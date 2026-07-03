@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Guide 01 — 모델 자동 분담 범용 플레이북 v1.1</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;700&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#F2F4F3; --surface:#FFFFFF; --ink:#17242B; --ink-soft:#4A5B60;
+  --acc:#2F4A8A; --acc-deep:#213564; --acc-tint:#E7ECF6;
+  --amber:#B4690E; --amber-tint:#FBF1E2;
+  --red:#A83A2E; --red-tint:#F9EAE7;
+  --line:#D8DFDD;
+  --code-bg:#131B2B; --code-ink:#DCE6E3; --code-accent:#8FB0E8; --code-dim:#8CA09A;
+  --mono:'IBM Plex Mono',Consolas,'Courier New',monospace;
+  --sans:'IBM Plex Sans KR','Pretendard','Malgun Gothic',sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+body{font-family:var(--sans);background:var(--bg);color:var(--ink);line-height:1.75;font-size:16px}
+header.hero{background:var(--code-bg);color:var(--code-ink);padding:52px 24px 44px;border-bottom:4px solid var(--acc)}
+.hero-inner{max-width:1060px;margin:0 auto}
+.hero .eyebrow{font-family:var(--mono);font-size:13px;letter-spacing:.12em;color:var(--code-accent);text-transform:uppercase;margin-bottom:14px}
+.hero h1{font-size:clamp(25px,4vw,38px);font-weight:700;line-height:1.32;letter-spacing:-.01em}
+.hero h1 b{color:var(--code-accent);font-weight:700}
+.hero p.sub{margin-top:14px;max-width:660px;color:#AAB9B4;font-size:15px}
+.hero .meta{margin-top:20px;display:flex;flex-wrap:wrap;gap:8px}
+.hero .chip{font-family:var(--mono);font-size:12px;border:1px solid rgba(255,255,255,.22);border-radius:999px;padding:5px 12px;color:#C3D2CD}
+.hero .chip.strong{background:var(--acc);border-color:var(--acc);color:#fff}
+.doc-nav{max-width:1060px;margin:14px auto 0;display:flex;gap:8px;flex-wrap:wrap}
+.doc-nav a{font-family:var(--mono);font-size:12px;color:#C3D2CD;text-decoration:none;border:1px dashed rgba(255,255,255,.3);border-radius:8px;padding:4px 10px}
+.doc-nav a.here{background:rgba(255,255,255,.14);border-style:solid;color:#fff}
+.layout{max-width:1060px;margin:0 auto;display:grid;grid-template-columns:250px 1fr;gap:40px;padding:40px 24px 100px}
+@media (max-width:880px){.layout{grid-template-columns:1fr;gap:0}}
+nav.toc{position:sticky;top:24px;align-self:start;padding:20px 0}
+nav.toc .toc-title{font-family:var(--mono);font-size:12px;letter-spacing:.14em;color:var(--ink-soft);text-transform:uppercase;margin-bottom:16px;padding-left:34px}
+.metro{position:relative;list-style:none}
+.metro::before{content:"";position:absolute;left:11px;top:12px;bottom:12px;width:2px;background:var(--line)}
+.metro li a{display:flex;align-items:center;gap:12px;padding:7px 0;color:var(--ink-soft);text-decoration:none;font-size:14px;position:relative;transition:color .15s}
+.metro li a .dot{width:24px;height:24px;flex:0 0 24px;border-radius:50%;background:var(--surface);border:2px solid var(--line);display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:11px;font-weight:600;color:var(--ink-soft);position:relative;z-index:1;transition:all .15s}
+.metro li a:hover{color:var(--acc)}
+.metro li a:hover .dot{border-color:var(--acc);color:var(--acc)}
+.metro li a.active{color:var(--acc-deep);font-weight:700}
+.metro li a.active .dot{background:var(--acc);border-color:var(--acc);color:#fff}
+@media (max-width:880px){
+  nav.toc{position:static;padding:20px 0 8px;overflow-x:auto}
+  nav.toc .toc-title{padding-left:0}
+  .metro{display:flex;gap:4px}
+  .metro::before{display:none}
+  .metro li a{white-space:nowrap;border:1px solid var(--line);border-radius:999px;padding:5px 12px;background:var(--surface)}
+  .metro li a .dot{width:18px;height:18px;flex-basis:18px;font-size:10px}
+}
+main{min-width:0}
+section.station{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:34px 34px 28px;margin-bottom:34px;position:relative}
+@media (max-width:600px){section.station{padding:24px 18px}}
+.station-head{display:flex;align-items:center;gap:14px;margin-bottom:6px}
+.station-badge{width:42px;height:42px;flex:0 0 42px;border-radius:50%;background:var(--acc);color:#fff;display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-weight:600;font-size:15px}
+.station-badge.appendix{background:var(--ink)}
+.station-head h2{font-size:22px;font-weight:700;letter-spacing:-.01em}
+.station-goal{font-size:14px;color:var(--ink-soft);margin:2px 0 20px 56px;font-family:var(--mono)}
+@media (max-width:600px){.station-goal{margin-left:0}}
+section.station h3{font-size:17px;font-weight:700;margin:30px 0 10px;padding-top:22px;border-top:1px dashed var(--line)}
+section.station h3:first-of-type{border-top:0;padding-top:0}
+section.station h3 .stepnum{display:inline-block;background:var(--acc-tint);color:var(--acc-deep);font-family:var(--mono);font-size:13px;border-radius:6px;padding:1px 9px;margin-right:8px;vertical-align:1px}
+section.station p{margin:10px 0}
+section.station ul,section.station ol{margin:10px 0 10px 22px}
+section.station li{margin:6px 0}
+section.station a{color:var(--acc-deep)}
+code.inline{font-family:var(--mono);font-size:.88em;background:var(--acc-tint);color:var(--acc-deep);padding:1px 6px;border-radius:5px}
+.codeblock{margin:14px 0 20px;border-radius:10px;overflow:hidden;border:1px solid rgba(0,0,0,.35)}
+.codebar{display:flex;align-items:center;justify-content:space-between;background:rgba(255,255,255,.07);padding:7px 12px 7px 14px;gap:10px;background-color:#1B2740}
+.codebar .path{font-family:var(--mono);font-size:12px;color:var(--code-accent);overflow-x:auto;white-space:nowrap}
+.copybtn{flex:0 0 auto;font-family:var(--mono);font-size:12px;background:var(--acc);color:#fff;border:0;border-radius:6px;padding:5px 12px;cursor:pointer;transition:background .15s}
+.copybtn:hover{background:var(--acc-deep)}
+.copybtn.done{background:#3E7D46}
+.codeblock pre{background:var(--code-bg);color:var(--code-ink);font-family:var(--mono);font-size:13.5px;line-height:1.65;padding:16px 18px;overflow-x:auto;margin:0}
+.callout{border-radius:10px;padding:14px 16px 14px 46px;margin:14px 0;font-size:14.5px;position:relative}
+.callout::before{position:absolute;left:15px;top:13px;font-size:16px}
+.callout.why{background:var(--acc-tint);border:1px solid rgba(0,0,0,.08)}
+.callout.why::before{content:"💡"}
+.callout.warn{background:var(--amber-tint);border:1px solid #EBD3AE}
+.callout.warn::before{content:"⚠️"}
+.callout.danger{background:var(--red-tint);border:1px solid #EBC4BC}
+.callout.danger::before{content:"🚫"}
+.callout.check{background:#EDF3EE;border:1px solid #C9DECB}
+.callout.check::before{content:"✅"}
+.callout b:first-child{display:block;margin-bottom:2px}
+table{width:100%;border-collapse:collapse;margin:14px 0;font-size:14px}
+th,td{border:1px solid var(--line);padding:9px 12px;text-align:left;vertical-align:top}
+th{background:var(--acc-tint);color:var(--acc-deep);font-weight:700;font-family:var(--mono);font-size:13px}
+td code{font-family:var(--mono);font-size:.9em;color:var(--acc-deep)}
+tr:nth-child(even) td{background:#FAFCFB}
+.tbl-scroll{overflow-x:auto}
+.checklist{list-style:none;margin:12px 0 !important;border:1px solid var(--line);border-radius:10px;overflow:hidden}
+.checklist li{margin:0 !important;border-bottom:1px solid var(--line)}
+.checklist li:last-child{border-bottom:0}
+.checklist label{display:flex;gap:10px;align-items:flex-start;padding:11px 14px;cursor:pointer;font-size:14.5px;transition:background .15s}
+.checklist label:hover{background:var(--acc-tint)}
+.checklist input{margin-top:4px;accent-color:var(--acc);width:16px;height:16px;flex:0 0 16px}
+.checklist input:checked + span{color:var(--ink-soft);text-decoration:line-through}
+details{border:1px solid var(--line);border-radius:10px;margin:14px 0;background:#FAFCFB}
+details summary{cursor:pointer;padding:12px 16px;font-weight:700;font-size:14.5px;color:var(--acc-deep);list-style:none}
+details summary::before{content:"▸ ";font-family:var(--mono)}
+details[open] summary::before{content:"▾ "}
+details .d-body{padding:0 16px 14px}
+.flow{font-family:var(--mono);font-size:13.5px;background:var(--acc-tint);border:1px dashed var(--acc);border-radius:10px;padding:14px 18px;margin:14px 0;line-height:2}
+.flow b{color:var(--acc-deep)}
+footer{max-width:1060px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);font-size:13px;font-family:var(--mono)}
+:focus-visible{outline:3px solid var(--acc);outline-offset:2px;border-radius:4px}
+</style>
+</head>
+<body>
+<header class="hero">
+  <div class="hero-inner">
+    <div class="eyebrow">Guide 01 · Model Routing Playbook</div>
+    <h1>모델 자동 분담<br><b>범용 적용 플레이북</b></h1>
+    <p class="sub">어려운 추론(분석·설계)은 상위 모델(Opus), 잘 정의된 실행은 하위 모델(Sonnet/Haiku)로 자동 분담합니다. 어떤 프로젝트든 이 파일 하나로 "학습 → 질문 → 맞춤 구성 → 승인 → 착수"가 이루어집니다.</p>
+    <div class="meta">
+      <span class="chip strong">v1.1</span>
+      <span class="chip">최종 갱신 2026-07-03</span>
+      <span class="chip">Claude Code v2.1.x 기준</span>
+      <span class="chip">Opus 4.8 · Sonnet 5 · Fable 5</span>
+    </div>
+    <div class="doc-nav">
+      <a href="00_Claude-Code-통합구성-범용마스터.html">← 00 통합구성</a>
+      <a class="here" href="#">01 모델분담 플레이북 (현재)</a>
+      <a href="99_WAVE전용-최고플랜.html">99 WAVE 실전 플랜 →</a>
+    </div>
+  </div>
+</header>
+
+<div class="layout">
+<nav class="toc" aria-label="목차">
+  <div class="toc-title">진행 노선도</div>
+  <ul class="metro">
+    <li><a href="#s0"><span class="dot">0</span>무엇·왜·결과</a></li>
+    <li><a href="#s1"><span class="dot">1</span>불변 원칙 5</a></li>
+    <li><a href="#s2"><span class="dot">2</span>Claude 실행 절차</a></li>
+    <li><a href="#s3"><span class="dot">3</span>적응 규칙·질문</a></li>
+    <li><a href="#s4"><span class="dot">4</span>에이전트 로스터</a></li>
+    <li><a href="#s5"><span class="dot">5</span>모델 배정표</a></li>
+    <li><a href="#s6"><span class="dot">6</span>착수 전 점검</a></li>
+    <li><a href="#sa"><span class="dot">A</span>주의 (기대치)</a></li>
+    <li><a href="#sb"><span class="dot">B</span>모델 라인업</a></li>
+    <li><a href="#sc"><span class="dot">C</span>버전</a></li>
+  </ul>
+</nav>
+
+<main>
+
+<section class="station" id="s0">
+  <div class="station-head"><div class="station-badge">0</div><h2>이게 뭐 · 왜 · 결과</h2></div>
+  <p class="station-goal">사용법: 원본 md를 프로젝트 루트에 넣고 "이 플레이북을 이 프로젝트에 적용해줘"</p>
+  <div class="tbl-scroll"><table>
+    <tr><th></th><th>내용</th></tr>
+    <tr><td><b>무엇</b></td><td>어려운 추론은 상위 모델(예: Opus), 잘 정의된 실행은 하위 모델(예: Sonnet/Haiku)로 <b>자동 분담하는 작업 파이프라인</b>을 이 프로젝트에 맞게 세팅</td></tr>
+    <tr><td><b>왜</b></td><td>품질은 지키고 토큰/비용은 줄인다. 프로젝트마다 스택·성격이 다르므로 고정 템플릿이 아니라 <b>학습+질문으로 맞춘다</b></td></tr>
+    <tr><td><b>결과</b></td><td><code>.claude/agents/</code>(모델별 서브에이전트) + <code>docs/</code>(난이도 기준·핸드오프 규약)이 만들어지고 1단계부터 실행 가능</td></tr>
+  </table></div>
+  <p>적용을 지시하면 Claude는 ①프로젝트를 스스로 학습 → ②모르는 것만 질문 → ③맞춤 구성 생성 → ④승인 후 착수 순서로 움직입니다(§2).</p>
+</section>
+
+<section class="station" id="s1">
+  <div class="station-head"><div class="station-badge">1</div><h2>불변 원칙 5 — 모든 프로젝트 공통</h2></div>
+  <p class="station-goal">프로젝트가 무엇이든 이 5가지는 항상 지킨다</p>
+  <ol>
+    <li><b>문서 고정 핸드오프</b> — 단계 산출물을 파일로 남기고 다음 단계는 <code class="inline">@파일</code>로 읽는다. 대화 요약으로 넘기지 않는다(컨텍스트 손실이 최대 실패 원인).</li>
+    <li><b>트리아지는 상위 모델</b> — "무엇이 어렵고 무엇이 쉬운가" 분류가 최고 레버리지. 여기서 틀리면 하류 전체가 오염된다.</li>
+    <li><b>검증 스테이지 필수</b> — 상위 모델의 diff 리뷰 + 정답 대조(테스트/파리티). "검증기가 모델보다 중요."</li>
+    <li><b>난이도 기반 라우팅</b> — 강한 모델=추론(분석/설계/엣지), 약한 모델=실행(정형/반복). 잘 정의된 것만 싸게.</li>
+    <li><b>자동화 천장 인정</b> — 완전 자동은 없다(~70~85%). 계획·비기능요구(성능/보안/구조)·최종 리뷰는 사람이 소유.</li>
+  </ol>
+</section>
+
+<section class="station" id="s2">
+  <div class="station-head"><div class="station-badge">2</div><h2>Claude 실행 절차 — "적용해줘" 하면 이 순서</h2></div>
+  <p class="station-goal">STEP 1~4: 학습 → 질문 → 생성 → 승인</p>
+
+  <h3><span class="stepnum">STEP 1</span>프로젝트 자동 학습 (스스로)</h3>
+  <p>코드/설정으로 알 수 있는 건 질문하지 않고 직접 확인합니다:</p>
+  <ul>
+    <li><b>스택/런타임</b>: <code class="inline">package.json</code>·<code class="inline">pom.xml</code>·<code class="inline">build.gradle</code>·<code class="inline">composer.json</code>·<code class="inline">requirements.txt</code>·<code class="inline">go.mod</code>·<code class="inline">Cargo.toml</code> 등 감지 → 언어·프레임워크·버전</li>
+    <li><b>빌드/테스트/CI</b>: 명령, 기존 테스트 유무, CI 설정</li>
+    <li><b>구조/도메인</b>: 디렉터리 트리, 주요 모듈, 엔트리포인트, README·CLAUDE.md·docs</li>
+    <li><b>규모/성격</b>: 파일 수·크기, 사내툴/외부서비스/라이브러리 여부</li>
+    <li><b>경계/시크릿</b>: 건드리면 안 되는 영역, 시크릿 위치(읽지 않는다)</li>
+    <li><b>git</b>: 브랜치·원격·미커밋 여부</li>
+  </ul>
+
+  <h3><span class="stepnum">STEP 2</span>부족분 질문 (모르는 것만)</h3>
+  <p>코드로 확인 불가능한 것만 §3의 질문을 <b>한 번에 묶어</b>, 각 질문에 <b>추천 기본값</b>과 함께 묻습니다. 이미 파악한 건 "이렇게 이해했다"로 확인만.</p>
+
+  <h3><span class="stepnum">STEP 3</span>이 프로젝트에 맞춘 구성 생성</h3>
+  <ul>
+    <li>(a) <b>난이도 rubric</b>을 이 프로젝트 기준으로 작성 → <code class="inline">docs/난이도-매트릭스.md</code> 골격</li>
+    <li>(b) <b>에이전트 로스터 + 모델 배정</b> → <code class="inline">.claude/agents/</code>에 생성 (§4 템플릿을 이 스택에 맞게: tools·빌드/테스트 명령·용어)</li>
+    <li>(c) <b>오케스트레이션 순서 + 핸드오프 문서 규약</b>(어느 문서에 무엇) → <code class="inline">docs/</code>에 기록</li>
+  </ul>
+
+  <h3><span class="stepnum">STEP 4</span>확인 후 착수</h3>
+  <p>구성 요약을 보고하고 <b>승인</b>을 받은 뒤 1단계(survey/분석)부터 실행. 승인 없이 대량 변경하지 않는다.</p>
+</section>
+
+<section class="station" id="s3">
+  <div class="station-head"><div class="station-badge">3</div><h2>적응 규칙 + 질문 템플릿</h2></div>
+  <p class="station-goal">프로젝트마다 "알아서 채우는" 변수들</p>
+
+  <h3>적응 규칙 (Claude가 스스로 조정)</h3>
+  <div class="tbl-scroll"><table>
+    <tr><th>프로젝트 변수</th><th>어떻게 조정</th></tr>
+    <tr><td><b>지배적 활동</b> (레거시 전환 / 신규 개발 / 리팩터 / 감사·리뷰 / 버그헌팅)</td><td>로스터 형태를 바꾼다. 전환·리팩터 = survey→triage→analyst→implement→review · 신규 개발 = spec→implement→review · 감사 = finder→verifier</td></tr>
+    <tr><td><b>스택/빌드</b></td><td>에이전트 tools와 빌드·테스트·린트 명령을 그 스택에 맞춤 (<code>./gradlew test</code>·<code>npm test</code>·<code>pytest</code>)</td></tr>
+    <tr><td><b>규모</b></td><td>크면 슬라이스를 잘게·병렬로, 작으면 단일 흐름. <b>초대형 코드베이스의 survey/triage엔 <code>sonnet[1m]</code>·<code>opus[1m]</code>(1M 컨텍스트) 고려</b> — <code>opusplan[1m]</code>은 plan 단계에도 1M 적용</td></tr>
+    <tr><td><b>성격</b> (사내툴 / 외부 서비스 / 라이브러리)</td><td>검증의 NFR 가중치 조정 (외부 서비스=보안·성능↑, 라이브러리=API 호환·문서↑)</td></tr>
+    <tr><td><b>난이도 高 정의</b></td><td>그 스택의 위험 요소로 채움. 예) 암호화·인증·동시성·상태머신·외부 연동 규약·거대·강결합 파일·성능 임계 경로 / 易 = CRUD·조회·정형 변환·보일러플레이트</td></tr>
+  </table></div>
+
+  <h3>질문 템플릿 6 (추천 기본값 포함)</h3>
+  <ol>
+    <li><b>목적/활동</b>: 이 작업의 목적은? (전환 / 신규 기능 / 리팩터 / 감사 / 버그수정)</li>
+    <li><b>타깃/제약</b>: 목표 스택·버전? 반드시 지킬 제약(DB 스키마·외부 API·프로토콜)?</li>
+    <li><b>범위/우선순위</b>: 먼저 할 영역과 제외 영역? (추천: 저위험·읽기중심부터)</li>
+    <li><b>모델/비용</b>: 쓸 수 있는 모델? (opus/sonnet/haiku) 비용 상한·분담 선호? (추천 기본값: §5)</li>
+    <li><b>검증(정답)</b>: 기존 테스트/CI 유무? "정답(oracle)"은 무엇? (기존 동작 재생·골든테스트·수동확인)</li>
+    <li><b>팀/기록</b>: 다중 개발자? 작업 기록 위치? (추천: <code class="inline">docs/</code> append 전용)</li>
+  </ol>
+</section>
+
+<section class="station" id="s4">
+  <div class="station-head"><div class="station-badge">4</div><h2>에이전트 로스터 템플릿 — Claude가 &lt;…&gt;를 채운다</h2></div>
+  <p class="station-goal">배치: 팀 공유면 &lt;repo&gt;/.claude/agents/, 개인 실험이면 ~/.claude/agents/</p>
+  <p>아래는 "전환/리팩터형" 기본 로스터입니다. 신규개발형이면 survey/triage를 빼고 spec-writer부터 시작합니다. 모델 값은 별칭(opus·sonnet·haiku) 또는 전체 ID.</p>
+
+  <div class="codeblock">
+    <div class="codebar"><span class="path">.claude/agents/surveyor.md</span><button class="copybtn" onclick="copyCode(this)">복사</button></div>
+<pre>---
+name: surveyor
+description: &lt;프로젝트&gt; 구조 survey 전문. 모듈·의존성·엔트리포인트를 목록화. 넓은 조사에 적극 사용. 파일 수정 안 함.
+tools: Read, Grep, Glob, Bash
+model: sonnet
+---
+넓고 기계적으로 훑어 docs/survey/&lt;area&gt;.md 에 표·목록으로 남긴다. 판단·설계는 하지 않는다.</pre>
+  </div>
+  <div class="codeblock">
+    <div class="codebar"><span class="path">.claude/agents/triage.md</span><button class="copybtn" onclick="copyCode(this)">복사</button></div>
+<pre>---
+name: triage
+description: 난이도 분류 전문. survey + rubric으로 모듈별 난이도(高/低)·근거·권장모델·순서를 매긴다.
+tools: Read, Grep, Glob
+model: opus
+---
+입력 @docs/survey/*.md, rubric(&lt;高 정의&gt;)에 따라 판정 → docs/난이도-매트릭스.md. 애매하면 高로 올리고 이유를 남긴다.</pre>
+  </div>
+  <div class="codeblock">
+    <div class="codebar"><span class="path">.claude/agents/analyst-hard.md — 쌍둥이 analyst-light.md는 model: sonnet만 변경</span><button class="copybtn" onclick="copyCode(this)">복사</button></div>
+<pre>---
+name: analyst-hard
+description: 高난이도 모듈 상세 분석·&lt;타깃 스택&gt; 설계. 구현 spec(성공기준·샘플 입출력·위험) 작성.
+tools: Read, Grep, Glob
+model: opus
+---
+입력 @docs/난이도-매트릭스.md 해당 모듈 + 관련 코드 → docs/spec/&lt;module&gt;.md. 기존 버그 보존 여부는 "사람 확인 필요" 표시.</pre>
+  </div>
+  <div class="codeblock">
+    <div class="codebar"><span class="path">.claude/agents/implementer.md</span><button class="copybtn" onclick="copyCode(this)">복사</button></div>
+<pre>---
+name: implementer
+description: spec 기반 &lt;타깃 스택&gt; 구현 전문(정형 모듈). spec 준비되면 적극 사용.
+tools: Read, Write, Edit, Bash
+model: sonnet
+---
+입력 @docs/spec/&lt;module&gt;.md(대화 요약 아님). 성공기준·샘플 만족하게 구현, 범위 밖 손대지 않음. 변경 요약 보고.</pre>
+  </div>
+  <div class="codeblock">
+    <div class="codebar"><span class="path">.claude/agents/reviewer.md</span><button class="copybtn" onclick="copyCode(this)">복사</button></div>
+<pre>---
+name: reviewer
+description: 변환/구현 코드 diff 검증. 타입·널·관용구·상태·NFR(성능·보안) 관점. 구현 직후 적극 사용. 읽기 전용.
+tools: Read, Grep, Glob, Bash
+model: opus
+---
+spec과 diff를 대조해 의미 오역을 잡는다. 코드는 고치지 않고 무엇이/왜/어떻게 지적만.</pre>
+  </div>
+  <div class="codeblock">
+    <div class="codebar"><span class="path">.claude/agents/parity-tester.md</span><button class="copybtn" onclick="copyCode(this)">복사</button></div>
+<pre>---
+name: parity-tester
+description: 정답 대조(테스트/재생) 실행. 빠르고 저렴하게 통과/차이만 보고.
+tools: Bash, Read
+model: haiku
+---
+&lt;테스트 명령&gt;으로 검증하고 diff만 보고. 원인 분석은 상위 단계로.</pre>
+  </div>
+</section>
+
+<section class="station" id="s5">
+  <div class="station-head"><div class="station-badge">5</div><h2>기본 모델 배정 — 사용자가 다르게 원하면 덮어씀</h2></div>
+  <p class="station-goal">단계별 기본값 + 하이브리드 옵션 2종 + 비용 제2축</p>
+  <div class="tbl-scroll"><table>
+    <tr><th>단계</th><th>기본 모델</th><th>이유</th></tr>
+    <tr><td>survey / 정형 실행 / 테스트</td><td><code>sonnet</code> / <code>haiku</code></td><td>기계적·반복 → 싸게</td></tr>
+    <tr><td>난이도 분류(triage)</td><td><b><code>opus</code></b></td><td>최고 레버리지</td></tr>
+    <tr><td>상세 분석·설계</td><td>低 <code>sonnet</code> / 高 <b><code>opus</code></b></td><td>난이도별</td></tr>
+    <tr><td>高난이도 구현</td><td><b><code>opusplan</code></b>(메인 세션) 또는 <b><code>/advisor</code></b></td><td>opusplan=계획 Opus/실행 Sonnet 자동 · advisor=실행 중에도 Opus 온디맨드 자문</td></tr>
+    <tr><td>리뷰</td><td><b><code>opus</code></b></td><td>의미 오역·NFR 검출</td></tr>
+  </table></div>
+
+  <div class="callout warn"><b>opusplan 주의</b><code class="inline">opusplan</code>은 <b>메인 세션 모드 별칭</b>(Plan Mode=Opus → 실행=Sonnet)입니다. 서브에이전트 frontmatter엔 <code class="inline">opus</code>/<code class="inline">sonnet</code>을 직접 핀하세요. 어려운 구현은 서브에이전트 대신 메인 세션 <code class="inline">/model opusplan</code>으로. 단 <code class="inline">availableModels</code> 정책에서 Opus가 제외된 환경이면 opusplan은 plan 모드에서도 Sonnet에 머뭅니다.</div>
+  <div class="callout why"><b>opusplan vs /advisor</b>opusplan은 plan 경계에서 모델을 바꾸고, <code class="inline">/advisor</code>는 <b>실행 중 Sonnet이 막힐 때 Opus에 자문</b>(모델이 자문 시점을 스스로 판단)합니다. Anthropic 측정 기준 advisor 패턴이 비용 −11.9%·정확도 +2.7%. 계획이 명확한 정형 전환엔 opusplan, 실행 중 난관이 예상되는 탐색적 작업엔 advisor가 유리합니다.</div>
+  <div class="callout why"><b>비용 제2축 — effort</b>모델 선택과 별개로 <code class="inline">/effort</code>(low~xhigh)로 추론 강도를 조절할 수 있습니다(Opus 4.7+는 xhigh가 기본). "라우팅으로 모델을, effort로 강도를" 2축 운용이 최종 형태입니다.</div>
+</section>
+
+<section class="station" id="s6">
+  <div class="station-head"><div class="station-badge">6</div><h2>착수 전 자기 점검</h2></div>
+  <p class="station-goal">Claude(그리고 나)가 시작 전에 확인할 5가지</p>
+  <ul class="checklist">
+    <li><label><input type="checkbox"><span>프로젝트 스택·구조·성격을 파악했다 (모르는 건 질문했다)</span></label></li>
+    <li><label><input type="checkbox"><span>이 프로젝트용 <b>난이도 rubric</b>을 확정했다</span></label></li>
+    <li><label><input type="checkbox"><span><b>핸드오프 문서 규약</b>(어느 파일에 무엇)을 정했다</span></label></li>
+    <li><label><input type="checkbox"><span><b>검증 방법(정답)</b>이 정해졌다</span></label></li>
+    <li><label><input type="checkbox"><span>사용자 <b>승인</b>을 받았다</span></label></li>
+  </ul>
+</section>
+
+<section class="station" id="sa">
+  <div class="station-head"><div class="station-badge appendix">A</div><h2>주의 — 기대치 관리</h2></div>
+  <p class="station-goal">이 체계로도 안 되는 것들을 미리 알기</p>
+  <ul>
+    <li><b>완전 자동 아님</b>(~75% 천장): 숨은 비즈로직·아키텍처·보안 엣지는 사람이 판단.</li>
+    <li><b>"almost right" 함정</b>: 어려운 걸 싼 모델로 밀면 재작업이 더 비쌀 수 있음 → rubric으로 걸러 高는 상위 모델.</li>
+    <li><b>비기능요구(성능/보안/구조)는 자주 누락</b> → reviewer가 명시 점검.</li>
+    <li><b>"N% 자동 보존" 류 벤더 수치 불신</b> → 정답 대조로 직접 검증.</li>
+    <li><b>내장 라우팅과 중복 주의</b>: Claude Code는 이미 탐색용 Explore 서브에이전트를 Haiku로 자동 실행. 단순 코드 탐색까지 커스텀 surveyor로 감싸면 과설계 — surveyor는 "문서 산출물이 필요한 survey"에만.</li>
+  </ul>
+</section>
+
+<section class="station" id="sb">
+  <div class="station-head"><div class="station-badge appendix">B</div><h2>모델 라인업 참고 (2026-07 기준)</h2></div>
+  <p class="station-goal">별칭이 자동 추적하므로 §5 배정표는 그대로 유효</p>
+  <ul>
+    <li><b>별칭</b>: <code class="inline">haiku</code> / <code class="inline">sonnet</code> / <code class="inline">opus</code> / <code class="inline">best</code>(가장 유능한 가용 모델). 실제 모델: Sonnet 5(Claude Code v2.1.197+), Opus 4.8(v2.1.154+).</li>
+    <li><b>Claude Fable 5</b>: 최상위 모델, 기본값 아님 → <code class="inline">/model fable</code>로 선택. 장시간 자율 세션·검증 강화형. 안전 분류기 발동 시(사이버보안·바이오 등) 자동 모델 폴백.</li>
+    <li><b>버전 핀</b>이 필요하면 전체 ID(<code class="inline">claude-opus-4-8</code>) 또는 <code class="inline">ANTHROPIC_DEFAULT_OPUS_MODEL</code> 등 환경변수.</li>
+  </ul>
+</section>
+
+<section class="station" id="sc">
+  <div class="station-head"><div class="station-badge appendix">C</div><h2>버전</h2></div>
+  <p class="station-goal">갱신 시: 이 표에 한 줄 추가 + §B 모델 라인업 최신화</p>
+  <div class="tbl-scroll"><table>
+    <tr><th>버전</th><th>날짜</th><th>변경 내용</th></tr>
+    <tr><td>v1.0</td><td>2026-07-03</td><td>범용 플레이북 초판 (WAVE 전용 플랜에서 일반화)</td></tr>
+    <tr><td>v1.1</td><td>2026-07-03</td><td>공식 문서 재검증: /advisor 대안 추가, [1m] 1M 컨텍스트 옵션, /effort 비용 제2축, availableModels 예외, 내장 Explore 중복 주의, 모델 라인업 참고 신설</td></tr>
+  </table></div>
+</section>
+
+</main>
+</div>
+
+<footer>Guide 01 — 모델 자동 분담 범용 플레이북 v1.1 · 2026-07-03 · 원본: 01_모델분담-범용-플레이북.md (v1.1)</footer>
+
+<script>
+function copyCode(btn){
+  var pre = btn.closest('.codeblock').querySelector('pre');
+  var text = pre.innerText;
+  function done(){
+    btn.textContent = '복사됨!'; btn.classList.add('done');
+    setTimeout(function(){ btn.textContent='복사'; btn.classList.remove('done'); }, 1600);
+  }
+  function fallback(){
+    var ta = document.createElement('textarea');
+    ta.value = text; document.body.appendChild(ta); ta.select();
+    try{ document.execCommand('copy'); done(); }catch(e){}
+    document.body.removeChild(ta);
+  }
+  if(navigator.clipboard && navigator.clipboard.writeText){
+    navigator.clipboard.writeText(text).then(done).catch(fallback);
+  } else { fallback(); }
+}
+(function(){
+  var links = document.querySelectorAll('.metro a'); var map = {};
+  links.forEach(function(a){ map[a.getAttribute('href').slice(1)] = a; });
+  if('IntersectionObserver' in window){
+    var obs = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if(e.isIntersecting){
+          links.forEach(function(a){ a.classList.remove('active'); });
+          var a = map[e.target.id]; if(a) a.classList.add('active');
+        }
+      });
+    }, {rootMargin:'-30% 0px -60% 0px'});
+    document.querySelectorAll('section.station').forEach(function(s){ obs.observe(s); });
+  }
+})();
+</script>
+</body>
+</html>
