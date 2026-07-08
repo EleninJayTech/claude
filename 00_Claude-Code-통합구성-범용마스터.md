@@ -1,11 +1,12 @@
 # Claude Code 통합 구성 — 범용 마스터 (드롭인 적용)
 
-> **문서 버전: v1.1** · 최종 갱신: **2026-07-03** · 기준: Claude Code v2.1.x (Opus 4.8 · Sonnet 5 · Fable 5)
+> **문서 버전: v1.2** · 최종 갱신: **2026-07-08** · 기준: Claude Code v2.1.x (Opus 4.8 · Sonnet 5 · Fable 5)
 >
 > | 버전 | 날짜 | 변경 내용 |
 > | --- | --- | --- |
 > | v1.0 | 2026-07-03 | 8개 소스 통합 초판 (setup-followalong v8 반영) |
 > | v1.1 | 2026-07-03 | 공식 문서 재검증: deny 파일명령 감지(v2.0.22+) 반영, `includeCoAuthoredBy`→`attribution` 교체, PowerShell deny 패턴(`type`/`Get-Content`/`gc`) 추가, Windows sandbox 미지원 명시, deny→ask→allow 우선순위 명시 |
+> | v1.2 | 2026-07-08 | 추론 강도 제어 `/effort` §D-6 추가 (xhigh=high보다 깊고 max 바로 아래; Fable 5·Opus 4.7+·Sonnet 5; 값은 새 세션 기본값으로 저장). §L 재검증 항목 반영 |
 >
 > ※ 갱신 시: 이 표에 한 줄 추가 + 하단 "문서 정보" 날짜 수정 + §L 재검증 체크리스트 수행.
 
@@ -119,6 +120,16 @@ New-Item -ItemType Directory -Path .claude/skills/wrap -Force
 ### D-4. 기본 `/resume`·`/wrap` (단일 repo용 기본형) — §F-2 A 참조. (통합/MSA는 §F-2 B·C로 덮어씀)
 
 ### D-5. 확인 — `claude` → `/` → `/resume`·`/wrap` 자동완성되면 성공.
+
+### D-6. 추론 강도(effort) 제어 — `/effort` 🟢
+세션의 **사고(reasoning) 깊이**를 조절하는 슬래시 명령. 고른 값은 settings.json **`effortLevel`** 키에 저장돼 **새 세션 기본값**이 된다.
+- **단계(낮음→높음)**: `low` → `medium` → `high` → `xhigh` → `max`.
+- **`/effort xhigh`**: high보다 깊은 추론, **최대(max) 바로 아래**. 지원 모델 **Fable 5 · Opus 4.7+ · Sonnet 5**. (실측 안내문: *"Deeper reasoning than high, just below maximum"*)
+- **`/effort` (인자 없이)**: 대화형 선택 목록을 띄운다(Esc로 취소).
+- **프로젝트별 기본값 고정**: `effortLevel`은 **User·Project·Local 스코프** 지원 → 특정 프로젝트만 xhigh로 두려면 그 프로젝트 `.claude/settings.json`에 `"effortLevel": "xhigh"`. 우선순위 **Local > Project > User(전역)**. 세션 1회 오버라이드는 `--effort` 플래그·`CLAUDE_CODE_EFFORT_LEVEL` 환경변수.
+- **트레이드오프**: 높일수록 복잡한 설계·디버깅·마이그레이션 판단 품질↑, 대신 **토큰·지연 증가**. 어려운 전환/설계/리버스는 `high`~`xhigh`, 단순 편집·조회는 `low`~`medium` 권장. 상시 `max`는 비용 대비 비권장.
+- `/model`(모델 선택)과 짝 명령: 모델에 따라 사용 가능한 단계가 다르다(xhigh는 위 3모델 계열).
+> 🟡 재검증: effort 단계 명칭·xhigh/max 지원 모델 범위·`effortLevel` 스코프는 버전에 따라 변할 수 있음. `claude --version`·`/effort` 실제 출력·`code.claude.com/docs/en/settings`로 검증.
 
 ---
 
@@ -414,6 +425,7 @@ Claude Code는 매주 바뀐다. 6개월마다 30분:
 - `code.claude.com/docs/en/whats-new` 최신 항목 확인.
 - 🔴🟡: deny의 서브프로세스 우회·**Windows sandboxing 지원 여부**(permissions), `attribution` 스키마 변화, CLAUDE.local.md deprecation(memory), auto-memory 한도(200줄/25KB).
 - `/model` 최신 정책(별칭이 가리키는 실제 모델), `claude --version`.
+- `/effort` 단계 명칭·xhigh/max 지원 모델 범위, **프로젝트별 기본 effort 고정 지원 여부**(§D-6).
 - 갱신 후 이 문서 "최종 갱신" 날짜 수정.
 
 ---
@@ -421,5 +433,5 @@ Claude Code는 매주 바뀐다. 6개월마다 30분:
 ## 핵심 출처 🟢
 IDE 통합·`--add-dir`(ide-integrations·large-codebases) / permissions·deny 한계 / hooks / skills / memory·auto-memory / repomix(repomix.com). — 모두 `code.claude.com/docs` 및 `docs.anthropic.com`.
 
-**문서 정보** — 통합 마스터(범용) **v1.1**. 8개 소스(⓪ 폴더구성 · ① 셋업 · structure-guide · daily-routine · SFA 셋업/통합 · setup-followalong v8 · integrated-setup) 중복 제거·v8 반영.
-최종 갱신: 2026-07-03 (변경 이력은 문서 최상단 버전 표 참조) / 참조: Claude Code v2.1.x, Opus 4.8 · Sonnet 5(v2.1.197+) · Fable 5.
+**문서 정보** — 통합 마스터(범용) **v1.2**. 8개 소스(⓪ 폴더구성 · ① 셋업 · structure-guide · daily-routine · SFA 셋업/통합 · setup-followalong v8 · integrated-setup) 중복 제거·v8 반영 + `/effort`(§D-6).
+최종 갱신: 2026-07-08 (변경 이력은 문서 최상단 버전 표 참조) / 참조: Claude Code v2.1.x, Opus 4.8 · Sonnet 5(v2.1.197+) · Fable 5.
