@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Claude Code 셋업 &amp; 모델 분담 — 신입 따라하기 가이드 v1.1</title>
+<title>Claude Code 셋업 &amp; 모델 분담 — 신입 따라하기 가이드 v1.2</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;700&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
 <style>
@@ -141,8 +141,8 @@ footer{max-width:1060px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
     <h1>Claude Code 셋업 &amp; 모델 분담<br><b>신입 개발자 따라하기 가이드</b></h1>
     <p class="sub">터미널을 처음 만지는 신입도 위에서 아래로 그대로 복사·붙여넣기만 하면, Claude Code 세션 기록 시스템과 "비싼 모델은 어려운 일, 싼 모델은 쉬운 일" 자동 분담 체계까지 완성됩니다.</p>
     <div class="meta">
-      <span class="chip strong">v1.1</span>
-      <span class="chip">최종 갱신 2026-07-03</span>
+      <span class="chip strong">v1.2</span>
+      <span class="chip">최종 갱신 2026-07-20</span>
       <span class="chip">Claude Code v2.1.x 기준</span>
       <span class="chip">터미널: PowerShell (Windows)</span>
       <span class="chip">원본: 00·01·99 마크다운 3종</span>
@@ -233,7 +233,6 @@ New-Item -ItemType Directory -Path .claude/skills/wrap -Force</pre>
   <div class="codeblock">
     <div class="codebar"><span class="path">C:/Users/&lt;내계정&gt;/.claude/settings.json</span><button class="copybtn" onclick="copyCode(this)">복사</button></div>
 <pre>{
-  "theme": "dark",
   "autoMemoryEnabled": true,
   "attribution": { "commit": "", "pr": "" },
   "permissions": {
@@ -254,7 +253,7 @@ New-Item -ItemType Directory -Path .claude/skills/wrap -Force</pre>
   }
 }</pre>
   </div>
-  <div class="callout warn"><b>이 deny 규칙이 하는 일 (v2.1 기준 정확한 사실)</b>① <code class="inline">.env</code>·인증서를 Read 도구와 Bash 안의 파일 명령(cat/type 등)에서 차단합니다. ② 단, python/node 스크립트가 파일을 직접 여는 것까지는 못 막습니다 — <b>진짜 비밀은 아예 레포에 두지 않는 게 근본 해법</b>입니다(부록 A). ③ Windows에는 아직 샌드박스가 없어 규칙이 더 중요합니다.</div>
+  <div class="callout warn"><b>이 deny 규칙이 하는 일 (2026-07-20 재검증 기준)</b>① <code class="inline">.env</code>·인증서를 Read 도구와 Bash 안의 파일 명령(cat/type 등)에서 차단합니다. Read deny는 같은 경로의 <b>Edit도 차단</b>(v2.1.208+). ② 단, python/node 스크립트가 파일을 직접 여는 것까지는 못 막습니다 — <b>진짜 비밀은 아예 레포에 두지 않는 게 근본 해법</b>입니다(부록 A). ③ OS 샌드박스는 <b>macOS·Linux·WSL2</b>에서 지원(<code class="inline">/sandbox</code>) — <b>네이티브 Windows만 미지원</b>이라 Windows에선 규칙이 더 중요합니다.</div>
 
   <h3><span class="stepnum">STEP 4</span>/resume · /wrap 스킬 만들기</h3>
   <p>세션 시작·종료 버튼입니다. 파일 2개를 만드세요.</p>
@@ -544,15 +543,15 @@ model: haiku
 &lt;테스트 명령&gt;으로 검증하고 diff만 보고. 원인 분석은 상위 단계로.</pre>
   </div>
 
-  <div class="callout warn"><b>중복 주의: 이미 내장 탐색 에이전트가 있어요</b>Claude Code는 "이 함수 어디 있지?" 같은 단순 탐색에 내장 Explore 에이전트(Haiku)를 자동으로 씁니다. <b>surveyor는 docs/survey/*.md 산출물이 필요한 조사에만</b> 쓰세요.</div>
+  <div class="callout warn"><b>중복 주의: 이미 내장 탐색 에이전트가 있어요</b>Claude Code는 "이 함수 어디 있지?" 같은 단순 탐색에 내장 Explore 에이전트를 자동으로 씁니다(현행: 메인 모델 상속·Opus 상한 — Haiku 고정은 구정보). <b>surveyor는 docs/survey/*.md 산출물이 필요한 조사에만</b> 쓰세요.</div>
 
   <h3><span class="stepnum">STEP 2</span>opusplan vs /advisor — 어려운 구현은 이렇게</h3>
   <div class="tbl-scroll"><table>
     <tr><th>방법</th><th>동작</th><th>이럴 때</th></tr>
     <tr><td><code>/model opusplan</code></td><td>Plan 모드=Opus로 계획 → 실행=Sonnet 자동 전환</td><td>spec이 탄탄한 <b>정형 작업</b> (계획만 잘 세우면 되는 일)</td></tr>
-    <tr><td><code>/advisor</code></td><td>Sonnet으로 실행하다가 막히면 <b>실행 중에도 Opus에 자문</b> (Anthropic 측정: 비용 −11.9%, 정확도 +2.7%)</td><td>실행 중 난관이 예상되는 <b>탐색적 작업</b></td></tr>
+    <tr><td><code>/advisor</code></td><td>Sonnet으로 실행하다가 막히면 <b>실행 중에도 Opus에 자문</b> (공식 블로그 측정: SWE-bench Multilingual +2.7%p·비용 −11.9%). 실험적·Anthropic API 전용</td><td>실행 중 난관이 예상되는 <b>탐색적 작업</b></td></tr>
   </table></div>
-  <div class="callout why"><b>추가 비용 레버 2개</b>① <code class="inline">/effort</code>(low~xhigh)로 추론 강도 조절 — "모델은 라우팅으로, 강도는 effort로" 2축 운용. ② 초대형 코드베이스 조사엔 <code class="inline">sonnet[1m]</code>·<code class="inline">opus[1m]</code>(1M 컨텍스트) 별칭. 참고: <code class="inline">availableModels</code> 정책으로 Opus가 막힌 환경이면 opusplan은 plan 모드에서도 Sonnet에 머뭅니다.</div>
+  <div class="callout why"><b>추가 비용 레버 2개</b>① <code class="inline">/effort</code>(low~max)로 추론 강도 조절 — "모델은 라우팅으로, 강도는 effort로" 2축 운용. 에이전트별 차등은 frontmatter <code class="inline">effort:</code> 키. ② 초대형 코드베이스: <b>Anthropic API에선 Sonnet 5·Opus 4.8이 기본 1M 컨텍스트</b>라 suffix 불필요 — <code class="inline">[1m]</code> 별칭은 게이트웨이·비자동 티어용. 참고(v2.1.205+): <code class="inline">availableModels</code>로 Opus 최신이 막혀도 opusplan은 <b>허용된 최신 Opus로 plan 실행</b>, 모든 Opus가 막힌 경우에만 Sonnet에 머뭅니다.</div>
 
   <h3><span class="stepnum">STEP 3</span>실행 흐름 (메인 세션에 이대로 지시)</h3>
   <div class="flow">
@@ -603,7 +602,7 @@ model: haiku
     <tr><td>Read 도구로 <code>.env</code> 읽기</td><td>✅ 막음</td></tr>
     <tr><td>Bash 안의 파일 명령(<code>cat</code>/<code>type</code>/<code>head</code> 등)으로 읽기</td><td>✅ 감지·차단 (v2.0.22+ 개선. 단 규칙을 넣어야 함 — cat 계열은 원래 무프롬프트 내장 명령)</td></tr>
     <tr><td>python/node 스크립트가 파일을 직접 open</td><td>🚫 <b>못 막음</b> (서브프로세스 우회)</td></tr>
-    <tr><td>Windows에서 OS 샌드박스로 차단</td><td>🚫 Windows/Linux엔 아직 샌드박스 없음</td></tr>
+    <tr><td>OS 샌드박스로 차단</td><td>✅ macOS·Linux·WSL2 지원(<code class="inline">/sandbox</code>) · 🚫 네이티브 Windows만 미지원 → WSL2 또는 규칙 기반</td></tr>
   </table></div>
 
   <div class="callout danger"><b>그래서 결론은 하나</b>진짜 비밀번호·API 키·인증서는 <b>작업 레포에 아예 두지 않습니다</b>(별도 vault·환경변수·<code class="inline">_secure_config</code>). deny는 부분 안전망이고, 시크릿 분리가 근본 해법입니다.</div>
@@ -642,12 +641,13 @@ model: haiku
     <tr><th>버전</th><th>날짜</th><th>변경 내용</th></tr>
     <tr><td>v1.0</td><td>2026-07-03</td><td>마크다운 3종(00 통합구성 · 01 범용 플레이북 · 99 WAVE 플랜) 초판</td></tr>
     <tr><td>v1.1</td><td>2026-07-03</td><td>공식 문서 재검증 반영: deny 파일명령 감지(v2.0.22+), attribution 교체, PowerShell deny 패턴, Windows sandbox 미지원, /advisor·[1m]·/effort, 모델 라인업(Sonnet 5·Opus 4.8·Fable 5) + 본 HTML 가이드 제작</td></tr>
+    <tr><td>v1.2</td><td>2026-07-20</td><td>공식 문서 전면 재검증: 샌드박스 <b>Linux·WSL2 지원</b> 반영(네이티브 Windows만 미지원), Read deny의 Edit 차단(v2.1.208+), 내장 Explore=메인 모델 상속 정정, opusplan×availableModels 변경(v2.1.205+), API 기본 1M 컨텍스트, advisor 수치 출처 확정, 에이전트 frontmatter <code class="inline">effort:</code> 키 확정</td></tr>
   </table></div>
 
   <h3>6개월 재검증 체크리스트</h3>
   <ul class="checklist">
     <li><label><input type="checkbox"><span><code class="inline">code.claude.com/docs/en/whats-new</code> 최신 항목 확인</span></label></li>
-    <li><label><input type="checkbox"><span>deny의 서브프로세스 우회 · <b>Windows sandboxing 지원 여부</b> 재확인</span></label></li>
+    <li><label><input type="checkbox"><span>deny의 서브프로세스 우회 · <b>샌드박스 네이티브 Windows 지원 여부</b>(현재 macOS·Linux·WSL2만) 재확인</span></label></li>
     <li><label><input type="checkbox"><span><code class="inline">attribution</code> 스키마 · auto-memory 한도(200줄/25KB) 변화 확인</span></label></li>
     <li><label><input type="checkbox"><span><code class="inline">/model</code> 최신 정책(별칭이 가리키는 실제 모델) · <code class="inline">claude --version</code></span></label></li>
     <li><label><input type="checkbox"><span>이 문서와 마크다운 3종의 버전 표에 한 줄 추가 + 날짜 갱신</span></label></li>
@@ -660,7 +660,7 @@ model: haiku
 </div>
 
 <footer>
-  Claude Code 신입 따라하기 가이드 v1.1 · 2026-07-03 · 원본: 00_통합구성-범용마스터 / 01_모델분담-범용-플레이북 / 99_WAVE전용-최고플랜 (모두 v1.1)
+  Claude Code 신입 따라하기 가이드 v1.2 · 2026-07-20 · 원본: 00_통합구성-범용마스터(v1.3) / 01_모델분담-범용-플레이북(v1.2) / 99_WAVE전용-최고플랜(v1.2)
 </footer>
 
 <script>

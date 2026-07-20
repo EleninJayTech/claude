@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Guide 01 — 모델 자동 분담 범용 플레이북 v1.1</title>
+<title>Guide 01 — 모델 자동 분담 범용 플레이북 v1.2</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;700&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
 <style>
@@ -119,8 +119,8 @@ footer{max-width:1060px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
     <h1>모델 자동 분담<br><b>범용 적용 플레이북</b></h1>
     <p class="sub">어려운 추론(분석·설계)은 상위 모델(Opus), 잘 정의된 실행은 하위 모델(Sonnet/Haiku)로 자동 분담합니다. 어떤 프로젝트든 이 파일 하나로 "학습 → 질문 → 맞춤 구성 → 승인 → 착수"가 이루어집니다.</p>
     <div class="meta">
-      <span class="chip strong">v1.1</span>
-      <span class="chip">최종 갱신 2026-07-03</span>
+      <span class="chip strong">v1.2</span>
+      <span class="chip">최종 갱신 2026-07-20</span>
       <span class="chip">Claude Code v2.1.x 기준</span>
       <span class="chip">Opus 4.8 · Sonnet 5 · Fable 5</span>
     </div>
@@ -213,7 +213,7 @@ footer{max-width:1060px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
     <tr><th>프로젝트 변수</th><th>어떻게 조정</th></tr>
     <tr><td><b>지배적 활동</b> (레거시 전환 / 신규 개발 / 리팩터 / 감사·리뷰 / 버그헌팅)</td><td>로스터 형태를 바꾼다. 전환·리팩터 = survey→triage→analyst→implement→review · 신규 개발 = spec→implement→review · 감사 = finder→verifier</td></tr>
     <tr><td><b>스택/빌드</b></td><td>에이전트 tools와 빌드·테스트·린트 명령을 그 스택에 맞춤 (<code>./gradlew test</code>·<code>npm test</code>·<code>pytest</code>)</td></tr>
-    <tr><td><b>규모</b></td><td>크면 슬라이스를 잘게·병렬로, 작으면 단일 흐름. <b>초대형 코드베이스의 survey/triage엔 <code>sonnet[1m]</code>·<code>opus[1m]</code>(1M 컨텍스트) 고려</b> — <code>opusplan[1m]</code>은 plan 단계에도 1M 적용</td></tr>
+    <tr><td><b>규모</b></td><td>크면 슬라이스를 잘게·병렬로, 작으면 단일 흐름. 초대형 코드베이스는 1M 컨텍스트 활용 — 단 <b>Anthropic API에선 Sonnet 5·Opus 4.8이 기본 1M</b>이라 suffix 불필요(구독 Max·Team·Enterprise도 Opus 자동 1M). <code>[1m]</code> suffix(<code>opus[1m]</code>·<code>opusplan[1m]</code>)는 게이트웨이·구형 모델·비자동 티어에서만 의미</td></tr>
     <tr><td><b>성격</b> (사내툴 / 외부 서비스 / 라이브러리)</td><td>검증의 NFR 가중치 조정 (외부 서비스=보안·성능↑, 라이브러리=API 호환·문서↑)</td></tr>
     <tr><td><b>난이도 高 정의</b></td><td>그 스택의 위험 요소로 채움. 예) 암호화·인증·동시성·상태머신·외부 연동 규약·거대·강결합 파일·성능 임계 경로 / 易 = CRUD·조회·정형 변환·보일러플레이트</td></tr>
   </table></div>
@@ -308,9 +308,9 @@ model: haiku
     <tr><td>리뷰</td><td><b><code>opus</code></b></td><td>의미 오역·NFR 검출</td></tr>
   </table></div>
 
-  <div class="callout warn"><b>opusplan 주의</b><code class="inline">opusplan</code>은 <b>메인 세션 모드 별칭</b>(Plan Mode=Opus → 실행=Sonnet)입니다. 서브에이전트 frontmatter엔 <code class="inline">opus</code>/<code class="inline">sonnet</code>을 직접 핀하세요. 어려운 구현은 서브에이전트 대신 메인 세션 <code class="inline">/model opusplan</code>으로. 단 <code class="inline">availableModels</code> 정책에서 Opus가 제외된 환경이면 opusplan은 plan 모드에서도 Sonnet에 머뭅니다.</div>
-  <div class="callout why"><b>opusplan vs /advisor</b>opusplan은 plan 경계에서 모델을 바꾸고, <code class="inline">/advisor</code>는 <b>실행 중 Sonnet이 막힐 때 Opus에 자문</b>(모델이 자문 시점을 스스로 판단)합니다. Anthropic 측정 기준 advisor 패턴이 비용 −11.9%·정확도 +2.7%. 계획이 명확한 정형 전환엔 opusplan, 실행 중 난관이 예상되는 탐색적 작업엔 advisor가 유리합니다.</div>
-  <div class="callout why"><b>비용 제2축 — effort</b>모델 선택과 별개로 <code class="inline">/effort</code>(low~xhigh)로 추론 강도를 조절할 수 있습니다. "라우팅으로 모델을, effort로 강도를" 2축 운용이 최종 형태입니다. 다만 <b>강도를 프로젝트 설정에 고정하지는 마세요</b>(<code class="inline">effortLevel</code> 비권장) — 세션 단위 단일값이라 작업별 최적이 안 되고, 서브에이전트 차등에도 쓸 수 없습니다(그건 에이전트 frontmatter 몫). <b>기본값 + 필요할 때 <code class="inline">/effort</code></b> 가 최적입니다. <b>⚠️ 세션이 계속 xhigh로 시작한다면</b> 모델 기본값이 아니라 프로젝트 <code class="inline">.claude/settings.json</code>의 <code class="inline">effortLevel</code> 때문일 가능성이 큽니다(Project &gt; User, 경고 없음) — 통합마스터 D-6 참조.</div>
+  <div class="callout warn"><b>opusplan 주의</b><code class="inline">opusplan</code>은 <b>메인 세션 모드 별칭</b>(Plan Mode=Opus → 실행=Sonnet)입니다. 서브에이전트 frontmatter의 <code class="inline">model:</code> 값으론 못 씁니다(<code class="inline">sonnet</code>/<code class="inline">opus</code>/<code class="inline">haiku</code>/<code class="inline">fable</code>/전체 ID/<code class="inline">inherit</code>만 유효, 기본값 inherit). 어려운 구현은 서브에이전트 대신 메인 세션 <code class="inline">/model opusplan</code>으로. <code class="inline">availableModels</code> 상호작용(v2.1.205+): Opus 최신이 제외돼도 <b>허용된 최신 Opus로 plan 실행</b>, 모든 Opus가 제외된 경우에만 Sonnet 유지.</div>
+  <div class="callout why"><b>opusplan vs /advisor</b>opusplan은 plan 경계에서 모델을 바꾸고, <code class="inline">/advisor</code>는 <b>실행 중 주모델이 막힐 때 상위 모델에 자문</b>(모델이 자문 시점을 스스로 판단, 전체 대화를 advisor가 읽음)합니다. 공식 측정(블로그 "The advisor strategy"): Sonnet+Opus advisor = SWE-bench Multilingual <b>+2.7%p·태스크당 비용 −11.9%</b>(Sonnet 단독 대비), BrowseComp에선 Haiku+Opus advisor 41.2%(단독 19.7%). 계획이 명확한 정형 전환엔 opusplan, 실행 중 난관이 예상되는 탐색적 작업엔 advisor가 유리합니다. <b>제약(2026-07 현행)</b>: 실험적·<b>Anthropic API 전용</b>(Bedrock/Vertex/Foundry 불가). 설정: <code class="inline">/advisor opus</code>·<code class="inline">advisorModel</code>·<code class="inline">--advisor</code>. advisor는 주모델과 같거나 더 유능해야 하며, Fable 5는 현재 advisor 역할로는 제공 안 됨.</div>
+  <div class="callout why"><b>비용 제2축 — effort</b>모델 선택과 별개로 <code class="inline">/effort</code>(low~max)로 추론 강도를 조절할 수 있습니다. "라우팅으로 모델을, effort로 강도를" 2축 운용이 최종 형태입니다. 에이전트별 차등은 <b>frontmatter <code class="inline">effort:</code> 키</b>(공식 확정)로 겁니다. 다만 <b>강도를 프로젝트 설정에 고정하지는 마세요</b>(<code class="inline">effortLevel</code> 비권장) — 세션 단위 단일값이라 작업별 최적이 안 되고, 서브에이전트 차등에도 쓸 수 없습니다(그건 에이전트 frontmatter <code class="inline">effort:</code> 몫). <b>기본값 + 필요할 때 <code class="inline">/effort</code></b> 가 최적입니다. <b>⚠️ 세션이 계속 xhigh로 시작한다면</b> 모델 기본값이 아니라 프로젝트 <code class="inline">.claude/settings.json</code>의 <code class="inline">effortLevel</code> 때문일 가능성이 큽니다(Project &gt; User, 경고 없음) — 통합마스터 D-6 참조.</div>
 </section>
 
 <section class="station" id="s6">
@@ -333,17 +333,21 @@ model: haiku
     <li><b>"almost right" 함정</b>: 어려운 걸 싼 모델로 밀면 재작업이 더 비쌀 수 있음 → rubric으로 걸러 高는 상위 모델.</li>
     <li><b>비기능요구(성능/보안/구조)는 자주 누락</b> → reviewer가 명시 점검.</li>
     <li><b>"N% 자동 보존" 류 벤더 수치 불신</b> → 정답 대조로 직접 검증.</li>
-    <li><b>내장 라우팅과 중복 주의</b>: Claude Code는 이미 탐색용 Explore 서브에이전트를 Haiku로 자동 실행. 단순 코드 탐색까지 커스텀 surveyor로 감싸면 과설계 — surveyor는 "문서 산출물이 필요한 survey"에만.</li>
+    <li><b>내장 라우팅과 중복 주의</b>: Claude Code는 탐색에 내장 Explore 서브에이전트를 자동 사용. <s>Haiku 고정</s>은 구정보 — 현행은 <b>메인 세션 모델 상속(Opus 상한)</b>. 싸게 고정하려면 <code class="inline">Explore</code> 이름의 커스텀 에이전트를 <code class="inline">model: haiku</code>로 정의(내장을 덮어씀). 단순 코드 탐색까지 커스텀 surveyor로 감싸면 과설계 — surveyor는 "문서 산출물이 필요한 survey"에만. (내장 Explore·Plan 끄기: <code class="inline">CLAUDE_CODE_DISABLE_EXPLORE_PLAN_AGENTS=1</code>, v2.1.198+)</li>
   </ul>
 </section>
 
 <section class="station" id="sb">
-  <div class="station-head"><div class="station-badge appendix">B</div><h2>모델 라인업 참고 (2026-07 기준)</h2></div>
+  <div class="station-head"><div class="station-badge appendix">B</div><h2>모델 라인업 참고 (2026-07-20 재검증)</h2></div>
   <p class="station-goal">별칭이 자동 추적하므로 §5 배정표는 그대로 유효</p>
   <ul>
-    <li><b>별칭</b>: <code class="inline">haiku</code> / <code class="inline">sonnet</code> / <code class="inline">opus</code> / <code class="inline">best</code>(가장 유능한 가용 모델). 실제 모델: Sonnet 5(Claude Code v2.1.197+), Opus 4.8(v2.1.154+).</li>
-    <li><b>Claude Fable 5</b>: 최상위 모델, 기본값 아님 → <code class="inline">/model fable</code>로 선택. 장시간 자율 세션·검증 강화형. 안전 분류기 발동 시(사이버보안·바이오 등) 자동 모델 폴백.</li>
-    <li><b>버전 핀</b>이 필요하면 전체 ID(<code class="inline">claude-opus-4-8</code>) 또는 <code class="inline">ANTHROPIC_DEFAULT_OPUS_MODEL</code> 등 환경변수.</li>
+    <li><b>별칭</b>: <code class="inline">haiku</code> / <code class="inline">sonnet</code> / <code class="inline">opus</code> / <code class="inline">fable</code> / <code class="inline">best</code> / <code class="inline">default</code>. <b><code class="inline">best</code> = 조직에 Fable 5 접근권 있으면 Fable 5, 없으면 최신 Opus</b>. <code class="inline">default</code>는 오버라이드를 지우고 계정 기본값 복귀(별칭 아님).</li>
+    <li><b>별칭 해석은 프로바이더별로 다름</b>: Anthropic API 기준 opus=Opus 4.8(v2.1.154+)·sonnet=Sonnet 5(v2.1.197+). Bedrock/Vertex/Foundry는 더 낮은 버전일 수 있음.</li>
+    <li><b>Claude Fable 5</b>(v2.1.170+): 최상위 모델, 기본값 아님 → <code class="inline">/model fable</code>로 선택. 장시간 자율 세션·자체 검증 강화형 — "단계가 아니라 결과를 기술"하는 프롬프트에 최적. 안전 분류기 발동 시(사이버보안·바이오 등) <b>Opus 4.8로 자동 폴백</b>(<code class="inline">/model fable</code>로 복귀).</li>
+    <li><b>컨텍스트</b>: Anthropic API에선 Fable 5·Sonnet 5·Opus 4.8·4.7이 <b>기본 1M</b>. 구독(Max·Team·Enterprise)은 Opus 자동 1M 업그레이드. <code class="inline">[1m]</code> suffix는 그 외 경로용.</li>
+    <li><b>기본 모델(계정별)</b>: Max·Team Premium·API = Opus 4.8 / Pro·Team Standard·Enterprise 구독 = Sonnet 5.</li>
+    <li><b>버전 핀</b>: 전체 ID(<code class="inline">claude-opus-4-8</code>) 또는 <code class="inline">ANTHROPIC_DEFAULT_OPUS_MODEL</code>/<code class="inline">…SONNET…</code>/<code class="inline">…HAIKU…</code>/<code class="inline">…FABLE_MODEL</code> 환경변수.</li>
+    <li><b>가용성 폴백</b>: <code class="inline">--fallback-model sonnet,haiku</code> 또는 <code class="inline">fallbackModel</code> 설정(과부하 시 체인 순서 대체, 최대 3개).</li>
   </ul>
 </section>
 
@@ -354,13 +358,14 @@ model: haiku
     <tr><th>버전</th><th>날짜</th><th>변경 내용</th></tr>
     <tr><td>v1.0</td><td>2026-07-03</td><td>범용 플레이북 초판 (WAVE 전용 플랜에서 일반화)</td></tr>
     <tr><td>v1.1</td><td>2026-07-03</td><td>공식 문서 재검증: /advisor 대안 추가, [1m] 1M 컨텍스트 옵션, /effort 비용 제2축, availableModels 예외, 내장 Explore 중복 주의, 모델 라인업 참고 신설</td></tr>
+    <tr><td>v1.2</td><td>2026-07-20</td><td>공식 문서 재검증: 내장 <b>Explore=메인 모델 상속</b>(Haiku 고정 아님) 정정, opusplan×availableModels 동작 변경(v2.1.205+), advisor 수치 출처 확정(공식 블로그·SWE-bench Multilingual)·Anthropic API 전용 명시, <b>Sonnet 5는 API에서 기본 1M</b> 반영, 에이전트 frontmatter <code class="inline">effort:</code> 키 확정, 모델 라인업 갱신</td></tr>
   </table></div>
 </section>
 
 </main>
 </div>
 
-<footer>Guide 01 — 모델 자동 분담 범용 플레이북 v1.1 · 2026-07-03 · 원본: 01_모델분담-범용-플레이북.md (v1.1)</footer>
+<footer>Guide 01 — 모델 자동 분담 범용 플레이북 v1.2 · 2026-07-20 · 원본: 01_모델분담-범용-플레이북.md (v1.2)</footer>
 
 <script>
 function copyCode(btn){

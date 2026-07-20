@@ -1,11 +1,12 @@
 # 서브에이전트 모델 자동 분담 — 최고 플랜 (WAVE PHP→Java)
 
-> **문서 버전: v1.1** · 최종 갱신: **2026-07-03** · 기준: Claude Code v2.1.x (Opus 4.8 · Sonnet 5 · Haiku)
+> **문서 버전: v1.2** · 최종 갱신: **2026-07-20** · 기준: Claude Code v2.1.x (Opus 4.8 · Sonnet 5 · Haiku)
 >
 > | 버전 | 날짜 | 변경 내용 |
 > | --- | --- | --- |
 > | v1.0 | 2026-07-03 | 초판: 사용자 5단계 초안에 triage=Opus 승격 + 검증 스테이지(reviewer/parity) 보강 |
 > | v1.1 | 2026-07-03 | 공식 문서 재검증: 高구현에 `/advisor` 대안 병기, `opus[1m]`(camp_edit.php 등 초대형 파일), `/effort` 단계별 배정, availableModels 예외, surveyor↔내장 Explore 역할 구분 |
+> | v1.2 | 2026-07-20 | 공식 문서 재검증: 에이전트 frontmatter **`effort:` 키 확정**, 내장 Explore=메인 모델 상속(Haiku 고정 아님) 정정, opusplan×availableModels 동작 변경(v2.1.205+), **API에선 Opus 4.8 기본 1M**(`[1m]` 불필요) 반영, advisor 제약(Anthropic API 전용)·수치 출처 확정 |
 >
 > ※ 갱신 시: 이 표에 한 줄 추가 + 범용 플레이북(01)과 버전 정합성 확인.
 
@@ -61,8 +62,8 @@
 ## 4. 에이전트 정의 (복붙 — `.claude/agents/`)
 
 > 배치: **신규 Java repo 생성 후 그 repo `.claude/agents/`**(팀 공유) 권장. 지금 실험은 사용자 스코프 `~/.claude/agents/` 가능.
-> 모델 값: 별칭 `opus`·`sonnet`·`haiku` 또는 전체 ID(`claude-opus-4-8`). 별칭은 최신 모델을 자동 추적(2026-07 기준 sonnet=Sonnet 5(v2.1.197+), opus=Opus 4.8(v2.1.154+)).
-> 중복 주의: Claude Code는 단순 코드 탐색에 이미 내장 Explore 서브에이전트(Haiku)를 자동 사용한다. `surveyor`는 **docs/survey/*.md 산출물이 필요한 조사**에만 쓰고, 일회성 "이 함수 어딨지" 탐색은 내장에 맡긴다.
+> 모델 값: 별칭 `opus`·`sonnet`·`haiku`·`fable`, 전체 ID(`claude-opus-4-8`), 또는 `inherit`(생략 시 기본). 별칭은 최신 모델을 자동 추적(2026-07 기준 sonnet=Sonnet 5(v2.1.197+), opus=Opus 4.8(v2.1.154+)).
+> 중복 주의: Claude Code는 단순 코드 탐색에 이미 내장 Explore 서브에이전트를 자동 사용한다(현행: **메인 모델 상속·Opus 상한** — Haiku 고정은 구정보). `surveyor`는 **docs/survey/*.md 산출물이 필요한 조사**에만 쓰고, 일회성 "이 함수 어딨지" 탐색은 내장에 맡긴다. 탐색 비용을 고정하려면 `Explore` 이름의 커스텀 에이전트를 `model: haiku`로 정의(내장을 덮어씀).
 
 **surveyor.md**
 ```markdown
@@ -168,10 +169,10 @@ model: haiku
 6. parity-tester 로 레거시 대조 → 통과 시 다음 슬라이스
 ```
 
-> **opusplan 주의**: `opusplan`은 **메인 세션 모드 별칭**(Plan Mode=Opus, 실행=Sonnet)이다. 서브에이전트 frontmatter엔 `opus`/`sonnet`을 직접 핀한다. 高난이도 구현은 서브에이전트 대신 **메인 세션 `/model opusplan`**으로 진행하면 계획-구현 분담이 자연스럽다. (단 `availableModels` 정책으로 Opus가 제외된 환경이면 opusplan은 plan 모드에서도 Sonnet에 머문다.)
-> **대안 — `/advisor`**: opusplan이 plan 경계에서만 Opus를 쓰는 것과 달리, advisor는 **실행 중 Sonnet이 막힐 때 Opus에 온디맨드 자문**한다(Anthropic 측정: 비용 −11.9%·정확도 +2.7%). WAVE 기준: spec이 탄탄한 정형 전환(마스터데이터·CRUD)은 opusplan, 실행 중 난관이 예상되는 高모듈(camp 상태머신·`camp_edit.php` 해체)은 advisor가 유리할 수 있다.
-> **초대형 파일 대응**: `camp_edit.php`(3,000줄+) 같은 강결합 파일 분석엔 `opus[1m]`(1M 컨텍스트), 전체 survey엔 `sonnet[1m]` 고려. `opusplan[1m]`은 plan 단계에도 1M 적용.
-> **비용 제2축 — effort**: 이 플랜의 에이전트 7종은 **`model:` 핀(opus/sonnet/haiku)** 으로 이미 강도를 나눠 갖는다. effort는 그 위에 얹는 2차 조정이며, **현재는 기본값으로 충분**하다. 강도 차등이 정말 필요해지면(예: triage·reviewer만 더 깊게, parity-tester는 얕게) **에이전트 frontmatter**에 지정한다 — `model:`과 같은 자리.
+> **opusplan 주의**: `opusplan`은 **메인 세션 모드 별칭**(Plan Mode=Opus, 실행=Sonnet)이다. 서브에이전트 frontmatter의 `model:` 값으론 못 쓴다. 高난이도 구현은 서브에이전트 대신 **메인 세션 `/model opusplan`**으로 진행하면 계획-구현 분담이 자연스럽다. `availableModels` 상호작용(v2.1.205+): Opus 최신이 제외돼도 **허용된 최신 Opus로 plan 실행**, 모든 Opus가 제외된 경우에만 Sonnet 유지.
+> **대안 — `/advisor`**: opusplan이 plan 경계에서만 Opus를 쓰는 것과 달리, advisor는 **실행 중 Sonnet이 막힐 때 Opus에 온디맨드 자문**한다(공식 블로그 측정: Sonnet+Opus advisor = SWE-bench Multilingual **+2.7%p·비용 −11.9%**). 실험적 기능·**Anthropic API 전용**(Bedrock/Vertex/Foundry 불가), 설정은 `/advisor opus`·`advisorModel`·`--advisor`. WAVE 기준: spec이 탄탄한 정형 전환(마스터데이터·CRUD)은 opusplan, 실행 중 난관이 예상되는 高모듈(camp 상태머신·`camp_edit.php` 해체)은 advisor가 유리할 수 있다.
+> **초대형 파일 대응**: **Anthropic API에선 Opus 4.8·Sonnet 5가 기본 1M 컨텍스트**라 `camp_edit.php`(3,000줄+) 분석에 별도 suffix가 필요 없다(구독 Max·Team·Enterprise도 Opus 자동 1M). `opus[1m]`·`opusplan[1m]` suffix는 게이트웨이·비자동 티어에서만 의미.
+> **비용 제2축 — effort**: 이 플랜의 에이전트 7종은 **`model:` 핀(opus/sonnet/haiku)** 으로 이미 강도를 나눠 갖는다. effort는 그 위에 얹는 2차 조정이며, **현재는 기본값(high)으로 충분**하다. 강도 차등이 정말 필요해지면(예: triage·reviewer만 더 깊게, parity-tester는 얕게) **에이전트 frontmatter의 `effort:` 키**(공식 확정, 2026-07-20)에 지정한다 — `model:`과 같은 자리. 예: reviewer에 `effort: xhigh`, parity-tester에 `effort: low`.
 > ❌ **프로젝트 `.claude/settings.json`의 `effortLevel`로는 안 된다.** 그건 세션 전체에 하나만 적용되는 값이라 에이전트별로 갈라지지 않는다. 올려봐야 서브에이전트엔 영향 없이 메인 세션만 무거워진다.
 > ⚠️ 실제로 wave-project에 `"effortLevel": "xhigh"`가 이 오해로 박혀 있었고(2026-07-20 발견), 서브에이전트엔 무효인 채 메인 세션만 매번 xhigh로 시작시키고 있었다. 제거함. 세션이 계속 xhigh로 시작하면 모델 기본값이 아니라 이 키를 의심할 것(Project > User, 경고 없음).
 > **핸드오프 철칙**: 다음 단계는 항상 앞 단계가 남긴 **파일(@경로)** 을 읽는다. "분석하고 고쳐줘" 식 요약 전달은 컨텍스트 손실의 주원인.
@@ -202,10 +203,10 @@ model: haiku
 
 ## 근거 (출처)
 - **레거시 현대화 실전**: Google [arxiv 2504.09691] 74% 자동화, ServiceTitan/InfoQ(validator>model), Aviator(Java→TS 타입/널 갭), VirtusLab(C++→Rust 일회성 실패·decompose 패턴), Abto.
-- **멀티모델 라우팅**: Claude Code Model config(`opusplan`·`/advisor`·`[1m]`·effort — code.claude.com/docs/en/model-config), RouteLLM(~95% 품질/15~25% 강모델), "plan을 파일로"(Addy Osmani spec, Tweag), context 손실 폴백(claude-code issue #3434).
+- **멀티모델 라우팅**: Claude Code Model config(`opusplan`·`[1m]`·effort — code.claude.com/docs/en/model-config), Advisor(code.claude.com/docs/en/advisor + claude.com/blog/the-advisor-strategy — SWE-bench Multilingual +2.7%p/−11.9% 실측), RouteLLM(~95% 품질/15~25% 강모델), "plan을 파일로"(Addy Osmani spec, Tweag), context 손실 폴백(claude-code issue #3434).
 - **Claude Code 서브에이전트**: code.claude.com/docs/en/sub-agents (모델 핀·격리 컨텍스트·`@agent-`·description "use proactively"·파일 핸드오프).
 - **마이그레이션 방법론**: Strangler Fig(Fowler/MS/AWS/Thoughtworks), 바운디드 컨텍스트 슬라이스, shadow traffic·data parity(Datafold), 세션→Spring Security.
 
 ---
 
-**문서 정보** — WAVE 전용 플랜 **v1.1** · 최종 갱신: 2026-07-03 (변경 이력은 문서 최상단 버전 표 참조). 참조: Claude Code v2.1.x, Opus 4.8 · Sonnet 5 · Haiku.
+**문서 정보** — WAVE 전용 플랜 **v1.2** · 최종 갱신: 2026-07-20 (변경 이력은 문서 최상단 버전 표 참조). 참조: Claude Code v2.1.x, Opus 4.8 · Sonnet 5 · Haiku.
