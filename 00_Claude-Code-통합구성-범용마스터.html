@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Guide 00 — Claude Code 통합 구성 (범용 마스터) v1.3</title>
+<title>Guide 00 — Claude Code 통합 구성 (범용 마스터) v1.4</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;700&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
 <style>
@@ -119,7 +119,7 @@ footer{max-width:1060px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
     <h1>Claude Code 통합 구성<br><b>환경 셋업 &amp; 세션 기록 시스템</b></h1>
     <p class="sub">글로벌 규칙 → 프로젝트 셋업 → /resume·/wrap 루틴까지. 1인 단일 repo부터 팀 멀티레포까지 환경에 맞게 복사·붙여넣기로 완성합니다.</p>
     <div class="meta">
-      <span class="chip strong">v1.3</span>
+      <span class="chip strong">v1.4</span>
       <span class="chip">최종 갱신 2026-07-20</span>
       <span class="chip">Claude Code v2.1.x 기준</span>
       <span class="chip">터미널: PowerShell (Windows)</span>
@@ -294,7 +294,7 @@ New-Item -ItemType Directory -Path .claude/skills/wrap -Force</pre>
 <section class="station" id="s4">
   <div class="station-head"><div class="station-badge">4</div><h2>프로젝트 셋업 — 환경별</h2></div>
   <p class="station-goal">공통: 각 repo에 CLAUDE.md(본체) + docs/ + F-1 규칙블록 + F-3 settings + F-5 gitignore</p>
-  <div class="callout why"><b>CLAUDE.md 작성 원칙</b>프로젝트 사실(스택·DB·아키텍처·제약)만. 행동 규칙(글로벌과 중복) 금지, 30~200줄.</div>
+  <div class="callout why"><b>CLAUDE.md 작성 원칙</b>프로젝트 사실(스택·DB·아키텍처·제약)만. 행동 규칙(글로벌과 중복) 금지, 30~200줄. <b>없으면 <code class="inline">/init</code>으로 초안 생성 후 다듬기</b>(코드베이스 분석해 빌드·테스트 명령을 채워줌).</div>
 
   <h3>E-1 🅱️ 단일 repo — 신입 기본 코스</h3>
   <ol>
@@ -361,6 +361,7 @@ New-Item -ItemType Directory -Path .claude/skills/wrap -Force</pre>
 - 다른 repo는 접근 가능(cwd 또는 additionalDirectories)하면 자동 교차기록, 불가하면 "○○에 기록 필요" 알림.
 
 ### 세션 워크플로 규율
+- 작업 요청엔 성공 기준·검증 명령(테스트/빌드/재현 스크립트)을 함께 받는다. 구현 후 그 검증을 실행해 증거(출력)로 보고 — "됐다"는 말로 끝내지 않는다.
 - append-only(과거 수정·삭제 금지). 결정이 바뀌면 새 DEC + 기존에 "Superseded by DEC-…" 표시. 상호참조는 [[DEC-…]]·날짜.
 - /resume: 먼저 git status·브랜치로 미커밋(진행 중) 작업 발견 → 그다음 PROGRESS 최상단 + PROJECT_PLAN 현재 Phase + 최근 DEC 3건.
 - /wrap: PROGRESS append + 새 DEC + PROJECT_PLAN 체크박스 갱신 + 미커밋이면 경고(커밋 전엔 다음 /resume가 git status로만 발견).
@@ -369,7 +370,7 @@ New-Item -ItemType Directory -Path .claude/skills/wrap -Force</pre>
 - PROGRESS가 약 800줄/분기 경계를 넘으면 가장 오래된 분기를 docs/archive/로 옮기고 활성 파일 맨 아래 포인터 한 줄.
 
 ### 공유 vs 개인 / 시크릿
-- 공유(커밋): CLAUDE.md·.claude/skills·.claude/settings.json·.gitattributes·docs/.
+- 공유(커밋): CLAUDE.md·.claude/skills·.claude/settings.json·.gitattributes·docs/·.mcp.json(팀 MCP 서버 — 각자 첫 실행 때 승인).
 - 개인(커밋 금지): .claude/settings.local.json·CLAUDE.local.md. 개인 노트는 auto-memory(~/.claude/projects/&lt;proj&gt;/memory, 머신 로컬·200줄/25KB).
 - 시크릿(.env·키·비밀번호)은 읽지도 커밋하지도 않는다.
 
@@ -539,11 +540,12 @@ CLAUDE.local.md</pre>
     프로젝트(또는 상위 폴더)에서 <b>claude</b> 실행<br>
     → <b>git pull</b> &nbsp;<span style="color:var(--ink-soft)"># 동료 기록 동기화</span><br>
     → <b>/resume</b> &nbsp;<span style="color:var(--ink-soft)"># git status로 미커밋 먼저 → 대상 판별 → 지난 기록</span><br>
-    → <b>@경로/파일</b> 작업 &nbsp;<span style="color:var(--ink-soft)"># 작게 쪼개기</span><br>
+    → <b>@경로/파일</b> 작업 &nbsp;<span style="color:var(--ink-soft)"># 작게 쪼개기 · 여러 파일이면 plan mode(Shift+Tab) · 무관한 작업 전 /clear</span><br>
     → <b>/wrap</b> &nbsp;<span style="color:var(--ink-soft)"># 대상 docs에 [상태] 기록 + 미커밋 경고</span><br>
     → repo별 <b>git 커밋·푸시</b> &nbsp;<span style="color:var(--ink-soft)"># 독립 git이면 각각. 미커밋 두지 말 것</span>
   </div>
   <div class="callout danger"><b>기록만 하고 커밋 안 하면 다음 세션이 못 찾는다</b>미커밋은 git status로만 발견됩니다. 반드시 커밋하세요.</div>
+  <div class="callout why"><b>교정 2회 룰</b>같은 문제로 교정을 두 번 넘게 했다면 컨텍스트가 실패한 시도로 오염된 상태 — 계속 고치지 말고 <code class="inline">/clear</code> 후 배운 것을 반영한 새 프롬프트로 시작하세요(상세: 02 진단·확장활용 가이드).</div>
   <details><summary>적응 규칙 — 프로젝트마다 다른 것 (Claude가 채우는 변수)</summary><div class="d-body">
     <div class="tbl-scroll"><table>
       <tr><th>변수</th><th>조정</th></tr>
@@ -603,6 +605,7 @@ CLAUDE.local.md</pre>
     <tr><td>v1.1</td><td>2026-07-03</td><td>공식 문서 재검증: deny 파일명령 감지(v2.0.22+), includeCoAuthoredBy→attribution 교체, PowerShell deny 패턴 추가, Windows sandbox 미지원 명시, deny→ask→allow 우선순위 명시</td></tr>
     <tr><td>v1.2</td><td>2026-07-08</td><td>추론 강도 제어 <code class="inline">/effort</code> D-6 추가 (xhigh=high보다 깊고 max 바로 아래; Fable 5·Opus 4.7+·Sonnet 5; settings.json <code class="inline">effortLevel</code> 키·User/Project/Local 스코프). 재검증 체크리스트 반영</td></tr>
     <tr><td>v1.3</td><td>2026-07-20</td><td>공식 문서 전면 재검증: 샌드박스 <b>Linux·WSL2 지원</b> 반영(네이티브 Windows만 미지원), Read deny의 Edit 차단(v2.1.208+), PowerShell 규칙 별칭 자동 정규화, 에이전트·스킬 frontmatter <code class="inline">effort:</code> 키 확정(D-6 🟡 해소), /effort auto·ultracode·ultrathink, sandbox.credentials, .claude/rules/ 소개</td></tr>
+    <tr><td>v1.4</td><td>2026-07-20</td><td>경량 보완(02 가이드 연동): 규칙 블록에 <b>검증 기준 규칙</b>(성공 기준·검증 명령 동봉), <code class="inline">/init</code>, 공유 목록에 <code class="inline">.mcp.json</code>, 매일 루틴에 <b>plan mode·/clear</b> 습관</td></tr>
   </table></div>
   <h3>재검증 체크리스트</h3>
   <ul class="checklist">
@@ -619,7 +622,7 @@ CLAUDE.local.md</pre>
 </main>
 </div>
 
-<footer>Guide 00 — Claude Code 통합 구성 v1.3 · 2026-07-20 · 원본: 00_Claude-Code-통합구성-범용마스터.md (v1.3)</footer>
+<footer>Guide 00 — Claude Code 통합 구성 v1.4 · 2026-07-20 · 원본: 00_Claude-Code-통합구성-범용마스터.md (v1.4)</footer>
 
 <script>
 function copyCode(btn){

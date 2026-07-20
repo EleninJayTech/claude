@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Guide 01 — 모델 자동 분담 범용 플레이북 v1.2</title>
+<title>Guide 01 — 모델 자동 분담 범용 플레이북 v1.3</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;700&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
 <style>
@@ -119,7 +119,7 @@ footer{max-width:1060px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
     <h1>모델 자동 분담<br><b>범용 적용 플레이북</b></h1>
     <p class="sub">어려운 추론(분석·설계)은 상위 모델(Opus), 잘 정의된 실행은 하위 모델(Sonnet/Haiku)로 자동 분담합니다. 어떤 프로젝트든 이 파일 하나로 "학습 → 질문 → 맞춤 구성 → 승인 → 착수"가 이루어집니다.</p>
     <div class="meta">
-      <span class="chip strong">v1.2</span>
+      <span class="chip strong">v1.3</span>
       <span class="chip">최종 갱신 2026-07-20</span>
       <span class="chip">Claude Code v2.1.x 기준</span>
       <span class="chip">Opus 4.8 · Sonnet 5 · Fable 5</span>
@@ -213,7 +213,7 @@ footer{max-width:1060px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
     <tr><th>프로젝트 변수</th><th>어떻게 조정</th></tr>
     <tr><td><b>지배적 활동</b> (레거시 전환 / 신규 개발 / 리팩터 / 감사·리뷰 / 버그헌팅)</td><td>로스터 형태를 바꾼다. 전환·리팩터 = survey→triage→analyst→implement→review · 신규 개발 = spec→implement→review · 감사 = finder→verifier</td></tr>
     <tr><td><b>스택/빌드</b></td><td>에이전트 tools와 빌드·테스트·린트 명령을 그 스택에 맞춤 (<code>./gradlew test</code>·<code>npm test</code>·<code>pytest</code>)</td></tr>
-    <tr><td><b>규모</b></td><td>크면 슬라이스를 잘게·병렬로, 작으면 단일 흐름. 초대형 코드베이스는 1M 컨텍스트 활용 — 단 <b>Anthropic API에선 Sonnet 5·Opus 4.8이 기본 1M</b>이라 suffix 불필요(구독 Max·Team·Enterprise도 Opus 자동 1M). <code>[1m]</code> suffix(<code>opus[1m]</code>·<code>opusplan[1m]</code>)는 게이트웨이·구형 모델·비자동 티어에서만 의미</td></tr>
+    <tr><td><b>규모</b></td><td>크면 슬라이스를 잘게·병렬로, 작으면 단일 흐름. <b>병렬 도구</b>: 파일을 고치는 에이전트 병렬은 frontmatter <code>isolation: worktree</code>(각자 격리 checkout — 충돌 원천 차단), 사람 주도 세션 병렬은 <code>claude --worktree &lt;이름&gt;</code>. 초대형 코드베이스는 1M 컨텍스트 활용 — 단 <b>Anthropic API에선 Sonnet 5·Opus 4.8이 기본 1M</b>이라 suffix 불필요(구독 Max·Team·Enterprise도 Opus 자동 1M). <code>[1m]</code> suffix(<code>opus[1m]</code>·<code>opusplan[1m]</code>)는 게이트웨이·구형 모델·비자동 티어에서만 의미</td></tr>
     <tr><td><b>성격</b> (사내툴 / 외부 서비스 / 라이브러리)</td><td>검증의 NFR 가중치 조정 (외부 서비스=보안·성능↑, 라이브러리=API 호환·문서↑)</td></tr>
     <tr><td><b>난이도 高 정의</b></td><td>그 스택의 위험 요소로 채움. 예) 암호화·인증·동시성·상태머신·외부 연동 규약·거대·강결합 파일·성능 임계 경로 / 易 = CRUD·조회·정형 변환·보일러플레이트</td></tr>
   </table></div>
@@ -232,6 +232,7 @@ footer{max-width:1060px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
 <section class="station" id="s4">
   <div class="station-head"><div class="station-badge">4</div><h2>에이전트 로스터 템플릿 — Claude가 &lt;…&gt;를 채운다</h2></div>
   <p class="station-goal">배치: 팀 공유면 &lt;repo&gt;/.claude/agents/, 개인 실험이면 ~/.claude/agents/</p>
+  <div class="callout why"><b>frontmatter 옵션 2개</b>① 강도 차등: <code class="inline">effort:</code>(low~max) — 세션 effort를 그 에이전트 실행 중에만 오버라이드(공식 확정 키). ② 병렬 안전: 파일을 고치는 에이전트(implementer 등)를 병렬로 돌릴 땐 <code class="inline">isolation: worktree</code> — 각자 격리된 checkout에서 작업해 파일 충돌 원천 차단(변경 없으면 자동 정리).</div>
   <p>아래는 "전환/리팩터형" 기본 로스터입니다. 신규개발형이면 survey/triage를 빼고 spec-writer부터 시작합니다. 모델 값은 별칭(opus·sonnet·haiku) 또는 전체 ID.</p>
 
   <div class="codeblock">
@@ -282,7 +283,8 @@ description: 변환/구현 코드 diff 검증. 타입·널·관용구·상태·N
 tools: Read, Grep, Glob, Bash
 model: opus
 ---
-spec과 diff를 대조해 의미 오역을 잡는다. 코드는 고치지 않고 무엇이/왜/어떻게 지적만.</pre>
+spec과 diff를 대조해 의미 오역을 잡는다. 코드는 고치지 않고 무엇이/왜/어떻게 지적만.
+정확성·요구사항에 영향 주는 것만 지적하고 스타일 취향은 제외한다(빈틈을 찾으라면 멀쩡한 코드에서도 찾아내므로 — 과설계 방지).</pre>
   </div>
   <div class="codeblock">
     <div class="codebar"><span class="path">.claude/agents/parity-tester.md</span><button class="copybtn" onclick="copyCode(this)">복사</button></div>
@@ -311,6 +313,7 @@ model: haiku
   <div class="callout warn"><b>opusplan 주의</b><code class="inline">opusplan</code>은 <b>메인 세션 모드 별칭</b>(Plan Mode=Opus → 실행=Sonnet)입니다. 서브에이전트 frontmatter의 <code class="inline">model:</code> 값으론 못 씁니다(<code class="inline">sonnet</code>/<code class="inline">opus</code>/<code class="inline">haiku</code>/<code class="inline">fable</code>/전체 ID/<code class="inline">inherit</code>만 유효, 기본값 inherit). 어려운 구현은 서브에이전트 대신 메인 세션 <code class="inline">/model opusplan</code>으로. <code class="inline">availableModels</code> 상호작용(v2.1.205+): Opus 최신이 제외돼도 <b>허용된 최신 Opus로 plan 실행</b>, 모든 Opus가 제외된 경우에만 Sonnet 유지.</div>
   <div class="callout why"><b>opusplan vs /advisor</b>opusplan은 plan 경계에서 모델을 바꾸고, <code class="inline">/advisor</code>는 <b>실행 중 주모델이 막힐 때 상위 모델에 자문</b>(모델이 자문 시점을 스스로 판단, 전체 대화를 advisor가 읽음)합니다. 공식 측정(블로그 "The advisor strategy"): Sonnet+Opus advisor = SWE-bench Multilingual <b>+2.7%p·태스크당 비용 −11.9%</b>(Sonnet 단독 대비), BrowseComp에선 Haiku+Opus advisor 41.2%(단독 19.7%). 계획이 명확한 정형 전환엔 opusplan, 실행 중 난관이 예상되는 탐색적 작업엔 advisor가 유리합니다. <b>제약(2026-07 현행)</b>: 실험적·<b>Anthropic API 전용</b>(Bedrock/Vertex/Foundry 불가). 설정: <code class="inline">/advisor opus</code>·<code class="inline">advisorModel</code>·<code class="inline">--advisor</code>. advisor는 주모델과 같거나 더 유능해야 하며, Fable 5는 현재 advisor 역할로는 제공 안 됨.</div>
   <div class="callout why"><b>비용 제2축 — effort</b>모델 선택과 별개로 <code class="inline">/effort</code>(low~max)로 추론 강도를 조절할 수 있습니다. "라우팅으로 모델을, effort로 강도를" 2축 운용이 최종 형태입니다. 에이전트별 차등은 <b>frontmatter <code class="inline">effort:</code> 키</b>(공식 확정)로 겁니다. 다만 <b>강도를 프로젝트 설정에 고정하지는 마세요</b>(<code class="inline">effortLevel</code> 비권장) — 세션 단위 단일값이라 작업별 최적이 안 되고, 서브에이전트 차등에도 쓸 수 없습니다(그건 에이전트 frontmatter <code class="inline">effort:</code> 몫). <b>기본값 + 필요할 때 <code class="inline">/effort</code></b> 가 최적입니다. <b>⚠️ 세션이 계속 xhigh로 시작한다면</b> 모델 기본값이 아니라 프로젝트 <code class="inline">.claude/settings.json</code>의 <code class="inline">effortLevel</code> 때문일 가능성이 큽니다(Project &gt; User, 경고 없음) — 통합마스터 D-6 참조.</div>
+  <div class="callout why"><b>대량 정형 전환의 대안 — claude -p 팬아웃</b>파일 수백 개짜리 마이그레이션은 세션 안 서브에이전트보다 <b>헤드리스 루프</b>가 더 통제 가능합니다(파일당 독립 컨텍스트 + <code class="inline">--allowedTools</code>로 권한 좁게). 순서: 대상 파일 목록 생성 → 2~3개로 프롬프트 튜닝 → 전체 루프 실행. 상세는 02 진단·확장활용 가이드 §8.</div>
 </section>
 
 <section class="station" id="s6">
@@ -359,13 +362,14 @@ model: haiku
     <tr><td>v1.0</td><td>2026-07-03</td><td>범용 플레이북 초판 (WAVE 전용 플랜에서 일반화)</td></tr>
     <tr><td>v1.1</td><td>2026-07-03</td><td>공식 문서 재검증: /advisor 대안 추가, [1m] 1M 컨텍스트 옵션, /effort 비용 제2축, availableModels 예외, 내장 Explore 중복 주의, 모델 라인업 참고 신설</td></tr>
     <tr><td>v1.2</td><td>2026-07-20</td><td>공식 문서 재검증: 내장 <b>Explore=메인 모델 상속</b>(Haiku 고정 아님) 정정, opusplan×availableModels 동작 변경(v2.1.205+), advisor 수치 출처 확정(공식 블로그·SWE-bench Multilingual)·Anthropic API 전용 명시, <b>Sonnet 5는 API에서 기본 1M</b> 반영, 에이전트 frontmatter <code class="inline">effort:</code> 키 확정, 모델 라인업 갱신</td></tr>
+    <tr><td>v1.3</td><td>2026-07-20</td><td>경량 보완(02 가이드 연동): 병렬 실행 — <code class="inline">isolation: worktree</code>(에이전트 격리)·<code class="inline">claude --worktree</code>(세션 병렬), 대량 정형 전환의 <code class="inline">claude -p</code> 팬아웃 대안, reviewer <b>지적 범위 제한</b>(정확성·요구사항만)</td></tr>
   </table></div>
 </section>
 
 </main>
 </div>
 
-<footer>Guide 01 — 모델 자동 분담 범용 플레이북 v1.2 · 2026-07-20 · 원본: 01_모델분담-범용-플레이북.md (v1.2)</footer>
+<footer>Guide 01 — 모델 자동 분담 범용 플레이북 v1.3 · 2026-07-20 · 원본: 01_모델분담-범용-플레이북.md (v1.3)</footer>
 
 <script>
 function copyCode(btn){

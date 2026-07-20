@@ -1,6 +1,6 @@
 # Claude Code 통합 구성 — 범용 마스터 (드롭인 적용)
 
-> **문서 버전: v1.3** · 최종 갱신: **2026-07-20** · 기준: Claude Code v2.1.x (Opus 4.8 · Sonnet 5 · Fable 5)
+> **문서 버전: v1.4** · 최종 갱신: **2026-07-20** · 기준: Claude Code v2.1.x (Opus 4.8 · Sonnet 5 · Fable 5)
 >
 > | 버전 | 날짜 | 변경 내용 |
 > | --- | --- | --- |
@@ -8,6 +8,7 @@
 > | v1.1 | 2026-07-03 | 공식 문서 재검증: deny 파일명령 감지(v2.0.22+) 반영, `includeCoAuthoredBy`→`attribution` 교체, PowerShell deny 패턴(`type`/`Get-Content`/`gc`) 추가, Windows sandbox 미지원 명시, deny→ask→allow 우선순위 명시 |
 > | v1.2 | 2026-07-08 | 추론 강도 제어 `/effort` §D-6 추가 (xhigh=high보다 깊고 max 바로 아래; Fable 5·Opus 4.7+·Sonnet 5; 값은 새 세션 기본값으로 저장). §L 재검증 항목 반영 |
 > | v1.3 | 2026-07-20 | 공식 문서 전면 재검증: 샌드박스 **Linux·WSL2 지원** 반영(네이티브 Windows만 미지원, §J), Read deny의 Edit 차단(v2.1.208+), PowerShell 규칙 **별칭 자동 정규화**, 에이전트·스킬 frontmatter **`effort:` 키 확정**(§D-6 🟡 해소), `/effort auto`·`ultracode`·`ultrathink` 추가, `sandbox.credentials`, `.claude/rules/` 소개, 스킬=커맨드 통합 반영 |
+> | v1.4 | 2026-07-20 | 경량 보완(02 가이드 연동): §F-1에 **검증 기준 규칙**(성공 기준·검증 명령 동봉), §E에 `/init`, 공유 목록에 `.mcp.json`, §G 루틴에 **plan mode·`/clear`** 습관. 상세 기법은 02 진단·확장활용 가이드 참조 |
 >
 > ※ 갱신 시: 이 표에 한 줄 추가 + 하단 "문서 정보" 날짜 수정 + §L 재검증 체크리스트 수행.
 
@@ -23,6 +24,7 @@
 - **무엇**: Claude Code를 (1인 단일 repo ~ 다중 repo 통합 ~ 여러 팀원 MSA)까지 **환경에 맞게** 세팅하고, 세션 기록(PROGRESS/DECISIONS/PROJECT_PLAN)을 자동 관리하게 한다.
 - **왜**: 프로젝트마다 repo 수·팀 규모·동시성이 다르므로 고정 템플릿이 아니라 **판별 + 필요한 부분만** 적용한다.
 - **결과**: 글로벌 셋업(PC당 1회) + 프로젝트 셋업(환경별) + `/resume`·`/wrap` 루틴이 동작.
+- **참고**: 세션 안 운영 기법(검증 루프·plan mode·컨텍스트 관리·worktree 병렬·헤드리스·MCP)은 **02 진단·확장활용 가이드**가 담당한다 — 이 문서는 얇게 유지.
 
 ---
 
@@ -151,7 +153,7 @@ New-Item -ItemType Directory -Path .claude/skills/wrap -Force
 ## E. 프로젝트 셋업 (환경별)
 
 > 공통: 각 repo `CLAUDE.md`(프로젝트 사실 = **본체**) + `docs/` + §F-1 규칙블록 + §F-3 프로젝트 settings + §F-5 `.gitignore`.
-> `CLAUDE.md` 사실은 스택·DB·아키텍처·제약. 행동 규칙(글로벌)과 중복 금지, 30~200줄.
+> `CLAUDE.md` 사실은 스택·DB·아키텍처·제약. 행동 규칙(글로벌)과 중복 금지, 30~200줄. **없으면 `/init`으로 초안 생성 후 다듬기**(코드베이스 분석해 빌드·테스트 명령을 채워줌).
 
 ### E-1. 🅱️ 단일 repo (B)
 - `docs/` **flat**: `PROJECT_PLAN.md` · `PROGRESS.md` · `DECISIONS.md` (§F-6 양식).
@@ -208,6 +210,7 @@ New-Item -ItemType Directory -Path .claude/skills/wrap -Force
 - 다른 repo는 접근 가능(cwd 또는 additionalDirectories)하면 자동 교차기록, 불가하면 "○○에 기록 필요" 알림.
 
 ### 세션 워크플로 규율
+- 작업 요청엔 **성공 기준·검증 명령**(테스트/빌드/재현 스크립트)을 함께 받는다. 구현 후 그 검증을 실행해 **증거(출력)로 보고** — "됐다"는 말로 끝내지 않는다.
 - append-only(과거 수정·삭제 금지). 결정이 바뀌면 새 DEC + 기존에 "Superseded by DEC-…" 표시. 상호참조는 [[DEC-…]]·날짜.
 - /resume: **먼저 git status·브랜치로 미커밋(진행 중) 작업 발견** → 그다음 PROGRESS 최상단 + PROJECT_PLAN 현재 Phase + 최근 DEC 3건.
 - /wrap: PROGRESS append + 새 DEC + PROJECT_PLAN 체크박스 갱신 + **미커밋이면 경고**(커밋 전엔 다음 /resume가 git status로만 발견).
@@ -216,7 +219,7 @@ New-Item -ItemType Directory -Path .claude/skills/wrap -Force
 - PROGRESS가 약 800줄/분기 경계를 넘으면 가장 오래된 분기를 docs/archive/로 옮기고 활성 파일 맨 아래 포인터 한 줄.
 
 ### 공유 vs 개인 / 시크릿
-- 공유(커밋): CLAUDE.md·.claude/skills·.claude/settings.json·.gitattributes·docs/.
+- 공유(커밋): CLAUDE.md·.claude/skills·.claude/settings.json·.gitattributes·docs/·.mcp.json(팀 MCP 서버 — 각자 첫 실행 때 승인).
 - 개인(커밋 금지): .claude/settings.local.json·CLAUDE.local.md. 개인 노트는 auto-memory(~/.claude/projects/<proj>/memory, 머신 로컬·200줄/25KB).
 - 시크릿(.env·키·비밀번호)은 읽지도 커밋하지도 않는다.
 
@@ -380,11 +383,13 @@ CLAUDE.local.md
 프로젝트(또는 상위 폴더)에서 claude 실행
   → git pull            (동료 기록 동기화)
   → /resume             (git status로 미커밋 먼저 → 대상 판별 → 지난 기록)
-  → @경로/파일 작업      (작게 쪼개기)
+  → @경로/파일 작업      (작게 쪼개기 · 여러 파일 건드리면 plan mode(Shift+Tab)로 시작
+                         · 무관한 작업으로 넘어갈 땐 /clear)
   → /wrap               (대상 docs에 [상태] 기록 + 미커밋 경고)
   → repo별 git 커밋·푸시 (독립 git이면 각각. 미커밋 두지 말 것)
 ```
 > ⚠️ **기록만 하고 커밋 안 하면 다음 세션이 못 찾는다**(미커밋은 git status로만 발견). 반드시 커밋.
+> 💡 같은 문제로 **교정 2회 실패 시** 계속 고치지 말고 `/clear` 후 배운 것을 반영한 새 프롬프트로 — 거의 항상 이쪽이 빠르다(상세: 02 가이드).
 
 ---
 
@@ -454,5 +459,5 @@ Claude Code는 매주 바뀐다. 6개월마다 30분:
 ## 핵심 출처 🟢
 IDE 통합·`--add-dir`(ide-integrations·large-codebases) / permissions·deny 한계 / hooks / skills / memory·auto-memory / repomix(repomix.com). — 모두 `code.claude.com/docs` 및 `docs.anthropic.com`.
 
-**문서 정보** — 통합 마스터(범용) **v1.3**. 8개 소스(⓪ 폴더구성 · ① 셋업 · structure-guide · daily-routine · SFA 셋업/통합 · setup-followalong v8 · integrated-setup) 중복 제거·v8 반영 + `/effort`(§D-6) + 2026-07-20 공식 문서 전면 재검증.
+**문서 정보** — 통합 마스터(범용) **v1.4**. 8개 소스(⓪ 폴더구성 · ① 셋업 · structure-guide · daily-routine · SFA 셋업/통합 · setup-followalong v8 · integrated-setup) 중복 제거·v8 반영 + `/effort`(§D-6) + 2026-07-20 공식 문서 전면 재검증 + 02 가이드 연동 경량 보완.
 최종 갱신: 2026-07-20 (변경 이력은 문서 최상단 버전 표 참조) / 참조: Claude Code v2.1.x, Opus 4.8 · Sonnet 5(v2.1.197+) · Fable 5(v2.1.170+).
