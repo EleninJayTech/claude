@@ -1,0 +1,92 @@
+{
+  "attribution": {
+    "commit": "",
+    "pr": ""
+  },
+  "permissions": {
+    "deny": [
+      "Read(**/.env)",
+      "Read(**/.env.*)",
+      "Read(**/*.pem)",
+      "Read(**/*.key)",
+      "Read(**/*.p12)",
+      "Bash(cat *.env)",
+      "Bash(cat *.env.*)",
+      "Bash(cat *.pem)",
+      "Bash(cat *.key)",
+      "Bash(type *.env*)",
+      "Bash(Get-Content *.env*)",
+      "Bash(gc *.env*)",
+      "Read(**/node_modules/**)",
+      "Read(**/.next/**)",
+      "Read(**/dist/**)",
+      "Read(**/build/**)",
+      "Read(**/out/**)",
+      "Read(**/coverage/**)",
+      "Read(**/target/**)",
+      "Read(**/.gradle/**)",
+      "Read(**/vendor/**)",
+      "Read(**/*.jar)",
+      "Read(**/*.class)",
+      "Read(**/*.log)"
+    ]
+  },
+  "hooks": {
+    "PreCompact": [
+      {
+        "matcher": "auto",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "echo \"[PreCompact] auto-compact 임박 - 작업 끊고 /wrap 권장\" 1>&2",
+            "async": true
+          }
+        ]
+      }
+    ],
+    "SessionStart": [
+      {
+        "matcher": "startup",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "echo '[시스템] 통합 워크스페이스 초기화 완료'"
+          }
+        ]
+      },
+      {
+        "matcher": "compact",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "echo 'compact 후 컨텍스트 복구: docs/PROGRESS.md 최상단과 docs/PROJECT_PLAN.md를 다시 읽고 현재 상태를 재확인하라.'"
+          }
+        ]
+      }
+    ]
+  },
+  "statusLine": {
+    "type": "command",
+    "command": "cols=${COLUMNS:-}; case \"$cols\" in \"\"|*[!0-9]*) cols=$(stty size </dev/tty 2>/dev/null | awk '{print $2}');; esac; case \"$cols\" in \"\"|*[!0-9]*) cols=120;; esac; export COLUMNS=$(( cols > 4 ? cols - 4 : 1 )); plugin_dir=$(ls -1d \"${CLAUDE_CONFIG_DIR:-$HOME/.claude}\"/plugins/cache/*/claude-hud/*/ 2>/dev/null | sort -V | tail -1); exec \"/c/Program Files/nodejs/node\" \"${plugin_dir}dist/index.js\""
+  },
+  "extraKnownMarketplaces": {
+    "repomix": {
+      "source": {
+        "source": "github",
+        "repo": "yamadashy/repomix"
+      }
+    },
+    "claude-hud": {
+      "source": {
+        "source": "github",
+        "repo": "jarrodwatts/claude-hud"
+      }
+    }
+  },
+  "effortLevel": "high",
+  "autoMemoryEnabled": true,
+  "theme": "dark-daltonized",
+  "inputNeededNotifEnabled": true,
+  "agentPushNotifEnabled": true,
+  "model": "claude-fable-5[1m]"
+}
