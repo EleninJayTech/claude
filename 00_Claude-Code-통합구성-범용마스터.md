@@ -126,10 +126,18 @@ New-Item -ItemType Directory -Path .claude/skills/wrap -Force
 - **단계(낮음→높음)**: `low` → `medium` → `high` → `xhigh` → `max`.
 - **`/effort xhigh`**: high보다 깊은 추론, **최대(max) 바로 아래**. 지원 모델 **Fable 5 · Opus 4.7+ · Sonnet 5**. (실측 안내문: *"Deeper reasoning than high, just below maximum"*)
 - **`/effort` (인자 없이)**: 대화형 선택 목록을 띄운다(Esc로 취소).
-- **프로젝트별 기본값 고정**: `effortLevel`은 **User·Project·Local 스코프** 지원 → 특정 프로젝트만 xhigh로 두려면 그 프로젝트 `.claude/settings.json`에 `"effortLevel": "xhigh"`. 우선순위 **Local > Project > User(전역)**. 세션 1회 오버라이드는 `--effort` 플래그·`CLAUDE_CODE_EFFORT_LEVEL` 환경변수.
+- **스코프**: `effortLevel`은 **User·Project·Local** 지원, 우선순위 **Local > Project > User(전역)**. 세션 1회 오버라이드는 `--effort` 플래그·`CLAUDE_CODE_EFFORT_LEVEL` 환경변수.
+- ✅ **권장 — 프로젝트 `.claude/settings.json`엔 `effortLevel`을 넣지 않는다(기본값 사용)**. 이유 3가지:
+  1. **세션 단위 값이라 작업별 최적이 될 수 없다.** 같은 프로젝트에서도 상태머신 설계는 xhigh가, 문서 수정·조회는 medium이 맞다. 한 값으로 고정하면 둘 중 하나는 항상 틀린다. 작업에 맞추는 건 `/effort` 한 번이면 된다.
+  2. **서브에이전트 차등에 쓸 수 없다.** effort를 에이전트별로 다르게 주려면 `.claude/agents/*.md` **frontmatter**에 적어야 한다(`model:` 핀과 같은 자리). 프로젝트 `effortLevel`을 올려도 에이전트별로 갈라지지 않는다 — 아래 함정 참고.
+  3. **repo에 커밋돼 팀원 전원에게 적용된다.** 개인 취향·PC 성능·요금제가 다른데 한 값이 강제된다.
+- ⚠️ **함정 — 프로젝트 값이 `/effort` 선택을 조용히 덮어쓴다** (2026-07-20 실측): `/effort`로 고른 값은 **User 스코프**에 저장되는데, 그 프로젝트 `.claude/settings.json`에 `effortLevel`이 있으면 Project가 이겨서 **새 세션마다 프로젝트 값으로 되돌아간다**. 경고 메시지는 없다. "왜 자꾸 xhigh로 시작하지?" 싶으면 `.claude/settings.json`부터 확인할 것.
+  - 실제 사례(wave-project): 서브에이전트를 강하게 돌릴 의도로 프로젝트에 `"effortLevel": "xhigh"`를 박아뒀는데, **서브에이전트엔 아무 영향이 없고 메인 세션만 계속 xhigh로 시작**하는 상태였다. 키를 제거해 사용자 `/effort`를 따르도록 정리.
+- **그래도 프로젝트에 고정할 만한 경우**: 팀 전원이 같은 성격의 작업만 하는 repo(예: 대량 정형 마이그레이션 전용)에서 매번 올리는 걸 잊는 게 더 큰 손해일 때. 이때도 `xhigh`보다 **`high`가 무난**하다(품질 차이 대비 토큰·지연 부담이 급하게 커지는 구간이 xhigh 이상).
 - **트레이드오프**: 높일수록 복잡한 설계·디버깅·마이그레이션 판단 품질↑, 대신 **토큰·지연 증가**. 어려운 전환/설계/리버스는 `high`~`xhigh`, 단순 편집·조회는 `low`~`medium` 권장. 상시 `max`는 비용 대비 비권장.
 - `/model`(모델 선택)과 짝 명령: 모델에 따라 사용 가능한 단계가 다르다(xhigh는 위 3모델 계열).
 > 🟡 재검증: effort 단계 명칭·xhigh/max 지원 모델 범위·`effortLevel` 스코프는 버전에 따라 변할 수 있음. `claude --version`·`/effort` 실제 출력·`code.claude.com/docs/en/settings`로 검증.
+> 🟡 재검증: **서브에이전트 frontmatter의 effort 키 이름**. 에이전트 정의(`.claude/agents/*.md`)가 모델·도구와 함께 추론 강도를 갖는 것은 확인했으나, 키 표기(`effort:` 등)는 문서로 확정하지 못했다. **확인 전엔 에이전트 파일에 추측한 키를 적지 말 것**(조용히 무시되면 설정한 줄 알고 넘어가게 된다). `code.claude.com/docs/en/sub-agents`로 검증.
 
 ---
 

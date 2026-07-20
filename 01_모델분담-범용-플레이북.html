@@ -310,7 +310,7 @@ model: haiku
 
   <div class="callout warn"><b>opusplan 주의</b><code class="inline">opusplan</code>은 <b>메인 세션 모드 별칭</b>(Plan Mode=Opus → 실행=Sonnet)입니다. 서브에이전트 frontmatter엔 <code class="inline">opus</code>/<code class="inline">sonnet</code>을 직접 핀하세요. 어려운 구현은 서브에이전트 대신 메인 세션 <code class="inline">/model opusplan</code>으로. 단 <code class="inline">availableModels</code> 정책에서 Opus가 제외된 환경이면 opusplan은 plan 모드에서도 Sonnet에 머뭅니다.</div>
   <div class="callout why"><b>opusplan vs /advisor</b>opusplan은 plan 경계에서 모델을 바꾸고, <code class="inline">/advisor</code>는 <b>실행 중 Sonnet이 막힐 때 Opus에 자문</b>(모델이 자문 시점을 스스로 판단)합니다. Anthropic 측정 기준 advisor 패턴이 비용 −11.9%·정확도 +2.7%. 계획이 명확한 정형 전환엔 opusplan, 실행 중 난관이 예상되는 탐색적 작업엔 advisor가 유리합니다.</div>
-  <div class="callout why"><b>비용 제2축 — effort</b>모델 선택과 별개로 <code class="inline">/effort</code>(low~xhigh)로 추론 강도를 조절할 수 있습니다(Opus 4.7+는 xhigh가 기본). "라우팅으로 모델을, effort로 강도를" 2축 운용이 최종 형태입니다.</div>
+  <div class="callout why"><b>비용 제2축 — effort</b>모델 선택과 별개로 <code class="inline">/effort</code>(low~xhigh)로 추론 강도를 조절할 수 있습니다. "라우팅으로 모델을, effort로 강도를" 2축 운용이 최종 형태입니다. 다만 <b>강도를 프로젝트 설정에 고정하지는 마세요</b>(<code class="inline">effortLevel</code> 비권장) — 세션 단위 단일값이라 작업별 최적이 안 되고, 서브에이전트 차등에도 쓸 수 없습니다(그건 에이전트 frontmatter 몫). <b>기본값 + 필요할 때 <code class="inline">/effort</code></b> 가 최적입니다. <b>⚠️ 세션이 계속 xhigh로 시작한다면</b> 모델 기본값이 아니라 프로젝트 <code class="inline">.claude/settings.json</code>의 <code class="inline">effortLevel</code> 때문일 가능성이 큽니다(Project &gt; User, 경고 없음) — 통합마스터 D-6 참조.</div>
 </section>
 
 <section class="station" id="s6">

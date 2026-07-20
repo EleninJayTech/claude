@@ -171,7 +171,9 @@ model: haiku
 > **opusplan 주의**: `opusplan`은 **메인 세션 모드 별칭**(Plan Mode=Opus, 실행=Sonnet)이다. 서브에이전트 frontmatter엔 `opus`/`sonnet`을 직접 핀한다. 高난이도 구현은 서브에이전트 대신 **메인 세션 `/model opusplan`**으로 진행하면 계획-구현 분담이 자연스럽다. (단 `availableModels` 정책으로 Opus가 제외된 환경이면 opusplan은 plan 모드에서도 Sonnet에 머문다.)
 > **대안 — `/advisor`**: opusplan이 plan 경계에서만 Opus를 쓰는 것과 달리, advisor는 **실행 중 Sonnet이 막힐 때 Opus에 온디맨드 자문**한다(Anthropic 측정: 비용 −11.9%·정확도 +2.7%). WAVE 기준: spec이 탄탄한 정형 전환(마스터데이터·CRUD)은 opusplan, 실행 중 난관이 예상되는 高모듈(camp 상태머신·`camp_edit.php` 해체)은 advisor가 유리할 수 있다.
 > **초대형 파일 대응**: `camp_edit.php`(3,000줄+) 같은 강결합 파일 분석엔 `opus[1m]`(1M 컨텍스트), 전체 survey엔 `sonnet[1m]` 고려. `opusplan[1m]`은 plan 단계에도 1M 적용.
-> **비용 제2축**: `/effort`(low~xhigh)로 추론 강도 조절 가능(Opus 4.7+는 xhigh 기본). triage·reviewer는 high 이상 유지, parity-tester는 low로 낮춰도 무방.
+> **비용 제2축 — effort**: 이 플랜의 에이전트 7종은 **`model:` 핀(opus/sonnet/haiku)** 으로 이미 강도를 나눠 갖는다. effort는 그 위에 얹는 2차 조정이며, **현재는 기본값으로 충분**하다. 강도 차등이 정말 필요해지면(예: triage·reviewer만 더 깊게, parity-tester는 얕게) **에이전트 frontmatter**에 지정한다 — `model:`과 같은 자리.
+> ❌ **프로젝트 `.claude/settings.json`의 `effortLevel`로는 안 된다.** 그건 세션 전체에 하나만 적용되는 값이라 에이전트별로 갈라지지 않는다. 올려봐야 서브에이전트엔 영향 없이 메인 세션만 무거워진다.
+> ⚠️ 실제로 wave-project에 `"effortLevel": "xhigh"`가 이 오해로 박혀 있었고(2026-07-20 발견), 서브에이전트엔 무효인 채 메인 세션만 매번 xhigh로 시작시키고 있었다. 제거함. 세션이 계속 xhigh로 시작하면 모델 기본값이 아니라 이 키를 의심할 것(Project > User, 경고 없음).
 > **핸드오프 철칙**: 다음 단계는 항상 앞 단계가 남긴 **파일(@경로)** 을 읽는다. "분석하고 고쳐줘" 식 요약 전달은 컨텍스트 손실의 주원인.
 
 ---
