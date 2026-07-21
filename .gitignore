@@ -1,3 +1,8 @@
+# Claude 런타임
+.claude/cache/
+.claude/sessions/
+.claude/logs/
+
 # Claude 개인 구성 (커밋 금지)
 .claude/settings.local.json*
 .claude/*.local.md
