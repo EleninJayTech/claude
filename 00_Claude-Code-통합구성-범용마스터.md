@@ -1,6 +1,6 @@
 # Claude Code 통합 구성 — 범용 마스터 (드롭인 적용)
 
-> **문서 버전: v1.5** · 최종 갱신: **2026-07-23** · 기준: Claude Code v2.1.218 (Opus 4.8 · Sonnet 5 · Fable 5)
+> **문서 버전: v1.6** · 최종 갱신: **2026-07-23** · 기준: Claude Code v2.1.218 (Opus 4.8 · Sonnet 5 · Fable 5)
 >
 > | 버전 | 날짜 | 변경 내용 |
 > | --- | --- | --- |
@@ -10,6 +10,7 @@
 > | v1.3 | 2026-07-20 | 공식 문서 전면 재검증: 샌드박스 **Linux·WSL2 지원** 반영(네이티브 Windows만 미지원, §J), Read deny의 Edit 차단(v2.1.208+), PowerShell 규칙 **별칭 자동 정규화**, 에이전트·스킬 frontmatter **`effort:` 키 확정**(§D-6 🟡 해소), `/effort auto`·`ultracode`·`ultrathink` 추가, `sandbox.credentials`, `.claude/rules/` 소개, 스킬=커맨드 통합 반영 |
 > | v1.4 | 2026-07-20 | 경량 보완(02 가이드 연동): §F-1에 **검증 기준 규칙**(성공 기준·검증 명령 동봉), §E에 `/init`, 공유 목록에 `.mcp.json`, §G 루틴에 **plan mode·`/clear`** 습관. 상세 기법은 02 진단·확장활용 가이드 참조 |
 > | v1.5 | 2026-07-23 | 공식 문서 재검증(v2.1.218 기준, 기존 서술 전부 유효 확인): 샌드박스 기본 읽기 정책 표현 정정(홈 전체→**컴퓨터 전체**), `sandbox.filesystem.disabled`(v2.1.216) 추가, `Tool(param:value)` deny/ask 매칭 한 줄 추가(§J). **범용성 정리**: 특정 프로젝트명 사례 일반화, D-3 예시에서 개인 취향 키(`extraKnownMarketplaces`) 제거 |
+> | v1.6 | 2026-07-23 | **기본 원칙 명문화**(§0): 1순위 = 최적의 결과물, 토큰 절약 = 품질을 해치지 않는 범위의 2순위 |
 >
 > ※ 갱신 시: 이 표에 한 줄 추가 + 하단 "문서 정보" 날짜 수정 + §L 재검증 체크리스트 수행.
 
@@ -22,6 +23,7 @@
 ---
 
 ## 0. 이 문서가 하는 일
+- **기본 원칙**: 이 구성(과 01·02 문서)의 1순위 목표는 **최적의 결과물**이다. 토큰 절약은 품질을 해치지 않는 범위에서 얹는 **2순위 부가 효과** — 절약을 위해 검증·기록·상위 모델 라우팅을 빼지 않는다.
 - **무엇**: Claude Code를 (1인 단일 repo ~ 다중 repo 통합 ~ 여러 팀원 MSA)까지 **환경에 맞게** 세팅하고, 세션 기록(PROGRESS/DECISIONS/PROJECT_PLAN)을 자동 관리하게 한다.
 - **왜**: 프로젝트마다 repo 수·팀 규모·동시성이 다르므로 고정 템플릿이 아니라 **판별 + 필요한 부분만** 적용한다.
 - **결과**: 글로벌 셋업(PC당 1회) + 프로젝트 셋업(환경별) + `/resume`·`/wrap` 루틴이 동작.
@@ -460,5 +462,5 @@ Claude Code는 매주 바뀐다. 6개월마다 30분:
 ## 핵심 출처 🟢
 IDE 통합·`--add-dir`(ide-integrations·large-codebases) / permissions·deny 한계 / hooks / skills / memory·auto-memory — 모두 `code.claude.com/docs` 및 `docs.anthropic.com`.
 
-**문서 정보** — 통합 마스터(범용) **v1.5**. 8개 소스(⓪ 폴더구성 · ① 셋업 · structure-guide · daily-routine · SFA 셋업/통합 · setup-followalong v8 · integrated-setup) 중복 제거·v8 반영 + `/effort`(§D-6) + 2026-07-20 공식 문서 전면 재검증 + 02 가이드 연동 경량 보완 + 2026-07-23 재검증(v2.1.218).
+**문서 정보** — 통합 마스터(범용) **v1.6**. 8개 소스(⓪ 폴더구성 · ① 셋업 · structure-guide · daily-routine · SFA 셋업/통합 · setup-followalong v8 · integrated-setup) 중복 제거·v8 반영 + `/effort`(§D-6) + 2026-07-20 공식 문서 전면 재검증 + 02 가이드 연동 경량 보완 + 2026-07-23 재검증(v2.1.218).
 최종 갱신: 2026-07-23 (변경 이력은 문서 최상단 버전 표 참조) / 참조: Claude Code v2.1.218, Opus 4.8 · Sonnet 5(v2.1.197+) · Fable 5(v2.1.170+).
