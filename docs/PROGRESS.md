@@ -1,5 +1,7 @@
 # PROGRESS (최상단 append)
 
+- [docs][Done] (구)02 진단·확장활용 가이드 제거 + 문서 번호 재편 — 02는 진단부(반영 완료된 역사 기록)와 사람용 운영 가이드로, 범용 구성 적용(드롭인)에 불필요 판단. 00·01의 02 포인터를 공식 문서 직접 참조로 전환(통합구성 v1.7, 모델분담 v1.6). 번호 재편: 통합구성 00→01, 모델분담 01→02, 00 슬롯은 신규 문서 예약. [[DEC-20260723-bsjeong87-03]] — @bsjeong87 (main) 2026-07-23
+
 - [docs][Done] 기본 원칙 명문화 — "1순위 = 최적의 결과물, 토큰 절약 = 품질 유지 전제의 2순위"를 00 §0(v1.6)·01 왜(v1.5)·CLAUDE.md에 반영, [[DEC-20260723-bsjeong87-02]] — @bsjeong87 (main) 2026-07-23
 
 - [docs][Done] 공식 문서 재검증·최신화(v2.1.212→v2.1.218) + 범용성 검사 — 00 v1.5·01 v1.4·02 v1.2. 기존 서술은 전부 유효 확인(whats-new·changelog·model-config·sub-agents·sandboxing·advisor·memory·permissions 당일 조회). 정정 1건: 샌드박스 기본 읽기 정책(홈 전체→컴퓨터 전체). 신규 반영: `sandbox.filesystem.disabled`(v2.1.216)·`Tool(param:value)` deny/ask·worktree 기본 분기점(기본 브랜치)·서브에이전트 동시 상한 20/중첩 기본 비활성(v2.1.217)·Fable 5 메인은 advisor 없이 동작·`/checkup` 별칭. 범용성 정리: 00의 wave-project 사례 일반화, D-3 예시에서 `extraKnownMarketplaces`(개인 취향 키) 제거 — @bsjeong87 (main) 2026-07-23
