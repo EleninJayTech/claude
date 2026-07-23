@@ -1,6 +1,6 @@
 # DECISIONS (append 전용 · id = DEC-날짜-작성자-번호)
 
-- **DEC-20260720-bsjeong87-01** — md 파일 3종 유지(삭제 안 함). HTML은 사람용, md는 Claude 학습용 드롭인 — 역할이 다름. 중복은 감수.
+- **DEC-20260720-bsjeong87-01** — md 파일 3종 유지(삭제 안 함). HTML은 사람용, md는 Claude 학습용 드롭인 — 역할이 다름. 중복은 감수. *(Superseded by [[DEC-20260723-bsjeong87-01]])*
 - **DEC-20260720-bsjeong87-02** — 문서 최신화는 기억이 아니라 **당일 공식 문서(code.claude.com/docs) 조회 검증**으로만 반영. 확인 못 한 항목은 🟡로 남김(§L 원칙).
 - **DEC-20260720-bsjeong87-03** — `theme` 키를 settings.json 예시에서 제거(문서화 키 아님 확인). 테마는 `/config`로 안내. 개인 설정에 남아 있는 건 무방.
 - **DEC-20260720-bsjeong87-04** — 글로벌 .claude 백업은 **화이트리스트 방식**(CLAUDE.md·settings.json·skills·commands만). 통째 커밋 금지 — .credentials.json·대화기록 유출 위험.
@@ -8,3 +8,4 @@
 - **DEC-20260721-bsjeong87-01** — 새 PC 글로벌 셋업은 **`global-config/` 정본 복원을 1순위**로 한다. 00 §D의 settings/CLAUDE.md 블록을 보고 수기 재구성하는 건 백업이 없을 때의 **폴백**. 이번에 §D(그것도 낡은 v1.2)만 보고 재구성했다가 `skills/humanizer/`·`commands/` 전체와 CLAUDE.md §9를 누락했다 — §D 블록은 최소 골격이지 실제 구성의 전부가 아니다. 복원 전 `git pull`로 문서 버전부터 확인할 것(당시 로컬은 7/16 상태, 원격은 v1.4).
 - **DEC-20260721-bsjeong87-02** — 복원 시 `settings.json`은 **통째 덮어쓰기가 아니라 병합**. 문서·백업 반영분(deny·hooks 등 구성 성격)은 적용하되, **머신·계정 현실에 종속된 값은 현재 것을 보존**한다: `model`(백업은 `claude-fable-5[1m]`이나 사용량 크레딧 미활성 → `opus`), `effortLevel`, `theme`, `enabledPlugins`·마켓플레이스 소스 형식(실제 설치 경로가 다름), `autoUpdatesChannel`. 백업 시점 이후 머신 상태가 달라져 있으므로 통째 복원은 동작하지 않는 설정을 되살린다.
 - **DEC-20260721-bsjeong87-03** — `theme`은 백업 동기화 대상에 **포함**하되(개인 설정에 남는 건 무방 — [[DEC-20260720-bsjeong87-03]]), 값이 바뀌면 커밋 전에 사용자에게 고지한다. 이번에 `dark-daltonized`(색각 대응) → `dark`가 백업에 반영됐다 — 접근성 설정이라 무언 반영은 위험. 복원용 백업은 되살릴 값이므로 취향 키라도 변경 시 확인이 필요하다.
+- **DEC-20260723-bsjeong87-01** — **html 전면 폐기, md 단일 관리로 전환** ([[DEC-20260720-bsjeong87-01]] 대체). 이 repo 문서의 용도가 "새 PC·새 프로젝트에서 Claude에게 학습시키는 드롭인 지시서"로 확정되면서 사람용 html의 존재 이유가 소멸 — 이중 동기화 유지보수만 남음. 02는 HTML만 있던 것을 md로 변환(v1.1, 내용 동일)해 보존 후 html 3종 삭제(복구는 git 히스토리 197ff1a 이전). PROJECT_PLAN 미해결 항목(02 md 부재)도 함께 해소.

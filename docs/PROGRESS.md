@@ -1,5 +1,7 @@
 # PROGRESS (최상단 append)
 
+- [docs][Done] html 전면 폐기 → md 단일 관리 전환 — 문서 용도가 드롭인 지시서로 확정되며 사람용 html 불필요 판단. 02를 md로 변환(v1.1, 내용 동일 — HTML만 존재하던 미해결 항목 해소) 후 html 3종 삭제. CLAUDE.md 문서 관리 규칙·PROJECT_PLAN 갱신, [[DEC-20260723-bsjeong87-01]](DEC-20260720-bsjeong87-01 대체) — @bsjeong87 (main) 2026-07-23
+
 - [backup][Done] `global-config/` 백업 재동기화 — 새 PC 복원 후 바뀐 `~/.claude/settings.json`을 백업에 반영(화이트리스트 4종 중 settings.json 1건만 실제 변경). 추가: `PowerShell(Get-Content *.env*)` deny(00 v1.4 §D-3)·`statusLine.refreshInterval`·`enabledPlugins`·`autoUpdatesChannel`. 변경: claude-hud 소스 형식(github repo→git url)·`model`(fable-5[1m]→opus)·`theme`(dark-daltonized→dark). 무결성 검증: 화이트리스트 밖 파일 0건·토큰류 문자열 0건. 커밋 8cd1514 — @bsjeong87 (main) 2026-07-21
 
 - [repo][Done] 이 repo 자체에 00 §E-1(단일 repo B형) 적용 — 그동안 PROGRESS·DECISIONS만 있고 `CLAUDE.md`·`PROJECT_PLAN.md`·`.claude/settings.json`·`.gitattributes`가 없던 공백을 메움. CLAUDE.md는 프로젝트 사실(문서 3종 역할·md/html 이중관리·백업 화이트리스트 규칙·커밋 양식) + §F-1 규칙블록 정본. PROJECT_PLAN은 기존 기록에서 Phase 1~4 역산. `.gitattributes` merge=union은 1인이지만 **여러 PC 작업**이라 채택. 커밋 7e1c13a — @bsjeong87 (main) 2026-07-21
