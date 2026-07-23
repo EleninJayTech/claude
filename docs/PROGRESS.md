@@ -1,5 +1,7 @@
 # PROGRESS (최상단 append)
 
+- [docs][Done] `00_통합-설치.md` v1.0 신설 — 01~03을 선택 목록(AskUserQuestion multiSelect)으로 통합 설치하는 셀렉터. 라우터 원칙(설치 로직 중복 금지, 각 하위 문서가 정본), 로컬에 하위 문서 없으면 GitHub raw 폴백, 기존/유사 구성은 유지/재구성/교체 질문, 상황별 추천 조합(§C), 04~ 추가 시 §B 표만 갱신 — @bsjeong87 (main) 2026-07-23
+
 - [docs][Done] 확장기능 설치 체크리스트 번호 이동 00→**03** — 00 슬롯은 다른 신규 문서용으로 재예약. CLAUDE.md 구성물 표 갱신 — @bsjeong87 (main) 2026-07-23
 
 - [docs][Done] 00 신규 문서 신설 — `00_확장기능-설치-체크리스트.md` v1.0. 드롭인하면 감지(기존/유사 구성)→체크리스트 확인 요청(AskUserQuestion: 항목·유지/재구성/교체·스코프 글로벌/프로젝트·호출 방식 자동/수동)→선택 항목만 설치→검증 증거 보고. 초기 3종: claude-hud(사용량 HUD, github.com/jarrodwatts/claude-hud)·svg-design 스킬(SVG 필터 가이드 분석을 SKILL.md로 증류 — useId·Safari 클리핑·numOctaves≤3·a11y·DOMPurify 규칙 + 4대 레시피)·frontend-design(Anthropic 공식 스킬). 원문(temp/)은 .gitignore로 커밋 제외. 이후 항목 추가는 §4 규약(무엇/스코프/감지/설치/검증/제거) — @bsjeong87 (main) 2026-07-23
