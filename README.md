@@ -24,7 +24,7 @@
 | [`01_Claude-Code-통합구성-범용마스터.md`](01_Claude-Code-통합구성-범용마스터.md) | **기반.** 글로벌 셋업(행동 규칙·시크릿 차단·훅) + 프로젝트 셋업(환경 판별, `docs/` 기록 체계, `/resume`·`/wrap`) |
 | [`02_모델분담-범용-플레이북.md`](02_모델분담-범용-플레이북.md) | 난이도 기반 모델 라우팅 — 어려운 판단은 상위 모델, 정형 실행은 하위 모델(`.claude/agents/` 로스터) |
 | [`03_확장기능-설치-체크리스트.md`](03_확장기능-설치-체크리스트.md) | 확장 기능 — claude-hud(사용량 HUD) · svg-design(SVG 필터 스킬) · frontend-design(Anthropic 공식 디자인 스킬) |
-| [`사용법.html`](사용법.html) | **사람용 안내 페이지** (개발 입문자 눈높이) — 브라우저로 열어 보세요 |
+| [`index.html`](index.html) | **사람용 안내 페이지** (개발 입문자 눈높이) — [GitHub Pages에서 보기](https://eleninjaytech.github.io/claude/) |
 
 부속: `docs/`(이 저장소의 작업 기록 — PROGRESS·DECISIONS·PROJECT_PLAN) · `global-config/`(글로벌 `~/.claude` 백업, 새 PC 복원용)
 

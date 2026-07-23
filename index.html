@@ -27,6 +27,8 @@ header.hero{background:var(--code-bg);color:var(--code-ink);padding:52px 24px 44
 .hero p.sub{margin-top:14px;max-width:680px;color:#AAB9B4;font-size:15px}
 .hero .meta{margin-top:20px;display:flex;flex-wrap:wrap;gap:8px}
 .hero .chip{font-family:var(--mono);font-size:12px;border:1px solid rgba(255,255,255,.22);border-radius:999px;padding:5px 12px;color:#C3D2CD}
+.hero a.btn{background:var(--acc);border-color:var(--acc);color:#fff;text-decoration:none}
+.hero a.btn:hover{background:var(--acc-deep)}
 main{max-width:960px;margin:0 auto;padding:40px 24px 100px}
 section{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:32px 34px 26px;margin-bottom:30px}
 @media (max-width:600px){section{padding:24px 18px}}
@@ -72,6 +74,8 @@ a{color:var(--acc-deep)}
       <span class="chip">대상: 개발 입문자~주니어</span>
       <span class="chip">문서 4종 (00~03)</span>
       <span class="chip">2026-07-23</span>
+      <a class="chip btn" href="https://github.com/EleninJayTech/claude">GitHub 저장소 ↗</a>
+      <a class="chip btn" href="https://github.com/EleninJayTech/claude/blob/main/00_%ED%86%B5%ED%95%A9-%EC%84%A4%EC%B9%98.md">00 문서 바로 보기 ↗</a>
     </div>
   </div>
 </header>
@@ -100,6 +104,7 @@ a{color:var(--acc-deep)}
       <h4>선택형 설치 메뉴 (시작점)</h4>
       <p>01~03을 목록으로 보여주고, 체크한 것만 설치합니다. 이미 설치된 게 있으면 "유지/재구성/교체"를 물어봅니다.</p>
       <p><b>이 파일 하나만</b> 들고 가도 됩니다 — 나머지 문서는 GitHub에서 알아서 가져옵니다.</p>
+      <p><a href="https://github.com/EleninJayTech/claude/blob/main/00_통합-설치.md">문서 열기 ↗</a></p>
     </div>
     <div class="card">
       <span class="tag">01 통합구성</span>
@@ -107,12 +112,14 @@ a{color:var(--acc-deep)}
       <p>① 글로벌 셋업: 행동 규칙, 시크릿(.env) 읽기 차단, 자동 알림 훅.</p>
       <p>② 프로젝트 셋업: repo 구조를 판별해 작업 기록 체계(<code class="i">docs/PROGRESS·DECISIONS·PROJECT_PLAN</code>)와 <code class="i">/resume</code>·<code class="i">/wrap</code> 명령을 만듭니다.</p>
       <p>→ 효과: <b>어제 하던 작업을 오늘 세션이 기억</b>하고, 실수로 비밀 파일을 읽거나 커밋하는 사고를 막습니다.</p>
+      <p><a href="https://github.com/EleninJayTech/claude/blob/main/01_Claude-Code-통합구성-범용마스터.md">문서 열기 ↗</a></p>
     </div>
     <div class="card">
       <span class="tag">02 모델분담</span>
       <h4>비싼 모델·싼 모델 역할 분담</h4>
       <p>어려운 판단(설계·난이도 분류·리뷰)은 상위 모델, 정해진 대로 만드는 일(정형 구현·테스트 실행)은 하위 모델이 맡는 전문 에이전트 팀(<code class="i">.claude/agents/</code>)을 만듭니다.</p>
       <p>→ 효과: 품질은 지키면서 비용이 줄고, 단계 산출물이 문서로 남아 다음 단계가 이어받습니다.</p>
+      <p><a href="https://github.com/EleninJayTech/claude/blob/main/02_모델분담-범용-플레이북.md">문서 열기 ↗</a></p>
     </div>
     <div class="card">
       <span class="tag">03 확장기능</span>
@@ -120,6 +127,7 @@ a{color:var(--acc-deep)}
       <p><b>claude-hud</b>: 입력창 아래 사용량·컨텍스트 잔량 실시간 표시.</p>
       <p><b>svg-design</b>: SVG 필터 시각 효과(Gooey·Liquid Glass 등)를 브라우저 버그·성능·접근성까지 지켜 구현하는 스킬.</p>
       <p><b>frontend-design</b>: "AI가 만든 티" 나는 UI를 피하게 하는 Anthropic 공식 디자인 스킬.</p>
+      <p><a href="https://github.com/EleninJayTech/claude/blob/main/03_확장기능-설치-체크리스트.md">문서 열기 ↗</a></p>
     </div>
   </div>
 </section>
@@ -165,8 +173,14 @@ a{color:var(--acc-deep)}
   <p>01의 글로벌 셋업이 <code class="i">.env</code>·인증서·키 파일을 읽기·출력 차단(deny 규칙)합니다. 다만 근본 원칙은 "진짜 비밀은 repo에 두지 않기"입니다.</p>
 </section>
 
+<section style="text-align:center">
+  <h2 style="justify-content:center"><span class="num">☕</span>후원하기 / Support</h2>
+  <p>이 문서들이 도움이 되셨다면 커피 한 잔으로 응원해 주세요 😊</p>
+  <p style="margin-top:16px"><a href="https://www.buymeacoffee.com/eleninjaytech"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me a Coffee" style="height:48px;max-width:100%"></a></p>
+</section>
+
 </main>
 
-<footer>사용법 페이지 · 2026-07-23 · 저장소: github.com/EleninJayTech/claude · 설치 문서 정본: 00~03 md (이 페이지는 사람용 안내이며 설치에는 관여하지 않음)</footer>
+<footer>사용법 페이지 · 2026-07-23 · 저장소: <a href="https://github.com/EleninJayTech/claude">github.com/EleninJayTech/claude</a> · 설치 문서 정본: 00~03 md (이 페이지는 사람용 안내이며 설치에는 관여하지 않음)</footer>
 </body>
 </html>
