@@ -1,5 +1,7 @@
 # PROGRESS (최상단 append)
 
+- [docs][Done] 확장기능 설치 체크리스트 번호 이동 00→**03** — 00 슬롯은 다른 신규 문서용으로 재예약. CLAUDE.md 구성물 표 갱신 — @bsjeong87 (main) 2026-07-23
+
 - [docs][Done] 00 신규 문서 신설 — `00_확장기능-설치-체크리스트.md` v1.0. 드롭인하면 감지(기존/유사 구성)→체크리스트 확인 요청(AskUserQuestion: 항목·유지/재구성/교체·스코프 글로벌/프로젝트·호출 방식 자동/수동)→선택 항목만 설치→검증 증거 보고. 초기 3종: claude-hud(사용량 HUD, github.com/jarrodwatts/claude-hud)·svg-design 스킬(SVG 필터 가이드 분석을 SKILL.md로 증류 — useId·Safari 클리핑·numOctaves≤3·a11y·DOMPurify 규칙 + 4대 레시피)·frontend-design(Anthropic 공식 스킬). 원문(temp/)은 .gitignore로 커밋 제외. 이후 항목 추가는 §4 규약(무엇/스코프/감지/설치/검증/제거) — @bsjeong87 (main) 2026-07-23
 
 - [docs][Done] (구)02 진단·확장활용 가이드 제거 + 문서 번호 재편 — 02는 진단부(반영 완료된 역사 기록)와 사람용 운영 가이드로, 범용 구성 적용(드롭인)에 불필요 판단. 00·01의 02 포인터를 공식 문서 직접 참조로 전환(통합구성 v1.7, 모델분담 v1.6). 번호 재편: 통합구성 00→01, 모델분담 01→02, 00 슬롯은 신규 문서 예약. [[DEC-20260723-bsjeong87-03]] — @bsjeong87 (main) 2026-07-23
