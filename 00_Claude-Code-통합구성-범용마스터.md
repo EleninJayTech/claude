@@ -1,6 +1,6 @@
 # Claude Code 통합 구성 — 범용 마스터 (드롭인 적용)
 
-> **문서 버전: v1.4** · 최종 갱신: **2026-07-20** · 기준: Claude Code v2.1.x (Opus 4.8 · Sonnet 5 · Fable 5)
+> **문서 버전: v1.5** · 최종 갱신: **2026-07-23** · 기준: Claude Code v2.1.218 (Opus 4.8 · Sonnet 5 · Fable 5)
 >
 > | 버전 | 날짜 | 변경 내용 |
 > | --- | --- | --- |
@@ -9,6 +9,7 @@
 > | v1.2 | 2026-07-08 | 추론 강도 제어 `/effort` §D-6 추가 (xhigh=high보다 깊고 max 바로 아래; Fable 5·Opus 4.7+·Sonnet 5; 값은 새 세션 기본값으로 저장). §L 재검증 항목 반영 |
 > | v1.3 | 2026-07-20 | 공식 문서 전면 재검증: 샌드박스 **Linux·WSL2 지원** 반영(네이티브 Windows만 미지원, §J), Read deny의 Edit 차단(v2.1.208+), PowerShell 규칙 **별칭 자동 정규화**, 에이전트·스킬 frontmatter **`effort:` 키 확정**(§D-6 🟡 해소), `/effort auto`·`ultracode`·`ultrathink` 추가, `sandbox.credentials`, `.claude/rules/` 소개, 스킬=커맨드 통합 반영 |
 > | v1.4 | 2026-07-20 | 경량 보완(02 가이드 연동): §F-1에 **검증 기준 규칙**(성공 기준·검증 명령 동봉), §E에 `/init`, 공유 목록에 `.mcp.json`, §G 루틴에 **plan mode·`/clear`** 습관. 상세 기법은 02 진단·확장활용 가이드 참조 |
+> | v1.5 | 2026-07-23 | 공식 문서 재검증(v2.1.218 기준, 기존 서술 전부 유효 확인): 샌드박스 기본 읽기 정책 표현 정정(홈 전체→**컴퓨터 전체**), `sandbox.filesystem.disabled`(v2.1.216) 추가, `Tool(param:value)` deny/ask 매칭 한 줄 추가(§J). **범용성 정리**: 특정 프로젝트명 사례 일반화, D-3 예시에서 개인 취향 키(`extraKnownMarketplaces`) 제거 |
 >
 > ※ 갱신 시: 이 표에 한 줄 추가 + 하단 "문서 정보" 날짜 수정 + §L 재검증 체크리스트 수행.
 
@@ -114,11 +115,10 @@ New-Item -ItemType Directory -Path .claude/skills/wrap -Force
       { "type": "command", "command": "echo \"[알림] 곧 컨텍스트 압축 - /wrap 권장\" 1>&2", "async": true } ] } ],
     "SessionStart": [ { "matcher": "compact", "hooks": [
       { "type": "command", "command": "echo '압축 후 복구: docs/PROGRESS.md 최상단과 PROJECT_PLAN.md를 다시 읽어라.'" } ] } ]
-  },
-  "extraKnownMarketplaces": { "repomix": { "source": { "source": "github", "repo": "yamadashy/repomix" } } }
+  }
 }
 ```
-> 🔴 **deny 현행 동작(2026-07-20 재검증)**: ① Read/Edit deny는 파일 도구 + Bash 안의 인식되는 파일 명령(`cat`/`head`/`tail`/`sed` 등)까지 적용. Read deny는 같은 경로 **Edit도 차단**(v2.1.208+). ② `cat`·`ls`·`head`·`grep` 등은 **기본 무프롬프트 읽기전용 내장 명령**(목록 비설정)이라, 특정 명령에 프롬프트를 강제하려면 위처럼 ask/deny 규칙이 필요. ③ python/node 스크립트가 파일을 직접 여는 **서브프로세스 우회는 여전히 가능** → **근본은 시크릿을 레포에서 분리**(§C-7), OS 수준 차단은 샌드박스(§J). ④ **PowerShell 툴 규칙은 별칭을 자동 정규화** — `PowerShell(Get-Content *)` 하나로 `gc`·`type`·별칭까지 매칭(대소문자 무관). `Bash(...)` 문자열 매칭엔 정규화가 없으므로 Git Bash 병용 환경은 기존 3종(type/Get-Content/gc)도 유지. ⑤ 경로 규칙 참고: 맨 파일명은 gitignore 의미로 **모든 깊이에 매칭**(`Read(.env)` ≡ `Read(**/.env)`), Windows 경로는 POSIX 정규화(`//c/**/.env`). hooks 매처(`"auto"`/`"compact"`)는 정확 문자열/정규식 — 철자 엄격.
+> 🔴 **deny 현행 동작(2026-07-23 재검증)**: ① Read/Edit deny는 파일 도구 + Bash 안의 인식되는 파일 명령(`cat`/`head`/`tail`/`sed` 등)까지 적용. Read deny는 같은 경로 **Edit도 차단**(v2.1.208+). ② `cat`·`ls`·`head`·`grep` 등은 **기본 무프롬프트 읽기전용 내장 명령**(목록 비설정)이라, 특정 명령에 프롬프트를 강제하려면 위처럼 ask/deny 규칙이 필요. ③ python/node 스크립트가 파일을 직접 여는 **서브프로세스 우회는 여전히 가능** → **근본은 시크릿을 레포에서 분리**(§C-7), OS 수준 차단은 샌드박스(§J). ④ **PowerShell 툴 규칙은 별칭을 자동 정규화** — `PowerShell(Get-Content *)` 하나로 `gc`·`type`·별칭까지 매칭(대소문자 무관). `Bash(...)` 문자열 매칭엔 정규화가 없으므로 Git Bash 병용 환경은 기존 3종(type/Get-Content/gc)도 유지. ⑤ 경로 규칙 참고: 맨 파일명은 gitignore 의미로 **모든 깊이에 매칭**(`Read(.env)` ≡ `Read(**/.env)`), Windows 경로는 POSIX 정규화(`//c/**/.env`). hooks 매처(`"auto"`/`"compact"`)는 정확 문자열/정규식 — 철자 엄격.
 > 🟡 `includeCoAuthoredBy`는 deprecated → `attribution` 객체로 대체(빈 문자열 `""` = 표기 숨김).
 > 🟡 테마(dark/light)는 settings.json 문서화 키가 아님(2026-07-20 확인) — 세션에서 **`/config`**(또는 `/theme`)로 설정.
 
@@ -141,7 +141,7 @@ New-Item -ItemType Directory -Path .claude/skills/wrap -Force
   2. **서브에이전트 차등에 쓸 수 없다.** effort를 에이전트별로 다르게 주려면 `.claude/agents/*.md`(또는 스킬 SKILL.md) **frontmatter의 `effort:` 키**에 적는다(`model:` 핀과 같은 자리, 공식 확정 — 값: low/medium/high/xhigh/max, 세션 값을 오버라이드하되 환경변수엔 밀림). 프로젝트 `effortLevel`을 올려도 에이전트별로 갈라지지 않는다 — 아래 함정 참고.
   3. **repo에 커밋돼 팀원 전원에게 적용된다.** 개인 취향·PC 성능·요금제가 다른데 한 값이 강제된다.
 - ⚠️ **함정 — 프로젝트 값이 `/effort` 선택을 조용히 덮어쓴다** (2026-07-20 실측): `/effort`로 고른 값은 **User 스코프**에 저장되는데, 그 프로젝트 `.claude/settings.json`에 `effortLevel`이 있으면 Project가 이겨서 **새 세션마다 프로젝트 값으로 되돌아간다**. 경고 메시지는 없다. "왜 자꾸 xhigh로 시작하지?" 싶으면 `.claude/settings.json`부터 확인할 것.
-  - 실제 사례(wave-project): 서브에이전트를 강하게 돌릴 의도로 프로젝트에 `"effortLevel": "xhigh"`를 박아뒀는데, **서브에이전트엔 아무 영향이 없고 메인 세션만 계속 xhigh로 시작**하는 상태였다. 키를 제거해 사용자 `/effort`를 따르도록 정리.
+  - 실제 사례: 서브에이전트를 강하게 돌릴 의도로 프로젝트에 `"effortLevel": "xhigh"`를 박아둔 경우 — **서브에이전트엔 아무 영향이 없고 메인 세션만 계속 xhigh로 시작**하는 상태가 된다. 키를 제거해 사용자 `/effort`를 따르도록 정리하는 게 맞다.
 - **그래도 프로젝트에 고정할 만한 경우**: 팀 전원이 같은 성격의 작업만 하는 repo(예: 대량 정형 마이그레이션 전용)에서 매번 올리는 걸 잊는 게 더 큰 손해일 때. 이때도 `xhigh`보다 **`high`가 무난**하다(품질 차이 대비 토큰·지연 부담이 급하게 커지는 구간이 xhigh 이상).
 - **트레이드오프**: 높일수록 복잡한 설계·디버깅·마이그레이션 판단 품질↑, 대신 **토큰·지연 증가**. 어려운 전환/설계/리버스는 `high`~`xhigh`, 단순 편집·조회는 `low`~`medium` 권장. 상시 `max`는 비용 대비 비권장.
 - `/model`(모델 선택)과 짝 명령: 모델에 따라 사용 가능한 단계가 다르다(위 모델별 지원 참고). 모델을 처음 바꾸면 **그 모델의 기본 effort가 적용**되니(이전 선택 무시) 필요하면 `/effort`를 다시 실행.
@@ -419,10 +419,11 @@ CLAUDE.local.md
 ## J. 보안 (셋업 전 최우선) 🔴
 - **deny의 현재 커버리지**: Read/Edit deny 규칙은 파일 도구 + Bash 안의 인식되는 파일 명령(`cat`/`head`/`tail`/`sed` 등)까지 감지·차단한다. Read deny는 같은 경로의 **Edit까지 차단**(v2.1.208+; Write·NotebookEdit는 별도 `Edit(...)` deny 필요 — `Write(...)` 규칙은 무효라 시작 시 경고가 뜬다). 심볼릭 링크는 링크·대상 **둘 다** 검사해 하나라도 deny면 차단.
 - **남은 구멍 2개**: ① 임의 서브프로세스(python/node 스크립트가 파일을 직접 open) 우회 가능 → OS 수준 차단은 아래 샌드박스. ② `cat`·`ls`·`head`·`grep` 등 읽기전용 내장 명령은 **기본적으로 프롬프트 없이 실행**되므로, 막으려면 명시적 ask/deny 규칙 필요.
-- **샌드박스(2026-07-20 재검증)** 🔴: `/sandbox` 또는 `sandbox.enabled`로 켜는 OS 수준 격리(Bash 명령+자식 프로세스의 파일·네트워크 접근을 OS가 강제). 지원: **macOS(Seatbelt) · Linux · WSL2(bubblewrap+socat)**. **네이티브 Windows는 여전히 미지원** → Windows에선 WSL2에서 돌리거나, allow 좁게 + deny 규칙 기반으로 운용. ~~"Windows/Linux 모두 없음"~~은 구버전 서술(Linux·WSL2는 지원됨).
-  - 샌드박스 기본 읽기 정책은 **홈 전체 읽기 허용**이라 `~/.ssh`·`~/.aws`는 **`sandbox.credentials`**(v2.1.187+)로 명시 차단하거나 env 토큰은 `mode: "mask"`(v2.1.199+)로 대체. 전 서브프로세스에서 Anthropic·클라우드 자격증명 제거는 `CLAUDE_CODE_SUBPROCESS_ENV_SCRUB`.
+- **샌드박스(2026-07-23 재검증)** 🔴: `/sandbox` 또는 `sandbox.enabled`로 켜는 OS 수준 격리(Bash 명령+자식 프로세스의 파일·네트워크 접근을 OS가 강제). 지원: **macOS(Seatbelt) · Linux · WSL2(bubblewrap+socat)**. **네이티브 Windows는 여전히 미지원** → Windows에선 WSL2에서 돌리거나, allow 좁게 + deny 규칙 기반으로 운용. ~~"Windows/Linux 모두 없음"~~은 구버전 서술(Linux·WSL2는 지원됨).
+  - 샌드박스 기본 읽기 정책은 **컴퓨터 전체 읽기 허용**(일부 시스템 경로 제외)이라 `~/.ssh`·`~/.aws`는 **`sandbox.credentials`**(v2.1.187+)로 명시 차단하거나 env 토큰은 `mode: "mask"`(v2.1.199+)로 대체. 전 서브프로세스에서 Anthropic·클라우드 자격증명 제거는 `CLAUDE_CODE_SUBPROCESS_ENV_SCRUB`. 파일 격리만 끄고 네트워크 격리는 유지하려면 `sandbox.filesystem.disabled`(v2.1.216+, user/managed 스코프만 유효).
 - **PowerShell 규칙**: `PowerShell(Get-Content *)` deny 하나로 별칭(`gc`·`type`·`cat`)까지 자동 매칭(대소문자 무관, 파이프·`;`로 나뉜 복합 명령은 **모든 하위 명령**이 규칙을 통과해야 허용). Bash 규칙은 별칭 정규화가 없으므로 Git Bash 병용 시 3종 유지(§D-3·§F-3).
 - **규칙 우선순위**: deny → ask → allow 순 첫 매치. 넓은 deny는 더 좁은 allow보다 항상 우선(= deny에 예외를 뚫을 수 없음). 스코프 간에도 동일 — 어느 스코프든 deny가 있으면 다른 스코프 allow로 못 뚫는다.
+- **파라미터 매칭**: deny/ask 규칙은 `Tool(param:value)` 형식으로 도구의 최상위 입력 파라미터도 매칭 가능(예: `Agent(model:opus)`, 샌드박스 우회 재시도에 프롬프트를 강제하는 `Bash(dangerouslyDisableSandbox:true)` ask). 단 `command`·`file_path` 등 자체 매칭 문법이 있는 필드는 불가.
 - **최선**: 진짜 비밀번호·API 키·인증서를 **작업 레포에 두지 않기**(별도 vault·환경변수·`_secure_config` 등).
 - **차선**: 불가피하면 `.env` + deny + (macOS·Linux·WSL2면) 샌드박스 + `sandbox.credentials`. 단 완전 차단 아님을 인지(샌드박스 프록시는 기본적으로 TLS 내용을 검사하지 않음 — 넓은 도메인 allow는 유출 경로가 될 수 있음).
 - 글로벌 `CLAUDE.md #8`이 "cat .env 금지"를 행동 규칙으로 보완.
@@ -457,7 +458,7 @@ Claude Code는 매주 바뀐다. 6개월마다 30분:
 ---
 
 ## 핵심 출처 🟢
-IDE 통합·`--add-dir`(ide-integrations·large-codebases) / permissions·deny 한계 / hooks / skills / memory·auto-memory / repomix(repomix.com). — 모두 `code.claude.com/docs` 및 `docs.anthropic.com`.
+IDE 통합·`--add-dir`(ide-integrations·large-codebases) / permissions·deny 한계 / hooks / skills / memory·auto-memory — 모두 `code.claude.com/docs` 및 `docs.anthropic.com`.
 
-**문서 정보** — 통합 마스터(범용) **v1.4**. 8개 소스(⓪ 폴더구성 · ① 셋업 · structure-guide · daily-routine · SFA 셋업/통합 · setup-followalong v8 · integrated-setup) 중복 제거·v8 반영 + `/effort`(§D-6) + 2026-07-20 공식 문서 전면 재검증 + 02 가이드 연동 경량 보완.
-최종 갱신: 2026-07-20 (변경 이력은 문서 최상단 버전 표 참조) / 참조: Claude Code v2.1.x, Opus 4.8 · Sonnet 5(v2.1.197+) · Fable 5(v2.1.170+).
+**문서 정보** — 통합 마스터(범용) **v1.5**. 8개 소스(⓪ 폴더구성 · ① 셋업 · structure-guide · daily-routine · SFA 셋업/통합 · setup-followalong v8 · integrated-setup) 중복 제거·v8 반영 + `/effort`(§D-6) + 2026-07-20 공식 문서 전면 재검증 + 02 가이드 연동 경량 보완 + 2026-07-23 재검증(v2.1.218).
+최종 갱신: 2026-07-23 (변경 이력은 문서 최상단 버전 표 참조) / 참조: Claude Code v2.1.218, Opus 4.8 · Sonnet 5(v2.1.197+) · Fable 5(v2.1.170+).

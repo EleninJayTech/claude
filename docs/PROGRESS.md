@@ -1,5 +1,7 @@
 # PROGRESS (최상단 append)
 
+- [docs][Done] 공식 문서 재검증·최신화(v2.1.212→v2.1.218) + 범용성 검사 — 00 v1.5·01 v1.4·02 v1.2. 기존 서술은 전부 유효 확인(whats-new·changelog·model-config·sub-agents·sandboxing·advisor·memory·permissions 당일 조회). 정정 1건: 샌드박스 기본 읽기 정책(홈 전체→컴퓨터 전체). 신규 반영: `sandbox.filesystem.disabled`(v2.1.216)·`Tool(param:value)` deny/ask·worktree 기본 분기점(기본 브랜치)·서브에이전트 동시 상한 20/중첩 기본 비활성(v2.1.217)·Fable 5 메인은 advisor 없이 동작·`/checkup` 별칭. 범용성 정리: 00의 wave-project 사례 일반화, D-3 예시에서 `extraKnownMarketplaces`(개인 취향 키) 제거 — @bsjeong87 (main) 2026-07-23
+
 - [docs][Done] html 전면 폐기 → md 단일 관리 전환 — 문서 용도가 드롭인 지시서로 확정되며 사람용 html 불필요 판단. 02를 md로 변환(v1.1, 내용 동일 — HTML만 존재하던 미해결 항목 해소) 후 html 3종 삭제. CLAUDE.md 문서 관리 규칙·PROJECT_PLAN 갱신, [[DEC-20260723-bsjeong87-01]](DEC-20260720-bsjeong87-01 대체) — @bsjeong87 (main) 2026-07-23
 
 - [backup][Done] `global-config/` 백업 재동기화 — 새 PC 복원 후 바뀐 `~/.claude/settings.json`을 백업에 반영(화이트리스트 4종 중 settings.json 1건만 실제 변경). 추가: `PowerShell(Get-Content *.env*)` deny(00 v1.4 §D-3)·`statusLine.refreshInterval`·`enabledPlugins`·`autoUpdatesChannel`. 변경: claude-hud 소스 형식(github repo→git url)·`model`(fable-5[1m]→opus)·`theme`(dark-daltonized→dark). 무결성 검증: 화이트리스트 밖 파일 0건·토큰류 문자열 0건. 커밋 8cd1514 — @bsjeong87 (main) 2026-07-21
