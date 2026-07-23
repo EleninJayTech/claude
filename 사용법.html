@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Claude Code 구성 문서 저장소 — 사용법</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;700&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#F2F4F3; --surface:#FFFFFF; --ink:#17242B; --ink-soft:#4A5B60;
+  --acc:#0E6B5B; --acc-deep:#0A4A40; --acc-tint:#E3F0EC;
+  --amber:#B4690E; --amber-tint:#FBF1E2;
+  --line:#D8DFDD;
+  --code-bg:#10201D; --code-ink:#DCE6E3; --code-accent:#6FD3B8;
+  --mono:'IBM Plex Mono',Consolas,'Courier New',monospace;
+  --sans:'IBM Plex Sans KR','Pretendard','Malgun Gothic',sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--sans);background:var(--bg);color:var(--ink);line-height:1.75;font-size:16px}
+header.hero{background:var(--code-bg);color:var(--code-ink);padding:52px 24px 44px;border-bottom:4px solid var(--acc)}
+.hero-inner{max-width:960px;margin:0 auto}
+.hero .eyebrow{font-family:var(--mono);font-size:13px;letter-spacing:.12em;color:var(--code-accent);text-transform:uppercase;margin-bottom:14px}
+.hero h1{font-size:clamp(25px,4vw,38px);font-weight:700;line-height:1.32}
+.hero h1 b{color:var(--code-accent)}
+.hero p.sub{margin-top:14px;max-width:680px;color:#AAB9B4;font-size:15px}
+.hero .meta{margin-top:20px;display:flex;flex-wrap:wrap;gap:8px}
+.hero .chip{font-family:var(--mono);font-size:12px;border:1px solid rgba(255,255,255,.22);border-radius:999px;padding:5px 12px;color:#C3D2CD}
+main{max-width:960px;margin:0 auto;padding:40px 24px 100px}
+section{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:32px 34px 26px;margin-bottom:30px}
+@media (max-width:600px){section{padding:24px 18px}}
+h2{font-size:22px;font-weight:700;margin-bottom:6px;display:flex;align-items:center;gap:12px}
+h2 .num{width:38px;height:38px;flex:0 0 38px;border-radius:50%;background:var(--acc);color:#fff;display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:15px}
+.goal{font-size:14px;color:var(--ink-soft);margin:2px 0 18px 50px;font-family:var(--mono)}
+@media (max-width:600px){.goal{margin-left:0}}
+h3{font-size:16.5px;font-weight:700;margin:24px 0 8px}
+p{margin:10px 0}
+ul,ol{margin:10px 0 10px 22px}
+li{margin:6px 0}
+code.i{font-family:var(--mono);font-size:.88em;background:var(--acc-tint);color:var(--acc-deep);padding:1px 6px;border-radius:5px}
+pre{background:var(--code-bg);color:var(--code-ink);font-family:var(--mono);font-size:13.5px;line-height:1.7;padding:16px 18px;overflow-x:auto;border-radius:10px;margin:12px 0 18px}
+pre b{color:var(--code-accent);font-weight:600}
+table{width:100%;border-collapse:collapse;margin:14px 0;font-size:14px}
+th,td{border:1px solid var(--line);padding:9px 12px;text-align:left;vertical-align:top}
+th{background:var(--acc-tint);color:var(--acc-deep);font-family:var(--mono);font-size:13px}
+tr:nth-child(even) td{background:#FAFCFB}
+.tbl{overflow-x:auto}
+.tip{border-radius:10px;padding:13px 16px 13px 44px;margin:14px 0;font-size:14.5px;position:relative;background:var(--acc-tint);border:1px solid rgba(0,0,0,.08)}
+.tip::before{content:"💡";position:absolute;left:14px;top:12px}
+.warn{border-radius:10px;padding:13px 16px 13px 44px;margin:14px 0;font-size:14.5px;position:relative;background:var(--amber-tint);border:1px solid #EBD3AE}
+.warn::before{content:"⚠️";position:absolute;left:14px;top:12px}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px;margin:16px 0}
+.card{border:1px solid var(--line);border-radius:12px;padding:18px;background:#FAFCFB}
+.card .tag{display:inline-block;font-family:var(--mono);font-size:12px;font-weight:600;background:var(--acc);color:#fff;border-radius:6px;padding:2px 10px;margin-bottom:8px}
+.card .tag.zero{background:var(--ink)}
+.card h4{font-size:15.5px;margin-bottom:6px}
+.card p{font-size:13.5px;color:var(--ink-soft);margin:4px 0}
+.flow{font-family:var(--mono);font-size:13.5px;background:var(--acc-tint);border:1px dashed var(--acc);border-radius:10px;padding:14px 18px;margin:14px 0;line-height:2.1}
+.flow b{color:var(--acc-deep)}
+footer{max-width:960px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);font-size:13px;font-family:var(--mono)}
+a{color:var(--acc-deep)}
+</style>
+</head>
+<body>
+<header class="hero">
+  <div class="hero-inner">
+    <div class="eyebrow">EleninJayTech / claude — How To Use</div>
+    <h1>Claude Code를 <b>바로 잘 쓰게</b> 만들어 주는<br>문서 저장소 사용법</h1>
+    <p class="sub">이 저장소의 md 문서들은 읽는 문서가 아니라 <b>"실행되는 문서"</b>입니다. 프로젝트에 넣고 Claude에게 "적용해줘"라고 말하면, Claude가 문서를 읽고 알아서 환경을 구성합니다. 개발을 배우는 중이라면 이 페이지 하나로 전체 그림을 잡을 수 있습니다.</p>
+    <div class="meta">
+      <span class="chip">대상: 개발 입문자~주니어</span>
+      <span class="chip">문서 4종 (00~03)</span>
+      <span class="chip">2026-07-23</span>
+    </div>
+  </div>
+</header>
+
+<main>
+
+<section>
+  <h2><span class="num">1</span>핵심 개념 — "드롭인 문서"</h2>
+  <p class="goal">복사해 넣고, 한 문장 말하면 끝</p>
+  <p>보통 개발 가이드는 사람이 읽고 손으로 따라 합니다. 이 저장소의 문서는 다릅니다 — <b>Claude가 읽고 Claude가 따라 합니다.</b></p>
+  <div class="flow">
+    1. 문서(md)를 내 프로젝트 폴더에 <b>복사</b><br>
+    2. Claude Code 실행 후: <b>"00_통합-설치.md 를 학습해서 이 프로젝트에 적용해줘"</b><br>
+    3. Claude가 환경을 스스로 파악 → <b>선택 목록 제시</b> → 체크한 것만 설치 → 검증 결과 보고
+  </div>
+  <p>이렇게 하면 설정 파일(<code class="i">CLAUDE.md</code>, <code class="i">.claude/</code>, <code class="i">docs/</code>)을 직접 만드는 법을 몰라도, 검증된 구성을 어떤 PC·어떤 프로젝트에든 똑같이 재현할 수 있습니다.</p>
+  <div class="tip"><b>모든 문서의 기본 원칙</b> — 1순위는 <b>최적의 결과물</b>입니다. 토큰(비용) 절약은 품질을 해치지 않는 범위의 2순위 부가 효과입니다.</div>
+</section>
+
+<section>
+  <h2><span class="num">2</span>문서 4종 — 각각 무엇을 하나</h2>
+  <p class="goal">00은 입구, 01은 기반, 02·03은 강화</p>
+  <div class="cards">
+    <div class="card">
+      <span class="tag zero">00 통합-설치</span>
+      <h4>선택형 설치 메뉴 (시작점)</h4>
+      <p>01~03을 목록으로 보여주고, 체크한 것만 설치합니다. 이미 설치된 게 있으면 "유지/재구성/교체"를 물어봅니다.</p>
+      <p><b>이 파일 하나만</b> 들고 가도 됩니다 — 나머지 문서는 GitHub에서 알아서 가져옵니다.</p>
+    </div>
+    <div class="card">
+      <span class="tag">01 통합구성</span>
+      <h4>기반 공사 (가장 중요)</h4>
+      <p>① 글로벌 셋업: 행동 규칙, 시크릿(.env) 읽기 차단, 자동 알림 훅.</p>
+      <p>② 프로젝트 셋업: repo 구조를 판별해 작업 기록 체계(<code class="i">docs/PROGRESS·DECISIONS·PROJECT_PLAN</code>)와 <code class="i">/resume</code>·<code class="i">/wrap</code> 명령을 만듭니다.</p>
+      <p>→ 효과: <b>어제 하던 작업을 오늘 세션이 기억</b>하고, 실수로 비밀 파일을 읽거나 커밋하는 사고를 막습니다.</p>
+    </div>
+    <div class="card">
+      <span class="tag">02 모델분담</span>
+      <h4>비싼 모델·싼 모델 역할 분담</h4>
+      <p>어려운 판단(설계·난이도 분류·리뷰)은 상위 모델, 정해진 대로 만드는 일(정형 구현·테스트 실행)은 하위 모델이 맡는 전문 에이전트 팀(<code class="i">.claude/agents/</code>)을 만듭니다.</p>
+      <p>→ 효과: 품질은 지키면서 비용이 줄고, 단계 산출물이 문서로 남아 다음 단계가 이어받습니다.</p>
+    </div>
+    <div class="card">
+      <span class="tag">03 확장기능</span>
+      <h4>선택형 부가 기능</h4>
+      <p><b>claude-hud</b>: 입력창 아래 사용량·컨텍스트 잔량 실시간 표시.</p>
+      <p><b>svg-design</b>: SVG 필터 시각 효과(Gooey·Liquid Glass 등)를 브라우저 버그·성능·접근성까지 지켜 구현하는 스킬.</p>
+      <p><b>frontend-design</b>: "AI가 만든 티" 나는 UI를 피하게 하는 Anthropic 공식 디자인 스킬.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2><span class="num">3</span>상황별 사용법</h2>
+  <p class="goal">내 상황에 맞는 한 문장만 고르면 됨</p>
+  <div class="tbl"><table>
+    <tr><th>상황</th><th>Claude에게 할 말</th><th>일어나는 일</th></tr>
+    <tr><td><b>새 PC 셋업</b></td><td>"00_통합-설치.md 를 학습해서 <b>이 PC에</b> 적용해줘"</td><td>글로벌 규칙·보안 설정 + (선택 시) 사용량 HUD 설치</td></tr>
+    <tr><td><b>새 프로젝트 시작</b></td><td>"00_통합-설치.md 를 학습해서 <b>이 프로젝트에</b> 적용해줘"</td><td>repo 유형 판별 → 기록 체계 + /resume·/wrap 생성, 개발 프로젝트면 02·03도 목록에서 선택</td></tr>
+    <tr><td><b>특정 문서만</b></td><td>"02_모델분담-범용-플레이북.md 를 이 프로젝트에 적용해줘"</td><td>00을 거치지 않고 그 문서 절차만 실행</td></tr>
+    <tr><td><b>확장 기능만</b></td><td>"03_확장기능-설치-체크리스트.md 를 적용해줘"</td><td>3종 체크리스트 → 스코프(전체 PC/이 프로젝트)·호출 방식(자동/수동)을 물어보고 설치</td></tr>
+  </table></div>
+  <div class="warn"><b>덮어쓰기 걱정은 안 해도 됩니다</b> — 모든 문서는 설치 전에 기존 구성을 먼저 감지하고, 이미 있으면 <b>유지 / 재구성 / 교체</b>를 반드시 물어보게 설계돼 있습니다.</div>
+</section>
+
+<section>
+  <h2><span class="num">4</span>설치 후 매일 쓰는 법</h2>
+  <p class="goal">하루 루틴은 명령 두 개면 충분</p>
+  <div class="flow">
+    아침: <b>git pull</b> → <b>/resume</b>  ("어제 어디까지 했더라?"를 Claude가 보고)<br>
+    작업: 파일은 <b>@경로/파일명</b> 으로 지정 · 작업 요청엔 <b>성공 기준·검증 명령</b>을 함께<br>
+    마감: <b>/wrap</b>  (오늘 작업·결정을 docs/에 자동 기록) → <b>git 커밋·푸시</b>
+  </div>
+  <ul>
+    <li><code class="i">/resume</code> — 미커밋 변경·기록을 읽고 "지난 작업 X, 다음은 Y?" 브리핑</li>
+    <li><code class="i">/wrap</code> — 오늘 한 일을 PROGRESS에, 내린 결정을 DECISIONS에 기록. <b>기록 후 커밋까지 해야</b> 다음 세션이 찾습니다</li>
+  </ul>
+  <div class="tip"><b>입문자에게 특히 좋은 습관 3가지</b> — ① 요청할 때 "구현 후 테스트 돌려서 통과 확인해줘"처럼 <b>검증까지 시키기</b> ② 무관한 작업으로 넘어갈 땐 <code class="i">/clear</code> ③ 같은 문제를 두 번 교정해도 안 되면 <code class="i">/clear</code> 후 배운 것을 반영해 새로 요청.</div>
+</section>
+
+<section>
+  <h2><span class="num">5</span>자주 묻는 것</h2>
+  <p class="goal">처음 보면 궁금한 것들</p>
+  <h3>Q. 문서가 왜 전부 md 파일인가요?</h3>
+  <p>Claude가 읽고 실행하는 용도라서입니다. 사람용 안내는 이 페이지 하나로 충분하게 유지합니다.</p>
+  <h3>Q. 문서 내용을 그냥 믿어도 되나요?</h3>
+  <p>모든 기술 서술은 <b>공식 문서(code.claude.com/docs)를 당일 조회해 검증한 날짜</b>와 함께 기록됩니다. 각 문서 상단의 버전 표와 "기준: Claude Code v2.1.x" 표기를 확인하세요. Claude Code는 매주 바뀌므로 문서에도 6개월 주기 재검증 체크리스트(§L)가 들어 있습니다.</p>
+  <h3>Q. 팀 프로젝트에도 쓸 수 있나요?</h3>
+  <p>네. 01이 repo 구조(1인 단일 repo ~ 여러 팀원 동시 편집)를 판별해 필요한 만큼만 구성합니다. 기록 파일은 append 전용 + 자동 병합(merge=union)이라 동시 작업 충돌도 자동 처리됩니다.</p>
+  <h3>Q. 시크릿(.env, 키 파일)은 안전한가요?</h3>
+  <p>01의 글로벌 셋업이 <code class="i">.env</code>·인증서·키 파일을 읽기·출력 차단(deny 규칙)합니다. 다만 근본 원칙은 "진짜 비밀은 repo에 두지 않기"입니다.</p>
+</section>
+
+</main>
+
+<footer>사용법 페이지 · 2026-07-23 · 저장소: github.com/EleninJayTech/claude · 설치 문서 정본: 00~03 md (이 페이지는 사람용 안내이며 설치에는 관여하지 않음)</footer>
+</body>
+</html>
