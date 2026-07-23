@@ -1,5 +1,7 @@
 # PROGRESS (최상단 append)
 
+- [docs][Done] README.md 작성 — 저장소 소개(드롭인 개념·빠른 시작 3단계·문서 표 00~03+사용법.html·원칙 3줄) + Buy Me a Coffee 후원 섹션(buymeacoffee.com/eleninjaytech) — @bsjeong87 (main) 2026-07-23
+
 - [docs][Done] `사용법.html` 신설 — 개발 입문자 대상 사람용 안내 페이지(드롭인 개념, 문서 4종 역할, 상황별 명령 문장, 매일 루틴, FAQ). md 미러가 아니라 DEC-0723-01(md 단일 관리)의 이중 관리에 해당하지 않음 — 문서 목록 변경 시에만 갱신. CLAUDE.md 구성물 표·규칙에 예외 명시 — @bsjeong87 (main) 2026-07-23
 
 - [docs][Done] `00_통합-설치.md` v1.0 신설 — 01~03을 선택 목록(AskUserQuestion multiSelect)으로 통합 설치하는 셀렉터. 라우터 원칙(설치 로직 중복 금지, 각 하위 문서가 정본), 로컬에 하위 문서 없으면 GitHub raw 폴백, 기존/유사 구성은 유지/재구성/교체 질문, 상황별 추천 조합(§C), 04~ 추가 시 §B 표만 갱신 — @bsjeong87 (main) 2026-07-23
