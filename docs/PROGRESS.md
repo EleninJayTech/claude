@@ -1,5 +1,7 @@
 # PROGRESS (최상단 append)
 
+- [docs][Done] index.html 전면 재디자인 + README·index 눈높이 하향 — frontend-design 스킬 원문(anthropics/skills) 원칙 적용: AI 기본값 룩 3종 회피, "종이 문서+형광펜 체크" 방향, 시그니처=03 svg-design 레시피(Gooey feColorMatrix 19 -8·Squiggle feTurbulence+feDisplacementMap)로 그린 대표 이미지(00~03 문서가 하나로 합쳐지는 애니메이션, reduced-motion 대응·aria-label). 이후 요청으로 README·index 카피를 비개발자도 이해하는 수준으로 재작성(Claude Code 정의부터, 용어 풀이·비유) — @bsjeong87 (main) 2026-07-23
+
 - [docs][Done] GitHub Pages 오픈 준비 — `사용법.html`→`index.html` 전환(별도 페이지 신설 대신 단일 페이지 유지). 보강: 히어로에 GitHub 저장소·00 문서 버튼, 카드별 문서 열기 링크(GitHub blob), 후원 섹션(Buy Me a Coffee). README·CLAUDE.md 참조 갱신, Pages URL: eleninjaytech.github.io/claude — @bsjeong87 (main) 2026-07-23
 
 - [docs][Done] README.md 작성 — 저장소 소개(드롭인 개념·빠른 시작 3단계·문서 표 00~03+사용법.html·원칙 3줄) + Buy Me a Coffee 후원 섹션(buymeacoffee.com/eleninjaytech) — @bsjeong87 (main) 2026-07-23
