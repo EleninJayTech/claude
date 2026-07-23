@@ -2,8 +2,8 @@
 
 > 마스터 로드맵. 완료 항목은 체크하고 상세는 `PROGRESS.md`에, 결정 근거는 `DECISIONS.md`에 남긴다.
 
-## 현재 Phase — **Phase 3: 구성 배포·검증**
-문서 3종 체계는 확립됐다(Phase 1~2 완료). 지금은 이 구성을 실제 PC·프로젝트에 적용하고 어긋난 부분을 찾는 단계.
+## 현재 Phase — **Phase 3.5 완료 → Phase 4 대기(유지보수)**
+문서 체계가 2026-07-23 개편됐다: 드롭인 4종(00 셀렉터·01 통합구성·02 모델분담·03 확장기능) + 사람용 index.html(GitHub Pages). 남은 것은 유지보수 주기.
 
 ---
 
@@ -26,11 +26,23 @@
 - [x] `global-config/` 백업 재동기화 (2026-07-21) — `~/.claude`와 완전 일치 확인. 반영분: `PowerShell(Get-Content *.env*)` deny, `statusLine.refreshInterval`, `enabledPlugins`, `autoUpdatesChannel`, claude-hud 마켓플레이스 소스 형식(github→git url), `model`(fable-5→opus), `theme`(dark-daltonized→dark)
 - [ ] 01 플레이북의 `.claude/agents/` 로스터 — 스택별로 다르므로 각 프로젝트 셋업 시 적용(이 문서 repo엔 불필요)
 
+## Phase 3.5 — 문서 체계 개편 (2026-07-23) ✅
+- [x] html 미러 폐기 → md 단일 관리 ([[DEC-20260723-bsjeong87-01]])
+- [x] 공식 문서 재검증(v2.1.218) + 범용성 정리(프로젝트명·개인 취향 키 제거)
+- [x] 기본 원칙 명문화 — 최적 결과 1순위·토큰 절약 2순위 ([[DEC-20260723-bsjeong87-02]])
+- [x] (구)02 진단 가이드 제거 + 번호 재편: 통합구성→01, 모델분담→02 ([[DEC-20260723-bsjeong87-03]])
+- [x] 03 확장기능 설치 체크리스트 신설(claude-hud·svg-design·frontend-design)
+- [x] 00 통합-설치 셀렉터 신설(01~03 선택 설치, GitHub raw 폴백)
+- [x] README + index.html(사람용, 비개발자 눈높이, frontend-design·svg-design 적용) ([[DEC-20260723-bsjeong87-04]])
+- [ ] GitHub Pages 활성화 확인 — 저장소 Settings→Pages에서 main/root 지정(사용자 수동, eleninjaytech.github.io/claude)
+
 ## Phase 4 — 유지보수 (예정)
 - [ ] **다음 재검증: 2027-01경** (00 §L, 6개월 주기)
   - `code.claude.com/docs/en/whats-new` 최신 항목
   - 🔴🟡 항목: deny 서브프로세스 우회, **샌드박스 네이티브 Windows 지원 여부**, `attribution` 스키마, auto-memory 한도, `sandbox.credentials` 스키마
   - `/model` 별칭이 가리키는 실제 모델, `/effort` 단계·`ultracode` 동작, frontmatter `effort:` 키 유지 여부
+  - 03 소스 생존: `github.com/jarrodwatts/claude-hud` 설치 명령, `github.com/anthropics/skills`의 frontend-design 위치·설치 CLI
+  - 00 §B 문서 목록·raw URL이 실제 저장소와 일치하는지
   - 갱신 후 각 문서 "최종 갱신" 날짜 수정
 
 ---
