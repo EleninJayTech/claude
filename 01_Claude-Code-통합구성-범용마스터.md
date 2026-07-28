@@ -1,6 +1,6 @@
 # Claude Code 통합 구성 — 범용 마스터 (드롭인 적용)
 
-> **문서 버전: v1.9** · 최종 갱신: **2026-07-28** · 기준: Claude Code v2.1.220 (Opus 5 · Sonnet 5 · Fable 5)
+> **문서 버전: v1.10** · 최종 갱신: **2026-07-28** · 기준: Claude Code v2.1.220 (Opus 5 · Sonnet 5 · Fable 5)
 >
 > | 버전 | 날짜 | 변경 내용 |
 > | --- | --- | --- |
@@ -14,6 +14,7 @@
 > | v1.7 | 2026-07-23 | **(구)02 진단·확장활용 가이드 제거** — 세션 운영 상세는 공식 문서(best-practices 등) 직접 참조로 전환(§0·§G). **문서 번호 재편**: 이 문서 00→**01**, 모델분담 01→**02** (00 슬롯은 신규 문서 예약) |
 > | v1.8 | 2026-07-28 | **Opus 5 출시 반영**(v2.1.219+, 당일 공식 문서 조회): §D-6 effort 지원표에 Opus 5 추가(전 단계), effort 기본값 hold 차이(Opus 5는 hold 없음) 명시 |
 > | v1.9 | 2026-07-28 | **부분 선택 도입**(STEP 3: 구성 항목을 선택 목록으로 확인 후 생성) + **§J-1 auto mode 신설**(권한 분류기 — 안전 요건·회사 정책 우선·스코프 제한, 당일 공식 문서 조회) |
+> | v1.10 | 2026-07-28 | **절약 프로필 추가**(§D-6): Pro·한도 관리 사용자용 effort 운용 — medium 시작·필요 시만 상향, ultracode/max 비권장, 컨텍스트 절약 습관. 품질 불변 지점 명시 |
 >
 > ※ 갱신 시: 이 표에 한 줄 추가 + 하단 "문서 정보" 날짜 수정 + §L 재검증 체크리스트 수행.
 
@@ -144,6 +145,11 @@ New-Item -ItemType Directory -Path .claude/skills/wrap -Force
 - **`ultracode`**: `/effort ultracode` — effort 단계가 아니라 Claude Code 설정. 모델엔 `xhigh`를 보내면서 굵직한 작업마다 **동적 워크플로(멀티에이전트 오케스트레이션)** 를 얹는다. 세션 한정, 토큰 소모 큼.
 - **`ultrathink`**: 프롬프트에 이 단어를 넣으면 **그 턴만** 깊은 추론 요청(세션 설정 불변). "think hard" 류는 키워드가 아님.
 - **스코프**: `effortLevel`은 **User·Project·Local** 지원, 우선순위 **Managed > CLI > Local > Project > User**. 세션 1회 오버라이드는 `--effort` 플래그·`CLAUDE_CODE_EFFORT_LEVEL` 환경변수(환경변수가 최우선).
+- **절약 프로필** (Pro 요금제·한도 관리 사용자 — 00 STEP 3에서 선택): 절약은 품질 유지 전제의 2순위이므로 **기본값 하향 + 낭비 제거**로만 아낀다.
+  - 세션을 `/effort medium`으로 시작하고, 어려운 작업(설계·동시성·상태머신 등)에 들어갈 때만 그때 `/effort high`↑ — 작업이 끝나면 되돌린다. `ultracode`·`max`는 비권장(토큰 소모 큼).
+  - 컨텍스트 절약 습관: 무관한 작업 전 `/clear`, 긴 세션은 `/compact <초점>`, CLAUDE.md 200줄 이하 + `.claude/rules/` 경로 스코프(§D-2 팁) — 매 턴 실려가는 고정 비용을 줄이는 게 가장 큰 절약.
+  - **줄이지 않는 것**(품질 불변): 트리아지·최종 리뷰의 상위 모델(02 §F), 검증 게이트(04) — 여기서 아끼면 재작업이 더 비싸다.
+  - 한도 가시화: claude-hud(03) 설치를 권장 — 측정 없는 절약은 감이다.
 - ✅ **권장 — 프로젝트 `.claude/settings.json`엔 `effortLevel`을 넣지 않는다(기본값 사용)**. 이유 3가지:
   1. **세션 단위 값이라 작업별 최적이 될 수 없다.** 같은 프로젝트에서도 상태머신 설계는 xhigh가, 문서 수정·조회는 medium이 맞다. 한 값으로 고정하면 둘 중 하나는 항상 틀린다. 작업에 맞추는 건 `/effort` 한 번이면 된다.
   2. **서브에이전트 차등에 쓸 수 없다.** effort를 에이전트별로 다르게 주려면 `.claude/agents/*.md`(또는 스킬 SKILL.md) **frontmatter의 `effort:` 키**에 적는다(`model:` 핀과 같은 자리, 공식 확정 — 값: low/medium/high/xhigh/max, 세션 값을 오버라이드하되 환경변수엔 밀림). 프로젝트 `effortLevel`을 올려도 에이전트별로 갈라지지 않는다 — 아래 함정 참고.
@@ -475,5 +481,5 @@ Claude Code는 매주 바뀐다. 6개월마다 30분:
 ## 핵심 출처 🟢
 IDE 통합·`--add-dir`(ide-integrations·large-codebases) / permissions·deny 한계 / hooks / skills / memory·auto-memory — 모두 `code.claude.com/docs` 및 `docs.anthropic.com`.
 
-**문서 정보** — 통합 마스터(범용) **v1.9**. 8개 소스(⓪ 폴더구성 · ① 셋업 · structure-guide · daily-routine · SFA 셋업/통합 · setup-followalong v8 · integrated-setup) 중복 제거·v8 반영 + `/effort`(§D-6) + 2026-07-20 공식 문서 전면 재검증 + 02 가이드 연동 경량 보완 + 2026-07-23 재검증(v2.1.218) + 2026-07-28 Opus 5 반영·부분 선택·auto mode(v2.1.220).
+**문서 정보** — 통합 마스터(범용) **v1.10**. 8개 소스(⓪ 폴더구성 · ① 셋업 · structure-guide · daily-routine · SFA 셋업/통합 · setup-followalong v8 · integrated-setup) 중복 제거·v8 반영 + `/effort`(§D-6) + 2026-07-20 공식 문서 전면 재검증 + 02 가이드 연동 경량 보완 + 2026-07-23 재검증(v2.1.218) + 2026-07-28 Opus 5 반영·부분 선택·auto mode(v2.1.220).
 최종 갱신: 2026-07-28 (변경 이력은 문서 최상단 버전 표 참조) / 참조: Claude Code v2.1.220, Opus 5(v2.1.219+) · Sonnet 5(v2.1.197+) · Fable 5(v2.1.170+).
