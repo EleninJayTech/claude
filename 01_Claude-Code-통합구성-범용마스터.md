@@ -1,6 +1,6 @@
 # Claude Code 통합 구성 — 범용 마스터 (드롭인 적용)
 
-> **문서 버전: v1.7** · 최종 갱신: **2026-07-23** · 기준: Claude Code v2.1.218 (Opus 4.8 · Sonnet 5 · Fable 5)
+> **문서 버전: v1.8** · 최종 갱신: **2026-07-28** · 기준: Claude Code v2.1.220 (Opus 5 · Sonnet 5 · Fable 5)
 >
 > | 버전 | 날짜 | 변경 내용 |
 > | --- | --- | --- |
@@ -12,6 +12,7 @@
 > | v1.5 | 2026-07-23 | 공식 문서 재검증(v2.1.218 기준, 기존 서술 전부 유효 확인): 샌드박스 기본 읽기 정책 표현 정정(홈 전체→**컴퓨터 전체**), `sandbox.filesystem.disabled`(v2.1.216) 추가, `Tool(param:value)` deny/ask 매칭 한 줄 추가(§J). **범용성 정리**: 특정 프로젝트명 사례 일반화, D-3 예시에서 개인 취향 키(`extraKnownMarketplaces`) 제거 |
 > | v1.6 | 2026-07-23 | **기본 원칙 명문화**(§0): 1순위 = 최적의 결과물, 토큰 절약 = 품질을 해치지 않는 범위의 2순위 |
 > | v1.7 | 2026-07-23 | **(구)02 진단·확장활용 가이드 제거** — 세션 운영 상세는 공식 문서(best-practices 등) 직접 참조로 전환(§0·§G). **문서 번호 재편**: 이 문서 00→**01**, 모델분담 01→**02** (00 슬롯은 신규 문서 예약) |
+> | v1.8 | 2026-07-28 | **Opus 5 출시 반영**(v2.1.219+, 당일 공식 문서 조회): §D-6 effort 지원표에 Opus 5 추가(전 단계), effort 기본값 hold 차이(Opus 5는 hold 없음) 명시 |
 >
 > ※ 갱신 시: 이 표에 한 줄 추가 + 하단 "문서 정보" 날짜 수정 + §L 재검증 체크리스트 수행.
 
@@ -132,7 +133,8 @@ New-Item -ItemType Directory -Path .claude/skills/wrap -Force
 ### D-6. 추론 강도(effort) 제어 — `/effort` 🟢
 세션의 **사고(reasoning) 깊이**를 조절하는 슬래시 명령. 고른 값은 settings.json **`effortLevel`** 키에 저장돼 **새 세션 기본값**이 된다.
 - **단계(낮음→높음)**: `low` → `medium` → `high` → `xhigh` → `max`. **기본값은 `high`**(Opus 4.7만 `xhigh`).
-- **모델별 지원**: Fable 5 · Sonnet 5 · Opus 4.8 · Opus 4.7 = 전 단계(`xhigh` 포함). Opus 4.6 · Sonnet 4.6 = `xhigh` 없음(low/medium/high/max). 미지원 단계를 지정하면 **바로 아래 지원 단계로 자동 폴백**(예: Opus 4.6에서 xhigh→high).
+- **모델별 지원**: Fable 5 · Opus 5 · Sonnet 5 · Opus 4.8 · Opus 4.7 = 전 단계(`xhigh` 포함). Opus 4.6 · Sonnet 4.6 = `xhigh` 없음(low/medium/high/max). 미지원 단계를 지정하면 **바로 아래 지원 단계로 자동 폴백**(예: Opus 4.6에서 xhigh→high).
+- **기본값 hold 차이**: Fable 5·Opus 4.8·4.7은 첫 실행 시 그 모델의 기본 effort를 강제 적용하고 명시적으로 바꿀 때까지 유지(hold)하지만, **Opus 5는 hold가 없어 이전에 설정한 값이 그대로 승계**된다.
 - **`/effort xhigh`**: high보다 깊은 추론, **최대(max) 바로 아래**. (안내문: *"Deeper reasoning than high, just below maximum"*)
 - **`/effort` (인자 없이)**: 대화형 슬라이더. `/effort auto`는 모델 기본값으로 리셋. `/model` 화면에서도 좌우 화살표로 effort 조절 가능.
 - **저장 제한**: `effortLevel`에 저장되는 건 `low`~`xhigh`뿐. **`max`는 세션 한정**(단 `CLAUDE_CODE_EFFORT_LEVEL`로는 지속 지정 가능).
@@ -463,5 +465,5 @@ Claude Code는 매주 바뀐다. 6개월마다 30분:
 ## 핵심 출처 🟢
 IDE 통합·`--add-dir`(ide-integrations·large-codebases) / permissions·deny 한계 / hooks / skills / memory·auto-memory — 모두 `code.claude.com/docs` 및 `docs.anthropic.com`.
 
-**문서 정보** — 통합 마스터(범용) **v1.7**. 8개 소스(⓪ 폴더구성 · ① 셋업 · structure-guide · daily-routine · SFA 셋업/통합 · setup-followalong v8 · integrated-setup) 중복 제거·v8 반영 + `/effort`(§D-6) + 2026-07-20 공식 문서 전면 재검증 + 02 가이드 연동 경량 보완 + 2026-07-23 재검증(v2.1.218).
-최종 갱신: 2026-07-23 (변경 이력은 문서 최상단 버전 표 참조) / 참조: Claude Code v2.1.218, Opus 4.8 · Sonnet 5(v2.1.197+) · Fable 5(v2.1.170+).
+**문서 정보** — 통합 마스터(범용) **v1.8**. 8개 소스(⓪ 폴더구성 · ① 셋업 · structure-guide · daily-routine · SFA 셋업/통합 · setup-followalong v8 · integrated-setup) 중복 제거·v8 반영 + `/effort`(§D-6) + 2026-07-20 공식 문서 전면 재검증 + 02 가이드 연동 경량 보완 + 2026-07-23 재검증(v2.1.218) + 2026-07-28 Opus 5 반영(v2.1.220).
+최종 갱신: 2026-07-28 (변경 이력은 문서 최상단 버전 표 참조) / 참조: Claude Code v2.1.220, Opus 5(v2.1.219+) · Sonnet 5(v2.1.197+) · Fable 5(v2.1.170+).

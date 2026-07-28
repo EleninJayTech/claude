@@ -1,5 +1,7 @@
 # PROGRESS (최상단 append)
 
+- [docs][Done] Opus 5 출시 반영(당일 공식 문서 조회: whats-new·changelog·model-config·advisor·models-overview) — 01 v1.8(§D-6 effort 지원표에 Opus 5, hold 차이), 02 v1.7(§I 라인업: `opus` 별칭=Opus 5 v2.1.219+, 기본 모델 Max·API=Opus 5, Fable 폴백 분화 바이오→Opus 5·사이버→Opus 4.8, Opus 5 자체 분류기, fast mode=Opus 5·4.8 전용, advisor Opus 4.7+ 동급 규칙), 00·03 v1.1(참조 v2.1.220). CLAUDE.md 구성물 표 갱신. Opus 5: $5/$25 MTok(4.8 동일)·1M/128K·컷오프 2026-05 — @bsjeong87 (main) 2026-07-28
+
 - [docs][Done] index.html 전면 재디자인 + README·index 눈높이 하향 — frontend-design 스킬 원문(anthropics/skills) 원칙 적용: AI 기본값 룩 3종 회피, "종이 문서+형광펜 체크" 방향, 시그니처=03 svg-design 레시피(Gooey feColorMatrix 19 -8·Squiggle feTurbulence+feDisplacementMap)로 그린 대표 이미지(00~03 문서가 하나로 합쳐지는 애니메이션, reduced-motion 대응·aria-label). 이후 요청으로 README·index 카피를 비개발자도 이해하는 수준으로 재작성(Claude Code 정의부터, 용어 풀이·비유) — @bsjeong87 (main) 2026-07-23
 
 - [docs][Done] GitHub Pages 오픈 준비 — `사용법.html`→`index.html` 전환(별도 페이지 신설 대신 단일 페이지 유지). 보강: 히어로에 GitHub 저장소·00 문서 버튼, 카드별 문서 열기 링크(GitHub blob), 후원 섹션(Buy Me a Coffee). README·CLAUDE.md 참조 갱신, Pages URL: eleninjaytech.github.io/claude — @bsjeong87 (main) 2026-07-23
