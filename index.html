@@ -49,11 +49,13 @@ h1{font-family:var(--serif);font-weight:700;font-size:clamp(30px,4.6vw,46px);lin
   .blob.b2{animation:drift2 8s ease-in-out infinite alternate}
   .blob.b3{animation:drift3 6.5s ease-in-out infinite alternate}
   .blob.b4{animation:drift4 9s ease-in-out infinite alternate}
+  .blob.b5{animation:drift5 7.5s ease-in-out infinite alternate}
 }
 @keyframes drift1{to{transform:translate(46px,14px)}}
 @keyframes drift2{to{transform:translate(-40px,-10px)}}
 @keyframes drift3{to{transform:translate(18px,-26px)}}
 @keyframes drift4{to{transform:translate(-22px,24px)}}
+@keyframes drift5{to{transform:translate(30px,-18px)}}
 
 /* ---------- 본문 공통 ---------- */
 main{max-width:1040px;margin:0 auto;padding:26px 24px 80px}
@@ -143,12 +145,14 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
         <circle class="blob b2" cx="300" cy="130" r="52" fill="#FFCF1F"/>
         <circle class="blob b3" cx="200" cy="255" r="58" fill="#FFE175"/>
         <circle class="blob b4" cx="315" cy="245" r="44" fill="#F5C400"/>
+        <circle class="blob b5" cx="120" cy="260" r="40" fill="#FFDB60"/>
       </g>
       <g font-family="IBM Plex Mono,monospace" font-size="17" font-weight="600" fill="#20222E" text-anchor="middle">
         <text x="150" y="156">00</text>
         <text x="300" y="136">01</text>
         <text x="200" y="261">02</text>
         <text x="315" y="251">03</text>
+        <text x="120" y="266">04</text>
       </g>
       <g filter="url(#squiggle)">
         <path d="M108 330 Q 230 356 352 330" fill="none" stroke="#2B49C7" stroke-width="3" stroke-linecap="round"/>
@@ -182,13 +186,13 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
 <!-- 2 -->
 <section>
   <div class="h-row"><svg width="30" height="30"><use href="#check"/></svg><h2>문서 네 장이 하는 일</h2></div>
-  <p class="goal">00은 입구 · 01은 기반 · 02와 03은 강화</p>
+  <p class="goal">00은 입구 · 01은 기반 · 02~04는 강화</p>
   <ul class="doclist">
     <li>
       <svg width="26" height="26"><use href="#check"/></svg>
       <span class="no">00</span>
       <span class="desc"><b>통합 설치 메뉴.</b>
-        <p>01~03을 목록으로 보여주고, 체크한 것만 각 문서의 절차대로 설치합니다.</p>
+        <p>01~04를 목록으로 보여주고, 체크한 것만 각 문서의 절차대로 설치합니다.</p>
         <a href="https://github.com/EleninJayTech/claude/blob/main/00_통합-설치.md">00_통합-설치.md ↗</a></span>
     </li>
     <li>
@@ -209,8 +213,15 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
       <svg width="26" height="26"><use href="#check"/></svg>
       <span class="no">03</span>
       <span class="desc"><b>편의 기능 셋.</b>
-        <p><b>claude-hud</b>(오늘 AI를 얼마나 썼는지 화면에 실시간 표시) · <b>svg-design</b>(이 페이지 위쪽 노란 애니메이션을 그린 그래픽 기술) · <b>frontend-design</b>("AI가 만든 티" 안 나는 세련된 화면을 만드는 Anthropic 공식 디자인 지침 — 이 페이지도 이걸로 만들었습니다).</p>
+        <p><b>claude-hud</b>(오늘 AI를 얼마나 썼는지 화면에 실시간 표시) · <b>svg-design</b>(이 페이지 위쪽 노란 애니메이션을 그린 그래픽 기술) · <b>frontend-design</b>("AI가 만든 티" 안 나는 세련된 화면을 만드는 Anthropic 공식 디자인 지침 — 이 페이지도 이걸로 만들었습니다) · <b>MCP</b>(외부 도구 연결) · <b>브라우저 검증</b>(만든 화면을 AI가 직접 열어 확인).</p>
         <a href="https://github.com/EleninJayTech/claude/blob/main/03_확장기능-설치-체크리스트.md">03_확장기능-설치-체크리스트.md ↗</a></span>
+    </li>
+    <li>
+      <svg width="26" height="26"><use href="#check"/></svg>
+      <span class="no">04</span>
+      <span class="desc"><b>자동 검사원.</b>
+        <p>AI가 코드를 고칠 때마다 검사기가 자동으로 돌고, 코드를 합치기 전에 한 번 더 검사합니다. "됐다"는 말 대신 <b>검사 통과 증거</b>를 받게 됩니다.</p>
+        <a href="https://github.com/EleninJayTech/claude/blob/main/04_검증-자동화.md">04_검증-자동화.md ↗</a></span>
     </li>
   </ul>
 </section>
@@ -223,7 +234,8 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
     <tr><th>상황</th><th>Claude에게 할 말</th><th>결과</th></tr>
     <tr><td>새 컴퓨터 세팅</td><td>"00_통합-설치.md 를 학습해서 <b>이 PC에</b> 적용해줘"</td><td>기본 규칙·보안 잠금 + 원하면 사용량 표시기</td></tr>
     <tr><td>새 작업 폴더 시작</td><td>"00_통합-설치.md 를 학습해서 <b>이 프로젝트에</b> 적용해줘"</td><td>작업 일지 시스템 + 이어하기/마무리 명령</td></tr>
-    <tr><td>편의 기능만</td><td>"03_확장기능-설치-체크리스트.md 를 적용해줘"</td><td>3가지 중 골라 설치</td></tr>
+    <tr><td>편의 기능만</td><td>"03_확장기능-설치-체크리스트.md 를 적용해줘"</td><td>5가지 중 골라 설치</td></tr>
+    <tr><td>자동 검사만</td><td>"04_검증-자동화.md 를 이 프로젝트에 적용해줘"</td><td>코드 수정마다 자동 검사 + 합치기 전 검사</td></tr>
     <tr><td>AI 역할 분담만</td><td>"02_모델분담-범용-플레이북.md 를 이 프로젝트에 적용해줘"</td><td>비싼 AI·싼 AI 역할 분담 팀 구성</td></tr>
   </table></div>
 </section>
@@ -272,7 +284,7 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
 
 </main>
 
-<footer>사용법 페이지 · 2026-07-23 · 저장소: <a href="https://github.com/EleninJayTech/claude">github.com/EleninJayTech/claude</a> · 설치 문서 정본은 00~03 md — 이 페이지는 사람용 안내이며, 대표 이미지는 03 svg-design 레시피(Gooey·Squiggle)로, 디자인은 frontend-design 스킬 원칙으로 만들었습니다.</footer>
+<footer>사용법 페이지 · 2026-07-28 · 저장소: <a href="https://github.com/EleninJayTech/claude">github.com/EleninJayTech/claude</a> · 설치 문서 정본은 00~04 md — 이 페이지는 사람용 안내이며, 대표 이미지는 03 svg-design 레시피(Gooey·Squiggle)로, 디자인은 frontend-design 스킬 원칙으로 만들었습니다.</footer>
 
 </body>
 </html>

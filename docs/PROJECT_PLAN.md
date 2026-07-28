@@ -2,8 +2,8 @@
 
 > 마스터 로드맵. 완료 항목은 체크하고 상세는 `PROGRESS.md`에, 결정 근거는 `DECISIONS.md`에 남긴다.
 
-## 현재 Phase — **Phase 3.5 완료 → Phase 4 대기(유지보수)**
-문서 체계가 2026-07-23 개편됐다: 드롭인 4종(00 셀렉터·01 통합구성·02 모델분담·03 확장기능) + 사람용 index.html(GitHub Pages). 남은 것은 유지보수 주기.
+## 현재 Phase — **Phase 5 완료 → Phase 4 대기(유지보수)**
+드롭인 5종(00 셀렉터·01 통합구성·02 모델분담·03 확장기능·04 검증 자동화) + 사람용 index.html(GitHub Pages). 설계 원칙: 2단계 선택형·중복 제거·회사 업무용 고려([[DEC-20260728-bsjeong87-01]]).
 
 ---
 
@@ -36,12 +36,21 @@
 - [x] README + index.html(사람용, 비개발자 눈높이, frontend-design·svg-design 적용) ([[DEC-20260723-bsjeong87-04]])
 - [ ] GitHub Pages 활성화 확인 — 저장소 Settings→Pages에서 main/root 지정(사용자 수동, eleninjaytech.github.io/claude)
 
+## Phase 5 — 문서 확장 1차 (2026-07-28) ✅
+- [x] Opus 5 출시 반영 — 01 v1.8·02 v1.7·00/03 v1.1 (v2.1.220 당일 재검증)
+- [x] 커뮤니티·공식 기능 조사 → 공백 리스트업 → 설계 원칙 확정 ([[DEC-20260728-bsjeong87-01]])
+- [x] 04_검증-자동화.md v1.0 신설 (hooks 게이트·gh/glab·CI 통합, 호스트 감지 분기)
+- [x] 01 v1.9 — §J-1 auto mode + 부분 선택 / 02 v1.8 — reviewer 중복 정리·/goal / 03 v1.2 — MCP·브라우저 검증·플러그인 부록
+- [x] 00 v1.2 — 2단계 선택 + README·index.html 동기화(04 반영)
+
 ## Phase 4 — 유지보수 (예정)
 - [ ] **다음 재검증: 2027-01경** (00 §L, 6개월 주기)
   - `code.claude.com/docs/en/whats-new` 최신 항목
   - 🔴🟡 항목: deny 서브프로세스 우회, **샌드박스 네이티브 Windows 지원 여부**, `attribution` 스키마, auto-memory 한도, `sandbox.credentials` 스키마
   - `/model` 별칭이 가리키는 실제 모델, `/effort` 단계·`ultracode` 동작, frontmatter `effort:` 키 유지 여부
-  - 03 소스 생존: `github.com/jarrodwatts/claude-hud` 설치 명령, `github.com/anthropics/skills`의 frontend-design 위치·설치 CLI
+  - auto mode 요건(플랜·모델·프로바이더)·`disableAutoMode` 유지 여부(01 §J-1)
+  - 03 소스 생존: `github.com/jarrodwatts/claude-hud` 설치 명령, `github.com/anthropics/skills`의 frontend-design 위치·설치 CLI, `claude mcp` 명령 체계, 부록 플러그인 생존·중복 재판정
+  - 04: hooks 스키마·`claude-code-action` 버전·gh/glab 설치 명령
   - 00 §B 문서 목록·raw URL이 실제 저장소와 일치하는지
   - 갱신 후 각 문서 "최종 갱신" 날짜 수정
 

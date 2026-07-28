@@ -1,5 +1,7 @@
 # PROGRESS (최상단 append)
 
+- [docs][Done] 문서 확장 1차(커뮤니티·공식 기능 조사 기반, [[DEC-20260728-bsjeong87-01]]) — **04_검증-자동화.md v1.0 신설**(hooks 게이트·gh/glab CLI·CI 통합, git 호스트 감지 분기, 회사 정책 게이트) · 01 v1.9(§J-1 auto mode 신설 + STEP 3 부분 선택 ⓐ~ⓕ) · 02 v1.8(로스터 에이전트별 선택, 내장 /code-review 정본화·커스텀 reviewer 선택 강등, /goal·백그라운드 서브에이전트 경량) · 03 v1.2(§4 MCP·§5 브라우저 검증 추가, 플러그인 부록 — 중복 판정 표) · 00 v1.2(§B에 04, 2단계 선택 명시, 회사 repo 추천 조합). 문서 목록 변경으로 README·index.html 동기화(04 카드·블롭 추가, DEC-0723-04 규칙) — @bsjeong87 (main) 2026-07-28
+
 - [docs][Done] Opus 5 출시 반영(당일 공식 문서 조회: whats-new·changelog·model-config·advisor·models-overview) — 01 v1.8(§D-6 effort 지원표에 Opus 5, hold 차이), 02 v1.7(§I 라인업: `opus` 별칭=Opus 5 v2.1.219+, 기본 모델 Max·API=Opus 5, Fable 폴백 분화 바이오→Opus 5·사이버→Opus 4.8, Opus 5 자체 분류기, fast mode=Opus 5·4.8 전용, advisor Opus 4.7+ 동급 규칙), 00·03 v1.1(참조 v2.1.220). CLAUDE.md 구성물 표 갱신. Opus 5: $5/$25 MTok(4.8 동일)·1M/128K·컷오프 2026-05 — @bsjeong87 (main) 2026-07-28
 
 - [docs][Done] index.html 전면 재디자인 + README·index 눈높이 하향 — frontend-design 스킬 원문(anthropics/skills) 원칙 적용: AI 기본값 룩 3종 회피, "종이 문서+형광펜 체크" 방향, 시그니처=03 svg-design 레시피(Gooey feColorMatrix 19 -8·Squiggle feTurbulence+feDisplacementMap)로 그린 대표 이미지(00~03 문서가 하나로 합쳐지는 애니메이션, reduced-motion 대응·aria-label). 이후 요청으로 README·index 카피를 비개발자도 이해하는 수준으로 재작성(Claude Code 정의부터, 용어 풀이·비유) — @bsjeong87 (main) 2026-07-23

@@ -1,6 +1,6 @@
 # Claude Code 통합 구성 — 범용 마스터 (드롭인 적용)
 
-> **문서 버전: v1.8** · 최종 갱신: **2026-07-28** · 기준: Claude Code v2.1.220 (Opus 5 · Sonnet 5 · Fable 5)
+> **문서 버전: v1.9** · 최종 갱신: **2026-07-28** · 기준: Claude Code v2.1.220 (Opus 5 · Sonnet 5 · Fable 5)
 >
 > | 버전 | 날짜 | 변경 내용 |
 > | --- | --- | --- |
@@ -13,6 +13,7 @@
 > | v1.6 | 2026-07-23 | **기본 원칙 명문화**(§0): 1순위 = 최적의 결과물, 토큰 절약 = 품질을 해치지 않는 범위의 2순위 |
 > | v1.7 | 2026-07-23 | **(구)02 진단·확장활용 가이드 제거** — 세션 운영 상세는 공식 문서(best-practices 등) 직접 참조로 전환(§0·§G). **문서 번호 재편**: 이 문서 00→**01**, 모델분담 01→**02** (00 슬롯은 신규 문서 예약) |
 > | v1.8 | 2026-07-28 | **Opus 5 출시 반영**(v2.1.219+, 당일 공식 문서 조회): §D-6 effort 지원표에 Opus 5 추가(전 단계), effort 기본값 hold 차이(Opus 5는 hold 없음) 명시 |
+> | v1.9 | 2026-07-28 | **부분 선택 도입**(STEP 3: 구성 항목을 선택 목록으로 확인 후 생성) + **§J-1 auto mode 신설**(권한 분류기 — 안전 요건·회사 정책 우선·스코프 제한, 당일 공식 문서 조회) |
 >
 > ※ 갱신 시: 이 표에 한 줄 추가 + 하단 "문서 정보" 날짜 수정 + §L 재검증 체크리스트 수행.
 
@@ -43,7 +44,9 @@
 
 **STEP 2 — 부족분 질문(모르는 것만, §I).** 특히: (a) 환경 유형 확정, (b) **여러 팀원이 같은 단위를 동시 편집**하는가(→ MSA 단위분할 필요 판단), (c) 커밋 양식, (d) 자주 함께 고치는 repo(→ `additionalDirectories`). 이미 코드로 안 것은 "이렇게 이해했다"로 확인만.
 
-**STEP 3 — 필요한 구성만 생성.** §D(글로벌, 없으면) + §E(환경별 프로젝트 셋업) + §F(SSOT 블록)에서 **해당 시나리오 부분만** 골라 파일 생성. 불필요한 것(단일 repo에 MSA 단위분할 등)은 만들지 않는다.
+**STEP 3 — 구성 항목 선택 확인 → 필요한 것만 생성.** 감지 결과를 바탕으로 아래 항목을 **선택 목록(다중 선택)으로 제시**하고, 체크된 것만 생성한다(전부 기본 체크, 이미 있는 항목은 "유지/재구성" 표기):
+- ⓐ 글로벌 행동 규칙(§D-2 CLAUDE.md) ⓑ 글로벌 보안(§D-3 deny·hooks) ⓒ `/resume`·`/wrap` 스킬(§D-4·F-2) ⓓ 프로젝트 기록 체계(§E·F-1: docs/·CLAUDE.md·.gitattributes) ⓔ 프로젝트 권한(§F-3 settings.json) ⓕ effort 가이드(§D-6, 안내만)
+- §D~F에서 **해당 시나리오 부분만** 골라 생성. 불필요한 것(단일 repo에 MSA 단위분할 등)은 만들지 않는다. 단 **ⓑ 보안(deny·시크릿 차단)은 해제를 권하지 않는다** — 사용자가 명시적으로 빼는 경우에만 제외하고 위험을 고지한다.
 
 **STEP 4 — 확인.** 무엇을 만들었는지 요약 보고 → `/` 자동완성으로 `/resume`·`/wrap` 확인 → 승인 후 커밋 안내(§E 커밋 규칙).
 
@@ -433,6 +436,13 @@ CLAUDE.local.md
 - **차선**: 불가피하면 `.env` + deny + (macOS·Linux·WSL2면) 샌드박스 + `sandbox.credentials`. 단 완전 차단 아님을 인지(샌드박스 프록시는 기본적으로 TLS 내용을 검사하지 않음 — 넓은 도메인 allow는 유출 경로가 될 수 있음).
 - 글로벌 `CLAUDE.md #8`이 "cat .env 금지"를 행동 규칙으로 보완.
 
+### J-1. 권한 모드 운용 — auto mode 🟢 (2026-07-28 공식 문서 확인)
+"매번 승인(manual)"과 "전부 스킵(`--dangerously-skip-permissions`)" 사이의 중간지대. **별도 분류기 모델**(기본 Sonnet 5)이 각 액션을 실행 전 심사해 안전한 것은 통과시키고, 요청 범위를 벗어난 행동·미인식 인프라 대상·읽은 콘텐츠(프롬프트 인젝션)에서 유래한 행동을 차단한다.
+- **켜기**: `Shift+Tab` 순환(manual→acceptEdits→plan→auto, 요건 충족 시 등장) 또는 `--permission-mode auto`. 기본 시작 모드로 쓰려면 `defaultMode: "auto"` — 단 **user/managed 스코프만 유효**(프로젝트·로컬 settings에선 무시됨: repo가 스스로 권한을 올리는 걸 막는 설계, v2.1.142+).
+- **규칙과의 관계**: 명시적 **ask 규칙은 auto mode에서도 프롬프트 강제**, deny는 그대로 차단(분류기가 deny를 뚫지 못함). `rm -rf /`·`~` 같은 파괴 명령은 분류기가 심사(v2.1.218+), 요청하지 않은 파괴적 git 명령·트랜스크립트 조작은 차단.
+- **회사 환경 주의** 🔴: Team·Enterprise는 **Owner가 admin 설정에서 켜야** 사용 가능하고, 관리자가 managed settings `permissions.disableAutoMode: "disable"`로 조직 전체 차단 가능 — **조직 정책이 항상 우선**이며 이 문서로 우회 구성하지 않는다. 프로바이더는 API·Claude Platform on AWS·Bedrock·Google Cloud·Foundry 모두 기본 제공(v2.1.207+), 단 Bedrock 등 서드파티는 Sonnet 5·Opus 4.7+·Fable 5만 지원.
+- **한계**: 프롬프트를 줄일 뿐 안전 보장이 아니다 — 방향을 신뢰하는 작업에만 쓰고, 민감 작업(배포·시크릿 인접·대량 삭제)은 manual/plan으로 내려서 검토한다. plan mode 중에도 분류기가 셸 명령을 심사한다(`useAutoModeDuringPlan` 기본 on, v2.1.218+).
+
 ---
 
 ## K. 트러블슈팅
@@ -465,5 +475,5 @@ Claude Code는 매주 바뀐다. 6개월마다 30분:
 ## 핵심 출처 🟢
 IDE 통합·`--add-dir`(ide-integrations·large-codebases) / permissions·deny 한계 / hooks / skills / memory·auto-memory — 모두 `code.claude.com/docs` 및 `docs.anthropic.com`.
 
-**문서 정보** — 통합 마스터(범용) **v1.8**. 8개 소스(⓪ 폴더구성 · ① 셋업 · structure-guide · daily-routine · SFA 셋업/통합 · setup-followalong v8 · integrated-setup) 중복 제거·v8 반영 + `/effort`(§D-6) + 2026-07-20 공식 문서 전면 재검증 + 02 가이드 연동 경량 보완 + 2026-07-23 재검증(v2.1.218) + 2026-07-28 Opus 5 반영(v2.1.220).
+**문서 정보** — 통합 마스터(범용) **v1.9**. 8개 소스(⓪ 폴더구성 · ① 셋업 · structure-guide · daily-routine · SFA 셋업/통합 · setup-followalong v8 · integrated-setup) 중복 제거·v8 반영 + `/effort`(§D-6) + 2026-07-20 공식 문서 전면 재검증 + 02 가이드 연동 경량 보완 + 2026-07-23 재검증(v2.1.218) + 2026-07-28 Opus 5 반영·부분 선택·auto mode(v2.1.220).
 최종 갱신: 2026-07-28 (변경 이력은 문서 최상단 버전 표 참조) / 참조: Claude Code v2.1.220, Opus 5(v2.1.219+) · Sonnet 5(v2.1.197+) · Fable 5(v2.1.170+).
