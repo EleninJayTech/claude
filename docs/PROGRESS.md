@@ -1,5 +1,7 @@
 # PROGRESS (최상단 append)
 
+- [docs][Done] `demo.html` 설치 시연 페이지 신설([[DEC-20260805-bsjeong87-01]]) — 소개·사용법을 영상처럼 보여주는 인터랙티브 시연(7챕터: 소개→한 문장→고르기→설치와 증거→매일 루틴→업데이트→끝). 터미널 재생 엔진(타이핑 효과·체크리스트 애니메이션·재생/일시정지/챕터 점프/진행 바 시킹/배속 1~2×/자막, 스페이스바 단축키, prefers-reduced-motion 대응), index.html 디자인 토큰 재사용. index.html 히어로에 "▶ 설치 시연 보기" 버튼·README에 🎬 링크 추가, CLAUDE.md 구성물 표 반영. 검증: script 블록 node --check 통과, Pages 배포 확인 — @bsjeong87 (main) 2026-08-05
+
 - [docs][Done] `/reverify` 프로젝트 스킬 신설(`.claude/skills/reverify/SKILL.md`, 수동 호출 전용) — 오늘 수행한 전면 재검증+확장 조사를 한 명령으로 재실행 가능하게 절차화: ① 조사 에이전트 4종 병렬(모델·권한·소스 생존·신규 후보) ② 정정 수술 반영+날짜 규칙(최근 재검증은 전 문서, DEC-0804-02) ③ 확장 후보는 보고만(신설은 승인 후) ④ PROGRESS/DEC/커밋+증거 보고. CLAUDE.md 관리 규칙에 포인터 한 줄 — @bsjeong87 (main) 2026-08-04
 
 - [docs][Done] 문서 확장 2차 — 신규 드롭인 2종 신설(당일 공식 문서 조회 기반, [[DEC-20260804-bsjeong87-03]]): **05_출력스타일.md v1.0**(내장 4종 전환+커스텀 `output-styles/*.md` 생성 — (구)`/output-style` 명령 제거(v2.1.91)·현행 `/config`/`outputStyle` 키, `keep-coding-instructions` 기본 false 함정, 세션 중 변경 미적용, 서브에이전트 미적용 명시) · **06_루틴-자동화.md v1.0**(클라우드 스케줄 에이전트 — research preview·Pro+, 트리거 3종(스케줄 `/schedule`·API·GitHub), repo 준비물(.mcp.json 프로젝트 스코프), 정의는 계정 저장이라 docs/ROUTINES.md 기록 패턴, 회사 게이트 🔴). 동기화: 00 v1.6(§B·§C·STEP 2), CLAUDE.md 구성물 표, README·index.html(문서 목록 변경 — DEC-0723-04 의무) — @bsjeong87 (main) 2026-08-04

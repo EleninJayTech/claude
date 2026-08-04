@@ -5,6 +5,7 @@
 > 가구 설명서를 읽고 조립까지 해 주는 로봇처럼 — 문서를 넣고 한 문장 말하면 준비가 끝납니다.
 
 📖 **처음이라면**: [사용법 페이지(GitHub Pages)](https://eleninjaytech.github.io/claude/)를 먼저 보세요. 개발을 몰라도 이해할 수 있게 썼습니다.
+🎬 **설치가 어떻게 진행되는지 보려면**: [설치 시연 페이지](https://eleninjaytech.github.io/claude/demo.html) — 영상처럼 재생되는 인터랙티브 시연입니다.
 
 ## 사용법 (세 줄)
 
