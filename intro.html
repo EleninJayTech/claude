@@ -4,276 +4,244 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Claude Code 드롭인 문서 — 소개 영상</title>
-<meta name="description" content="문서를 넣는다. 한 문장 말한다. 끝. — Claude Code 드롭인 문서 25초 소개.">
+<meta name="description" content="문서를 넣는다. 한 문장 말한다. 끝. — 키네틱 타이포 20초 소개.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=IBM+Plex+Sans+KR:wght@400;500;700&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;700&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
 <style>
 :root{
-  --paper:#FCFCF8; --ink:#20222E; --ink-soft:#5A5E70;
-  --marker:#FFD84D; --marker-soft:#FFF3C2; --marker-deep:#F5C400;
-  --blue:#2B49C7; --line:#E5E4DB;
-  --dark:#171923; --dim:#9EA3B5; --green:#7BC97E;
-  --serif:'Gowun Batang','Nanum Myeongjo',serif;
+  --w:#F7F6F2; --b:#0C0C0E; --y:#FFD84D; --dim:#8B8E9C;
   --sans:'IBM Plex Sans KR','Pretendard','Malgun Gothic',sans-serif;
   --mono:'IBM Plex Mono',Consolas,monospace;
 }
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:var(--sans);background:#0F1118;color:var(--ink);line-height:1.6;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px}
-a{color:var(--blue)}
-:focus-visible{outline:3px solid var(--marker);outline-offset:2px;border-radius:4px}
+body{font-family:var(--sans);background:#08080A;color:var(--w);line-height:1.5;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px}
+a{color:var(--y)}
+:focus-visible{outline:3px solid var(--y);outline-offset:2px;border-radius:4px}
 
 .frame{width:min(1120px,100%)}
 .topbar{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:10px;font-family:var(--mono);font-size:12.5px;color:var(--dim)}
-.topbar b{color:var(--marker)}
+.topbar b{color:var(--y)}
 .topbar a{color:var(--dim);text-decoration:none;border-bottom:1px dotted var(--dim)}
 
 /* ── 16:9 스테이지 ── */
-.stage{position:relative;aspect-ratio:16/9;background:var(--dark);border-radius:14px;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.5)}
-.scene{position:absolute;inset:0;display:none;padding:6% 7%}
-.scene.on{display:flex}
-/* 종이 질감: 모눈 + 마커 모서리 */
-.scene.paper{background:
-  repeating-linear-gradient(0deg, transparent 0 31px, rgba(43,73,199,.05) 31px 32px),
-  repeating-linear-gradient(90deg, transparent 0 31px, rgba(43,73,199,.04) 31px 32px),
-  var(--paper)}
-.scene.dark{background:var(--dark);color:#F2F1E9}
-.stage.paused *{animation-play-state:paused !important}
+.stage{position:relative;aspect-ratio:16/9;background:var(--b);border-radius:12px;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.55);cursor:pointer}
+.stage.w{background:var(--w)}
+.stage.b{background:var(--b)}
+.stage.y{background:var(--y)}
+.stage.paused .kw,.stage.paused .sub,.stage.paused .cl,.stage.paused .cmdT{animation-play-state:paused !important}
 
-/* 거대 배경 숫자 (에디토리얼) */
-.bignum{position:absolute;right:2%;bottom:-6%;font-family:var(--mono);font-weight:600;font-size:clamp(120px,30vw,340px);line-height:1;color:rgba(43,73,199,.07);user-select:none;pointer-events:none}
-.dark .bignum{color:rgba(255,216,77,.06)}
+#host{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:5%}
 
-/* 등장 효과 */
-.scene .fx{opacity:0}
-.scene.on .fx{animation:up .5s cubic-bezier(.2,.7,.2,1) forwards;animation-delay:var(--d,0s)}
-.scene.on .fx.pop{animation:pop .42s cubic-bezier(.2,1.4,.3,1) forwards;animation-delay:var(--d,0s)}
-.scene.on .fx.strike{animation:strike .5s ease forwards;animation-delay:var(--d,0s)}
-@keyframes up{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:none}}
-@keyframes pop{0%{opacity:0;transform:scale(1.6) rotate(-3deg)}70%{opacity:1;transform:scale(.97) rotate(.6deg)}100%{opacity:1;transform:scale(1)}}
-@keyframes strike{from{opacity:0;clip-path:inset(0 100% 0 0)}to{opacity:1;clip-path:inset(0 0 0 0)}}
+/* 키네틱 단어 */
+.kw{font-weight:700;font-size:clamp(46px,13vw,158px);line-height:1.15;letter-spacing:-.04em;white-space:nowrap}
+.stage.w .kw{color:var(--b)}
+.stage.b .kw{color:var(--w)}
+.stage.y .kw{color:var(--b);font-size:clamp(60px,17vw,210px)}
+.sub{margin-top:2.4%;font-family:var(--mono);font-size:clamp(12px,1.8vw,19px);color:var(--dim)}
+.stage.w .sub{color:#5A5D6B}
+.stage.y .sub{color:#4A4013}
 
-/* 형광펜 스와이프 전환 */
-.swipe{position:absolute;inset:-6% -12%;background:var(--marker);z-index:4;transform:translateX(-112%) skewX(-8deg);pointer-events:none}
-.swipe.run{animation:swipe .5s cubic-bezier(.6,.1,.3,1) forwards}
-@keyframes swipe{0%{transform:translateX(-112%) skewX(-8deg)}100%{transform:translateX(112%) skewX(-8deg)}}
+/* 등장 애니메이션 */
+.slam{animation:slam .3s cubic-bezier(.15,1.2,.3,1) both}
+@keyframes slam{0%{opacity:0;transform:scale(2.4)}60%{opacity:1;transform:scale(.965)}100%{opacity:1;transform:scale(1)}}
+.slide{animation:slide .32s cubic-bezier(.2,.9,.2,1) both}
+@keyframes slide{from{opacity:0;transform:translateX(-9%)}to{opacity:1;transform:none}}
+.rise{animation:rise .3s cubic-bezier(.2,.9,.2,1) both}
+@keyframes rise{from{opacity:0;transform:translateY(34%)}to{opacity:1;transform:none}}
+.flashIn{animation:flashIn .34s cubic-bezier(.15,1.3,.3,1) both}
+@keyframes flashIn{0%{opacity:0;transform:scale(.4) rotate(-5deg)}100%{opacity:1;transform:scale(1) rotate(0)}}
+.fadeIn{animation:fadeIn .5s ease both}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
 
-/* 타이포 */
-.kicker{font-family:var(--mono);font-size:clamp(11px,1.2vw,14px);letter-spacing:.22em;color:var(--ink-soft)}
-.dark .kicker{color:var(--dim)}
-.huge{font-family:var(--serif);font-weight:700;font-size:clamp(26px,5.4vw,64px);line-height:1.32;letter-spacing:-.015em}
-.mid{font-size:clamp(13px,1.8vw,19px);color:var(--ink-soft)}
-.dark .mid{color:var(--dim)}
-.mark{background:linear-gradient(transparent 58%, var(--marker) 58%, var(--marker) 92%, transparent 92%);padding:0 2px}
-.left{flex-direction:column;align-items:flex-start;justify-content:center;text-align:left;gap:2.2%}
-
-/* S2 터미널 스트립 */
-.strip{width:100%;font-family:var(--mono);font-size:clamp(13px,2vw,21px);display:flex;flex-direction:column;gap:3%}
-.strip .cmdline{background:#0F1118;border:1px solid #2E3140;border-radius:12px;padding:2.6% 3.4%;color:var(--marker-soft)}
-.strip .cmdline .pr{color:var(--marker);font-weight:600}
-.strip .ok{color:var(--green)}
-.caret{display:inline-block;width:.55em;height:1.15em;background:var(--marker-soft);margin-left:2px;animation:blink 1s steps(1) infinite;vertical-align:text-bottom}
+/* 명령어 비트 */
+.cmdT{font-family:var(--mono);font-size:clamp(13px,2.3vw,25px);color:var(--w);background:#141519;border:1px solid #2A2C36;border-radius:12px;padding:2.4% 3.2%;max-width:94%}
+.cmdT .pr{color:var(--y);font-weight:600}
+.cmdT .hl{color:#FFEFAF}
+.caret{display:inline-block;width:.55em;height:1.15em;background:var(--y);margin-left:2px;animation:blink .9s steps(1) infinite;vertical-align:text-bottom}
 @keyframes blink{50%{opacity:0}}
+.cmdOk{margin-top:2.4%;font-family:var(--mono);font-size:clamp(12px,1.8vw,19px);color:#7BC97E}
 
-/* S3 스탬프 그리드 (호버 인터랙션) */
-.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2.2%;width:100%;margin-top:2.6%}
-.stamp{background:#fff;border:1.5px solid var(--ink);border-radius:12px;padding:2.6% 3.2%;font-size:clamp(12px,1.6vw,17px);text-align:left;box-shadow:3px 3px 0 var(--ink);transition:transform .18s,box-shadow .18s;cursor:default}
-.stamp:hover{transform:translate(-2px,-3px) rotate(-.5deg);box-shadow:6px 7px 0 var(--marker-deep)}
-.stamp b{display:block}
-.stamp small{color:var(--ink-soft);font-size:.8em;line-height:1.45;display:block;margin-top:1px}
-.stamp .ck{color:var(--blue);font-weight:700;font-family:var(--mono);margin-right:6px}
+/* 클러스터 비트 (단어 사방 배치) */
+.clWrap{position:relative;width:100%;height:100%}
+.cl{position:absolute;font-weight:700;color:var(--w);letter-spacing:-.03em}
+.cl .n{font-family:var(--mono);font-size:.32em;color:var(--y);vertical-align:super;margin-right:.2em;letter-spacing:0}
+.cl1{top:14%;left:8%;font-size:clamp(34px,7.5vw,92px)}
+.cl2{top:16%;right:9%;font-size:clamp(30px,6.5vw,80px);transform:rotate(2deg)}
+.cl3{bottom:20%;left:14%;font-size:clamp(30px,6.8vw,84px);transform:rotate(-2deg)}
+.cl4{bottom:13%;right:12%;font-size:clamp(38px,8.5vw,104px);color:var(--y)}
 
-/* S5 CTA (마커 옐로) */
-.scene.yellow{background:var(--marker);color:var(--ink);flex-direction:column;align-items:flex-start;justify-content:center;text-align:left;gap:2.4%}
-.url{font-family:var(--mono);font-weight:600;font-size:clamp(15px,2.8vw,32px);background:var(--ink);color:var(--marker);padding:1.2% 2.4%;border-radius:10px;display:inline-flex;align-items:center;gap:14px}
-.url button{font-family:var(--mono);font-size:.55em;background:none;border:1px solid var(--marker);color:var(--marker);border-radius:6px;padding:4px 10px;cursor:pointer}
-.url button:hover{background:var(--marker);color:var(--ink)}
-.ctaRow{display:flex;gap:12px;flex-wrap:wrap}
-.ctaRow a,.ctaRow button{font-family:var(--mono);font-size:clamp(12px,1.4vw,15px);text-decoration:none;border:1.5px solid var(--ink);border-radius:8px;padding:9px 16px;color:var(--ink);background:transparent;cursor:pointer;transition:transform .15s,background .15s}
-.ctaRow a:hover,.ctaRow button:hover{transform:translateY(-2px);background:var(--paper)}
-.ctaRow a.solid{background:var(--ink);color:var(--marker)}
+/* CTA */
+.cta{display:flex;flex-direction:column;align-items:center;gap:3%}
+.cta .url{font-family:var(--mono);font-weight:600;font-size:clamp(16px,3.4vw,38px);color:var(--b);background:var(--y);padding:1.4% 2.6%;border-radius:12px;display:inline-flex;align-items:center;gap:16px}
+.cta .url button{font-family:var(--mono);font-size:.5em;background:var(--b);border:none;color:var(--y);border-radius:6px;padding:6px 12px;cursor:pointer}
+.cta .url button:hover{opacity:.85}
+.ctaRow{display:flex;gap:12px;flex-wrap:wrap;justify-content:center}
+.ctaRow a,.ctaRow button{font-family:var(--mono);font-size:clamp(12px,1.4vw,15px);text-decoration:none;border:1.5px solid #3A3D4A;border-radius:8px;padding:9px 16px;color:var(--w);background:transparent;cursor:pointer;transition:transform .15s,border-color .15s,color .15s}
+.ctaRow a:hover,.ctaRow button:hover{transform:translateY(-2px);border-color:var(--y);color:var(--y)}
 
 /* 포스터 */
-.overlay{position:absolute;inset:0;z-index:5;display:flex;flex-direction:column;align-items:flex-start;justify-content:center;gap:3%;padding:6% 7%;text-align:left;background:
-  repeating-linear-gradient(0deg, transparent 0 31px, rgba(43,73,199,.05) 31px 32px),
-  repeating-linear-gradient(90deg, transparent 0 31px, rgba(43,73,199,.04) 31px 32px),
-  var(--paper)}
+.overlay{position:absolute;inset:0;z-index:5;background:var(--b);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4%;text-align:center;padding:5%}
 .overlay.hide{display:none}
-.overlay h2{font-family:var(--serif);font-weight:700;font-size:clamp(26px,5vw,58px);line-height:1.35}
-.bigbtn{font-family:var(--mono);font-size:clamp(14px,1.8vw,18px);background:var(--ink);color:var(--marker);border:none;border-radius:999px;padding:14px 34px;cursor:pointer;transition:transform .15s;animation:pulse 2.2s ease-in-out infinite}
-.bigbtn:hover{transform:scale(1.06)}
-@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(32,34,46,.35)}50%{box-shadow:0 0 0 12px rgba(32,34,46,0)}}
+.overlay .t1{font-weight:700;font-size:clamp(34px,7.5vw,92px);letter-spacing:-.04em;line-height:1.2}
+.overlay .t1 em{font-style:normal;color:var(--y)}
+.overlay .t2{font-family:var(--mono);font-size:clamp(12px,1.5vw,16px);color:var(--dim)}
+.bigbtn{font-family:var(--mono);font-size:clamp(14px,1.8vw,18px);background:var(--y);color:var(--b);border:none;border-radius:999px;padding:14px 38px;cursor:pointer;transition:transform .15s;animation:pulse 2s ease-in-out infinite}
+.bigbtn:hover{transform:scale(1.07)}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(255,216,77,.35)}50%{box-shadow:0 0 0 14px rgba(255,216,77,0)}}
 
 /* 컨트롤 */
-.ctrl{display:flex;align-items:center;gap:12px;margin-top:12px;font-family:var(--mono)}
-.ctrl>button{background:none;border:1.5px solid #3A3E52;color:#CFD2DE;border-radius:8px;padding:7px 13px;font-size:13px;cursor:pointer}
-.ctrl>button:hover{border-color:var(--marker);color:var(--marker)}
-.dots{flex:1;display:flex;gap:8px}
-.dots button{flex:1;height:8px;padding:0;border:none;border-radius:5px;background:#2A2D3D;position:relative;overflow:hidden;cursor:pointer}
-.dots button .p{position:absolute;inset:0 auto 0 0;width:0;background:var(--marker);border-radius:5px}
-.dots button.done .p{width:100%}
-.hint2{margin-top:8px;font-family:var(--mono);font-size:12px;color:#5A5E70;text-align:center}
+.ctrl{display:flex;align-items:center;gap:12px;margin-top:12px}
+.ctrl>button{background:none;border:1.5px solid #3A3E52;color:#CFD2DE;border-radius:8px;padding:7px 13px;font-family:var(--mono);font-size:13px;cursor:pointer}
+.ctrl>button:hover{border-color:var(--y);color:var(--y)}
+.bar{flex:1;height:9px;background:#23252F;border-radius:6px;cursor:pointer;position:relative}
+.bar .fill{position:absolute;inset:0 auto 0 0;width:0;background:var(--y);border-radius:6px}
+.hint2{margin-top:8px;font-family:var(--mono);font-size:12px;color:#4E5160;text-align:center}
 
 @media (prefers-reduced-motion:reduce){
-  .scene .fx,.scene.on .fx{animation:none !important;opacity:1}
-  .swipe,.swipe.run{display:none}
+  .slam,.slide,.rise,.flashIn,.fadeIn{animation:fadeIn .01s both !important}
   .caret{animation:none}.bigbtn{animation:none}
 }
-@media (max-width:640px){.grid{grid-template-columns:1fr 1fr}}
 </style>
 </head>
 <body>
 
 <div class="frame">
   <div class="topbar">
-    <span><b>EleninJayTech / claude</b> · 소개 (25초)</span>
+    <span><b>EleninJayTech / claude</b> · 소개 (20초)</span>
     <span><a href="index.html">사용법</a> · <a href="demo.html">설치 시연</a> · <a href="https://github.com/EleninJayTech/claude">GitHub</a></span>
   </div>
 
-  <div class="stage" id="stage" aria-label="소개 영상">
+  <div class="stage b" id="stage" aria-label="소개 영상">
+    <div id="host" aria-live="off"></div>
 
-    <!-- S1 핵심 선언 -->
-    <section class="scene paper left" data-dur="4200">
-      <span class="bignum" aria-hidden="true">00</span>
-      <p class="kicker fx" style="--d:.05s">CLAUDE CODE 드롭인 문서</p>
-      <h1 class="huge">
-        <span class="fx strike" style="--d:.3s;display:block">문서를 넣는다.</span>
-        <span class="fx strike" style="--d:1.2s;display:block">한 문장 말한다.</span>
-        <span class="fx pop" style="--d:2.2s;display:inline-block"><span class="mark">끝.</span></span>
-      </h1>
-    </section>
-
-    <!-- S2 그 한 문장 -->
-    <section class="scene dark left" data-dur="5200">
-      <span class="bignum" aria-hidden="true">01</span>
-      <p class="kicker fx" style="--d:.05s">그 한 문장</p>
-      <div class="strip">
-        <p class="cmdline fx" style="--d:.3s"><span class="pr">❯ </span><span id="typed"></span><span class="caret"></span></p>
-        <p class="ok fx" style="--d:3.4s">✓ 감지 → 선택 → 설치 → 검증까지, Claude가 진행</p>
-      </div>
-    </section>
-
-    <!-- S3 설치되는 것 -->
-    <section class="scene paper left" data-dur="6400">
-      <span class="bignum" aria-hidden="true">06</span>
-      <p class="kicker fx" style="--d:.05s">체크한 것만 설치</p>
-      <div class="grid">
-        <div class="stamp fx pop" style="--d:.3s"><b><span class="ck">✓</span>어제를 기억</b><small>작업 일지 + /resume·/wrap</small></div>
-        <div class="stamp fx pop" style="--d:.75s"><b><span class="ck">✓</span>비밀 파일 잠금</b><small>읽지도, 내보내지도 못하게</small></div>
-        <div class="stamp fx pop" style="--d:1.2s"><b><span class="ck">✓</span>AI 역할 분담</b><small>비싼 모델·싼 모델 팀</small></div>
-        <div class="stamp fx pop" style="--d:1.65s"><b><span class="ck">✓</span>자동 검사원</b><small>고칠 때마다 검사 실행</small></div>
-        <div class="stamp fx pop" style="--d:2.1s"><b><span class="ck">✓</span>말투 커스텀</b><small>설명형·다이어그램·학습 모드</small></div>
-        <div class="stamp fx pop" style="--d:2.55s"><b><span class="ck">✓</span>예약 실행</b><small>꺼져 있어도 밤에 알아서 (Pro+)</small></div>
-      </div>
-      <p class="mid fx" style="--d:3.3s">이 페이지의 디자인도 이 문서(frontend-design·svg-design)로 만든 것.</p>
-    </section>
-
-    <!-- S4 신뢰 -->
-    <section class="scene dark left" data-dur="4600">
-      <span class="bignum" aria-hidden="true">✓</span>
-      <p class="kicker fx" style="--d:.05s">그리고 원칙</p>
-      <h2 class="huge">
-        <span class="fx strike" style="--d:.3s;display:block">공식 문서로 <span class="mark">그날 확인</span>.</span>
-        <span class="fx strike" style="--d:1.6s;display:block">말 대신 <span class="mark">증거</span>.</span>
-      </h2>
-    </section>
-
-    <!-- S5 CTA -->
-    <section class="scene yellow" data-dur="9000">
-      <p class="kicker fx" style="--d:.05s;color:var(--ink-soft)">GET STARTED — 무료 · 문서 7장 · 선택 설치</p>
-      <h2 class="huge fx" style="--d:.3s">지금 시작하세요.</h2>
-      <p class="url fx pop" style="--d:1s"><span>eleninjaytech.github.io/claude</span><button id="btnCopy" title="주소 복사">복사</button></p>
-      <div class="ctaRow fx" style="--d:1.8s">
-        <a class="solid" href="index.html">사용법 보기</a>
-        <a href="demo.html">설치 과정 시연</a>
-        <a href="https://github.com/EleninJayTech/claude">GitHub</a>
-        <button id="btnReplay">↺ 다시 보기</button>
-      </div>
-    </section>
-
-    <div class="swipe" id="swipe" aria-hidden="true"></div>
-
-    <!-- 포스터 -->
     <div class="overlay" id="poster">
-      <p class="kicker">EleninJayTech / claude · 25초 소개</p>
-      <h2>Claude Code 세팅,<br><span class="mark">말 한마디</span>로.</h2>
+      <p class="t1">세팅,<br><em>말 한마디</em>로.</p>
+      <p class="t2">Claude Code 드롭인 문서 · 20초</p>
       <button class="bigbtn" id="btnStart">▶ 재생</button>
     </div>
   </div>
 
   <div class="ctrl">
     <button id="btnPlay" aria-pressed="false">⏸</button>
-    <div class="dots" id="dots" aria-label="장면 이동"></div>
+    <div class="bar" id="bar" role="slider" aria-label="진행" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" tabindex="0"><div class="fill" id="fill"></div></div>
   </div>
-  <p class="hint2">스페이스바: 재생/일시정지 · 막대 클릭: 장면 이동 · 16:9 그대로 화면 녹화하면 유튜브용 영상</p>
+  <p class="hint2">화면 클릭·스페이스바: 재생/일시정지 · 막대 클릭: 이동 · 16:9 그대로 화면 녹화하면 유튜브용 영상</p>
 </div>
 
 <script>
 "use strict";
-const stage=document.getElementById("stage"),
-      scenes=[...stage.querySelectorAll(".scene")],
-      poster=document.getElementById("poster"), swipe=document.getElementById("swipe"),
-      btnStart=document.getElementById("btnStart"), btnReplay=document.getElementById("btnReplay"),
-      btnPlay=document.getElementById("btnPlay"), btnCopy=document.getElementById("btnCopy"),
-      dots=document.getElementById("dots");
+const PROMPT='"00_통합-설치.md 를 학습해서 이 프로젝트에 적용해줘"';
+/* 비트: t=단어, s=서브, m=배경(w/b/y), a=애니메이션, d=길이(ms) */
+const BEATS=[
+  {t:"문서를",      m:"w", a:"slam",  d:820},
+  {t:"넣는다.",     m:"b", a:"slam",  d:820},
+  {t:"한 문장",     m:"w", a:"slide", d:800},
+  {t:"말한다.",     m:"b", a:"slam",  d:850},
+  {t:"끝.",         m:"y", a:"flashIn", d:1350},
+  {type:"cmd",      m:"b", d:3300},
+  {type:"cluster",  m:"b", d:2700},
+  {t:"기억.",  s:"어제 일을 오늘 이어서 — /resume · /wrap", m:"w", a:"slam", d:1650},
+  {t:"잠금.",  s:"비밀번호·열쇠 파일, 읽지도 내보내지도 못하게", m:"b", a:"slam", d:1650},
+  {t:"분담.",  s:"어려운 건 비싼 모델 · 단순한 건 싼 모델", m:"w", a:"slam", d:1650},
+  {t:"검사.",  s:"\"됐다\" 대신 실행 증거로 보고", m:"b", a:"slam", d:1650},
+  {t:"전부,",       m:"w", a:"rise",  d:700},
+  {t:"공식 문서로", m:"w", a:"rise",  d:800},
+  {t:"그날 확인.",  m:"y", a:"slam",  d:1500},
+  {type:"cta",      m:"b", d:0}
+];
+const TOTAL=BEATS.reduce((a,b)=>a+b.d,0);
+
+const stage=document.getElementById("stage"), host=document.getElementById("host"),
+      poster=document.getElementById("poster"), fill=document.getElementById("fill"),
+      bar=document.getElementById("bar"), btnPlay=document.getElementById("btnPlay"),
+      btnStart=document.getElementById("btnStart");
 const RM=matchMedia("(prefers-reduced-motion: reduce)").matches;
-const PROMPT='00_통합-설치.md 를 학습해서 이 프로젝트에 적용해줘';
-let cur=-1, playing=false, timer=null, t0=0, remain=0, typeTimer=null, raf=null;
+let cur=-1, playing=false, timer=null, t0=0, remain=0, typeTimer=null, raf=null, ended=false;
 
-scenes.forEach((s,i)=>{ const b=document.createElement("button");
-  b.setAttribute("aria-label","장면 "+(i+1)); b.innerHTML="<span class='p'></span>";
-  b.addEventListener("click",()=>{ show(i); if(!playing) togglePlay(true); });
-  dots.appendChild(b); });
-const dotEls=[...dots.children];
+function setBg(m){ stage.classList.remove("w","b","y"); stage.classList.add(m); }
+function el(tag,cls,html){ const e=document.createElement(tag); if(cls)e.className=cls; if(html!==undefined)e.innerHTML=html; return e; }
 
-function typeInto(){ const el=document.getElementById("typed");
-  el.textContent=""; clearInterval(typeTimer);
-  if(RM){ el.textContent=PROMPT; return; }
-  let i=0; typeTimer=setInterval(()=>{ el.textContent=PROMPT.slice(0,++i);
-    if(i>=PROMPT.length) clearInterval(typeTimer); },26); }
+function render(b){
+  host.innerHTML=""; setBg(b.m);
+  if(b.type==="cmd"){
+    const c=el("p","cmdT fadeIn","<span class='pr'>❯ </span><span class='hl' id='typed'></span><span class='caret'></span>");
+    host.appendChild(c);
+    const ok=el("p","cmdOk","✓ 감지 → 선택 → 설치 → 검증, Claude가 진행"); ok.style.opacity="0"; host.appendChild(ok);
+    clearInterval(typeTimer);
+    const tEl=c.querySelector("#typed");
+    if(RM){ tEl.textContent=PROMPT; ok.style.opacity="1"; ok.className="cmdOk fadeIn"; return; }
+    let i=0; typeTimer=setInterval(()=>{ tEl.textContent=PROMPT.slice(0,++i);
+      if(i>=PROMPT.length){ clearInterval(typeTimer); ok.className="cmdOk rise"; ok.style.opacity=""; } },30);
+  }
+  else if(b.type==="cluster"){
+    const w=el("div","clWrap");
+    [["감지","1"],["선택","2"],["설치","3"],["검증","4"]].forEach(([t,n],k)=>{
+      const c=el("span","cl cl"+n+" flashIn","<span class='n'>0"+n+"</span>"+t);
+      c.style.animationDelay=(RM?0:k*0.42)+"s"; w.appendChild(c); });
+    host.appendChild(w);
+  }
+  else if(b.type==="cta"){
+    const c=el("div","cta fadeIn",
+      "<p class='kw' style='font-size:clamp(30px,6.5vw,78px)'>지금 시작하세요.</p>"+
+      "<p class='url'><span>eleninjaytech.github.io/claude</span><button id='btnCopy'>복사</button></p>"+
+      "<div class='ctaRow'><a href='index.html'>사용법</a><a href='demo.html'>설치 시연</a>"+
+      "<a href='https://github.com/EleninJayTech/claude'>GitHub</a><button id='btnReplay'>↺ 다시 보기</button></div>");
+    host.appendChild(c);
+    c.querySelector("#btnCopy").addEventListener("click",e=>{ e.stopPropagation();
+      navigator.clipboard.writeText("https://eleninjaytech.github.io/claude/")
+        .then(()=>{ e.target.textContent="복사됨 ✓"; setTimeout(()=>e.target.textContent="복사",1500); })
+        .catch(()=>{ e.target.textContent="Ctrl+C"; }); });
+    c.querySelector("#btnReplay").addEventListener("click",e=>{ e.stopPropagation(); seek(0); playOn(); });
+  }
+  else{
+    const w=el("p","kw "+b.a,b.t); host.appendChild(w);
+    if(b.s){ const s=el("p","sub rise",b.s); s.style.animationDelay=RM?"0s":".28s"; host.appendChild(s); }
+  }
+}
 
-function show(i){ clearTimeout(timer); clearInterval(typeTimer); cancelAnimationFrame(raf);
-  poster.classList.add("hide");
-  if(cur>=0) scenes[cur].classList.remove("on");
-  cur=i;
-  const s=scenes[i]; void s.offsetWidth; s.classList.add("on");
-  dotEls.forEach((d,k)=>{ d.classList.toggle("done",k<i); if(k>=i) d.querySelector(".p").style.width="0"; });
-  if(s.querySelector("#typed")) setTimeout(typeInto, RM?0:520);
-  remain=+s.dataset.dur; if(RM) remain=Math.max(remain,4500);
-  t0=performance.now(); tick(); schedule(); }
-
-function go(i){ if(RM || cur<0){ show(i); return; }   // 첫 장면·모션 최소화는 스와이프 생략
-  swipe.classList.remove("run"); void swipe.offsetWidth; swipe.classList.add("run");
-  setTimeout(()=>show(i), 230); }
+function show(i){ clearTimeout(timer); clearInterval(typeTimer);
+  poster.classList.add("hide"); ended=false;
+  cur=i; const b=BEATS[i]; render(b);
+  if(b.type==="cta"){ finish(); return; }
+  remain=RM?Math.max(b.d,2400):b.d; t0=performance.now(); schedule(); }
 
 function schedule(){ clearTimeout(timer); if(!playing) return;
-  timer=setTimeout(()=>{ (cur+1<scenes.length) ? go(cur+1) : finish(); }, remain); }
+  timer=setTimeout(()=>show(cur+1), remain); }
 
-function tick(){ cancelAnimationFrame(raf);
-  const dur=+scenes[cur].dataset.dur;
-  const loop=()=>{ if(cur<0) return;
-    const done=dur-remain+(playing?performance.now()-t0:0);
-    dotEls[cur].querySelector(".p").style.width=Math.min(100,done/dur*100)+"%";
+function elapsedBefore(i){ let s=0; for(let k=0;k<i;k++) s+=BEATS[k].d; return s; }
+function tickLoop(){ cancelAnimationFrame(raf);
+  const loop=()=>{ if(cur>=0 && !ended){
+    const b=BEATS[cur];
+    const inBeat=b.d - remain + (playing?performance.now()-t0:0);
+    const p=Math.min(100,(elapsedBefore(cur)+Math.min(inBeat,b.d))/TOTAL*100);
+    fill.style.width=p+"%"; bar.setAttribute("aria-valuenow",Math.round(p)); }
     raf=requestAnimationFrame(loop); };
   raf=requestAnimationFrame(loop); }
 
-function finish(){ playing=false; btnPlay.textContent="▶"; btnPlay.setAttribute("aria-pressed","false");
-  dotEls.forEach(d=>d.classList.add("done")); }
+function finish(){ playing=false; ended=true;
+  btnPlay.textContent="▶"; btnPlay.setAttribute("aria-pressed","false");
+  fill.style.width="100%"; bar.setAttribute("aria-valuenow",100); }
 
-function togglePlay(force){ const want=(force!==undefined)?force:!playing;
-  if(want===playing) return;
-  playing=want;
-  btnPlay.textContent=playing?"⏸":"▶"; btnPlay.setAttribute("aria-pressed",String(playing));
-  stage.classList.toggle("paused",!playing);
-  if(playing){ if(cur<0){ show(0); return; } t0=performance.now(); schedule(); tick(); }
-  else{ clearTimeout(timer); remain-=performance.now()-t0; } }
+function playOn(){ if(playing) return; playing=true;
+  btnPlay.textContent="⏸"; btnPlay.setAttribute("aria-pressed","true");
+  stage.classList.remove("paused");
+  if(cur<0){ show(0); } else { t0=performance.now(); schedule(); } tickLoop(); }
+function pauseOn(){ if(!playing) return; playing=false;
+  btnPlay.textContent="▶"; btnPlay.setAttribute("aria-pressed","false");
+  stage.classList.add("paused"); clearTimeout(timer); remain-=performance.now()-t0; }
 
-btnStart.addEventListener("click",()=>togglePlay(true));
-btnReplay.addEventListener("click",()=>{ togglePlay(true); show(0); });
-btnPlay.addEventListener("click",()=>{ (cur<0)?togglePlay(true):togglePlay(); });
-btnCopy.addEventListener("click",()=>{ navigator.clipboard.writeText("https://eleninjaytech.github.io/claude/")
-  .then(()=>{ btnCopy.textContent="복사됨 ✓"; setTimeout(()=>btnCopy.textContent="복사",1500); })
-  .catch(()=>{ btnCopy.textContent="Ctrl+C"; }); });
-document.addEventListener("keydown",e=>{ if(e.code==="Space" && !["BUTTON","A"].includes(e.target.tagName)){ e.preventDefault(); (cur<0)?togglePlay(true):togglePlay(); } });
+function seek(i){ pauseOn(); show(Math.max(0,Math.min(i,BEATS.length-1))); tickLoop(); }
+
+btnStart.addEventListener("click",e=>{ e.stopPropagation(); playOn(); });
+btnPlay.addEventListener("click",()=>{ if(ended){ seek(0); playOn(); } else playing?pauseOn():playOn(); });
+bar.addEventListener("click",e=>{ const r=bar.getBoundingClientRect();
+  const t=(e.clientX-r.left)/r.width*TOTAL; let s=0,i=0;
+  for(;i<BEATS.length-1;i++){ s+=BEATS[i].d; if(t<s) break; }
+  seek(i); playOn(); });
+stage.addEventListener("click",e=>{ if(["BUTTON","A"].includes(e.target.tagName)) return;
+  if(cur<0){ playOn(); return; } if(ended){ return; } playing?pauseOn():playOn(); });
+document.addEventListener("keydown",e=>{ if(e.code==="Space" && !["BUTTON","A"].includes(e.target.tagName)){
+  e.preventDefault(); if(cur<0||ended){ (ended&&seek(0)), playOn(); } else playing?pauseOn():playOn(); } });
 </script>
 </body>
 </html>
