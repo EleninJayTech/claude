@@ -47,6 +47,12 @@
 ## Phase 5.5 — 적용 기록 도입 (2026-08-04) ✅
 - [x] `dropin-applied` 한 줄 기록 + 재적용 분기(버전 diff·미선택 재질문) — 00 v1.4·01 v1.11·02 v1.10·03 v1.4·04 v1.2 ([[DEC-20260804-bsjeong87-01]])
 
+## Phase 6 — 문서 확장 2차 + 전면 재검증 (2026-08-04) ✅
+- [x] 전면 재검증(v2.1.221, 조사 에이전트 4종) — 정정 1건(중첩 스폰 기본 3) + "최근 재검증" 표기 분리 ([[DEC-20260804-bsjeong87-02]])
+- [x] 05_출력스타일.md v1.0 신설 (내장 4종 + 커스텀 output-styles, keep-coding-instructions 함정)
+- [x] 06_루틴-자동화.md v1.0 신설 (클라우드 스케줄 에이전트 — Pro+·preview·회사 게이트, docs/ROUTINES.md 기록 패턴) ([[DEC-20260804-bsjeong87-03]])
+- [x] 00 v1.6·CLAUDE.md·README·index.html 문서 목록 동기화
+
 ## Phase 4 — 유지보수 (예정)
 - [ ] **다음 재검증: 2027-01경** (00 §L, 6개월 주기)
   - `code.claude.com/docs/en/whats-new` 최신 항목
@@ -55,6 +61,8 @@
   - auto mode 요건(플랜·모델·프로바이더)·`disableAutoMode` 유지 여부(01 §J-1)
   - 03 소스 생존: `github.com/jarrodwatts/claude-hud` 설치 명령, `github.com/anthropics/skills`의 frontend-design 위치·설치 CLI, `claude mcp` 명령 체계, 부록 플러그인 생존·중복 재판정
   - 04: hooks 스키마·`claude-code-action` 버전·gh/glab 설치 명령
+  - 05: `outputStyle` 키·frontmatter(`keep-coding-instructions` 기본값)·내장 스타일 목록
+  - 06: **routines preview→GA 전환 여부(3개월 주기 권장)**·`/schedule` 명령·요금제 범위·시크릿 저장소 신설 여부
   - 00 §B 문서 목록·raw URL이 실제 저장소와 일치하는지
   - 갱신 후 각 문서 "최종 갱신" 날짜 수정
 
