@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Claude Code 드롭인 문서 — 소개 영상</title>
+<meta name="description" content="문서를 넣고 한 문장 말하면 Claude Code 구성이 끝납니다 — 1분 소개 영상(인터랙티브 HTML).">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=IBM+Plex+Sans+KR:wght@400;500;700&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#FCFCF8; --ink:#20222E; --ink-soft:#5A5E70;
+  --marker:#FFD84D; --marker-soft:#FFF3C2;
+  --blue:#2B49C7; --blue-soft:#E8ECFB; --line:#E5E4DB;
+  --dark:#171923; --dark2:#20222E; --dim:#9EA3B5; --green:#7BC97E;
+  --serif:'Gowun Batang','Nanum Myeongjo',serif;
+  --sans:'IBM Plex Sans KR','Pretendard','Malgun Gothic',sans-serif;
+  --mono:'IBM Plex Mono',Consolas,monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--sans);background:#0F1118;color:var(--ink);line-height:1.7;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px}
+a{color:var(--blue)}
+:focus-visible{outline:3px solid var(--marker);outline-offset:2px;border-radius:4px}
+
+.frame{width:min(1120px,100%)}
+.topbar{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:10px;font-family:var(--mono);font-size:12.5px;color:var(--dim)}
+.topbar b{color:var(--marker)}
+.topbar a{color:var(--dim);text-decoration:none;border-bottom:1px dotted var(--dim)}
+
+/* ── 16:9 스테이지 ── */
+.stage{position:relative;aspect-ratio:16/9;background:var(--dark);border-radius:14px;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.5)}
+.scene{position:absolute;inset:0;display:none;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:4%}
+.scene.on{display:flex}
+.scene.paper{background:var(--paper)}
+.scene.dark{background:var(--dark);color:#F2F1E9}
+
+/* 장면 요소 공통: --d 만큼 지연 후 등장 */
+.scene .fx{opacity:0}
+.scene.on .fx{animation:up .7s cubic-bezier(.2,.7,.2,1) forwards;animation-delay:var(--d,0s)}
+.scene.on .fx.pop{animation:pop .55s cubic-bezier(.2,1.4,.3,1) forwards;animation-delay:var(--d,0s)}
+@keyframes up{from{opacity:0;transform:translateY(26px)}to{opacity:1;transform:none}}
+@keyframes pop{0%{opacity:0;transform:scale(1.7) rotate(-4deg)}70%{opacity:1;transform:scale(.96) rotate(1deg)}100%{opacity:1;transform:scale(1) rotate(0)}}
+.stage.paused *{animation-play-state:paused !important}
+
+.kicker{font-family:var(--mono);font-size:clamp(11px,1.3vw,15px);letter-spacing:.22em;color:var(--dim);margin-bottom:2.2%}
+.paper .kicker{color:var(--ink-soft)}
+.big{font-family:var(--serif);font-weight:700;font-size:clamp(22px,4.6vw,52px);line-height:1.4;letter-spacing:-.01em}
+.mid{font-size:clamp(14px,1.9vw,21px);color:var(--dim);margin-top:2.4%}
+.paper .mid{color:var(--ink-soft)}
+.mark{background:linear-gradient(transparent 58%, var(--marker) 58%, var(--marker) 92%, transparent 92%);padding:0 2px}
+.dark .mark{color:var(--ink)}
+
+/* 장면 2: 고민 리스트 */
+.pains{margin-top:3%;display:flex;flex-direction:column;gap:2%;font-size:clamp(14px,2.1vw,22px);text-align:left}
+.pains .fx{display:flex;gap:14px;align-items:center}
+.pains .x{font-family:var(--mono);font-weight:600;color:#C0392B}
+
+/* 장면 3: goo 블롭 */
+.gooWrap{width:clamp(200px,32%,340px);margin-bottom:2%}
+.gooWrap svg{width:100%;height:auto;display:block}
+.blob{transform-box:fill-box;transform-origin:center}
+.scene.on .blob.m1{animation:merge1 2.6s ease-in-out .3s forwards}
+.scene.on .blob.m2{animation:merge2 2.6s ease-in-out .3s forwards}
+.scene.on .blob.m3{animation:merge3 2.6s ease-in-out .3s forwards}
+.scene.on .blob.m4{animation:merge4 2.6s ease-in-out .3s forwards}
+@keyframes merge1{to{transform:translate(52px,30px)}}
+@keyframes merge2{to{transform:translate(-58px,24px)}}
+@keyframes merge3{to{transform:translate(20px,-40px)}}
+@keyframes merge4{to{transform:translate(-26px,-34px)}}
+
+/* 장면 4: 스텝 + 프롬프트 */
+.steps{display:flex;gap:4%;margin-top:3%;justify-content:center;flex-wrap:wrap}
+.step{background:#fff;border:1.5px solid var(--ink);border-radius:12px;padding:2.2% 3%;font-size:clamp(13px,1.8vw,19px);text-align:left;max-width:44%}
+.step .n{font-family:var(--mono);font-weight:600;color:var(--blue);display:block;font-size:.85em}
+.say{font-family:var(--mono);font-size:clamp(12px,1.8vw,19px);background:var(--ink);color:var(--marker-soft);border-radius:10px;padding:2% 3%;margin-top:3%;min-height:2.6em;display:flex;align-items:center;max-width:92%}
+.caret{display:inline-block;width:.55em;height:1.15em;background:var(--marker-soft);margin-left:2px;animation:blink 1s steps(1) infinite;vertical-align:text-bottom}
+@keyframes blink{50%{opacity:0}}
+
+/* 장면 5: 스탬프 그리드 */
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2.4%;margin-top:3.4%;width:94%}
+.stamp{background:#fff;border:1.5px solid var(--line);border-radius:12px;padding:3% 4%;font-size:clamp(12px,1.7vw,18px);text-align:left}
+.stamp b{display:block;font-size:1.05em}
+.stamp small{color:var(--ink-soft);font-size:.82em;line-height:1.5;display:block;margin-top:2px}
+.stamp .ck{color:var(--blue);font-weight:700;font-family:var(--mono);margin-right:6px}
+
+/* 장면 6: 신뢰 라인 */
+.trust{margin-top:3%;display:flex;flex-direction:column;gap:2.2%;font-size:clamp(14px,2.1vw,22px)}
+.trust .fx{display:flex;gap:14px;align-items:center;text-align:left}
+.trust .ok{font-family:var(--mono);color:var(--green);font-weight:600}
+
+/* 장면 7: CTA */
+.url{font-family:var(--mono);font-weight:600;font-size:clamp(16px,3.2vw,36px);background:var(--marker);color:var(--ink);padding:1.4% 3%;border-radius:12px;margin-top:3%}
+.ghost{margin-top:2.4%;font-family:var(--mono);font-size:clamp(12px,1.5vw,16px);color:var(--dim)}
+
+/* ── 포스터/엔드 오버레이 ── */
+.overlay{position:absolute;inset:0;background:rgba(15,17,24,.86);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;color:#F2F1E9;z-index:5;text-align:center;padding:4%}
+.overlay.hide{display:none}
+.overlay h2{font-family:var(--serif);font-size:clamp(20px,3.4vw,36px);line-height:1.5}
+.overlay .sub2{color:var(--dim);font-size:clamp(13px,1.7vw,17px)}
+.bigbtn{font-family:var(--mono);font-size:clamp(14px,1.9vw,18px);background:var(--marker);color:var(--ink);border:none;border-radius:999px;padding:14px 34px;cursor:pointer;transition:transform .15s}
+.bigbtn:hover{transform:scale(1.05)}
+.overlay .links a{color:var(--marker-soft);margin:0 10px;font-family:var(--mono);font-size:14px}
+
+/* ── 컨트롤 바 ── */
+.ctrl{display:flex;align-items:center;gap:12px;margin-top:12px;font-family:var(--mono)}
+.ctrl button{background:none;border:1.5px solid #3A3E52;color:#CFD2DE;border-radius:8px;padding:7px 13px;font-family:var(--mono);font-size:13px;cursor:pointer}
+.ctrl button:hover{border-color:var(--marker);color:var(--marker)}
+.dots{flex:1;display:flex;gap:8px;align-items:center}
+.dots button{flex:1;height:8px;padding:0;border:none;border-radius:5px;background:#2A2D3D;position:relative;overflow:hidden;cursor:pointer}
+.dots button .p{position:absolute;inset:0 auto 0 0;width:0;background:var(--marker);border-radius:5px}
+.dots button.done .p{width:100%}
+.hint2{margin-top:8px;font-family:var(--mono);font-size:12px;color:#5A5E70;text-align:center}
+
+@media (prefers-reduced-motion:reduce){
+  .scene .fx,.scene.on .fx{animation:none !important;opacity:1}
+  .scene.on .blob{animation:none !important}
+  .caret{animation:none}
+}
+@media (max-width:640px){.grid{grid-template-columns:1fr 1fr}.step{max-width:100%}}
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" aria-hidden="true" style="position:absolute">
+  <defs>
+    <filter id="goo" color-interpolation-filters="sRGB">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="10" result="blur"/>
+      <feColorMatrix in="blur" mode="matrix" result="goo" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 19 -8"/>
+      <feComposite in="SourceGraphic" in2="goo" operator="atop"/>
+    </filter>
+  </defs>
+</svg>
+
+<div class="frame">
+  <div class="topbar">
+    <span><b>EleninJayTech / claude</b> · 소개 영상 (약 1분)</span>
+    <span><a href="index.html">사용법</a> · <a href="demo.html">설치 시연</a> · <a href="https://github.com/EleninJayTech/claude">GitHub</a></span>
+  </div>
+
+  <div class="stage" id="stage" aria-label="소개 영상">
+
+    <!-- S1 후킹 -->
+    <section class="scene dark" data-dur="6500">
+      <p class="kicker fx" style="--d:.1s">CLAUDE CODE</p>
+      <h1 class="big fx" style="--d:.5s">AI에게 개발을 시키는 시대.</h1>
+      <p class="big fx" style="--d:1.7s" aria-hidden="false">그런데… <span class="mark">세팅</span>은 누가 해주죠?</p>
+    </section>
+
+    <!-- S2 문제 -->
+    <section class="scene paper" data-dur="8000">
+      <p class="kicker fx" style="--d:.1s">THE PROBLEM</p>
+      <h2 class="big fx" style="--d:.3s">Claude Code는 강력하지만</h2>
+      <div class="pains">
+        <p class="fx" style="--d:1.2s"><span class="x">✗</span> 대화를 끄면 어제 일을 전부 잊는다</p>
+        <p class="fx" style="--d:2.4s"><span class="x">✗</span> 비밀번호·열쇠 파일을 읽을까 불안하다</p>
+        <p class="fx" style="--d:3.6s"><span class="x">✗</span> 설정 파일은 낯설고, 최신 정보는 계속 바뀐다</p>
+      </div>
+    </section>
+
+    <!-- S3 해법 -->
+    <section class="scene dark" data-dur="7500">
+      <div class="gooWrap fx" style="--d:.1s" aria-hidden="true">
+        <svg viewBox="0 0 300 220">
+          <g filter="url(#goo)">
+            <circle class="blob m1" cx="90"  cy="80"  r="42" fill="#FFD84D"/>
+            <circle class="blob m2" cx="210" cy="70"  r="36" fill="#FFCF1F"/>
+            <circle class="blob m3" cx="120" cy="160" r="38" fill="#FFE175"/>
+            <circle class="blob m4" cx="200" cy="150" r="32" fill="#F5C400"/>
+          </g>
+        </svg>
+      </div>
+      <p class="kicker fx" style="--d:.6s">THE IDEA</p>
+      <h2 class="big fx" style="--d:1s">그래서, 설명서를<br><span class="mark">AI가 읽게</span> 했습니다.</h2>
+      <p class="mid fx" style="--d:2.6s">사람이 따라 하는 설명서가 아니라 — Claude가 읽고 직접 실행하는 문서.</p>
+    </section>
+
+    <!-- S4 방법 -->
+    <section class="scene paper" data-dur="9000">
+      <p class="kicker fx" style="--d:.1s">HOW IT WORKS</p>
+      <h2 class="big fx" style="--d:.3s">하는 일은 두 가지뿐</h2>
+      <div class="steps">
+        <div class="step fx pop" style="--d:1.1s"><span class="n">STEP 1</span>문서 한 개를 작업 폴더에 넣는다</div>
+        <div class="step fx pop" style="--d:1.9s"><span class="n">STEP 2</span>한 문장 말한다</div>
+      </div>
+      <div class="say fx" style="--d:2.7s"><span id="typed"></span><span class="caret" id="typedCaret"></span></div>
+    </section>
+
+    <!-- S5 얻는 것 -->
+    <section class="scene paper" data-dur="10000">
+      <p class="kicker fx" style="--d:.1s">WHAT YOU GET</p>
+      <h2 class="big fx" style="--d:.3s">체크한 것만, 알아서 설치됩니다</h2>
+      <div class="grid">
+        <div class="stamp fx pop" style="--d:1.2s"><b><span class="ck">✓</span>어제를 기억</b><small>작업 일지 + /resume·/wrap — 내일도 이어서</small></div>
+        <div class="stamp fx pop" style="--d:2.0s"><b><span class="ck">✓</span>비밀 파일 잠금</b><small>비밀번호·인증서는 읽지도 내보내지도 못하게</small></div>
+        <div class="stamp fx pop" style="--d:2.8s"><b><span class="ck">✓</span>AI 역할 분담</b><small>어려운 판단은 비싼 모델, 단순 작업은 싼 모델</small></div>
+        <div class="stamp fx pop" style="--d:3.6s"><b><span class="ck">✓</span>자동 검사원</b><small>고칠 때마다 검사 — "됐다" 대신 증거</small></div>
+        <div class="stamp fx pop" style="--d:4.4s"><b><span class="ck">✓</span>말투·역할 커스텀</b><small>설명 위주·다이어그램 우선·학습 모드</small></div>
+        <div class="stamp fx pop" style="--d:5.2s"><b><span class="ck">✓</span>자동 실행 예약</b><small>컴퓨터가 꺼져 있어도 밤에 알아서 (Pro+)</small></div>
+      </div>
+    </section>
+
+    <!-- S6 신뢰 -->
+    <section class="scene dark" data-dur="8000">
+      <p class="kicker fx" style="--d:.1s">WHY TRUST IT</p>
+      <h2 class="big fx" style="--d:.3s">기억이 아니라, <span class="mark">확인</span>으로 만듭니다</h2>
+      <div class="trust">
+        <p class="fx" style="--d:1.4s"><span class="ok">✓</span> 모든 내용은 Anthropic 공식 문서를 그날 직접 확인해 반영</p>
+        <p class="fx" style="--d:2.6s"><span class="ok">✓</span> 문서마다 검증 날짜·버전 기록, 6개월마다 재점검</p>
+        <p class="fx" style="--d:3.8s"><span class="ok">✓</span> 설치 결과는 말이 아니라 실행 증거로 보고</p>
+      </div>
+    </section>
+
+    <!-- S7 CTA -->
+    <section class="scene dark" data-dur="9000">
+      <p class="kicker fx" style="--d:.1s">GET STARTED</p>
+      <h2 class="big fx" style="--d:.4s">문서 하나, 한 문장.<br>지금 시작하세요.</h2>
+      <p class="url fx pop" style="--d:1.6s">eleninjaytech.github.io/claude</p>
+      <p class="ghost fx" style="--d:2.6s">github.com/EleninJayTech/claude · 무료 · 문서 7장 · 원하는 것만 선택 설치</p>
+    </section>
+
+    <!-- 포스터 -->
+    <div class="overlay" id="poster">
+      <p class="kicker">EleninJayTech / claude</p>
+      <h2>문서를 넣고, 한 문장 말하면,<br>구성이 끝납니다.</h2>
+      <p class="sub2">Claude Code 드롭인 문서 · 1분 소개</p>
+      <button class="bigbtn" id="btnStart">▶ 재생</button>
+    </div>
+
+    <!-- 엔딩 -->
+    <div class="overlay hide" id="ending">
+      <h2>시청 감사합니다 🙌</h2>
+      <div class="links">
+        <a href="demo.html">설치 과정 시연 보기</a> ·
+        <a href="index.html">사용법 페이지</a> ·
+        <a href="https://github.com/EleninJayTech/claude">GitHub 저장소</a>
+      </div>
+      <button class="bigbtn" id="btnReplay">↺ 다시 보기</button>
+    </div>
+  </div>
+
+  <div class="ctrl">
+    <button id="btnPlay" aria-pressed="false">⏸</button>
+    <div class="dots" id="dots" aria-label="장면 이동"></div>
+  </div>
+  <p class="hint2">스페이스바: 재생/일시정지 · 막대 클릭: 장면 이동 · 화면 녹화하면 그대로 유튜브용 영상이 됩니다</p>
+</div>
+
+<script>
+"use strict";
+const stage=document.getElementById("stage"),
+      scenes=[...stage.querySelectorAll(".scene")],
+      poster=document.getElementById("poster"), ending=document.getElementById("ending"),
+      btnStart=document.getElementById("btnStart"), btnReplay=document.getElementById("btnReplay"),
+      btnPlay=document.getElementById("btnPlay"), dots=document.getElementById("dots");
+const RM=matchMedia("(prefers-reduced-motion: reduce)").matches;
+const PROMPT='"00_통합-설치.md 를 학습해서 이 프로젝트에 적용해줘"';
+let cur=-1, playing=false, timer=null, t0=0, remain=0, typeTimer=null, raf=null;
+
+scenes.forEach((s,i)=>{ const b=document.createElement("button");
+  b.setAttribute("aria-label","장면 "+(i+1)); b.innerHTML="<span class='p'></span>";
+  b.addEventListener("click",()=>{ go(i); if(!playing) togglePlay(true); });
+  dots.appendChild(b); });
+const dotEls=[...dots.children];
+
+function typeInto(){ const el=document.getElementById("typed"), caret=document.getElementById("typedCaret");
+  el.textContent=""; caret.style.display="inline-block"; clearInterval(typeTimer);
+  if(RM){ el.textContent=PROMPT; return; }
+  let i=0; typeTimer=setInterval(()=>{ el.textContent=PROMPT.slice(0,++i);
+    if(i>=PROMPT.length) clearInterval(typeTimer); },46); }
+
+function go(i){ clearTimeout(timer); clearInterval(typeTimer); cancelAnimationFrame(raf);
+  poster.classList.add("hide"); ending.classList.add("hide");
+  if(cur>=0) scenes[cur].classList.remove("on");
+  cur=i;
+  const s=scenes[i]; void s.offsetWidth; s.classList.add("on");
+  dotEls.forEach((d,k)=>{ d.classList.toggle("done",k<i); if(k>=i) d.querySelector(".p").style.width="0"; });
+  if(s.querySelector("#typed")) setTimeout(typeInto, RM?0:3100);
+  remain=+s.dataset.dur; if(RM) remain=Math.max(remain,5000);
+  t0=performance.now(); tick(); schedule(); }
+
+function schedule(){ clearTimeout(timer);
+  if(!playing) return;
+  timer=setTimeout(()=>{ (cur+1<scenes.length) ? go(cur+1) : finish(); }, remain); }
+
+function tick(){ cancelAnimationFrame(raf);
+  const dur=+scenes[cur].dataset.dur;
+  const loop=()=>{ if(cur<0) return;
+    const done=dur-remain+(playing?performance.now()-t0:0);
+    dotEls[cur].querySelector(".p").style.width=Math.min(100,done/dur*100)+"%";
+    raf=requestAnimationFrame(loop); };
+  raf=requestAnimationFrame(loop); }
+
+function finish(){ playing=false; btnPlay.textContent="▶"; btnPlay.setAttribute("aria-pressed","false");
+  dotEls.forEach(d=>d.classList.add("done")); ending.classList.remove("hide"); }
+
+function togglePlay(force){ const want=(force!==undefined)?force:!playing;
+  if(want===playing) return;
+  playing=want;
+  btnPlay.textContent=playing?"⏸":"▶"; btnPlay.setAttribute("aria-pressed",String(playing));
+  stage.classList.toggle("paused",!playing);
+  if(playing){ if(cur<0){ go(0); return; } t0=performance.now(); schedule(); tick(); }
+  else{ clearTimeout(timer); remain-=performance.now()-t0; } }
+
+btnStart.addEventListener("click",()=>{ togglePlay(true); });
+btnReplay.addEventListener("click",()=>{ togglePlay(true); go(0); });
+btnPlay.addEventListener("click",()=>{ if(cur<0){ togglePlay(true); } else togglePlay(); });
+document.addEventListener("keydown",e=>{ if(e.code==="Space" && !["BUTTON","A"].includes(e.target.tagName)){ e.preventDefault(); (cur<0)?togglePlay(true):togglePlay(); } });
+</script>
+</body>
+</html>

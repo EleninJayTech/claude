@@ -6,6 +6,7 @@
 
 📖 **처음이라면**: [사용법 페이지(GitHub Pages)](https://eleninjaytech.github.io/claude/)를 먼저 보세요. 개발을 몰라도 이해할 수 있게 썼습니다.
 🎬 **설치가 어떻게 진행되는지 보려면**: [설치 시연 페이지](https://eleninjaytech.github.io/claude/demo.html) — 영상처럼 재생되는 인터랙티브 시연입니다.
+▶️ **1분 만에 개념을 잡으려면**: [소개 영상 페이지](https://eleninjaytech.github.io/claude/intro.html) — 유튜브 소개 영상 스타일의 1분 프레젠테이션(화면 녹화하면 그대로 영상으로 쓸 수 있습니다).
 
 ## 사용법 (세 줄)
 

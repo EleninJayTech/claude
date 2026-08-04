@@ -1,5 +1,7 @@
 # PROGRESS (최상단 append)
 
+- [docs][Done] `intro.html` 1분 소개 영상 페이지 신설([[DEC-20260805-bsjeong87-02]]) — 유튜브 소개용 시네마틱 프레젠테이션: 16:9 스테이지, 7장면 자동 전환(후킹→문제→해법(goo 블롭 병합)→방법(프롬프트 타이핑)→얻는 것(스탬프 6종)→신뢰→CTA), 포스터/엔딩 오버레이·장면 막대 시킹·일시정지·스페이스바·reduced-motion 대응. index.html 히어로 CTA 1순위로, demo.html·README 상호 링크. 검증: node --check 통과, Pages HTTP 200 — @bsjeong87 (main) 2026-08-05
+
 - [docs][Done] `demo.html` 설치 시연 페이지 신설([[DEC-20260805-bsjeong87-01]]) — 소개·사용법을 영상처럼 보여주는 인터랙티브 시연(7챕터: 소개→한 문장→고르기→설치와 증거→매일 루틴→업데이트→끝). 터미널 재생 엔진(타이핑 효과·체크리스트 애니메이션·재생/일시정지/챕터 점프/진행 바 시킹/배속 1~2×/자막, 스페이스바 단축키, prefers-reduced-motion 대응), index.html 디자인 토큰 재사용. index.html 히어로에 "▶ 설치 시연 보기" 버튼·README에 🎬 링크 추가, CLAUDE.md 구성물 표 반영. 검증: script 블록 node --check 통과, Pages 배포 확인 — @bsjeong87 (main) 2026-08-05
 
 - [docs][Done] `/reverify` 프로젝트 스킬 신설(`.claude/skills/reverify/SKILL.md`, 수동 호출 전용) — 오늘 수행한 전면 재검증+확장 조사를 한 명령으로 재실행 가능하게 절차화: ① 조사 에이전트 4종 병렬(모델·권한·소스 생존·신규 후보) ② 정정 수술 반영+날짜 규칙(최근 재검증은 전 문서, DEC-0804-02) ③ 확장 후보는 보고만(신설은 승인 후) ④ PROGRESS/DEC/커밋+증거 보고. CLAUDE.md 관리 규칙에 포인터 한 줄 — @bsjeong87 (main) 2026-08-04
