@@ -52,6 +52,8 @@
 - [x] 05_출력스타일.md v1.0 신설 (내장 4종 + 커스텀 output-styles, keep-coding-instructions 함정)
 - [x] 06_루틴-자동화.md v1.0 신설 (클라우드 스케줄 에이전트 — Pro+·preview·회사 게이트, docs/ROUTINES.md 기록 패턴) ([[DEC-20260804-bsjeong87-03]])
 - [x] 00 v1.6·CLAUDE.md·README·index.html 문서 목록 동기화
+- [x] `/reverify` 프로젝트 스킬 — 재검증+확장 조사를 한 명령으로 (2026-08-04)
+- [x] `demo.html` 설치 시연 페이지 — 터미널 재생형 인터랙티브, Pages 배포 확인 (2026-08-05, [[DEC-20260805-bsjeong87-01]])
 
 ## Phase 4 — 유지보수 (예정)
 - [ ] **다음 재검증: 2027-01경** (00 §L, 6개월 주기)
