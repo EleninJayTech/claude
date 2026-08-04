@@ -4,12 +4,12 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Claude Code 드롭인 문서 — 소개 영상</title>
-<meta name="description" content="문서를 넣는다. 한 문장 말한다. 끝. — 키네틱 타이포 20초 소개.">
+<meta name="description" content="문서를 넣는다. 한 문장 말한다. 끝. — 키네틱 타이포 18초 소개.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;700&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
 <style>
 :root{
-  --w:#F7F6F2; --b:#0C0C0E; --y:#FFD84D; --dim:#8B8E9C;
+  --w:#F7F6F2; --b:#0C0C0E; --y:#FFD84D; --dim:#8B8E9C; --green:#7BC97E;
   --sans:'IBM Plex Sans KR','Pretendard','Malgun Gothic',sans-serif;
   --mono:'IBM Plex Mono',Consolas,monospace;
 }
@@ -28,7 +28,7 @@ a{color:var(--y)}
 .stage.w{background:var(--w)}
 .stage.b{background:var(--b)}
 .stage.y{background:var(--y)}
-.stage.paused .kw,.stage.paused .sub,.stage.paused .cl,.stage.paused .cmdT{animation-play-state:paused !important}
+.stage.paused *{animation-play-state:paused !important}
 
 #host{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:5%}
 
@@ -37,38 +37,59 @@ a{color:var(--y)}
 .stage.w .kw{color:var(--b)}
 .stage.b .kw{color:var(--w)}
 .stage.y .kw{color:var(--b);font-size:clamp(60px,17vw,210px)}
-.sub{margin-top:2.4%;font-family:var(--mono);font-size:clamp(12px,1.8vw,19px);color:var(--dim)}
+.sub{margin-top:2.2%;font-family:var(--mono);font-size:clamp(12px,1.7vw,18px);color:var(--dim)}
 .stage.w .sub{color:#5A5D6B}
-.stage.y .sub{color:#4A4013}
 
 /* 등장 애니메이션 */
-.slam{animation:slam .3s cubic-bezier(.15,1.2,.3,1) both}
+.slam{animation:slam .24s cubic-bezier(.15,1.2,.3,1) both}
 @keyframes slam{0%{opacity:0;transform:scale(2.4)}60%{opacity:1;transform:scale(.965)}100%{opacity:1;transform:scale(1)}}
-.slide{animation:slide .32s cubic-bezier(.2,.9,.2,1) both}
+.slide{animation:slide .26s cubic-bezier(.2,.9,.2,1) both}
 @keyframes slide{from{opacity:0;transform:translateX(-9%)}to{opacity:1;transform:none}}
-.rise{animation:rise .3s cubic-bezier(.2,.9,.2,1) both}
-@keyframes rise{from{opacity:0;transform:translateY(34%)}to{opacity:1;transform:none}}
-.flashIn{animation:flashIn .34s cubic-bezier(.15,1.3,.3,1) both}
+.rise{animation:rise .26s cubic-bezier(.2,.9,.2,1) both}
+@keyframes rise{from{opacity:0;transform:translateY(30%)}to{opacity:1;transform:none}}
+.flashIn{animation:flashIn .3s cubic-bezier(.15,1.3,.3,1) both}
 @keyframes flashIn{0%{opacity:0;transform:scale(.4) rotate(-5deg)}100%{opacity:1;transform:scale(1) rotate(0)}}
-.fadeIn{animation:fadeIn .5s ease both}
+.fadeIn{animation:fadeIn .4s ease both}
 @keyframes fadeIn{from{opacity:0}to{opacity:1}}
 
-/* 명령어 비트 */
-.cmdT{font-family:var(--mono);font-size:clamp(13px,2.3vw,25px);color:var(--w);background:#141519;border:1px solid #2A2C36;border-radius:12px;padding:2.4% 3.2%;max-width:94%}
+/* 터미널 패널 공통 (cmd·select·install) */
+.panel{width:min(92%,760px);background:#141519;border:1px solid #2A2C36;border-radius:12px;padding:2.4% 3%;text-align:left;font-family:var(--mono);font-size:clamp(11px,1.55vw,16.5px);line-height:1.9;color:#D8D9E0}
+.panel .hd{color:var(--dim);margin-bottom:1%}
+.panel .hd .pr{color:var(--y);font-weight:600}
+.cmdT{font-size:clamp(13px,2.1vw,23px)}
 .cmdT .pr{color:var(--y);font-weight:600}
 .cmdT .hl{color:#FFEFAF}
 .caret{display:inline-block;width:.55em;height:1.15em;background:var(--y);margin-left:2px;animation:blink .9s steps(1) infinite;vertical-align:text-bottom}
 @keyframes blink{50%{opacity:0}}
-.cmdOk{margin-top:2.4%;font-family:var(--mono);font-size:clamp(12px,1.8vw,19px);color:#7BC97E}
+.okline{color:var(--green)}
 
-/* 클러스터 비트 (단어 사방 배치) */
-.clWrap{position:relative;width:100%;height:100%}
-.cl{position:absolute;font-weight:700;color:var(--w);letter-spacing:-.03em}
-.cl .n{font-family:var(--mono);font-size:.32em;color:var(--y);vertical-align:super;margin-right:.2em;letter-spacing:0}
-.cl1{top:14%;left:8%;font-size:clamp(34px,7.5vw,92px)}
-.cl2{top:16%;right:9%;font-size:clamp(30px,6.5vw,80px);transform:rotate(2deg)}
-.cl3{bottom:20%;left:14%;font-size:clamp(30px,6.8vw,84px);transform:rotate(-2deg)}
-.cl4{bottom:13%;right:12%;font-size:clamp(38px,8.5vw,104px);color:var(--y)}
+/* 선택 체크리스트 (CLI multiselect 모양) */
+.row{position:relative;display:flex;gap:12px;align-items:baseline;padding:.35% 1.2%;border-radius:7px;opacity:0;animation:rise .22s ease both;animation-delay:var(--d)}
+.row .desc{color:#8B8E9C}
+.row b{color:#F2F1E9;font-weight:600}
+.row .box{width:1.4em;color:var(--dim);position:relative}
+.row .box .on{position:absolute;left:0;top:0;color:var(--y);opacity:0}
+/* 커서 하이라이트가 행을 훑고 지나감 */
+.row::before{content:"";position:absolute;inset:0;border-radius:7px;background:rgba(255,216,77,.13);opacity:0;animation:sweep .5s ease both;animation-delay:var(--sw)}
+@keyframes sweep{0%{opacity:0}25%{opacity:1}100%{opacity:0}}
+/* 체크 켜짐: ☐ 사라지고 ☑ 팝 + 글로우 */
+.row.pick .box .off{animation:offOut .01s linear both;animation-delay:var(--ck)}
+@keyframes offOut{to{opacity:0}}
+.row.pick .box .on{animation:ckPop .3s cubic-bezier(.15,1.5,.3,1) both;animation-delay:var(--ck)}
+@keyframes ckPop{0%{opacity:0;transform:scale(2.4) rotate(-8deg)}100%{opacity:1;transform:scale(1)}}
+.row.pick b{animation:pickGlow .45s ease both;animation-delay:var(--ck)}
+@keyframes pickGlow{0%{color:#F2F1E9}40%{color:var(--y)}100%{color:#F2F1E9}}
+.row.skip .box .off{color:#4A4D5C}
+.row.skip b,.row.skip .desc{color:#4A4D5C}
+
+/* 설치 출력 */
+.iline{display:flex;gap:10px;align-items:baseline;opacity:0;animation:rise .2s ease both;animation-delay:var(--d)}
+.iline .ck{color:var(--green);font-weight:600;animation:ckPop .28s cubic-bezier(.15,1.5,.3,1) both;animation-delay:calc(var(--d) + .1s)}
+.iline .f{color:#FFEFAF}
+.iline .desc{color:#8B8E9C}
+.pbar{margin-top:1.6%;height:8px;background:#23252F;border-radius:5px;overflow:hidden}
+.pbar i{display:block;height:100%;background:var(--y);width:0;animation:pfill var(--pd) linear both;animation-delay:.2s}
+@keyframes pfill{to{width:100%}}
 
 /* CTA */
 .cta{display:flex;flex-direction:column;align-items:center;gap:3%}
@@ -98,7 +119,12 @@ a{color:var(--y)}
 .hint2{margin-top:8px;font-family:var(--mono);font-size:12px;color:#4E5160;text-align:center}
 
 @media (prefers-reduced-motion:reduce){
-  .slam,.slide,.rise,.flashIn,.fadeIn{animation:fadeIn .01s both !important}
+  .slam,.slide,.rise,.flashIn,.fadeIn,.row,.iline{animation:fadeIn .01s both !important}
+  .row::before{animation:none}
+  .row.pick .box .off{opacity:0;animation:none}
+  .row.pick .box .on{opacity:1;animation:none}
+  .iline .ck{animation:fadeIn .01s both !important}
+  .pbar i{animation-duration:.01s}
   .caret{animation:none}.bigbtn{animation:none}
 }
 </style>
@@ -107,7 +133,7 @@ a{color:var(--y)}
 
 <div class="frame">
   <div class="topbar">
-    <span><b>EleninJayTech / claude</b> · 소개 (20초)</span>
+    <span><b>EleninJayTech / claude</b> · 소개 (18초)</span>
     <span><a href="index.html">사용법</a> · <a href="demo.html">설치 시연</a> · <a href="https://github.com/EleninJayTech/claude">GitHub</a></span>
   </div>
 
@@ -116,7 +142,7 @@ a{color:var(--y)}
 
     <div class="overlay" id="poster">
       <p class="t1">세팅,<br><em>말 한마디</em>로.</p>
-      <p class="t2">Claude Code 드롭인 문서 · 20초</p>
+      <p class="t2">Claude Code 드롭인 문서 · 18초</p>
       <button class="bigbtn" id="btnStart">▶ 재생</button>
     </div>
   </div>
@@ -133,23 +159,35 @@ a{color:var(--y)}
 const PROMPT='"00_통합-설치.md 를 학습해서 이 프로젝트에 적용해줘"';
 /* 비트: t=단어, s=서브, m=배경(w/b/y), a=애니메이션, d=길이(ms) */
 const BEATS=[
-  {t:"문서를",      m:"w", a:"slam",  d:820},
-  {t:"넣는다.",     m:"b", a:"slam",  d:820},
-  {t:"한 문장",     m:"w", a:"slide", d:800},
-  {t:"말한다.",     m:"b", a:"slam",  d:850},
-  {t:"끝.",         m:"y", a:"flashIn", d:1350},
-  {type:"cmd",      m:"b", d:3300},
-  {type:"cluster",  m:"b", d:2700},
-  {t:"기억.",  s:"어제 일을 오늘 이어서 — /resume · /wrap", m:"w", a:"slam", d:1650},
-  {t:"잠금.",  s:"비밀번호·열쇠 파일, 읽지도 내보내지도 못하게", m:"b", a:"slam", d:1650},
-  {t:"분담.",  s:"어려운 건 비싼 모델 · 단순한 건 싼 모델", m:"w", a:"slam", d:1650},
-  {t:"검사.",  s:"\"됐다\" 대신 실행 증거로 보고", m:"b", a:"slam", d:1650},
-  {t:"전부,",       m:"w", a:"rise",  d:700},
-  {t:"공식 문서로", m:"w", a:"rise",  d:800},
-  {t:"그날 확인.",  m:"y", a:"slam",  d:1500},
+  {t:"문서를",      m:"w", a:"slam",  d:680},
+  {t:"넣는다.",     m:"b", a:"slam",  d:680},
+  {t:"한 문장",     m:"w", a:"slide", d:660},
+  {t:"말한다.",     m:"b", a:"slam",  d:700},
+  {t:"끝.",         m:"y", a:"flashIn", d:1050},
+  {type:"cmd",      m:"b", d:2500},
+  {type:"select",   m:"b", d:4300},
+  {type:"install",  m:"b", d:4600},
+  {t:"말 대신 증거.", s:"실행 출력으로 보고 — hooks·CI 2중 게이트", m:"w", a:"slam", d:1500},
+  {t:"그날 확인.",  s:"모든 내용은 공식 문서 당일 조회로 검증",   m:"y", a:"slam", d:1500},
   {type:"cta",      m:"b", d:0}
 ];
 const TOTAL=BEATS.reduce((a,b)=>a+b.d,0);
+
+/* CLI 선택 체크리스트: [체크여부, 이름, 설명, 등장d, 커서sweep, 체크시점] */
+const SEL=[
+  [1,"01 기반",     "CLAUDE.md · docs/ 작업일지 · /resume /wrap", .15, .45,  .75],
+  [1,"02 모델분담", ".claude/agents/ — opus 판단 · sonnet 실행",   .30, 1.15, 1.45],
+  [0,"03 확장기능", "claude-hud · MCP  (이번엔 건너뜀)",            .45, 1.85, 0],
+  [1,"04 검증",     "hooks 품질 게이트 · gh CLI",                  .60, 2.45, 2.75]
+];
+/* 설치 출력: [파일, 설명, 등장d] */
+const INST=[
+  ["CLAUDE.md",             "프로젝트 사실·규칙",              .2],
+  [".claude/settings.json", "deny: .env·*.pem 읽기 차단",      .8],
+  [".claude/skills/",       "resume·wrap — 세션 이어하기",     1.4],
+  [".claude/agents/",       "triage=opus · implementer=sonnet",2.0],
+  ["hooks(PostToolUse)",    "편집 즉시 포맷·린트 실행",         2.6]
+];
 
 const stage=document.getElementById("stage"), host=document.getElementById("host"),
       poster=document.getElementById("poster"), fill=document.getElementById("fill"),
@@ -164,21 +202,38 @@ function el(tag,cls,html){ const e=document.createElement(tag); if(cls)e.classNa
 function render(b){
   host.innerHTML=""; setBg(b.m);
   if(b.type==="cmd"){
-    const c=el("p","cmdT fadeIn","<span class='pr'>❯ </span><span class='hl' id='typed'></span><span class='caret'></span>");
+    const c=el("p","panel cmdT fadeIn","<span class='pr'>❯ </span><span class='hl' id='typed'></span><span class='caret'></span>");
     host.appendChild(c);
-    const ok=el("p","cmdOk","✓ 감지 → 선택 → 설치 → 검증, Claude가 진행"); ok.style.opacity="0"; host.appendChild(ok);
     clearInterval(typeTimer);
     const tEl=c.querySelector("#typed");
-    if(RM){ tEl.textContent=PROMPT; ok.style.opacity="1"; ok.className="cmdOk fadeIn"; return; }
+    if(RM){ tEl.textContent=PROMPT; return; }
     let i=0; typeTimer=setInterval(()=>{ tEl.textContent=PROMPT.slice(0,++i);
-      if(i>=PROMPT.length){ clearInterval(typeTimer); ok.className="cmdOk rise"; ok.style.opacity=""; } },30);
+      if(i>=PROMPT.length) clearInterval(typeTimer); },22);
   }
-  else if(b.type==="cluster"){
-    const w=el("div","clWrap");
-    [["감지","1"],["선택","2"],["설치","3"],["검증","4"]].forEach(([t,n],k)=>{
-      const c=el("span","cl cl"+n+" flashIn","<span class='n'>0"+n+"</span>"+t);
-      c.style.animationDelay=(RM?0:k*0.42)+"s"; w.appendChild(c); });
-    host.appendChild(w);
+  else if(b.type==="select"){
+    const p=el("div","panel fadeIn","<p class='hd'><span class='pr'>?</span> 무엇을 설치할까요? — 체크한 것만 설치됩니다</p>");
+    SEL.forEach(([on,name,desc,d,sw,ck])=>{
+      const r=el("div","row "+(on?"pick":"skip"),
+        "<span class='box'><span class='off'>☐</span><span class='on'>☑</span></span>"+
+        "<b>"+name+"</b><span class='desc'>"+desc+"</span>");
+      r.style.setProperty("--d",d+"s");
+      r.style.setProperty("--sw",sw+"s");
+      r.style.setProperty("--ck",(ck||0)+"s");
+      p.appendChild(r); });
+    p.appendChild(el("p","okline iline","<span class='ck'>✓</span> 3개 선택 — 각 문서의 절차대로 진행")).style.setProperty("--d","3.3s");
+    host.appendChild(p);
+  }
+  else if(b.type==="install"){
+    const p=el("div","panel fadeIn","<p class='hd'><span class='pr'>❯</span> 설치 중 — 생성되는 것들</p>");
+    INST.forEach(([f,desc,d])=>{
+      const r=el("div","iline","<span class='ck'>✓</span><span class='f'>"+f+"</span><span class='desc'>— "+desc+"</span>");
+      r.style.setProperty("--d",d+"s"); p.appendChild(r); });
+    const pb=el("div","pbar","<i></i>");
+    pb.querySelector("i").style.setProperty("--pd",(RM?0.01:3.4)+"s");
+    p.appendChild(pb);
+    const done=el("p","okline iline","<span class='ck'>✓</span> 검증 통과 — /resume·hooks 동작을 증거 출력으로 확인");
+    done.style.setProperty("--d","3.7s"); p.appendChild(done);
+    host.appendChild(p);
   }
   else if(b.type==="cta"){
     const c=el("div","cta fadeIn",
@@ -195,7 +250,7 @@ function render(b){
   }
   else{
     const w=el("p","kw "+b.a,b.t); host.appendChild(w);
-    if(b.s){ const s=el("p","sub rise",b.s); s.style.animationDelay=RM?"0s":".28s"; host.appendChild(s); }
+    if(b.s){ const s=el("p","sub rise",b.s); s.style.animationDelay=RM?"0s":".22s"; host.appendChild(s); }
   }
 }
 
