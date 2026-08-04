@@ -49,7 +49,9 @@ a{color:var(--y)}
   .bgdeco .blk:nth-child(3){animation-duration:8s}
 }
 @keyframes bgdrift{from{transform:translate(0,0) rotate(var(--rot,0deg))}to{transform:translate(-1.2%,1.5%) rotate(var(--rot,0deg))}}
-#host .kw,#host .sub{position:relative;z-index:1}
+#host .kw,#host .sub,#host .panel,#host .cta{position:relative;z-index:1}
+.overlay>*{position:relative;z-index:1}
+.overlay .bgdeco{position:absolute;inset:0;z-index:0;color:#F7F6F2;opacity:.07}
 
 /* 키네틱 단어 */
 .kw{font-weight:700;font-size:clamp(46px,13vw,158px);line-height:1.15;letter-spacing:-.04em;white-space:nowrap}
@@ -183,43 +185,114 @@ const BEATS=[
   {t:"한 문장",     m:"w", a:"slide", d:660, bg:"cmdwin"},
   {t:"말한다.",     m:"b", a:"slam",  d:700, bg:"say"},
   {t:"끝.",         m:"y", a:"flashIn", d:1050, bg:"done"},
-  {type:"cmd",      m:"b", d:2500},
-  {type:"select",   m:"b", d:4300},
-  {type:"install",  m:"b", d:4600},
+  {type:"cmd",      m:"b", d:2500, bg:"cmdbg"},
+  {type:"select",   m:"b", d:4300, bg:"selbg"},
+  {type:"install",  m:"b", d:4600, bg:"instbg"},
   {t:"말 대신 증거.", s:"실행 출력으로 보고 — hooks·CI 2중 게이트", m:"w", a:"slam", d:1500, bg:"proof"},
   {t:"그날 확인.",  s:"모든 내용은 공식 문서 당일 조회로 검증",   m:"y", a:"slam", d:1500, bg:"verify"},
-  {type:"cta",      m:"b", d:0}
+  {type:"cta",      m:"b", d:0, bg:"ctabg"}
 ];
 
-/* 단어 비트 배경 데코 템플릿 */
+/* 단어 비트 배경 데코 템플릿 — [클래스, top, left, 회전, 내용] · 화면을 8구역(모서리4+변4)으로 채움 */
+const F_A="00_통합-설치.md\n01_통합구성-범용마스터.md\n02_모델분담-플레이북.md\n03_확장기능-체크리스트.md";
+const F_B="04_검증-자동화.md\n05_출력스타일.md\n06_루틴-자동화.md";
+const W_CLAUDE="<span class='dots'>● ● ●</span>❯ claude\n▸ Claude Code v2.1.221\n▸ my-project (git)";
+const W_RESUME="<span class='dots'>● ● ●</span>❯ /resume\n▸ 지난 세션: 로그인 리팩터링\n▸ 다음: 재설정 화면";
+const W_WRAP="<span class='dots'>● ● ●</span>❯ /wrap\n▸ PROGRESS 기록 ✓\n▸ 커밋 안내";
 const BG={
-docs:[["md","2%","3%","-2",
-"00_통합-설치.md\n01_통합구성-범용마스터.md\n02_모델분담-플레이북.md\n03_확장기능-체크리스트.md"],
-["md","54%","62%","2",
-"04_검증-자동화.md\n05_출력스타일.md\n06_루틴-자동화.md"]],
-tree:[["md","6%","4%","-1",
-"my-project/\n├─ 00_통합-설치.md   ← 여기에\n├─ src/\n├─ package.json\n└─ .git/"],
-["sm","58%","66%","2",
-"# 복사 한 번이면 끝\n# 나머지 문서는 저장소에서\n# 자동으로 가져옵니다"]],
-cmdwin:[["win sm","4%","5%","-2",
-"<span class='dots'>● ● ●</span>❯ claude\n▸ Claude Code v2.1.221\n▸ my-project (git)"],
-["win sm","55%","58%","2",
-"<span class='dots'>● ● ●</span>❯ /resume\n▸ 지난 세션 이어서…"]],
-say:[["huge","5%","8%","-2","\"적용해줘\""],
-["md","50%","60%","1",
-"❯ 00_통합-설치.md 를 학습해서\n  이 프로젝트에 적용해줘\n▸ 문서를 읽었습니다…"]],
-done:[["huge","4%","6%","-3","☑ ☑ ☑"],
-["sm","48%","62%","2",
-"&lt;!-- dropin-applied: 2026-08-05\n     · 프로필=표준 · 01 02 04 --&gt;"]],
-proof:[["md","4%","5%","-1",
-"✓ lint … passed\n✓ tests … 42/42\n✓ hooks(PostToolUse) 실행됨"],
-["sm","56%","60%","2",
-"❯ npm test\n▸ all green — 증거 첨부"]],
-verify:[["md","4%","6%","-1",
-"code.claude.com/docs\n✓ changelog  ✓ permissions\n✓ sandboxing ✓ model-config"],
-["sm","52%","64%","2",
-"최근 재검증: 2026-08-05\n확인 못 한 항목은 🟡"]]
+docs:[
+ ["md","3%","3%","-2",F_A],
+ ["md","3%","63%","2",F_B],
+ ["win sm","38%","2%","-1",W_CLAUDE],
+ ["sm","40%","74%","2","드롭인 = 넣으면 끝\n복사 한 번, 질문에 답만"],
+ ["md","72%","5%","-1","docs/PROGRESS.md\ndocs/DECISIONS.md\ndocs/PROJECT_PLAN.md"],
+ ["huge","66%","70%","3","7장"],
+ ["sm","2%","41%","1","사람용 설명 아님 —\nClaude가 읽는 설명서"]],
+tree:[
+ ["md","4%","3%","-1","my-project/\n├─ 00_통합-설치.md ← 여기에\n├─ src/\n├─ package.json\n└─ .git/"],
+ ["win sm","5%","66%","2",W_CLAUDE],
+ ["sm","42%","76%","-2","❯ git add .\n❯ git commit -m 'docs: 드롭인'"],
+ ["md","46%","3%","1","❯ ls\n00_통합-설치.md ✓"],
+ ["sm","76%","32%","-1","나머지 문서는 저장소에서 자동으로"],
+ ["md","70%","64%","2","raw.githubusercontent.com/…\nHTTP 200 ✓"],
+ ["huge","2%","44%","2","📄"]],
+cmdwin:[
+ ["win sm","4%","3%","-2",W_CLAUDE],
+ ["win sm","5%","64%","2",W_RESUME],
+ ["md","44%","2%","-1","❯ /effort high\n❯ /model opus"],
+ ["md","46%","76%","2","❯ /wrap\n▸ 기록 완료 ✓"],
+ ["sm","78%","5%","-1","말이 곧 실행이다"],
+ ["win sm","66%","58%","1",W_WRAP],
+ ["huge","2%","44%","1","❯_"]],
+say:[
+ ["huge","4%","5%","-2","\"적용해줘\""],
+ ["md","7%","64%","2","❯ 00_통합-설치.md 를 학습해서\n  이 프로젝트에 적용해줘"],
+ ["md","44%","3%","-1","▸ 문서를 읽었습니다\n▸ 환경을 조사합니다"],
+ ["sm","48%","78%","1","AskUserQuestion ▤\n(선택 목록 준비)"],
+ ["md","74%","6%","-1","▸ git 감지 ✓\n▸ 스택 감지 ✓ (Node)"],
+ ["huge","64%","64%","3","❯_"],
+ ["sm","2%","44%","1","한 문장 = 전체 셋업"]],
+done:[
+ ["huge","4%","4%","-3","☑ ☑ ☑"],
+ ["huge","6%","72%","2","☑"],
+ ["sm","42%","62%","2","&lt;!-- dropin-applied: 2026-08-05\n · 프로필=표준 · 01 02 04 --&gt;"],
+ ["md","46%","4%","-1","설치 3 · 건너뜀 3\n소요 2분"],
+ ["huge","68%","8%","-2","☑ ☑"],
+ ["sm","78%","56%","1","❯ git commit ✓  push ✓"],
+ ["md","2%","40%","1","재적용은 버전 비교로"]],
+proof:[
+ ["md","3%","3%","-1","✓ lint … passed\n✓ tests … 42/42\n✓ build … ok"],
+ ["win sm","4%","64%","2","<span class='dots'>● ● ●</span>hooks(PostToolUse)\n▸ prettier --write ✓\n▸ eslint --fix ✓"],
+ ["md","46%","76%","1","❯ npm test\n▸ all green"],
+ ["md","46%","2%","-2","증거 없는 \"됐다\" 금지"],
+ ["sm","78%","4%","-1","CI: claude-code-action@v1 ✓"],
+ ["md","70%","58%","2","PR 머지 전 2차 게이트 ✓"],
+ ["huge","2%","44%","2","✓"]],
+verify:[
+ ["md","4%","3%","-1","code.claude.com/docs\n✓ changelog  ✓ permissions\n✓ sandboxing ✓ model-config"],
+ ["sm","5%","70%","2","최근 재검증: 2026-08-05"],
+ ["md","44%","72%","1","확인 못 한 항목은 🟡"],
+ ["md","48%","2%","-2","기억이 아니라 조회로"],
+ ["sm","78%","6%","-1","6개월마다 재점검"],
+ ["md","70%","54%","2","버전 표 + 날짜 기록 ✓"],
+ ["huge","2%","44%","2","🟡→✓"]],
+cmdbg:[
+ ["md","4%","3%","-2",F_A],
+ ["md","4%","66%","2",F_B],
+ ["huge","38%","4%","-1","❯"],
+ ["md","76%","5%","-1","my-project/\n└─ 00_통합-설치.md"],
+ ["sm","78%","62%","2","한 문장이면 시작"],
+ ["huge","36%","80%","2","00"]],
+selbg:[
+ ["huge","4%","4%","-2","?"],
+ ["md","5%","60%","2","01 기억·보안   02 모델 팀\n03 편의        04 검사\n05 말투        06 예약"],
+ ["sm","78%","4%","-1","이미 있으면: 유지 / 재구성 / 교체"],
+ ["md","74%","58%","2","프로필: 표준 | 절약(Pro)"],
+ ["huge","40%","82%","1","☑"],
+ ["sm","44%","2%","-1","AskUserQuestion\n(multiSelect)"]],
+instbg:[
+ ["md","4%","3%","-1","\"deny\": [\"Read(**/.env)\",\n        \"Read(**/*.pem)\"]"],
+ ["md","4%","62%","2","triage:      opus\nimplementer: sonnet\nparity:      haiku"],
+ ["huge","38%","3%","-2","⚙"],
+ ["sm","42%","80%","1","PostToolUse → lint"],
+ ["md","78%","5%","-1","docs/PROGRESS.md 생성 ✓"],
+ ["sm","78%","60%","2","merge=union (.gitattributes)"]],
+ctabg:[
+ ["md","4%","3%","-2",F_A],
+ ["md","4%","64%","2",F_B],
+ ["huge","38%","4%","-1","☑"],
+ ["huge","40%","82%","2","7장"],
+ ["sm","80%","4%","-1","무료 · 선택 설치 · 증거 보고"],
+ ["md","76%","54%","1","github.com/EleninJayTech/claude"]]
 };
+
+function addBG(container,key){ if(!key||!BG[key]) return;
+  const bg=el("div","bgdeco");
+  BG[key].forEach(([cls,top,left,rot,txt])=>{
+    const blk=el("div","blk "+cls,txt.replace(/\n/g,"<br>"));
+    blk.style.top=top; blk.style.left=left; blk.style.setProperty("--rot",rot+"deg");
+    blk.style.transform="rotate("+rot+"deg)"; bg.appendChild(blk); });
+  container.prepend(bg); }
 const TOTAL=BEATS.reduce((a,b)=>a+b.d,0);
 
 /* CLI 선택 체크리스트: [체크여부, 이름, 설명, 등장d, 커서sweep, 체크시점] */
@@ -249,7 +322,7 @@ function setBg(m){ stage.classList.remove("w","b","y"); stage.classList.add(m); 
 function el(tag,cls,html){ const e=document.createElement(tag); if(cls)e.className=cls; if(html!==undefined)e.innerHTML=html; return e; }
 
 function render(b){
-  host.innerHTML=""; setBg(b.m);
+  host.innerHTML=""; setBg(b.m); addBG(host,b.bg);
   if(b.type==="cmd"){
     const c=el("p","panel cmdT fadeIn","<span class='pr'>❯ </span><span class='hl' id='typed'></span><span class='caret'></span>");
     host.appendChild(c);
@@ -298,14 +371,6 @@ function render(b){
     c.querySelector("#btnReplay").addEventListener("click",e=>{ e.stopPropagation(); seek(0); playOn(); });
   }
   else{
-    if(b.bg && BG[b.bg]){
-      const bg=el("div","bgdeco");
-      BG[b.bg].forEach(([cls,top,left,rot,txt])=>{
-        const blk=el("div","blk "+cls,txt.replace(/\n/g,"<br>"));
-        blk.style.top=top; blk.style.left=left; blk.style.setProperty("--rot",rot+"deg");
-        blk.style.transform="rotate("+rot+"deg)"; bg.appendChild(blk); });
-      host.appendChild(bg);
-    }
     const w=el("p","kw "+b.a,b.t); host.appendChild(w);
     if(b.s){ const s=el("p","sub rise",b.s); s.style.animationDelay=RM?"0s":".22s"; host.appendChild(s); }
   }
@@ -344,6 +409,7 @@ function pauseOn(){ if(!playing) return; playing=false;
 
 function seek(i){ pauseOn(); show(Math.max(0,Math.min(i,BEATS.length-1))); tickLoop(); }
 
+addBG(poster,"ctabg");
 btnStart.addEventListener("click",e=>{ e.stopPropagation(); playOn(); });
 btnPlay.addEventListener("click",()=>{ if(ended){ seek(0); playOn(); } else playing?pauseOn():playOn(); });
 bar.addEventListener("click",e=>{ const r=bar.getBoundingClientRect();
