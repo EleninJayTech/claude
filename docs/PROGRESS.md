@@ -1,5 +1,7 @@
 # PROGRESS (최상단 append)
 
+- [docs][Done] 전면 재검증(v2.1.221, 당일 공식 문서 조회 — 조사 에이전트 4종 병렬: 모델·effort·advisor / 권한·샌드박스·hooks / 외부 소스 생존 / 신규 구성 후보) — 00 v1.5·01 v1.12·02 v1.11·03 v1.5·04 v1.3. **정정 1건**: 서브에이전트 중첩 스폰 기본 깊이 3(v2.1.219+, (구)"기본 비활성"). **갱신**: 03 frontend-design 플러그인 마켓플레이스 설치 병기·플러그인 즉시 활성화(v2.1.221)·Chrome 표기(GA→전 유료 플랜), 02 §E에 /code-review ultra·/simplify 한 줄. 나머지 전 서술 유효 확인(샌드박스 Windows 미지원·attribution·auto-memory 200줄/25KB·hooks·advisor −11.9%/+2.7%p·1M 정책·외부 소스 5종 생존·raw URL 200). **"최근 재검증" 표기 분리**([[DEC-20260804-bsjeong87-02]]). 신규 범용 문서 후보 조사: Output Styles·Routines(클라우드 스케줄 에이전트) 유력, statusline 커스텀은 claude-hud와 중복 — 채택 여부는 사용자 결정 대기 — @bsjeong87 (main) 2026-08-04
+
 - [docs][Done] 적용 기록(dropin-applied) 도입 — 문서 업데이트 후 재적용 시 버전 비교가 가능하도록, 적용 시 대상 CLAUDE.md 맨 아래 한 줄(`<!-- dropin-applied: 적용일 · 프로필 · 문서별 버전 · 미선택 -->`)을 남기게 5종 갱신([[DEC-20260804-bsjeong87-01]]): 00 v1.4(STEP 5 기록 형식 정의 + STEP 2 기록 우선 확인 + STEP 3 재적용 분기 — 버전 diff 요약, 버전 동일해도 기존 재구성/미선택 추가 질문) · 01 v1.11 · 02 v1.10 · 03 v1.4 · 04 v1.2(각 STEP 4에 기록 한 줄, 단독 적용 시에도). CLAUDE.md 구성물 표 갱신 — @bsjeong87 (main) 2026-08-04
 
 - [docs][Done] 00 단독 설치 경로 실증 검증 — "00_통합-설치.md 하나만으로 전체 설치 가능한가" 질문에 증거로 확인: §B 등재 5개 문서(00~04)의 GitHub raw URL(한글 파일명 URL 인코딩) HEAD 요청 전부 HTTP 200, §A STEP 1 폴백(로컬 없으면 저장소 원본 WebFetch) 경로 유효. 문서 변경 없음(검증만). 전제: 인터넷(WebFetch) 가능 환경 — @bsjeong87 (main) 2026-07-28
