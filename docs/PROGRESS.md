@@ -1,5 +1,7 @@
 # PROGRESS (최상단 append)
 
+- [docs][Done] 00 단독 설치 경로 실증 검증 — "00_통합-설치.md 하나만으로 전체 설치 가능한가" 질문에 증거로 확인: §B 등재 5개 문서(00~04)의 GitHub raw URL(한글 파일명 URL 인코딩) HEAD 요청 전부 HTTP 200, §A STEP 1 폴백(로컬 없으면 저장소 원본 WebFetch) 경로 유효. 문서 변경 없음(검증만). 전제: 인터넷(WebFetch) 가능 환경 — @bsjeong87 (main) 2026-07-28
+
 - [docs][Done] 절약 프로필(Pro·한도 관리) 도입 — 별도 Pro 문서 대신 기존 문서 선택지로([[DEC-20260728-bsjeong87-02]]). 00 v1.3(STEP 3 운용 프로필 표준/절약 + §C Pro 행) · 01 v1.10(§D-6 절약 운용: medium 시작·필요 시만 상향, ultracode/max 비권장, 품질 불변 지점 명시) · 02 v1.9(§F 절약 배정: Sonnet+상위 advisor 1순위 패턴, haiku 적극, 로스터 축소 — 트리아지·최종 리뷰 불변) · 03 v1.3(절약이면 claude-hud 기본 체크) · 04 v1.1(게이트는 절약에서도 유지). README·index.html에 Pro 안내 추가 — @bsjeong87 (main) 2026-07-28
 
 - [docs][Done] 문서 확장 1차(커뮤니티·공식 기능 조사 기반, [[DEC-20260728-bsjeong87-01]]) — **04_검증-자동화.md v1.0 신설**(hooks 게이트·gh/glab CLI·CI 통합, git 호스트 감지 분기, 회사 정책 게이트) · 01 v1.9(§J-1 auto mode 신설 + STEP 3 부분 선택 ⓐ~ⓕ) · 02 v1.8(로스터 에이전트별 선택, 내장 /code-review 정본화·커스텀 reviewer 선택 강등, /goal·백그라운드 서브에이전트 경량) · 03 v1.2(§4 MCP·§5 브라우저 검증 추가, 플러그인 부록 — 중복 판정 표) · 00 v1.2(§B에 04, 2단계 선택 명시, 회사 repo 추천 조합). 문서 목록 변경으로 README·index.html 동기화(04 카드·블롭 추가, DEC-0723-04 규칙) — @bsjeong87 (main) 2026-07-28
