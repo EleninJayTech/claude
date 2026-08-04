@@ -1,6 +1,6 @@
 # Claude Code 통합 구성 — 범용 마스터 (드롭인 적용)
 
-> **문서 버전: v1.10** · 최종 갱신: **2026-07-28** · 기준: Claude Code v2.1.220 (Opus 5 · Sonnet 5 · Fable 5)
+> **문서 버전: v1.11** · 최종 갱신: **2026-08-04** · 기준: Claude Code v2.1.220 (Opus 5 · Sonnet 5 · Fable 5)
 >
 > | 버전 | 날짜 | 변경 내용 |
 > | --- | --- | --- |
@@ -15,6 +15,7 @@
 > | v1.8 | 2026-07-28 | **Opus 5 출시 반영**(v2.1.219+, 당일 공식 문서 조회): §D-6 effort 지원표에 Opus 5 추가(전 단계), effort 기본값 hold 차이(Opus 5는 hold 없음) 명시 |
 > | v1.9 | 2026-07-28 | **부분 선택 도입**(STEP 3: 구성 항목을 선택 목록으로 확인 후 생성) + **§J-1 auto mode 신설**(권한 분류기 — 안전 요건·회사 정책 우선·스코프 제한, 당일 공식 문서 조회) |
 > | v1.10 | 2026-07-28 | **절약 프로필 추가**(§D-6): Pro·한도 관리 사용자용 effort 운용 — medium 시작·필요 시만 상향, ultracode/max 비권장, 컨텍스트 절약 습관. 품질 불변 지점 명시 |
+> | v1.11 | 2026-08-04 | **적용 기록 한 줄 추가**(STEP 4: 대상 CLAUDE.md에 `dropin-applied` 버전 기록 — 재적용 시 버전 비교용, 형식·재적용 규칙은 00 §A) |
 >
 > ※ 갱신 시: 이 표에 한 줄 추가 + 하단 "문서 정보" 날짜 수정 + §L 재검증 체크리스트 수행.
 
@@ -49,7 +50,7 @@
 - ⓐ 글로벌 행동 규칙(§D-2 CLAUDE.md) ⓑ 글로벌 보안(§D-3 deny·hooks) ⓒ `/resume`·`/wrap` 스킬(§D-4·F-2) ⓓ 프로젝트 기록 체계(§E·F-1: docs/·CLAUDE.md·.gitattributes) ⓔ 프로젝트 권한(§F-3 settings.json) ⓕ effort 가이드(§D-6, 안내만)
 - §D~F에서 **해당 시나리오 부분만** 골라 생성. 불필요한 것(단일 repo에 MSA 단위분할 등)은 만들지 않는다. 단 **ⓑ 보안(deny·시크릿 차단)은 해제를 권하지 않는다** — 사용자가 명시적으로 빼는 경우에만 제외하고 위험을 고지한다.
 
-**STEP 4 — 확인.** 무엇을 만들었는지 요약 보고 → `/` 자동완성으로 `/resume`·`/wrap` 확인 → 승인 후 커밋 안내(§E 커밋 규칙).
+**STEP 4 — 확인.** 무엇을 만들었는지 요약 보고 → `/` 자동완성으로 `/resume`·`/wrap` 확인 → 승인 후 커밋 안내(§E 커밋 규칙). **적용 기록**: 대상 `CLAUDE.md` 맨 아래 `<!-- dropin-applied: … -->` 한 줄에 `01 v1.11`을 추가/갱신한다(형식·재적용 규칙은 00 §A — 00 없이 단독 적용해도 남긴다).
 
 > 원칙: **승인 없이 대량 변경·커밋하지 않는다.** 시크릿(.env·키·인증서)은 읽지도 커밋하지도 않는다.
 
@@ -481,5 +482,5 @@ Claude Code는 매주 바뀐다. 6개월마다 30분:
 ## 핵심 출처 🟢
 IDE 통합·`--add-dir`(ide-integrations·large-codebases) / permissions·deny 한계 / hooks / skills / memory·auto-memory — 모두 `code.claude.com/docs` 및 `docs.anthropic.com`.
 
-**문서 정보** — 통합 마스터(범용) **v1.10**. 8개 소스(⓪ 폴더구성 · ① 셋업 · structure-guide · daily-routine · SFA 셋업/통합 · setup-followalong v8 · integrated-setup) 중복 제거·v8 반영 + `/effort`(§D-6) + 2026-07-20 공식 문서 전면 재검증 + 02 가이드 연동 경량 보완 + 2026-07-23 재검증(v2.1.218) + 2026-07-28 Opus 5 반영·부분 선택·auto mode(v2.1.220).
-최종 갱신: 2026-07-28 (변경 이력은 문서 최상단 버전 표 참조) / 참조: Claude Code v2.1.220, Opus 5(v2.1.219+) · Sonnet 5(v2.1.197+) · Fable 5(v2.1.170+).
+**문서 정보** — 통합 마스터(범용) **v1.11**. 8개 소스(⓪ 폴더구성 · ① 셋업 · structure-guide · daily-routine · SFA 셋업/통합 · setup-followalong v8 · integrated-setup) 중복 제거·v8 반영 + `/effort`(§D-6) + 2026-07-20 공식 문서 전면 재검증 + 02 가이드 연동 경량 보완 + 2026-07-23 재검증(v2.1.218) + 2026-07-28 Opus 5 반영·부분 선택·auto mode(v2.1.220) + 2026-08-04 적용 기록(dropin-applied).
+최종 갱신: 2026-08-04 (변경 이력은 문서 최상단 버전 표 참조) / 참조: Claude Code v2.1.220, Opus 5(v2.1.219+) · Sonnet 5(v2.1.197+) · Fable 5(v2.1.170+).
