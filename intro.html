@@ -333,7 +333,7 @@ function render(b){
       if(i>=PROMPT.length) clearInterval(typeTimer); },22);
   }
   else if(b.type==="select"){
-    const p=el("div","panel fadeIn","<p class='hd'><span class='pr'>?</span> 무엇을 설치할까요? — 체크한 것만 설치됩니다</p>");
+    const p=el("div","panel fadeIn","<p class='hd'><span class='pr'>?</span> 모드: 권장 — 감지된 프로젝트에 맞게 자동 체크</p>");
     SEL.forEach(([on,name,desc,d,sw,ck])=>{
       const r=el("div","row "+(on?"pick":"skip"),
         "<span class='box'><span class='off'>☐</span><span class='on'>☑</span></span>"+

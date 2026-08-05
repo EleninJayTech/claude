@@ -176,11 +176,12 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
     <span class="dim"># 1. 00_통합-설치.md 파일을 내 작업 폴더에 복사해 넣고</span><br>
     <span class="dim"># 2. Claude Code를 켜서 이렇게 말합니다:</span><br>
     "<b>00_통합-설치.md 를 학습해서 이 프로젝트에 적용해줘</b>"<br>
-    <span class="dim"># 3. "무엇을 설치할까요?" 목록이 나오면 원하는 것만 체크 → 끝</span>
+    <span class="dim"># 3. 설치 모드를 고르면 끝 — 최소 / 권장 / 전체 / 사용자(직접 선택)</span>
   </div>
   <ul>
     <li>여기서 "프로젝트"란 <b>지금 작업 중인 폴더 하나</b>를 말합니다. 컴퓨터 전체에 세팅하려면 <b>"이 PC에 적용해줘"</b>라고 말하면 됩니다.</li>
     <li>파일은 00 하나만 복사해도 됩니다 — 나머지 문서는 필요할 때 Claude가 인터넷(이 저장소)에서 가져옵니다.</li>
+    <li><b>"권장"</b>을 고르면 프로젝트를 조사한 결과에 맞는 조합이 자동으로 골라집니다. 목적 <b>번들</b>(디자인·검증 강화·무인 자동화 등)을 얹어 <b>"최소 + 디자인"</b>처럼 조합할 수도 있습니다.</li>
     <li>이미 설치된 것이 있으면 Claude가 <b>그대로 둘지 / 고칠지 / 새로 깔지</b>를 먼저 물어봅니다. 말없이 덮어쓰지 않습니다.</li>
   </ul>
 </section>
@@ -194,7 +195,7 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
       <svg width="26" height="26"><use href="#check"/></svg>
       <span class="no">00</span>
       <span class="desc"><b>통합 설치 메뉴.</b>
-        <p>01~04를 목록으로 보여주고, 체크한 것만 각 문서의 절차대로 설치합니다.</p>
+        <p>설치 모드(최소/권장/전체/사용자)와 번들만 고르면, 01~06 중 맞는 조합을 각 문서의 절차대로 설치합니다.</p>
         <a href="https://github.com/EleninJayTech/claude/blob/main/00_통합-설치.md">00_통합-설치.md ↗</a></span>
     </li>
     <li>
@@ -250,6 +251,8 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
     <tr><th>상황</th><th>Claude에게 할 말</th><th>결과</th></tr>
     <tr><td>새 컴퓨터 세팅</td><td>"00_통합-설치.md 를 학습해서 <b>이 PC에</b> 적용해줘"</td><td>기본 규칙·보안 잠금 + 원하면 사용량 표시기</td></tr>
     <tr><td>새 작업 폴더 시작</td><td>"00_통합-설치.md 를 학습해서 <b>이 프로젝트에</b> 적용해줘"</td><td>작업 일지 시스템 + 이어하기/마무리 명령</td></tr>
+    <tr><td>고르기 번거롭다</td><td>설치 중 "모드" 질문에서 <b>권장</b> 선택</td><td>프로젝트 조사 결과에 맞는 조합 자동 설치</td></tr>
+    <tr><td>웹 화면 작업 위주</td><td>모드에 <b>디자인 번들</b> 얹기 — "최소 + 디자인"</td><td>디자인 스킬 3종이 미리 체크된 구성</td></tr>
     <tr><td>편의 기능만</td><td>"03_확장기능-설치-체크리스트.md 를 적용해줘"</td><td>5가지 중 골라 설치</td></tr>
     <tr><td>자동 검사만</td><td>"04_검증-자동화.md 를 이 프로젝트에 적용해줘"</td><td>코드 수정마다 자동 검사 + 합치기 전 검사</td></tr>
     <tr><td>Pro 요금제(사용량 적음)</td><td>설치 중 "운용 프로필" 질문에서 <b>절약</b> 선택</td><td>품질이 중요한 순간은 그대로, 평상시 소비만 절약</td></tr>
