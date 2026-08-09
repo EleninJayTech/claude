@@ -5,16 +5,22 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Claude Code 드롭인 문서 — 소개 영상</title>
 <meta name="description" content="문서를 넣는다. 한 문장 말한다. 끝. — 키네틱 타이포 18초 소개.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>▶️</text></svg>">
+<meta property="og:title" content="Claude Code 드롭인 문서 — 소개 영상">
+<meta property="og:description" content="문서를 넣는다. 한 문장 말한다. 끝. — 18초 소개 영상.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://eleninjaytech.github.io/claude/pages/intro.html">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;700&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" rel="stylesheet">
 <style>
 :root{
   --w:#F7F6F2; --b:#0C0C0E; --y:#FFD84D; --dim:#8B8E9C; --green:#7BC97E;
-  --sans:'IBM Plex Sans KR','Pretendard','Malgun Gothic',sans-serif;
+  --sans:'Pretendard Variable',Pretendard,'Malgun Gothic',sans-serif;
   --mono:'IBM Plex Mono',Consolas,monospace;
 }
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:var(--sans);background:#08080A;color:var(--w);line-height:1.5;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px}
+body{font-family:var(--sans);background:#08080A;color:var(--w);line-height:1.5;min-height:100dvh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px}
 a{color:var(--y)}
 :focus-visible{outline:3px solid var(--y);outline-offset:2px;border-radius:4px}
 
@@ -24,7 +30,10 @@ a{color:var(--y)}
 .topbar a{color:var(--dim);text-decoration:none;border-bottom:1px dotted var(--dim)}
 
 /* ── 16:9 스테이지 ── */
-.stage{position:relative;aspect-ratio:16/9;background:var(--b);border-radius:12px;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.55);cursor:pointer}
+.stage{position:relative;aspect-ratio:16/9;background:var(--b);border-radius:12px;overflow:hidden;box-shadow:0 0 0 1px #1E1F26,0 24px 70px rgba(4,6,20,.6),0 4px 18px rgba(255,216,77,.05);cursor:pointer}
+/* 필름 그레인 — 시네마 질감 (정적 노이즈, 클릭 통과) */
+.stage::after{content:"";position:absolute;inset:0;z-index:6;pointer-events:none;opacity:.05;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)'/%3E%3C/svg%3E")}
 .stage.w{background:var(--w)}
 .stage.b{background:var(--b)}
 .stage.y{background:var(--y)}
@@ -54,7 +63,7 @@ a{color:var(--y)}
 .overlay .bgdeco{position:absolute;inset:0;z-index:0;color:#F7F6F2;opacity:.07}
 
 /* 키네틱 단어 */
-.kw{font-weight:700;font-size:clamp(46px,13vw,158px);line-height:1.15;letter-spacing:-.04em;white-space:nowrap}
+.kw{font-weight:800;font-size:clamp(46px,13vw,158px);line-height:1.15;letter-spacing:-.04em;white-space:nowrap}
 .stage.w .kw{color:var(--b)}
 .stage.b .kw{color:var(--w)}
 .stage.y .kw{color:var(--b);font-size:clamp(60px,17vw,210px)}
@@ -120,21 +129,24 @@ a{color:var(--y)}
 .ctaRow{display:flex;gap:12px;flex-wrap:wrap;justify-content:center}
 .ctaRow a,.ctaRow button{font-family:var(--mono);font-size:clamp(12px,1.4vw,15px);text-decoration:none;border:1.5px solid #3A3D4A;border-radius:8px;padding:9px 16px;color:var(--w);background:transparent;cursor:pointer;transition:transform .15s,border-color .15s,color .15s}
 .ctaRow a:hover,.ctaRow button:hover{transform:translateY(-2px);border-color:var(--y);color:var(--y)}
+.ctaRow a:active,.ctaRow button:active{transform:translateY(0) scale(.96)}
 
 /* 포스터 */
 .overlay{position:absolute;inset:0;z-index:5;background:var(--b);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4%;text-align:center;padding:5%}
 .overlay.hide{display:none}
-.overlay .t1{font-weight:700;font-size:clamp(34px,7.5vw,92px);letter-spacing:-.04em;line-height:1.2}
+.overlay .t1{font-weight:800;font-size:clamp(34px,7.5vw,92px);letter-spacing:-.04em;line-height:1.2}
 .overlay .t1 em{font-style:normal;color:var(--y)}
 .overlay .t2{font-family:var(--mono);font-size:clamp(12px,1.5vw,16px);color:var(--dim)}
 .bigbtn{font-family:var(--mono);font-size:clamp(14px,1.8vw,18px);background:var(--y);color:var(--b);border:none;border-radius:999px;padding:14px 38px;cursor:pointer;transition:transform .15s;animation:pulse 2s ease-in-out infinite}
 .bigbtn:hover{transform:scale(1.07)}
+.bigbtn:active{transform:scale(.97)}
 @keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(255,216,77,.35)}50%{box-shadow:0 0 0 14px rgba(255,216,77,0)}}
 
 /* 컨트롤 */
 .ctrl{display:flex;align-items:center;gap:12px;margin-top:12px}
 .ctrl>button{background:none;border:1.5px solid #3A3E52;color:#CFD2DE;border-radius:8px;padding:7px 13px;font-family:var(--mono);font-size:13px;cursor:pointer}
 .ctrl>button:hover{border-color:var(--y);color:var(--y)}
+.ctrl>button:active{transform:scale(.95)}
 .bar{flex:1;height:9px;background:#23252F;border-radius:6px;cursor:pointer;position:relative}
 .bar .fill{position:absolute;inset:0 auto 0 0;width:0;background:var(--y);border-radius:6px}
 .hint2{margin-top:8px;font-family:var(--mono);font-size:12px;color:#4E5160;text-align:center}
@@ -188,7 +200,7 @@ const BEATS=[
   {type:"cmd",      m:"b", d:2500, bg:"cmdbg"},
   {type:"select",   m:"b", d:4300, bg:"selbg"},
   {type:"install",  m:"b", d:4600, bg:"instbg"},
-  {t:"말 대신 증거.", s:"실행 출력으로 보고 — hooks·CI 2중 게이트", m:"w", a:"slam", d:1500, bg:"proof"},
+  {t:"말 대신 증거.", s:"검사를 실제로 돌린 출력으로 보고 — 고칠 때·합치기 전 2중 자동 검사", m:"w", a:"slam", d:1500, bg:"proof"},
   {t:"그날 확인.",  s:"모든 내용은 공식 문서 당일 조회로 검증",   m:"y", a:"slam", d:1500, bg:"verify"},
   {type:"cta",      m:"b", d:0, bg:"ctabg"}
 ];

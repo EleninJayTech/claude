@@ -5,8 +5,14 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Claude Code 드롭인 문서 — 설치 시연</title>
 <meta name="description" content="문서를 넣고 한 문장 말하면 Claude Code 구성이 끝나는 과정을 영상처럼 보여주는 인터랙티브 시연 페이지.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎬</text></svg>">
+<meta property="og:title" content="Claude Code 드롭인 문서 — 설치 시연">
+<meta property="og:description" content="문서 하나, 한 문장으로 설치되는 과정을 영상처럼 재생하는 인터랙티브 시연.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://eleninjaytech.github.io/claude/pages/demo.html">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=IBM+Plex+Sans+KR:wght@400;500;700&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@700;900&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" rel="stylesheet">
 <style>
 :root{
   --paper:#FCFCF8; --card:#FFFFFF; --ink:#20222E; --ink-soft:#5A5E70;
@@ -14,12 +20,16 @@
   --blue:#2B49C7; --blue-soft:#E8ECFB;
   --line:#E5E4DB; --term:#1B1D27; --term-line:#2E3140;
   --green:#7BC97E; --dim:#9EA3B5;
-  --serif:'Gowun Batang','Nanum Myeongjo',serif;
-  --sans:'IBM Plex Sans KR','Pretendard','Malgun Gothic',sans-serif;
+  --serif:'Noto Serif KR','Nanum Myeongjo',serif;
+  --sans:'Pretendard Variable',Pretendard,'Malgun Gothic',sans-serif;
   --mono:'IBM Plex Mono',Consolas,monospace;
 }
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:var(--sans);background:var(--paper);color:var(--ink);line-height:1.8;font-size:16px}
+body{font-family:var(--sans);background:var(--paper);color:var(--ink);line-height:1.85;font-size:16.5px;
+  word-break:keep-all;overflow-wrap:break-word;
+  background-image:linear-gradient(#F1F0E7 1px,transparent 1px),linear-gradient(90deg,#F1F0E7 1px,transparent 1px);
+  background-size:26px 26px}
+p,li{text-wrap:pretty}
 ::selection{background:var(--marker)}
 a{color:var(--blue)}
 :focus-visible{outline:3px solid var(--blue);outline-offset:2px;border-radius:4px}
@@ -27,17 +37,17 @@ a{color:var(--blue)}
 .wrap{max-width:900px;margin:0 auto;padding:48px 24px 80px}
 .eyebrow{font-family:var(--mono);font-size:13px;letter-spacing:.14em;color:var(--ink-soft);margin-bottom:14px}
 .eyebrow b{color:var(--blue);font-weight:600}
-h1{font-family:var(--serif);font-weight:700;font-size:clamp(26px,4.2vw,38px);line-height:1.45}
+h1{font-family:var(--serif);font-weight:900;font-size:clamp(26px,4.2vw,38px);line-height:1.5;letter-spacing:-.02em;text-wrap:balance}
 .mark{background:linear-gradient(transparent 58%, var(--marker) 58%, var(--marker) 92%, transparent 92%);padding:0 2px}
 p.sub{margin-top:14px;color:var(--ink-soft);max-width:38em}
 .backlink{font-family:var(--mono);font-size:13px}
 
 /* ── 플레이어 ── */
-.player{margin-top:28px;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px}
+.player{margin-top:28px;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px;box-shadow:0 18px 44px -20px rgba(32,34,46,.22)}
 .chrome{background:var(--term);border-radius:10px 10px 0 0;padding:10px 14px;display:flex;align-items:center;gap:8px}
 .chrome .dot{width:11px;height:11px;border-radius:50%}
 .chrome .title{margin-left:8px;font-family:var(--mono);font-size:12.5px;color:var(--dim)}
-.term{background:var(--term);border-radius:0 0 10px 10px;height:min(52vh,430px);overflow-y:auto;padding:16px 18px 22px;font-family:var(--mono);font-size:13.5px;line-height:1.9;color:#E8E7DE;scroll-behavior:smooth}
+.term{background:var(--term);border-radius:0 0 10px 10px;height:min(52dvh,430px);overflow-y:auto;padding:16px 18px 22px;font-family:var(--mono);font-size:13.5px;line-height:1.9;color:#E8E7DE;scroll-behavior:smooth}
 .term .ln{opacity:0;transform:translateY(3px);transition:opacity .25s,transform .25s;white-space:pre-wrap;word-break:break-word}
 .term .ln.show{opacity:1;transform:none}
 .term .cmd{color:#F2F1E9}
@@ -63,19 +73,21 @@ p.sub{margin-top:14px;color:var(--ink-soft);max-width:38em}
 
 /* 컨트롤 */
 .controls{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin-top:12px}
-button{font-family:var(--mono);font-size:13.5px;border:1.5px solid var(--ink);background:var(--card);color:var(--ink);border-radius:8px;padding:8px 14px;cursor:pointer;transition:transform .15s}
+button{font-family:var(--mono);font-size:13.5px;border:1.5px solid var(--ink);background:var(--card);color:var(--ink);border-radius:8px;padding:8px 14px;cursor:pointer;transition:transform .18s,background .18s,border-color .18s,color .18s}
 button:hover{transform:translateY(-2px)}
+button:active{transform:translateY(0) scale(.97)}
 button.solid{background:var(--ink);color:var(--paper)}
 button[aria-pressed="true"]{background:var(--marker);border-color:var(--ink);color:var(--ink)}
 .bar{flex:1 1 160px;height:10px;background:var(--blue-soft);border-radius:6px;cursor:pointer;position:relative;min-width:120px}
 .bar .fill{position:absolute;inset:0 auto 0 0;width:0;background:var(--blue);border-radius:6px;transition:width .2s}
 .chapters{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
 .chapters button{font-size:12.5px;padding:6px 11px;border-width:1px;border-color:var(--line);color:var(--ink-soft)}
+.chapters button:hover{border-color:var(--ink);color:var(--ink)}
 .chapters button.cur{border-color:var(--ink);color:var(--ink);background:var(--marker-soft)}
 .hint{margin-top:10px;font-size:12.5px;color:var(--ink-soft);font-family:var(--mono)}
 
 /* 아래 안내 */
-.next{margin-top:26px;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:26px 28px}
+.next{margin-top:26px;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:26px 28px;box-shadow:0 12px 32px -20px rgba(32,34,46,.16)}
 .next h2{font-family:var(--serif);font-size:20px;margin-bottom:8px}
 .say{font-family:var(--mono);font-size:14px;background:var(--ink);color:#F2F1E9;border-radius:10px;padding:14px 16px;margin:12px 0;line-height:2;overflow-x:auto}
 .say b{color:var(--marker)}
@@ -141,7 +153,7 @@ add("cmd","00_통합-설치.md 를 학습해서 이 프로젝트에 적용해줘
 add("out","<span class='who'>Claude</span> 문서를 읽었습니다. 먼저 이 폴더를 조사하겠습니다.");
 add("ok","✓ git 저장소 확인 — 새 프로젝트");
 add("ok","✓ 적용 기록(dropin-applied) 없음 → 첫 설치로 진행");
-add("ok","✓ 스택 감지 — package.json (Node 프로젝트)");
+add("ok","✓ 기술 스택 감지 — package.json 발견 (Node.js로 만드는 프로젝트)");
 add("ok","✓ 기존 Claude 구성 없음 — 덮어쓸 것이 없습니다",{cap:"묻기 전에 먼저 조사합니다. 이미 설치된 것이 있으면 <b>그대로 둘지/고칠지/새로 깔지</b>를 물어봅니다."});
 
 ch("② 고르기");
@@ -162,22 +174,22 @@ add("ok","✓ CLAUDE.md — 프로젝트 사실 기록(스택·구조·규칙)")
 add("ok","✓ docs/ PROGRESS·DECISIONS·PROJECT_PLAN — 작업 일지 시스템");
 add("ok","✓ .claude/settings.json — 비밀번호·열쇠 파일 읽기 차단(deny)");
 add("ok","✓ /resume·/wrap 스킬 — 이어하기·마무리 명령");
-add("ok","✓ .claude/agents/ — AI 역할 분담 로스터");
-add("ok","✓ hooks 품질 게이트 — 코드 수정마다 자동 검사");
+add("ok","✓ .claude/agents/ — AI 역할 분담표(어려운 일=비싼 모델, 단순 작업=싼 모델)");
+add("ok","✓ hooks 품질 게이트 — 파일을 고칠 때마다 검사기가 자동 실행");
 add("out","<span class='who'>Claude</span> 이제 검증합니다 — 말이 아니라 증거로 보고드립니다.",{cap:"<b>\"됐다\"로 끝나지 않습니다.</b> 실제로 검증을 실행한 출력(증거)을 보고받습니다."});
 add("ok","✓ \"/\" 입력 → /resume /wrap 자동완성 확인");
 add("ok","✓ 일부러 포맷을 어긋나게 저장 → 검사기가 즉시 잡아냄");
 add("out","<span class='who'>Claude</span> 마지막으로 적용 기록을 남깁니다:");
 add("note","&lt;!-- dropin-applied: 2026-08-05 · 모드=권장 · 프로필=표준 · 01 v1.12 · 02 v1.12 · 04 v1.3 · 미선택: 03, 05, 06 --&gt;",{cap:"<b>무엇을 설치했는지 기록이 남습니다.</b> 나중에 문서가 업데이트되면 이 기록으로 바뀐 것만 확인합니다."});
-add("ok","✓ 설치 완료 — 커밋해 두면 팀원과 다음 세션이 그대로 이어받습니다");
+add("ok","✓ 설치 완료 — 저장(커밋)해 두면 팀원과 다음 세션이 그대로 이어받습니다");
 
 ch("④ 매일 루틴");
 add("cmd","/resume",{cap:"<b>하루의 시작.</b> AI는 원래 대화를 끄면 다 잊지만, 작업 일지 덕분에 어제를 기억합니다."});
-add("out","<span class='who'>Claude</span> 지난 세션: 로그인 화면 리팩터링 완료. 다음 작업: 비밀번호 재설정 화면. 진행할까요?");
+add("out","<span class='who'>Claude</span> 지난 세션: 로그인 화면 코드 정리(리팩터링) 완료. 다음 작업: 비밀번호 재설정 화면. 진행할까요?");
 add("cmd","비밀번호 재설정 화면 만들어줘. 완성되면 직접 열어서 확인까지 해줘");
 add("ok","✓ 구현 완료 — 브라우저로 열어 동작 확인(스크린샷 첨부)");
 add("cmd","/wrap",{cap:"<b>하루의 끝.</b> 오늘 한 일과 결정이 자동 기록됩니다 — 내일 /resume 하면 여기서 이어집니다."});
-add("ok","✓ 오늘 작업이 일지에 기록됨 · 미커밋 경고 → 커밋 안내");
+add("ok","✓ 오늘 작업이 일지에 기록됨 · 저장 안 된 변경 경고 → 커밋 방법 안내");
 
 ch("⑤ 업데이트");
 add("cmd","00_통합-설치.md 를 다시 적용해줘",{cap:"<b>몇 달 뒤, 문서가 새 버전이 되었다면?</b> 처음부터 다시 깔지 않습니다."});

@@ -5,8 +5,14 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>설치 옵션 사전 — Claude Code 드롭인 구성 문서</title>
 <meta name="description" content="00 통합 설치를 돌리면 나오는 모든 체크박스·선택지를 항목별로 설명한다. 개발을 배우는 중이라도 무엇을 고를지 판단할 수 있게.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧭</text></svg>">
+<meta property="og:title" content="설치 옵션 사전 — Claude Code 드롭인 구성 문서">
+<meta property="og:description" content="설치 때 나오는 모든 체크박스·선택지를 입문자 눈높이로 하나씩 설명.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://eleninjaytech.github.io/claude/pages/options.html">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=IBM+Plex+Sans+KR:wght@400;500;700&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@700;900&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" rel="stylesheet">
 <style>
 :root{
   --paper:#FCFCF8; --card:#FFFFFF; --ink:#20222E; --ink-soft:#5A5E70;
@@ -15,13 +21,17 @@
   --green:#1B7A4B; --green-soft:#E3F3EA;
   --red:#B3261E; --red-soft:#FBE9E7;
   --line:#E5E4DB;
-  --serif:'Gowun Batang','Nanum Myeongjo',serif;
-  --sans:'IBM Plex Sans KR','Pretendard','Malgun Gothic',sans-serif;
+  --serif:'Noto Serif KR','Nanum Myeongjo',serif;
+  --sans:'Pretendard Variable',Pretendard,'Malgun Gothic',sans-serif;
   --mono:'IBM Plex Mono',Consolas,monospace;
 }
 *{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
-body{font-family:var(--sans);background:var(--paper);color:var(--ink);line-height:1.8;font-size:16px}
+body{font-family:var(--sans);background:var(--paper);color:var(--ink);line-height:1.85;font-size:16.5px;
+  word-break:keep-all;overflow-wrap:break-word;
+  background-image:linear-gradient(#F1F0E7 1px,transparent 1px),linear-gradient(90deg,#F1F0E7 1px,transparent 1px);
+  background-size:26px 26px}
+p,li{text-wrap:pretty}
 ::selection{background:var(--marker)}
 a{color:var(--blue)}
 :focus-visible{outline:3px solid var(--blue);outline-offset:2px;border-radius:4px}
@@ -30,7 +40,7 @@ a{color:var(--blue)}
 .hero{max-width:1040px;margin:0 auto;padding:60px 24px 22px}
 .eyebrow{font-family:var(--mono);font-size:13px;letter-spacing:.14em;color:var(--ink-soft);margin-bottom:16px}
 .eyebrow b{color:var(--blue);font-weight:600}
-h1{font-family:var(--serif);font-weight:700;font-size:clamp(29px,4.4vw,44px);line-height:1.45;letter-spacing:-.01em}
+h1{font-family:var(--serif);font-weight:900;font-size:clamp(29px,4.4vw,44px);line-height:1.5;letter-spacing:-.02em;text-wrap:balance}
 .mark{background:linear-gradient(transparent 58%, var(--marker) 58%, var(--marker) 92%, transparent 92%);padding:0 2px}
 .hero p.sub{margin-top:18px;color:var(--ink-soft);font-size:16.5px;max-width:42em}
 
@@ -47,32 +57,34 @@ li{margin:6px 0}
 code.i{font-family:var(--mono);font-size:.88em;background:var(--blue-soft);color:var(--blue);padding:1px 6px;border-radius:5px;word-break:break-all}
 
 /* ---------- 목차 ---------- */
-nav.toc{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:22px 26px;margin:0 0 26px}
+nav.toc{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:22px 26px;margin:0 0 26px;scroll-margin-top:16px}
 nav.toc b{font-family:var(--mono);font-size:13px;letter-spacing:.1em;color:var(--ink-soft);display:block;margin-bottom:10px}
-nav.toc ol{margin:0 0 0 20px;font-size:14.5px}
-nav.toc li{margin:5px 0}
+nav.toc ol{margin:0 0 0 20px;font-size:15px;columns:2;column-gap:40px}
+@media (max-width:700px){nav.toc ol{columns:1}}
+nav.toc li{margin:5px 0;break-inside:avoid}
 nav.toc a{text-decoration:none;border-bottom:1px solid var(--blue-soft)}
 nav.toc a:hover{border-bottom-color:var(--blue)}
 
 /* ---------- 선택 항목 카드 ---------- */
-.opt{border:1px solid var(--line);border-radius:11px;padding:18px 20px;margin:14px 0;background:#FEFEFC}
+.opt{border:1px solid var(--line);border-left:3px solid var(--marker);border-radius:11px;padding:18px 20px;margin:14px 0;background:#FEFEFC;transition:box-shadow .2s,transform .2s}
+.opt:hover{transform:translateY(-1px);box-shadow:0 12px 30px -18px rgba(32,34,46,.22)}
 .opt-head{display:flex;flex-wrap:wrap;align-items:baseline;gap:9px;margin-bottom:4px}
 .opt-head .name{font-weight:700;font-size:16px}
 .opt-head .id{font-family:var(--mono);font-size:13px;color:var(--blue);font-weight:600}
-.opt .lead{color:var(--ink-soft);font-size:14.5px;margin:6px 0 12px}
-.opt dl{display:grid;grid-template-columns:96px 1fr;gap:6px 14px;font-size:14.5px;margin-top:10px}
+.opt .lead{color:var(--ink-soft);font-size:15px;margin:6px 0 12px}
+.opt dl{display:grid;grid-template-columns:96px 1fr;gap:6px 14px;font-size:15px;margin-top:10px}
 @media (max-width:560px){.opt dl{grid-template-columns:1fr;gap:2px}.opt dt{margin-top:9px}}
 .opt dt{font-family:var(--mono);font-size:12.5px;color:var(--ink-soft);padding-top:4px}
 .opt dd{margin:0}
 .opt dd code{font-family:var(--mono);font-size:.87em;background:#F3F3EC;padding:1px 5px;border-radius:4px;word-break:break-all}
 
-.badge{font-family:var(--mono);font-size:11.5px;font-weight:600;padding:2px 8px;border-radius:20px;white-space:nowrap;letter-spacing:.02em}
+.badge{font-family:var(--mono);font-size:11.5px;font-weight:600;padding:2px 8px;border-radius:6px;white-space:nowrap;letter-spacing:.02em}
 .b-on{background:var(--green-soft);color:var(--green)}
 .b-off{background:#F1F1EA;color:var(--ink-soft)}
 .b-keep{background:var(--marker-soft);color:#8A6D00}
 .b-gate{background:var(--red-soft);color:var(--red)}
 
-table{width:100%;border-collapse:collapse;margin:14px 0;font-size:14px}
+table{width:100%;border-collapse:collapse;margin:14px 0;font-size:14.5px}
 th,td{border:1px solid var(--line);padding:10px 12px;text-align:left;vertical-align:top}
 th{background:var(--marker-soft);font-family:var(--mono);font-size:12.5px}
 .tbl{overflow-x:auto}
@@ -81,6 +93,11 @@ th{background:var(--marker-soft);font-family:var(--mono);font-size:12.5px}
 .note.warn{background:var(--red-soft);border-color:#F0C4BF}
 .note.tip{background:var(--blue-soft);border-color:#C9D3F4}
 footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);font-size:13px;font-family:var(--mono);line-height:1.7}
+
+/* 긴 문서용 — 목차로 돌아가기 */
+.totop{position:fixed;right:22px;bottom:22px;z-index:10;font-family:var(--mono);font-size:12.5px;background:var(--ink);color:var(--paper);text-decoration:none;padding:9px 14px;border-radius:8px;box-shadow:0 10px 24px -10px rgba(32,34,46,.5);transition:transform .15s}
+.totop:hover{transform:translateY(-2px)}
+.totop:active{transform:translateY(0) scale(.96)}
 </style>
 </head>
 <body>
@@ -100,7 +117,7 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
 
 <main>
 
-<nav class="toc">
+<nav class="toc" id="toc">
   <b>목차</b>
   <ol>
     <li><a href="#words">0. 먼저 알아둘 낱말 8개</a> — 스코프·settings.json·훅·서브에이전트 같은 말부터</li>
@@ -717,6 +734,8 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
 </section>
 
 </main>
+
+<a class="totop" href="#toc">↑ 목차</a>
 
 <footer>
   설치 옵션 사전 · 00_통합-설치.md v1.7 기준 · 2026-08-06<br>
