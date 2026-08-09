@@ -8,8 +8,9 @@
 
 | 페이지 | URL |
 | --- | --- |
-| ▶️ **1분 소개 영상** — 유튜브 소개 스타일, 화면 녹화하면 그대로 영상 | https://eleninjaytech.github.io/claude/intro.html |
-| 🎬 **설치 시연** — 영상처럼 재생되는 인터랙티브 터미널 시연 | https://eleninjaytech.github.io/claude/demo.html |
+| ▶️ **1분 소개 영상** — 유튜브 소개 스타일, 화면 녹화하면 그대로 영상 | https://eleninjaytech.github.io/claude/pages/intro.html |
+| 🎬 **설치 시연** — 영상처럼 재생되는 인터랙티브 터미널 시연 | https://eleninjaytech.github.io/claude/pages/demo.html |
+| 🧭 **설치 옵션 사전** — 설치 중 나오는 선택 항목 전부를 입문자 눈높이로 | https://eleninjaytech.github.io/claude/pages/options.html |
 | 📖 **사용법 안내** — 처음이라면 여기부터, 개발을 몰라도 이해 가능 | https://eleninjaytech.github.io/claude/ |
 
 ## 사용법 (세 줄)
@@ -27,6 +28,7 @@
 - **"권장"을 고르면** 프로젝트를 조사한 결과에 맞는 조합이 자동으로 골라집니다. 목적 **번들**(디자인·검증 강화·무인 자동화 등)을 얹어 "최소 + 디자인"처럼 조합할 수도 있습니다.
 - 이미 설치된 것이 있으면 **그대로 둘지 / 고칠지 / 새로 깔지**를 먼저 물어봅니다. 말없이 덮어쓰지 않습니다.
 - **Pro 요금제(사용량이 적은 요금제)라면** 설치 중 "운용 프로필"에서 **절약**을 고르세요 — 품질이 중요한 순간(어려운 판단·최종 검사)은 그대로 두고, 평상시 소비만 줄이도록 구성됩니다.
+- 설치 중에 나오는 질문·체크 항목의 뜻은 [**설치 옵션 사전**](pages/options.html)에 항목별로 정리돼 있습니다.
 - 모르는 용어가 나오면 Claude에게 "쉽게 설명해줘"라고 하면 됩니다.
 
 ## 문서 일곱 장이 하는 일
@@ -40,7 +42,8 @@
 | [`04_검증-자동화.md`](04_검증-자동화.md) | **자동 검사원.** AI가 코드를 고칠 때마다 검사기가 자동으로 돌고, 코드를 합치기 전에 한 번 더 검사 — "됐다"는 말 대신 **검사 통과 증거**를 받게 됩니다 |
 | [`05_출력스타일.md`](05_출력스타일.md) | **말투·역할 바꾸기.** 답변 방식을 원하는 대로 — 설명 위주, 다이어그램 먼저, 학습 모드 등. 코딩 실력은 유지한 채 스타일만 바꿉니다 |
 | [`06_루틴-자동화.md`](06_루틴-자동화.md) | **자동 실행 예약.** 내 컴퓨터가 꺼져 있어도 클라우드에서 정해진 시간에 AI가 알아서 작업(야간 코드 검토·주간 문서 점검 등) — Pro 요금제 이상, 회사에서는 승인 후 |
-| [`index.html`](index.html) | **사람용 안내 페이지** — [웹에서 보기](https://eleninjaytech.github.io/claude/) |
+| [`index.html`](index.html) | **사람용 안내 페이지**(GitHub Pages 랜딩) — [웹에서 보기](https://eleninjaytech.github.io/claude/) |
+| [`pages/`](pages/) | 나머지 사람용 페이지 — [소개 영상](pages/intro.html) · [설치 시연](pages/demo.html) · [설치 옵션 사전](pages/options.html) |
 
 ## 이 저장소의 원칙
 

@@ -22,7 +22,7 @@ disable-model-invocation: true
 - **정정·갱신**: 변경된 서술만 해당 문서에 수술적으로 고친다(범위 외 손대지 않음). 각 문서 버전 표에 한 줄 + 버전 bump.
 - **날짜 규칙**(DEC-20260804-bsjeong87-02): "최종 갱신"은 편집한 문서만, **"최근 재검증"은 전면 재검증한 오늘 날짜로 전 문서 갱신**(내용 변경이 없어도 — 그게 이 표기의 목적). "기준: Claude Code v" 버전도 최신으로.
 - 각 문서 STEP의 자기 버전 표기(`NN vX.Y`)와 00 STEP 5의 dropin-applied 예시 버전 동기화.
-- `CLAUDE.md` 구성물 표 버전 동기화. **문서 목록이 바뀌었을 때만** README·index.html 동기화(DEC-20260723-bsjeong87-04).
+- `CLAUDE.md` 구성물 표 버전 동기화. **문서 목록이 바뀌었을 때만** README·index.html·`pages/`(demo·intro·options) 동기화(DEC-20260723-bsjeong87-04).
 
 ## 3. 확장 후보 보고 (조사 D 결과 — 신설은 하지 않는다)
 후보별 표(무엇/요금제/구성 생성형 여부/중복 판정/추천 순위)로 **보고만** 하고 사용자 선택을 기다린다. 승인되면 그때: 후보별 스펙 확정 조사(전용 에이전트) → 문서 작성(03·04와 같은 형식: 감지/설치/검증/제거 + 회사 게이트 + dropin-applied) → 00 §B·§C, CLAUDE.md, README·index.html 동기화 → Phase 4 재검증 목록에 신규 항목 추가.

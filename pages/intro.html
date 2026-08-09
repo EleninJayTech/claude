@@ -155,7 +155,7 @@ a{color:var(--y)}
 <div class="frame">
   <div class="topbar">
     <span><b>EleninJayTech / claude</b> · 소개 (18초)</span>
-    <span><a href="index.html">사용법</a> · <a href="demo.html">설치 시연</a> · <a href="https://github.com/EleninJayTech/claude">GitHub</a></span>
+    <span><a href="../index.html">사용법</a> · <a href="demo.html">설치 시연</a> · <a href="options.html">옵션 사전</a> · <a href="https://github.com/EleninJayTech/claude">GitHub</a></span>
   </div>
 
   <div class="stage b" id="stage" aria-label="소개 영상">
@@ -250,7 +250,7 @@ proof:[
  ["huge","2%","44%","2","✓"]],
 verify:[
  ["md","4%","3%","-1","code.claude.com/docs\n✓ changelog  ✓ permissions\n✓ sandboxing ✓ model-config"],
- ["sm","5%","70%","2","최근 재검증: 2026-08-05"],
+ ["sm","5%","70%","2","최근 재검증: 2026-08-04"],
  ["md","44%","72%","1","확인 못 한 항목은 🟡"],
  ["md","48%","2%","-2","기억이 아니라 조회로"],
  ["sm","78%","6%","-1","6개월마다 재점검"],
@@ -361,7 +361,7 @@ function render(b){
     const c=el("div","cta fadeIn",
       "<p class='kw' style='font-size:clamp(30px,6.5vw,78px)'>지금 시작하세요.</p>"+
       "<p class='url'><span>eleninjaytech.github.io/claude</span><button id='btnCopy'>복사</button></p>"+
-      "<div class='ctaRow'><a href='index.html'>사용법</a><a href='demo.html'>설치 시연</a>"+
+      "<div class='ctaRow'><a href='../index.html'>사용법</a><a href='demo.html'>설치 시연</a><a href='options.html'>옵션 사전</a>"+
       "<a href='https://github.com/EleninJayTech/claude'>GitHub</a><button id='btnReplay'>↺ 다시 보기</button></div>");
     host.appendChild(c);
     c.querySelector("#btnCopy").addEventListener("click",e=>{ e.stopPropagation();

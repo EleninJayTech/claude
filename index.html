@@ -50,12 +50,16 @@ h1{font-family:var(--serif);font-weight:700;font-size:clamp(30px,4.6vw,46px);lin
   .blob.b3{animation:drift3 6.5s ease-in-out infinite alternate}
   .blob.b4{animation:drift4 9s ease-in-out infinite alternate}
   .blob.b5{animation:drift5 7.5s ease-in-out infinite alternate}
+  .blob.b6{animation:drift6 8.5s ease-in-out infinite alternate}
+  .blob.b7{animation:drift7 7s ease-in-out infinite alternate}
 }
 @keyframes drift1{to{transform:translate(46px,14px)}}
 @keyframes drift2{to{transform:translate(-40px,-10px)}}
 @keyframes drift3{to{transform:translate(18px,-26px)}}
 @keyframes drift4{to{transform:translate(-22px,24px)}}
 @keyframes drift5{to{transform:translate(30px,-18px)}}
+@keyframes drift6{to{transform:translate(-26px,20px)}}
+@keyframes drift7{to{transform:translate(24px,16px)}}
 
 /* ---------- 본문 공통 ---------- */
 main{max-width:1040px;margin:0 auto;padding:26px 24px 80px}
@@ -132,8 +136,9 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
     <h1>문서를 넣고,<br><span class="mark">한 문장</span> 말하면,<br>구성이 끝납니다.</h1>
     <p class="sub"><b>Claude Code</b>는 컴퓨터에서 대화하듯 개발을 시킬 수 있는 AI 도구입니다(Anthropic 제작). 이곳의 문서들은 그 Claude Code를 <b>내 컴퓨터에 맞게 세팅해 주는 "말로 실행되는 설명서"</b>입니다 — 가구 설명서를 읽고 조립까지 해 주는 로봇처럼, 문서를 폴더에 넣고 "적용해줘"라고 말하면 Claude가 알아서 준비를 끝냅니다. 설정 파일을 몰라도 됩니다.</p>
     <div class="cta">
-      <a class="btn solid" href="intro.html">▶ 1분 소개 영상</a>
-      <a class="btn ghost" href="demo.html">설치 시연 보기</a>
+      <a class="btn solid" href="pages/intro.html">▶ 1분 소개 영상</a>
+      <a class="btn ghost" href="pages/demo.html">설치 시연 보기</a>
+      <a class="btn ghost" href="pages/options.html">설치 옵션 사전</a>
       <a class="btn ghost" href="https://github.com/EleninJayTech/claude">GitHub 저장소</a>
       <a class="btn ghost" href="https://github.com/EleninJayTech/claude/blob/main/00_통합-설치.md">00 문서 열기</a>
     </div>
@@ -141,13 +146,15 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
 
   <!-- 대표 이미지: 문서 4장이 Gooey로 합쳐져 하나의 구성이 되는 장면 -->
   <div class="demo">
-    <svg class="stage" viewBox="0 0 460 380" role="img" aria-label="문서 네 장이 액체처럼 합쳐져 하나의 구성이 되는 애니메이션">
+    <svg class="stage" viewBox="0 0 460 380" role="img" aria-label="문서 일곱 장이 액체처럼 합쳐져 하나의 구성이 되는 애니메이션">
       <g filter="url(#goo)">
         <circle class="blob b1" cx="150" cy="150" r="64" fill="#FFD84D"/>
         <circle class="blob b2" cx="300" cy="130" r="52" fill="#FFCF1F"/>
         <circle class="blob b3" cx="200" cy="255" r="58" fill="#FFE175"/>
         <circle class="blob b4" cx="315" cy="245" r="44" fill="#F5C400"/>
         <circle class="blob b5" cx="120" cy="260" r="40" fill="#FFDB60"/>
+        <circle class="blob b6" cx="243" cy="103" r="35" fill="#FFE9A0"/>
+        <circle class="blob b7" cx="88" cy="196" r="35" fill="#FFCF1F"/>
       </g>
       <g font-family="IBM Plex Mono,monospace" font-size="17" font-weight="600" fill="#20222E" text-anchor="middle">
         <text x="150" y="156">00</text>
@@ -155,12 +162,14 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
         <text x="200" y="261">02</text>
         <text x="315" y="251">03</text>
         <text x="120" y="266">04</text>
+        <text x="243" y="109">05</text>
+        <text x="88" y="202">06</text>
       </g>
       <g filter="url(#squiggle)">
         <path d="M108 330 Q 230 356 352 330" fill="none" stroke="#2B49C7" stroke-width="3" stroke-linecap="round"/>
         <path d="M338 322 L 352 330 L 336 340" fill="none" stroke="#2B49C7" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
       </g>
-      <text x="230" y="372" font-family="IBM Plex Sans KR,sans-serif" font-size="14" fill="#5A5E70" text-anchor="middle">네 문서가 하나의 구성으로</text>
+      <text x="230" y="372" font-family="IBM Plex Sans KR,sans-serif" font-size="14" fill="#5A5E70" text-anchor="middle">일곱 문서가 하나의 구성으로</text>
     </svg>
     <p class="caption">이 그림 자체가 <b>03 문서의 svg-design 스킬 레시피</b>(Gooey 필터 <code>feColorMatrix 19&nbsp;-8</code> + Squiggle 손그림 떨림)로 그린 것입니다. 설치하면 Claude가 이런 것을 만들어 줍니다.</p>
   </div>
@@ -183,12 +192,13 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
     <li>파일은 00 하나만 복사해도 됩니다 — 나머지 문서는 필요할 때 Claude가 인터넷(이 저장소)에서 가져옵니다.</li>
     <li><b>"권장"</b>을 고르면 프로젝트를 조사한 결과에 맞는 조합이 자동으로 골라집니다. 목적 <b>번들</b>(디자인·검증 강화·무인 자동화 등)을 얹어 <b>"최소 + 디자인"</b>처럼 조합할 수도 있습니다.</li>
     <li>이미 설치된 것이 있으면 Claude가 <b>그대로 둘지 / 고칠지 / 새로 깔지</b>를 먼저 물어봅니다. 말없이 덮어쓰지 않습니다.</li>
+    <li>설치 중에 나오는 질문·체크 항목이 무슨 뜻인지 모르겠다면 <a href="pages/options.html"><b>설치 옵션 사전</b></a>을 보세요 — 항목마다 "생기는 파일 / 체크할 때 / 뺄 때"를 풀어 뒀습니다.</li>
   </ul>
 </section>
 
 <!-- 2 -->
 <section>
-  <div class="h-row"><svg width="30" height="30"><use href="#check"/></svg><h2>문서 여섯 장이 하는 일</h2></div>
+  <div class="h-row"><svg width="30" height="30"><use href="#check"/></svg><h2>문서 일곱 장이 하는 일</h2></div>
   <p class="goal">00은 입구 · 01은 기반 · 02~06은 강화</p>
   <ul class="doclist">
     <li>
@@ -289,7 +299,7 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
   <h3>개발을 몰라도 쓸 수 있나요?</h3>
   <p>네. 문서를 폴더에 넣고 한 문장 말하는 게 전부이고, 나머지는 Claude가 물어보면서 진행합니다. 모르는 용어가 나오면 Claude에게 "쉽게 설명해줘"라고 하면 됩니다.</p>
   <h3>문서가 왜 전부 md(텍스트 파일)인가요?</h3>
-  <p>사람이 아니라 <b>Claude가 읽고 실행하는 용도</b>라서입니다. 사람용 안내는 이 페이지 하나로 유지합니다.</p>
+  <p>사람이 아니라 <b>Claude가 읽고 실행하는 용도</b>라서입니다. 사람이 읽는 안내는 이 페이지와 <a href="pages/intro.html">소개 영상</a>·<a href="pages/demo.html">설치 시연</a>·<a href="pages/options.html">옵션 사전</a> 세 장(<code class="i">pages/</code> 폴더)으로 따로 둡니다.</p>
   <h3>내용을 믿어도 되나요?</h3>
   <p>문서의 모든 기술 내용은 Anthropic 공식 설명서를 그날 직접 확인한 날짜와 함께 기록되고, 6개월마다 다시 점검합니다.</p>
   <h3>비밀번호 같은 건 안전한가요?</h3>
@@ -301,8 +311,9 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
 <section>
   <div class="h-row"><svg width="30" height="30"><use href="#check"/></svg><h2>공유 링크</h2></div>
   <p class="goal">다른 사람에게 소개할 때 이 주소를 그대로 복사해 보내세요</p>
-  <p>▶️ 1분 소개 영상 — <a href="intro.html">https://eleninjaytech.github.io/claude/intro.html</a></p>
-  <p>🎬 설치 시연 — <a href="demo.html">https://eleninjaytech.github.io/claude/demo.html</a></p>
+  <p>▶️ 1분 소개 영상 — <a href="pages/intro.html">https://eleninjaytech.github.io/claude/pages/intro.html</a></p>
+  <p>🎬 설치 시연 — <a href="pages/demo.html">https://eleninjaytech.github.io/claude/pages/demo.html</a></p>
+  <p>🧭 설치 옵션 사전 — <a href="pages/options.html">https://eleninjaytech.github.io/claude/pages/options.html</a></p>
   <p>📖 사용법 안내(이 페이지) — <a href="https://eleninjaytech.github.io/claude/">https://eleninjaytech.github.io/claude/</a></p>
 </section>
 
@@ -315,7 +326,7 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
 
 </main>
 
-<footer>사용법 페이지 · 2026-07-28 · 저장소: <a href="https://github.com/EleninJayTech/claude">github.com/EleninJayTech/claude</a> · 설치 문서 정본은 00~04 md — 이 페이지는 사람용 안내이며, 대표 이미지는 03 svg-design 레시피(Gooey·Squiggle)로, 디자인은 frontend-design 스킬 원칙으로 만들었습니다.</footer>
+<footer>사용법 페이지 · 2026-08-09 · 저장소: <a href="https://github.com/EleninJayTech/claude">github.com/EleninJayTech/claude</a> · 설치 문서 정본은 00~06 md — 이 페이지는 사람용 안내이며, 대표 이미지는 03 svg-design 레시피(Gooey·Squiggle)로, 디자인은 frontend-design 스킬 원칙으로 만들었습니다.</footer>
 
 </body>
 </html>
