@@ -1,6 +1,6 @@
 # Claude Code 통합 구성 — 범용 마스터 (드롭인 적용)
 
-> **문서 버전: v1.12** · 최종 갱신: **2026-08-04** · **최근 재검증: 2026-08-04** · 기준: Claude Code v2.1.221 (Opus 5 · Sonnet 5 · Fable 5)
+> **문서 버전: v1.13** · 최종 갱신: **2026-08-10** · **최근 재검증: 2026-08-04** · 기준: Claude Code v2.1.221 (Opus 5 · Sonnet 5 · Fable 5)
 >
 > | 버전 | 날짜 | 변경 내용 |
 > | --- | --- | --- |
@@ -17,6 +17,7 @@
 > | v1.10 | 2026-07-28 | **절약 프로필 추가**(§D-6): Pro·한도 관리 사용자용 effort 운용 — medium 시작·필요 시만 상향, ultracode/max 비권장, 컨텍스트 절약 습관. 품질 불변 지점 명시 |
 > | v1.11 | 2026-08-04 | **적용 기록 한 줄 추가**(STEP 4: 대상 CLAUDE.md에 `dropin-applied` 버전 기록 — 재적용 시 버전 비교용, 형식·재적용 규칙은 00 §A) |
 > | v1.12 | 2026-08-04 | **전면 재검증**(당일 공식 문서 조회, v2.1.221): §C-7·D-3·D-6·J·J-1 전 서술 유효 확인 — 샌드박스 네이티브 Windows 여전히 미지원, `attribution` 스키마·auto-memory 한도(200줄/25KB)·hooks 스키마·`.mcp.json` 승인 플로우·effort 단계/frontmatter `effort:` 키 모두 현행 일치. **"최근 재검증" 표기 분리** |
+> | v1.13 | 2026-08-10 | **`/resume`에 원격 최신화 선행 추가**(§F-1 규칙·§F-2 템플릿 A/B/C): remote 있고 워킹트리 clean이면 `git pull --ff-only` 먼저, 아니면 `git fetch` 후 뒤처짐만 보고 — 여러 PC·팀원 커밋을 못 보면 끝난 작업을 다음 할 일로 오판(DEC-20260810-bsjeong87-01) |
 >
 > ※ 갱신 시: 이 표에 한 줄 추가 + 하단 "문서 정보" 날짜 수정 + §L 재검증 체크리스트 수행.
 
@@ -228,7 +229,7 @@ New-Item -ItemType Directory -Path .claude/skills/wrap -Force
 ### 세션 워크플로 규율
 - 작업 요청엔 **성공 기준·검증 명령**(테스트/빌드/재현 스크립트)을 함께 받는다. 구현 후 그 검증을 실행해 **증거(출력)로 보고** — "됐다"는 말로 끝내지 않는다.
 - append-only(과거 수정·삭제 금지). 결정이 바뀌면 새 DEC + 기존에 "Superseded by DEC-…" 표시. 상호참조는 [[DEC-…]]·날짜.
-- /resume: **먼저 git status·브랜치로 미커밋(진행 중) 작업 발견** → 그다음 PROGRESS 최상단 + PROJECT_PLAN 현재 Phase + 최근 DEC 3건.
+- /resume: **remote 있고 워킹트리 clean이면 `git pull --ff-only` 먼저**(아니면 `git fetch` 후 뒤처짐만 보고 — 병합은 사용자 결정) → **git status·브랜치로 미커밋(진행 중) 작업 발견** → 그다음 PROGRESS 최상단 + PROJECT_PLAN 현재 Phase + 최근 DEC 3건.
 - /wrap: PROGRESS append + 새 DEC + PROJECT_PLAN 체크박스 갱신 + **미커밋이면 경고**(커밋 전엔 다음 /resume가 git status로만 발견).
 
 ### 길이 관리
@@ -252,9 +253,9 @@ New-Item -ItemType Directory -Path .claude/skills/wrap -Force
 # resume/SKILL.md
 ---
 name: resume
-description: 세션 시작 시 git status로 미커밋 작업 먼저 확인 후 CLAUDE.md·docs/PROGRESS.md 최상단·PROJECT_PLAN.md를 읽고 지난 상태·다음 작업 보고.
+description: 세션 시작 시 원격 최신화(clean이면 git pull --ff-only)·git status로 미커밋 작업 먼저 확인 후 CLAUDE.md·docs/PROGRESS.md 최상단·PROJECT_PLAN.md를 읽고 지난 상태·다음 작업 보고.
 ---
-# /resume — 먼저 git status·브랜치로 미커밋(진행 중) 작업 발견 → CLAUDE.md, docs/PROGRESS.md(최상단), PROJECT_PLAN.md를 읽고 "지난 X, 다음 Y?" 보고.
+# /resume — remote 있고 워킹트리 clean이면 `git pull --ff-only` 먼저(아니면 `git fetch` 후 뒤처짐만 보고) → git status·브랜치로 미커밋(진행 중) 작업 발견 → CLAUDE.md, docs/PROGRESS.md(최상단), PROJECT_PLAN.md를 읽고 "지난 X, 다음 Y?" 보고.
 ```
 ```markdown
 # wrap/SKILL.md
@@ -273,7 +274,7 @@ name: resume
 description: 단위분할 재개. git status로 미커밋 작업 먼저, 대상 단위(app/module/domain)를 PWD>브랜치>질문 순 판별해 docs/<단위>/PROGRESS.md를 읽는다.
 ---
 # /resume (솔루션-aware)
-0) 먼저 git status·현재 브랜치 확인 — 미커밋/비-main 브랜치면 그 단위 작업 우선(untracked일 수 있음).
+0) remote 있고 clean이면 `git pull --ff-only` 먼저(아니면 fetch 후 뒤처짐 보고) → git status·현재 브랜치 확인 — 미커밋/비-main 브랜치면 그 단위 작업 우선(untracked일 수 있음).
 1) 대상 단위 판별: PWD가 <단위> 안 → 그 단위 / 브랜치명(feature/<단위>) / 불명확하면 질문.
 2) docs/<단위>/PROGRESS.md 최상단 + docs/PROJECT_PLAN.md + 최근 DEC 3건 → "이 단위 지난 X, 다음 Y?" 보고.
 ```
@@ -296,7 +297,7 @@ name: resume
 description: 통합 워크스페이스 재개. 루트+하위 repo git status로 미커밋 먼저, 대상 repo+단위 판별해 <repo>/docs[/<단위>]/PROGRESS.md와 (있으면) 루트 docs/INDEX.md를 읽는다.
 ---
 # /resume (통합)
-0) 루트+하위 repo 각각 git status·브랜치로 미커밋(진행 중) 작업 먼저 발견.
+0) 루트+하위 repo 각각: remote 있고 clean이면 `git pull --ff-only` 먼저(아니면 fetch 후 뒤처짐 보고) → git status·브랜치로 미커밋(진행 중) 작업 발견.
 1) 대상 repo(+단위) 판별: PWD > 브랜치 > 질문.
 2) <repo>/docs[/<단위>]/PROGRESS.md 최상단 + <repo>/PROJECT_PLAN.md + 루트 docs/INDEX.md 최근 항목 → 보고.
 ```
@@ -483,5 +484,5 @@ Claude Code는 매주 바뀐다. 6개월마다 30분:
 ## 핵심 출처 🟢
 IDE 통합·`--add-dir`(ide-integrations·large-codebases) / permissions·deny 한계 / hooks / skills / memory·auto-memory — 모두 `code.claude.com/docs` 및 `docs.anthropic.com`.
 
-**문서 정보** — 통합 마스터(범용) **v1.12**. 8개 소스(⓪ 폴더구성 · ① 셋업 · structure-guide · daily-routine · SFA 셋업/통합 · setup-followalong v8 · integrated-setup) 중복 제거·v8 반영 + `/effort`(§D-6) + 2026-07-20 공식 문서 전면 재검증 + 02 가이드 연동 경량 보완 + 2026-07-23 재검증(v2.1.218) + 2026-07-28 Opus 5 반영·부분 선택·auto mode(v2.1.220) + 2026-08-04 적용 기록(dropin-applied)·전면 재검증(v2.1.221).
-최종 갱신: 2026-08-04 · 최근 재검증: 2026-08-04 / 참조: Claude Code v2.1.221, Opus 5(v2.1.219+) · Sonnet 5(v2.1.197+) · Fable 5(v2.1.170+).
+**문서 정보** — 통합 마스터(범용) **v1.13**. 8개 소스(⓪ 폴더구성 · ① 셋업 · structure-guide · daily-routine · SFA 셋업/통합 · setup-followalong v8 · integrated-setup) 중복 제거·v8 반영 + `/effort`(§D-6) + 2026-07-20 공식 문서 전면 재검증 + 02 가이드 연동 경량 보완 + 2026-07-23 재검증(v2.1.218) + 2026-07-28 Opus 5 반영·부분 선택·auto mode(v2.1.220) + 2026-08-04 적용 기록(dropin-applied)·전면 재검증(v2.1.221) + 2026-08-10 /resume 원격 최신화 선행.
+최종 갱신: 2026-08-10 · 최근 재검증: 2026-08-04 / 참조: Claude Code v2.1.221, Opus 5(v2.1.219+) · Sonnet 5(v2.1.197+) · Fable 5(v2.1.170+).
