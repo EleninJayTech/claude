@@ -1,6 +1,6 @@
 # Claude Code 통합 구성 — 범용 마스터 (드롭인 적용)
 
-> **문서 버전: v1.15** · 최종 갱신: **2026-08-10** · **최근 재검증: 2026-08-04** · 기준: Claude Code v2.1.226 (Opus 5 · Sonnet 5 · Fable 5)
+> **문서 버전: v1.16** · 최종 갱신: **2026-08-10** · **최근 재검증: 2026-08-04** · 기준: Claude Code v2.1.226 (Opus 5 · Sonnet 5 · Fable 5)
 >
 > | 버전 | 날짜 | 변경 내용 |
 > | --- | --- | --- |
@@ -20,6 +20,7 @@
 > | v1.13 | 2026-08-10 | **`/resume`에 원격 최신화 선행 추가**(§F-1 규칙·§F-2 템플릿 A/B/C): remote 있고 워킹트리 clean이면 `git pull --ff-only` 먼저, 아니면 `git fetch` 후 뒤처짐만 보고 — 여러 PC·팀원 커밋을 못 보면 끝난 작업을 다음 할 일로 오판(DEC-20260810-bsjeong87-01) |
 > | v1.14 | 2026-08-10 | **중복 재판정 경량 반영**(당일 조회, v2.1.226 — DEC-20260810-bsjeong87-02): §E `/init`에 대화형 플로우(`CLAUDE_CODE_NEW_INIT=1` — CLAUDE.md+스킬+hooks 제안형) 한 줄, §K 트러블슈팅에 `/doctor`(셋업 진단+수정, CLAUDE.md 트림 제안 v2.1.206+) 행 추가. 커스텀 `/resume`·`/wrap`+docs/ 기록 체계는 내장 Tasks(세션·휘발) 대비 정본 유지 재확인 |
 > | v1.15 | 2026-08-10 | **스킬 중복 등록 방지**(DEC-20260810-bsjeong87-04): §F-2에 설치 전 같은 이름 구형 `commands/` 제거 규칙(방치 시 `/` 자동완성 2개·구형 내용 실행 위험 — 실제 발생 사례), §K에 증상 행 추가 |
+> | v1.16 | 2026-08-10 | **`/dropin-check` 배포 + 점검 안내 내장**(DEC-20260810-bsjeong87-05): §D-4에 dropin-check 글로벌 스킬 설치(저장소 global-config 복사 또는 raw), §F-2 /resume 템플릿 A/B/C에 조건부 안내 단계(dropin-applied 30일 경과 시 /dropin-check, PROJECT_PLAN 예정일 경과 항목) — 매 세션 hook 안내 대신 resume 시 해당할 때만 |
 >
 > ※ 갱신 시: 이 표에 한 줄 추가 + 하단 "문서 정보" 날짜 수정 + §L 재검증 체크리스트 수행.
 
@@ -135,9 +136,10 @@ New-Item -ItemType Directory -Path .claude/skills/wrap -Force
 > 🟡 `includeCoAuthoredBy`는 deprecated → `attribution` 객체로 대체(빈 문자열 `""` = 표기 숨김).
 > 🟡 테마(dark/light)는 settings.json 문서화 키가 아님(2026-07-20 확인) — 세션에서 **`/config`**(또는 `/theme`)로 설정.
 
-### D-4. 기본 `/resume`·`/wrap` (단일 repo용 기본형) — §F-2 A 참조. (통합/MSA는 §F-2 B·C로 덮어씀)
+### D-4. 기본 `/resume`·`/wrap` + `/dropin-check` (단일 repo용 기본형) — §F-2 A 참조. (통합/MSA는 §F-2 B·C로 덮어씀)
+- **`/dropin-check`**(구성 최신성 점검, 읽기 전용)는 환경 무관 **글로벌 스킬** — 문서 저장소의 `global-config/skills/dropin-check/SKILL.md`를 `~/.claude/skills/dropin-check/`로 복사한다(로컬 클론 없으면 raw: `https://raw.githubusercontent.com/EleninJayTech/claude/main/global-config/skills/dropin-check/SKILL.md`). 설치 전 같은 이름 구형 `commands/`가 있으면 제거(§F-2 주의).
 
-### D-5. 확인 — `claude` → `/` → `/resume`·`/wrap` 자동완성되면 성공.
+### D-5. 확인 — `claude` → `/` → `/resume`·`/wrap`·`/dropin-check` 자동완성되면 성공.
 
 ### D-6. 추론 강도(effort) 제어 — `/effort` 🟢
 세션의 **사고(reasoning) 깊이**를 조절하는 슬래시 명령. 고른 값은 settings.json **`effortLevel`** 키에 저장돼 **새 세션 기본값**이 된다.
@@ -258,7 +260,7 @@ New-Item -ItemType Directory -Path .claude/skills/wrap -Force
 name: resume
 description: 세션 시작 시 원격 최신화(clean이면 git pull --ff-only)·git status로 미커밋 작업 먼저 확인 후 CLAUDE.md·docs/PROGRESS.md 최상단·PROJECT_PLAN.md를 읽고 지난 상태·다음 작업 보고.
 ---
-# /resume — remote 있고 워킹트리 clean이면 `git pull --ff-only` 먼저(아니면 `git fetch` 후 뒤처짐만 보고) → git status·브랜치로 미커밋(진행 중) 작업 발견 → CLAUDE.md, docs/PROGRESS.md(최상단), PROJECT_PLAN.md를 읽고 "지난 X, 다음 Y?" 보고.
+# /resume — remote 있고 워킹트리 clean이면 `git pull --ff-only` 먼저(아니면 `git fetch` 후 뒤처짐만 보고) → git status·브랜치로 미커밋(진행 중) 작업 발견 → CLAUDE.md, docs/PROGRESS.md(최상단), PROJECT_PLAN.md를 읽고 "지난 X, 다음 Y?" 보고. + 조건부 안내: dropin-applied 30일 경과면 `/dropin-check`, PROJECT_PLAN 예정일 경과 항목 안내.
 ```
 ```markdown
 # wrap/SKILL.md
@@ -280,6 +282,7 @@ description: 단위분할 재개. git status로 미커밋 작업 먼저, 대상 
 0) remote 있고 clean이면 `git pull --ff-only` 먼저(아니면 fetch 후 뒤처짐 보고) → git status·현재 브랜치 확인 — 미커밋/비-main 브랜치면 그 단위 작업 우선(untracked일 수 있음).
 1) 대상 단위 판별: PWD가 <단위> 안 → 그 단위 / 브랜치명(feature/<단위>) / 불명확하면 질문.
 2) docs/<단위>/PROGRESS.md 최상단 + docs/PROJECT_PLAN.md + 최근 DEC 3건 → "이 단위 지난 X, 다음 Y?" 보고.
+3) 조건부 안내: dropin-applied 30일 경과면 /dropin-check, PROJECT_PLAN 예정일 경과 항목 안내.
 ```
 ```markdown
 # wrap/SKILL.md
@@ -303,6 +306,7 @@ description: 통합 워크스페이스 재개. 루트+하위 repo git status로 
 0) 루트+하위 repo 각각: remote 있고 clean이면 `git pull --ff-only` 먼저(아니면 fetch 후 뒤처짐 보고) → git status·브랜치로 미커밋(진행 중) 작업 발견.
 1) 대상 repo(+단위) 판별: PWD > 브랜치 > 질문.
 2) <repo>/docs[/<단위>]/PROGRESS.md 최상단 + <repo>/PROJECT_PLAN.md + 루트 docs/INDEX.md 최근 항목 → 보고.
+3) 조건부 안내: dropin-applied 30일 경과면 /dropin-check, 예정일 경과 항목 안내.
 ```
 ```markdown
 # wrap/SKILL.md
@@ -489,5 +493,5 @@ Claude Code는 매주 바뀐다. 6개월마다 30분:
 ## 핵심 출처 🟢
 IDE 통합·`--add-dir`(ide-integrations·large-codebases) / permissions·deny 한계 / hooks / skills / memory·auto-memory — 모두 `code.claude.com/docs` 및 `docs.anthropic.com`.
 
-**문서 정보** — 통합 마스터(범용) **v1.15**. 8개 소스(⓪ 폴더구성 · ① 셋업 · structure-guide · daily-routine · SFA 셋업/통합 · setup-followalong v8 · integrated-setup) 중복 제거·v8 반영 + `/effort`(§D-6) + 2026-07-20 공식 문서 전면 재검증 + 02 가이드 연동 경량 보완 + 2026-07-23 재검증(v2.1.218) + 2026-07-28 Opus 5 반영·부분 선택·auto mode(v2.1.220) + 2026-08-04 적용 기록(dropin-applied)·전면 재검증(v2.1.221) + 2026-08-10 /resume 원격 최신화 선행·중복 재판정 경량 반영(v2.1.226)·스킬 중복 등록 방지.
+**문서 정보** — 통합 마스터(범용) **v1.16**. 8개 소스(⓪ 폴더구성 · ① 셋업 · structure-guide · daily-routine · SFA 셋업/통합 · setup-followalong v8 · integrated-setup) 중복 제거·v8 반영 + `/effort`(§D-6) + 2026-07-20 공식 문서 전면 재검증 + 02 가이드 연동 경량 보완 + 2026-07-23 재검증(v2.1.218) + 2026-07-28 Opus 5 반영·부분 선택·auto mode(v2.1.220) + 2026-08-04 적용 기록(dropin-applied)·전면 재검증(v2.1.221) + 2026-08-10 /resume 원격 최신화 선행·중복 재판정 경량 반영(v2.1.226)·스킬 중복 등록 방지.
 최종 갱신: 2026-08-10 · 최근 재검증: 2026-08-04 / 참조: Claude Code v2.1.226, Opus 5(v2.1.219+) · Sonnet 5(v2.1.197+) · Fable 5(v2.1.170+).
