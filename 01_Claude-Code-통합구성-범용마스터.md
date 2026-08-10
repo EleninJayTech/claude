@@ -1,6 +1,6 @@
 # Claude Code 통합 구성 — 범용 마스터 (드롭인 적용)
 
-> **문서 버전: v1.13** · 최종 갱신: **2026-08-10** · **최근 재검증: 2026-08-04** · 기준: Claude Code v2.1.221 (Opus 5 · Sonnet 5 · Fable 5)
+> **문서 버전: v1.14** · 최종 갱신: **2026-08-10** · **최근 재검증: 2026-08-04** · 기준: Claude Code v2.1.226 (Opus 5 · Sonnet 5 · Fable 5)
 >
 > | 버전 | 날짜 | 변경 내용 |
 > | --- | --- | --- |
@@ -18,6 +18,7 @@
 > | v1.11 | 2026-08-04 | **적용 기록 한 줄 추가**(STEP 4: 대상 CLAUDE.md에 `dropin-applied` 버전 기록 — 재적용 시 버전 비교용, 형식·재적용 규칙은 00 §A) |
 > | v1.12 | 2026-08-04 | **전면 재검증**(당일 공식 문서 조회, v2.1.221): §C-7·D-3·D-6·J·J-1 전 서술 유효 확인 — 샌드박스 네이티브 Windows 여전히 미지원, `attribution` 스키마·auto-memory 한도(200줄/25KB)·hooks 스키마·`.mcp.json` 승인 플로우·effort 단계/frontmatter `effort:` 키 모두 현행 일치. **"최근 재검증" 표기 분리** |
 > | v1.13 | 2026-08-10 | **`/resume`에 원격 최신화 선행 추가**(§F-1 규칙·§F-2 템플릿 A/B/C): remote 있고 워킹트리 clean이면 `git pull --ff-only` 먼저, 아니면 `git fetch` 후 뒤처짐만 보고 — 여러 PC·팀원 커밋을 못 보면 끝난 작업을 다음 할 일로 오판(DEC-20260810-bsjeong87-01) |
+> | v1.14 | 2026-08-10 | **중복 재판정 경량 반영**(당일 조회, v2.1.226 — DEC-20260810-bsjeong87-02): §E `/init`에 대화형 플로우(`CLAUDE_CODE_NEW_INIT=1` — CLAUDE.md+스킬+hooks 제안형) 한 줄, §K 트러블슈팅에 `/doctor`(셋업 진단+수정, CLAUDE.md 트림 제안 v2.1.206+) 행 추가. 커스텀 `/resume`·`/wrap`+docs/ 기록 체계는 내장 Tasks(세션·휘발) 대비 정본 유지 재확인 |
 >
 > ※ 갱신 시: 이 표에 한 줄 추가 + 하단 "문서 정보" 날짜 수정 + §L 재검증 체크리스트 수행.
 
@@ -170,7 +171,7 @@ New-Item -ItemType Directory -Path .claude/skills/wrap -Force
 ## E. 프로젝트 셋업 (환경별)
 
 > 공통: 각 repo `CLAUDE.md`(프로젝트 사실 = **본체**) + `docs/` + §F-1 규칙블록 + §F-3 프로젝트 settings + §F-5 `.gitignore`.
-> `CLAUDE.md` 사실은 스택·DB·아키텍처·제약. 행동 규칙(글로벌)과 중복 금지, 30~200줄. **없으면 `/init`으로 초안 생성 후 다듬기**(코드베이스 분석해 빌드·테스트 명령을 채워줌).
+> `CLAUDE.md` 사실은 스택·DB·아키텍처·제약. 행동 규칙(글로벌)과 중복 금지, 30~200줄. **없으면 `/init`으로 초안 생성 후 다듬기**(코드베이스 분석해 빌드·테스트 명령을 채워줌. `CLAUDE_CODE_NEW_INIT=1`이면 대화형 다단계 — CLAUDE.md+스킬+hooks까지 제안 후 승인받아 생성).
 
 ### E-1. 🅱️ 단일 repo (B)
 - `docs/` **flat**: `PROJECT_PLAN.md` · `PROGRESS.md` · `DECISIONS.md` (§F-6 양식).
@@ -467,6 +468,7 @@ CLAUDE.local.md
 | 여러 repo 한 번에 커밋 안 됨 | 정상 — 독립 git. repo별 따로 |
 | `.env`를 Claude가 읽으려 함 | deny + CLAUDE.md #8 / **근본은 시크릿 분리** |
 | Windows에서 Bash 없다고 에러 | Claude Code `v2.1.120+`로 업데이트(PowerShell만으로 동작) |
+| 셋업이 전반적으로 이상함 | **`/doctor`** — 구성 전체 진단+수정 제안(비대 CLAUDE.md 트림 제안 포함 v2.1.206+, `/checkup` 별칭) |
 
 ---
 
@@ -484,5 +486,5 @@ Claude Code는 매주 바뀐다. 6개월마다 30분:
 ## 핵심 출처 🟢
 IDE 통합·`--add-dir`(ide-integrations·large-codebases) / permissions·deny 한계 / hooks / skills / memory·auto-memory — 모두 `code.claude.com/docs` 및 `docs.anthropic.com`.
 
-**문서 정보** — 통합 마스터(범용) **v1.13**. 8개 소스(⓪ 폴더구성 · ① 셋업 · structure-guide · daily-routine · SFA 셋업/통합 · setup-followalong v8 · integrated-setup) 중복 제거·v8 반영 + `/effort`(§D-6) + 2026-07-20 공식 문서 전면 재검증 + 02 가이드 연동 경량 보완 + 2026-07-23 재검증(v2.1.218) + 2026-07-28 Opus 5 반영·부분 선택·auto mode(v2.1.220) + 2026-08-04 적용 기록(dropin-applied)·전면 재검증(v2.1.221) + 2026-08-10 /resume 원격 최신화 선행.
-최종 갱신: 2026-08-10 · 최근 재검증: 2026-08-04 / 참조: Claude Code v2.1.221, Opus 5(v2.1.219+) · Sonnet 5(v2.1.197+) · Fable 5(v2.1.170+).
+**문서 정보** — 통합 마스터(범용) **v1.14**. 8개 소스(⓪ 폴더구성 · ① 셋업 · structure-guide · daily-routine · SFA 셋업/통합 · setup-followalong v8 · integrated-setup) 중복 제거·v8 반영 + `/effort`(§D-6) + 2026-07-20 공식 문서 전면 재검증 + 02 가이드 연동 경량 보완 + 2026-07-23 재검증(v2.1.218) + 2026-07-28 Opus 5 반영·부분 선택·auto mode(v2.1.220) + 2026-08-04 적용 기록(dropin-applied)·전면 재검증(v2.1.221) + 2026-08-10 /resume 원격 최신화 선행·중복 재판정 경량 반영(v2.1.226).
+최종 갱신: 2026-08-10 · 최근 재검증: 2026-08-04 / 참조: Claude Code v2.1.226, Opus 5(v2.1.219+) · Sonnet 5(v2.1.197+) · Fable 5(v2.1.170+).
