@@ -21,7 +21,7 @@ Claude Code 셋업·운영을 위한 **드롭인 지시 문서** 저장소. 코�
 | `pages/demo.html` | 사람용 설치 시연 페이지(터미널 재생형 인터랙티브 — 재생/챕터/배속/자막) — index.html과 동일 규칙(사람용 예외, 절차가 크게 바뀔 때만 갱신) | 2026-08-05 |
 | `pages/intro.html` | 사람용 1분 소개 영상 페이지(16:9 시네마틱 7장면 자동 전환 — 유튜브 소개용, 화면 녹화 시 영상화) — 사람용 예외 동일 | 2026-08-05 |
 | `pages/options.html` | 사람용 설치 옵션 사전(00 설치 중 나오는 모든 선택 항목을 입문자 눈높이로 설명 — 용어 8개·공통 질문 4종·01~06 항목별·추천 조합·FAQ) — 사람용 예외 동일 | 2026-08-06 |
-| `global-config/` | `~/.claude` 백업(화이트리스트 4종) — 새 PC 복원용 | 2026-07-21 스냅샷 |
+| `global-config/` | `~/.claude` 백업(화이트리스트 5종) — 새 PC 복원용 | 2026-08-10 스냅샷 |
 
 ## 문서 관리 규칙 (이 repo 고유)
 - **md 단일 관리**: 드롭인 지시서는 md만 유지. 지시서의 html 미러는 2026-07-23 폐기(git 히스토리에서 복구 가능). ([[DEC-20260723-bsjeong87-01]], DEC-20260720-bsjeong87-01 대체) — 예외: 사람용 페이지 4종(`index.html` + `pages/` 3종)은 md 미러가 아닌 **독립 산출물**이라 이중 관리에 해당하지 않음(md 내용 변경 시 동기화 의무 없음, 문서 목록이 바뀔 때만 갱신). 배치 규칙: `index.html`만 루트(Pages 진입점), 나머지는 `pages/`.
@@ -31,7 +31,7 @@ Claude Code 셋업·운영을 위한 **드롭인 지시 문서** 저장소. 코�
 - **전면 재검증+확장 조사는 `/reverify` 한 번으로**(`.claude/skills/reverify/` — 조사 에이전트 병렬→반영→후보 보고→기록·커밋 절차 내장). "최근 재검증" 날짜는 이 절차를 돌린 날에만 갱신(DEC-20260804-bsjeong87-02).
 
 ## global-config/ 백업 규칙
-- **화이트리스트만** 커밋: `CLAUDE.md`·`settings.json`·`skills/`·`commands/`. 통째 커밋 금지 — `.credentials.json`·`history.jsonl`·`projects/`·`sessions/`는 시크릿·대화기록. ([[DEC-20260720-bsjeong87-04]])
+- **화이트리스트만** 커밋: `CLAUDE.md`·`settings.json`·`skills/`·`commands/`·`output-styles/`. 통째 커밋 금지 — `.credentials.json`·`history.jsonl`·`projects/`·`sessions/`는 시크릿·대화기록. ([[DEC-20260720-bsjeong87-04]], `output-styles/` 추가는 [[DEC-20260810-bsjeong87-10]])
 - 원본(`~/.claude`)을 고쳐도 **자동 갱신되지 않는다** — 수동으로 다시 복사해 커밋.
 - `theme` 등 개인 취향 키는 문서 예시에서 제외하되 개인 설정에 남는 건 무방. ([[DEC-20260720-bsjeong87-03]])
 

@@ -19,8 +19,8 @@ description: 드롭인 구성 최신성 점검(읽기 전용). 대상 프로젝�
 - 글로벌만 적용한 PC면 `~/.claude/CLAUDE.md`도 확인.
 - 기록이 없으면: "적용 기록 없음(미적용이거나 2026-08-04(기록 도입) 이전 적용)"으로 보고하고 문서 비교는 생략.
 
-## 3) 글로벌 구성 대조 — 화이트리스트 4종
-- `~/.claude`의 `CLAUDE.md`·`settings.json`·`skills/`·`commands/`를 저장소 `global-config/`와 파일 단위 대조(없음/내용 다름).
+## 3) 글로벌 구성 대조 — 화이트리스트 5종
+- `~/.claude`의 `CLAUDE.md`·`settings.json`·`skills/`·`commands/`·`output-styles/`를 저장소 `global-config/`와 파일 단위 대조(없음/내용 다름).
 - `settings.json`은 머신 종속 키(model·theme·enabledPlugins·statusLine·effortLevel 등)가 달라도 정상(DEC-20260721-bsjeong87-02) —
   **구성 성격 키(permissions.deny·hooks)의 차이만** 보고.
 - 어느 쪽이 최신인지 단정하지 말 것 — 백업 규칙상 원본(`~/.claude`) 수정이 백업에 자동 반영되지 않으므로, 차이의 방향(로컬이 구버전 / 백업이 구버전)을 파일 내용으로 판단해 명시.

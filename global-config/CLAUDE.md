@@ -45,3 +45,6 @@ When compacting, always preserve:
   - 적용 권장: **외부 공유·사용자 노출 한국어 문서**(주간보고·온보딩 docs·공지). 개인 기록(PROGRESS/DECISIONS 등 내부 로그)엔 강제하지 않음.
   - 우선순위: 프로젝트 `CLAUDE.md` 규칙(간결 출력 등)이 humanizer 지침보다 우선.
 <!-- claude-skill-setup:end -->
+
+<!-- dropin-applied: 2026-08-10 · 모드=권장+디자인+검증강화+응답스타일+무인자동화 · 프로필=표준 · 01 v1.19(글로벌: CLAUDE.md·deny 27종·hooks·스킬 4종 + resume/wrap에 통합형 절차 이관) · 03 v1.7(svg-design 신규·frontend-design 신규 / claude-hud 0.3.0·MCP·브라우저 검증은 기존 유지) · 04 v1.5(gh 2.97.0 설치, `gh auth login` 대기 / glab 설치됨·사내 호스트 미등록) · 05 v1.1(korean-evidence-report 생성·활성) · 미선택: 02·06(프로젝트 스코프 문서) -->
+
