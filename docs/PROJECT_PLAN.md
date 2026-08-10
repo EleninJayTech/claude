@@ -63,6 +63,7 @@
 ## Phase 4 — 유지보수 (진행 중)
 - [x] 2026-08-10 `/resume` 원격 최신화 선행 — 01 v1.13 + 글로벌 스킬·global-config/ 백업 + repo CLAUDE.md ([[DEC-20260810-bsjeong87-01]])
 - [x] 2026-08-10 과거 중복 판정 전면 재심(v2.1.226 조회) — 정본 교체 0 · 정정 1(02 ultra 가용성) · 보강 4문서(01 v1.14·02 v1.13·03 v1.6·04 v1.4) ([[DEC-20260810-bsjeong87-02]])
+- [x] 2026-08-10 `/dropin-check` 점검 전용 글로벌 스킬 신설 + `/reverify` 보강(잔여 인계·중복 재심 축) + 백업 구버전 2건 동기화 ([[DEC-20260810-bsjeong87-03]])
 - [ ] **다음 재검증: 2027-01경** (00 §L, 6개월 주기)
   - 중복 재심 🟡 잔여: Context7·Caveman 생존, todo-tracking 공식 문서(2026-08-10 404), `/team-onboarding` 재평가 ([[DEC-20260810-bsjeong87-02]])
   - `code.claude.com/docs/en/whats-new` 최신 항목
