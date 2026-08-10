@@ -6,7 +6,7 @@
 | --- | --- |
 | `CLAUDE.md` | `~/.claude/CLAUDE.md` (글로벌 행동 규칙) |
 | `settings.json` | `~/.claude/settings.json` (deny·hooks·statusline 등) |
-| `skills/` | `~/.claude/skills/` (resume·wrap·humanizer·dropin-check) |
+| `skills/` | `~/.claude/skills/` (resume·wrap·humanizer·dropin-check·dropin-update) |
 | `commands/` | `~/.claude/commands/` (skill-setup만 — 스킬과 이름이 겹치는 구형 커맨드는 중복 등록되므로 제거, [[DEC-20260810-bsjeong87-04]]) |
 
 **복원**: 새 PC에서 위 표의 원본 위치로 그대로 복사.
