@@ -1,5 +1,7 @@
 # PROGRESS (최상단 append)
 
+- [docs][Done] **최종 정합성 자동 점검 + options.html ⓒ 동기화**(사용자 질문 "지금 버전 문제없나", 커밋 f82f576). 자동 점검 결과: 문서 7종 헤더=푸터 버전 전부 일치·CLAUDE.md 표 동기화·스킬 5종 로컬=백업 해시 일치·살아있는 버전 하드코딩 0건·PROGRESS 52줄(800 여유)·README 낡은 표기 없음·Pages 폰트 라이브 반영 확인. **발견·수정 1건**: pages/options.html ⓒ 카드가 점검 스킬을 모름(01 v1.16~19에서 ⓒ 산출물이 2종→4종으로 변경 — DEC-0806-01 "선택지 구성 변경 시 동기화" 의무 대상) → dropin-check/update 파일·설명, resume pull 선행·30일 안내 반영. 결론: 현재 버전 정합성 문제 없음(전면 내용 재검증은 2027-01 /reverify 예정) — @bsjeong87 (main) 2026-08-10
+
 - [docs][Done] **index.html 폰트 통일 — 사람용 4페이지 단일화**([[DEC-20260810-bsjeong87-09]], 커밋 670378b). 2026-08-09 리디자인 때 갈라진 폰트(DEC-0809-01 "사용자 결정 대기") 해소: 본문 IBM Plex Sans KR→**Pretendard Variable**(jsDelivr), 제목 Gowun Batang→**Noto Serif KR 900**(h1 900·`text-wrap:balance`), `word-break:keep-all`·16.5px/1.85, 히어로 SVG 텍스트 폰트까지 교체(mono는 IBM Plex Mono 공통 유지). 이후 신설 페이지도 이 조합 준수. 검증: 구 폰트 참조 0건(grep)·폰트 CDN 2종 HTTP 200·Pages 자동 재배포 확인 — @bsjeong87 (main) 2026-08-10
 
 - [docs][Done] **실적용 발견 공백 3건 반영**(2026-08-05~06 Pending 후보 전부 승인·소진, [[DEC-20260810-bsjeong87-08]], 커밋 32b4caa) — ① **06 v1.2**: §1 게이트에 "claude.ai **계정 레벨** GitHub 연결" 확인 추가(repo 연동과 별개 — 없으면 프롬프트·cron 다 만든 뒤 루틴 저장이 HTTP 401, 2026-08-06 실측 명기) ② **00 v1.9**: dropin-applied 괄호 메모에 "부분 완료·사용자 조치 대기" 표기 명시(예: `gh 설치, 인증 대기` — 재적용 분기·/dropin-check가 읽음) ③ **01 v1.19**: §F-1·§F-2 A/B/C+글로벌 resume 스킬(백업 동기화)에 "PROGRESS는 **Read limit 앞 ~40줄만**"(800줄 근접 시 통째 읽기 차단). DECISIONS 아카이브 규칙은 영향 작아 계속 보류 — @bsjeong87 (main) 2026-08-10
