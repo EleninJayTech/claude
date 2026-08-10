@@ -2,7 +2,7 @@
 
 > 마스터 로드맵. 완료 항목은 체크하고 상세는 `PROGRESS.md`에, 결정 근거는 `DECISIONS.md`에 남긴다.
 
-## 현재 Phase — **Phase 6 완료 → Phase 4 대기(유지보수)**
+## 현재 Phase — **Phase 4 유지보수 (2026-08-10 첫 수행)**
 드롭인 5종(00 셀렉터·01 통합구성·02 모델분담·03 확장기능·04 검증 자동화) + 사람용 index.html(GitHub Pages). 설계 원칙: 2단계 선택형·중복 제거·회사 업무용 고려([[DEC-20260728-bsjeong87-01]]).
 
 ---
@@ -60,8 +60,11 @@
 - [x] 사람용 페이지 `pages/` 분리(index만 루트 유지, 공유 URL 변경) + 4페이지 최신화(index 문서 7장 반영·상호 링크·intro 날짜 정정) (2026-08-09, [[DEC-20260809-bsjeong87-01]])
 - [x] pages/ 3종 리디자인 — 글씨체 Pretendard·Noto Serif KR 교체+`keep-all` 가독성, 격자·그레인 질감, 파비콘·og·`:active`·`↑ 목차` (2026-08-09)
 
-## Phase 4 — 유지보수 (예정)
+## Phase 4 — 유지보수 (진행 중)
+- [x] 2026-08-10 `/resume` 원격 최신화 선행 — 01 v1.13 + 글로벌 스킬·global-config/ 백업 + repo CLAUDE.md ([[DEC-20260810-bsjeong87-01]])
+- [x] 2026-08-10 과거 중복 판정 전면 재심(v2.1.226 조회) — 정본 교체 0 · 정정 1(02 ultra 가용성) · 보강 4문서(01 v1.14·02 v1.13·03 v1.6·04 v1.4) ([[DEC-20260810-bsjeong87-02]])
 - [ ] **다음 재검증: 2027-01경** (00 §L, 6개월 주기)
+  - 중복 재심 🟡 잔여: Context7·Caveman 생존, todo-tracking 공식 문서(2026-08-10 404), `/team-onboarding` 재평가 ([[DEC-20260810-bsjeong87-02]])
   - `code.claude.com/docs/en/whats-new` 최신 항목
   - 🔴🟡 항목: deny 서브프로세스 우회, **샌드박스 네이티브 Windows 지원 여부**, `attribution` 스키마, auto-memory 한도, `sandbox.credentials` 스키마
   - `/model` 별칭이 가리키는 실제 모델, `/effort` 단계·`ultracode` 동작, frontmatter `effort:` 키 유지 여부
