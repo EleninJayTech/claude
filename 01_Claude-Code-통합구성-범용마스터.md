@@ -1,6 +1,6 @@
 # Claude Code 통합 구성 — 범용 마스터 (드롭인 적용)
 
-> **문서 버전: v1.14** · 최종 갱신: **2026-08-10** · **최근 재검증: 2026-08-04** · 기준: Claude Code v2.1.226 (Opus 5 · Sonnet 5 · Fable 5)
+> **문서 버전: v1.15** · 최종 갱신: **2026-08-10** · **최근 재검증: 2026-08-04** · 기준: Claude Code v2.1.226 (Opus 5 · Sonnet 5 · Fable 5)
 >
 > | 버전 | 날짜 | 변경 내용 |
 > | --- | --- | --- |
@@ -19,6 +19,7 @@
 > | v1.12 | 2026-08-04 | **전면 재검증**(당일 공식 문서 조회, v2.1.221): §C-7·D-3·D-6·J·J-1 전 서술 유효 확인 — 샌드박스 네이티브 Windows 여전히 미지원, `attribution` 스키마·auto-memory 한도(200줄/25KB)·hooks 스키마·`.mcp.json` 승인 플로우·effort 단계/frontmatter `effort:` 키 모두 현행 일치. **"최근 재검증" 표기 분리** |
 > | v1.13 | 2026-08-10 | **`/resume`에 원격 최신화 선행 추가**(§F-1 규칙·§F-2 템플릿 A/B/C): remote 있고 워킹트리 clean이면 `git pull --ff-only` 먼저, 아니면 `git fetch` 후 뒤처짐만 보고 — 여러 PC·팀원 커밋을 못 보면 끝난 작업을 다음 할 일로 오판(DEC-20260810-bsjeong87-01) |
 > | v1.14 | 2026-08-10 | **중복 재판정 경량 반영**(당일 조회, v2.1.226 — DEC-20260810-bsjeong87-02): §E `/init`에 대화형 플로우(`CLAUDE_CODE_NEW_INIT=1` — CLAUDE.md+스킬+hooks 제안형) 한 줄, §K 트러블슈팅에 `/doctor`(셋업 진단+수정, CLAUDE.md 트림 제안 v2.1.206+) 행 추가. 커스텀 `/resume`·`/wrap`+docs/ 기록 체계는 내장 Tasks(세션·휘발) 대비 정본 유지 재확인 |
+> | v1.15 | 2026-08-10 | **스킬 중복 등록 방지**(DEC-20260810-bsjeong87-04): §F-2에 설치 전 같은 이름 구형 `commands/` 제거 규칙(방치 시 `/` 자동완성 2개·구형 내용 실행 위험 — 실제 발생 사례), §K에 증상 행 추가 |
 >
 > ※ 갱신 시: 이 표에 한 줄 추가 + 하단 "문서 정보" 날짜 수정 + §L 재검증 체크리스트 수행.
 
@@ -247,7 +248,8 @@ New-Item -ItemType Directory -Path .claude/skills/wrap -Force
 
 ### F-2. `/resume`·`/wrap` 스킬 (환경에 맞는 것 하나 선택)
 
-> 참고(2026-07 현행): **커스텀 커맨드(`.claude/commands/`)는 스킬로 통합**됐다 — 둘 다 `/이름`을 만들고 동작이 같으며 스킬 쪽이 상위집합(보조 파일·frontmatter 확장). frontmatter에서 `name:`은 이제 선택(폴더명이 기본 명령명), `description:`은 권장(Claude의 자동 로드 판단 기준). 필요 시 확장 키: `disable-model-invocation: true`(수동 호출 전용), `user-invocable: false`(Claude 전용), `model:`·`effort:`(스킬 실행 중 오버라이드), `context: fork`(서브에이전트에서 실행), `allowed-tools:`(그 턴 무프롬프트 도구 허용).
+> 참고(2026-07 현행): **커스텀 커맨드(`.claude/commands/`)는 스킬로 통합**됐다 — 둘 다 `/이름`을 만들고 동작이 같으며 스킬 쪽이 상위집합(보조 파일·frontmatter 확장). frontmatter에서 `name:`은 이제 선택(폴더명이 기본 명령명), `description:`은 권장(Claude의 자동 로드 판단 기준).
+> ⚠️ **중복 등록 방지**: 스킬 설치 전 **같은 이름의 구형 커맨드**(`~/.claude/commands/<이름>.md`·프로젝트 `.claude/commands/`)가 있는지 확인하고 있으면 삭제한다 — 방치하면 `/` 자동완성에 같은 명령이 2개 뜨고, 구형을 고르면 옛 내용이 실행된다(정본은 `skills/`). 필요 시 확장 키: `disable-model-invocation: true`(수동 호출 전용), `user-invocable: false`(Claude 전용), `model:`·`effort:`(스킬 실행 중 오버라이드), `context: fork`(서브에이전트에서 실행), `allowed-tools:`(그 턴 무프롬프트 도구 허용).
 
 **A) 기본형** (단일 repo · 글로벌 `~/.claude/skills/`)
 ```markdown
@@ -459,6 +461,7 @@ CLAUDE.local.md
 | 증상 | 확인 |
 | --- | --- |
 | `/resume`·`/wrap` 자동완성 안 뜸 | IDE 재시작 / 폴더·파일명 / `SKILL.md`의 `name:` |
+| `/` 자동완성에 같은 명령이 2개 | 구형 `commands/<이름>.md`와 `skills/<이름>/` 중복 등록 — **commands 쪽 삭제**(스킬이 정본, §F-2 주의) |
 | IntelliJ에서 Claude 안 열림 | 플러그인 설치 후 **완전 재시작** / `Ctrl+Esc` |
 | hooks 안 도는 듯 | 매처 철자(`auto`/`compact`) 정확히 |
 | `/resume`가 진행 중 작업 못 찾음 | 미커밋+다른 브랜치라서 — skill이 `git status` 먼저 보는지 / **`/wrap` 후 커밋** 습관화 |
@@ -486,5 +489,5 @@ Claude Code는 매주 바뀐다. 6개월마다 30분:
 ## 핵심 출처 🟢
 IDE 통합·`--add-dir`(ide-integrations·large-codebases) / permissions·deny 한계 / hooks / skills / memory·auto-memory — 모두 `code.claude.com/docs` 및 `docs.anthropic.com`.
 
-**문서 정보** — 통합 마스터(범용) **v1.14**. 8개 소스(⓪ 폴더구성 · ① 셋업 · structure-guide · daily-routine · SFA 셋업/통합 · setup-followalong v8 · integrated-setup) 중복 제거·v8 반영 + `/effort`(§D-6) + 2026-07-20 공식 문서 전면 재검증 + 02 가이드 연동 경량 보완 + 2026-07-23 재검증(v2.1.218) + 2026-07-28 Opus 5 반영·부분 선택·auto mode(v2.1.220) + 2026-08-04 적용 기록(dropin-applied)·전면 재검증(v2.1.221) + 2026-08-10 /resume 원격 최신화 선행·중복 재판정 경량 반영(v2.1.226).
+**문서 정보** — 통합 마스터(범용) **v1.15**. 8개 소스(⓪ 폴더구성 · ① 셋업 · structure-guide · daily-routine · SFA 셋업/통합 · setup-followalong v8 · integrated-setup) 중복 제거·v8 반영 + `/effort`(§D-6) + 2026-07-20 공식 문서 전면 재검증 + 02 가이드 연동 경량 보완 + 2026-07-23 재검증(v2.1.218) + 2026-07-28 Opus 5 반영·부분 선택·auto mode(v2.1.220) + 2026-08-04 적용 기록(dropin-applied)·전면 재검증(v2.1.221) + 2026-08-10 /resume 원격 최신화 선행·중복 재판정 경량 반영(v2.1.226)·스킬 중복 등록 방지.
 최종 갱신: 2026-08-10 · 최근 재검증: 2026-08-04 / 참조: Claude Code v2.1.226, Opus 5(v2.1.219+) · Sonnet 5(v2.1.197+) · Fable 5(v2.1.170+).
