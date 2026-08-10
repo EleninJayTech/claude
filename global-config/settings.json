@@ -18,6 +18,8 @@
       "Bash(Get-Content *.env*)",
       "Bash(gc *.env*)",
       "PowerShell(Get-Content *.env*)",
+      "PowerShell(Get-Content *.key)",
+      "PowerShell(Get-Content *.pem)",
       "Read(**/node_modules/**)",
       "Read(**/.next/**)",
       "Read(**/dist/**)",

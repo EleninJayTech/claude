@@ -6,7 +6,7 @@
 | --- | --- |
 | `CLAUDE.md` | `~/.claude/CLAUDE.md` (글로벌 행동 규칙) |
 | `settings.json` | `~/.claude/settings.json` (deny·hooks·statusline 등) |
-| `skills/` | `~/.claude/skills/` (resume·wrap·humanizer) |
+| `skills/` | `~/.claude/skills/` (resume·wrap·humanizer·dropin-check) |
 | `commands/` | `~/.claude/commands/` (구형 커맨드 — 스킬로 통합됨, 참고용) |
 
 **복원**: 새 PC에서 위 표의 원본 위치로 그대로 복사.

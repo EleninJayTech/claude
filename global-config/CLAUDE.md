@@ -35,7 +35,7 @@ When compacting, always preserve:
 - Open issues / errors encountered
 
 ## 8. Secret Safety
-- 절대 .env, 인증서, 키 파일을 읽거나 cat하지 마라.
+- 절대 .env, 인증서, 키 파일을 읽거나 cat/type/Get-Content(gc)하지 마라.
 - 시크릿이 필요한 작업은 사용자에게 환경변수로 제공받아라.
 
 <!-- claude-skill-setup:start -->
