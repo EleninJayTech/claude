@@ -6,20 +6,21 @@
 <title>Claude Code 구성 문서 저장소 — 사용법</title>
 <meta name="description" content="문서를 넣고 한 문장 말하면 Claude Code 구성이 끝나는 드롭인 문서 저장소. 사용법 안내.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=IBM+Plex+Sans+KR:wght@400;500;700&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@700;900&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" rel="stylesheet">
 <style>
 :root{
   --paper:#FCFCF8; --card:#FFFFFF; --ink:#20222E; --ink-soft:#5A5E70;
   --marker:#FFD84D; --marker-soft:#FFF3C2;
   --blue:#2B49C7; --blue-soft:#E8ECFB;
   --line:#E5E4DB;
-  --serif:'Gowun Batang','Nanum Myeongjo',serif;
-  --sans:'IBM Plex Sans KR','Pretendard','Malgun Gothic',sans-serif;
+  --serif:'Noto Serif KR','Nanum Myeongjo',serif;
+  --sans:'Pretendard Variable',Pretendard,'Malgun Gothic',sans-serif;
   --mono:'IBM Plex Mono',Consolas,monospace;
 }
 *{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
-body{font-family:var(--sans);background:var(--paper);color:var(--ink);line-height:1.8;font-size:16px}
+body{font-family:var(--sans);background:var(--paper);color:var(--ink);line-height:1.85;font-size:16.5px;word-break:keep-all;overflow-wrap:break-word}
 ::selection{background:var(--marker)}
 a{color:var(--blue)}
 :focus-visible{outline:3px solid var(--blue);outline-offset:2px;border-radius:4px}
@@ -29,7 +30,7 @@ a{color:var(--blue)}
 @media (max-width:820px){.hero{grid-template-columns:1fr;padding-top:44px}}
 .eyebrow{font-family:var(--mono);font-size:13px;letter-spacing:.14em;color:var(--ink-soft);margin-bottom:18px}
 .eyebrow b{color:var(--blue);font-weight:600}
-h1{font-family:var(--serif);font-weight:700;font-size:clamp(30px,4.6vw,46px);line-height:1.45;letter-spacing:-.01em}
+h1{font-family:var(--serif);font-weight:900;font-size:clamp(30px,4.6vw,46px);line-height:1.5;letter-spacing:-.02em;text-wrap:balance}
 .mark{background:linear-gradient(transparent 58%, var(--marker) 58%, var(--marker) 92%, transparent 92%);padding:0 2px}
 .hero p.sub{margin-top:20px;color:var(--ink-soft);font-size:16.5px;max-width:34em}
 .cta{margin-top:28px;display:flex;gap:12px;flex-wrap:wrap}
@@ -169,7 +170,7 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
         <path d="M108 330 Q 230 356 352 330" fill="none" stroke="#2B49C7" stroke-width="3" stroke-linecap="round"/>
         <path d="M338 322 L 352 330 L 336 340" fill="none" stroke="#2B49C7" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
       </g>
-      <text x="230" y="372" font-family="IBM Plex Sans KR,sans-serif" font-size="14" fill="#5A5E70" text-anchor="middle">일곱 문서가 하나의 구성으로</text>
+      <text x="230" y="372" font-family="Pretendard Variable,sans-serif" font-size="14" fill="#5A5E70" text-anchor="middle">일곱 문서가 하나의 구성으로</text>
     </svg>
     <p class="caption">이 그림 자체가 <b>03 문서의 svg-design 스킬 레시피</b>(Gooey 필터 <code>feColorMatrix 19&nbsp;-8</code> + Squiggle 손그림 떨림)로 그린 것입니다. 설치하면 Claude가 이런 것을 만들어 줍니다.</p>
   </div>
