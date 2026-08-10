@@ -227,7 +227,7 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
     <div class="opt-head"><span class="name">최소</span><span class="badge b-off">01만</span></div>
     <p class="lead">기록 체계와 보안만 깝니다. 문서 안 세부 항목도 필수만.</p>
     <dl>
-      <dt>생기는 것</dt><dd>글로벌 <code>CLAUDE.md</code>·<code>settings.json</code>, <code>/resume</code>·<code>/wrap</code>, 프로젝트 <code>docs/</code> 3종</dd>
+      <dt>생기는 것</dt><dd>글로벌 <code>CLAUDE.md</code>·<code>settings.json</code>, <code>/resume</code>·<code>/wrap</code>·점검 스킬(<code>/dropin-check</code>·<code>/dropin-update</code>), 프로젝트 <code>docs/</code> 3종</dd>
       <dt>이럴 때</dt><dd>코드가 없는 문서 저장소, 혹은 “일단 기본만 써보고 싶다”</dd>
     </dl>
   </div>
@@ -327,13 +327,15 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
   </div>
 
   <div class="opt">
-    <div class="opt-head"><span class="id">ⓒ</span><span class="name"><code>/resume</code> · <code>/wrap</code> 스킬</span><span class="badge b-on">기본 체크</span></div>
-    <p class="lead">세션을 시작할 때와 끝낼 때 쓰는 슬래시 명령 두 개. <b>이 구성의 실질적인 핵심</b>입니다.</p>
+    <div class="opt-head"><span class="id">ⓒ</span><span class="name"><code>/resume</code> · <code>/wrap</code> · 점검 스킬</span><span class="badge b-on">기본 체크</span></div>
+    <p class="lead">세션을 시작할 때와 끝낼 때 쓰는 슬래시 명령 두 개 + 구성 점검 명령 두 개. <b>이 구성의 실질적인 핵심</b>입니다.</p>
     <dl>
-      <dt>만들 파일</dt><dd><code>skills/resume/SKILL.md</code> · <code>skills/wrap/SKILL.md</code></dd>
-      <dt><code>/resume</code></dt><dd>먼저 <b>커밋 안 된 변경</b>을 찾고(진행 중이던 작업), 그다음 지난 기록·계획·최근 결정을 읽어 “지난번엔 X, 다음은 Y?”라고 보고</dd>
+      <dt>만들 파일</dt><dd><code>skills/resume/SKILL.md</code> · <code>skills/wrap/SKILL.md</code> · <code>skills/dropin-check/</code> · <code>skills/dropin-update/</code></dd>
+      <dt><code>/resume</code></dt><dd>원격이 있으면 <b>먼저 pull로 최신화</b>하고, <b>커밋 안 된 변경</b>을 찾고(진행 중이던 작업), 지난 기록·계획·최근 결정을 읽어 “지난번엔 X, 다음은 Y?”라고 보고. 설치가 오래됐으면(30일+) 점검을 권해줍니다</dd>
       <dt><code>/wrap</code></dt><dd>오늘 한 일을 기록에 추가하고, 새 결정을 남기고, 계획의 체크박스를 갱신하고, <b>커밋 안 했으면 경고</b></dd>
-      <dt>종류</dt><dd>환경에 따라 셋 중 하나 — 단일 저장소용 기본형 / 팀이 한 저장소를 나눠 쓰는 분할형 / 여러 저장소를 한 폴더에서 다루는 통합형</dd>
+      <dt><code>/dropin-check</code></dt><dd>내 구성이 문서의 최신 버전으로 적용돼 있는지 <b>점검만</b>(아무것도 바꾸지 않음)</dd>
+      <dt><code>/dropin-update</code></dt><dd>프로젝트에 넣어둔 문서 사본이 낡았으면 <b>물어보고</b> 최신본으로 교체</dd>
+      <dt>종류</dt><dd>resume·wrap은 환경에 따라 셋 중 하나 — 단일 저장소용 기본형 / 팀이 한 저장소를 나눠 쓰는 분할형 / 여러 저장소를 한 폴더에서 다루는 통합형</dd>
     </dl>
   </div>
 
