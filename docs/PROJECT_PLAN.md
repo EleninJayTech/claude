@@ -70,6 +70,7 @@
 - [x] 2026-08-10 실적용 공백 3건 반영 — 06 v1.2 계정 GitHub 연결 게이트, 00 v1.9 부분 완료 표기, 01 v1.19 PROGRESS ~40줄 Read limit ([[DEC-20260810-bsjeong87-08]])
 - [x] 2026-08-10 index.html 폰트 통일 — 사람용 4페이지 Pretendard·Noto Serif KR 단일화 ([[DEC-20260810-bsjeong87-09]])
 - [x] 2026-08-10 00 통합 설치를 이 repo 자체에 적용 — 권장 모드·표준 프로필, 01 v1.19 재구성 점검 어긋남 0건, `dropin-applied` 기록 신설(기록 부재 해소)
+- [x] 2026-08-11 설치 옵션 학습 코스 `pages/learn.html` 신설(챕터 11개·선택 시뮬레이터·진행도 저장) — 5페이지 상호 링크·README·CLAUDE.md 동기화 + 03 v1.8 claude-hud 추천 표시 구성 ([[DEC-20260811-bsjeong87-01]])
 - [ ] **다음 재검증: 2027-01경** (00 §L, 6개월 주기)
   - 중복 재심 🟡 잔여: Context7·Caveman 생존, todo-tracking 공식 문서(2026-08-10 404), `/team-onboarding` 재평가 ([[DEC-20260810-bsjeong87-02]])
   - `code.claude.com/docs/en/whats-new` 최신 항목
