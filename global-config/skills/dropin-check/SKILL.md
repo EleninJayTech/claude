@@ -9,13 +9,14 @@ description: 드롭인 구성 최신성 점검(읽기 전용). 대상 프로젝�
 글로벌 복원은 `global-config/` 복사(DEC-20260721-bsjeong87-01).
 
 ## 1) 기준 확보 — 문서 저장소의 현재 버전
+- 대상 `CLAUDE.md`의 `dropin-applied`에 `출처=클론 <경로>`(00 v1.10+)가 있으면 그 경로를 클론 후보 최우선으로 쓴다.
 - 로컬 클론 탐색: 기본 후보 `D:\claude`(remote가 `EleninJayTech/claude`인지 확인). 없으면 사용자에게 경로를 묻고,
   그것도 없으면 GitHub API(`https://api.github.com/repos/EleninJayTech/claude/contents/`)에서 파일 목록·download_url을 얻어 원격 조회(한글 파일명 인코딩 회피).
 - 로컬 클론이면 점검 전 `git pull --ff-only`(clean일 때)로 기준을 최신화.
 - 각 드롭인 문서(`NN_*.md` 전부, 현재 00~06)의 **최상단 헤더만** 읽어 `문서 버전: vX.Y` 추출(전체 Read 금지 — 앞 5줄이면 충분).
 
 ## 2) 적용 기록 점검 — 대상 프로젝트
-- 대상(현재 PWD 프로젝트)의 `CLAUDE.md`(루트 또는 `.claude/`) 맨 아래 `<!-- dropin-applied: ... -->` 줄 파싱: 적용일·모드·프로필·문서별 버전·미선택.
+- 대상(현재 PWD 프로젝트)의 `CLAUDE.md`(루트 또는 `.claude/`) 맨 아래 `<!-- dropin-applied: ... -->` 줄 파싱: 적용일·모드·프로필·문서별 버전·미선택·출처(있으면).
 - 글로벌만 적용한 PC면 `~/.claude/CLAUDE.md`도 확인.
 - 기록이 없으면: "적용 기록 없음(미적용이거나 2026-08-04(기록 도입) 이전 적용)"으로 보고하고 문서 비교는 생략.
 

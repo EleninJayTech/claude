@@ -1,6 +1,6 @@
 # Claude Code 통합 구성 — 범용 마스터 (드롭인 적용)
 
-> **문서 버전: v1.19** · 최종 갱신: **2026-08-10** · **최근 재검증: 2026-08-04** · 기준: Claude Code v2.1.226 (Opus 5 · Sonnet 5 · Fable 5)
+> **문서 버전: v1.20** · 최종 갱신: **2026-08-12** · **최근 재검증: 2026-08-04** · 기준: Claude Code v2.1.226 (Opus 5 · Sonnet 5 · Fable 5)
 >
 > | 버전 | 날짜 | 변경 내용 |
 > | --- | --- | --- |
@@ -22,6 +22,7 @@
 > | v1.15 | 2026-08-10 | **스킬 중복 등록 방지**(DEC-20260810-bsjeong87-04): §F-2에 설치 전 같은 이름 구형 `commands/` 제거 규칙(방치 시 `/` 자동완성 2개·구형 내용 실행 위험 — 실제 발생 사례), §K에 증상 행 추가 |
 > | v1.16 | 2026-08-10 | **`/dropin-check` 배포 + 점검 안내 내장**(DEC-20260810-bsjeong87-05): §D-4에 dropin-check 글로벌 스킬 설치(저장소 global-config 복사 또는 raw), §F-2 /resume 템플릿 A/B/C에 조건부 안내 단계(dropin-applied 30일 경과 시 /dropin-check, PROJECT_PLAN 예정일 경과 항목) — 매 세션 hook 안내 대신 resume 시 해당할 때만 |
 > | v1.17 | 2026-08-10 | **`/dropin-update` 신설·배포**(DEC-20260810-bsjeong87-06): 문서 사본 최신화 스킬(버전 비교 보고 → 사용자 승인한 문서만 raw 최신본으로 교체, 원본 repo 안에선 git pull 안내 후 중단) §D-4 추가, §F-2 안내에 병기. 안내에서 /reverify 언급 제거(문서 저장소 관리자 전용) |
+> | v1.20 | 2026-08-12 | **점검·최신화 스킬의 설치 유형 전 지원 명시**(§D-4): dropin-check·update가 사본/클론 참조/raw 세 유형 모두 지원(판별 근거는 00 v1.10 `출처=` 필드) — 클론 참조 설치에서 update가 "사본 없음"만 보고하던 공백 해소(스킬 본문도 동일 개정) |
 > | v1.18 | 2026-08-10 | **적용 기록 표기 자기 참조화**(DEC-20260810-bsjeong87-07, 00~06 공통): STEP 4의 하드코딩(`01 v1.12` — v1.13~17 동안 미동기 실버그)을 "최상단 문서 버전 표기에서 읽어 기록"으로 교체 + STEP 3 ⓒ에 점검 스킬 병기 |
 > | v1.19 | 2026-08-10 | **/resume의 PROGRESS 부분 읽기 명시**(DEC-20260810-bsjeong87-08): §F-1 규칙·§F-2 템플릿 A/B/C에 "최상단 ~40줄만 Read limit" — 800줄 상한 근접 시 통째 읽기(수만 토큰)를 차단 |
 >
@@ -140,7 +141,7 @@ New-Item -ItemType Directory -Path .claude/skills/wrap -Force
 > 🟡 테마(dark/light)는 settings.json 문서화 키가 아님(2026-07-20 확인) — 세션에서 **`/config`**(또는 `/theme`)로 설정.
 
 ### D-4. 기본 `/resume`·`/wrap` + 점검·최신화 스킬 (단일 repo용 기본형) — §F-2 A 참조. (통합/MSA는 §F-2 B·C로 덮어씀)
-- **`/dropin-check`**(적용 상태 점검, 읽기 전용)·**`/dropin-update`**(문서 사본 최신화, 승인 후 교체)는 환경 무관 **글로벌 스킬** — 문서 저장소의 `global-config/skills/<이름>/SKILL.md`를 `~/.claude/skills/<이름>/`로 복사한다(로컬 클론 없으면 raw: `https://raw.githubusercontent.com/EleninJayTech/claude/main/global-config/skills/dropin-check/SKILL.md` · 같은 경로의 `dropin-update`). 설치 전 같은 이름 구형 `commands/`가 있으면 제거(§F-2 주의).
+- **`/dropin-check`**(적용 상태 점검, 읽기 전용)·**`/dropin-update`**(문서 사본 최신화, 승인 후 교체)는 환경 무관 **글로벌 스킬** — 문서 저장소의 `global-config/skills/<이름>/SKILL.md`를 `~/.claude/skills/<이름>/`로 복사한다(로컬 클론 없으면 raw: `https://raw.githubusercontent.com/EleninJayTech/claude/main/global-config/skills/dropin-check/SKILL.md` · 같은 경로의 `dropin-update`). 설치 전 같은 이름 구형 `commands/`가 있으면 제거(§F-2 주의). 두 스킬은 **설치 유형 무관 동작 보장** — 프로젝트 사본 / 로컬 클론 참조 / raw 직접(사본·클론을 나중에 지워도 계속 동작), 판별 근거는 00 STEP 5 기록의 `출처=` 필드(00 v1.10+).
 
 ### D-5. 확인 — `claude` → `/` → `/resume`·`/wrap`·`/dropin-check`·`/dropin-update` 자동완성되면 성공.
 
@@ -496,5 +497,5 @@ Claude Code는 매주 바뀐다. 6개월마다 30분:
 ## 핵심 출처 🟢
 IDE 통합·`--add-dir`(ide-integrations·large-codebases) / permissions·deny 한계 / hooks / skills / memory·auto-memory — 모두 `code.claude.com/docs` 및 `docs.anthropic.com`.
 
-**문서 정보** — 통합 마스터(범용) **v1.19**. 8개 소스(⓪ 폴더구성 · ① 셋업 · structure-guide · daily-routine · SFA 셋업/통합 · setup-followalong v8 · integrated-setup) 중복 제거·v8 반영 + `/effort`(§D-6) + 2026-07-20 공식 문서 전면 재검증 + 02 가이드 연동 경량 보완 + 2026-07-23 재검증(v2.1.218) + 2026-07-28 Opus 5 반영·부분 선택·auto mode(v2.1.220) + 2026-08-04 적용 기록(dropin-applied)·전면 재검증(v2.1.221) + 2026-08-10 /resume 원격 최신화 선행·중복 재판정 경량 반영(v2.1.226)·스킬 중복 등록 방지.
-최종 갱신: 2026-08-10 · 최근 재검증: 2026-08-04 / 참조: Claude Code v2.1.226, Opus 5(v2.1.219+) · Sonnet 5(v2.1.197+) · Fable 5(v2.1.170+).
+**문서 정보** — 통합 마스터(범용) **v1.20**. 8개 소스(⓪ 폴더구성 · ① 셋업 · structure-guide · daily-routine · SFA 셋업/통합 · setup-followalong v8 · integrated-setup) 중복 제거·v8 반영 + `/effort`(§D-6) + 2026-07-20 공식 문서 전면 재검증 + 02 가이드 연동 경량 보완 + 2026-07-23 재검증(v2.1.218) + 2026-07-28 Opus 5 반영·부분 선택·auto mode(v2.1.220) + 2026-08-04 적용 기록(dropin-applied)·전면 재검증(v2.1.221) + 2026-08-10 /resume 원격 최신화 선행·중복 재판정 경량 반영(v2.1.226)·스킬 중복 등록 방지.
+최종 갱신: 2026-08-12 · 최근 재검증: 2026-08-04 / 참조: Claude Code v2.1.226, Opus 5(v2.1.219+) · Sonnet 5(v2.1.197+) · Fable 5(v2.1.170+).
