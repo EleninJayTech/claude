@@ -1,6 +1,6 @@
 # Claude Code 통합 구성 — 범용 마스터 (드롭인 적용)
 
-> **문서 버전: v1.20** · 최종 갱신: **2026-08-12** · **최근 재검증: 2026-08-04** · 기준: Claude Code v2.1.226 (Opus 5 · Sonnet 5 · Fable 5)
+> **문서 버전: v1.21** · 최종 갱신: **2026-08-12** · **최근 재검증: 2026-08-04** · 기준: Claude Code v2.1.226 (Opus 5 · Sonnet 5 · Fable 5)
 >
 > | 버전 | 날짜 | 변경 내용 |
 > | --- | --- | --- |
@@ -23,6 +23,7 @@
 > | v1.16 | 2026-08-10 | **`/dropin-check` 배포 + 점검 안내 내장**(DEC-20260810-bsjeong87-05): §D-4에 dropin-check 글로벌 스킬 설치(저장소 global-config 복사 또는 raw), §F-2 /resume 템플릿 A/B/C에 조건부 안내 단계(dropin-applied 30일 경과 시 /dropin-check, PROJECT_PLAN 예정일 경과 항목) — 매 세션 hook 안내 대신 resume 시 해당할 때만 |
 > | v1.17 | 2026-08-10 | **`/dropin-update` 신설·배포**(DEC-20260810-bsjeong87-06): 문서 사본 최신화 스킬(버전 비교 보고 → 사용자 승인한 문서만 raw 최신본으로 교체, 원본 repo 안에선 git pull 안내 후 중단) §D-4 추가, §F-2 안내에 병기. 안내에서 /reverify 언급 제거(문서 저장소 관리자 전용) |
 > | v1.20 | 2026-08-12 | **점검·최신화 스킬의 설치 유형 전 지원 명시**(§D-4): dropin-check·update가 사본/클론 참조/raw 세 유형 모두 지원(판별 근거는 00 v1.10 `출처=` 필드) — 클론 참조 설치에서 update가 "사본 없음"만 보고하던 공백 해소(스킬 본문도 동일 개정) |
+> | v1.21 | 2026-08-12 | **조건부 안내 2건 보강**(DEC-20260812-bsjeong87-03, §F-2 A/B/C+글로벌 스킬 동기화): ① /resume — dropin-applied 괄호의 조치 대기 메모 안내(DEC-0810-08 "다음 세션이 발견" 취지의 배선 완성, 추가 조회 0) ② /wrap — append 후 PROGRESS ~800줄 경계 감지·아카이브 안내(길이 관리 규칙의 감지 주체 부재 해소 — /resume는 앞 40줄만 읽음) |
 > | v1.18 | 2026-08-10 | **적용 기록 표기 자기 참조화**(DEC-20260810-bsjeong87-07, 00~06 공통): STEP 4의 하드코딩(`01 v1.12` — v1.13~17 동안 미동기 실버그)을 "최상단 문서 버전 표기에서 읽어 기록"으로 교체 + STEP 3 ⓒ에 점검 스킬 병기 |
 > | v1.19 | 2026-08-10 | **/resume의 PROGRESS 부분 읽기 명시**(DEC-20260810-bsjeong87-08): §F-1 규칙·§F-2 템플릿 A/B/C에 "최상단 ~40줄만 Read limit" — 800줄 상한 근접 시 통째 읽기(수만 토큰)를 차단 |
 >
@@ -264,7 +265,7 @@ New-Item -ItemType Directory -Path .claude/skills/wrap -Force
 name: resume
 description: 세션 시작 시 원격 최신화(clean이면 git pull --ff-only)·git status로 미커밋 작업 먼저 확인 후 CLAUDE.md·docs/PROGRESS.md 최상단·PROJECT_PLAN.md를 읽고 지난 상태·다음 작업 보고.
 ---
-# /resume — remote 있고 워킹트리 clean이면 `git pull --ff-only` 먼저(아니면 `git fetch` 후 뒤처짐만 보고) → git status·브랜치로 미커밋(진행 중) 작업 발견 → CLAUDE.md, docs/PROGRESS.md(최상단 ~40줄만 Read limit), PROJECT_PLAN.md를 읽고 "지난 X, 다음 Y?" 보고. + 조건부 안내: dropin-applied 30일 경과면 `/dropin-check`·`/dropin-update`, PROJECT_PLAN 예정일 경과 항목 안내.
+# /resume — remote 있고 워킹트리 clean이면 `git pull --ff-only` 먼저(아니면 `git fetch` 후 뒤처짐만 보고) → git status·브랜치로 미커밋(진행 중) 작업 발견 → CLAUDE.md, docs/PROGRESS.md(최상단 ~40줄만 Read limit), PROJECT_PLAN.md를 읽고 "지난 X, 다음 Y?" 보고. + 조건부 안내: dropin-applied 30일 경과면 `/dropin-check`·`/dropin-update`, PROJECT_PLAN 예정일 경과 항목, dropin-applied 괄호의 조치 대기 메모(예: gh 인증 대기 — 완료했다면 재적용으로 기록 갱신) 안내.
 ```
 ```markdown
 # wrap/SKILL.md
@@ -272,7 +273,7 @@ description: 세션 시작 시 원격 최신화(clean이면 git pull --ff-only)�
 name: wrap
 description: 세션 종료 시 docs/PROGRESS.md 최상단에 오늘 작업 append, 새 결정 DECISIONS, PROJECT_PLAN 체크박스, 미커밋 경고, 변경 파일 보고.
 ---
-# /wrap — docs/PROGRESS.md 최상단 append(작업/결정/다음/미해결) + 새 DEC + PROJECT_PLAN 체크박스. 미커밋이면 경고. 변경 파일 보고.
+# /wrap — docs/PROGRESS.md 최상단 append(작업/결정/다음/미해결) + 새 DEC + PROJECT_PLAN 체크박스. 미커밋이면 경고. 변경 파일 보고. append 후 PROGRESS 총 줄 수 확인 — ~800줄/분기 경계 초과면 아카이브(docs/archive/ 이동+포인터) 안내(/resume는 앞 40줄만 읽어 감지 못 함).
 ```
 
 **B) 솔루션-aware** (MSA 단위분할 repo · 각 repo `.claude/skills/`, 글로벌 기본형을 덮어씀)
@@ -286,7 +287,7 @@ description: 단위분할 재개. git status로 미커밋 작업 먼저, 대상 
 0) remote 있고 clean이면 `git pull --ff-only` 먼저(아니면 fetch 후 뒤처짐 보고) → git status·현재 브랜치 확인 — 미커밋/비-main 브랜치면 그 단위 작업 우선(untracked일 수 있음).
 1) 대상 단위 판별: PWD가 <단위> 안 → 그 단위 / 브랜치명(feature/<단위>) / 불명확하면 질문.
 2) docs/<단위>/PROGRESS.md 최상단(~40줄 Read limit) + docs/PROJECT_PLAN.md + 최근 DEC 3건 → "이 단위 지난 X, 다음 Y?" 보고.
-3) 조건부 안내: dropin-applied 30일 경과면 /dropin-check·/dropin-update, PROJECT_PLAN 예정일 경과 항목 안내.
+3) 조건부 안내: dropin-applied 30일 경과면 /dropin-check·/dropin-update, PROJECT_PLAN 예정일 경과 항목, dropin-applied 괄호의 조치 대기 메모 안내.
 ```
 ```markdown
 # wrap/SKILL.md
@@ -297,6 +298,7 @@ description: 단위분할 마무리. 대상 단위 docs/<단위>/PROGRESS.md에 
 # /wrap (솔루션-aware)
 대상 단위 판별 후 docs/<단위>/PROGRESS.md 최상단에 [Done]/[Pending]/[Blocked] 병기 기록.
 다른 단위도 바뀌면 그 단위에 [공통] 교차 한 줄. 미커밋이면 경고. 완료 모호 시 확인 후 기록.
+append 후 해당 PROGRESS 줄 수 확인 — ~800줄 경계 초과면 아카이브 안내.
 ```
 
 **C) 통합형** (루트 통합 레이어 · 루트 `.claude/skills/`)
@@ -310,7 +312,7 @@ description: 통합 워크스페이스 재개. 루트+하위 repo git status로 
 0) 루트+하위 repo 각각: remote 있고 clean이면 `git pull --ff-only` 먼저(아니면 fetch 후 뒤처짐 보고) → git status·브랜치로 미커밋(진행 중) 작업 발견.
 1) 대상 repo(+단위) 판별: PWD > 브랜치 > 질문.
 2) <repo>/docs[/<단위>]/PROGRESS.md 최상단(~40줄 Read limit) + <repo>/PROJECT_PLAN.md + 루트 docs/INDEX.md 최근 항목 → 보고.
-3) 조건부 안내: dropin-applied 30일 경과면 /dropin-check·/dropin-update, 예정일 경과 항목 안내.
+3) 조건부 안내: dropin-applied 30일 경과면 /dropin-check·/dropin-update, 예정일 경과 항목, 조치 대기 메모 안내.
 ```
 ```markdown
 # wrap/SKILL.md
@@ -321,7 +323,7 @@ description: 통합 마무리. 건드린 repo마다 <repo>/docs[/<단위>]/PROGR
 # /wrap (통합)
 1) 각 repo git status로 변경 감지. 2) 변경 repo마다 docs[/<단위>]/PROGRESS.md 최상단 append.
 3) 여러 repo면 주 대상 본문 + 나머지 [공통] 교차. 4) (선택) 루트 docs/INDEX.md 크로스-repo 한 줄+링크.
-5) repo별 변경 파일 보고 + 미커밋 경고. 커밋은 repo별 따로(팀 양식).
+5) repo별 변경 파일 보고 + 미커밋 경고. 커밋은 repo별 따로(팀 양식). append한 PROGRESS가 ~800줄 경계 초과면 아카이브 안내.
 ```
 
 **D) 루트 라우터 `CLAUDE.md`** (통합 레이어)
@@ -497,5 +499,5 @@ Claude Code는 매주 바뀐다. 6개월마다 30분:
 ## 핵심 출처 🟢
 IDE 통합·`--add-dir`(ide-integrations·large-codebases) / permissions·deny 한계 / hooks / skills / memory·auto-memory — 모두 `code.claude.com/docs` 및 `docs.anthropic.com`.
 
-**문서 정보** — 통합 마스터(범용) **v1.20**. 8개 소스(⓪ 폴더구성 · ① 셋업 · structure-guide · daily-routine · SFA 셋업/통합 · setup-followalong v8 · integrated-setup) 중복 제거·v8 반영 + `/effort`(§D-6) + 2026-07-20 공식 문서 전면 재검증 + 02 가이드 연동 경량 보완 + 2026-07-23 재검증(v2.1.218) + 2026-07-28 Opus 5 반영·부분 선택·auto mode(v2.1.220) + 2026-08-04 적용 기록(dropin-applied)·전면 재검증(v2.1.221) + 2026-08-10 /resume 원격 최신화 선행·중복 재판정 경량 반영(v2.1.226)·스킬 중복 등록 방지.
+**문서 정보** — 통합 마스터(범용) **v1.21**. 8개 소스(⓪ 폴더구성 · ① 셋업 · structure-guide · daily-routine · SFA 셋업/통합 · setup-followalong v8 · integrated-setup) 중복 제거·v8 반영 + `/effort`(§D-6) + 2026-07-20 공식 문서 전면 재검증 + 02 가이드 연동 경량 보완 + 2026-07-23 재검증(v2.1.218) + 2026-07-28 Opus 5 반영·부분 선택·auto mode(v2.1.220) + 2026-08-04 적용 기록(dropin-applied)·전면 재검증(v2.1.221) + 2026-08-10 /resume 원격 최신화 선행·중복 재판정 경량 반영(v2.1.226)·스킬 중복 등록 방지.
 최종 갱신: 2026-08-12 · 최근 재검증: 2026-08-04 / 참조: Claude Code v2.1.226, Opus 5(v2.1.219+) · Sonnet 5(v2.1.197+) · Fable 5(v2.1.170+).

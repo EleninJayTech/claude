@@ -18,3 +18,4 @@ description: 세션 시작 시 사용. remote가 있으면 원격 최신화(clea
 3. 점검 안내(조건부 — 해당할 때만 보고 말미에 한 줄):
    - CLAUDE.md의 `dropin-applied` 적용일이 **30일 이상 경과** → "`/dropin-check`(적용 상태 점검)·`/dropin-update`(문서 최신화) 권장".
    - PROJECT_PLAN에 **예정일이 지난 항목**(예: "다음 재검증") → 해당 항목 안내.
+   - `dropin-applied` 괄호에 **사용자 조치 대기 메모**(예: `gh 설치, 인증 대기`) → "○○ 조치 대기 중 — 완료했다면 00 재적용으로 기록 갱신" 안내(추가 조회 없음 — 이미 읽는 CLAUDE.md 맨 아래 줄).

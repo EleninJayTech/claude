@@ -9,6 +9,8 @@ description: 세션 종료 시 사용. 건드린 repo마다 docs/PROGRESS.md 최
 새 결정은 docs/DECISIONS.md에 DEC-NNN으로 추가, docs/PROJECT_PLAN.md 체크박스 갱신.
 마지막에 변경 파일 목록을 보고하고, 미커밋 변경이 남으면 경고하라
 (커밋 전엔 다음 /resume가 git status로만 발견 가능).
+append 후 **PROGRESS 총 줄 수를 확인**해(약 800줄/분기 경계 — /resume는 앞 40줄만 읽어 감지 못 함)
+넘었으면 "가장 오래된 분기를 `docs/archive/`로 이동 + 활성 파일 맨 아래 포인터 한 줄" 아카이브를 안내한다(이동은 승인 후).
 
 ## 파생 뷰 동기화 (있는 repo만)
 그 repo에 `docs/WBS.md`가 있고 이번 세션에 PROJECT_PLAN 상태가 바뀌었으면 **같은 변화를 WBS 표에도**

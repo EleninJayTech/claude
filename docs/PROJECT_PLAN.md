@@ -73,6 +73,7 @@
 - [x] 2026-08-11 설치 옵션 학습 코스 `pages/learn.html` 신설(챕터 11개·선택 시뮬레이터·진행도 저장) — 5페이지 상호 링크·README·CLAUDE.md 동기화 + 03 v1.8 claude-hud 추천 표시 구성 ([[DEC-20260811-bsjeong87-01]])
 - [x] 2026-08-12 dropin-check/update 설치 유형 전 지원 — 00 v1.10 `출처=` 필드·01 v1.20·스킬 2종 개정(사본/클론/raw, 삭제돼도 동작), wave 실사례 공백 해소 ([[DEC-20260812-bsjeong87-01]])
 - [x] 2026-08-12 STEP 2 흔적 감지 보강(승인 대기 후보 ①②③ 소진) — 00 v1.11 로컬 전용 산출물 조회·/dropin-check 동일·02 v1.15 부분 적용 사유 기록 ([[DEC-20260812-bsjeong87-02]])
+- [x] 2026-08-12 /resume·/wrap 조건부 안내 보강 — 조치 대기 메모 안내(DEC-0810-08 취지 배선 완성)·PROGRESS 800줄 경계 감지, 01 v1.21+글로벌 스킬·백업 동기화 ([[DEC-20260812-bsjeong87-03]])
 - [ ] **다음 재검증: 2027-01경** (00 §L, 6개월 주기)
   - 중복 재심 🟡 잔여: Context7·Caveman 생존, todo-tracking 공식 문서(2026-08-10 404), `/team-onboarding` 재평가 ([[DEC-20260810-bsjeong87-02]])
   - `code.claude.com/docs/en/whats-new` 최신 항목
