@@ -1,6 +1,6 @@
 # Claude Code 통합 구성 — 범용 마스터 (드롭인 적용)
 
-> **문서 버전: v1.21** · 최종 갱신: **2026-08-12** · **최근 재검증: 2026-08-04** · 기준: Claude Code v2.1.226 (Opus 5 · Sonnet 5 · Fable 5)
+> **문서 버전: v1.22** · 최종 갱신: **2026-08-12** · **최근 재검증: 2026-08-04** · 기준: Claude Code v2.1.226 (Opus 5 · Sonnet 5 · Fable 5)
 >
 > | 버전 | 날짜 | 변경 내용 |
 > | --- | --- | --- |
@@ -22,10 +22,11 @@
 > | v1.15 | 2026-08-10 | **스킬 중복 등록 방지**(DEC-20260810-bsjeong87-04): §F-2에 설치 전 같은 이름 구형 `commands/` 제거 규칙(방치 시 `/` 자동완성 2개·구형 내용 실행 위험 — 실제 발생 사례), §K에 증상 행 추가 |
 > | v1.16 | 2026-08-10 | **`/dropin-check` 배포 + 점검 안내 내장**(DEC-20260810-bsjeong87-05): §D-4에 dropin-check 글로벌 스킬 설치(저장소 global-config 복사 또는 raw), §F-2 /resume 템플릿 A/B/C에 조건부 안내 단계(dropin-applied 30일 경과 시 /dropin-check, PROJECT_PLAN 예정일 경과 항목) — 매 세션 hook 안내 대신 resume 시 해당할 때만 |
 > | v1.17 | 2026-08-10 | **`/dropin-update` 신설·배포**(DEC-20260810-bsjeong87-06): 문서 사본 최신화 스킬(버전 비교 보고 → 사용자 승인한 문서만 raw 최신본으로 교체, 원본 repo 안에선 git pull 안내 후 중단) §D-4 추가, §F-2 안내에 병기. 안내에서 /reverify 언급 제거(문서 저장소 관리자 전용) |
-> | v1.20 | 2026-08-12 | **점검·최신화 스킬의 설치 유형 전 지원 명시**(§D-4): dropin-check·update가 사본/클론 참조/raw 세 유형 모두 지원(판별 근거는 00 v1.10 `출처=` 필드) — 클론 참조 설치에서 update가 "사본 없음"만 보고하던 공백 해소(스킬 본문도 동일 개정) |
-> | v1.21 | 2026-08-12 | **조건부 안내 2건 보강**(DEC-20260812-bsjeong87-03, §F-2 A/B/C+글로벌 스킬 동기화): ① /resume — dropin-applied 괄호의 조치 대기 메모 안내(DEC-0810-08 "다음 세션이 발견" 취지의 배선 완성, 추가 조회 0) ② /wrap — append 후 PROGRESS ~800줄 경계 감지·아카이브 안내(길이 관리 규칙의 감지 주체 부재 해소 — /resume는 앞 40줄만 읽음) |
 > | v1.18 | 2026-08-10 | **적용 기록 표기 자기 참조화**(DEC-20260810-bsjeong87-07, 00~06 공통): STEP 4의 하드코딩(`01 v1.12` — v1.13~17 동안 미동기 실버그)을 "최상단 문서 버전 표기에서 읽어 기록"으로 교체 + STEP 3 ⓒ에 점검 스킬 병기 |
 > | v1.19 | 2026-08-10 | **/resume의 PROGRESS 부분 읽기 명시**(DEC-20260810-bsjeong87-08): §F-1 규칙·§F-2 템플릿 A/B/C에 "최상단 ~40줄만 Read limit" — 800줄 상한 근접 시 통째 읽기(수만 토큰)를 차단 |
+> | v1.20 | 2026-08-12 | **점검·최신화 스킬의 설치 유형 전 지원 명시**(§D-4): dropin-check·update가 사본/클론 참조/raw 세 유형 모두 지원(판별 근거는 00 v1.10 `출처=` 필드) — 클론 참조 설치에서 update가 "사본 없음"만 보고하던 공백 해소(스킬 본문도 동일 개정) |
+> | v1.21 | 2026-08-12 | **조건부 안내 2건 보강**(DEC-20260812-bsjeong87-03, §F-2 A/B/C+글로벌 스킬 동기화): ① /resume — dropin-applied 괄호의 조치 대기 메모 안내(DEC-0810-08 "다음 세션이 발견" 취지의 배선 완성, 추가 조회 0) ② /wrap — append 후 PROGRESS ~800줄 경계 감지·아카이브 안내(길이 관리 규칙의 감지 주체 부재 해소 — /resume는 앞 40줄만 읽음) |
+> | v1.22 | 2026-08-12 | **아카이브 포인터 최상단 이동 + 폴더 단위 검색 규칙**(DEC-20260812-bsjeong87-04, §F-1): 포인터 "맨 아래"는 통째 읽기 시절 설계 — /resume 40줄 읽기(v1.19)와 어긋나 아카이브 존재가 영영 안 보임 → 최상단(제목 바로 아래)으로. 과거 이력 검색은 활성 파일이 아니라 `docs/` 폴더 단위(아카이브 포함) 명시. 부수: 버전 표 v1.20·v1.21 행 삽입 위치 오류(v1.17 뒤) 정정 |
 >
 > ※ 갱신 시: 이 표에 한 줄 추가 + 하단 "문서 정보" 날짜 수정 + §L 재검증 체크리스트 수행.
 
@@ -242,7 +243,7 @@ New-Item -ItemType Directory -Path .claude/skills/wrap -Force
 - /wrap: PROGRESS append + 새 DEC + PROJECT_PLAN 체크박스 갱신 + **미커밋이면 경고**(커밋 전엔 다음 /resume가 git status로만 발견).
 
 ### 길이 관리
-- PROGRESS가 약 800줄/분기 경계를 넘으면 가장 오래된 분기를 docs/archive/로 옮기고 활성 파일 맨 아래 포인터 한 줄.
+- PROGRESS가 약 800줄/분기 경계를 넘으면 가장 오래된 분기를 docs/archive/로 옮기고 활성 파일 **최상단(제목 바로 아래) 포인터 한 줄**("이전 분기: docs/archive/…"). 맨 아래가 아니라 최상단인 이유 — /resume가 앞 ~40줄만 읽어 아래 포인터는 보이지 않는다. **과거 이력 검색은 활성 파일이 아니라 `docs/` 폴더 단위로**(아카이브 자동 포함) — 파일만 검색하면 "기록 없음"으로 오판한다.
 
 ### 공유 vs 개인 / 시크릿
 - 공유(커밋): CLAUDE.md·.claude/skills·.claude/settings.json·.gitattributes·docs/·.mcp.json(팀 MCP 서버 — 각자 첫 실행 때 승인).
@@ -273,7 +274,7 @@ description: 세션 시작 시 원격 최신화(clean이면 git pull --ff-only)�
 name: wrap
 description: 세션 종료 시 docs/PROGRESS.md 최상단에 오늘 작업 append, 새 결정 DECISIONS, PROJECT_PLAN 체크박스, 미커밋 경고, 변경 파일 보고.
 ---
-# /wrap — docs/PROGRESS.md 최상단 append(작업/결정/다음/미해결) + 새 DEC + PROJECT_PLAN 체크박스. 미커밋이면 경고. 변경 파일 보고. append 후 PROGRESS 총 줄 수 확인 — ~800줄/분기 경계 초과면 아카이브(docs/archive/ 이동+포인터) 안내(/resume는 앞 40줄만 읽어 감지 못 함).
+# /wrap — docs/PROGRESS.md 최상단 append(작업/결정/다음/미해결) + 새 DEC + PROJECT_PLAN 체크박스. 미커밋이면 경고. 변경 파일 보고. append 후 PROGRESS 총 줄 수 확인 — ~800줄/분기 경계 초과면 아카이브(docs/archive/ 이동+최상단 포인터) 안내(/resume는 앞 40줄만 읽어 감지 못 함).
 ```
 
 **B) 솔루션-aware** (MSA 단위분할 repo · 각 repo `.claude/skills/`, 글로벌 기본형을 덮어씀)
@@ -499,5 +500,5 @@ Claude Code는 매주 바뀐다. 6개월마다 30분:
 ## 핵심 출처 🟢
 IDE 통합·`--add-dir`(ide-integrations·large-codebases) / permissions·deny 한계 / hooks / skills / memory·auto-memory — 모두 `code.claude.com/docs` 및 `docs.anthropic.com`.
 
-**문서 정보** — 통합 마스터(범용) **v1.21**. 8개 소스(⓪ 폴더구성 · ① 셋업 · structure-guide · daily-routine · SFA 셋업/통합 · setup-followalong v8 · integrated-setup) 중복 제거·v8 반영 + `/effort`(§D-6) + 2026-07-20 공식 문서 전면 재검증 + 02 가이드 연동 경량 보완 + 2026-07-23 재검증(v2.1.218) + 2026-07-28 Opus 5 반영·부분 선택·auto mode(v2.1.220) + 2026-08-04 적용 기록(dropin-applied)·전면 재검증(v2.1.221) + 2026-08-10 /resume 원격 최신화 선행·중복 재판정 경량 반영(v2.1.226)·스킬 중복 등록 방지.
+**문서 정보** — 통합 마스터(범용) **v1.22**. 8개 소스(⓪ 폴더구성 · ① 셋업 · structure-guide · daily-routine · SFA 셋업/통합 · setup-followalong v8 · integrated-setup) 중복 제거·v8 반영 + `/effort`(§D-6) + 2026-07-20 공식 문서 전면 재검증 + 02 가이드 연동 경량 보완 + 2026-07-23 재검증(v2.1.218) + 2026-07-28 Opus 5 반영·부분 선택·auto mode(v2.1.220) + 2026-08-04 적용 기록(dropin-applied)·전면 재검증(v2.1.221) + 2026-08-10 /resume 원격 최신화 선행·중복 재판정 경량 반영(v2.1.226)·스킬 중복 등록 방지.
 최종 갱신: 2026-08-12 · 최근 재검증: 2026-08-04 / 참조: Claude Code v2.1.226, Opus 5(v2.1.219+) · Sonnet 5(v2.1.197+) · Fable 5(v2.1.170+).
