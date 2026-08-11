@@ -72,6 +72,7 @@
 - [x] 2026-08-10 00 통합 설치를 이 repo 자체에 적용 — 권장 모드·표준 프로필, 01 v1.19 재구성 점검 어긋남 0건, `dropin-applied` 기록 신설(기록 부재 해소)
 - [x] 2026-08-11 설치 옵션 학습 코스 `pages/learn.html` 신설(챕터 11개·선택 시뮬레이터·진행도 저장) — 5페이지 상호 링크·README·CLAUDE.md 동기화 + 03 v1.8 claude-hud 추천 표시 구성 ([[DEC-20260811-bsjeong87-01]])
 - [x] 2026-08-12 dropin-check/update 설치 유형 전 지원 — 00 v1.10 `출처=` 필드·01 v1.20·스킬 2종 개정(사본/클론/raw, 삭제돼도 동작), wave 실사례 공백 해소 ([[DEC-20260812-bsjeong87-01]])
+- [x] 2026-08-12 STEP 2 흔적 감지 보강(승인 대기 후보 ①②③ 소진) — 00 v1.11 로컬 전용 산출물 조회·/dropin-check 동일·02 v1.15 부분 적용 사유 기록 ([[DEC-20260812-bsjeong87-02]])
 - [ ] **다음 재검증: 2027-01경** (00 §L, 6개월 주기)
   - 중복 재심 🟡 잔여: Context7·Caveman 생존, todo-tracking 공식 문서(2026-08-10 404), `/team-onboarding` 재평가 ([[DEC-20260810-bsjeong87-02]])
   - `code.claude.com/docs/en/whats-new` 최신 항목
@@ -91,5 +92,5 @@
 - ~~**02 가이드는 HTML만 존재**~~ → 해소(2026-07-23): 02를 md로 변환하고 html 3종 전면 폐기, md 단일 관리로 전환 ([[DEC-20260723-bsjeong87-01]]).
 - [x] ~~**00 v1.7 실적용에서 나온 경량 반영 후보 2건**(2026-08-06, 승인 대기)~~ → **해소(2026-08-10)**: ① 06 v1.2 §1 계정 GitHub 연결 게이트 ② 00 v1.9 부분 완료 표기 ([[DEC-20260810-bsjeong87-08]])
 - [ ] **플러그인 설치 상태는 백업 경로 없음**(2026-08-10 발견, [[DEC-20260810-bsjeong87-10]]) — `plugins/installed_plugins.json`·`known_marketplaces.json`이 화이트리스트 밖이라 새 PC에서 claude-hud는 `/plugin` 수동 재설치. 캐시(수백 KB)와 같은 폴더라 편입 보류 — 다음 재검증에서 선별 백업 가능한지 판단.
-- [ ] **STEP 2 흔적 감지가 로컬 전용 산출물을 못 본다**(2026-08-10 실적용 발견, 경량 반영 후보 — 승인 대기). nastvad에서 02를 "미설치"로 오판: 산출물이 `.git/info/exclude`(`.claude/agents/`·`hooks/`)와 `.gitignore`(`*.local.md` rubric)로 전부 로컬 전용이라 파일 존재 여부만으로는 적용 범위를 알 수 없었다. 후보 조치 — ① 00 STEP 2 `.claude/agents/` 항목에 "rubric·핸드오프 산출물(`model-routing.local.md` 등)까지 확인, gitignore·`.git/info/exclude`도 조회" 한 줄 ② `/dropin-check`에 동일 감지 ③ 02가 부분 적용될 때 **어느 에이전트를 왜 뺐는지**를 `dropin-applied` 괄호에 남기게 명시([[DEC-20260810-bsjeong87-08]]의 부분 완료 표기 확장). 근본 해법은 기록([[DEC-20260804-bsjeong87-01]])이지만 기록 도입 이전 프로젝트엔 흔적 감지가 유일한 수단이라 보강 가치 있음.
+- [x] ~~**STEP 2 흔적 감지가 로컬 전용 산출물을 못 본다**~~(2026-08-10 실적용 발견) → **해소(2026-08-12)**: 후보 ①②③ 전부 반영 — 00 v1.11 STEP 2 조회 확장·/dropin-check 동일·02 v1.15 부분 적용 사유 기록 ([[DEC-20260812-bsjeong87-02]]). (이하 원문) nastvad에서 02를 "미설치"로 오판: 산출물이 `.git/info/exclude`(`.claude/agents/`·`hooks/`)와 `.gitignore`(`*.local.md` rubric)로 전부 로컬 전용이라 파일 존재 여부만으로는 적용 범위를 알 수 없었다. 후보 조치 — ① 00 STEP 2 `.claude/agents/` 항목에 "rubric·핸드오프 산출물(`model-routing.local.md` 등)까지 확인, gitignore·`.git/info/exclude`도 조회" 한 줄 ② `/dropin-check`에 동일 감지 ③ 02가 부분 적용될 때 **어느 에이전트를 왜 뺐는지**를 `dropin-applied` 괄호에 남기게 명시([[DEC-20260810-bsjeong87-08]]의 부분 완료 표기 확장). 근본 해법은 기록([[DEC-20260804-bsjeong87-01]])이지만 기록 도입 이전 프로젝트엔 흔적 감지가 유일한 수단이라 보강 가치 있음.
 - [ ] **`~/.claude` 수정이 백업에 자동 반영되지 않는 구조**(2026-08-10 재확인) — 오늘 적용한 03·05 산출물이 전부 백업에서 빠져 있었고 `/dropin-check`로만 발견됐다. 수동 복사 규칙([[DEC-20260720-bsjeong87-04]])을 유지할지, 동기화 스킬·hook으로 자동화할지 판단 필요.

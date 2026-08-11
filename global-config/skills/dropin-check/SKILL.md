@@ -19,6 +19,7 @@ description: 드롭인 구성 최신성 점검(읽기 전용). 대상 프로젝�
 - 대상(현재 PWD 프로젝트)의 `CLAUDE.md`(루트 또는 `.claude/`) 맨 아래 `<!-- dropin-applied: ... -->` 줄 파싱: 적용일·모드·프로필·문서별 버전·미선택·출처(있으면).
 - 글로벌만 적용한 PC면 `~/.claude/CLAUDE.md`도 확인.
 - 기록이 없으면: "적용 기록 없음(미적용이거나 2026-08-04(기록 도입) 이전 적용)"으로 보고하고 문서 비교는 생략.
+- 흔적으로 추정할 때(기록 없음·02 적용 범위 확인): `.claude/agents/` 로스터만 보지 말고 rubric·핸드오프 산출물(`model-routing.local.md`·`.claude/specs/` 등)과 `.gitignore`·`.git/info/exclude`도 조회 — 02 산출물은 전부 로컬 전용일 수 있어 파일 부재≠미적용(2026-08-10 오판 실사례).
 
 ## 3) 글로벌 구성 대조 — 화이트리스트 5종
 - `~/.claude`의 `CLAUDE.md`·`settings.json`·`skills/`·`commands/`·`output-styles/`를 저장소 `global-config/`와 파일 단위 대조(없음/내용 다름).
