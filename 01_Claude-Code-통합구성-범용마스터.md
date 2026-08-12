@@ -1,6 +1,6 @@
 # Claude Code 통합 구성 — 범용 마스터 (드롭인 적용)
 
-> **문서 버전: v1.33** · 최종 갱신: **2026-08-13** · **최근 재검증: 2026-08-04** · 기준: Claude Code v2.1.226 (Opus 5 · Sonnet 5 · Fable 5)
+> **문서 버전: v1.34** · 최종 갱신: **2026-08-13** · **최근 재검증: 2026-08-04** · 기준: Claude Code v2.1.226 (Opus 5 · Sonnet 5 · Fable 5)
 >
 > | 버전 | 날짜 | 변경 내용 |
 > | --- | --- | --- |
@@ -38,6 +38,7 @@
 > | v1.31 | 2026-08-12 | **실적용 검증(playground) 발견 반영**: §B에 **혼합형** 행 신설(F3 — 상위 폴더 아래 독립 repo와 비-git 폴더가 섞인 형태가 미정의였다. 실측: `bubble_memo`는 비-git인데 CLAUDE.md·docs 완비 → 단위별로 git 여부를 따로 판정), §F-2 C wrap 템플릿의 `docs/` 부재 폴백에 **루트 라우터 예외**(F4 — v1.30이 넣은 폴백이 통합 루트에서 오탐. 루트는 `docs/INDEX.md`만 있는 것이 정상인데 "01 §E-1 미설치"로 잘못 알린다)+A 템플릿에 세션 기록 소실 고지 |
 > | v1.32 | 2026-08-12 | **실적용 2회차 발견 반영**: §A STEP 1의 **유형 열거 제거**(G4 — "§B의 유형(B / A-1 / A-2 / +MSA)"이라 못박아, v1.31이 신설한 **혼합형**도 기존 **비-git 폴더**도 판별에서 빠져 있었다. 표에 행이 늘면 이 문장만 낡는 구조라 열거 대신 **§B 표를 가리키게** 바꿈 — 02의 "개수를 고정하지 말 것"과 같은 처방), §F-2 C 템플릿의 루트 라우터 예외 조건을 **"`INDEX.md`만 있음"→"PROGRESS·DECISIONS·PROJECT_PLAN이 없음"**으로 정정(G1 — 실측 루트 `docs/`엔 워크스페이스 레이어 산출물 9개가 함께 있어 조건이 실물과 반대였다. `wrap` 스킬 실물도 동일 정정) |
 > | v1.33 | 2026-08-13 | **신규 설치 경로 실행에서 발견 반영**: §A STEP 4에 **§검증 신설**(H3 — 이 문서의 유일한 검증(§D-5)이 글로벌 스킬 자동완성뿐이라, **01이 만드는 프로젝트 산출물**(`docs/` 3종·`CLAUDE.md` §F-1 블록·`.gitattributes`·`.claude/settings.json`)을 확인하라는 지시가 0이었다. 재적용에서는 파일이 이미 있어 증상이 없고, 빈 repo에 처음 깔 때만 드러난다 — 02가 v1.18에서 고친 것과 같은 결함이 31개 버전 남아 있었다), §F-3에 **`additionalDirectories` 조건 경고**(H2 — JSON 블록의 `../<자주 함께 고치는 repo>` 플레이스홀더를 지우지 않고 적용하면 존재하지 않는 경로가 **팀 공유 파일에 커밋**된다. JSON엔 주석을 못 달아 블록 밖 줄이 정본) |
+> | v1.34 | 2026-08-13 | **적용 시나리오 검증 반영**: §D 서두에 OS 주석(명령 블록=Windows 기준, macOS·Linux 대체 명령 — §D만 Windows 하드코딩이던 것)+D-2·D-3 경로 `~/.claude` 표기, §E-4에 **팀원 층위 혼재 공존 규칙**(루트 설치자·하위 repo 설치자 공존 — 상위 폴더가 팀 공유 repo면 루트 산출물 커밋 전 팀 합의. 이 시나리오가 어디에도 없던 것) |
 >
 > ※ 갱신 시: 이 표에 한 줄 추가 + 하단 "문서 정보" 날짜 수정 + §L 재검증 체크리스트 수행.
 
@@ -109,6 +110,8 @@
 
 ## D. 글로벌 셋업 (PC당 1회) — 전 환경 공통
 
+> 아래 명령 블록은 Windows(PowerShell) 기준이다 — macOS·Linux는 홈을 `~`로 읽고 D-1을 `mkdir -p ~/.claude/skills/{resume,wrap,dropin-check,dropin-update}`로 대체한다(만드는 내용물 D-2~D-4는 OS 무관. OS별 CLI 설치 분기는 04 §2와 같은 방식).
+
 ### D-1. 폴더
 ```powershell
 cd C:/Users/<내계정>
@@ -119,7 +122,7 @@ New-Item -ItemType Directory -Path .claude/skills/dropin-update -Force
 ```
 > 4종이다 — §D-4가 뒤 2종을 복사해 넣고 §D-5가 4종 자동완성을 성공 기준으로 삼는다.
 
-### D-2. 글로벌 `CLAUDE.md` (행동 규칙) — `C:/Users/<내계정>/.claude/CLAUDE.md`
+### D-2. 글로벌 `CLAUDE.md` (행동 규칙) — `~/.claude/CLAUDE.md`
 > ⚠️ 아래는 **최소 골격**이지 실제 구성의 전부가 아니다. 문서 저장소 클론이 있으면 **정본은 `global-config/CLAUDE.md`** — 그걸 복사하고 이 블록은 대조용으로만 쓴다([[DEC-20260721-bsjeong87-01]]: 골격만 보고 재구성했다가 `skills/humanizer`와 스킬 카탈로그 절을 통째로 누락한 실사례). 클론이 없을 때만 이 블록으로 시작한다. **복사할 때 맨 아래 `dropin-applied` 줄은 빼거나 이 PC 기준으로 다시 쓴다** — 그 줄은 미러를 마지막에 커밋한 PC의 기록이라, 그대로 옮기면 새 PC가 하지도 않은 설치를 했다고 주장하고 `/dropin-check`가 그것을 1차 근거로 믿는다.
 ```markdown
 # CLAUDE.md (Global)
@@ -134,7 +137,7 @@ New-Item -ItemType Directory -Path .claude/skills/dropin-update -Force
 ```
 > 팁: CLAUDE.md가 200줄을 넘보면 **`.claude/rules/*.md`** 로 주제별 분리(전역 `~/.claude/rules/`도 지원). rules 파일에 `paths:` frontmatter(glob)를 주면 **해당 경로 파일을 다룰 때만 로드**돼 컨텍스트를 아낀다. HTML 주석(`<!-- -->`)은 로드 시 제거되므로 유지보수 메모용으로 사용 가능.
 
-### D-3. 글로벌 `settings.json` (deny + hooks) — `C:/Users/<내계정>/.claude/settings.json`
+### D-3. 글로벌 `settings.json` (deny + hooks) — `~/.claude/settings.json`
 ```json
 {
   "autoMemoryEnabled": true,
@@ -235,6 +238,7 @@ New-Item -ItemType Directory -Path .claude/skills/dropin-update -Force
 - 루트 통합 `/resume`·`/wrap` = §F-2 C(**개인 글로벌 교체 방식** — 동명 우선순위 주의 §F-2). 하위 repo 스킬은 루트 실행 시 디렉터리-한정 이름(`<하위>:resume`)으로 함께 로드된다(v2.1.203+) — 비한정 `/resume`가 실행하는 건 개인/루트 쪽이므로 통합 절차는 거기 둔다.
 - (선택) 루트 `docs/INDEX.md` = **얇은 크로스-repo 인덱스**(§F-2 E). 크로스-repo 세션만 한 줄+링크.
 - 루트를 개인 git repo로 둘 수도 있음(백업용) → 하위 repo들을 `.gitignore`로 제외.
+- **팀원마다 설치 층위가 달라도 공존한다** — 어떤 팀원은 루트(이 레이어)에서, 어떤 팀원은 하위 repo 하나(§E-1)에서 적용해도 충돌 지점이 없다: 루트 레이어는 하위 repo를 손대지 않고, 하위 적용은 그 repo 안에만 산출물을 만든다. 단 **상위 폴더 자체가 팀 공유 git repo면** 루트 라우터·INDEX가 커밋되어 하위 repo만 쓰는 팀원에게도 도착하므로, 커밋 전에 팀 합의를 받는다(기본 전제는 루트 레이어=개인 소유·비공유).
 
 ---
 
@@ -534,5 +538,5 @@ Claude Code는 매주 바뀐다. 6개월마다 30분:
 ## 핵심 출처 🟢
 IDE 통합·`--add-dir`(ide-integrations·large-codebases) / permissions·deny 한계 / hooks / skills / memory·auto-memory — 모두 `code.claude.com/docs` 및 `docs.anthropic.com`.
 
-**문서 정보** — 통합 마스터(범용) **v1.33**. 변경 이력은 최상단 버전 표 참조(유래: 8개 소스 통합 초판 — v1.0 행).
-최종 갱신: 2026-08-12 · 최근 재검증: 2026-08-04 / 참조: Claude Code v2.1.226, Opus 5(v2.1.219+) · Sonnet 5(v2.1.197+) · Fable 5(v2.1.170+).
+**문서 정보** — 통합 마스터(범용) **v1.34**. 변경 이력은 최상단 버전 표 참조(유래: 8개 소스 통합 초판 — v1.0 행).
+최종 갱신: 2026-08-13 · 최근 재검증: 2026-08-04 / 참조: Claude Code v2.1.226, Opus 5(v2.1.219+) · Sonnet 5(v2.1.197+) · Fable 5(v2.1.170+).
