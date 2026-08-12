@@ -6,12 +6,13 @@ description: 세션 종료 시 사용. 건드린 repo마다 docs/PROGRESS.md 최
 # /wrap — 세션 마무리
 
 오늘 세션 마무리. docs/PROGRESS.md 최상단에 오늘 작업 항목을 append,
-새 결정은 docs/DECISIONS.md에 DEC-NNN으로 추가, docs/PROJECT_PLAN.md 체크박스 갱신.
+새 결정은 docs/DECISIONS.md에 **DEC-YYYYMMDD-<작성자>** id로 추가(동시 발번 충돌 방지 — 예: DEC-20260812-min), docs/PROJECT_PLAN.md 체크박스 갱신.
+비-git 폴더면 git status·커밋 단계는 건너뛰고 기록 append만 한다.
 마지막에 변경 파일 목록을 보고하고, 미커밋 변경이 남으면 경고하라
 (커밋 전엔 다음 /resume가 git status로만 발견 가능).
 append 후 **PROGRESS 총 줄 수를 확인**해(약 800줄/분기 경계 — /resume는 앞 40줄만 읽어 감지 못 함)
 넘었으면 "가장 오래된 분기를 `docs/archive/`로 이동 + 활성 파일 **최상단(제목 바로 아래)** 포인터 한 줄" 아카이브를 안내한다
-(이동은 승인 후 — 포인터가 최상단이어야 /resume의 40줄 읽기에 보인다. 과거 이력 검색은 `docs/` 폴더 단위로).
+(이동은 승인 후 — 포인터가 최상단이어야 /resume의 40줄 읽기에 보인다. 이후 append는 **포인터 줄 아래부터**(포인터 최상단 고정). 과거 이력 검색은 `docs/` 폴더 단위로).
 
 ## 파생 뷰 동기화 (있는 repo만)
 그 repo에 `docs/WBS.md`가 있고 이번 세션에 PROJECT_PLAN 상태가 바뀌었으면 **같은 변화를 WBS 표에도**

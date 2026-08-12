@@ -31,7 +31,7 @@
 When compacting, always preserve:
 - The list of files modified in this session
 - Pending tasks (what was about to be done)
-- Recent decisions (last 3 DEC-NNN if any)
+- Recent decisions (last 3 DECs — DEC-YYYYMMDD-<author>, if any)
 - Open issues / errors encountered
 
 ## 8. Secret Safety
