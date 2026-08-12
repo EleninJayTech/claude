@@ -390,11 +390,12 @@ footer{max-width:1120px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
         <tr><td><b>surveyor</b></td><td>구조를 넓고 기계적으로 훑어 목록으로 남김 (판단 안 함)</td><td>sonnet</td></tr>
         <tr><td><b>triage</b></td><td>훑은 결과에 난이도를 매김 — <b>가장 중요한 자리</b></td><td><b>opus</b></td></tr>
         <tr><td><b>analyst</b></td><td>어려운 부분을 분석해 구현 명세를 씀</td><td>난이도별</td></tr>
+        <tr><td><b>spec-writer</b></td><td>새 기능의 요구를 확정해 명세를 씀 — 새로 만드는 일의 1단계</td><td><b>opus</b></td></tr>
         <tr><td><b>implementer</b></td><td>명세대로 구현 (범위 밖은 안 건드림)</td><td>sonnet</td></tr>
         <tr><td><b>parity-tester</b></td><td>테스트를 돌려 통과/차이만 보고</td><td>haiku</td></tr>
       </table></div>
-      <p>에이전트는 통째가 아니라 <b>하나씩</b> 고릅니다. 기존 코드를 고치는 일이면 5종 전부,
-      새로 만드는 일이면 surveyor·triage 없이 시작합니다. 리뷰어는 따로 안 만듭니다 —
+      <p>에이전트는 통째가 아니라 <b>하나씩</b> 고릅니다. 기존 코드를 고치는 일이면 spec-writer를 뺀 5종,
+      새로 만드는 일이면 surveyor·triage 없이 <b>spec-writer부터</b> 시작합니다. 리뷰어는 따로 안 만듭니다 —
       내장 <code class="i">/code-review</code>가 이미 있기 때문입니다.</p>
       <div class="coach warn" style="margin-top:8px"><span class="who">⚠️</span><div>
         <b>코드가 없는 저장소면 설치하지 않습니다</b> 문서만 있는 곳에 로스터를 깔면 쓰지 않는 파일만 늘어납니다. Claude가 감지하고 알려줍니다.
@@ -537,7 +538,7 @@ footer{max-width:1120px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
 </div>
 
 <footer>
-  설치 옵션 학습 코스 · 2026-08-12<br>
+  설치 옵션 학습 코스 · 2026-08-13<br>
   각 항목의 정본은 해당 하위 문서(01~06)입니다. 이 페이지는 사람이 배우기 위한 안내이며, 설치 절차 자체를 바꾸지 않습니다. 진행도는 이 브라우저의 localStorage에만 저장됩니다.<br>
   저장소: github.com/EleninJayTech/claude ·
   <a href="../index.html">사용법</a> · <a href="intro.html">소개 영상</a> · <a href="demo.html">설치 시연</a> · <a href="options.html">옵션 사전</a>
@@ -577,7 +578,7 @@ var SITUS = {
   newpc:{name:'새 PC', docs:{'01':'글로벌 규칙·보안·/resume·/wrap','03':'claude-hud 상태 표시줄'}, why:'PC 첫 세팅이니 글로벌 기반 + 사용량이 보이는 상태 표시줄부터.'},
   dev:{name:'개발 프로젝트', docs:{'01':'기록 체계·보안','02':'모델 분담 로스터','04':'훅 게이트·CLI·CI'}, why:'코드가 있으니 분담과 자동 검증까지.'},
   docsrepo:{name:'문서 저장소', docs:{'01':'기록 체계·보안'}, why:'빌드·코드가 없어 02·04는 쓸 곳이 없습니다.'},
-  applied:{name:'이미 01이 있음', docs:null, why:'아직 없는 문서 중 상황에 맞는 것만 제안합니다.'}
+  applied:{name:'이미 01이 있음', docs:{'01':'이미 있음 — 재적용 점검(어긋난 곳만 손봄)'}, why:'아직 없는 문서 중 상황에 맞는 것만 제안합니다.'}
 };
 var BUNDLES = {
   design:{name:'디자인', desc:'웹 화면 프로젝트용', docs:{'03':'svg-design · frontend-design · 브라우저 검증'}},
@@ -847,30 +848,36 @@ function drawFinal(){
   renderOpts($('fProf'), keysOf(PROFS).map(function(x){return {key:x.key,name:x.name};}), F.prof, function(k){ F.prof=k; F.preset=-1; drawFinal(); }, false);
 
   var base=basePlan(F.mode,F.situ);
-  var docs = base.docs===null ? null : JSON.parse(JSON.stringify(base.docs));
+  var isCustom = base.docs===null;
+  var docs = isCustom ? {} : JSON.parse(JSON.stringify(base.docs));
   var notes=[];
-  if(docs!==null){
-    F.bundles.forEach(function(k){
-      var b=BUNDLES[k];
-      if(k==='company'){ notes.push('회사 수정자: CI·MCP·루틴에 조직 승인 게이트'); return; }
-      Object.keys(b.docs).forEach(function(dk){
-        docs[dk] = docs[dk] ? docs[dk]+' + '+b.docs[dk] : b.docs[dk];
-      });
+  F.bundles.forEach(function(k){
+    var b=BUNDLES[k];
+    if(k==='company'){ notes.push('회사 수정자: CI·MCP·루틴에 조직 승인 게이트'); return; }
+    Object.keys(b.docs).forEach(function(dk){
+      docs[dk] = docs[dk] ? docs[dk]+' + '+b.docs[dk] : b.docs[dk];
     });
+  });
+  var h;
+  if(isCustom){
+    h='<p class="empty">직접 고르는 모드 — 문서와 세부 항목은 직접 고릅니다.'+(Object.keys(docs).length?' 아래는 선택한 번들이 합집합으로 얹는 몫입니다.':'')+'</p>';
+    if(Object.keys(docs).length) h+=planHTML(docs,'');
+    if(base.why) h+='<p class="why">'+base.why+'</p>';
+  } else {
+    h = planHTML(docs, base.why);
   }
-  var h = planHTML(docs, base.why);
   if(notes.length) h+='<p class="why">🏢 '+notes.join(' · ')+'</p>';
   if(F.prof==='save') h+='<p class="why">💰 절약 프로필: effort medium 시작 · Sonnet 중심 — 단 검증 게이트는 그대로.</p>';
   $('finalPlan').innerHTML=h;
 
   var modeLabel=MODES[F.mode].name + F.bundles.filter(function(k){return k!=='company';}).map(function(k){return '+'+BUNDLES[k].name;}).join('')
     + (F.bundles.indexOf('company')>=0?'+회사':'');
-  var chosen = docs===null ? [] : Object.keys(docs).sort();
+  var chosen = Object.keys(docs).sort();
   var un = ['01','02','03','04','05','06'].filter(function(k){ return chosen.indexOf(k)<0; });
   var today = new Date().toISOString().slice(0,10);
   var line='<!-- dropin-applied: '+today+' · 모드='+modeLabel+' · 프로필='+PROFS[F.prof].name;
   chosen.forEach(function(k){ line+=' · '+k+' v○.○'; });
-  if(un.length && docs!==null) line+=' · 미선택: '+un.join(', ');
+  if(un.length && !isCustom) line+=' · 미선택: '+un.join(', ');
   line+=' · 출처=사본 -->';
   $('finalStamp').textContent=line;
 }
