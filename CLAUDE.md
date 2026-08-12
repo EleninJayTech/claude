@@ -10,7 +10,7 @@ Claude Code 셋업·운영을 위한 **드롭인 지시 문서** 저장소. 코�
 ## 구성물
 | 파일 | 역할 | 버전 |
 | --- | --- | --- |
-| `00_통합-설치.md` | 01~06 통합 설치 셀렉터 — 문서 확보→감지→설치 모드(최소/권장/전체/사용자)+목적 번들(§C-2 합집합)+운용 프로필(표준/절약)→해당 문서 프로토콜로 위임, 적용 기록(`dropin-applied` — `출처=` 포함)·재적용 분기 | v1.12 (2026-08-12) |
+| `00_통합-설치.md` | 01~06 통합 설치 셀렉터 — 문서 확보→감지→설치 모드(최소/권장/전체/사용자)+목적 번들(§C-2 합집합)+운용 프로필(표준/절약)→해당 문서 프로토콜로 위임, 적용 기록(`dropin-applied` — `출처=` 포함)·재적용 분기 | v1.13 (2026-08-12) |
 | `01_Claude-Code-통합구성-범용마스터.md` | 글로벌+프로젝트 셋업 마스터(§D 글로벌·§E 환경별·§F SSOT 블록·§J-1 auto mode·§D-6 절약 프로필) — 구성 항목 부분 선택 | v1.26 (2026-08-12) |
 | `02_모델분담-범용-플레이북.md` | 상위/하위 모델 자동 분담, `.claude/agents/` 로스터 템플릿(에이전트별 선택, 리뷰 정본=내장 `/code-review`, §F 절약 배정=Sonnet+advisor 패턴, 비개발 repo 가드) | v1.16 (2026-08-12) |
 | `03_확장기능-설치-체크리스트.md` | 확장 5종(claude-hud·svg-design·frontend-design·MCP·브라우저 검증) 체크리스트 설치 + 플러그인 부록 | v1.8 (2026-08-11) |
@@ -36,6 +36,8 @@ Claude Code 셋업·운영을 위한 **드롭인 지시 문서** 저장소. 코�
 - **화이트리스트만** 커밋: `CLAUDE.md`·`settings.json`·`skills/`·`commands/`·`output-styles/`. 통째 커밋 금지 — `.credentials.json`·`history.jsonl`·`projects/`·`sessions/`는 시크릿·대화기록. ([[DEC-20260720-bsjeong87-04]], `output-styles/` 추가는 [[DEC-20260810-bsjeong87-10]])
 - 원본(`~/.claude`)을 고쳐도 **자동 갱신되지 않는다** — 수동으로 다시 복사해 커밋.
 - `theme` 등 개인 취향 키는 문서 예시에서 제외하되 개인 설정에 남는 건 무방. ([[DEC-20260720-bsjeong87-03]])
+- **여러 PC가 갱신하면 미러는 갈라진다** — `settings.json`은 마지막 커밋 PC의 머신 종속 키를 갖는다. diff가 머신 종속 키뿐이면 정상, **구성 성격 키(`permissions.deny`·`hooks`)가 다를 때만 실제 차이**로 본다. 복원은 통째 덮어쓰기가 아니라 병합([[DEC-20260721-bsjeong87-02]], 상세는 `global-config/README.md`).
+- 해시 대조(/wrap·/dropin-check)는 **줄바꿈을 정규화한 뒤** 비교한다 — repo는 `core.autocrlf=input`이라 커밋본은 LF인데 Windows 정본은 CRLF라, 내용이 같아도 해시가 갈린다(다른 PC에서 pull한 직후 오검출).
 
 ## 환경
 - 단일 git repo(01 §B의 **B형**). remote: `github.com/EleninJayTech/claude`, 기본 브랜치 `main`.

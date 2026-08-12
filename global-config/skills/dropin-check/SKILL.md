@@ -27,6 +27,7 @@ description: 드롭인 구성 최신성 점검(읽기 전용). 대상 프로젝�
 - `~/.claude`의 `CLAUDE.md`·`settings.json`·`skills/`·`commands/`·`output-styles/`를 저장소 `global-config/`와 파일 단위 대조(없음/내용 다름).
 - `settings.json`은 머신 종속 키(model·theme·enabledPlugins·statusLine·effortLevel 등)가 달라도 정상(DEC-20260721-bsjeong87-02) —
   **구성 성격 키(permissions.deny·hooks)의 차이만** 보고.
+- **줄바꿈을 정규화한 뒤 비교** — `core.autocrlf=input` 저장소는 커밋본이 LF, Windows 정본은 CRLF라 내용이 같아도 파일 해시가 갈린다(pull 직후 오검출). 줄바꿈만 다르면 차이로 치지 않는다.
 - 어느 쪽이 최신인지 단정하지 말 것 — 백업 규칙상 원본(`~/.claude`) 수정이 백업에 자동 반영되지 않으므로, 차이의 방향(로컬이 구버전 / 백업이 구버전)을 파일 내용으로 판단해 명시.
 - **중복 등록 감지**: `commands/<이름>.md`와 `skills/<이름>/`이 같은 이름이면 "구형 잔재 — `/` 자동완성 2개·구형 내용 실행 위험, commands 쪽 삭제 권고"로 보고(정본은 skills, DEC-20260810-bsjeong87-04). 프로젝트 `.claude/commands/`↔`.claude/skills/`도 동일 점검.
 
