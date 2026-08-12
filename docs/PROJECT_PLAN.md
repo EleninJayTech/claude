@@ -86,7 +86,7 @@
   - 🔴🟡 항목: deny 서브프로세스 우회, **샌드박스 네이티브 Windows 지원 여부**, `attribution` 스키마, auto-memory 한도, `sandbox.credentials` 스키마
   - `/model` 별칭이 가리키는 실제 모델, `/effort` 단계·`ultracode` 동작, frontmatter `effort:` 키 유지 여부
   - humanizer frontmatter `allowed-tools` 공백 구분 표기의 파서 동작(2026-08-12 /audit 의심 인계)
-  - `pages/intro.html:211` 시연 화면의 `Claude Code v2.1.221` 표기 — 유지(소품)/숫자 제거/현행 반영 중 결정(2026-08-12 인계, 갱신 의무 대상은 아님)
+  - ~~`pages/intro.html:211` 시연 화면의 `Claude Code v2.1.221` 표기 — 유지(소품)/숫자 제거/현행 반영 중 결정~~ → **해소(2026-08-12)**: 사용자 선택 **숫자 제거**(`▸ Claude Code`) — 소품이 CLI 버전을 따라 낡는 구조 자체를 제거. 사람용 5종 `v2.1.x` 표기 0건
   - auto mode 요건(플랜·모델·프로바이더)·`disableAutoMode` 유지 여부(01 §J-1)
   - 03 소스 생존: `github.com/jarrodwatts/claude-hud` 설치 명령, `github.com/anthropics/skills`의 frontend-design 위치·설치 CLI, `claude mcp` 명령 체계, 부록 플러그인 생존·중복 재판정
   - 04: hooks 스키마·`claude-code-action` 버전·gh/glab 설치 명령
