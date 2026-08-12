@@ -7,6 +7,9 @@ description: 세션 종료 시 사용. 건드린 repo마다 docs/PROGRESS.md 최
 
 오늘 세션 마무리. docs/PROGRESS.md 최상단에 오늘 작업 항목을 append,
 새 결정은 docs/DECISIONS.md에 **DEC-YYYYMMDD-<작성자>** id로 추가(동시 발번 충돌 방지 — 예: DEC-20260812-min), docs/PROJECT_PLAN.md 체크박스 갱신.
+**이번에 append한 항목에 미해소 `[Pending]`·`[Blocked]`가 있으면 PROJECT_PLAN "미해결/관찰 중"에 한 줄로 올린다**(닫힐 때까지 유지) —
+PROGRESS는 append 전용이고 /resume은 앞 ~40줄만 읽으므로, 그 항목이 40줄 창 밖으로 밀리는 순간 어느 절차도 다시 보지 않는다.
+정기 항목(재검증·점검 주기)은 **`다음 ○○: YYYY-MM경`** 형식으로 남긴다 — /resume의 "예정일 경과" 안내가 읽는 형식이라, 안 적으면 그 안내는 발화하지 않는다.
 비-git 폴더면 git status·커밋 단계는 건너뛰고 기록 append만 한다.
 `docs/`에 PROGRESS·DECISIONS·PROJECT_PLAN이 **없으면** 기록 파일을 새로 만들지 말고
 "01 §E-1 기록 체계 미설치 — 필요하면 01을 적용하세요"를 알린다(00 STEP 5의 최소 골격만 있는 repo가 여기 해당).
