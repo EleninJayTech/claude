@@ -1,6 +1,6 @@
 # Claude Code 통합 구성 — 범용 마스터 (드롭인 적용)
 
-> **문서 버전: v1.25** · 최종 갱신: **2026-08-12** · **최근 재검증: 2026-08-04** · 기준: Claude Code v2.1.226 (Opus 5 · Sonnet 5 · Fable 5)
+> **문서 버전: v1.26** · 최종 갱신: **2026-08-12** · **최근 재검증: 2026-08-04** · 기준: Claude Code v2.1.226 (Opus 5 · Sonnet 5 · Fable 5)
 >
 > | 버전 | 날짜 | 변경 내용 |
 > | --- | --- | --- |
@@ -29,6 +29,7 @@
 > | v1.22 | 2026-08-12 | **아카이브 포인터 최상단 이동 + 폴더 단위 검색 규칙**(DEC-20260812-bsjeong87-04, §F-1): 포인터 "맨 아래"는 통째 읽기 시절 설계 — /resume 40줄 읽기(v1.19)와 어긋나 아카이브 존재가 영영 안 보임 → 최상단(제목 바로 아래)으로. 과거 이력 검색은 활성 파일이 아니라 `docs/` 폴더 단위(아카이브 포함) 명시. 부수: 버전 표 v1.20·v1.21 행 삽입 위치 오류(v1.17 뒤) 정정 |
 > | v1.23 | 2026-08-12 | **스킬 스코프 우선순위 정정**(/audit S1, 당일 공식 문서 확인): "프로젝트 `.claude/skills/`가 글로벌 기본형을 덮어씀"은 **정반대** — 공식 우선순위는 **enterprise > personal > project**(개인이 프로젝트를 이김, 스킬>커맨드). §D-4·§E-3·§E-4·§F-2 B/C 통일 — B·C는 글로벌 기본형(A) **교체** 방식으로 설치(동명 방치 시 B·C가 실행되지 않음). §E-4에 중첩 스킬 디렉터리-한정 이름 로드(v2.1.203+) 반영 |
 > | v1.24 | 2026-08-12 | **/audit 중·하 등급 일괄 반영**(docs/audit-20260812.md): §D-3 deny 예시 실물 동기화 3건(M5: `Get-Content *.pem`/`*.key`·`coverage`)+선택 확장 예 `sessionUrl`·`startup` 매처(h23), §F-2 A/C resume 템플릿에 최근 DEC 3건(M6), §G git pull 이중 실행 제거 — /resume에 위임(M9), §F-1 길이 관리에 append는 포인터 아래부터(M10), §B에 비-git 폴더 행(M26), §K에 push 권한 없음 행(h10), §F-2 A wrap 템플릿에 파생 뷰 동기화(h19), 푸터 변경 요약을 버전 표 참조로 교체(h3) |
+> | v1.26 | 2026-08-12 | **B·C 교체의 PC 전역 전파 경고 + 폴백 의무화**(§F-2): 글로벌은 PC당 하나라 한 프로젝트에서 B·C로 교체하면 **같은 PC의 다른 프로젝트도 그것을 실행**한다(v1.23이 확정한 personal>project의 부작용 — 단일 repo에서 B의 단위 판별이 헛돈다). 주의 문구에 전파 경고 한 줄 + B·C의 resume·wrap 템플릿 4곳에 **폴백**(단위 없음·단일 repo·비-git) 한 줄씩 — 실제 배포된 글로벌 스킬엔 이미 있던 폴백이 문서 템플릿엔 빠져 있어 신규 설치자만 위험을 떠안던 공백 |
 > | v1.25 | 2026-08-12 | **글로벌 정본 ↔ 백업 미러 대조를 /wrap에 배선**(DEC-20260812-bsjeong87-06, §F-2 A/B/C): `~/.claude`와 `global-config/`는 자동 동기화가 없어 한쪽만 고치면 갈라지는데 **감지 주체가 없었다**(양방향 실사례 2건 — 2026-08-10 백업 누락·08-12 정본 미반영). 세션 중 어느 쪽이든 고쳤을 때만 5종 해시 대조(약 0.5초, 클론 없으면 생략) → 방향 판정+복사 안내. `settings.json`은 키 단위·머신 종속 키 제외 |
 >
 > ※ 갱신 시: 이 표에 한 줄 추가 + 하단 "문서 정보" 날짜 수정 + §L 재검증 체크리스트 수행.
@@ -264,6 +265,7 @@ New-Item -ItemType Directory -Path .claude/skills/wrap -Force
 > 참고(2026-07 현행): **커스텀 커맨드(`.claude/commands/`)는 스킬로 통합**됐다 — 둘 다 `/이름`을 만들고 동작이 같으며 스킬 쪽이 상위집합(보조 파일·frontmatter 확장). frontmatter에서 `name:`은 이제 선택(폴더명이 기본 명령명), `description:`은 권장(Claude의 자동 로드 판단 기준).
 > ⚠️ **중복 등록 방지**: 스킬 설치 전 **같은 이름의 구형 커맨드**(`~/.claude/commands/<이름>.md`·프로젝트 `.claude/commands/`)가 있는지 확인하고 있으면 삭제한다 — 방치하면 `/` 자동완성에 같은 명령이 2개 뜨고, 구형을 고르면 옛 내용이 실행된다(정본은 `skills/`). 필요 시 확장 키: `disable-model-invocation: true`(수동 호출 전용), `user-invocable: false`(Claude 전용), `model:`·`effort:`(스킬 실행 중 오버라이드), `context: fork`(서브에이전트에서 실행), `allowed-tools:`(그 턴 무프롬프트 도구 허용).
 > ⚠️ **동명 스킬 우선순위(공식, 2026-08-12 확인)**: **enterprise > personal > project** — 프로젝트 `.claude/skills/`는 글로벌(개인) 동명 스킬을 덮지 **못한다**(같은 이름이면 개인 쪽이 실행. 스킬과 커맨드가 같은 이름이면 스킬 우선). 따라서 **B·C를 선택하면 글로벌 기본형(A)을 그 내용으로 교체(또는 제거)** — 한 이름 한 정의. B를 repo에 커밋해 공유해도 개인 글로벌에 동명 기본형이 있는 PC에선 개인 쪽이 실행되므로 팀에 고지한다.
+> ⚠️ **교체는 그 PC의 모든 프로젝트에 전파된다**: 글로벌은 PC당 하나라, 한 프로젝트에서 B·C로 바꾸면 같은 PC의 **다른 프로젝트도 그것을 실행**한다(단일 repo에서 B의 "단위 판별"이 헛도는 식). 그래서 B·C 템플릿은 **대상이 전제와 다를 때의 폴백**(단위 없음·단일 repo·비-git)을 반드시 갖춘다 — 아래 각 템플릿 0)·1)의 폴백 줄. 폴백 없이 교체하지 않는다.
 
 **A) 기본형** (단일 repo · 글로벌 `~/.claude/skills/`)
 ```markdown
@@ -293,6 +295,7 @@ description: 단위분할 재개. git status로 미커밋 작업 먼저, 대상 
 # /resume (솔루션-aware)
 0) remote 있고 clean이면 `git pull --ff-only` 먼저(아니면 fetch 후 뒤처짐 보고) → git status·현재 브랜치 확인 — 미커밋/비-main 브랜치면 그 단위 작업 우선(untracked일 수 있음).
 1) 대상 단위 판별: PWD가 <단위> 안 → 그 단위 / 브랜치명(feature/<단위>) / 불명확하면 질문.
+   **폴백**: `docs/<단위>/`가 없는 단일 repo면 단위 판별을 건너뛰고 `docs/`(flat) 기준으로 A와 동일하게 진행. 비-git 폴더면 0)도 건너뛴다.
 2) docs/<단위>/PROGRESS.md 최상단(~40줄 Read limit) + docs/PROJECT_PLAN.md + 최근 DEC 3건 → "이 단위 지난 X, 다음 Y?" 보고.
 3) 조건부 안내: dropin-applied 30일 경과면 /dropin-check·/dropin-update, PROJECT_PLAN 예정일 경과 항목, dropin-applied 괄호의 조치 대기 메모 안내.
 ```
@@ -304,6 +307,7 @@ description: 단위분할 마무리. 대상 단위 docs/<단위>/PROGRESS.md에 
 ---
 # /wrap (솔루션-aware)
 대상 단위 판별 후 docs/<단위>/PROGRESS.md 최상단에 [Done]/[Pending]/[Blocked] 병기 기록.
+**폴백**: 단위 폴더가 없는 단일 repo면 `docs/PROGRESS.md`에 A와 동일하게. 비-git 폴더면 git status·커밋 단계를 건너뛰고 기록만.
 다른 단위도 바뀌면 그 단위에 [공통] 교차 한 줄. 미커밋이면 경고. 완료 모호 시 확인 후 기록.
 append 후 해당 PROGRESS 줄 수 확인 — ~800줄 경계 초과면 아카이브 안내.
 이번 세션에 `~/.claude/`나 저장소 `global-config/`를 고쳤으면 화이트리스트 5종 해시 대조(클론 없으면 생략) — 차이 시 방향 판정+복사 안내.
@@ -319,6 +323,7 @@ description: 통합 워크스페이스 재개. 루트+하위 repo git status로 
 # /resume (통합)
 0) 루트+하위 repo 각각: remote 있고 clean이면 `git pull --ff-only` 먼저(아니면 fetch 후 뒤처짐 보고) → git status·브랜치로 미커밋(진행 중) 작업 발견.
 1) 대상 repo(+단위) 판별: PWD > 브랜치 > 질문.
+   **폴백**: 하위 repo가 없는 단일 repo면 0)·1)을 그 repo에만 수행하고 INDEX는 생략(=A와 동일). 비-git 폴더면 0)을 건너뛰고 docs 체계만 읽는다.
 2) <repo>/docs[/<단위>]/PROGRESS.md 최상단(~40줄 Read limit) + 최근 DEC 3건 + <repo>/PROJECT_PLAN.md + 루트 docs/INDEX.md 최근 항목 → 보고.
 3) 조건부 안내: dropin-applied 30일 경과면 /dropin-check·/dropin-update, 예정일 경과 항목, 조치 대기 메모 안내.
 ```
@@ -329,7 +334,7 @@ name: wrap
 description: 통합 마무리. 건드린 repo마다 <repo>/docs[/<단위>]/PROGRESS.md 기록, 여러 repo면 [공통] 교차, (선택) 루트 INDEX 한 줄, 미커밋 경고, 커밋은 repo별 안내.
 ---
 # /wrap (통합)
-1) 각 repo git status로 변경 감지. 2) 변경 repo마다 docs[/<단위>]/PROGRESS.md 최상단 append.
+1) 각 repo git status로 변경 감지(**폴백**: 단일 repo면 그 repo만 — 3)·4)는 생략해 A와 동일. 비-git 폴더면 git 단계를 건너뛰고 기록만). 2) 변경 repo마다 docs[/<단위>]/PROGRESS.md 최상단 append.
 3) 여러 repo면 주 대상 본문 + 나머지 [공통] 교차. 4) (선택) 루트 docs/INDEX.md 크로스-repo 한 줄+링크.
 5) repo별 변경 파일 보고 + 미커밋 경고. 커밋은 repo별 따로(팀 양식). append한 PROGRESS가 ~800줄 경계 초과면 아카이브 안내.
 6) 이번 세션에 `~/.claude/`나 저장소 `global-config/`를 고쳤으면 화이트리스트 5종 해시 대조(클론 없으면 생략) — 차이 시 방향 판정+복사 안내.
@@ -500,6 +505,7 @@ Claude Code는 매주 바뀐다. 6개월마다 30분:
 - 🔴🟡: deny의 서브프로세스 우회, **샌드박스 네이티브 Windows 지원 여부**(현재 macOS·Linux·WSL2만 — sandboxing), `attribution` 스키마 변화, auto-memory 한도(현행 MEMORY.md 200줄/25KB), `sandbox.credentials` 스키마.
 - `/model` 최신 정책(별칭이 가리키는 실제 모델·`best`의 해석), `claude --version`.
 - `/effort` 단계 명칭·모델별 지원 범위·`ultracode` 동작, 에이전트·스킬 frontmatter `effort:` 키 유지 여부(§D-6, 2026-07-20 확정).
+- §F-2 B·C 템플릿의 폴백(단위 없음·단일 repo·비-git)이 배포된 글로벌 스킬 실물과 일치하는지(v1.26 — 문서만 고치고 스킬을 빠뜨리면 같은 공백이 반대 방향으로 재발).
 - 갱신 후 이 문서 "최종 갱신" 날짜 수정.
 - ✅ 해소된 과거 항목(재확인 불필요): CLAUDE.local.md deprecation 우려 → **계속 지원**(2026-07-20 확인, `.gitignore` 추가 권장 유지).
 
@@ -508,5 +514,5 @@ Claude Code는 매주 바뀐다. 6개월마다 30분:
 ## 핵심 출처 🟢
 IDE 통합·`--add-dir`(ide-integrations·large-codebases) / permissions·deny 한계 / hooks / skills / memory·auto-memory — 모두 `code.claude.com/docs` 및 `docs.anthropic.com`.
 
-**문서 정보** — 통합 마스터(범용) **v1.25**. 변경 이력은 최상단 버전 표 참조(유래: 8개 소스 통합 초판 — v1.0 행).
+**문서 정보** — 통합 마스터(범용) **v1.26**. 변경 이력은 최상단 버전 표 참조(유래: 8개 소스 통합 초판 — v1.0 행).
 최종 갱신: 2026-08-12 · 최근 재검증: 2026-08-04 / 참조: Claude Code v2.1.226, Opus 5(v2.1.219+) · Sonnet 5(v2.1.197+) · Fable 5(v2.1.170+).
