@@ -34,7 +34,7 @@
 - [x] 03 확장기능 설치 체크리스트 신설(claude-hud·svg-design·frontend-design)
 - [x] 00 통합-설치 셀렉터 신설(01~03 선택 설치, GitHub raw 폴백)
 - [x] README + index.html(사람용, 비개발자 눈높이, frontend-design·svg-design 적용) ([[DEC-20260723-bsjeong87-04]])
-- [ ] GitHub Pages 활성화 확인 — 저장소 Settings→Pages에서 main/root 지정(사용자 수동, eleninjaytech.github.io/claude)
+- [x] GitHub Pages 활성화 확인 (2026-08-12) — main/root 서빙 중, HTTP 200 실측(`eleninjaytech.github.io/claude/`·`/pages/learn.html`)
 
 ## Phase 5 — 문서 확장 1차 (2026-07-28) ✅
 - [x] Opus 5 출시 반영 — 01 v1.8·02 v1.7·00/03 v1.1 (v2.1.220 당일 재검증)
@@ -77,6 +77,8 @@
 - [x] 2026-08-12 아카이브 포인터 최상단 이동·docs/ 폴더 단위 검색 규칙 — 01 v1.22·repo CLAUDE.md·wrap 스킬 동기화, 버전 표 순서 오류 부수 정정 ([[DEC-20260812-bsjeong87-04]])
 - [x] 2026-08-12 **/audit 첫 수행 발견 51건 전부 수정**(상2·중26·하23 + 의심 3건 확정 처리) — S1 스코프 우선순위 공식 확정(enterprise>personal>project, B·C=글로벌 교체 방식), 00 v1.12·01 v1.24·02 v1.16·04 v1.6·05 v1.2·06 v1.3, 글로벌 스킬·백업 미러 해시 일치, skill-setup BOM 실버그 해소 ([[DEC-20260812-bsjeong87-05]])
 - [x] 2026-08-12 00 재적용(YogaSlim7 글로벌) — /audit 수정분을 실구성에 반영(01 v1.24: CLAUDE.md 2곳·스킬 4종·skill-setup BOM, 해시 일치), 06 준비물 설치(docs/ROUTINES.md 틀·.gitattributes merge=union — **루틴 생성은 계정 GitHub 연결 확인 대기**), 04 gh 인증 여전히 대기
+- [x] 2026-08-12 글로벌 정본↔백업 미러 감지 배선 — /wrap에 5종 해시 대조 한 단계(세션 중 수정 시만·클론 없으면 생략), 01 v1.25 §F-2 A/B/C+글로벌 스킬·미러 동기화. 미해결 "백업 자동 반영" 항목 해소 ([[DEC-20260812-bsjeong87-06]])
+- [x] 2026-08-12 GitHub Pages 활성화 확인 완료 — main/root 서빙 HTTP 200 실측, Phase 3.5 잔여 체크박스 정리
 - [ ] **다음 내부 정합성 전수조사: 2026-11경** — `/audit`(분기 1회 또는 개정 몰린 뒤 — 이 repo 전용 프로젝트 스킬, 첫 수행 2026-08-12). 예정일이 지나면 /resume가 안내
 - [ ] **다음 재검증: 2027-01경** (00 §L, 6개월 주기)
   - 중복 재심 🟡 잔여: Context7·Caveman 생존, todo-tracking 공식 문서(2026-08-10 404), `/team-onboarding` 재평가 ([[DEC-20260810-bsjeong87-02]])
@@ -99,4 +101,4 @@
 - [x] ~~**00 v1.7 실적용에서 나온 경량 반영 후보 2건**(2026-08-06, 승인 대기)~~ → **해소(2026-08-10)**: ① 06 v1.2 §1 계정 GitHub 연결 게이트 ② 00 v1.9 부분 완료 표기 ([[DEC-20260810-bsjeong87-08]])
 - [ ] **플러그인 설치 상태는 백업 경로 없음**(2026-08-10 발견, [[DEC-20260810-bsjeong87-10]]) — `plugins/installed_plugins.json`·`known_marketplaces.json`이 화이트리스트 밖이라 새 PC에서 claude-hud는 `/plugin` 수동 재설치. 캐시(수백 KB)와 같은 폴더라 편입 보류 — 다음 재검증에서 선별 백업 가능한지 판단.
 - [x] ~~**STEP 2 흔적 감지가 로컬 전용 산출물을 못 본다**~~(2026-08-10 실적용 발견) → **해소(2026-08-12)**: 후보 ①②③ 전부 반영 — 00 v1.11 STEP 2 조회 확장·/dropin-check 동일·02 v1.15 부분 적용 사유 기록 ([[DEC-20260812-bsjeong87-02]]). (이하 원문) nastvad에서 02를 "미설치"로 오판: 산출물이 `.git/info/exclude`(`.claude/agents/`·`hooks/`)와 `.gitignore`(`*.local.md` rubric)로 전부 로컬 전용이라 파일 존재 여부만으로는 적용 범위를 알 수 없었다. 후보 조치 — ① 00 STEP 2 `.claude/agents/` 항목에 "rubric·핸드오프 산출물(`model-routing.local.md` 등)까지 확인, gitignore·`.git/info/exclude`도 조회" 한 줄 ② `/dropin-check`에 동일 감지 ③ 02가 부분 적용될 때 **어느 에이전트를 왜 뺐는지**를 `dropin-applied` 괄호에 남기게 명시([[DEC-20260810-bsjeong87-08]]의 부분 완료 표기 확장). 근본 해법은 기록([[DEC-20260804-bsjeong87-01]])이지만 기록 도입 이전 프로젝트엔 흔적 감지가 유일한 수단이라 보강 가치 있음.
-- [ ] **`~/.claude` 수정이 백업에 자동 반영되지 않는 구조**(2026-08-10 재확인) — 오늘 적용한 03·05 산출물이 전부 백업에서 빠져 있었고 `/dropin-check`로만 발견됐다. 수동 복사 규칙([[DEC-20260720-bsjeong87-04]])을 유지할지, 동기화 스킬·hook으로 자동화할지 판단 필요.
+- [x] ~~**`~/.claude` 수정이 백업에 자동 반영되지 않는 구조**~~(2026-08-10 재확인) → **해소(2026-08-12)**: 자동 복사가 아니라 **감지 배선**으로 결론 — /wrap이 세션 중 양쪽 중 하나라도 고쳤을 때만 5종 해시 대조(약 0.5초)해 방향을 판정·보고하고 복사를 안내한다(01 v1.25 §F-2 A/B/C + 글로벌 스킬·백업 미러 해시 일치, [[DEC-20260812-bsjeong87-06]]). 비교 로직 신설이 아니라 기존 /dropin-check 규칙 재사용 — 빈 곳은 "감지 시점"과 "복사 실행"이었다. (이하 원문) 오늘 적용한 03·05 산출물이 전부 백업에서 빠져 있었고 `/dropin-check`로만 발견됐다. 수동 복사 규칙([[DEC-20260720-bsjeong87-04]])을 유지할지, 동기화 스킬·hook으로 자동화할지 판단 필요.

@@ -1,6 +1,6 @@
 # Claude Code 통합 구성 — 범용 마스터 (드롭인 적용)
 
-> **문서 버전: v1.24** · 최종 갱신: **2026-08-12** · **최근 재검증: 2026-08-04** · 기준: Claude Code v2.1.226 (Opus 5 · Sonnet 5 · Fable 5)
+> **문서 버전: v1.25** · 최종 갱신: **2026-08-12** · **최근 재검증: 2026-08-04** · 기준: Claude Code v2.1.226 (Opus 5 · Sonnet 5 · Fable 5)
 >
 > | 버전 | 날짜 | 변경 내용 |
 > | --- | --- | --- |
@@ -29,6 +29,7 @@
 > | v1.22 | 2026-08-12 | **아카이브 포인터 최상단 이동 + 폴더 단위 검색 규칙**(DEC-20260812-bsjeong87-04, §F-1): 포인터 "맨 아래"는 통째 읽기 시절 설계 — /resume 40줄 읽기(v1.19)와 어긋나 아카이브 존재가 영영 안 보임 → 최상단(제목 바로 아래)으로. 과거 이력 검색은 활성 파일이 아니라 `docs/` 폴더 단위(아카이브 포함) 명시. 부수: 버전 표 v1.20·v1.21 행 삽입 위치 오류(v1.17 뒤) 정정 |
 > | v1.23 | 2026-08-12 | **스킬 스코프 우선순위 정정**(/audit S1, 당일 공식 문서 확인): "프로젝트 `.claude/skills/`가 글로벌 기본형을 덮어씀"은 **정반대** — 공식 우선순위는 **enterprise > personal > project**(개인이 프로젝트를 이김, 스킬>커맨드). §D-4·§E-3·§E-4·§F-2 B/C 통일 — B·C는 글로벌 기본형(A) **교체** 방식으로 설치(동명 방치 시 B·C가 실행되지 않음). §E-4에 중첩 스킬 디렉터리-한정 이름 로드(v2.1.203+) 반영 |
 > | v1.24 | 2026-08-12 | **/audit 중·하 등급 일괄 반영**(docs/audit-20260812.md): §D-3 deny 예시 실물 동기화 3건(M5: `Get-Content *.pem`/`*.key`·`coverage`)+선택 확장 예 `sessionUrl`·`startup` 매처(h23), §F-2 A/C resume 템플릿에 최근 DEC 3건(M6), §G git pull 이중 실행 제거 — /resume에 위임(M9), §F-1 길이 관리에 append는 포인터 아래부터(M10), §B에 비-git 폴더 행(M26), §K에 push 권한 없음 행(h10), §F-2 A wrap 템플릿에 파생 뷰 동기화(h19), 푸터 변경 요약을 버전 표 참조로 교체(h3) |
+> | v1.25 | 2026-08-12 | **글로벌 정본 ↔ 백업 미러 대조를 /wrap에 배선**(DEC-20260812-bsjeong87-06, §F-2 A/B/C): `~/.claude`와 `global-config/`는 자동 동기화가 없어 한쪽만 고치면 갈라지는데 **감지 주체가 없었다**(양방향 실사례 2건 — 2026-08-10 백업 누락·08-12 정본 미반영). 세션 중 어느 쪽이든 고쳤을 때만 5종 해시 대조(약 0.5초, 클론 없으면 생략) → 방향 판정+복사 안내. `settings.json`은 키 단위·머신 종속 키 제외 |
 >
 > ※ 갱신 시: 이 표에 한 줄 추가 + 하단 "문서 정보" 날짜 수정 + §L 재검증 체크리스트 수행.
 
@@ -279,7 +280,7 @@ description: 세션 시작 시 원격 최신화(clean이면 git pull --ff-only)�
 name: wrap
 description: 세션 종료 시 docs/PROGRESS.md 최상단에 오늘 작업 append, 새 결정 DECISIONS, PROJECT_PLAN 체크박스, 미커밋 경고, 변경 파일 보고.
 ---
-# /wrap — docs/PROGRESS.md 최상단 append(작업/결정/다음/미해결) + 새 DEC + PROJECT_PLAN 체크박스(+ 있으면 `docs/WBS.md` 등 파생 뷰 동기화 — SSOT=PROJECT_PLAN). 미커밋이면 경고. 변경 파일 보고. append 후 PROGRESS 총 줄 수 확인 — ~800줄/분기 경계 초과면 아카이브(docs/archive/ 이동+최상단 포인터) 안내(/resume는 앞 40줄만 읽어 감지 못 함).
+# /wrap — docs/PROGRESS.md 최상단 append(작업/결정/다음/미해결) + 새 DEC + PROJECT_PLAN 체크박스(+ 있으면 `docs/WBS.md` 등 파생 뷰 동기화 — SSOT=PROJECT_PLAN). 미커밋이면 경고. 변경 파일 보고. append 후 PROGRESS 총 줄 수 확인 — ~800줄/분기 경계 초과면 아카이브(docs/archive/ 이동+최상단 포인터) 안내(/resume는 앞 40줄만 읽어 감지 못 함). + 이번 세션에 `~/.claude/`나 저장소 `global-config/`를 고쳤으면 화이트리스트 5종 해시 대조(클론 없으면 생략) — 차이 시 어느 쪽이 최신인지 판정해 방향 보고+복사 안내(`settings.json`은 키 단위, 머신 종속 키 제외 §D-1).
 ```
 
 **B) 솔루션-aware** (MSA 단위분할 repo · 각 repo `.claude/skills/`에 커밋해 공유 — 개인 글로벌에 동명 기본형(A)이 있는 PC는 글로벌을 이 내용으로 교체, 위 주의)
@@ -305,6 +306,7 @@ description: 단위분할 마무리. 대상 단위 docs/<단위>/PROGRESS.md에 
 대상 단위 판별 후 docs/<단위>/PROGRESS.md 최상단에 [Done]/[Pending]/[Blocked] 병기 기록.
 다른 단위도 바뀌면 그 단위에 [공통] 교차 한 줄. 미커밋이면 경고. 완료 모호 시 확인 후 기록.
 append 후 해당 PROGRESS 줄 수 확인 — ~800줄 경계 초과면 아카이브 안내.
+이번 세션에 `~/.claude/`나 저장소 `global-config/`를 고쳤으면 화이트리스트 5종 해시 대조(클론 없으면 생략) — 차이 시 방향 판정+복사 안내.
 ```
 
 **C) 통합형** (루트 통합 레이어 — **개인 글로벌 `~/.claude/skills/`의 기본형(A)을 이 내용으로 교체**. 루트 `.claude/skills/`에만 두면 동명 개인 스킬이 이겨 실행되지 않는다, 위 주의)
@@ -330,6 +332,7 @@ description: 통합 마무리. 건드린 repo마다 <repo>/docs[/<단위>]/PROGR
 1) 각 repo git status로 변경 감지. 2) 변경 repo마다 docs[/<단위>]/PROGRESS.md 최상단 append.
 3) 여러 repo면 주 대상 본문 + 나머지 [공통] 교차. 4) (선택) 루트 docs/INDEX.md 크로스-repo 한 줄+링크.
 5) repo별 변경 파일 보고 + 미커밋 경고. 커밋은 repo별 따로(팀 양식). append한 PROGRESS가 ~800줄 경계 초과면 아카이브 안내.
+6) 이번 세션에 `~/.claude/`나 저장소 `global-config/`를 고쳤으면 화이트리스트 5종 해시 대조(클론 없으면 생략) — 차이 시 방향 판정+복사 안내.
 ```
 
 **D) 루트 라우터 `CLAUDE.md`** (통합 레이어)
@@ -505,5 +508,5 @@ Claude Code는 매주 바뀐다. 6개월마다 30분:
 ## 핵심 출처 🟢
 IDE 통합·`--add-dir`(ide-integrations·large-codebases) / permissions·deny 한계 / hooks / skills / memory·auto-memory — 모두 `code.claude.com/docs` 및 `docs.anthropic.com`.
 
-**문서 정보** — 통합 마스터(범용) **v1.24**. 변경 이력은 최상단 버전 표 참조(유래: 8개 소스 통합 초판 — v1.0 행).
+**문서 정보** — 통합 마스터(범용) **v1.25**. 변경 이력은 최상단 버전 표 참조(유래: 8개 소스 통합 초판 — v1.0 행).
 최종 갱신: 2026-08-12 · 최근 재검증: 2026-08-04 / 참조: Claude Code v2.1.226, Opus 5(v2.1.219+) · Sonnet 5(v2.1.197+) · Fable 5(v2.1.170+).
