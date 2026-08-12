@@ -75,12 +75,14 @@
 - [x] 2026-08-12 STEP 2 흔적 감지 보강(승인 대기 후보 ①②③ 소진) — 00 v1.11 로컬 전용 산출물 조회·/dropin-check 동일·02 v1.15 부분 적용 사유 기록 ([[DEC-20260812-bsjeong87-02]])
 - [x] 2026-08-12 /resume·/wrap 조건부 안내 보강 — 조치 대기 메모 안내(DEC-0810-08 취지 배선 완성)·PROGRESS 800줄 경계 감지, 01 v1.21+글로벌 스킬·백업 동기화 ([[DEC-20260812-bsjeong87-03]])
 - [x] 2026-08-12 아카이브 포인터 최상단 이동·docs/ 폴더 단위 검색 규칙 — 01 v1.22·repo CLAUDE.md·wrap 스킬 동기화, 버전 표 순서 오류 부수 정정 ([[DEC-20260812-bsjeong87-04]])
+- [x] 2026-08-12 **/audit 첫 수행 발견 51건 전부 수정**(상2·중26·하23 + 의심 3건 확정 처리) — S1 스코프 우선순위 공식 확정(enterprise>personal>project, B·C=글로벌 교체 방식), 00 v1.12·01 v1.24·02 v1.16·04 v1.6·05 v1.2·06 v1.3, 글로벌 스킬·백업 미러 해시 일치, skill-setup BOM 실버그 해소 ([[DEC-20260812-bsjeong87-05]])
 - [ ] **다음 내부 정합성 전수조사: 2026-11경** — `/audit`(분기 1회 또는 개정 몰린 뒤 — 이 repo 전용 프로젝트 스킬, 첫 수행 2026-08-12). 예정일이 지나면 /resume가 안내
 - [ ] **다음 재검증: 2027-01경** (00 §L, 6개월 주기)
   - 중복 재심 🟡 잔여: Context7·Caveman 생존, todo-tracking 공식 문서(2026-08-10 404), `/team-onboarding` 재평가 ([[DEC-20260810-bsjeong87-02]])
   - `code.claude.com/docs/en/whats-new` 최신 항목
   - 🔴🟡 항목: deny 서브프로세스 우회, **샌드박스 네이티브 Windows 지원 여부**, `attribution` 스키마, auto-memory 한도, `sandbox.credentials` 스키마
   - `/model` 별칭이 가리키는 실제 모델, `/effort` 단계·`ultracode` 동작, frontmatter `effort:` 키 유지 여부
+  - humanizer frontmatter `allowed-tools` 공백 구분 표기의 파서 동작(2026-08-12 /audit 의심 인계)
   - auto mode 요건(플랜·모델·프로바이더)·`disableAutoMode` 유지 여부(01 §J-1)
   - 03 소스 생존: `github.com/jarrodwatts/claude-hud` 설치 명령, `github.com/anthropics/skills`의 frontend-design 위치·설치 CLI, `claude mcp` 명령 체계, 부록 플러그인 생존·중복 재판정
   - 04: hooks 스키마·`claude-code-action` 버전·gh/glab 설치 명령

@@ -1,5 +1,7 @@
 # DECISIONS (append 전용 · id = DEC-날짜-작성자-번호)
 
+- **DEC-20260812-bsjeong87-05** — **스킬 동명 우선순위 공식 확정 반영 + /audit 발견 51건 전부 수정**. ① 공식 문서(2026-08-12 조회, code.claude.com/docs/en/skills) 확정: 동명 스킬은 **enterprise > personal > project**(개인이 프로젝트를 이김), 스킬>커맨드, 중첩 `.claude/skills/`는 디렉터리-한정 이름(`<하위>:이름`)으로 로드(v2.1.203+). 01의 반대 서술("프로젝트가 글로벌을 덮음" — §D-4·§E-3·§E-4·§F-2 B/C)을 정정하고 **B(솔루션-aware)·C(통합형)는 글로벌 기본형(A)을 교체하는 방식**으로 설치 규칙 확정 — 동명 방치 시 B·C가 실행되지 않는 실배포 결함(실스킬 resume/wrap은 이미 교체 방식이라 서술만 어긋났던 것). ② h21 방향 결정: skill-setup 카탈로그는 03 부록 흡수 대신 **경량 개정**(superpowers 기각 판정 주석·frontend-design 경로 유동성 표기·humanizer 폴더째 복사·URL은 실행 시점 검증) + /reverify C축에 카탈로그 URL 생존 점검 배선. ③ 부수 발견: `~/.claude/commands/skill-setup.md`의 **UTF-8 BOM이 frontmatter 파싱을 깨는 실버그**(첫 줄 `---`가 인식되지 않아 본문 전체가 description화) — BOM 제거로 해소. 앞으로 커맨드·스킬 md는 BOM 없는 UTF-8로 저장한다.
+
 - **DEC-20260720-bsjeong87-01** — md 파일 3종 유지(삭제 안 함). HTML은 사람용, md는 Claude 학습용 드롭인 — 역할이 다름. 중복은 감수. *(Superseded by [[DEC-20260723-bsjeong87-01]])*
 - **DEC-20260720-bsjeong87-02** — 문서 최신화는 기억이 아니라 **당일 공식 문서(code.claude.com/docs) 조회 검증**으로만 반영. 확인 못 한 항목은 🟡로 남김(§L 원칙).
 - **DEC-20260720-bsjeong87-03** — `theme` 키를 settings.json 예시에서 제거(문서화 키 아님 확인). 테마는 `/config`로 안내. 개인 설정에 남아 있는 건 무방.
