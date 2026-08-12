@@ -26,6 +26,9 @@ disable-model-invocation: true
    기존 구성을 존중하기 위해:
     - 기본 설치 스코프는 사용자(`~/.claude/skills/`). 프로젝트(`.claude/skills/`) 설치는
       "팀에 커밋·공유됨"을 명시하고 별도 승인받는다.
+    - ⚠️ 동명 스킬 우선순위는 **enterprise > personal > project** — 같은 이름이 사용자 스코프에
+      남아 있으면 프로젝트에 설치·커밋해도 **그 PC에선 개인 쪽이 실행된다**(5단계 검증도 개인 쪽을
+      보고 통과한다). 프로젝트 설치 전에 사용자 스코프의 동명을 확인해 교체하거나 이름을 분리한다.
     - 기존 hooks·메모리 체계와 겹칠 수 있는 플러그인형(특히 superpowers, agentmemory)은
       자동 설치하지 말고, 발견된 실제 충돌 지점(SessionStart/PreCompact 등 훅 중복, MCP 서버,
       토큰 비용, 세션 캡처와 시크릿 정책의 긴장)을 먼저 보고한 뒤 사용자 승인 시에만 설치한다.
@@ -46,7 +49,7 @@ disable-model-invocation: true
     - 프로젝트: `./CLAUDE.md`, `./.claude/`(`settings.json`, `settings.local.json`, `skills/`,
       `commands/`, `agents/`, 훅, `.mcp.json`), `./AGENTS.md`
     - 사용자: `~/.claude/CLAUDE.md`, `~/.claude/settings.json`, `~/.claude/skills/`,
-      `~/.claude/commands/`, `~/.claude/plugins/`
+      `~/.claude/commands/`, `~/.claude/output-styles/`, `~/.claude/plugins/`
     - **이미 설치/내장된 스킬을 목록화**해 중복 설치를 막는다. 특히 `frontend-design`은 Claude Code
       기본 제공일 수 있으니 확인 후 이미 있으면 설치하지 않는다.
 - 위 인벤토리로 "기존 사용자 구성"의 유무를 판정한다. (`settings.json`의 hooks/permissions,
@@ -64,6 +67,7 @@ disable-model-invocation: true
 - 이 프로젝트에 대한 **적합도를 상/중/하/제외**로 매기고, 각 줄에 한 줄 근거를 단다.
 - **설치 범위**를 정한다: 팀과 공유할 프로젝트 규칙·안전 장치 → `.claude/skills/`(커밋되어 공유) /
   개인 스타일·메모리류 → `~/.claude/skills/`(모든 프로젝트에서 개인용). 선택 근거를 함께 제시.
+  프로젝트를 고르면 **사용자 스코프에 동명이 없는지 먼저 확인**한다(있으면 개인 쪽이 이겨 설치가 무효다).
 - **절대 카탈로그 전부를 다 설치하지 마라.** 이 프로젝트에 실제 이득이 되는 것만 추린다.
 
 **후보 스킬 카탈로그** *(필요하면 항목을 추가/삭제해 재사용하세요. 괄호 안은 참고용 힌트일 뿐,
@@ -111,9 +115,15 @@ disable-model-invocation: true
 
 **3단계 — 설치 (각 종류에 맞는 방식으로)**
 
+- **공통(설치 전):** 같은 이름의 **구형 커맨드**(`~/.claude/commands/<이름>.md` · 프로젝트
+  `.claude/commands/<이름>.md`)가 있으면 제거한다 — 방치하면 `/` 자동완성에 같은 명령이 2개 뜨고
+  구형을 고르면 옛 내용이 실행된다(정본은 `skills/`).
 - **표준 스킬 폴더형:** 임시로 얕은 클론 → `SKILL.md`가 직접 든 폴더를 찾음 → 그 폴더를 올바른
-  이름으로 선택한 스킬 디렉터리에 복사(**중첩 금지**) → `SKILL.md`의 frontmatter(`name`,
-  `description`) 유효성 확인 → 임시 파일 정리. 한 저장소에 스킬이 여러 개면 각각 처리.
+  이름으로 선택한 스킬 디렉터리에 복사(**중첩 금지**) → `SKILL.md`의 frontmatter 유효성 확인
+  (`name`·`description` + **첫 3바이트가 `2d 2d 2d`인지** — UTF-8 BOM(`ef bb bf`)이 붙으면 첫 `---`가
+  인식되지 않아 frontmatter 전체가 description으로 새고 `disable-model-invocation` 같은 키가 무력화된다.
+  외부 저장소에서 복사해 오는 절차라 유입 경로가 실재한다) → 임시 파일 정리. 한 저장소에 스킬이
+  여러 개면 각각 처리.
 - **플러그인/마켓플레이스형(superpowers 등):** 문서화된 슬래시 커맨드를 실행한다. 예:
   `/plugin marketplace add obra/superpowers-marketplace` 후
   `/plugin install superpowers@superpowers-marketplace`. 적용에 **재시작/`/reload-plugins`**가
