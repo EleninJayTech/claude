@@ -2,3 +2,4 @@ docs/PROGRESS.md       merge=union
 docs/DECISIONS.md      merge=union
 docs/**/PROGRESS.md    merge=union
 docs/**/DECISIONS.md   merge=union
+docs/ROUTINES.md       merge=union
