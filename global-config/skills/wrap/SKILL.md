@@ -18,8 +18,10 @@ append 후 **PROGRESS 총 줄 수를 확인**해(약 800줄/분기 경계 — /r
 이번 세션에 `~/.claude/`(화이트리스트 5종 — CLAUDE.md·settings.json·skills·commands·output-styles)나
 문서 저장소의 `global-config/`를 **수정했으면** 둘을 해시로 대조한다(약 0.5초. 저장소 클론이 없으면 건너뛴다).
 - 차이가 있으면 **어느 쪽이 최신인지 내용으로 판정**해 방향과 함께 보고하고 복사 명령을 제시한다(복사·커밋은 승인 후).
-- `settings.json`은 키 단위로 비교하고 **머신 종속 키**(model·theme·enabledPlugins·autoUpdatesChannel 등)는
-  차이로 치지 않는다(DEC-20260721-bsjeong87-02).
+- `settings.json`은 키 단위로 비교하되 **구성 성격 키(`permissions.deny`·`hooks`·`attribution`·`autoMemoryEnabled`)의 차이만**
+  실제 차이로 본다 — 그 밖은 전부 머신 종속으로 제외한다(model·theme·outputStyle·enabledPlugins·statusLine·effortLevel·
+  autoUpdatesChannel·마켓플레이스 소스 형식 등, DEC-20260721-bsjeong87-02). **제외 목록을 늘려 맞추지 말 것** —
+  포함 기준 한 줄이 정본이고 괄호는 예시일 뿐이다(목록으로 관리하면 사본마다 갈라진다).
 - **줄바꿈을 정규화한 뒤 비교한다** — 저장소가 `core.autocrlf=input`이면 커밋본은 LF, Windows 정본은 CRLF라
   내용이 같아도 해시가 갈린다(다른 PC에서 pull한 직후 오검출). 줄바꿈만 다르면 "차이 없음"으로 판정한다.
 - 정본은 `~/.claude`, `global-config/`는 복원용 사본이다. 한쪽만 고치면 **새 PC 복원 때 누락**되거나

@@ -1,6 +1,6 @@
 # Claude Code 통합 구성 — 범용 마스터 (드롭인 적용)
 
-> **문서 버전: v1.26** · 최종 갱신: **2026-08-12** · **최근 재검증: 2026-08-04** · 기준: Claude Code v2.1.226 (Opus 5 · Sonnet 5 · Fable 5)
+> **문서 버전: v1.27** · 최종 갱신: **2026-08-12** · **최근 재검증: 2026-08-04** · 기준: Claude Code v2.1.226 (Opus 5 · Sonnet 5 · Fable 5)
 >
 > | 버전 | 날짜 | 변경 내용 |
 > | --- | --- | --- |
@@ -25,12 +25,13 @@
 > | v1.18 | 2026-08-10 | **적용 기록 표기 자기 참조화**(DEC-20260810-bsjeong87-07, 00~06 공통): STEP 4의 하드코딩(`01 v1.12` — v1.13~17 동안 미동기 실버그)을 "최상단 문서 버전 표기에서 읽어 기록"으로 교체 + STEP 3 ⓒ에 점검 스킬 병기 |
 > | v1.19 | 2026-08-10 | **/resume의 PROGRESS 부분 읽기 명시**(DEC-20260810-bsjeong87-08): §F-1 규칙·§F-2 템플릿 A/B/C에 "최상단 ~40줄만 Read limit" — 800줄 상한 근접 시 통째 읽기(수만 토큰)를 차단 |
 > | v1.20 | 2026-08-12 | **점검·최신화 스킬의 설치 유형 전 지원 명시**(§D-4): dropin-check·update가 사본/클론 참조/raw 세 유형 모두 지원(판별 근거는 00 v1.10 `출처=` 필드) — 클론 참조 설치에서 update가 "사본 없음"만 보고하던 공백 해소(스킬 본문도 동일 개정) |
-> | v1.21 | 2026-08-12 | **조건부 안내 2건 보강**(DEC-20260812-bsjeong87-03, §F-2 A/B/C+글로벌 스킬 동기화): ① /resume — dropin-applied 괄호의 조치 대기 메모 안내(DEC-0810-08 "다음 세션이 발견" 취지의 배선 완성, 추가 조회 0) ② /wrap — append 후 PROGRESS ~800줄 경계 감지·아카이브 안내(길이 관리 규칙의 감지 주체 부재 해소 — /resume는 앞 40줄만 읽음) |
+> | v1.21 | 2026-08-12 | **조건부 안내 2건 보강**(DEC-20260812-bsjeong87-03, §F-2 A/B/C+글로벌 스킬 동기화): ① /resume — dropin-applied 괄호의 조치 대기 메모 안내(DEC-20260810-bsjeong87-08 "다음 세션이 발견" 취지의 배선 완성, 추가 조회 0) ② /wrap — append 후 PROGRESS ~800줄 경계 감지·아카이브 안내(길이 관리 규칙의 감지 주체 부재 해소 — /resume는 앞 40줄만 읽음) |
 > | v1.22 | 2026-08-12 | **아카이브 포인터 최상단 이동 + 폴더 단위 검색 규칙**(DEC-20260812-bsjeong87-04, §F-1): 포인터 "맨 아래"는 통째 읽기 시절 설계 — /resume 40줄 읽기(v1.19)와 어긋나 아카이브 존재가 영영 안 보임 → 최상단(제목 바로 아래)으로. 과거 이력 검색은 활성 파일이 아니라 `docs/` 폴더 단위(아카이브 포함) 명시. 부수: 버전 표 v1.20·v1.21 행 삽입 위치 오류(v1.17 뒤) 정정 |
 > | v1.23 | 2026-08-12 | **스킬 스코프 우선순위 정정**(/audit S1, 당일 공식 문서 확인): "프로젝트 `.claude/skills/`가 글로벌 기본형을 덮어씀"은 **정반대** — 공식 우선순위는 **enterprise > personal > project**(개인이 프로젝트를 이김, 스킬>커맨드). §D-4·§E-3·§E-4·§F-2 B/C 통일 — B·C는 글로벌 기본형(A) **교체** 방식으로 설치(동명 방치 시 B·C가 실행되지 않음). §E-4에 중첩 스킬 디렉터리-한정 이름 로드(v2.1.203+) 반영 |
 > | v1.24 | 2026-08-12 | **/audit 중·하 등급 일괄 반영**(docs/audit-20260812.md): §D-3 deny 예시 실물 동기화 3건(M5: `Get-Content *.pem`/`*.key`·`coverage`)+선택 확장 예 `sessionUrl`·`startup` 매처(h23), §F-2 A/C resume 템플릿에 최근 DEC 3건(M6), §G git pull 이중 실행 제거 — /resume에 위임(M9), §F-1 길이 관리에 append는 포인터 아래부터(M10), §B에 비-git 폴더 행(M26), §K에 push 권한 없음 행(h10), §F-2 A wrap 템플릿에 파생 뷰 동기화(h19), 푸터 변경 요약을 버전 표 참조로 교체(h3) |
-> | v1.26 | 2026-08-12 | **B·C 교체의 PC 전역 전파 경고 + 폴백 의무화**(§F-2): 글로벌은 PC당 하나라 한 프로젝트에서 B·C로 교체하면 **같은 PC의 다른 프로젝트도 그것을 실행**한다(v1.23이 확정한 personal>project의 부작용 — 단일 repo에서 B의 단위 판별이 헛돈다). 주의 문구에 전파 경고 한 줄 + B·C의 resume·wrap 템플릿 4곳에 **폴백**(단위 없음·단일 repo·비-git) 한 줄씩 — 실제 배포된 글로벌 스킬엔 이미 있던 폴백이 문서 템플릿엔 빠져 있어 신규 설치자만 위험을 떠안던 공백 |
 > | v1.25 | 2026-08-12 | **글로벌 정본 ↔ 백업 미러 대조를 /wrap에 배선**(DEC-20260812-bsjeong87-06, §F-2 A/B/C): `~/.claude`와 `global-config/`는 자동 동기화가 없어 한쪽만 고치면 갈라지는데 **감지 주체가 없었다**(양방향 실사례 2건 — 2026-08-10 백업 누락·08-12 정본 미반영). 세션 중 어느 쪽이든 고쳤을 때만 5종 해시 대조(약 0.5초, 클론 없으면 생략) → 방향 판정+복사 안내. `settings.json`은 키 단위·머신 종속 키 제외 |
+> | v1.26 | 2026-08-12 | **B·C 교체의 PC 전역 전파 경고 + 폴백 의무화**(§F-2): 글로벌은 PC당 하나라 한 프로젝트에서 B·C로 교체하면 **같은 PC의 다른 프로젝트도 그것을 실행**한다(v1.23이 확정한 personal>project의 부작용 — 단일 repo에서 B의 단위 판별이 헛돈다). 주의 문구에 전파 경고 한 줄 + B·C의 resume·wrap 템플릿 4곳에 **폴백**(단위 없음·단일 repo·비-git) 한 줄씩 — 실제 배포된 글로벌 스킬엔 이미 있던 폴백이 문서 템플릿엔 빠져 있어 신규 설치자만 위험을 떠안던 공백 |
+> | v1.27 | 2026-08-12 | **/audit 2차 반영**(docs/audit-20260812-2.md): §D-2에 **"정본은 `global-config/CLAUDE.md`" 포인터**(M8 — 골격만 보고 재구성해 스킬·§9를 누락한 2026-07-21 실사례 재발 차단), §D-1 폴더 생성 4종으로(L1 — §D-4·§D-5와 어긋나 있던 것), §A STEP 3에 **00 모드별 ⓐ~ⓕ 기본값 매핑**(M10 — "최소=필수만"의 필수가 미정의였음), §F-2 A wrap 템플릿의 `§D-1` 오참조를 DEC-20260721-bsjeong87-02로 교체(M2), §D-3 hooks 예시를 실물 문구로(L11), 축약 DEC id 정식화(L6), 버전 표 v1.25↔v1.26 순서 복구(M5) |
 >
 > ※ 갱신 시: 이 표에 한 줄 추가 + 하단 "문서 정보" 날짜 수정 + §L 재검증 체크리스트 수행.
 
@@ -63,6 +64,7 @@
 
 **STEP 3 — 구성 항목 선택 확인 → 필요한 것만 생성.** 감지 결과를 바탕으로 아래 항목을 **선택 목록(다중 선택)으로 제시**하고, 체크된 것만 생성한다(전부 기본 체크, 이미 있는 항목은 "유지/재구성" 표기):
 - ⓐ 글로벌 행동 규칙(§D-2 CLAUDE.md) ⓑ 글로벌 보안(§D-3 deny·hooks) ⓒ `/resume`·`/wrap`·점검 스킬 dropin-check/update(§D-4·F-2) ⓓ 프로젝트 기록 체계(§E·F-1: docs/·CLAUDE.md·.gitattributes) ⓔ 프로젝트 권한(§F-3 settings.json) ⓕ effort 가이드(§D-6, 안내만)
+- **00의 모드별 기본값**(00 STEP 3에서 왔을 때 — 사용자 모드가 아니면 이 매핑으로 자동 확정하고 질문 생략): **최소 = ⓑⓓ**(보안+기록 체계가 "기반"의 정의) / **권장·전체 = ⓐ~ⓕ 전부**. 어느 쪽이든 ⓑ는 빼지 않는다.
 - §D~F에서 **해당 시나리오 부분만** 골라 생성. 불필요한 것(단일 repo에 MSA 단위분할 등)은 만들지 않는다. 단 **ⓑ 보안(deny·시크릿 차단)은 해제를 권하지 않는다** — 사용자가 명시적으로 빼는 경우에만 제외하고 위험을 고지한다.
 
 **STEP 4 — 확인.** 무엇을 만들었는지 요약 보고 → `/` 자동완성으로 `/resume`·`/wrap` 확인 → 승인 후 커밋 안내(§E 커밋 규칙). **적용 기록**: 대상 `CLAUDE.md` 맨 아래 `<!-- dropin-applied: … -->` 한 줄에 이 문서의 **현재 버전**(최상단 "문서 버전" 표기에서 읽음)을 `01 vX.Y` 형식으로 추가/갱신한다(형식·재적용 규칙은 00 §A — 00 없이 단독 적용해도 남긴다).
@@ -103,9 +105,13 @@
 cd C:/Users/<내계정>
 New-Item -ItemType Directory -Path .claude/skills/resume -Force
 New-Item -ItemType Directory -Path .claude/skills/wrap -Force
+New-Item -ItemType Directory -Path .claude/skills/dropin-check -Force
+New-Item -ItemType Directory -Path .claude/skills/dropin-update -Force
 ```
+> 4종이다 — §D-4가 뒤 2종을 복사해 넣고 §D-5가 4종 자동완성을 성공 기준으로 삼는다.
 
 ### D-2. 글로벌 `CLAUDE.md` (행동 규칙) — `C:/Users/<내계정>/.claude/CLAUDE.md`
+> ⚠️ 아래는 **최소 골격**이지 실제 구성의 전부가 아니다. 문서 저장소 클론이 있으면 **정본은 `global-config/CLAUDE.md`** — 그걸 복사하고 이 블록은 대조용으로만 쓴다([[DEC-20260721-bsjeong87-01]]: 골격만 보고 재구성했다가 `skills/humanizer`와 스킬 카탈로그 절을 통째로 누락한 실사례). 클론이 없을 때만 이 블록으로 시작한다.
 ```markdown
 # CLAUDE.md (Global)
 ## 1. Think Before Coding — 가정 명시, 불확실하면 질문, 해석 갈리면 제시.
@@ -137,9 +143,9 @@ New-Item -ItemType Directory -Path .claude/skills/wrap -Force
   },
   "hooks": {
     "PreCompact": [ { "matcher": "auto", "hooks": [
-      { "type": "command", "command": "echo \"[알림] 곧 컨텍스트 압축 - /wrap 권장\" 1>&2", "async": true } ] } ],
+      { "type": "command", "command": "echo \"[PreCompact] auto-compact 임박 - 작업 끊고 /wrap 권장\" 1>&2", "async": true } ] } ],
     "SessionStart": [ { "matcher": "compact", "hooks": [
-      { "type": "command", "command": "echo '압축 후 복구: docs/PROGRESS.md 최상단과 PROJECT_PLAN.md를 다시 읽어라.'" } ] } ]
+      { "type": "command", "command": "echo 'compact 후 컨텍스트 복구: docs/PROGRESS.md 최상단과 docs/PROJECT_PLAN.md를 다시 읽고 현재 상태를 재확인하라.'" } ] } ]
   }
 }
 ```
@@ -282,7 +288,7 @@ description: 세션 시작 시 원격 최신화(clean이면 git pull --ff-only)�
 name: wrap
 description: 세션 종료 시 docs/PROGRESS.md 최상단에 오늘 작업 append, 새 결정 DECISIONS, PROJECT_PLAN 체크박스, 미커밋 경고, 변경 파일 보고.
 ---
-# /wrap — docs/PROGRESS.md 최상단 append(작업/결정/다음/미해결) + 새 DEC + PROJECT_PLAN 체크박스(+ 있으면 `docs/WBS.md` 등 파생 뷰 동기화 — SSOT=PROJECT_PLAN). 미커밋이면 경고. 변경 파일 보고. append 후 PROGRESS 총 줄 수 확인 — ~800줄/분기 경계 초과면 아카이브(docs/archive/ 이동+최상단 포인터) 안내(/resume는 앞 40줄만 읽어 감지 못 함). + 이번 세션에 `~/.claude/`나 저장소 `global-config/`를 고쳤으면 화이트리스트 5종 해시 대조(클론 없으면 생략) — 차이 시 어느 쪽이 최신인지 판정해 방향 보고+복사 안내(`settings.json`은 키 단위, 머신 종속 키 제외 §D-1).
+# /wrap — docs/PROGRESS.md 최상단 append(작업/결정/다음/미해결) + 새 DEC + PROJECT_PLAN 체크박스(+ 있으면 `docs/WBS.md` 등 파생 뷰 동기화 — SSOT=PROJECT_PLAN). 미커밋이면 경고. 변경 파일 보고. append 후 PROGRESS 총 줄 수 확인 — ~800줄/분기 경계 초과면 아카이브(docs/archive/ 이동+최상단 포인터) 안내(/resume는 앞 40줄만 읽어 감지 못 함). + 이번 세션에 `~/.claude/`나 저장소 `global-config/`를 고쳤으면 화이트리스트 5종 해시 대조(클론 없으면 생략) — 차이 시 어느 쪽이 최신인지 판정해 방향 보고+복사 안내(`settings.json`은 키 단위 — **구성 성격 키(`permissions.deny`·`hooks`)의 차이만** 실제 차이로 보고 나머지는 머신 종속으로 제외, DEC-20260721-bsjeong87-02).
 ```
 
 **B) 솔루션-aware** (MSA 단위분할 repo · 각 repo `.claude/skills/`에 커밋해 공유 — 개인 글로벌에 동명 기본형(A)이 있는 PC는 글로벌을 이 내용으로 교체, 위 주의)
@@ -514,5 +520,5 @@ Claude Code는 매주 바뀐다. 6개월마다 30분:
 ## 핵심 출처 🟢
 IDE 통합·`--add-dir`(ide-integrations·large-codebases) / permissions·deny 한계 / hooks / skills / memory·auto-memory — 모두 `code.claude.com/docs` 및 `docs.anthropic.com`.
 
-**문서 정보** — 통합 마스터(범용) **v1.26**. 변경 이력은 최상단 버전 표 참조(유래: 8개 소스 통합 초판 — v1.0 행).
+**문서 정보** — 통합 마스터(범용) **v1.27**. 변경 이력은 최상단 버전 표 참조(유래: 8개 소스 통합 초판 — v1.0 행).
 최종 갱신: 2026-08-12 · 최근 재검증: 2026-08-04 / 참조: Claude Code v2.1.226, Opus 5(v2.1.219+) · Sonnet 5(v2.1.197+) · Fable 5(v2.1.170+).
