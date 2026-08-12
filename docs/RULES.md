@@ -36,7 +36,7 @@
 | R03 | 미러 대조는 **줄바꿈을 정규화한 뒤** 비교한다 | `줄바꿈(을 정규화\| 차이는 내용)` | `01` `RC` `~wrap` `~check` `p:audit` | |
 | R04 | 미러 대조에서 `dropin-applied`로 시작하는 줄은 **차이로 치지 않는다**(PC별 값) | `차이로 치지 않는다` | `00` `01` `RC` `GR` `~wrap` `~check` `p:audit` | |
 | R05 | `settings.json`은 **구성 성격 키만** 실차이 — 포함 기준 한 줄이 정본이고 제외 목록을 늘리지 않는다 | `구성 성격` | `01` `RC` `GR` `~wrap` `~check` `p:audit` | |
-| R06 | 스코프 우선순위 **enterprise > personal > project**(개인이 프로젝트를 덮는다) | `enterprise > personal > project` | `00` `01` `02` `03` `~resume` `~wrap` | `~setup` |
+| R06 | 스코프 우선순위 **enterprise > personal > project**(개인이 프로젝트를 덮는다) | `enterprise > personal > project` | `00` `01` `02` `03` `~resume` `~wrap` `~check` | `~setup` |
 | R07 | PROGRESS **약 800줄/분기 경계**를 넘으면 아카이브 분할 | `800줄` | `01` `RC` `~wrap` | |
 | R08 | 미해소 `[Pending]`·`[Blocked]`는 PROJECT_PLAN **"미해결/관찰 중"**에 올려 닫힐 때까지 유지 | `미해결/관찰 중` | `01` `RC` `~wrap` | |
 | R09 | 정기 항목은 **`다음 ○○: YYYY-MM경`** 형식(이 형식이라야 `/resume` 예정일 안내가 발화) | `YYYY-MM경` | `01` `RC` `~wrap` | |
