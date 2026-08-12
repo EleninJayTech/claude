@@ -164,6 +164,7 @@ if (Want '규칙') {
     '~check'="$home_\.claude\skills\dropin-check\SKILL.md"; '~update'="$home_\.claude\skills\dropin-update\SKILL.md"
     '~setup'="$home_\.claude\commands\skill-setup.md"; '~GC'="$home_\.claude\CLAUDE.md"
     'p:audit'="$repo\.claude\skills\audit\SKILL.md"
+    'p:reverify'="$repo\.claude\skills\reverify\SKILL.md"; 'p:optimize'="$repo\.claude\skills\optimize\SKILL.md"
   }
   $texts = @{}; foreach ($k in $map.Keys) { $texts[$k] = Slurp $map[$k] }
 

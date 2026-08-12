@@ -31,7 +31,8 @@ Claude Code 셋업·운영을 위한 **드롭인 지시 문서** 저장소. 코�
 - 문서 갱신 시: 최상단 버전 표에 한 줄 + 하단 "문서 정보" 날짜 수정 + §L 재검증 체크리스트.
 - **전면 재검증+확장 조사는 `/reverify` 한 번으로**(`.claude/skills/reverify/` — 조사 에이전트 병렬→반영→후보 보고→기록·커밋 절차 내장). "최근 재검증" 날짜는 이 절차를 돌린 날에만 갱신(DEC-20260804-bsjeong87-02).
 - **기계적 검사는 커밋 전 `pwsh -File scripts/check.ps1`로**(드롭인 아님 — 이 저장소 유지보수 전용). 버전 4축·표 시간순/결번·표 파손·BOM·frontmatter·미러 해시·**규칙 대장**(`docs/RULES.md`) 7종. 판단이 필요 없는 것만 담으므로 여기서 잡히는 결함은 `/audit`이 볼 이유가 없다. **규칙을 고칠 땐 `docs/RULES.md`의 필수 목록을 열고 하나씩 지워 가며** 반영한다(사본은 범용 자족성이 요구하는 값이라 줄일 수 없고, 대신 추적한다).
-- **내부 정합성 전수조사는 `/audit` 한 번으로**(`.claude/skills/audit/` — 렌즈 전부(현재 A~F 6종) 병렬 조사→재검증→보고→승인 후 수정). /reverify=외부 최신성, /audit=내부 결함(어긋남·누락·드리프트). 개정이 몰린 뒤 또는 분기 1회 권장.
+- **내부 정합성 전수조사는 `/audit` 한 번으로**(`.claude/skills/audit/` — 렌즈 전부(현재 A~F 6종) 병렬 조사→재검증→보고→승인 후 수정). 개정이 몰린 뒤 또는 분기 1회 권장.
+- **부피·밀도 정리는 `/optimize` 한 번으로**(`.claude/skills/optimize/` — 측정→압축(요지만)→기계 검사→적대적 diff 검토→실적용 테스트 내장). **유지보수 4축**: /reverify=외부 최신성 · /audit=내부 결함 · 실적용=경험 검증 · /optimize=비대 제거 — 감사는 늘리는 쪽, 최적화는 줄이는 쪽으로 편향돼 있어 교대로 돈다. 대량 개정이 몇 차례 쌓인 뒤 권장.
 
 ## global-config/ 백업 규칙
 - **화이트리스트만** 커밋: `CLAUDE.md`·`settings.json`·`skills/`·`commands/`·`output-styles/`. 통째 커밋 금지 — `.credentials.json`·`history.jsonl`·`projects/`·`sessions/`는 시크릿·대화기록. ([[DEC-20260720-bsjeong87-04]], `output-styles/` 추가는 [[DEC-20260810-bsjeong87-10]])

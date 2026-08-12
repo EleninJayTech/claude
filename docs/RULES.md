@@ -21,7 +21,7 @@
 | `~resume` `~wrap` `~check` `~update` | `~/.claude/skills/{resume,wrap,dropin-check,dropin-update}/SKILL.md` |
 | `~setup` | `~/.claude/commands/skill-setup.md` |
 | `~GC` | `~/.claude/CLAUDE.md` |
-| `p:audit` | `.claude/skills/audit/SKILL.md` |
+| `p:audit` `p:reverify` `p:optimize` | `.claude/skills/{audit,reverify,optimize}/SKILL.md` |
 
 > `global-config/skills/**` 미러는 이 표의 대상이 아니다 — 정본(`~/.claude`)과 **해시로** 대조하는 별도 검사가 담당한다(`check.ps1` §미러).
 
@@ -48,6 +48,7 @@
 | R15 | 통합 워크스페이스 **루트 라우터 예외** — 루트 `docs/`에 PROGRESS·DECISIONS·PROJECT_PLAN이 없는 것이 정상 | `얇은 라우터` | `00` `01` `~wrap` | |
 | R16 | `docs/` append 파일은 `.gitattributes` **`merge=union`** | `merge=union` | `00` `01` `06` `RC` | `~setup` |
 | R17 | **비-git 폴더 면제** — git 의존 항목(커밋 절차·`.gitattributes`·git status)을 건너뛴다 | `비-git` | `00` `01` `~resume` `~wrap` | `p:audit` |
+| R18 | 반영은 요지만 — 경위·발견 ID는 본문·버전 표에 남기지 않는다(경위는 PROGRESS·git 몫, 마커 문자열은 보존) | `경위·발견 ID` | `p:audit` `p:reverify` | |
 
 ---
 
