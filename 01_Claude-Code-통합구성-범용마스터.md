@@ -1,6 +1,6 @@
 # Claude Code 통합 구성 — 범용 마스터 (드롭인 적용)
 
-> **문서 버전: v1.22** · 최종 갱신: **2026-08-12** · **최근 재검증: 2026-08-04** · 기준: Claude Code v2.1.226 (Opus 5 · Sonnet 5 · Fable 5)
+> **문서 버전: v1.23** · 최종 갱신: **2026-08-12** · **최근 재검증: 2026-08-04** · 기준: Claude Code v2.1.226 (Opus 5 · Sonnet 5 · Fable 5)
 >
 > | 버전 | 날짜 | 변경 내용 |
 > | --- | --- | --- |
@@ -27,6 +27,7 @@
 > | v1.20 | 2026-08-12 | **점검·최신화 스킬의 설치 유형 전 지원 명시**(§D-4): dropin-check·update가 사본/클론 참조/raw 세 유형 모두 지원(판별 근거는 00 v1.10 `출처=` 필드) — 클론 참조 설치에서 update가 "사본 없음"만 보고하던 공백 해소(스킬 본문도 동일 개정) |
 > | v1.21 | 2026-08-12 | **조건부 안내 2건 보강**(DEC-20260812-bsjeong87-03, §F-2 A/B/C+글로벌 스킬 동기화): ① /resume — dropin-applied 괄호의 조치 대기 메모 안내(DEC-0810-08 "다음 세션이 발견" 취지의 배선 완성, 추가 조회 0) ② /wrap — append 후 PROGRESS ~800줄 경계 감지·아카이브 안내(길이 관리 규칙의 감지 주체 부재 해소 — /resume는 앞 40줄만 읽음) |
 > | v1.22 | 2026-08-12 | **아카이브 포인터 최상단 이동 + 폴더 단위 검색 규칙**(DEC-20260812-bsjeong87-04, §F-1): 포인터 "맨 아래"는 통째 읽기 시절 설계 — /resume 40줄 읽기(v1.19)와 어긋나 아카이브 존재가 영영 안 보임 → 최상단(제목 바로 아래)으로. 과거 이력 검색은 활성 파일이 아니라 `docs/` 폴더 단위(아카이브 포함) 명시. 부수: 버전 표 v1.20·v1.21 행 삽입 위치 오류(v1.17 뒤) 정정 |
+> | v1.23 | 2026-08-12 | **스킬 스코프 우선순위 정정**(/audit S1, 당일 공식 문서 확인): "프로젝트 `.claude/skills/`가 글로벌 기본형을 덮어씀"은 **정반대** — 공식 우선순위는 **enterprise > personal > project**(개인이 프로젝트를 이김, 스킬>커맨드). §D-4·§E-3·§E-4·§F-2 B/C 통일 — B·C는 글로벌 기본형(A) **교체** 방식으로 설치(동명 방치 시 B·C가 실행되지 않음). §E-4에 중첩 스킬 디렉터리-한정 이름 로드(v2.1.203+) 반영 |
 >
 > ※ 갱신 시: 이 표에 한 줄 추가 + 하단 "문서 정보" 날짜 수정 + §L 재검증 체크리스트 수행.
 
@@ -142,7 +143,7 @@ New-Item -ItemType Directory -Path .claude/skills/wrap -Force
 > 🟡 `includeCoAuthoredBy`는 deprecated → `attribution` 객체로 대체(빈 문자열 `""` = 표기 숨김).
 > 🟡 테마(dark/light)는 settings.json 문서화 키가 아님(2026-07-20 확인) — 세션에서 **`/config`**(또는 `/theme`)로 설정.
 
-### D-4. 기본 `/resume`·`/wrap` + 점검·최신화 스킬 (단일 repo용 기본형) — §F-2 A 참조. (통합/MSA는 §F-2 B·C로 덮어씀)
+### D-4. 기본 `/resume`·`/wrap` + 점검·최신화 스킬 (단일 repo용 기본형) — §F-2 A 참조. (통합/MSA는 §F-2 B·C — 동명 스킬은 **개인(글로벌)이 프로젝트를 이기므로** 글로벌 쪽을 교체한다, §F-2 주의)
 - **`/dropin-check`**(적용 상태 점검, 읽기 전용)·**`/dropin-update`**(문서 사본 최신화, 승인 후 교체)는 환경 무관 **글로벌 스킬** — 문서 저장소의 `global-config/skills/<이름>/SKILL.md`를 `~/.claude/skills/<이름>/`로 복사한다(로컬 클론 없으면 raw: `https://raw.githubusercontent.com/EleninJayTech/claude/main/global-config/skills/dropin-check/SKILL.md` · 같은 경로의 `dropin-update`). 설치 전 같은 이름 구형 `commands/`가 있으면 제거(§F-2 주의). 두 스킬은 **설치 유형 무관 동작 보장** — 프로젝트 사본 / 로컬 클론 참조 / raw 직접(사본·클론을 나중에 지워도 계속 동작), 판별 근거는 00 STEP 5 기록의 `출처=` 필드(00 v1.10+).
 
 ### D-5. 확인 — `claude` → `/` → `/resume`·`/wrap`·`/dropin-check`·`/dropin-update` 자동완성되면 성공.
@@ -205,13 +206,13 @@ New-Item -ItemType Directory -Path .claude/skills/wrap -Force
 │   └── DECISIONS.md
 └── <unitB>/ ...
 ```
-- `.gitattributes`(§F-4) + **솔루션-aware 스킬**(§F-2 B)로 대상 단위 판별.
+- `.gitattributes`(§F-4) + **솔루션-aware 스킬**(§F-2 B)로 대상 단위 판별(동명 우선순위 주의 — §F-2).
 - 주제 문서는 평면(`docs/<unit>/이름.md`)으로 시작 → 한 단위 3개+면 하위 폴더 승격. 빈 폴더 금지.
 
 ### E-4. 🅰️ 루트 통합 레이어 (A-1/A-2에 얹는 개인 영역)
 하위 repo는 **손대지 않는다.** 루트(상위 폴더)에만 추가:
 - 루트 `CLAUDE.md` = **짧은 라우터**(§F-2 D). 50줄 안팎, repo 사실은 넣지 않음(각 repo가 본체).
-- 루트 `.claude/skills/` = **통합 `/resume`·`/wrap`**(§F-2 C). 하위 repo 솔루션-aware 스킬은 루트 실행 시 자동 등록 안 되므로 필요.
+- 루트 통합 `/resume`·`/wrap` = §F-2 C(**개인 글로벌 교체 방식** — 동명 우선순위 주의 §F-2). 하위 repo 스킬은 루트 실행 시 디렉터리-한정 이름(`<하위>:resume`)으로 함께 로드된다(v2.1.203+) — 비한정 `/resume`가 실행하는 건 개인/루트 쪽이므로 통합 절차는 거기 둔다.
 - (선택) 루트 `docs/INDEX.md` = **얇은 크로스-repo 인덱스**(§F-2 E). 크로스-repo 세션만 한 줄+링크.
 - 루트를 개인 git repo로 둘 수도 있음(백업용) → 하위 repo들을 `.gitignore`로 제외.
 
@@ -258,6 +259,7 @@ New-Item -ItemType Directory -Path .claude/skills/wrap -Force
 
 > 참고(2026-07 현행): **커스텀 커맨드(`.claude/commands/`)는 스킬로 통합**됐다 — 둘 다 `/이름`을 만들고 동작이 같으며 스킬 쪽이 상위집합(보조 파일·frontmatter 확장). frontmatter에서 `name:`은 이제 선택(폴더명이 기본 명령명), `description:`은 권장(Claude의 자동 로드 판단 기준).
 > ⚠️ **중복 등록 방지**: 스킬 설치 전 **같은 이름의 구형 커맨드**(`~/.claude/commands/<이름>.md`·프로젝트 `.claude/commands/`)가 있는지 확인하고 있으면 삭제한다 — 방치하면 `/` 자동완성에 같은 명령이 2개 뜨고, 구형을 고르면 옛 내용이 실행된다(정본은 `skills/`). 필요 시 확장 키: `disable-model-invocation: true`(수동 호출 전용), `user-invocable: false`(Claude 전용), `model:`·`effort:`(스킬 실행 중 오버라이드), `context: fork`(서브에이전트에서 실행), `allowed-tools:`(그 턴 무프롬프트 도구 허용).
+> ⚠️ **동명 스킬 우선순위(공식, 2026-08-12 확인)**: **enterprise > personal > project** — 프로젝트 `.claude/skills/`는 글로벌(개인) 동명 스킬을 덮지 **못한다**(같은 이름이면 개인 쪽이 실행. 스킬과 커맨드가 같은 이름이면 스킬 우선). 따라서 **B·C를 선택하면 글로벌 기본형(A)을 그 내용으로 교체(또는 제거)** — 한 이름 한 정의. B를 repo에 커밋해 공유해도 개인 글로벌에 동명 기본형이 있는 PC에선 개인 쪽이 실행되므로 팀에 고지한다.
 
 **A) 기본형** (단일 repo · 글로벌 `~/.claude/skills/`)
 ```markdown
@@ -277,7 +279,7 @@ description: 세션 종료 시 docs/PROGRESS.md 최상단에 오늘 작업 appen
 # /wrap — docs/PROGRESS.md 최상단 append(작업/결정/다음/미해결) + 새 DEC + PROJECT_PLAN 체크박스. 미커밋이면 경고. 변경 파일 보고. append 후 PROGRESS 총 줄 수 확인 — ~800줄/분기 경계 초과면 아카이브(docs/archive/ 이동+최상단 포인터) 안내(/resume는 앞 40줄만 읽어 감지 못 함).
 ```
 
-**B) 솔루션-aware** (MSA 단위분할 repo · 각 repo `.claude/skills/`, 글로벌 기본형을 덮어씀)
+**B) 솔루션-aware** (MSA 단위분할 repo · 각 repo `.claude/skills/`에 커밋해 공유 — 개인 글로벌에 동명 기본형(A)이 있는 PC는 글로벌을 이 내용으로 교체, 위 주의)
 ```markdown
 # resume/SKILL.md
 ---
@@ -302,7 +304,7 @@ description: 단위분할 마무리. 대상 단위 docs/<단위>/PROGRESS.md에 
 append 후 해당 PROGRESS 줄 수 확인 — ~800줄 경계 초과면 아카이브 안내.
 ```
 
-**C) 통합형** (루트 통합 레이어 · 루트 `.claude/skills/`)
+**C) 통합형** (루트 통합 레이어 — **개인 글로벌 `~/.claude/skills/`의 기본형(A)을 이 내용으로 교체**. 루트 `.claude/skills/`에만 두면 동명 개인 스킬이 이겨 실행되지 않는다, 위 주의)
 ```markdown
 # resume/SKILL.md
 ---
@@ -500,5 +502,5 @@ Claude Code는 매주 바뀐다. 6개월마다 30분:
 ## 핵심 출처 🟢
 IDE 통합·`--add-dir`(ide-integrations·large-codebases) / permissions·deny 한계 / hooks / skills / memory·auto-memory — 모두 `code.claude.com/docs` 및 `docs.anthropic.com`.
 
-**문서 정보** — 통합 마스터(범용) **v1.22**. 8개 소스(⓪ 폴더구성 · ① 셋업 · structure-guide · daily-routine · SFA 셋업/통합 · setup-followalong v8 · integrated-setup) 중복 제거·v8 반영 + `/effort`(§D-6) + 2026-07-20 공식 문서 전면 재검증 + 02 가이드 연동 경량 보완 + 2026-07-23 재검증(v2.1.218) + 2026-07-28 Opus 5 반영·부분 선택·auto mode(v2.1.220) + 2026-08-04 적용 기록(dropin-applied)·전면 재검증(v2.1.221) + 2026-08-10 /resume 원격 최신화 선행·중복 재판정 경량 반영(v2.1.226)·스킬 중복 등록 방지.
+**문서 정보** — 통합 마스터(범용) **v1.23**. 8개 소스(⓪ 폴더구성 · ① 셋업 · structure-guide · daily-routine · SFA 셋업/통합 · setup-followalong v8 · integrated-setup) 중복 제거·v8 반영 + `/effort`(§D-6) + 2026-07-20 공식 문서 전면 재검증 + 02 가이드 연동 경량 보완 + 2026-07-23 재검증(v2.1.218) + 2026-07-28 Opus 5 반영·부분 선택·auto mode(v2.1.220) + 2026-08-04 적용 기록(dropin-applied)·전면 재검증(v2.1.221) + 2026-08-10 /resume 원격 최신화 선행·중복 재판정 경량 반영(v2.1.226)·스킬 중복 등록 방지.
 최종 갱신: 2026-08-12 · 최근 재검증: 2026-08-04 / 참조: Claude Code v2.1.226, Opus 5(v2.1.219+) · Sonnet 5(v2.1.197+) · Fable 5(v2.1.170+).
