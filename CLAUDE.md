@@ -66,7 +66,7 @@ Claude Code 셋업·운영을 위한 **드롭인 지시 문서** 저장소. 코�
 - /wrap: PROGRESS append + 새 DEC + PROJECT_PLAN 체크박스 갱신 + **미커밋이면 경고**(커밋 전엔 다음 /resume가 git status로만 발견).
 
 ### 길이 관리
-- PROGRESS가 약 800줄/분기 경계를 넘으면 가장 오래된 분기를 docs/archive/로 옮기고 활성 파일 최상단(제목 바로 아래)에 포인터 한 줄(/resume 40줄 읽기에 보이도록). 이후 append는 포인터 줄 아래부터(포인터 최상단 고정). 과거 이력 검색은 파일이 아니라 docs/ 폴더 단위로(아카이브 포함).
+- PROGRESS가 약 800줄/분기 경계를 넘으면 가장 오래된 분기를 docs/archive/로 옮기고 활성 파일 **최상단(제목 바로 아래) 포인터 한 줄**("이전 분기: docs/archive/…"). 맨 아래가 아니라 최상단인 이유 — /resume가 앞 ~40줄만 읽어 아래 포인터는 보이지 않는다. 이후 append는 **포인터 줄 아래부터**(포인터 최상단 고정). **과거 이력 검색은 활성 파일이 아니라 `docs/` 폴더 단위로**(아카이브 자동 포함) — 파일만 검색하면 "기록 없음"으로 오판한다.
 
 ### 공유 vs 개인 / 시크릿
 - 공유(커밋): CLAUDE.md·.claude/skills·.claude/settings.json·.gitattributes·docs/·.mcp.json(팀 MCP 서버 — 각자 첫 실행 때 승인).
@@ -76,4 +76,4 @@ Claude Code 셋업·운영을 위한 **드롭인 지시 문서** 저장소. 코�
 ### 토큰 참고
 - docs/는 자동 선로딩되지 않고 필요 시만 읽힌다. 분할은 토큰이 아니라 정리·타겟 정확도용.
 
-<!-- dropin-applied: 2026-08-12 · 모드=권장+무인자동화 · 프로필=표준 · 01 v1.19 · 06 v1.3(§2·§4 준비물 — docs/ROUTINES.md 틀+.gitattributes merge=union, **루틴 생성은 계정 GitHub 연결 확인 대기**) · 미선택: 02·04(해당 없음-문서 repo), 03·05(글로벌 기적용) · 출처=사본 -->
+<!-- dropin-applied: 2026-08-12 · 모드=권장+무인자동화 · 프로필=표준 · 01 v1.25(재구성 점검 — §F-1 길이 관리 문구를 정본으로 동기화 1건, 그 외 ⓐ~ⓕ 어긋남 0) · 06 v1.3(§2·§4 준비물 — docs/ROUTINES.md 틀+.gitattributes merge=union, **루틴 생성은 계정 GitHub 연결 확인 대기**) · 미선택: 02·04(해당 없음-문서 repo. gh·glab 설치됨·둘 다 미인증 — 04 채택 시 인증 필요), 03·05(글로벌 기적용) · 출처=사본(이 repo가 문서 원본 — /dropin-update는 git pull 안내 후 중단) -->
