@@ -30,6 +30,7 @@ Claude Code 셋업·운영을 위한 **드롭인 지시 문서** 저장소. 코�
 - **최신화는 기억이 아니라 당일 공식 문서 조회로만**. 확인 못 한 항목은 🟡로 남긴다(00 §L 원칙). ([[DEC-20260720-bsjeong87-02]])
 - 문서 갱신 시: 최상단 버전 표에 한 줄 + 하단 "문서 정보" 날짜 수정 + §L 재검증 체크리스트.
 - **전면 재검증+확장 조사는 `/reverify` 한 번으로**(`.claude/skills/reverify/` — 조사 에이전트 병렬→반영→후보 보고→기록·커밋 절차 내장). "최근 재검증" 날짜는 이 절차를 돌린 날에만 갱신(DEC-20260804-bsjeong87-02).
+- **내부 정합성 전수조사는 `/audit` 한 번으로**(`.claude/skills/audit/` — 렌즈 5종 병렬 조사→재검증→보고→승인 후 수정). /reverify=외부 최신성, /audit=내부 결함(어긋남·누락·드리프트). 개정이 몰린 뒤 또는 분기 1회 권장.
 
 ## global-config/ 백업 규칙
 - **화이트리스트만** 커밋: `CLAUDE.md`·`settings.json`·`skills/`·`commands/`·`output-styles/`. 통째 커밋 금지 — `.credentials.json`·`history.jsonl`·`projects/`·`sessions/`는 시크릿·대화기록. ([[DEC-20260720-bsjeong87-04]], `output-styles/` 추가는 [[DEC-20260810-bsjeong87-10]])
