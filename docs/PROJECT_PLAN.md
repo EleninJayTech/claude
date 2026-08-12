@@ -76,6 +76,7 @@
 - [x] 2026-08-12 /resume·/wrap 조건부 안내 보강 — 조치 대기 메모 안내(DEC-0810-08 취지 배선 완성)·PROGRESS 800줄 경계 감지, 01 v1.21+글로벌 스킬·백업 동기화 ([[DEC-20260812-bsjeong87-03]])
 - [x] 2026-08-12 아카이브 포인터 최상단 이동·docs/ 폴더 단위 검색 규칙 — 01 v1.22·repo CLAUDE.md·wrap 스킬 동기화, 버전 표 순서 오류 부수 정정 ([[DEC-20260812-bsjeong87-04]])
 - [x] 2026-08-12 **/audit 첫 수행 발견 51건 전부 수정**(상2·중26·하23 + 의심 3건 확정 처리) — S1 스코프 우선순위 공식 확정(enterprise>personal>project, B·C=글로벌 교체 방식), 00 v1.12·01 v1.24·02 v1.16·04 v1.6·05 v1.2·06 v1.3, 글로벌 스킬·백업 미러 해시 일치, skill-setup BOM 실버그 해소 ([[DEC-20260812-bsjeong87-05]])
+- [x] 2026-08-12 00 재적용(YogaSlim7 글로벌) — /audit 수정분을 실구성에 반영(01 v1.24: CLAUDE.md 2곳·스킬 4종·skill-setup BOM, 해시 일치), 06 준비물 설치(docs/ROUTINES.md 틀·.gitattributes merge=union — **루틴 생성은 계정 GitHub 연결 확인 대기**), 04 gh 인증 여전히 대기
 - [ ] **다음 내부 정합성 전수조사: 2026-11경** — `/audit`(분기 1회 또는 개정 몰린 뒤 — 이 repo 전용 프로젝트 스킬, 첫 수행 2026-08-12). 예정일이 지나면 /resume가 안내
 - [ ] **다음 재검증: 2027-01경** (00 §L, 6개월 주기)
   - 중복 재심 🟡 잔여: Context7·Caveman 생존, todo-tracking 공식 문서(2026-08-10 404), `/team-onboarding` 재평가 ([[DEC-20260810-bsjeong87-02]])
