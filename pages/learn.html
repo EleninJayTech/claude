@@ -871,7 +871,7 @@ function drawFinal(){
   var line='<!-- dropin-applied: '+today+' · 모드='+modeLabel+' · 프로필='+PROFS[F.prof].name;
   chosen.forEach(function(k){ line+=' · '+k+' v○.○'; });
   if(un.length && docs!==null) line+=' · 미선택: '+un.join(', ');
-  line+=' -->';
+  line+=' · 출처=사본 -->';
   $('finalStamp').textContent=line;
 }
 drawFinal();
