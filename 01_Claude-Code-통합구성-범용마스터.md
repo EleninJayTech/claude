@@ -1,6 +1,6 @@
 # Claude Code 통합 구성 — 범용 마스터 (드롭인 적용)
 
-> **문서 버전: v1.49** · 최종 갱신: **2026-08-21** · **최근 재검증: 2026-08-20** · 기준: Claude Code v2.1.237 (Opus 5 · Sonnet 5 · Fable 5)
+> **문서 버전: v1.50** · 최종 갱신: **2026-08-21** · **최근 재검증: 2026-08-20** · 기준: Claude Code v2.1.237 (Opus 5 · Sonnet 5 · Fable 5)
 >
 > | 버전 | 날짜 | 변경 내용 |
 > | --- | --- | --- |
@@ -22,6 +22,7 @@
 > | v1.47 | 2026-08-20 | **최적화**: R20 적용 — 구 행 v1.0~v1.32을 축 요약 한 줄로 |
 > | v1.48 | 2026-08-20 | 병합 행 정정 — `출처=` 귀속(v1.20)과 /wrap 미러 대조(v1.25) 분리, 내장 Tasks 대비 정본 유지 복원 |
 > | v1.49 | 2026-08-21 | **다인 축 배선**(R21~R24) — 동시성 질문 **3분기**(ⓐ 혼자/ⓑ 다른 갈래/ⓒ 같은 갈래, STEP 1에 기여자 수 감지)·기록 양식에 **갈래·날짜**·`/resume` 갈래 우선·**되돌림 `[Reverted]`**·`PROJECT_PLAN`·`CLAUDE.md` **union 금지 명시**·§E-3에 팀원 전원 B 필수·A 폴백에 단위분할 감지·§E-2 권장 기본값(개별 repo)·§F-5 조건을 소유에서 **git 중첩**으로 |
+> | v1.50 | 2026-08-21 | **sfa형 시나리오 검증 반영** — R21·R22를 §F-2 **B·C 템플릿에도**(A에만 넣어 누락), **C ⊃ B ⊃ A**(한 PC에 환경이 섞이면 가장 넓은 것), C 폴백은 INDEX만 생략하고 **단위 판별 유지**, 방법 A 알림은 나에게만 뜨므로 **PR·이슈에도** 한 줄, §I 5를 "루트 레이어를 쓸까(기본 아니오)"+소유 2단으로, 갈래는 멀티레포에서 **repo 아닌 단위** |
 > ※ 갱신 시: 이 표에 한 줄 추가 + 하단 "문서 정보" 날짜 수정 + §L 재검증 체크리스트 수행.
 
 > **사용법**: 이 파일을 아무 프로젝트 루트(또는 `docs/`)에 넣고 Claude에게
@@ -246,7 +247,7 @@ New-Item -ItemType Directory -Path .claude/skills/dropin-update -Force
 
 ### 여러 대상 동시 변경 (방법 A)
 - 주 대상 docs에 본문, 함께 바뀐 대상엔 [공통] 교차 한 줄 + 링크.
-- 다른 repo는 접근 가능(cwd 또는 additionalDirectories)하면 자동 교차기록, 불가하면 "○○에 기록 필요" 알림.
+- 다른 repo는 접근 가능(cwd 또는 additionalDirectories)하면 자동 교차기록, 불가하면 "○○에 기록 필요" 알림. **그 알림은 나에게만 뜬다** — 상대에게 도달하는 채널은 그 repo의 git뿐이니, 주 대상 기록에 영향받는 repo·대상을 명시하고 **그 변경의 PR·이슈 본문에도 한 줄** 남긴다(개별 repo에서 각자 여는 팀에선 이 경로가 기본값이다).
 
 ### 세션 워크플로 규율
 - 작업 요청엔 **성공 기준·검증 명령**(테스트/빌드/재현 스크립트)을 함께 받는다. 구현 후 그 검증을 실행해 **증거(출력)로 보고** — "됐다"는 말로 끝내지 않는다.
@@ -269,6 +270,8 @@ New-Item -ItemType Directory -Path .claude/skills/dropin-update -Force
 ```
 
 ### F-2. `/resume`·`/wrap` 스킬 (환경에 맞는 것 하나 선택)
+
+> **C ⊃ B ⊃ A** — 한 PC에 여러 환경이 섞이면(단위분할 repo + 통합 워크스페이스 + 단일 repo) **가장 넓은 것 하나**를 고른다. 각 변형이 좁은 환경용 폴백을 갖추므로 넓은 쪽이 좁은 쪽을 안전하게 포함한다. 글로벌은 PC당 하나뿐이라 "환경마다 다른 것"은 성립하지 않는다.
 
 > 참고(2026-07 현행): **커스텀 커맨드(`.claude/commands/`)는 스킬로 통합**됐다 — 둘 다 `/이름`을 만들고 동작이 같으며 스킬 쪽이 상위집합(보조 파일·frontmatter 확장). frontmatter에서 `name:`은 이제 선택(폴더명이 기본 명령명), `description:`은 권장(Claude의 자동 로드 판단 기준).
 > ⚠️ **중복 등록 방지**: 스킬 설치 전 **같은 이름의 구형 커맨드**(`~/.claude/commands/<이름>.md`·프로젝트 `.claude/commands/`)가 있는지 확인하고 있으면 삭제한다 — 방치하면 `/` 자동완성에 같은 명령이 2개 뜨고, 구형을 고르면 옛 내용이 실행된다(정본은 `skills/`). 필요 시 확장 키: `disable-model-invocation: true`(수동 호출 전용), `user-invocable: false`(Claude 전용), `model:`·`effort:`(스킬 실행 중 오버라이드), `context: fork`(서브에이전트에서 실행), `allowed-tools:`(그 턴 무프롬프트 도구 허용).
@@ -306,7 +309,7 @@ description: 단위분할 재개. git status로 미커밋 작업 먼저, 대상 
 0) remote 있고 clean이면 `git pull --ff-only` 먼저(아니면 fetch 후 뒤처짐 보고) → git status·현재 브랜치 확인 — 미커밋/비-main 브랜치면 그 단위 작업 우선(untracked일 수 있음).
 1) 대상 단위 판별: PWD가 <단위> 안 → 그 단위 / 브랜치명(feature/<단위>) / 불명확하면 질문.
    **폴백**: `docs/<단위>/`가 없는 단일 repo면 단위 판별을 건너뛰고 `docs/`(flat) 기준으로 A와 동일하게 진행. 비-git 폴더면 0)도 건너뛴다.
-2) docs/<단위>/PROGRESS.md 최상단(최근 ~5항목) + docs/PROJECT_PLAN.md + 최근 DEC 3건 → "이 단위 지난 X, 다음 Y?" 보고.
+2) docs/<단위>/PROGRESS.md 최상단(최근 ~5항목 — 다인 공유면 현재 브랜치·PWD가 가리키는 **갈래를 우선** 읽고 남의 갈래는 한 줄 요약) + docs/PROJECT_PLAN.md + 최근 DEC 3건 → "이 단위 지난 X, 다음 Y?" 보고.
 3) 조건부 안내: dropin-applied 30일 경과면 /dropin-check·/dropin-update, PROJECT_PLAN 예정일 경과 항목(**미완료 항목만** — `[x]`·취소선 제외), dropin-applied 괄호의 조치 대기 메모·`게이트 차단(사유)`·`소스없음(사유)`/`확보 실패(사유)` 안내(대상 CLAUDE.md + 글로벌 `~/.claude/CLAUDE.md` 둘 다).
 ```
 ```markdown
@@ -316,7 +319,7 @@ name: wrap
 description: 단위분할 마무리. 대상 단위 docs/<단위>/PROGRESS.md에 [상태]+작성자+브랜치 기록, 단위간 변경은 [공통] 교차, 미커밋 경고.
 ---
 # /wrap (솔루션-aware)
-대상 단위 판별 후 docs/<단위>/PROGRESS.md 최상단에 [Done]/[Pending]/[Blocked] 병기 기록.
+대상 단위 판별 후 docs/<단위>/PROGRESS.md 최상단에 §F-6 양식으로 기록(`[갈래][Done|Pending|Blocked|Reverted] … — @작성자 (브랜치) YYYY-MM-DD` — **갈래·날짜를 비우지 않는다**). 되돌림은 [Reverted] 새 항목 append + 원항목 표시(revert가 지운 줄은 되살린다).
 **폴백**: 단위 폴더가 없는 단일 repo면 `docs/PROGRESS.md`에 A와 동일하게. 비-git 폴더면 git status·커밋 단계를 건너뛰고 기록만. `docs/`가 없으면(00 STEP 5 최소 골격만 있는 repo) **append하지 말고** "01 §E-1 기록 체계 미설치"를 알린다.
 다른 단위도 바뀌면 그 단위에 [공통] 교차 한 줄. 미커밋이면 경고. 완료 모호 시 확인 후 기록.
 append 후 해당 PROGRESS·DECISIONS 부피 확인 — ~800줄 또는 ~120KB 초과면 아카이브 안내(가장 오래된 항목부터 임계의 절반 이하까지).
@@ -333,8 +336,8 @@ description: 통합 워크스페이스 재개. 루트+하위 repo git status로 
 # /resume (통합)
 0) 루트+하위 repo 각각: remote 있고 clean이면 `git pull --ff-only` 먼저(아니면 fetch 후 뒤처짐 보고) → git status·브랜치로 미커밋(진행 중) 작업 발견.
 1) 대상 repo(+단위) 판별: PWD > 브랜치 > 질문.
-   **폴백**: 하위 repo가 없는 단일 repo면 0)·1)을 그 repo에만 수행하고 INDEX는 생략(=A와 동일). 비-git 폴더면 0)을 건너뛰고 docs 체계만 읽는다.
-2) <repo>/docs[/<단위>]/PROGRESS.md 최상단(최근 ~5항목) + 최근 DEC 3건 + <repo>/PROJECT_PLAN.md + 루트 docs/INDEX.md 최근 항목 → 보고.
+   **폴백**: 하위 repo가 없는 단일 repo면 0)·1)을 그 repo에만 수행하고 **INDEX만 생략**한다 — **단위 판별은 유지**한다(단일 repo인데 `docs/<단위>/`로 쪼갠 경우가 흔하다. A로 강등하면 그 기록을 못 찾는다). 비-git 폴더면 0)을 건너뛰고 docs 체계만 읽는다.
+2) <repo>/docs[/<단위>]/PROGRESS.md 최상단(최근 ~5항목 — 다인 공유면 현재 브랜치·PWD가 가리키는 **갈래를 우선** 읽고 남의 갈래는 한 줄 요약) + 최근 DEC 3건 + <repo>/PROJECT_PLAN.md + 루트 docs/INDEX.md 최근 항목 → 보고.
    **대상이 루트(워크스페이스 전체)면 하위 각 repo PROGRESS 최상단 ~2항목도 훑어** 최근 활동을 repo당 한 줄로 보고(팀원이 하위에서 남긴 기록은 INDEX에 없다).
 3) 조건부 안내: dropin-applied 30일 경과면 /dropin-check·/dropin-update, 예정일 경과 항목(**미완료 항목만** — `[x]`·취소선 제외), 조치 대기 메모·`게이트 차단(사유)`·`소스없음(사유)`/`확보 실패(사유)` 안내(대상 CLAUDE.md + 글로벌 `~/.claude/CLAUDE.md` 둘 다).
 ```
@@ -345,7 +348,7 @@ name: wrap
 description: 통합 마무리. 건드린 repo마다 <repo>/docs[/<단위>]/PROGRESS.md 기록, 여러 repo면 [공통] 교차, (선택) 루트 INDEX 한 줄, 미커밋 경고, 커밋은 repo별 안내.
 ---
 # /wrap (통합)
-1) 각 repo git status로 변경 감지(**폴백**: 단일 repo면 그 repo만 — 3)·4)는 생략해 A와 동일. 비-git 폴더면 git 단계를 건너뛰고 기록만). 2) 변경 repo마다 docs[/<단위>]/PROGRESS.md 최상단 append(**폴백**: 그 단위에 `docs/`가 없으면 append하지 말고 "01 §E-1 기록 체계 미설치"를 알린다. **루트는 예외** — 얇은 라우터의 루트 `docs/`엔 PROGRESS·DECISIONS·PROJECT_PLAN이 없는 것이 정상이니(`INDEX.md`·워크스페이스 레이어 산출물은 함께 있을 수 있다) 미설치로 보지 않는다).
+1) 각 repo git status로 변경 감지(**폴백**: 단일 repo면 그 repo만 — 3)·4)는 생략해 A와 동일. 비-git 폴더면 git 단계를 건너뛰고 기록만). 2) 변경 repo마다 docs[/<단위>]/PROGRESS.md 최상단 append(§F-6 양식 — `[갈래][…] … — @작성자 (브랜치) YYYY-MM-DD`, **갈래·날짜를 비우지 않는다**. 되돌림은 [Reverted] 새 항목 + 원항목 표시)(**폴백**: 그 단위에 `docs/`가 없으면 append하지 말고 "01 §E-1 기록 체계 미설치"를 알린다. **루트는 예외** — 얇은 라우터의 루트 `docs/`엔 PROGRESS·DECISIONS·PROJECT_PLAN이 없는 것이 정상이니(`INDEX.md`·워크스페이스 레이어 산출물은 함께 있을 수 있다) 미설치로 보지 않는다).
 3) 여러 repo면 주 대상 본문 + 나머지 [공통] 교차. 4) (선택) 루트 docs/INDEX.md 크로스-repo 한 줄+링크.
 5) repo별 변경 파일 보고 + 미커밋 경고. 커밋은 repo별 따로(팀 양식). append한 PROGRESS·DECISIONS가 ~800줄 또는 ~120KB 초과면 아카이브 안내(가장 오래된 항목부터 임계의 절반 이하까지).
 6) 이번 세션에 `~/.claude/`나 저장소 `global-config/`를 고쳤으면 화이트리스트 5종 해시 대조(클론 없으면 생략) — 차이 시 방향 판정+복사 안내. **판정 기준은 A와 동일**(구성 성격 4키만 실제 차이·포함 기준이 정본·글로벌 `CLAUDE.md`의 `dropin-applied` 줄 제외·줄바꿈 정규화 후 비교).
@@ -433,7 +436,7 @@ CLAUDE.local.md
 ```markdown
 - [<갈래>][Done] 게시판 카테고리 트리 추가 — @작성자 (feature/<갈래>) 2026-07-03
 ```
-- **`[<갈래>]`는 flat repo에서도 비우지 않는다**(값 = 프로젝트·기능명). 다인 공유 파일에서 `/resume`이 **내 갈래를 가려낼 유일한 근거**다.
+- **`[<갈래>]`는 flat repo에서도 비우지 않는다**(값 = 프로젝트·기능명). 다인 공유 파일에서 `/resume`이 **내 갈래를 가려낼 유일한 근거**다. **멀티레포에서 갈래는 repo가 아니라 repo 안의 단위**다(repo는 파일 경로가 이미 구분한다 — repo를 적으면 한 파일 안의 모든 항목이 같은 값이 돼 필터 구실을 못 한다).
 - **날짜를 적는다** — union 병합이 최상단 순서를 섞으므로(§F-4) 순서에 의존하면 "최근"이 최근이 아니게 된다.
 - **되돌림**: 원항목을 지우지 말고 **새 항목으로 append**(`[Reverted] <원작업> — <사유>`) + 원항목 끝에 `→ Reverted <날짜>`. `git revert`가 PROGRESS 줄까지 지우면 **그 줄은 되살린다** — 기록은 코드와 함께 되돌리지 않는다(append 전용 원칙이 git 조작으로 깨지는 자리다).
 
@@ -471,7 +474,7 @@ CLAUDE.local.md
 2. **동시성**(코드로 판별했으면 확인만 — §A STEP 1): ⓐ 혼자 / ⓑ 여러 명·**서로 다른 갈래**(각자 다른 프로젝트·기능) / ⓒ 여러 명·**같은 갈래**. → ⓑ부터 `merge=union` **필수**, ⓒ는 MSA 단위분할 **필수**(ⓑ도 갈래가 셋 이상이면 권장). **"같은 갈래"만 묻지 않는 이유** — 서로 다른 프로젝트를 하는 팀은 그 질문에 "아니오"가 나와 기록이 한 파일에 몰린다.
 3. **크로스-repo**: 자주 함께 고치는 repo가 있나? → `additionalDirectories`에 등록.
 4. **커밋 양식**: 팀 표준 커밋 메시지 규칙이 있나? (없으면 §H 기본값)
-5. **루트 레이어**: 통합 환경이면 루트를 개인 git repo로 둘까(백업), 비-git로 둘까?
+5. **루트 레이어**: 통합 환경이면 루트 레이어(§E-4)를 **쓸까**(기본: 아니오 — 권장 기본값은 개별 repo 각자 적용). 쓴다면 루트를 git repo로 둘까(백업), 비-git로 둘까? git repo면 **소유(개인/회사)**도 함께 정한다 — 회사 공유 repo면 라우터·INDEX가 팀 전원에게 커밋되므로 합의가 필요하다.
 6. **기록 위치**: docs를 repo별로 둘까(권장) 한곳에 모을까?
 
 ---
@@ -534,5 +537,5 @@ Claude Code는 매주 바뀐다. 6개월마다 30분:
 ## 핵심 출처 🟢
 IDE 통합·`--add-dir`(ide-integrations·large-codebases) / permissions·deny 한계 / hooks / skills / memory·auto-memory — 모두 `code.claude.com/docs` 및 `docs.anthropic.com`.
 
-**문서 정보** — 통합 마스터(범용) **v1.49**. 변경 이력은 최상단 버전 표 참조(유래: 8개 소스 통합 초판 — `v1.0~v1.32` 병합 행).
+**문서 정보** — 통합 마스터(범용) **v1.50**. 변경 이력은 최상단 버전 표 참조(유래: 8개 소스 통합 초판 — `v1.0~v1.32` 병합 행).
 최종 갱신: 2026-08-20 · 최근 재검증: 2026-08-20 / 참조: Claude Code v2.1.237, Opus 5(v2.1.219+) · Sonnet 5(v2.1.197+) · Fable 5(v2.1.170+).
