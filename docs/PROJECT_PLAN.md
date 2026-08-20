@@ -106,29 +106,15 @@
 - [x] ~~**다음 /audit(회귀 모드): 2026-09경**~~ → **완료(2026-08-20)**: 6차 조사·보고(34건) 후 산출물 미보존으로 **재도출** — 렌즈 A~F 6종 병렬, 원시 69 → **확정 54건 전건 수정**, `check.ps1` 통과. 보고서 `docs/audit-20260820-6.md`. 아래 원문 보존.
 - [x] ~~**다음 /audit(회귀 모드): 2026-09경** — 2026-08-20 6문서 대량 개정(00 v1.24~06 v1.9) 직후 필수 절차(DEC-20260812-bsjeong87-15 ① — 권장이 아니라 절차). **2026-08-20 조사·보고까지 수행(확정 34건) — 수정 미착수라 미완**~~: 수정을 마치고 check.ps1 재실행이 통과해야 이 줄을 체크한다(발견 목록은 아래 미해결 항목이 보유)
 - [ ] **다음 내부 정합성 전수조사: 2027-02경** — `/audit`(분기 1회 또는 개정 몰린 뒤 — 이 repo 전용 프로젝트 스킬. 2026-08-12에 1~5차 수행: 1·2차=전수, 3차=회귀, 4차=앵커 없는 전수, 5차=회귀). **다음 회차는 전수 모드로**(5차가 회귀였으므로 — DEC-20260812-bsjeong87-14 ① 모드 교대). 단 그 전에 **대량 일괄 수정이 또 생기면 그때마다 회귀 감사를 먼저 돌린다**(DEC-20260812-bsjeong87-15 ① — 권장이 아니라 절차). 예정일이 지나면 /resume가 안내
-- [ ] **다음 재검증: 2027-01경** (00 §L, 6개월 주기)
-  - 중복 재심 🟡 잔여: Context7·Caveman 생존, todo-tracking 공식 문서(2026-08-10 404), `/team-onboarding` 재평가 ([[DEC-20260810-bsjeong87-02]])
-  - `code.claude.com/docs/en/whats-new` 최신 항목
-  - 🔴🟡 항목: deny 서브프로세스 우회, **샌드박스 네이티브 Windows 지원 여부**, `attribution` 스키마, auto-memory 한도, `sandbox.credentials` 스키마
-  - `/model` 별칭이 가리키는 실제 모델, `/effort` 단계·`ultracode` 동작, frontmatter `effort:` 키 유지 여부
-  - humanizer frontmatter `allowed-tools` 공백 구분 표기의 파서 동작(2026-08-12 /audit 의심 인계 — 2차에서도 미해소 확인)
-  - `/skills` 명령 실재 여부(skill-setup의 "스킬 로드 확인(`/skills`)" 줄이 이 명령에 의존 — 03은 `/` 자동완성·`/context`를 씀. 줄번호는 개정마다 밀리므로 인용 문구로 찾는다. 2026-08-12 /audit 2차 인계)
-  - **hooks 세션 재로딩** — 04 §1 검증이 "같은 세션에 병합한 hook이 즉시 도는가"를 전제한다. 아니라면 그 검증은 "방금 건 hook"이 아니라 "아무 hook도 없는 상태"를 통과로 읽어 **설치 실패가 검증 통과로 위장**된다. 공식 문서로 확인 후 04 §1 검증 문구 확정(2026-08-12 /audit 4차 인계 — 04 §L에도 🟡 등재). **2026-08-20 실측 근거 확보**: 현행 hooks 문서가 "settings 파일 직접 수정은 file watcher가 자동 반영"이라 명시 — 재검증 시 이 근거로 확정하면 된다
-  - **output-styles 동명 우선순위** — 05 §2 감지("작업 디렉터리에 가까운 쪽 우선", 2026-08-04 조회)는 스킬 기준 "enterprise > personal > project"(01 §F-2, 08-12 재확인)와 방향이 반대다. 기능이 달라 둘 다 참일 수 있으나 한쪽만 갱신됐을 가능성 — 공식 문서로 확인 후 표현 통일(2026-08-12 /audit 2차 인계)
-  - ~~`pages/intro.html:211` 시연 화면의 `Claude Code v2.1.221` 표기 — 유지(소품)/숫자 제거/현행 반영 중 결정~~ → **해소(2026-08-12)**: 사용자 선택 **숫자 제거**(`▸ Claude Code`) — 소품이 CLI 버전을 따라 낡는 구조 자체를 제거. 사람용 5종 `v2.1.x` 표기 0건
-  - auto mode 요건(플랜·모델·프로바이더)·`disableAutoMode` 유지 여부(01 §J-1)
-  - 03 소스 생존: `github.com/jarrodwatts/claude-hud` 설치 명령, `github.com/anthropics/skills`의 frontend-design 위치·설치 CLI, `claude mcp` 명령 체계, 부록 플러그인 생존·중복 재판정
-  - 04: hooks 스키마·`claude-code-action` 버전·gh/glab 설치 명령 · **GitLab CI/CD 통합(beta→GA·`.gitlab-ci.yml` 정본 템플릿·필요 변수)** — 04 §L에만 있고 이 목록·`/reverify` C축 어디에도 없던 것을 2026-08-20 /audit 6차가 적발해 등재 · **GitLab 공식 경로의 러너 요건**(공식 통합에도 러너에 Claude Code 수동 설치가 필요한가 — 04 §3-B 셋째 불릿의 귀속이 이 답에 달렸다)
-  - **PreCompact `exit 2`의 stderr 표시 채널**(2026-08-20 /audit 6차 재도출 인계) — 차단 메시지가 사용자 화면에 뜨는지 Claude에게만 가는지. Claude 경유라면 "5분 내 재실행" override 안내가 사용자에게 닿지 않아 실행 불가능한 지시가 된다(통과 경로는 stdout, 차단만 stderr로 채널이 다르다)
-  - **`/schedule` 중지·삭제 하위명령 존재 여부**(같은 인계) — 06 v1.9가 생성 축만 CLI로 현행화하고 관리·제거(§5·§6)는 "웹에서" v1.0 서술 그대로다. CLI만 쓰는 사용자가 폐기를 미루면 불필요한 루틴이 사용량을 계속 태운다
-  - **GitLab 공식 통합이 `CLAUDE_CODE_OAUTH_TOKEN`(구독 인증)을 받는지**(같은 인계) — GitHub 축엔 병기했고 GitLab 축엔 API 키만 적혀 있다. 구독만 있는 사용자가 §3을 포기하거나 불필요한 종량 과금을 연다
-  - **frontend-design이 Claude Code 내장인지**(같은 인계) — `skill-setup`만 "내장이면 제외" 힌트를 갖고 03 §3 감지엔 없다. 내장이면 03을 따른 사용자가 내장본 위에 설치본을 얹고, 03 §3 검증은 어느 쪽이든 통과한다
-  - **03 플러그인 경로 3종의 관계**(2026-08-20 /audit 6차 인계) — 실행 캐시 `~/.claude/plugins/cache/` · 설치 목록 `installed_plugins.json` · 설정 `~/.claude/plugins/claude-hud/config.json`이 공존하는지, 감지의 "`claude-hud` 폴더 존재" 확인이 유효한지
-  - **`autoMode.soft_deny`가 구성 성격 키인가**(2026-08-20 /audit 6차 인계) — deny와 같은 보안 성격인데 미러 대조의 4키 포함 기준 밖이라 다른 PC에서 갈라져도 감지되지 않고 복원 병합에서도 빠진다(`autoMode.environment`는 명백히 머신 종속). 판정 후 포함 기준 한 줄에 반영하거나 머신 종속 확정을 DEC로
-  - 05: `outputStyle` 키·frontmatter(`keep-coding-instructions` 기본값)·내장 스타일 목록
-  - 06: **routines preview→GA 전환 여부(3개월 주기 권장)**·`/schedule` 명령·요금제 범위·시크릿 저장소 신설 여부
-  - 00 §B 문서 목록·raw URL이 실제 저장소와 일치하는지
-  - 갱신 후 각 문서 "최종 갱신" 날짜 수정
+- [x] ~~**다음 재검증: 2027-01경** (00 §L, 6개월 주기)~~ → **완료(2026-08-20)**: `/reverify` 4축 병렬 조사 → 정정 5건 반영(7문서 bump 00 v1.26~06 v1.11), **🟡 17건 해소**, 확장 후보 5건 보고(선택 대기). 아래 목록은 잔여·상시 축만 남겨 재작성 ([[DEC-20260820-bsjeong87-08]]).
+- [ ] **다음 재검증: 2027-02경** (00 §L, 6개월 주기 — GitLab beta·routines preview 항목만 3개월)
+  - **상시 축**: `whats-new` 최신 항목 · 03 소스 생존(claude-hud·anthropics/skills·Chrome·부록 플러그인) · 04 GitLab CI/CD **beta→GA**(2026-08-20 여전히 beta) · 06 routines **preview→GA**(여전히 preview) · 05 `outputStyle` 키·내장 스타일 증감(2026-08-20 4종→**5종** Concise) · 00 §B 문서 목록·raw URL · `/model` 별칭 · 갱신 후 날짜 수정
+  - 🟡 **`sandbox.credentials` 스키마 상세** — 2026-08-20 조회에서 인접 키(`allowUnsandboxedCommands`·`denyRead`·`denyWrite`)만 확인되고 `credentials` 자체 스키마는 공식 문서에서 못 찾았다(샌드박스 지원 OS·네이티브 Windows 미지원은 유효 확인 완료).
+  - 🟡 **03 플러그인 경로 3종의 관계**(2026-08-20 /audit 6차 인계 — 이번 재검증 4축 어디에도 안 실려 **미조사로 이월**): 실행 캐시 `~/.claude/plugins/cache/` · 설치 목록 `installed_plugins.json` · 설정 `<플러그인>/config.json`이 공존하는지, 감지가 어느 것을 봐야 하는지.
+  - 🟡 **`json.schemastore.org` → `www.schemastore.org` 301** — 원본 URL은 200이나 정본 호스트가 `www.`다. 인용처를 정본으로 바꿀지 판단.
+  - 🟡 **glab 설치 경로의 공식/커뮤니티 구분** — 공식 README는 Homebrew만 "officially supported", winget·choco·scoop은 커뮤니티 유지보수다. 04에 그 구분이 없다(경미).
+  - 🟡 **GitLab 구독 인증 비대칭이 04에 명시되지 않음** — GitHub Actions는 `CLAUDE_CODE_OAUTH_TOKEN`(구독)을 받지만 GitLab CI/CD는 **API 키 전용**이다(2026-08-20 확인, 04 §3-A·§3-B 서술 자체는 정확). 구독만 있는 사용자가 §3-B를 보고 될 거라 기대할 여지.
+  - 🟡 **obra/superpowers 역전** — Anthropic **공식 마켓플레이스**에 등재됐다(`/plugin install superpowers@claude-plugins-official`). 과거 기각(서드파티 중복)의 전제가 바뀌었으므로 03 부록 재평가 대상. **확장 후보로 보고됨 — 사용자 선택 대기.**
 
 ---
 
