@@ -1,6 +1,6 @@
 # Claude Code 통합 구성 — 범용 마스터 (드롭인 적용)
 
-> **문서 버전: v1.44** · 최종 갱신: **2026-08-20** · **최근 재검증: 2026-08-20** · 기준: Claude Code v2.1.237 (Opus 5 · Sonnet 5 · Fable 5)
+> **문서 버전: v1.45** · 최종 갱신: **2026-08-20** · **최근 재검증: 2026-08-20** · 기준: Claude Code v2.1.237 (Opus 5 · Sonnet 5 · Fable 5)
 >
 > | 버전 | 날짜 | 변경 내용 |
 > | --- | --- | --- |
@@ -49,6 +49,7 @@
 > | v1.42 | 2026-08-20 | §L 정리 — 유효 확인된 4건(deny 우회·샌드박스 Windows 미지원·`attribution`·auto-memory 한도)을 🔴🟡에서 분리, 🔴🟡는 `sandbox.credentials` 스키마만 |
 > | v1.43 | 2026-08-20 | 아카이브 임계에 **크기 축(~120KB) 추가**·대상에 DECISIONS 포함·자를 양은 달력이 아니라 목표치(임계의 절반 이하)로(§F-1·§F-2 A/B/C), /resume 예정일 안내는 **미완료 항목만**(`[x]`·취소선 제외) |
 > | v1.44 | 2026-08-20 | 재검증 2회차: Read deny가 **Write까지 차단**(v2.1.228+, 3곳), auto mode는 Team·Ent도 **기본 제공**(옵트아웃)·**Pro·Max·Team 기본 시작 모드**(8/14~)·`Shift+Tab` 순환 순서 정정, `sandbox.credentials` 스키마 확보로 **§L 🔴🟡 소진**, hooks 매처 `,` 허용·`SessionStart` 5종, `attribution.sessionUrl` 기본 true |
+> | v1.45 | 2026-08-20 | 확장 후보 편입: §J에 **격리 3단**(내장 샌드박스 → dev container → VM) — **네이티브 Windows에서 격리가 필요할 때의 공식 대안**이 그동안 이 문서에 없어 "미지원"에서 서술이 끊겼다. §L에 소비자 축 추가 |
 >
 > ※ 갱신 시: 이 표에 한 줄 추가 + 하단 "문서 정보" 날짜 수정 + §L 재검증 체크리스트 수행.
 
@@ -500,6 +501,7 @@ CLAUDE.local.md
 - **남은 구멍 2개**: ① 임의 서브프로세스(python/node 스크립트가 파일을 직접 open) 우회 가능 → OS 수준 차단은 아래 샌드박스. ② `cat`·`ls`·`head`·`grep` 등 읽기전용 내장 명령은 **기본적으로 프롬프트 없이 실행**되므로, 막으려면 명시적 ask/deny 규칙 필요.
 - **샌드박스(2026-08-04 재검증)** 🔴: `/sandbox` 또는 `sandbox.enabled`로 켜는 OS 수준 격리(Bash 명령+자식 프로세스의 파일·네트워크 접근을 OS가 강제). 지원: **macOS(Seatbelt) · Linux · WSL2(bubblewrap+socat)**. **네이티브 Windows는 여전히 미지원** → Windows에선 WSL2에서 돌리거나, allow 좁게 + deny 규칙 기반으로 운용. ~~"Windows/Linux 모두 없음"~~은 구버전 서술(Linux·WSL2는 지원됨).
   - 샌드박스 기본 읽기 정책은 **컴퓨터 전체 읽기 허용**(일부 시스템 경로 제외)이라 `~/.ssh`·`~/.aws`는 **`sandbox.credentials`**(v2.1.187+)로 명시 차단하거나 env 토큰은 `mode: "mask"`(v2.1.199+)로 대체 — 형식은 `credentials.files[]`={path,mode}·`credentials.envVars[]`={name,mode}(mode=`deny`|`mask`)이고, **`mask`는 user/managed 스코프에서만 유효하며 `network.tlsTerminate`가 필요**하다. 전 서브프로세스에서 Anthropic·클라우드 자격증명 제거는 `CLAUDE_CODE_SUBPROCESS_ENV_SCRUB`. 파일 격리만 끄고 네트워크 격리는 유지하려면 `sandbox.filesystem.disabled`(v2.1.216+, user/managed 스코프만 유효).
+- **격리 3단 — 어느 것을 쓰나**: 내장 샌드박스(위, 설치 불요·macOS·Linux·WSL2) → **dev container**(Docker 전제 — `.devcontainer/devcontainer.json` + 이그레스 방화벽 스크립트. **네이티브 Windows에서 격리가 필요할 때의 공식 대안**이다) → 전용 VM. 컨테이너에 `~/.ssh`·클라우드 자격증명을 마운트하면 격리 의미가 사라진다. 절차는 공식 `devcontainer` 문서를 직접 참조 — 이 문서는 선택 기준만 든다.
 - **PowerShell 규칙**: `PowerShell(Get-Content *)` deny 하나로 별칭(`gc`·`type`·`cat`)까지 자동 매칭(대소문자 무관, 파이프·`;`로 나뉜 복합 명령은 **모든 하위 명령**이 규칙을 통과해야 허용). Bash 규칙은 별칭 정규화가 없으므로 Git Bash 병용 시 3종 유지(§D-3·§F-3).
 - **규칙 우선순위**: deny → ask → allow 순 첫 매치. 넓은 deny는 더 좁은 allow보다 항상 우선(= deny에 예외를 뚫을 수 없음). 스코프 간에도 동일 — 어느 스코프든 deny가 있으면 다른 스코프 allow로 못 뚫는다.
 - **파라미터 매칭**: deny/ask 규칙은 `Tool(param:value)` 형식으로 도구의 최상위 입력 파라미터도 매칭 가능(예: `Agent(model:opus)`, 샌드박스 우회 재시도에 프롬프트를 강제하는 `Bash(dangerouslyDisableSandbox:true)` ask). 단 `command`·`file_path` 등 자체 매칭 문법이 있는 필드는 불가.
@@ -540,6 +542,7 @@ Claude Code는 매주 바뀐다. 6개월마다 30분:
 - `code.claude.com/docs/en/whats-new` 최신 항목 확인.
 - 🔴🟡: **현재 없음**(2026-08-20 `sandbox.credentials` 스키마 확인으로 마지막 항목 해소). 조회 팁 — `settings` 레퍼런스는 페이지가 길어 fetch가 알파벳 중간에서 잘린다. sandbox·attribution 절은 `settings.md` 원문을 직접 받아야 보인다.
 - 정기 확인(2026-08-20 전부 유효): deny의 서브프로세스 우회 한계, **샌드박스 네이티브 Windows 미지원**(macOS·Linux·WSL2만 — sandboxing), `sandbox.credentials` 스키마(`files[]`={path,mode}·`envVars[]`={name,mode}, mode=`deny`|`mask` + `extract`·`decode`·`injectHosts`·`awsPairs`·`sigv4`), `attribution` 스키마, auto-memory 한도(MEMORY.md 200줄/25KB).
+- **dev container 격리 경로**(§J 격리 3단) — feature 이미지·이그레스 방화벽 스크립트 구성이 유지되는지, 네이티브 Windows 대안이라는 위치가 바뀌지 않았는지(내장 샌드박스가 Windows를 지원하기 시작하면 이 줄의 근거가 사라진다).
 - `/model` 최신 정책(별칭이 가리키는 실제 모델·`best`의 해석), `claude --version`.
 - `/effort` 단계 명칭·모델별 지원 범위·`ultracode` 동작, 에이전트·스킬 frontmatter `effort:` 키 유지 여부(§D-6, 2026-07-20 확정).
 - §F-2 **A·B·C 전 템플릿**의 폴백(비-git·`docs/` 부재·단위 없음·단일 repo)·**조건부 안내 어휘**(조치 대기·`게이트 차단`·`소스없음`/`확보 실패` — 새 어휘가 늘 때마다 템플릿 3곳도 함께 늘려야 한다)·**미러 대조 판정 기준**(구성 성격 4키·포함 기준 정본·`dropin-applied` 줄 제외·줄바꿈 정규화)이 배포된 글로벌 스킬 실물과 일치하는지 — 문서만 고치고 스킬을 빠뜨리면(또는 그 반대로) 같은 공백이 방향만 바꿔 재발한다. **점검 범위에서 A를 빼지 말 것**: 단일 repo 신규 설치자가 쓰는 것이 A다(도입 경위는 버전 표 v1.26·v1.29 행).
@@ -551,5 +554,5 @@ Claude Code는 매주 바뀐다. 6개월마다 30분:
 ## 핵심 출처 🟢
 IDE 통합·`--add-dir`(ide-integrations·large-codebases) / permissions·deny 한계 / hooks / skills / memory·auto-memory — 모두 `code.claude.com/docs` 및 `docs.anthropic.com`.
 
-**문서 정보** — 통합 마스터(범용) **v1.44**. 변경 이력은 최상단 버전 표 참조(유래: 8개 소스 통합 초판 — v1.0 행).
+**문서 정보** — 통합 마스터(범용) **v1.45**. 변경 이력은 최상단 버전 표 참조(유래: 8개 소스 통합 초판 — v1.0 행).
 최종 갱신: 2026-08-20 · 최근 재검증: 2026-08-20 / 참조: Claude Code v2.1.237, Opus 5(v2.1.219+) · Sonnet 5(v2.1.197+) · Fable 5(v2.1.170+).
