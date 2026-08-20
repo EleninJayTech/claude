@@ -37,7 +37,7 @@
 | R04 | 미러 대조에서 `dropin-applied`로 시작하는 줄은 **차이로 치지 않는다**(PC별 값) | `차이로 치지 않는다` | `00` `01` `RC` `GR` `~wrap` `~check` `p:audit` | |
 | R05 | `settings.json`은 **구성 성격 키만** 실차이 — 포함 기준 한 줄이 정본이고 제외 목록을 늘리지 않는다 | `구성 성격` | `01` `RC` `GR` `~wrap` `~check` `p:audit` | |
 | R06 | 스코프 우선순위 **enterprise > personal > project**(개인이 프로젝트를 덮는다) | `enterprise > personal > project` | `00` `01` `02` `03` `~resume` `~wrap` `~check` | `~setup` |
-| R07 | PROGRESS **약 800줄/분기 경계**를 넘으면 아카이브 분할 | `800줄` | `01` `RC` `~wrap` | |
+| R07 | PROGRESS·DECISIONS가 **약 800줄 또는 약 120KB**(먼저 닿는 쪽)를 넘으면 아카이브 분할 — 가장 오래된 항목부터 **활성 파일이 임계의 절반 이하**가 될 때까지(날짜 경계에 맞춰) | `120KB` | `01` `RC` `~wrap` | |
 | R08 | 미해소 `[Pending]`·`[Blocked]`는 PROJECT_PLAN **"미해결/관찰 중"**에 올려 닫힐 때까지 유지 | `미해결/관찰 중` | `01` `RC` `~wrap` | |
 | R09 | 정기 항목은 **`다음 ○○: YYYY-MM경`** 형식(이 형식이라야 `/resume` 예정일 안내가 발화) | `YYYY-MM경` | `01` `RC` `~wrap` | `p:audit` `p:reverify` |
 | R10 | 적용 기록은 리터럴 `dropin-applied:`가 아니라 **`dropin-applied`로 시작하는 줄**로 찾는다 | `리터럴` | `00` `~check` | |
@@ -49,6 +49,7 @@
 | R16 | `docs/` append 파일은 `.gitattributes` **`merge=union`** | `merge=union` | `00` `01` `06` `RC` | `~setup` |
 | R17 | **비-git 폴더 면제** — git 의존 항목(커밋 절차·`.gitattributes`·git status)을 건너뛴다 | `비-git` | `00` `01` `~resume` `~wrap` | `p:audit` |
 | R18 | 반영은 요지만 — 경위·발견 ID는 본문·버전 표에 남기지 않는다(경위는 PROGRESS·git 몫, 마커 문자열은 보존) | `경위·발견 ID` | `p:audit` `p:reverify` | |
+| R19 | `/resume` 예정일 안내는 **미완료 항목만** 읽는다(`[x]`·취소선 종결 항목 제외 — R09 형식의 소비자 축) | `미완료 항목만` | `01` `~resume` | |
 
 ---
 
