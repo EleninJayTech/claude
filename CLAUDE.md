@@ -10,8 +10,8 @@ Claude Code 셋업·운영을 위한 **드롭인 지시 문서** 저장소. 코�
 ## 구성물
 | 파일 | 역할 | 버전 |
 | --- | --- | --- |
-| `00_통합-설치.md` | 01~06 통합 설치 셀렉터 — 문서 확보→감지→설치 모드(최소/권장/전체/사용자)+목적 번들(§C-2 합집합)+운용 프로필(표준/절약)→해당 문서 프로토콜로 위임, 적용 기록(`dropin-applied` — `출처=` 포함)·재적용 분기 | v1.29 (2026-08-20) |
-| `01_Claude-Code-통합구성-범용마스터.md` | 글로벌+프로젝트 셋업 마스터(§D 글로벌·§E 환경별·§F SSOT 블록·§J-1 auto mode·§D-6 절약 프로필) — 구성 항목 부분 선택 | v1.48 (2026-08-20) |
+| `00_통합-설치.md` | 01~06 통합 설치 셀렉터 — 문서 확보→감지→설치 모드(최소/권장/전체/사용자)+목적 번들(§C-2 합집합)+운용 프로필(표준/절약)→해당 문서 프로토콜로 위임, 적용 기록(`dropin-applied` — `출처=` 포함)·재적용 분기 | v1.30 (2026-08-21) |
+| `01_Claude-Code-통합구성-범용마스터.md` | 글로벌+프로젝트 셋업 마스터(§D 글로벌·§E 환경별·§F SSOT 블록·§J-1 auto mode·§D-6 절약 프로필) — 구성 항목 부분 선택 | v1.49 (2026-08-21) |
 | `02_모델분담-범용-플레이북.md` | 상위/하위 모델 자동 분담, `.claude/agents/` 로스터 템플릿(에이전트별 선택, 리뷰 정본=내장 `/code-review`, §F 절약 배정=Sonnet+advisor 패턴, 비개발 repo 가드) | v1.32 (2026-08-20) |
 | `03_확장기능-설치-체크리스트.md` | 확장 5종(claude-hud·svg-design·frontend-design·MCP·브라우저 검증) 체크리스트 설치 + 플러그인 부록 | v1.20 (2026-08-20) |
 | `04_검증-자동화.md` | 검증 3종(hooks 게이트·gh/glab CLI·CI 통합) — git 호스트 감지 분기, 회사 정책 확인 게이트 | v1.15 (2026-08-20) |
@@ -55,10 +55,12 @@ Claude Code 셋업·운영을 위한 **드롭인 지시 문서** 저장소. 코�
 ### 작업 기록 구조
 - 기록(PROGRESS·DECISIONS)은 flat(docs/) 또는 단위 분할(docs/<단위>/, MSA 정책). 마스터 PROJECT_PLAN.md만 docs/ 루트.
 - /resume·/wrap은 대상(repo+단위)을 PWD>브랜치>질문 순으로 판별.
-- 기록 항목 양식: [단위][상태(Done/Pending/Blocked)] 설명 — @작성자 (브랜치). 최상단 append.
+- 기록 항목 양식: [갈래][상태(Done/Pending/Blocked/Reverted)] 설명 — @작성자 (브랜치) YYYY-MM-DD. 최상단 append. **갈래·날짜를 비우지 않는다** — 다인 공유 파일에서 갈래는 /resume의 유일한 필터고, 날짜는 union 병합이 순서를 섞을 때 유일한 시간 근거다.
 
 ### 동시편집 충돌
 - PROGRESS·DECISIONS는 append 전용(기존 줄 수정 금지). .gitattributes의 merge=union이 동시 append를 자동 합침.
+- **PROJECT_PLAN.md·CLAUDE.md엔 merge=union을 걸지 않는다** — 체크박스 토글·기록 줄 교체는 줄 수정이라 union이면 양쪽이 다 남아 파손된다. 충돌은 손으로: PROJECT_PLAN은 체크박스=완료 우선·미해결=합집합, CLAUDE.md의 dropin-applied는 적용일 최신 줄 기준.
+- **되돌림**: 원항목을 지우지 말고 [Reverted] 새 항목 append + 원항목 끝에 "→ Reverted <날짜>". git revert가 PROGRESS 줄까지 지우면 그 줄은 되살린다(기록은 코드와 함께 되돌리지 않는다).
 - DECISIONS id는 동시 발번 충돌을 피해 날짜+작성자 포함(예: DEC-20260703-min).
 
 ### 여러 대상 동시 변경 (방법 A)

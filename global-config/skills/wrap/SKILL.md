@@ -7,6 +7,13 @@ description: 세션 종료 시 사용. 건드린 repo마다 docs/PROGRESS.md 최
 
 오늘 세션 마무리. docs/PROGRESS.md 최상단에 오늘 작업 항목을 append,
 새 결정은 docs/DECISIONS.md에 **DEC-YYYYMMDD-<작성자>** id로 추가(동시 발번 충돌 방지 — 예: DEC-20260812-min), docs/PROJECT_PLAN.md 체크박스 갱신.
+**기록 항목 양식**: `[갈래][Done|Pending|Blocked|Reverted] 설명 — @작성자 (브랜치) YYYY-MM-DD`. **갈래·날짜를 비우지 않는다** —
+여러 사람이 한 파일에 쓰는 repo에서 갈래는 /resume이 내 작업을 가려낼 유일한 필터이고,
+union 병합이 최상단 순서를 섞으므로(장수 검수·release 브랜치) 날짜가 유일한 시간 근거다.
+**되돌림**(검수 탈락·revert): 원항목을 지우지 말고 `[Reverted] <원작업> — <사유>` 새 항목을 append하고 원항목 끝에 `→ Reverted <날짜>`를 붙인다.
+`git revert`가 PROGRESS 줄까지 지웠으면 **그 줄은 되살린다** — 기록은 코드와 함께 되돌리지 않는다(append 전용 원칙이 git 조작으로 깨지는 자리다).
+**PROJECT_PLAN·CLAUDE.md엔 `merge=union`을 걸지 않는다** — 체크박스 토글·기록 줄 교체는 줄 수정이라 union이면 양쪽이 다 남아 파손된다.
+충돌은 손으로 합친다(체크박스=완료 우선·미해결=합집합 / `dropin-applied`는 적용일 최신 줄 기준).
 **이번에 append한 항목에 미해소 `[Pending]`·`[Blocked]`가 있으면 PROJECT_PLAN "미해결/관찰 중"에 한 줄로 올린다**(닫힐 때까지 유지) —
 PROGRESS는 append 전용이고 /resume은 최근 ~5항목만 읽으므로, 그 항목이 5항목 창 밖으로 밀리는 순간 어느 절차도 다시 보지 않는다.
 정기 항목(재검증·점검 주기)은 **`다음 ○○: YYYY-MM경`** 형식으로 남긴다 — /resume의 "예정일 경과" 안내가 읽는 형식이라, 안 적으면 그 안내는 발화하지 않는다.

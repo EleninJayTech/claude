@@ -19,7 +19,7 @@ description: 세션 시작 시 사용. remote가 있으면 원격 최신화(clea
 0. remote가 있고 워킹트리가 clean이면 `git pull --ff-only`로 먼저 최신화한다
    (미커밋이 있거나 ff 불가면 pull 대신 `git fetch`로 뒤처짐만 보고 — 병합은 사용자 결정).
 1. `git status`·현재 브랜치로 미커밋(진행 중) 작업을 발견하고,
-2. CLAUDE.md(프로젝트 + **글로벌 `~/.claude/CLAUDE.md`** — 3의 조건부 안내가 읽는 `dropin-applied`는 스코프별로 따로 있고, 글로벌만 적용한 PC에선 글로벌 줄이 유일한 기록이다), docs/PROGRESS.md(최상단 — **최근 ~5항목만**, 항목이 길면 **항목당 앞 ~700자**에서 끊는다. 줄 수가 아니라 항목 수다 — 1항목=1줄 형식에선 줄 상한이 상한 구실을 못 한다. 통째 읽기 금지), docs/DECISIONS.md 최근 3건(최상단 Read limit), docs/PROJECT_PLAN.md를 읽어
+2. CLAUDE.md(프로젝트 + **글로벌 `~/.claude/CLAUDE.md`** — 3의 조건부 안내가 읽는 `dropin-applied`는 스코프별로 따로 있고, 글로벌만 적용한 PC에선 글로벌 줄이 유일한 기록이다), docs/PROGRESS.md(최상단 — **최근 ~5항목만**, 항목이 길면 **항목당 앞 ~700자**에서 끊는다. 줄 수가 아니라 항목 수다 — 1항목=1줄 형식에선 줄 상한이 상한 구실을 못 한다. 통째 읽기 금지. **여러 사람이 한 파일에 쓰는 repo면 최상단 5항목이 남의 갈래로 채워진다** — 현재 브랜치·PWD가 가리키는 **갈래를 우선** 읽고 남의 갈래는 갈래별 한 줄로 요약한다. 항목 머리의 `[갈래]`와 끝의 날짜가 판별 근거다), docs/DECISIONS.md 최근 3건(최상단 Read limit), docs/PROJECT_PLAN.md를 읽어
    "지난 작업은 X, 다음은 Y로 진행할까요?" 형태로 요약 보고하라.
 3. 점검 안내(조건부 — 해당할 때만 보고 말미에 한 줄):
    - CLAUDE.md의 `dropin-applied` 적용일이 **30일 이상 경과** → "`/dropin-check`(적용 상태 점검)·`/dropin-update`(문서 최신화) 권장".

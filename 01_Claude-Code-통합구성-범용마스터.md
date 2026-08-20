@@ -1,6 +1,6 @@
 # Claude Code 통합 구성 — 범용 마스터 (드롭인 적용)
 
-> **문서 버전: v1.48** · 최종 갱신: **2026-08-20** · **최근 재검증: 2026-08-20** · 기준: Claude Code v2.1.237 (Opus 5 · Sonnet 5 · Fable 5)
+> **문서 버전: v1.49** · 최종 갱신: **2026-08-21** · **최근 재검증: 2026-08-20** · 기준: Claude Code v2.1.237 (Opus 5 · Sonnet 5 · Fable 5)
 >
 > | 버전 | 날짜 | 변경 내용 |
 > | --- | --- | --- |
@@ -21,6 +21,7 @@
 > | v1.46 | 2026-08-20 | **최적화**: 버전 표·본문 압축(규칙 불변) — §L이 정본인 인라인 재검증 날짜 제거 포함 |
 > | v1.47 | 2026-08-20 | **최적화**: R20 적용 — 구 행 v1.0~v1.32을 축 요약 한 줄로 |
 > | v1.48 | 2026-08-20 | 병합 행 정정 — `출처=` 귀속(v1.20)과 /wrap 미러 대조(v1.25) 분리, 내장 Tasks 대비 정본 유지 복원 |
+> | v1.49 | 2026-08-21 | **다인 축 배선**(R21~R24) — 동시성 질문 **3분기**(ⓐ 혼자/ⓑ 다른 갈래/ⓒ 같은 갈래, STEP 1에 기여자 수 감지)·기록 양식에 **갈래·날짜**·`/resume` 갈래 우선·**되돌림 `[Reverted]`**·`PROJECT_PLAN`·`CLAUDE.md` **union 금지 명시**·§E-3에 팀원 전원 B 필수·A 폴백에 단위분할 감지·§E-2 권장 기본값(개별 repo)·§F-5 조건을 소유에서 **git 중첩**으로 |
 > ※ 갱신 시: 이 표에 한 줄 추가 + 하단 "문서 정보" 날짜 수정 + §L 재검증 체크리스트 수행.
 
 > **사용법**: 이 파일을 아무 프로젝트 루트(또는 `docs/`)에 넣고 Claude에게
@@ -47,8 +48,9 @@
 - 상위 폴더가 git인가? 하위 repo들이 한 폴더 아래 모여 있나, 흩어져 있나?
 - 빌드/스택 감지(`package.json`·`pom.xml`·`build.gradle`·`composer.json`·`go.mod`·`Cargo.toml`…).
 - 기존 `CLAUDE.md`·`docs/`·`.claude/` 유무, git 브랜치·미커밋.
+- **다인 여부**: `git shortlog -sne --since="6 months"`의 기여자 수 → 2명 이상이면 다인으로 보고 STEP 2 (b)는 **확인만** 한다(커밋 로그에 적혀 있는 것을 묻지 않는다).
 
-**STEP 2 — 부족분 질문(모르는 것만, §I).** 특히: (a) 환경 유형 확정, (b) **여러 팀원이 같은 단위를 동시 편집**하는가(→ MSA 단위분할 필요 판단), (c) 커밋 양식, (d) 자주 함께 고치는 repo(→ `additionalDirectories`). 이미 코드로 안 것은 "이렇게 이해했다"로 확인만.
+**STEP 2 — 부족분 질문(모르는 것만, §I).** 특히: (a) 환경 유형 확정, (b) **동시성 3분기**(ⓐ 혼자 / ⓑ 여러 명·**서로 다른 갈래** / ⓒ 여러 명·같은 갈래), (c) 커밋 양식, (d) 자주 함께 고치는 repo(→ `additionalDirectories`). 이미 코드로 안 것은 "이렇게 이해했다"로 확인만.
 
 **STEP 3 — 구성 항목 선택 확인 → 필요한 것만 생성.** 감지 결과를 바탕으로 아래 항목을 **선택 목록(다중 선택)으로 제시**하고, 체크된 것만 생성한다(전부 기본 체크, 이미 있는 항목은 "유지/재구성" 표기):
 - ⓐ 글로벌 행동 규칙(§D-2 CLAUDE.md) ⓑ 글로벌 보안(§D-3 deny·hooks) ⓒ `/resume`·`/wrap`·점검 스킬 dropin-check/update(§D-4·F-2) ⓓ 프로젝트 기록 체계(§E·F-1: docs/·CLAUDE.md·.gitattributes·§F-5 .gitignore) ⓔ 프로젝트 권한(§F-3 settings.json) ⓕ effort 가이드(§D-6, 안내만)
@@ -190,17 +192,18 @@ New-Item -ItemType Directory -Path .claude/skills/dropin-update -Force
 
 ### E-1. 🅱️ 단일 repo (B)
 - `docs/` **flat**: `PROJECT_PLAN.md` · `PROGRESS.md` · `DECISIONS.md` (§F-6 양식).
-- 스킬: 글로벌 기본형(§F-2 A) 사용. `.gitattributes` merge=union(§F-4)은 다인 협업이면 권장.
+- 스킬: 글로벌 기본형(§F-2 A) 사용. `.gitattributes` merge=union(§F-4)은 **동시성 ⓑ·ⓒ면 필수**(§I 2).
 - 커밋: `git add CLAUDE.md docs .claude .gitignore` → 한 repo에서 커밋.
 
 ### E-2. 🅰️ 통합 멀티레포 (A-1 공통상위 / A-2 흩어짐)
+- **권장 기본값 = 개별 repo에서 각자 적용**(§E-1). 루트 레이어(§E-4)는 통합 조회가 필요한 개인의 **선택 사항**이고 팀 표준으로 강제하지 않는다 — 루트를 쓰면 §F-2 C(글로벌 스킬 교체)가 따라오는데 그건 그 PC의 **다른 프로젝트 전부**에 전파된다.
 - **레포를 물리적으로 합치지 말 것**(독립 git이면 깨짐). 각 repo는 E-1(또는 +E-3)을 각자 적용 — **누가 적용하나는 단위별로 묻는다**: 루트에서 통합 설치를 돌릴 때 하위 repo까지 §E-1을 적용할지, 각 팀원이 자기 repo에서 따로 적용할지 선택받는다(§E-4 루트 레이어 자체는 하위를 손대지 않는다 — 두 층은 별개다). **하위에 적용할 땐 회사/개인 판정·게이트·커밋 안내도 그 단위 기준** — 루트가 개인 repo라도 하위는 회사 repo일 수 있다.
 - **A-1**(한 폴더 아래): 상위 폴더에서 `claude` 한 번 → 전 repo 인식(`--add-dir` 불필요). 상위 폴더는 보통 git 아님(개인 git repo로 두는 변형은 §E-4).
 - **A-2**(흩어짐): `claude --add-dir ../repoB --add-dir ../repoC` (세션 한정) 또는 IDE 멀티루트/attach.
 - **루트 통합 레이어**는 §E-4.
 - 커밋: **repo별로 따로**. "변경한 repo별로 각각 add/commit" (한 번에 커밋 불가).
 
-### E-3. ➕ MSA 단위 분할 (여러 팀원 동시편집 시, 각 repo에 추가)
+### E-3. ➕ MSA 단위 분할 (동시성 ⓒ, 또는 ⓑ에 갈래 셋 이상 — 각 repo에 추가)
 그 repo의 1차 단위로 docs를 쪼갠다(프론트=app, 백엔드=module, RAG=domain 등). **단위는 빌드 모듈 전부가 아니라 팀이 실제로 동시 편집하는 1차 단위만** — Maven/Gradle 멀티 모듈 목록은 후보일 뿐이다(모듈 수만큼 만들면 아래 "빈 폴더 금지"와 충돌한다).
 ```text
 <repo>/docs/
@@ -211,7 +214,7 @@ New-Item -ItemType Directory -Path .claude/skills/dropin-update -Force
 │   └── DECISIONS.md
 └── <unitB>/ ...
 ```
-- `.gitattributes`(§F-4) + **솔루션-aware 스킬**(§F-2 B)로 대상 단위 판별(동명 우선순위 주의 — §F-2).
+- `.gitattributes`(§F-4) + **솔루션-aware 스킬**(§F-2 B)로 대상 단위 판별(동명 우선순위 주의 — §F-2). **이 repo에서 작업하는 팀원 전원이 B를 써야 한다** — 기본형 A는 `docs/PROGRESS.md`만 보므로 단위 폴더를 읽지 못하고 **조용히 빈손으로 끝난다**. B엔 단일 repo 폴백이 있어 교체해도 그 PC의 다른 프로젝트는 깨지지 않는다.
 - 주제 문서는 평면(`docs/<unit>/이름.md`)으로 시작 → 한 단위 3개+면 하위 폴더 승격. 빈 폴더 금지.
 
 ### E-4. 🅰️ 루트 통합 레이어 (A-1/A-2에 얹는 개인 영역)
@@ -233,10 +236,12 @@ New-Item -ItemType Directory -Path .claude/skills/dropin-update -Force
 ### 작업 기록 구조
 - 기록(PROGRESS·DECISIONS)은 flat(docs/) 또는 단위 분할(docs/<단위>/, MSA 정책). 마스터 PROJECT_PLAN.md만 docs/ 루트.
 - /resume·/wrap은 대상(repo+단위)을 PWD>브랜치>질문 순으로 판별.
-- 기록 항목 양식: [단위][상태(Done/Pending/Blocked)] 설명 — @작성자 (브랜치). 최상단 append.
+- 기록 항목 양식: [갈래][상태(Done/Pending/Blocked/Reverted)] 설명 — @작성자 (브랜치) YYYY-MM-DD. 최상단 append. **갈래·날짜를 비우지 않는다** — 다인 공유 파일에서 갈래는 /resume의 유일한 필터고, 날짜는 union 병합이 순서를 섞을 때 유일한 시간 근거다.
 
 ### 동시편집 충돌
 - PROGRESS·DECISIONS는 append 전용(기존 줄 수정 금지). .gitattributes의 merge=union이 동시 append를 자동 합침.
+- **PROJECT_PLAN.md·CLAUDE.md엔 merge=union을 걸지 않는다** — 체크박스 토글·기록 줄 교체는 줄 수정이라 union이면 양쪽이 다 남아 파손된다. 충돌은 손으로: PROJECT_PLAN은 체크박스=완료 우선·미해결=합집합, CLAUDE.md의 dropin-applied는 적용일 최신 줄 기준.
+- **되돌림**: 원항목을 지우지 말고 [Reverted] 새 항목 append + 원항목 끝에 "→ Reverted <날짜>". git revert가 PROGRESS 줄까지 지우면 그 줄은 되살린다(기록은 코드와 함께 되돌리지 않는다).
 - DECISIONS id는 동시 발번 충돌을 피해 날짜+작성자 포함(예: DEC-20260703-min).
 
 ### 여러 대상 동시 변경 (방법 A)
@@ -246,7 +251,7 @@ New-Item -ItemType Directory -Path .claude/skills/dropin-update -Force
 ### 세션 워크플로 규율
 - 작업 요청엔 **성공 기준·검증 명령**(테스트/빌드/재현 스크립트)을 함께 받는다. 구현 후 그 검증을 실행해 **증거(출력)로 보고** — "됐다"는 말로 끝내지 않는다.
 - append-only(과거 수정·삭제 금지). 결정이 바뀌면 새 DEC + 기존에 "Superseded by DEC-…" 표시. 상호참조는 [[DEC-…]]·날짜.
-- /resume: **remote 있고 워킹트리 clean이면 `git pull --ff-only` 먼저**(아니면 `git fetch` 후 뒤처짐만 보고 — 병합은 사용자 결정) → **git status·브랜치로 미커밋(진행 중) 작업 발견** → 그다음 PROGRESS 최상단(**최근 ~5항목만** — 길면 항목당 앞 ~700자. 줄 수가 아니라 항목 수다, 통째 읽기 금지) + PROJECT_PLAN 현재 Phase + 최근 DEC 3건.
+- /resume: **remote 있고 워킹트리 clean이면 `git pull --ff-only` 먼저**(아니면 `git fetch` 후 뒤처짐만 보고 — 병합은 사용자 결정) → **git status·브랜치로 미커밋(진행 중) 작업 발견** → 그다음 PROGRESS 최상단(**최근 ~5항목만** — 길면 항목당 앞 ~700자. 줄 수가 아니라 항목 수다, 통째 읽기 금지) + PROJECT_PLAN 현재 Phase + 최근 DEC 3건. **다인 공유 파일이면 최상단 5항목이 남의 갈래로 채워진다** — 현재 브랜치·PWD가 가리키는 갈래를 우선 읽고 나머지는 갈래별 한 줄로 요약한다.
 - /wrap: PROGRESS append + 새 DEC + PROJECT_PLAN 체크박스 갱신 + **미커밋이면 경고**(커밋 전엔 다음 /resume가 git status로만 발견).
 - **미해소 `[Pending]`·`[Blocked]`는 PROJECT_PLAN "미해결/관찰 중"에 한 줄로 올려 닫힐 때까지 유지**한다. PROGRESS는 append 전용이고 /resume은 최근 ~5항목만 읽으므로, 그 항목이 5항목 창 밖으로 밀리는 순간 어느 절차도 다시 보지 않는다.
 - 정기 항목(재검증·점검 주기)은 PROJECT_PLAN에 **`다음 ○○: YYYY-MM경`** 형식으로 남긴다 — /resume의 "예정일 경과" 안내가 읽는 형식이라, 안 적으면 그 안내는 발화하지 않는다. 반대로 그 안내는 **미완료 항목만** 읽는다(`[x]`·취소선으로 종결된 항목은 제외) — 종결 시 예정일 문자열을 지우지 않아도 되고, 지우면 이력이 사라진다.
@@ -277,8 +282,8 @@ New-Item -ItemType Directory -Path .claude/skills/dropin-update -Force
 name: resume
 description: 세션 시작 시 원격 최신화(clean이면 git pull --ff-only)·git status로 미커밋 작업 먼저 확인 후 CLAUDE.md·docs/PROGRESS.md 최상단·PROJECT_PLAN.md를 읽고 지난 상태·다음 작업 보고.
 ---
-# /resume — remote 있고 워킹트리 clean이면 `git pull --ff-only` 먼저(아니면 `git fetch` 후 뒤처짐만 보고) → git status·브랜치로 미커밋(진행 중) 작업 발견 → CLAUDE.md(**프로젝트+글로벌 `~/.claude/CLAUDE.md`** — 글로벌만 적용한 PC에선 글로벌 줄이 유일한 기록), docs/PROGRESS.md(최상단 최근 ~5항목만 — 길면 항목당 앞 ~700자), docs/DECISIONS.md 최근 3건(최상단 Read limit), PROJECT_PLAN.md를 읽고 "지난 X, 다음 Y?" 보고. + 조건부 안내: dropin-applied 30일 경과면 `/dropin-check`·`/dropin-update`, PROJECT_PLAN 예정일 경과 항목(**미완료 항목만** — `[x]`·취소선 종결 항목 제외), dropin-applied 괄호의 조치 대기 메모·`게이트 차단(사유)`·**`소스없음(사유)`/`확보 실패(사유)`**(예: gh 인증 대기 / 06 게이트 차단(조직 미승인) / 04 소스없음(네트워크 차단) — 해소됐다면 재적용으로 설치+기록 갱신) 안내.
-**폴백**: 비-git 폴더면 pull·status 단계를 건너뛰고 docs 체계만 읽는다.
+# /resume — remote 있고 워킹트리 clean이면 `git pull --ff-only` 먼저(아니면 `git fetch` 후 뒤처짐만 보고) → git status·브랜치로 미커밋(진행 중) 작업 발견 → CLAUDE.md(**프로젝트+글로벌 `~/.claude/CLAUDE.md`** — 글로벌만 적용한 PC에선 글로벌 줄이 유일한 기록), docs/PROGRESS.md(최상단 최근 ~5항목만 — 길면 항목당 앞 ~700자. **다인 공유면 현재 브랜치·PWD가 가리키는 갈래를 우선** 읽고 남의 갈래는 한 줄 요약), docs/DECISIONS.md 최근 3건(최상단 Read limit), PROJECT_PLAN.md를 읽고 "지난 X, 다음 Y?" 보고. + 조건부 안내: dropin-applied 30일 경과면 `/dropin-check`·`/dropin-update`, PROJECT_PLAN 예정일 경과 항목(**미완료 항목만** — `[x]`·취소선 종결 항목 제외), dropin-applied 괄호의 조치 대기 메모·`게이트 차단(사유)`·**`소스없음(사유)`/`확보 실패(사유)`**(예: gh 인증 대기 / 06 게이트 차단(조직 미승인) / 04 소스없음(네트워크 차단) — 해소됐다면 재적용으로 설치+기록 갱신) 안내.
+**폴백**: 비-git 폴더면 pull·status 단계를 건너뛰고 docs 체계만 읽는다. `docs/PROGRESS.md`가 없는데 `docs/<하위>/PROGRESS.md`가 있으면 **단위분할 repo**다 — A로는 대상 단위를 판별할 수 없으니 그 사실을 알리고 §F-2 B로 교체를 안내한다(조용히 빈손으로 끝내지 않는다).
 ```
 ```markdown
 # wrap/SKILL.md
@@ -402,7 +407,8 @@ docs/DECISIONS.md      merge=union
 docs/**/PROGRESS.md    merge=union
 docs/**/DECISIONS.md   merge=union
 ```
-> ⚠️ `merge=union`은 동시 top-insert 순서가 약간 섞일 수 있음(둘 다 보존). DEC 번호는 날짜+작성자로.
+> ⚠️ `merge=union`은 동시 top-insert 순서가 약간 섞일 수 있음(둘 다 보존). DEC 번호는 날짜+작성자로. **검수·release 같은 장수 통합 브랜치로 반복 병합하면 "약간"이 아니다** — 최상단이 최근이 아니게 되므로 §F-6 양식의 **날짜**로 읽는다.
+> ⚠️ **`PROJECT_PLAN.md`·`CLAUDE.md`는 이 목록에 넣지 않는다.** 체크박스 토글·기록 줄 교체는 append가 아니라 **줄 수정**이라, union을 걸면 `- [ ]`와 `- [x]`가 **둘 다 살아남아 파손**된다. 충돌하면 손으로 합친다 — PROJECT_PLAN은 **체크박스=완료 우선·미해결 목록=합집합**, `CLAUDE.md`의 `dropin-applied`는 **적용일이 최신인 줄 기준**(00 STEP 5).
 
 ### F-5. `.gitignore` (각 repo)
 ```
@@ -415,7 +421,7 @@ docs/**/DECISIONS.md   merge=union
 .claude/*.local.md
 CLAUDE.local.md
 ```
-> A-1 루트를 개인 repo로 둘 때만: 루트 `.gitignore`에 하위 repo 폴더(`<repoA>/` 등)도 제외.
+> A-1 **루트를 git repo로 둘 때**(소유 무관 — 개인·회사 어느 쪽이든): 루트 `.gitignore`에 하위 repo 폴더(`<repoA>/` 등)도 제외. 중첩 repo 제외는 소유가 아니라 **git 중첩**이 만드는 요구다.
 
 ### F-6. 상태 뱃지 · 기록 양식
 | 뱃지 | 의미 |
@@ -423,9 +429,13 @@ CLAUDE.local.md
 | 🚀 `[Done]` | PR/병합 가능한 독립 완결 |
 | ⏳ `[Pending]` | 정상 빌드, 잔여 스펙 있어 이어서 |
 | 🚨 `[Blocked]` | 컴파일 에러/외부 의존 교착으로 동결 |
+| ↩️ `[Reverted]` | 병합·검수 후 되돌려짐(코드는 빠졌고 기록은 남는다) |
 ```markdown
-- [<단위>][Done] 게시판 카테고리 트리 추가 — @작성자 (feature/<단위>)
+- [<갈래>][Done] 게시판 카테고리 트리 추가 — @작성자 (feature/<갈래>) 2026-07-03
 ```
+- **`[<갈래>]`는 flat repo에서도 비우지 않는다**(값 = 프로젝트·기능명). 다인 공유 파일에서 `/resume`이 **내 갈래를 가려낼 유일한 근거**다.
+- **날짜를 적는다** — union 병합이 최상단 순서를 섞으므로(§F-4) 순서에 의존하면 "최근"이 최근이 아니게 된다.
+- **되돌림**: 원항목을 지우지 말고 **새 항목으로 append**(`[Reverted] <원작업> — <사유>`) + 원항목 끝에 `→ Reverted <날짜>`. `git revert`가 PROGRESS 줄까지 지우면 **그 줄은 되살린다** — 기록은 코드와 함께 되돌리지 않는다(append 전용 원칙이 git 조작으로 깨지는 자리다).
 
 ---
 
@@ -458,7 +468,7 @@ CLAUDE.local.md
 
 ## I. 질문 템플릿 (부족하면 이걸 묻는다 · 추천값 포함)
 1. **환경 유형**: 단일 repo(B) / 통합(A-1·A-2) 중 무엇? (코드로 판별했으면 확인만)
-2. **동시성**: 여러 명이 같은 단위를 동시에 고치나? → 예면 MSA 단위분할 적용.
+2. **동시성**(코드로 판별했으면 확인만 — §A STEP 1): ⓐ 혼자 / ⓑ 여러 명·**서로 다른 갈래**(각자 다른 프로젝트·기능) / ⓒ 여러 명·**같은 갈래**. → ⓑ부터 `merge=union` **필수**, ⓒ는 MSA 단위분할 **필수**(ⓑ도 갈래가 셋 이상이면 권장). **"같은 갈래"만 묻지 않는 이유** — 서로 다른 프로젝트를 하는 팀은 그 질문에 "아니오"가 나와 기록이 한 파일에 몰린다.
 3. **크로스-repo**: 자주 함께 고치는 repo가 있나? → `additionalDirectories`에 등록.
 4. **커밋 양식**: 팀 표준 커밋 메시지 규칙이 있나? (없으면 §H 기본값)
 5. **루트 레이어**: 통합 환경이면 루트를 개인 git repo로 둘까(백업), 비-git로 둘까?
@@ -524,5 +534,5 @@ Claude Code는 매주 바뀐다. 6개월마다 30분:
 ## 핵심 출처 🟢
 IDE 통합·`--add-dir`(ide-integrations·large-codebases) / permissions·deny 한계 / hooks / skills / memory·auto-memory — 모두 `code.claude.com/docs` 및 `docs.anthropic.com`.
 
-**문서 정보** — 통합 마스터(범용) **v1.48**. 변경 이력은 최상단 버전 표 참조(유래: 8개 소스 통합 초판 — `v1.0~v1.32` 병합 행).
+**문서 정보** — 통합 마스터(범용) **v1.49**. 변경 이력은 최상단 버전 표 참조(유래: 8개 소스 통합 초판 — `v1.0~v1.32` 병합 행).
 최종 갱신: 2026-08-20 · 최근 재검증: 2026-08-20 / 참조: Claude Code v2.1.237, Opus 5(v2.1.219+) · Sonnet 5(v2.1.197+) · Fable 5(v2.1.170+).
