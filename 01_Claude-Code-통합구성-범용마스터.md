@@ -1,6 +1,6 @@
 # Claude Code 통합 구성 — 범용 마스터 (드롭인 적용)
 
-> **문서 버전: v1.45** · 최종 갱신: **2026-08-20** · **최근 재검증: 2026-08-20** · 기준: Claude Code v2.1.237 (Opus 5 · Sonnet 5 · Fable 5)
+> **문서 버전: v1.46** · 최종 갱신: **2026-08-20** · **최근 재검증: 2026-08-20** · 기준: Claude Code v2.1.237 (Opus 5 · Sonnet 5 · Fable 5)
 >
 > | 버전 | 날짜 | 변경 내용 |
 > | --- | --- | --- |
@@ -27,7 +27,7 @@
 > | v1.20 | 2026-08-12 | 점검·최신화 스킬 **설치 유형 전 지원** 명시(사본/클론/raw — 00 `출처=` 필드로 판별) |
 > | v1.21 | 2026-08-12 | 조건부 안내 2건(§F-2 A/B/C): /resume 조치 대기 메모 안내, /wrap의 PROGRESS ~800줄 경계 감지·아카이브 안내 |
 > | v1.22 | 2026-08-12 | **아카이브 포인터 최상단**(제목 바로 아래 — /resume 40줄 읽기에 보이게) + 과거 이력 검색은 `docs/` 폴더 단위 |
-> | v1.23 | 2026-08-12 | 스킬 스코프 우선순위 **정정**(공식 확인 결과 기존 서술이 정반대 — 실제는 **enterprise > personal > project**, 스킬>커맨드) — §D-4·§E-3·§E-4·§F-2 통일, B·C는 글로벌 기본형(A) **교체** 방식, 중첩 스킬 디렉터리-한정 이름(v2.1.203+) |
+> | v1.23 | 2026-08-12 | 스킬 스코프 우선순위 **정정**(**enterprise > personal > project**, 스킬>커맨드) — §D-4·§E-3·§E-4·§F-2 통일, B·C는 글로벌 기본형(A) **교체** 방식, 중첩 스킬 디렉터리-한정 이름(v2.1.203+) |
 > | v1.24 | 2026-08-12 | §D-3 deny 예시 실물 동기화+선택 확장 예, §F-2 A/C resume에 최근 DEC 3건, §G pull 이중 실행 제거, §F-1 append는 포인터 아래부터, §B 비-git 행, §K push 권한 없음 행, A wrap 파생 뷰 동기화 |
 > | v1.25 | 2026-08-12 | **/wrap에 글로벌 정본↔백업 미러 대조 배선**(§F-2 A/B/C): 세션 중 수정 시만 5종 해시 대조 → 방향 판정+복사 안내. `settings.json`은 키 단위·머신 종속 키 제외 |
 > | v1.26 | 2026-08-12 | §F-2 B·C **교체의 PC 전역 전파 경고** + resume·wrap 템플릿 4곳에 **폴백**(단위 없음·단일 repo·비-git) 의무화 |
@@ -37,20 +37,21 @@
 > | v1.30 | 2026-08-12 | §F-2 resume 3곳 `소스없음`/`확보 실패` 어휘+글로벌 `CLAUDE.md` 읽기, A wrap 줄바꿈 정규화, `docs/` 부재 폴백 위치 정정, §L 조건부 안내 어휘 동기화 |
 > | v1.31 | 2026-08-12 | §B **혼합형** 행 신설(독립 repo+비-git 혼재 — 단위별 git 판정), §F-2 C wrap 루트 라우터 예외, A 템플릿 세션 기록 소실 고지 |
 > | v1.32 | 2026-08-12 | §A STEP 1 유형 열거 제거(§B 표를 가리킴 — 행이 늘어도 낡지 않게), 루트 라우터 예외 조건을 "PROGRESS·DECISIONS·PROJECT_PLAN 부재"로 정정 |
-> | v1.33 | 2026-08-13 | §A STEP 4 **§검증 신설**(글로벌 스킬+프로젝트 산출물 **두 축** — `docs/` 3종·§F-1 블록·`.gitattributes`·settings 파싱), §F-3 `additionalDirectories` 조건 경고(단일 repo면 키 제거 — 플레이스홀더가 팀 공유 파일에 커밋되는 것 차단) |
+> | v1.33 | 2026-08-13 | §A STEP 4 **§검증 신설**(글로벌 스킬+프로젝트 산출물 **두 축** — `docs/` 3종·§F-1 블록·`.gitattributes`·settings 파싱), §F-3 `additionalDirectories` 조건 경고(단일 repo면 키 제거) |
 > | v1.34 | 2026-08-13 | §D 서두 OS 주석(명령 블록=Windows 기준, macOS·Linux 대체)+D-2·D-3 `~/.claude` 표기, §E-4 **팀원 층위 혼재 공존 규칙**(상위 폴더가 팀 공유 repo면 루트 산출물 커밋 전 팀 합의) |
 > | v1.35 | 2026-08-13 | **최적화**(릴리즈 정비): 버전 표·본문 서술 압축(규칙 불변) + §A STEP 4 §검증 ①에 비대화형 대체 증거(스킬 4종 실물 파일) |
-> | v1.36 | 2026-08-13 | **sfa형 워크스페이스 시나리오 검증 반영**: §E-2에 **하위 적용 여부 단위별 질문**("각자 적용"과 §E-4 "하위 불침습"의 층 구분 — 하위 적용 시 회사/개인 판정·게이트도 그 단위 기준), §E-2 A-1에 개인 git 루트 변형 포인터, §E-3 **단위 도출 기준**(빌드 모듈 전부가 아니라 동시 편집 1차 단위만), §E-4 개인 루트 remote의 사내 정보 반출 확인, §F-2 C resume에 **루트 대상 시 하위 각 repo PROGRESS 훑기**(팀원 기록 가시성 — 글로벌 스킬 동기) |
-> | v1.37 | 2026-08-20 | §F-3 `additionalDirectories`는 **상대 경로만**(절대경로는 그 PC에서만 유효 — 머신 종속 경로는 `settings.local.json`으로), §A STEP 4 §검증 ⓔ에 등록 경로 실재·상대 확인 |
-> | v1.38 | 2026-08-20 | §검증 ①에 **글로벌 축 실측**(ⓐ CLAUDE.md 실재·ⓑ 글로벌 deny — 필수 항목인데 프로젝트 deny만 보던 비대칭 해소, B/C 선택 시 스킬 **내용 축** 확인), ②에 §F-5 `.gitignore`·A-1 루트 라우터 실재 |
-> | v1.39 | 2026-08-20 | §D-3 hooks 예시를 실물 문구로 동기(auto·SessionStart)+**정본은 `global-config/settings.json`** 포인터·매처 열거 일반화·`manual` 게이트를 선택 확장에 등재, §D-5에 글로벌 deny 실측, §D-6에 게이트 전제, §검증에 **글로벌 전용이면 ② `해당 없음` 갈음**·`settings.local.json` 폴백 경로 확인, §B 비-git 면제를 "git 전제 산출물"로 묶음 |
+> | v1.36 | 2026-08-13 | §E-2에 **하위 적용 여부 단위별 질문**(하위 적용 시 회사/개인 판정·게이트도 그 단위 기준), §E-2 A-1에 개인 git 루트 변형 포인터, §E-3 **단위 도출 기준**(동시 편집 1차 단위만), §E-4 개인 루트 remote 사내 정보 반출 확인, §F-2 C resume에 **루트 대상 시 하위 각 repo PROGRESS 훑기** |
+> | v1.37 | 2026-08-20 | §F-3 `additionalDirectories`는 **상대 경로만**(머신 종속 경로는 `settings.local.json`), §A STEP 4 §검증 ⓔ에 등록 경로 실재·상대 확인 |
+> | v1.38 | 2026-08-20 | §검증 ①에 **글로벌 축 실측**(ⓐ CLAUDE.md 실재·ⓑ 글로벌 deny, B/C 선택 시 스킬 **내용 축** 확인), ②에 §F-5 `.gitignore`·A-1 루트 라우터 실재 |
+> | v1.39 | 2026-08-20 | §D-3 hooks 예시 실물 동기(auto·SessionStart)+**정본은 `global-config/settings.json`** 포인터·매처 열거 일반화·`manual` 게이트 선택 확장 등재, §D-5에 글로벌 deny 실측, §D-6에 게이트 전제, §검증에 **글로벌 전용이면 ② `해당 없음` 갈음**·`settings.local.json` 폴백 경로 확인, §B 비-git 면제를 "git 전제 산출물"로 묶음 |
 > | v1.40 | 2026-08-20 | /resume의 PROGRESS 읽기 단위를 **줄 수 → 최근 ~5항목**(길면 항목당 앞 ~700자)으로 교체 — §F-1·§F-2 A/B/C·스킬 페이로드 전부. 워크스페이스 루트의 하위 repo 훑기도 ~10줄 → ~2항목 |
 > | v1.41 | 2026-08-20 | 전면 재검증(v2.1.237) — deny 서브프로세스 우회 한계·샌드박스 네이티브 Windows 미지원·auto-memory 200줄/25KB·`attribution`·auto mode 전부 유효 확인 |
 > | v1.42 | 2026-08-20 | §L 정리 — 유효 확인된 4건(deny 우회·샌드박스 Windows 미지원·`attribution`·auto-memory 한도)을 🔴🟡에서 분리, 🔴🟡는 `sandbox.credentials` 스키마만 |
 > | v1.43 | 2026-08-20 | 아카이브 임계에 **크기 축(~120KB) 추가**·대상에 DECISIONS 포함·자를 양은 달력이 아니라 목표치(임계의 절반 이하)로(§F-1·§F-2 A/B/C), /resume 예정일 안내는 **미완료 항목만**(`[x]`·취소선 제외) |
 > | v1.44 | 2026-08-20 | 재검증 2회차: Read deny가 **Write까지 차단**(v2.1.228+, 3곳), auto mode는 Team·Ent도 **기본 제공**(옵트아웃)·**Pro·Max·Team 기본 시작 모드**(8/14~)·`Shift+Tab` 순환 순서 정정, `sandbox.credentials` 스키마 확보로 **§L 🔴🟡 소진**, hooks 매처 `,` 허용·`SessionStart` 5종, `attribution.sessionUrl` 기본 true |
-> | v1.45 | 2026-08-20 | 확장 후보 편입: §J에 **격리 3단**(내장 샌드박스 → dev container → VM) — **네이티브 Windows에서 격리가 필요할 때의 공식 대안**이 그동안 이 문서에 없어 "미지원"에서 서술이 끊겼다. §L에 소비자 축 추가 |
+> | v1.45 | 2026-08-20 | 확장 후보 편입: §J에 **격리 3단**(내장 샌드박스 → dev container → VM — 네이티브 Windows 격리 대안), §L에 소비자 축 추가 |
 >
+> | v1.46 | 2026-08-20 | **최적화**: 버전 표·본문 압축(규칙 불변) — §L이 정본인 인라인 재검증 날짜 제거 포함 |
 > ※ 갱신 시: 이 표에 한 줄 추가 + 하단 "문서 정보" 날짜 수정 + §L 재검증 체크리스트 수행.
 
 > **사용법**: 이 파일을 아무 프로젝트 루트(또는 `docs/`)에 넣고 Claude에게
@@ -172,7 +173,7 @@ New-Item -ItemType Directory -Path .claude/skills/dropin-update -Force
   }
 }
 ```
-> 🔴 **deny 현행 동작(2026-08-04 재검증)**: ① Read/Edit deny는 파일 도구 + Bash 안의 인식되는 파일 명령(`cat`/`head`/`tail`/`sed` 등)까지 적용. Read deny는 같은 경로 **Edit·Write도 차단**(편집 v2.1.208+·쓰기 v2.1.228+, NotebookEdit만 미포함). ② `cat`·`ls`·`head`·`grep` 등은 **기본 무프롬프트 읽기전용 내장 명령**(목록 비설정)이라, 특정 명령에 프롬프트를 강제하려면 위처럼 ask/deny 규칙이 필요. ③ python/node 스크립트가 파일을 직접 여는 **서브프로세스 우회는 여전히 가능** → **근본은 시크릿을 레포에서 분리**(§C-7), OS 수준 차단은 샌드박스(§J). ④ **PowerShell 툴 규칙은 별칭을 자동 정규화** — `PowerShell(Get-Content *)` 하나로 `gc`·`type`·별칭까지 매칭(대소문자 무관). `Bash(...)` 문자열 매칭엔 정규화가 없으므로 Git Bash 병용 환경은 기존 3종(type/Get-Content/gc)도 유지. ⑤ deny는 **집합**이라 배열 순서는 무관하다(실물과 순서가 달라도 차이 아님). ⑥ 경로 규칙 참고: 맨 파일명은 gitignore 의미로 **모든 깊이에 매칭**(`Read(.env)` ≡ `Read(**/.env)`), Windows 경로는 POSIX 정규화(`//c/**/.env`). hooks 매처는 **`|` 또는 `,`로 나열한 정확 문자열, 그 밖의 문자가 섞이면 정규식** — 철자 엄격(`SessionStart`=`startup`·`resume`·`clear`·`compact`·`fork`, `PreCompact`=`auto`·`manual`).
+> 🔴 **deny 현행 동작**: ① Read/Edit deny는 파일 도구 + Bash 안의 인식되는 파일 명령(`cat`/`head`/`tail`/`sed` 등)까지 적용. Read deny는 같은 경로 **Edit·Write도 차단**(편집 v2.1.208+·쓰기 v2.1.228+, NotebookEdit만 미포함). ② `cat`·`ls`·`head`·`grep` 등은 **기본 무프롬프트 읽기전용 내장 명령**(목록 비설정)이라, 특정 명령에 프롬프트를 강제하려면 위처럼 ask/deny 규칙이 필요. ③ python/node 스크립트가 파일을 직접 여는 **서브프로세스 우회는 여전히 가능** → **근본은 시크릿을 레포에서 분리**(§C-7), OS 수준 차단은 샌드박스(§J). ④ **PowerShell 툴 규칙은 별칭을 자동 정규화** — `PowerShell(Get-Content *)` 하나로 `gc`·`type`·별칭까지 매칭(대소문자 무관). `Bash(...)` 문자열 매칭엔 정규화가 없으므로 Git Bash 병용 환경은 기존 3종(type/Get-Content/gc)도 유지. ⑤ deny는 **집합**이라 배열 순서는 무관하다(실물과 순서가 달라도 차이 아님). ⑥ 경로 규칙 참고: 맨 파일명은 gitignore 의미로 **모든 깊이에 매칭**(`Read(.env)` ≡ `Read(**/.env)`), Windows 경로는 POSIX 정규화(`//c/**/.env`). hooks 매처는 **`|` 또는 `,`로 나열한 정확 문자열, 그 밖의 문자가 섞이면 정규식** — 철자 엄격(`SessionStart`=`startup`·`resume`·`clear`·`compact`·`fork`, `PreCompact`=`auto`·`manual`).
 > 🟡 `includeCoAuthoredBy`는 deprecated → `attribution` 객체(`commit`·`pr`·`sessionUrl`)로 대체. 빈 문자열 `""` = 표기 숨김이되, **전부 없애려면 `sessionUrl: false`까지 필요**(기본 true — 클라우드·Remote Control 세션에서 `Claude-Session` 트레일러가 붙는다).
 > 🟡 테마(dark/light)는 settings.json 문서화 키가 아님(2026-07-20 확인) — 세션에서 **`/config`**(또는 `/theme`)로 설정.
 > 선택 확장(실사용 예): `attribution`에 `"sessionUrl": false`(세션 URL 표기 제어), `SessionStart`에 `"startup"` 매처(새 세션 시작 시 안내 한 줄 — 예: `echo '[시스템] 통합 워크스페이스 초기화 완료'`), `PreCompact`에 `"manual"` 매처(`/compact` 선행 `/wrap` 게이트 — exit 2로 압축을 실제 차단, 판정은 `docs/**/PROGRESS.md` 변경 유무) — 위 예시와 같은 자리에 추가해 쓸 수 있다.
@@ -209,7 +210,7 @@ New-Item -ItemType Directory -Path .claude/skills/dropin-update -Force
 - **트레이드오프**: 높일수록 복잡한 설계·디버깅·마이그레이션 판단 품질↑, 대신 **토큰·지연 증가**. 어려운 전환/설계/리버스는 `high`~`xhigh`, 단순 편집·조회는 `low`~`medium` 권장. 상시 `max`는 비용 대비 비권장.
 - `/model`(모델 선택)과 짝 명령: 모델에 따라 사용 가능한 단계가 다르다(위 모델별 지원 참고). 모델을 처음 바꾸면 **그 모델의 기본 effort가 적용**되니(이전 선택 무시) 필요하면 `/effort`를 다시 실행.
 - Enterprise 조직은 역할별 **effort 상한**을 걸 수 있다(상한 초과 지정 시 상한으로 클램프).
-> ✅ 확정(2026-07-20, code.claude.com/docs/en/model-config·/sub-agents·/skills 재검증): 단계 명칭 low~max + ultracode(설정), 서브에이전트·스킬 frontmatter 키는 **`effort:`**, `effortLevel` 저장은 low~xhigh만. 이전 판의 🟡 2건(단계 명칭·frontmatter 키 미확정)은 해소됨.
+> ✅ 확정(2026-07-20, code.claude.com/docs/en/model-config·/sub-agents·/skills 재검증): 단계 명칭 low~max + ultracode(설정), 서브에이전트·스킬 frontmatter 키는 **`effort:`**, `effortLevel` 저장은 low~xhigh만.
 
 ---
 
@@ -499,7 +500,7 @@ CLAUDE.local.md
 ## J. 보안 (셋업 전 최우선) 🔴
 - **deny의 현재 커버리지**: Read/Edit deny 규칙은 파일 도구 + Bash 안의 인식되는 파일 명령(`cat`/`head`/`tail`/`sed` 등)까지 감지·차단한다. Read deny는 같은 경로의 **Edit·Write까지 차단**(편집 v2.1.208+·쓰기 v2.1.228+, 새 파일 생성 포함). **NotebookEdit만 미포함**이라 어떤 도구도 못 바꾸게 하려면 별도 `Edit(...)` deny가 필요하다(`Write(...)`·`NotebookEdit(...)` 경로 규칙 자체는 무효라 시작 시 경고가 뜬다). 심볼릭 링크는 링크·대상 **둘 다** 검사해 하나라도 deny면 차단.
 - **남은 구멍 2개**: ① 임의 서브프로세스(python/node 스크립트가 파일을 직접 open) 우회 가능 → OS 수준 차단은 아래 샌드박스. ② `cat`·`ls`·`head`·`grep` 등 읽기전용 내장 명령은 **기본적으로 프롬프트 없이 실행**되므로, 막으려면 명시적 ask/deny 규칙 필요.
-- **샌드박스(2026-08-04 재검증)** 🔴: `/sandbox` 또는 `sandbox.enabled`로 켜는 OS 수준 격리(Bash 명령+자식 프로세스의 파일·네트워크 접근을 OS가 강제). 지원: **macOS(Seatbelt) · Linux · WSL2(bubblewrap+socat)**. **네이티브 Windows는 여전히 미지원** → Windows에선 WSL2에서 돌리거나, allow 좁게 + deny 규칙 기반으로 운용. ~~"Windows/Linux 모두 없음"~~은 구버전 서술(Linux·WSL2는 지원됨).
+- **샌드박스** 🔴: `/sandbox` 또는 `sandbox.enabled`로 켜는 OS 수준 격리(Bash 명령+자식 프로세스의 파일·네트워크 접근을 OS가 강제). 지원: **macOS(Seatbelt) · Linux · WSL2(bubblewrap+socat)**. **네이티브 Windows는 여전히 미지원** → Windows에선 WSL2에서 돌리거나, allow 좁게 + deny 규칙 기반으로 운용.
   - 샌드박스 기본 읽기 정책은 **컴퓨터 전체 읽기 허용**(일부 시스템 경로 제외)이라 `~/.ssh`·`~/.aws`는 **`sandbox.credentials`**(v2.1.187+)로 명시 차단하거나 env 토큰은 `mode: "mask"`(v2.1.199+)로 대체 — 형식은 `credentials.files[]`={path,mode}·`credentials.envVars[]`={name,mode}(mode=`deny`|`mask`)이고, **`mask`는 user/managed 스코프에서만 유효하며 `network.tlsTerminate`가 필요**하다. 전 서브프로세스에서 Anthropic·클라우드 자격증명 제거는 `CLAUDE_CODE_SUBPROCESS_ENV_SCRUB`. 파일 격리만 끄고 네트워크 격리는 유지하려면 `sandbox.filesystem.disabled`(v2.1.216+, user/managed 스코프만 유효).
 - **격리 3단 — 어느 것을 쓰나**: 내장 샌드박스(위, 설치 불요·macOS·Linux·WSL2) → **dev container**(Docker 전제 — `.devcontainer/devcontainer.json` + 이그레스 방화벽 스크립트. **네이티브 Windows에서 격리가 필요할 때의 공식 대안**이다) → 전용 VM. 컨테이너에 `~/.ssh`·클라우드 자격증명을 마운트하면 격리 의미가 사라진다. 절차는 공식 `devcontainer` 문서를 직접 참조 — 이 문서는 선택 기준만 든다.
 - **PowerShell 규칙**: `PowerShell(Get-Content *)` deny 하나로 별칭(`gc`·`type`·`cat`)까지 자동 매칭(대소문자 무관, 파이프·`;`로 나뉜 복합 명령은 **모든 하위 명령**이 규칙을 통과해야 허용). Bash 규칙은 별칭 정규화가 없으므로 Git Bash 병용 시 3종 유지(§D-3·§F-3).
@@ -509,7 +510,7 @@ CLAUDE.local.md
 - **차선**: 불가피하면 `.env` + deny + (macOS·Linux·WSL2면) 샌드박스 + `sandbox.credentials`. 단 완전 차단 아님을 인지(샌드박스 프록시는 기본적으로 TLS 내용을 검사하지 않음 — 넓은 도메인 allow는 유출 경로가 될 수 있음).
 - 글로벌 `CLAUDE.md #8`이 "cat .env 금지"를 행동 규칙으로 보완.
 
-### J-1. 권한 모드 운용 — auto mode 🟢 (2026-07-28 공식 문서 확인)
+### J-1. 권한 모드 운용 — auto mode 🟢
 "매번 승인(manual)"과 "전부 스킵(`--dangerously-skip-permissions`)" 사이의 중간지대. **별도 분류기 모델**(기본 Sonnet 5)이 각 액션을 실행 전 심사해 안전한 것은 통과시키고, 요청 범위를 벗어난 행동·미인식 인프라 대상·읽은 콘텐츠(프롬프트 인젝션)에서 유래한 행동을 차단한다.
 - **켜기**: **Pro·Max·Team은 2026-08-14부터 auto가 기본 시작 모드**(v2.1.220+). 바꾸려면 `Shift+Tab` 순환(auto에서 첫 타는 `default`, 이후 `default`→`acceptEdits`→`plan`→`default`) 또는 `--permission-mode`. 기본 시작 모드 고정은 `defaultMode: "auto"` — 단 **user/managed 스코프만 유효**(프로젝트·로컬 settings에선 무시됨: repo가 스스로 권한을 올리는 걸 막는 설계, v2.1.142+).
 - **규칙과의 관계**: 명시적 **ask 규칙은 auto mode에서도 프롬프트 강제**, deny는 그대로 차단(분류기가 deny를 뚫지 못함). `rm -rf /`·`~` 같은 파괴 명령은 분류기가 심사(v2.1.218+), 요청하지 않은 파괴적 git 명령·트랜스크립트 조작은 차단.
@@ -554,5 +555,5 @@ Claude Code는 매주 바뀐다. 6개월마다 30분:
 ## 핵심 출처 🟢
 IDE 통합·`--add-dir`(ide-integrations·large-codebases) / permissions·deny 한계 / hooks / skills / memory·auto-memory — 모두 `code.claude.com/docs` 및 `docs.anthropic.com`.
 
-**문서 정보** — 통합 마스터(범용) **v1.45**. 변경 이력은 최상단 버전 표 참조(유래: 8개 소스 통합 초판 — v1.0 행).
+**문서 정보** — 통합 마스터(범용) **v1.46**. 변경 이력은 최상단 버전 표 참조(유래: 8개 소스 통합 초판 — v1.0 행).
 최종 갱신: 2026-08-20 · 최근 재검증: 2026-08-20 / 참조: Claude Code v2.1.237, Opus 5(v2.1.219+) · Sonnet 5(v2.1.197+) · Fable 5(v2.1.170+).
