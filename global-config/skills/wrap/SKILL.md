@@ -8,7 +8,7 @@ description: 세션 종료 시 사용. 건드린 repo마다 docs/PROGRESS.md 최
 오늘 세션 마무리. docs/PROGRESS.md 최상단에 오늘 작업 항목을 append,
 새 결정은 docs/DECISIONS.md에 **DEC-YYYYMMDD-<작성자>** id로 추가(동시 발번 충돌 방지 — 예: DEC-20260812-min), docs/PROJECT_PLAN.md 체크박스 갱신.
 **이번에 append한 항목에 미해소 `[Pending]`·`[Blocked]`가 있으면 PROJECT_PLAN "미해결/관찰 중"에 한 줄로 올린다**(닫힐 때까지 유지) —
-PROGRESS는 append 전용이고 /resume은 앞 ~40줄만 읽으므로, 그 항목이 40줄 창 밖으로 밀리는 순간 어느 절차도 다시 보지 않는다.
+PROGRESS는 append 전용이고 /resume은 최근 ~5항목만 읽으므로, 그 항목이 5항목 창 밖으로 밀리는 순간 어느 절차도 다시 보지 않는다.
 정기 항목(재검증·점검 주기)은 **`다음 ○○: YYYY-MM경`** 형식으로 남긴다 — /resume의 "예정일 경과" 안내가 읽는 형식이라, 안 적으면 그 안내는 발화하지 않는다.
 비-git 폴더면 git status·커밋 단계는 건너뛰고 기록 append만 한다.
 `docs/`에 PROGRESS·DECISIONS·PROJECT_PLAN이 **없으면** 기록 파일을 새로 만들지 말고
@@ -21,9 +21,9 @@ PROGRESS는 append 전용이고 /resume은 앞 ~40줄만 읽으므로, 그 항�
 (판별: 루트 `CLAUDE.md`가 단위로 라우팅하거나 `docs/INDEX.md`가 있으면 라우터로 본다).
 마지막에 변경 파일 목록을 보고하고, 미커밋 변경이 남으면 경고하라
 (커밋 전엔 다음 /resume가 git status로만 발견 가능).
-append 후 **PROGRESS 총 줄 수를 확인**해(약 800줄/분기 경계 — /resume는 앞 40줄만 읽어 감지 못 함)
+append 후 **PROGRESS 총 줄 수를 확인**해(약 800줄/분기 경계 — /resume는 최근 ~5항목만 읽어 감지 못 함)
 넘었으면 "가장 오래된 분기를 `docs/archive/`로 이동 + 활성 파일 **최상단(제목 바로 아래)** 포인터 한 줄" 아카이브를 안내한다
-(이동은 승인 후 — 포인터가 최상단이어야 /resume의 40줄 읽기에 보인다. 이후 append는 **포인터 줄 아래부터**(포인터 최상단 고정). 과거 이력 검색은 `docs/` 폴더 단위로).
+(이동은 승인 후 — 포인터가 최상단이어야 /resume의 최근 항목 읽기에 보인다. 이후 append는 **포인터 줄 아래부터**(포인터 최상단 고정). 과거 이력 검색은 `docs/` 폴더 단위로).
 
 ## 글로벌 구성 ↔ 백업 미러 대조 (건드린 세션만)
 이번 세션에 `~/.claude/`(화이트리스트 5종 — CLAUDE.md·settings.json·skills·commands·output-styles)나

@@ -8,7 +8,7 @@ description: 세션 시작 시 사용. remote가 있으면 원격 최신화(clea
 > **통합 워크스페이스**(상위 폴더 아래 독립 repo 여러 개)면 0·1을 **루트와 하위 repo 각각**에 수행하고,
 > 대상 repo(+단위)를 PWD>브랜치>질문 순으로 판별해 그 repo의 `docs[/<단위>]/`를 읽고,
 > (있으면) 루트 `docs/INDEX.md` 최근 항목도 함께 읽는다(크로스-repo 세션 흔적).
-> **대상이 루트(워크스페이스 전체)면 하위 각 repo PROGRESS 최상단 ~10줄도 훑어** 최근 활동을 repo당 한 줄로 보고한다 —
+> **대상이 루트(워크스페이스 전체)면 하위 각 repo PROGRESS 최상단 ~2항목도 훑어** 최근 활동을 repo당 한 줄로 보고한다 —
 > 팀원이 하위 repo에서 남긴 기록은 INDEX에 실리지 않아, pull만 하고 읽지 않으면 루트 사용자에게 영영 안 보인다.
 > 3의 조건부 안내는 **루트 `CLAUDE.md`의 기록도 함께** 본다(루트 레이어 적용분 — `/dropin-check` §2와 같은 범위.
 > 대상 repo 것만 읽으면 루트 레이어의 30일 경과·차단 메모가 영영 안내되지 않는다).
@@ -19,7 +19,7 @@ description: 세션 시작 시 사용. remote가 있으면 원격 최신화(clea
 0. remote가 있고 워킹트리가 clean이면 `git pull --ff-only`로 먼저 최신화한다
    (미커밋이 있거나 ff 불가면 pull 대신 `git fetch`로 뒤처짐만 보고 — 병합은 사용자 결정).
 1. `git status`·현재 브랜치로 미커밋(진행 중) 작업을 발견하고,
-2. CLAUDE.md(프로젝트 + **글로벌 `~/.claude/CLAUDE.md`** — 3의 조건부 안내가 읽는 `dropin-applied`는 스코프별로 따로 있고, 글로벌만 적용한 PC에선 글로벌 줄이 유일한 기록이다), docs/PROGRESS.md(최상단 — **Read limit으로 앞 ~40줄만**, 통째 읽기 금지), docs/DECISIONS.md 최근 3건(최상단 Read limit), docs/PROJECT_PLAN.md를 읽어
+2. CLAUDE.md(프로젝트 + **글로벌 `~/.claude/CLAUDE.md`** — 3의 조건부 안내가 읽는 `dropin-applied`는 스코프별로 따로 있고, 글로벌만 적용한 PC에선 글로벌 줄이 유일한 기록이다), docs/PROGRESS.md(최상단 — **최근 ~5항목만**, 항목이 길면 **항목당 앞 ~700자**에서 끊는다. 줄 수가 아니라 항목 수다 — 1항목=1줄 형식에선 줄 상한이 상한 구실을 못 한다. 통째 읽기 금지), docs/DECISIONS.md 최근 3건(최상단 Read limit), docs/PROJECT_PLAN.md를 읽어
    "지난 작업은 X, 다음은 Y로 진행할까요?" 형태로 요약 보고하라.
 3. 점검 안내(조건부 — 해당할 때만 보고 말미에 한 줄):
    - CLAUDE.md의 `dropin-applied` 적용일이 **30일 이상 경과** → "`/dropin-check`(적용 상태 점검)·`/dropin-update`(문서 최신화) 권장".
