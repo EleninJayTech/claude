@@ -58,6 +58,7 @@ if (Want '버전') {
       elseif ($c.Maj -eq $p.Maj -and $c.Min -ne $p.Min+1) { $bad += "결번 v$($p.Maj).$($p.Min)→v$($c.Maj).$($c.Min)" }
     }
     if ($bad) { Bad "$($f.Name.Substring(0,2))  $($bad -join ' · ')" } else { Ok "$($f.Name.Substring(0,2))  $($vs.Count)행 연속" }
+    if ($vs.Count -gt 25) { Note "$($f.Name.Substring(0,2))  버전 표 $($vs.Count)행 — R20 병합 대상(25행 초과 → 가장 오래된 행부터 축 요약 한 줄로 15행 이하까지)" }
   }
 }
 
