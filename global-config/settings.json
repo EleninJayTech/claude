@@ -42,8 +42,20 @@
         "hooks": [
           {
             "type": "command",
-            "command": "echo \"[PreCompact] auto-compact 임박 - 작업 끊고 /wrap 권장\" 1>&2",
+            "command": "echo \"[PreCompact] auto-compact 발동 - 기록 안 된 결정이 있었다면 압축 후 즉시 /wrap. 다음엔 한도 전에 /wrap > /clear > /resume 권장\" 1>&2",
             "async": true
+          }
+        ]
+      },
+      {
+        "matcher": "manual",
+        "hooks": [
+          {
+            "type": "command",
+            "shell": "powershell",
+            "timeout": 15,
+            "statusMessage": "wrap-gate: /wrap 선행 확인 중",
+            "command": "$p='docs/PROGRESS.md'; if(!(Test-Path $p)){ Write-Output '[wrap-gate] 기록 체계 없는 폴더 - 참고: /wrap > /clear > /resume 권장'; exit 0 }; $m=Join-Path $env:TEMP 'claude-compact-override'; if((Test-Path $m) -and (((Get-Date)-(Get-Item $m).LastWriteTime).TotalMinutes -lt 5)){ Remove-Item $m -Force; Write-Output '[wrap-gate] override 확인 - 압축 진행'; exit 0 }; $dirty=@(git status --porcelain 2>$null).Count; $today=Get-Date -Format yyyy-MM-dd; $hasToday=[bool](Select-String -Path $p -Pattern $today -Quiet); if($dirty -eq 0 -and $hasToday){ Write-Output '[wrap-gate] /wrap 흔적 확인(미커밋 0, 오늘 기록 있음) - 압축 진행. 참고: /clear > /resume이 요약 왜곡 없이 더 안전하다'; exit 0 }; New-Item -ItemType File -Path $m -Force | Out-Null; [Console]::Error.WriteLine(('[wrap-gate] /compact 차단 - /wrap 미확인(미커밋 {0}건, 오늘 기록 {1}). 권장: /wrap > /clear > /resume. 그래도 압축하려면 5분 내 /compact 재실행' -f $dirty, $hasToday)); exit 2"
           }
         ]
       }
@@ -63,7 +75,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "echo 'compact 후 컨텍스트 복구: docs/PROGRESS.md 최상단과 docs/PROJECT_PLAN.md를 다시 읽고 현재 상태를 재확인하라.'"
+            "command": "echo 'compact 후 컨텍스트 복구: docs/PROGRESS.md 최상단과 docs/PROJECT_PLAN.md를 다시 읽고 현재 상태를 재확인하라. 압축 전 미기록 결정이 있었다면 먼저 /wrap을 안내하라.'"
           }
         ]
       }
@@ -72,6 +84,9 @@
   "statusLine": {
     "type": "command",
     "command": "cols=${COLUMNS:-}; case \"$cols\" in \"\"|*[!0-9]*) cols=$(stty size </dev/tty 2>/dev/null | awk '{print $2}');; esac; case \"$cols\" in \"\"|*[!0-9]*) cols=120;; esac; export COLUMNS=$(( cols > 4 ? cols - 4 : 1 )); plugin_dir=$(ls -1d \"${CLAUDE_CONFIG_DIR:-$HOME/.claude}\"/plugins/cache/*/claude-hud/*/ 2>/dev/null | sort -V | tail -1); exec \"/c/Program Files/nodejs/node\" \"${plugin_dir}dist/index.js\""
+  },
+  "enabledPlugins": {
+    "claude-hud@claude-hud": true
   },
   "extraKnownMarketplaces": {
     "repomix": {
@@ -87,10 +102,43 @@
       }
     }
   },
-  "effortLevel": "high",
-  "outputStyle": "korean-evidence-report",
+  "outputStyle": "Explanatory",
+  "effortLevel": "xhigh",
+  "autoUpdatesChannel": "latest",
   "autoMemoryEnabled": true,
   "theme": "dark-daltonized",
   "inputNeededNotifEnabled": true,
-  "agentPushNotifEnabled": true
+  "agentPushNotifEnabled": true,
+  "autoMode": {
+    "soft_deny": [
+      "$defaults",
+      "Bash(git push --force*) in D:\\claude — force-push to the public origin/main is a footgun beyond the default Git Push Destination coverage"
+    ],
+    "environment": [
+      "### Org-wide",
+      "**Organization**: None configured",
+      "**Cloud provider(s)**: None configured",
+      "**Repository visibility**: not queryable via gh in this session; repo name/owner (EleninJayTech/claude) and its public GitHub Pages links (github.io URLs published in README) indicate this repo is PUBLIC — treat any push here as publishing",
+      "**Internal sharing / snippet hosting**: None configured — treat public paste/gist services as outside the trust boundary",
+      "**Secrets management**: None configured — repo's own CLAUDE.md instructs never reading or committing .env/certs/key files and excludes .credentials.json, history.jsonl, projects/, sessions/ from any backup",
+      "**Default / protected branches**: default branch `main` (per repo CLAUDE.md); gh query returned no rulesets and no protected branches listed (not authoritative — gh visibility check was not queryable here)",
+      "**CI/CD deploy targets**: None configured",
+      "**Network posture**: None configured",
+      "**Source control**: The trusted repo (github.com/EleninJayTech/claude) and its remote(s) only — no additional orgs configured",
+      "**Trusted internal domains**: None configured",
+      "**Trusted cloud buckets**: None configured",
+      "**Key internal services**: None configured",
+      "**Internal package registry**: None configured",
+      "**Sensitive data locations & audiences**: any file or store holding personal data, confidential business data, credentials, regulated data, or similarly sensitive material; preserve exact handles when known and share only with audiences cleared at the [named+specifics] bar. Repo-specific: `.claude/settings.local.json`, `CLAUDE.local.md`, and `global-config/.credentials.json` / `global-config/history.jsonl` / `global-config/projects/` / `global-config/sessions/` are explicitly marked personal/secret and excluded from commits per this repo's CLAUDE.md",
+      "**Data retention / declassification**: None configured",
+      "**Sensitive remote targets**: any namespace, host, or container whose name carries `prod` or `production` as a whole word or name segment",
+      "**Protected deployment namespaces / environments**: None configured — fall back to the Sensitive remote targets heuristic",
+      "**Protected IaC scopes**: IAM, RBAC, networking, quota, and node-pool resources; anything whose name or tag carries `prod` or `production` as a whole word or name segment",
+      "### User-specific",
+      "**Primary use of Claude Code**: personal/hobby documentation tooling — this repo is a documentation-only (no code/build/test) collection of Claude Code drop-in setup instructions, maintained by a single author (@bsjeong87)",
+      "**Trusted repo**: D:\\claude, the git repository the agent started in, with remote github.com/EleninJayTech/claude.git — appears PUBLIC (see Repository visibility); only this repo's own work should be pushed there, and secrets/sensitive data are never cleared into it regardless of visibility",
+      "**Org-specific CLIs**: None configured",
+      "routine under docs/ prefix: PROGRESS/DECISIONS/PROJECT_PLAN append-only convention scoped to this repo's docs/ directory"
+    ]
+  }
 }
