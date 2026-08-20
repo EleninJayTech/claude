@@ -81,6 +81,12 @@ if (Want '표') {
         $blk = @()
       }
     }
+    $q = @(0..($lines.Count-1)) | Where-Object { $lines[$_] -match '^>\s*\|' }
+    if ($q.Count -ge 2) {
+      foreach ($i in ($q[0])..($q[-1])) {
+        if ($lines[$i] -notmatch '^>\s*\|') { $bad += "줄 $($i+1) 인용 표 안의 비-표 줄 — 표가 갈려 뒷행이 헤더 없이 렌더된다" }
+      }
+    }
     if ($bad) { Bad "$($f.Name)  $($bad -join ' · ')" } else { Ok "$($f.Name)" }
   }
 }
