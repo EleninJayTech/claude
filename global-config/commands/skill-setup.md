@@ -80,8 +80,9 @@ disable-model-invocation: true
 2. **superpowers** — 체계적 코딩 프로세스 강제(요구사항→계획→테스트→구현→리뷰).
    `https://github.com/obra/superpowers`
    *(⚠️ 단순 폴더가 아니라 **플러그인**. 마켓플레이스로 설치 후 **재시작** 필요. 워크플로를 강하게
-   강제하는 무거운 프레임워크라, 팀/사용자가 그 방식을 원할 때만 권장. 2026-08-10 재심에서
-   01 docs/ 기록 체계가 이미 깔린 환경엔 중복으로 판정(DEC-20260810-bsjeong87-02) — 그런 곳엔 비권장.)*
+   강제하는 무거운 프레임워크라, 팀/사용자가 그 방식을 원할 때만 권장. **중복·충돌 판정의 정본은
+   03 부록**(2026-08-20 재판정: 4축 겹침 + SessionStart 훅 충돌로 기각 유지) — 01 docs/ 기록 체계가
+   깔린 환경엔 비권장.)*
 3. **frontend-design** — 뻔한 AI 디자인(흰 배경·보라 그라데이션·단조 레이아웃) 금지.
    `https://github.com/anthropics/skills/tree/main/skills/frontend-design`
    *(표준 스킬 폴더 — 경로는 저장소 개편이 잦으니 실행 시점에 위치 확인. **단, Claude Code에 이미 내장**되어
@@ -125,8 +126,9 @@ disable-model-invocation: true
   외부 저장소에서 복사해 오는 절차라 유입 경로가 실재한다) → 임시 파일 정리. 한 저장소에 스킬이
   여러 개면 각각 처리.
 - **플러그인/마켓플레이스형(superpowers 등):** 문서화된 슬래시 커맨드를 실행한다. 예:
-  `/plugin marketplace add obra/superpowers-marketplace` 후
-  `/plugin install superpowers@superpowers-marketplace`. 적용에 **재시작/`/reload-plugins`**가
+  superpowers는 공식 마켓에 등재돼 있어 `/plugin install superpowers@claude-plugins-official` 한 줄이면 되고,
+  벤더 마켓(`/plugin marketplace add obra/superpowers-marketplace` 후
+  `/plugin install superpowers@superpowers-marketplace`)은 폴백이다. 적용에 **재시작/`/reload-plugins`**가
   필요하면 그 절차를 사용자에게 안내한다.
 - **서버+MCP형(agentmemory 풀 모드):** 별도 터미널에서 `npx @agentmemory/agentmemory` 실행 +
   `/plugin marketplace add rohitg00/agentmemory` + `/plugin install agentmemory`를 안내하고,
