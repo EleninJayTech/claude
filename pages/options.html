@@ -499,7 +499,7 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
     <div class="opt-head"><span class="id">§5</span><span class="name">브라우저 검증</span><span class="badge b-off">디자인 번들</span></div>
     <p class="lead">만든 화면을 <b>Claude가 직접 열어보고 고치게</b> 합니다. “만들고 → 스스로 확인하고 → 고친다” 루프가 완성됩니다.</p>
     <dl>
-      <dt>경로 3종</dt><dd>Desktop 앱이면 <b>내장 브라우저</b>(설치 불필요) / CLI·IDE에서 Chrome을 쓰면 <b>Claude in Chrome 확장</b> / 그 외는 참고만</dd>
+      <dt>경로 3종</dt><dd>Desktop 앱이면 <b>내장 브라우저</b>(설치 불필요) / CLI·IDE에서 Chrome을 쓰면 <b>Claude in Chrome 확장</b> — 확장 설치만으론 연결되지 않고 <code>claude --chrome</code>이나 <code>/chrome</code>으로 활성화 + <code>/login</code> 인증이 필요하다(WSL 미지원) / 그 외는 참고만</dd>
       <dt>회사 주의 🔴</dt><dd>브라우저를 연결하면 <b>로그인된 세션</b>에도 접근할 수 있습니다. 확장의 사이트 권한을 <code>localhost</code>·스테이징으로 최소화하세요</dd>
     </dl>
   </div>

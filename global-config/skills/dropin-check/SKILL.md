@@ -9,7 +9,7 @@ description: 드롭인 구성 최신성 점검(읽기 전용). 대상 프로젝�
 글로벌 복원은 `global-config/` 복사(DEC-20260721-bsjeong87-01).
 
 ## 1) 기준 확보 — 문서 저장소의 현재 버전
-- 대상 `CLAUDE.md`의 `dropin-applied`에 `출처=클론 <경로>`(00 v1.10+)가 있으면 그 경로를 클론 후보 최우선으로 쓴다.
+- 대상 `CLAUDE.md`의 `dropin-applied`에 `출처=클론 <경로>`가 있으면(그 필드가 있는 기록이면) 그 경로를 클론 후보 최우선으로 쓴다.
 - 로컬 클론 탐색: remote가 `EleninJayTech/claude`인 폴더를 찾는다(흔한 위치 예: `D:\claude`·`D:\workspace\claude` — 경로는 PC마다 다르니 고정값으로 믿지 말 것). 없으면 사용자에게 경로를 묻고,
   그것도 없으면 GitHub API(`https://api.github.com/repos/EleninJayTech/claude/contents/`)에서 파일 목록·download_url을 얻어 원격 조회(한글 파일명 인코딩 회피).
 - 로컬 클론이면 점검 전 `git fetch`만 한다 — 이 스킬은 읽기 전용이라 `pull`은 하지 않는다(사용자가 그 클론에서 편집 중일 수 있다).

@@ -25,4 +25,4 @@ disable-model-invocation: true
 ## 3. 마무리
 - 문서별 버전 bump 한 줄(`**최적화**: … 압축(규칙 불변)` — 이 행 자체도 요지만) + CLAUDE.md 표 동기화.
 - 테스트가 찾은 절차 공백 중 **한 줄 처방이 서는 것만** 함께 반영하고, 판단이 필요한 것은 PROJECT_PLAN 관찰로 등재(1회 재발 후 배선).
-- PROGRESS append(절감 수치 = 전/후 측정값), 방침 변경이면 DEC, check.ps1 통과 후 커밋·푸시(이 repo 상시 허용).
+- PROGRESS 최상단 append(**아카이브 포인터가 있으면 그 줄 아래부터** — 포인터는 최상단 고정)(절감 수치 = 전/후 측정값), 방침 변경이면 DEC, check.ps1 통과 후 커밋·푸시(이 repo 상시 허용).

@@ -1,6 +1,6 @@
 # Claude Code 통합 구성 — 범용 마스터 (드롭인 적용)
 
-> **문서 버전: v1.38** · 최종 갱신: **2026-08-20** · **최근 재검증: 2026-08-04** · 기준: Claude Code v2.1.226 (Opus 5 · Sonnet 5 · Fable 5)
+> **문서 버전: v1.39** · 최종 갱신: **2026-08-20** · **최근 재검증: 2026-08-04** · 기준: Claude Code v2.1.226 (Opus 5 · Sonnet 5 · Fable 5)
 >
 > | 버전 | 날짜 | 변경 내용 |
 > | --- | --- | --- |
@@ -43,6 +43,7 @@
 > | v1.36 | 2026-08-13 | **sfa형 워크스페이스 시나리오 검증 반영**: §E-2에 **하위 적용 여부 단위별 질문**("각자 적용"과 §E-4 "하위 불침습"의 층 구분 — 하위 적용 시 회사/개인 판정·게이트도 그 단위 기준), §E-2 A-1에 개인 git 루트 변형 포인터, §E-3 **단위 도출 기준**(빌드 모듈 전부가 아니라 동시 편집 1차 단위만), §E-4 개인 루트 remote의 사내 정보 반출 확인, §F-2 C resume에 **루트 대상 시 하위 각 repo PROGRESS 훑기**(팀원 기록 가시성 — 글로벌 스킬 동기) |
 > | v1.37 | 2026-08-20 | §F-3 `additionalDirectories`는 **상대 경로만**(절대경로는 그 PC에서만 유효 — 머신 종속 경로는 `settings.local.json`으로), §A STEP 4 §검증 ⓔ에 등록 경로 실재·상대 확인 |
 > | v1.38 | 2026-08-20 | §검증 ①에 **글로벌 축 실측**(ⓐ CLAUDE.md 실재·ⓑ 글로벌 deny — 필수 항목인데 프로젝트 deny만 보던 비대칭 해소, B/C 선택 시 스킬 **내용 축** 확인), ②에 §F-5 `.gitignore`·A-1 루트 라우터 실재 |
+> | v1.39 | 2026-08-20 | §D-3 hooks 예시를 실물 문구로 동기(auto·SessionStart)+**정본은 `global-config/settings.json`** 포인터·매처 열거 일반화·`manual` 게이트를 선택 확장에 등재, §D-5에 글로벌 deny 실측, §D-6에 게이트 전제, §검증에 **글로벌 전용이면 ② `해당 없음` 갈음**·`settings.local.json` 폴백 경로 확인, §B 비-git 면제를 "git 전제 산출물"로 묶음 |
 >
 > ※ 갱신 시: 이 표에 한 줄 추가 + 하단 "문서 정보" 날짜 수정 + §L 재검증 체크리스트 수행.
 
@@ -80,7 +81,7 @@
 - §D~F에서 **해당 시나리오 부분만** 골라 생성. 불필요한 것(단일 repo에 MSA 단위분할 등)은 만들지 않는다. 단 **ⓑ 보안(deny·시크릿 차단)은 해제를 권하지 않는다** — 사용자가 명시적으로 빼는 경우에만 제외하고 위험을 고지한다.
 
 **STEP 4 — 확인.** 무엇을 만들었는지 요약 보고 → **§검증** → 승인 후 커밋 안내(§E 커밋 규칙).
-**§검증** — 두 축을 **둘 다** 증거로 낸다. ① **글로벌**: `/` 자동완성으로 `/resume`·`/wrap`·`/dropin-check`·`/dropin-update`(§D-5 — 자동완성을 볼 수 없는 비대화형 실행이면 스킬 4종 실물 파일 존재로 대체). ⓐ를 적용했으면 `~/.claude/CLAUDE.md` 실재, **ⓑ는 글로벌 `settings.json`의 `deny` 시크릿 차단(+hooks를 넣었으면 `hooks` 키)을 실측**한다 — "빼지 않는다"로 필수화한 항목인데 이 확인이 없으면 프로젝트 deny만 보게 된다. §F-2 **B·C를 골랐으면 스킬 본문이 해당 변형인지 내용으로 확인**(예: B의 단위 판별 서술) — 실물 존재만 보면 A가 그대로 남아 있어도 통과한다. ② **프로젝트 산출물**: 이번에 만든 것의 **파일 경로를 실제로 조회해** 보고 — ⓓ `docs/PROJECT_PLAN.md`·`PROGRESS.md`·`DECISIONS.md`(단위 분할이면 그 경로)·`CLAUDE.md`의 §F-1 블록·`.gitattributes`(`git check-attr merge docs/PROGRESS.md` = `union`) / ⓔ `.claude/settings.json`(JSON 파싱 성공 + `deny`에 시크릿 차단 존재 + `additionalDirectories`가 있으면 각 경로가 **이 머신에 실재하고 상대 경로**인지) / §F-5를 적용했으면 `.gitignore`의 개인 파일 패턴, A-1(통합)이면 루트 라우터 `CLAUDE.md`(§F-2 D) 실재도 함께. **①만 보면 검증이 통과한다** — 그 넷은 글로벌 스킬이라 이 프로젝트에 아무것도 안 만들어도 뜬다(신규 설치에서 `docs/`가 통째로 빠져도 "검증 OK"가 나온다). **적용 기록**: 대상 `CLAUDE.md` 맨 아래 `<!-- dropin-applied: … -->` 한 줄에 이 문서의 **현재 버전**(최상단 "문서 버전" 표기에서 읽음)을 `01 vX.Y` 형식으로 추가/갱신한다(형식·재적용 규칙은 00 §A — 00 없이 단독 적용해도 남긴다).
+**§검증** — 두 축을 **둘 다** 증거로 낸다(대상이 **글로벌 전용**이면 ⓓⓔ를 안 만드니 ②는 `해당 없음`을 명시해 갈음하고, ①의 ⓐ·ⓑ 실측이 필수 증거다 — 위 "글로벌(PC)뿐이면" 규칙과 짝). ① **글로벌**: `/` 자동완성으로 `/resume`·`/wrap`·`/dropin-check`·`/dropin-update`(§D-5 — 자동완성을 볼 수 없는 비대화형 실행이면 스킬 4종 실물 파일 존재로 대체). ⓐ를 적용했으면 `~/.claude/CLAUDE.md` 실재, **ⓑ는 글로벌 `settings.json`의 `deny` 시크릿 차단(+hooks를 넣었으면 `hooks` 키)을 실측**한다 — "빼지 않는다"로 필수화한 항목인데 이 확인이 없으면 프로젝트 deny만 보게 된다. §F-2 **B·C를 골랐으면 스킬 본문이 해당 변형인지 내용으로 확인**(예: B의 단위 판별 서술) — 실물 존재만 보면 A가 그대로 남아 있어도 통과한다. ② **프로젝트 산출물**: 이번에 만든 것의 **파일 경로를 실제로 조회해** 보고 — ⓓ `docs/PROJECT_PLAN.md`·`PROGRESS.md`·`DECISIONS.md`(단위 분할이면 그 경로)·`CLAUDE.md`의 §F-1 블록·`.gitattributes`(`git check-attr merge docs/PROGRESS.md` = `union`) / ⓔ `.claude/settings.json`(JSON 파싱 성공 + `deny`에 시크릿 차단 존재 + `additionalDirectories`가 있으면 각 경로가 **이 머신에 실재하고 상대 경로**인지 — §F-3 폴백으로 `.claude/settings.local.json`에 절대경로를 넣었으면 **그 파일의 경로도 같은 기준으로 실재 확인**) / §F-5를 적용했으면 `.gitignore`의 개인 파일 패턴, A-1(통합)이면 루트 라우터 `CLAUDE.md`(§F-2 D) 실재도 함께. **①만 보면 검증이 통과한다** — 그 넷은 글로벌 스킬이라 이 프로젝트에 아무것도 안 만들어도 뜬다(신규 설치에서 `docs/`가 통째로 빠져도 "검증 OK"가 나온다). **적용 기록**: 대상 `CLAUDE.md` 맨 아래 `<!-- dropin-applied: … -->` 한 줄에 이 문서의 **현재 버전**(최상단 "문서 버전" 표기에서 읽음)을 `01 vX.Y` 형식으로 추가/갱신한다(형식·재적용 규칙은 00 §A — 00 없이 단독 적용해도 남긴다).
 
 > 원칙: **승인 없이 대량 변경·커밋하지 않는다.** 시크릿(.env·키·인증서)은 읽지도 커밋하지도 않는다.
 
@@ -95,7 +96,7 @@
 | **🅰️ 통합 A-2** | 여러 repo가 **흩어져** 있음 | §E-2 + §E-4 (단 `--add-dir` 필요) |
 | **➕ MSA 단위분할** | 위에 더해 **여러 팀원이 한 repo의 같은 단위를 동시 편집** | §E-3 를 각 repo에 추가 적용 |
 | **혼합형** | 상위 폴더 아래에 **독립 repo와 비-git 폴더가 섞여** 있음 | 통합 레이어(§E-4)는 그대로 두고, **단위별로 git 여부를 따로 판정**한다 — 비-git 단위엔 아래 면제를 개별 적용하고 커밋은 상위 repo에서 수행. `/resume`·`/wrap`의 "루트+하위 각각 git status"도 git 단위에만 돌린다 |
-| **비-git 폴더** | `.git` 없음 | `git init` 권장(기록·재개 체계의 전제) — 원치 않으면 docs 체계만 적용하고 **git에 의존하는 것 전부**를 건너뛴다: /resume·/wrap의 git 단계(pull·status·커밋 안내), §E-1의 `git add`·커밋 절차, §F-4 `.gitattributes`(merge=union — git 없이는 아무 효과가 없다), 00 STEP 5의 커밋 안내 |
+| **비-git 폴더** | `.git` 없음 | `git init` 권장(기록·재개 체계의 전제) — 원치 않으면 docs 체계만 적용하고 **git에 의존하는 것 전부**를 건너뛴다: /resume·/wrap의 git 단계(pull·status·커밋 안내), §E-1의 `git add`·커밋 절차, §F-4 `.gitattributes`·§F-5 `.gitignore` 등 **git 전제 산출물**(git 없이는 아무 효과가 없다 — 목록을 세지 말고 ⓓ에서 git에 걸리는 것 전부), 00 STEP 5의 커밋 안내 |
 
 > MSA 단위분할은 **동시성 대응**이지 repo 수 문제가 아니다. 1인/저동시성이면 flat docs로 충분(단위분할 불필요).
 
@@ -159,21 +160,22 @@ New-Item -ItemType Directory -Path .claude/skills/dropin-update -Force
   },
   "hooks": {
     "PreCompact": [ { "matcher": "auto", "hooks": [
-      { "type": "command", "command": "echo \"[PreCompact] auto-compact 임박 - 작업 끊고 /wrap 권장\" 1>&2", "async": true } ] } ],
+      { "type": "command", "command": "echo \"[PreCompact] auto-compact 발동 - 기록 안 된 결정이 있었다면 압축 후 즉시 /wrap. 다음엔 한도 전에 /wrap > /clear > /resume 권장\" 1>&2", "async": true } ] } ],
     "SessionStart": [ { "matcher": "compact", "hooks": [
-      { "type": "command", "command": "echo 'compact 후 컨텍스트 복구: docs/PROGRESS.md 최상단과 docs/PROJECT_PLAN.md를 다시 읽고 현재 상태를 재확인하라.'" } ] } ]
+      { "type": "command", "command": "echo 'compact 후 컨텍스트 복구: docs/PROGRESS.md 최상단과 docs/PROJECT_PLAN.md를 다시 읽고 현재 상태를 재확인하라. 압축 전 미기록 결정이 있었다면 먼저 /wrap을 안내하라.'" } ] } ]
   }
 }
 ```
-> 🔴 **deny 현행 동작(2026-08-04 재검증)**: ① Read/Edit deny는 파일 도구 + Bash 안의 인식되는 파일 명령(`cat`/`head`/`tail`/`sed` 등)까지 적용. Read deny는 같은 경로 **Edit도 차단**(v2.1.208+). ② `cat`·`ls`·`head`·`grep` 등은 **기본 무프롬프트 읽기전용 내장 명령**(목록 비설정)이라, 특정 명령에 프롬프트를 강제하려면 위처럼 ask/deny 규칙이 필요. ③ python/node 스크립트가 파일을 직접 여는 **서브프로세스 우회는 여전히 가능** → **근본은 시크릿을 레포에서 분리**(§C-7), OS 수준 차단은 샌드박스(§J). ④ **PowerShell 툴 규칙은 별칭을 자동 정규화** — `PowerShell(Get-Content *)` 하나로 `gc`·`type`·별칭까지 매칭(대소문자 무관). `Bash(...)` 문자열 매칭엔 정규화가 없으므로 Git Bash 병용 환경은 기존 3종(type/Get-Content/gc)도 유지. ⑤ deny는 **집합**이라 배열 순서는 무관하다(실물과 순서가 달라도 차이 아님). ⑥ 경로 규칙 참고: 맨 파일명은 gitignore 의미로 **모든 깊이에 매칭**(`Read(.env)` ≡ `Read(**/.env)`), Windows 경로는 POSIX 정규화(`//c/**/.env`). hooks 매처(`"auto"`/`"compact"`)는 정확 문자열/정규식 — 철자 엄격.
+> 🔴 **deny 현행 동작(2026-08-04 재검증)**: ① Read/Edit deny는 파일 도구 + Bash 안의 인식되는 파일 명령(`cat`/`head`/`tail`/`sed` 등)까지 적용. Read deny는 같은 경로 **Edit도 차단**(v2.1.208+). ② `cat`·`ls`·`head`·`grep` 등은 **기본 무프롬프트 읽기전용 내장 명령**(목록 비설정)이라, 특정 명령에 프롬프트를 강제하려면 위처럼 ask/deny 규칙이 필요. ③ python/node 스크립트가 파일을 직접 여는 **서브프로세스 우회는 여전히 가능** → **근본은 시크릿을 레포에서 분리**(§C-7), OS 수준 차단은 샌드박스(§J). ④ **PowerShell 툴 규칙은 별칭을 자동 정규화** — `PowerShell(Get-Content *)` 하나로 `gc`·`type`·별칭까지 매칭(대소문자 무관). `Bash(...)` 문자열 매칭엔 정규화가 없으므로 Git Bash 병용 환경은 기존 3종(type/Get-Content/gc)도 유지. ⑤ deny는 **집합**이라 배열 순서는 무관하다(실물과 순서가 달라도 차이 아님). ⑥ 경로 규칙 참고: 맨 파일명은 gitignore 의미로 **모든 깊이에 매칭**(`Read(.env)` ≡ `Read(**/.env)`), Windows 경로는 POSIX 정규화(`//c/**/.env`). hooks 매처는 정확 문자열/정규식 — 철자 엄격(현행 매처 예: `auto`·`manual`·`startup`·`compact`).
 > 🟡 `includeCoAuthoredBy`는 deprecated → `attribution` 객체로 대체(빈 문자열 `""` = 표기 숨김).
 > 🟡 테마(dark/light)는 settings.json 문서화 키가 아님(2026-07-20 확인) — 세션에서 **`/config`**(또는 `/theme`)로 설정.
-> 선택 확장(실사용 예): `attribution`에 `"sessionUrl": false`(세션 URL 표기 제어), `SessionStart`에 `"startup"` 매처(새 세션 시작 시 안내 한 줄 — 예: `echo '[시스템] 통합 워크스페이스 초기화 완료'`) — 위 예시와 같은 자리에 추가해 쓸 수 있다.
+> 선택 확장(실사용 예): `attribution`에 `"sessionUrl": false`(세션 URL 표기 제어), `SessionStart`에 `"startup"` 매처(새 세션 시작 시 안내 한 줄 — 예: `echo '[시스템] 통합 워크스페이스 초기화 완료'`), `PreCompact`에 `"manual"` 매처(`/compact` 선행 `/wrap` 게이트 — exit 2로 압축을 실제 차단, 판정은 `docs/**/PROGRESS.md` 변경 유무) — 위 예시와 같은 자리에 추가해 쓸 수 있다.
+> 위 블록은 **최소 예시이고 정본이 아니다** — 이 저장소를 클론했다면 `global-config/settings.json`이 실물 스냅샷이다(§D-2의 `CLAUDE.md`와 같은 처리). 복원 경로가 둘(미러 병합 / 이 블록으로 재구성)이라 명시하지 않으면 PC마다 hooks 구성이 갈린다.
 
 ### D-4. 기본 `/resume`·`/wrap` + 점검·최신화 스킬 (단일 repo용 기본형) — §F-2 A 참조. (통합/MSA는 §F-2 B·C — 동명 스킬은 **개인(글로벌)이 프로젝트를 이기므로** 글로벌 쪽을 교체한다, §F-2 주의)
 - **`/dropin-check`**(적용 상태 점검, 읽기 전용)·**`/dropin-update`**(문서 사본 최신화, 승인 후 교체)는 환경 무관 **글로벌 스킬** — 문서 저장소의 `global-config/skills/<이름>/SKILL.md`를 `~/.claude/skills/<이름>/`로 복사한다(로컬 클론 없으면 raw: `https://raw.githubusercontent.com/EleninJayTech/claude/main/global-config/skills/dropin-check/SKILL.md` · 같은 경로의 `dropin-update`). 설치 전 같은 이름 구형 `commands/`가 있으면 제거(§F-2 주의). 두 스킬은 **설치 유형 무관 동작 보장** — 프로젝트 사본 / 로컬 클론 참조 / raw 직접(사본·클론을 나중에 지워도 계속 동작), 판별 근거는 00 STEP 5 기록의 `출처=` 필드(그 필드가 도입된 이후 기록 — 없으면 두 스킬이 사본→클론→raw 순으로 판별한다).
 
-### D-5. 확인 — `claude` → `/` → `/resume`·`/wrap`·`/dropin-check`·`/dropin-update` 자동완성되면 성공.
+### D-5. 확인 — `claude` → `/` → `/resume`·`/wrap`·`/dropin-check`·`/dropin-update` 자동완성 **+ 글로벌 `settings.json`의 `deny` 시크릿 차단 실측**(스킬 4종은 파일 복사만으로 뜨므로 자동완성만 보면 ⓑ가 통째로 빠져도 "성공"이 된다).
 
 ### D-6. 추론 강도(effort) 제어 — `/effort` 🟢
 세션의 **사고(reasoning) 깊이**를 조절하는 슬래시 명령. 고른 값은 settings.json **`effortLevel`** 키에 저장돼 **새 세션 기본값**이 된다.
@@ -188,7 +190,7 @@ New-Item -ItemType Directory -Path .claude/skills/dropin-update -Force
 - **스코프**: `effortLevel`은 **User·Project·Local** 지원, 우선순위 **Managed > CLI > Local > Project > User**. 세션 1회 오버라이드는 `--effort` 플래그·`CLAUDE_CODE_EFFORT_LEVEL` 환경변수(환경변수가 최우선).
 - **절약 프로필** (Pro 요금제·한도 관리 사용자 — 00 STEP 3에서 선택): 절약은 품질 유지 전제의 2순위이므로 **기본값 하향 + 낭비 제거**로만 아낀다.
   - 세션을 `/effort medium`으로 시작하고, 어려운 작업(설계·동시성·상태머신 등)에 들어갈 때만 그때 `/effort high`↑ — 작업이 끝나면 되돌린다. `ultracode`·`max`는 비권장(토큰 소모 큼).
-  - 컨텍스트 절약 습관: 무관한 작업 전 `/clear`, 긴 세션은 `/compact <초점>`, CLAUDE.md 200줄 이하 + `.claude/rules/` 경로 스코프(§D-2 팁) — 매 턴 실려가는 고정 비용을 줄이는 게 가장 큰 절약.
+  - 컨텍스트 절약 습관: 무관한 작업 전 `/clear`, 긴 세션은 `/compact <초점>`(§D-3 `manual` 게이트를 걸었으면 `/wrap` 뒤에 쓴다), CLAUDE.md 200줄 이하 + `.claude/rules/` 경로 스코프(§D-2 팁) — 매 턴 실려가는 고정 비용을 줄이는 게 가장 큰 절약.
   - **줄이지 않는 것**(품질 불변): 트리아지·최종 리뷰의 상위 모델(02 §F), 검증 게이트(04) — 여기서 아끼면 재작업이 더 비싸다.
   - 한도 가시화: claude-hud(03) 설치를 권장 — 측정 없는 절약은 감이다.
 - ✅ **권장 — 프로젝트 `.claude/settings.json`엔 `effortLevel`을 넣지 않는다(기본값 사용)**. 이유 3가지:
@@ -543,5 +545,5 @@ Claude Code는 매주 바뀐다. 6개월마다 30분:
 ## 핵심 출처 🟢
 IDE 통합·`--add-dir`(ide-integrations·large-codebases) / permissions·deny 한계 / hooks / skills / memory·auto-memory — 모두 `code.claude.com/docs` 및 `docs.anthropic.com`.
 
-**문서 정보** — 통합 마스터(범용) **v1.38**. 변경 이력은 최상단 버전 표 참조(유래: 8개 소스 통합 초판 — v1.0 행).
+**문서 정보** — 통합 마스터(범용) **v1.39**. 변경 이력은 최상단 버전 표 참조(유래: 8개 소스 통합 초판 — v1.0 행).
 최종 갱신: 2026-08-20 · 최근 재검증: 2026-08-04 / 참조: Claude Code v2.1.226, Opus 5(v2.1.219+) · Sonnet 5(v2.1.197+) · Fable 5(v2.1.170+).

@@ -39,7 +39,7 @@
 | R06 | 스코프 우선순위 **enterprise > personal > project**(개인이 프로젝트를 덮는다) | `enterprise > personal > project` | `00` `01` `02` `03` `~resume` `~wrap` `~check` | `~setup` |
 | R07 | PROGRESS **약 800줄/분기 경계**를 넘으면 아카이브 분할 | `800줄` | `01` `RC` `~wrap` | |
 | R08 | 미해소 `[Pending]`·`[Blocked]`는 PROJECT_PLAN **"미해결/관찰 중"**에 올려 닫힐 때까지 유지 | `미해결/관찰 중` | `01` `RC` `~wrap` | |
-| R09 | 정기 항목은 **`다음 ○○: YYYY-MM경`** 형식(이 형식이라야 `/resume` 예정일 안내가 발화) | `YYYY-MM경` | `01` `RC` `~wrap` | |
+| R09 | 정기 항목은 **`다음 ○○: YYYY-MM경`** 형식(이 형식이라야 `/resume` 예정일 안내가 발화) | `YYYY-MM경` | `01` `RC` `~wrap` | `p:audit` `p:reverify` |
 | R10 | 적용 기록은 리터럴 `dropin-applied:`가 아니라 **`dropin-applied`로 시작하는 줄**로 찾는다 | `리터럴` | `00` `~check` | |
 | R11 | 상태 어휘 4종(`미선택` / `게이트 차단(사유)` / `소스없음·확보 실패(사유)` / `해당 없음`)을 섞지 않는다 | `게이트 차단` | `00` `01` `03` `04` `06` `~resume` `~check` `p:audit` | |
 | R12 | `출처=` 필드(사본 / 사본 `<경로>` / 클론 `<경로>` / raw · **클론과 사본이 함께면 둘 다**) | `출처=` | `00` `01` `RC` `~check` `~update` `p:audit` | `GR` `~GC` |

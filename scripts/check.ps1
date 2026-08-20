@@ -127,12 +127,22 @@ if (Want '미러') {
   $norm = { param($s) ($s -replace "`r","") }
   $gc = Join-Path $repo 'global-config'
   $same = 0
-  foreach ($rel in @('CLAUDE.md') + (Get-ChildItem -LiteralPath $gc -Recurse -Include 'SKILL.md','*.md' -EA SilentlyContinue |
-            Where-Object { $_.FullName -match '\\(skills|commands|output-styles)\\' } |
-            ForEach-Object { $_.FullName.Substring($gc.Length+1) })) {
+  # 순회는 정본 ∪ 백업 합집합 — 백업만 돌면 "실물에만 있는 파일"(미러 복사를 잊은 새 스킬)을 구조적으로 못 본다.
+  # 확장자 필터를 두지 않는다 — .md 아닌 동반 파일(LICENSE.txt 등)도 복원 대상이다.
+  $rels = @('CLAUDE.md')
+  foreach ($root in @("$home_\.claude", $gc)) {
+    # 화이트리스트 최상위 3폴더만 — 상대경로 '선두'로 판정한다.
+    # (전체 경로에 매칭하면 `~/.claude/plugins/` 안 마켓플레이스 클론의 skills/까지 딸려온다)
+    foreach ($top in 'skills','commands','output-styles') {
+      $rels += (Get-ChildItem -LiteralPath (Join-Path $root $top) -Recurse -File -EA SilentlyContinue |
+                ForEach-Object { $_.FullName.Substring($root.Length+1) })
+    }
+  }
+  foreach ($rel in ($rels | Sort-Object -Unique)) {
     $src = Join-Path "$home_\.claude" $rel
     $dst = Join-Path $gc $rel
     if (-not (Test-Path -LiteralPath $src)) { Bad "정본 없음: $rel"; continue }
+    if (-not (Test-Path -LiteralPath $dst)) { Bad "백업 없음: $rel"; continue }
     $a = & $norm (Slurp $src); $b = & $norm (Slurp $dst)
     if ($rel -eq 'CLAUDE.md') {
       $a = (($a -split "`n") | Where-Object { $_ -notmatch '^\s*(<!--\s*)?dropin-applied' }) -join "`n"
@@ -145,10 +155,20 @@ if (Want '미러') {
   # settings.json — 구성 성격 키만 (포함 기준이 정본. 제외 목록을 늘리지 않는다)
   $ka = Get-Content "$home_\.claude\settings.json" -Raw -Encoding UTF8 | ConvertFrom-Json
   $kb = Get-Content (Join-Path $gc 'settings.json') -Raw -Encoding UTF8 | ConvertFrom-Json
+  # JSON 객체의 키 순서는 의미가 없다(01 §D-3 ⑤ "deny는 집합이라 순서 무관"의 키 버전).
+  # 재귀 키 정렬 없이 문자열 비교하면 정본이 재직렬화될 때마다 가짜 '실차이'가 난다(2026-08-20 실측).
+  function ConvertTo-NormJson($o) {
+    if ($null -eq $o) { return 'null' }
+    if ($o -is [System.Management.Automation.PSCustomObject]) {
+      return '{' + (($o.PSObject.Properties | Sort-Object Name | ForEach-Object { '"' + $_.Name + '":' + (ConvertTo-NormJson $_.Value) }) -join ',') + '}'
+    }
+    if ($o -is [System.Collections.IEnumerable] -and $o -isnot [string]) {
+      return '[' + (($o | ForEach-Object { ConvertTo-NormJson $_ }) -join ',') + ']'
+    }
+    return ($o | ConvertTo-Json -Compress -Depth 20)
+  }
   foreach ($k in 'permissions','hooks','attribution','autoMemoryEnabled') {
-    $x = if ($null -ne $ka.$k) { $ka.$k | ConvertTo-Json -Depth 20 -Compress } else { 'null' }
-    $y = if ($null -ne $kb.$k) { $kb.$k | ConvertTo-Json -Depth 20 -Compress } else { 'null' }
-    if ($x -eq $y) { Ok "settings.$k" } else { Bad "settings.$k 실차이" }
+    if ((ConvertTo-NormJson $ka.$k) -eq (ConvertTo-NormJson $kb.$k)) { Ok "settings.$k" } else { Bad "settings.$k 실차이" }
   }
 }
 

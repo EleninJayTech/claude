@@ -45,7 +45,7 @@ disable-model-invocation: true
   (살펴볼 예: `package.json`, `pyproject.toml`, `requirements.txt`, `Cargo.toml`, `go.mod`,
   `composer.json`, `Gemfile`, `README*`, 디렉터리 구조, 그리고 코드에 영상/미디어 처리 흔적이
   있는지)
-- **기존 Claude 설정 인벤토리:**
+- **기존 Claude 설정 인벤토리:** (cwd 한 겹 기준 — **단일 repo 전용**이다. 통합 워크스페이스면 00 §A STEP 2·`/resume`처럼 하위 repo를 각각 봐야 하므로 이 커맨드 대신 그 절차를 쓴다)
     - 프로젝트: `./CLAUDE.md`, `./.claude/`(`settings.json`, `settings.local.json`, `skills/`,
       `commands/`, `agents/`, 훅, `.mcp.json`), `./AGENTS.md`
     - 사용자: `~/.claude/CLAUDE.md`, `~/.claude/settings.json`, `~/.claude/skills/`,
