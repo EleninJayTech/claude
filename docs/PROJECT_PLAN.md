@@ -114,6 +114,7 @@
   - 🟡 **`json.schemastore.org` → `www.schemastore.org` 301** — 원본 URL은 200이나 정본 호스트가 `www.`다. 인용처를 정본으로 바꿀지 판단.
   - 🟡 **glab 설치 경로의 공식/커뮤니티 구분** — 공식 README는 Homebrew만 "officially supported", winget·choco·scoop은 커뮤니티 유지보수다. 04에 그 구분이 없다(경미).
   - 🟡 **GitLab 구독 인증 비대칭이 04에 명시되지 않음** — GitHub Actions는 `CLAUDE_CODE_OAUTH_TOKEN`(구독)을 받지만 GitLab CI/CD는 **API 키 전용**이다(2026-08-20 확인, 04 §3-A·§3-B 서술 자체는 정확). 구독만 있는 사용자가 §3-B를 보고 될 거라 기대할 여지.
+  - 🟡 **출력 스타일의 개인↔프로젝트 스코프 간 동명 우선순위가 공식 미명시**(2026-08-20 확인) — 05 §2가 "여러 스코프에 있으면 가까운 쪽"으로 **일반화해 적었던 것을 정정**(공식은 프로젝트 스코프 안 중첩 폴더 규칙만 규정). 명시되면 05 §2·§L에 반영. 01 §F-2의 스코프 우선순위는 스킬·설정 기준이라 출력 스타일에 그대로 옮기면 안 된다.
   - 🟡 **obra/superpowers 역전** — Anthropic **공식 마켓플레이스**에 등재됐다(`/plugin install superpowers@claude-plugins-official`). 과거 기각(서드파티 중복)의 전제가 바뀌었으므로 03 부록 재평가 대상. **확장 후보로 보고됨 — 사용자 선택 대기.**
 
 ---

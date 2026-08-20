@@ -1,6 +1,6 @@
 # Claude Code 통합 구성 — 범용 마스터 (드롭인 적용)
 
-> **문서 버전: v1.41** · 최종 갱신: **2026-08-20** · **최근 재검증: 2026-08-20** · 기준: Claude Code v2.1.237 (Opus 5 · Sonnet 5 · Fable 5)
+> **문서 버전: v1.42** · 최종 갱신: **2026-08-20** · **최근 재검증: 2026-08-20** · 기준: Claude Code v2.1.237 (Opus 5 · Sonnet 5 · Fable 5)
 >
 > | 버전 | 날짜 | 변경 내용 |
 > | --- | --- | --- |
@@ -46,6 +46,7 @@
 > | v1.39 | 2026-08-20 | §D-3 hooks 예시를 실물 문구로 동기(auto·SessionStart)+**정본은 `global-config/settings.json`** 포인터·매처 열거 일반화·`manual` 게이트를 선택 확장에 등재, §D-5에 글로벌 deny 실측, §D-6에 게이트 전제, §검증에 **글로벌 전용이면 ② `해당 없음` 갈음**·`settings.local.json` 폴백 경로 확인, §B 비-git 면제를 "git 전제 산출물"로 묶음 |
 > | v1.40 | 2026-08-20 | /resume의 PROGRESS 읽기 단위를 **줄 수 → 최근 ~5항목**(길면 항목당 앞 ~700자)으로 교체 — §F-1·§F-2 A/B/C·스킬 페이로드 전부. 워크스페이스 루트의 하위 repo 훑기도 ~10줄 → ~2항목 |
 > | v1.41 | 2026-08-20 | 전면 재검증(v2.1.237) — deny 서브프로세스 우회 한계·샌드박스 네이티브 Windows 미지원·auto-memory 200줄/25KB·`attribution`·auto mode 전부 유효 확인 |
+> | v1.42 | 2026-08-20 | §L 정리 — 유효 확인된 4건(deny 우회·샌드박스 Windows 미지원·`attribution`·auto-memory 한도)을 🔴🟡에서 분리, 🔴🟡는 `sandbox.credentials` 스키마만 |
 >
 > ※ 갱신 시: 이 표에 한 줄 추가 + 하단 "문서 정보" 날짜 수정 + §L 재검증 체크리스트 수행.
 
@@ -535,7 +536,8 @@ CLAUDE.local.md
 ## L. 유지보수 (6개월마다 재검증) ⭐
 Claude Code는 매주 바뀐다. 6개월마다 30분:
 - `code.claude.com/docs/en/whats-new` 최신 항목 확인.
-- 🔴🟡: deny의 서브프로세스 우회, **샌드박스 네이티브 Windows 지원 여부**(현재 macOS·Linux·WSL2만 — sandboxing), `attribution` 스키마 변화, auto-memory 한도(현행 MEMORY.md 200줄/25KB), `sandbox.credentials` 스키마.
+- 🔴🟡: `sandbox.credentials` 스키마(2026-08-20 조회에서 인접 키만 확인되고 스키마 본체는 못 찾았다).
+- 정기 확인(2026-08-20 전부 유효): deny의 서브프로세스 우회 한계, **샌드박스 네이티브 Windows 미지원**(macOS·Linux·WSL2만 — sandboxing), `attribution` 스키마, auto-memory 한도(MEMORY.md 200줄/25KB).
 - `/model` 최신 정책(별칭이 가리키는 실제 모델·`best`의 해석), `claude --version`.
 - `/effort` 단계 명칭·모델별 지원 범위·`ultracode` 동작, 에이전트·스킬 frontmatter `effort:` 키 유지 여부(§D-6, 2026-07-20 확정).
 - §F-2 **A·B·C 전 템플릿**의 폴백(비-git·`docs/` 부재·단위 없음·단일 repo)·**조건부 안내 어휘**(조치 대기·`게이트 차단`·`소스없음`/`확보 실패` — 새 어휘가 늘 때마다 템플릿 3곳도 함께 늘려야 한다)·**미러 대조 판정 기준**(구성 성격 4키·포함 기준 정본·`dropin-applied` 줄 제외·줄바꿈 정규화)이 배포된 글로벌 스킬 실물과 일치하는지 — 문서만 고치고 스킬을 빠뜨리면(또는 그 반대로) 같은 공백이 방향만 바꿔 재발한다. **점검 범위에서 A를 빼지 말 것**: 단일 repo 신규 설치자가 쓰는 것이 A다(도입 경위는 버전 표 v1.26·v1.29 행).
@@ -547,5 +549,5 @@ Claude Code는 매주 바뀐다. 6개월마다 30분:
 ## 핵심 출처 🟢
 IDE 통합·`--add-dir`(ide-integrations·large-codebases) / permissions·deny 한계 / hooks / skills / memory·auto-memory — 모두 `code.claude.com/docs` 및 `docs.anthropic.com`.
 
-**문서 정보** — 통합 마스터(범용) **v1.41**. 변경 이력은 최상단 버전 표 참조(유래: 8개 소스 통합 초판 — v1.0 행).
+**문서 정보** — 통합 마스터(범용) **v1.42**. 변경 이력은 최상단 버전 표 참조(유래: 8개 소스 통합 초판 — v1.0 행).
 최종 갱신: 2026-08-20 · 최근 재검증: 2026-08-20 / 참조: Claude Code v2.1.237, Opus 5(v2.1.219+) · Sonnet 5(v2.1.197+) · Fable 5(v2.1.170+).
