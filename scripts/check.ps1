@@ -40,6 +40,10 @@ if (Want '버전') {
     $set = @($hdr,$last,$ftr,$tbl) | Sort-Object -Unique
     if ($set.Count -eq 1 -and $set[0]) { Ok "$($f.Name.Substring(0,2))  $hdr" }
     else { Bad "$($f.Name)  헤더=$hdr 표=$last 푸터=$ftr CLAUDE.md=$tbl" }
+    $hdrD = [regex]::Match($t, '\*\*문서 버전:[^
+]*?최종 갱신:\s*\*\*([\d-]+)\*\*').Groups[1].Value
+    $ftrD = [regex]::Match($t, '(?m)^\*\*문서 정보\*\*[\s\S]{0,400}?최종 갱신:\s*\*{0,2}([\d-]+)').Groups[1].Value
+    if ($hdrD -and $ftrD -and $hdrD -ne $ftrD) { Bad "$($f.Name)  최종 갱신 헤더=$hdrD 푸터=$ftrD (버전만 올리고 날짜를 빠뜨렸다)" }
   }
 }
 
@@ -213,6 +217,14 @@ if (Want '규칙') {
       if ($texts[$c] -and $texts[$c] -match $marker) { $extra += $c }
     }
     if ($miss) { Bad "$id 누락 → $($miss -join ', ')" } else { Ok "$id  필수 $($need.Count)곳$(if($okay){" · 허용 $($okay.Count)"})" }
+    foreach ($m2 in [regex]::Matches($r.Groups[2].Value, '([0-9A-Za-z~:]+)\s*안\s*(\d+)\s*곳')) {
+      $code = $m2.Groups[1].Value; $want = [int]$m2.Groups[2].Value
+      if (-not $texts.ContainsKey($code) -or $null -eq $texts[$code]) { Bad "$id  '$code 안 $want곳' — 파일 코드 미정의"; continue }
+      $body = (($texts[$code] -split "`n") | Where-Object { $_ -notmatch '^>\s*\|' }) -join "`n"
+      $have = ([regex]::Matches($body, $marker)).Count
+      if ($have -ne $want) { Bad "$id  $code 안 사본 $have곳 ≠ 선언 $want곳 — 한 파일 안 사본은 마커 판정으로 안 잡힌다" }
+      else { Ok "$id  $code 안 $have곳" }
+    }
     if ($extra) { Note "$id 미등록 사본 → $($extra -join ', ')  (사본이면 필수에, 우연 일치면 허용에 등록)" }
   }
 }

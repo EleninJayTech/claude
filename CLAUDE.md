@@ -10,13 +10,13 @@ Claude Code 셋업·운영을 위한 **드롭인 지시 문서** 저장소. 코�
 ## 구성물
 | 파일 | 역할 | 버전 |
 | --- | --- | --- |
-| `00_통합-설치.md` | 01~06 통합 설치 셀렉터 — 문서 확보→감지→설치 모드(최소/권장/전체/사용자)+목적 번들(§C-2 합집합)+운용 프로필(표준/절약)→해당 문서 프로토콜로 위임, 적용 기록(`dropin-applied` — `출처=` 포함)·재적용 분기 | v1.32 (2026-08-21) |
-| `01_Claude-Code-통합구성-범용마스터.md` | 글로벌+프로젝트 셋업 마스터(§D 글로벌·§E 환경별·§F SSOT 블록·§J-1 auto mode·§D-6 절약 프로필) — 구성 항목 부분 선택 | v1.51 (2026-08-21) |
+| `00_통합-설치.md` | 01~06 통합 설치 셀렉터 — 문서 확보→감지→설치 모드(최소/권장/전체/사용자)+목적 번들(§C-2 합집합)+운용 프로필(표준/절약)→해당 문서 프로토콜로 위임, 적용 기록(`dropin-applied` — `출처=` 포함)·재적용 분기 | v1.33 (2026-08-21) |
+| `01_Claude-Code-통합구성-범용마스터.md` | 글로벌+프로젝트 셋업 마스터(§D 글로벌·§E 환경별·§F SSOT 블록·§J-1 auto mode·§D-6 절약 프로필) — 구성 항목 부분 선택 | v1.52 (2026-08-21) |
 | `02_모델분담-범용-플레이북.md` | 상위/하위 모델 자동 분담, `.claude/agents/` 로스터 템플릿(에이전트별 선택, 리뷰 정본=내장 `/code-review`, §F 절약 배정=Sonnet+advisor 패턴, 비개발 repo 가드) | v1.32 (2026-08-20) |
 | `03_확장기능-설치-체크리스트.md` | 확장 5종(claude-hud·svg-design·frontend-design·MCP·브라우저 검증) 체크리스트 설치 + 플러그인 부록 | v1.20 (2026-08-20) |
-| `04_검증-자동화.md` | 검증 3종(hooks 게이트·gh/glab CLI·CI 통합) — git 호스트 감지 분기, 회사 정책 확인 게이트 | v1.15 (2026-08-20) |
-| `05_출력스타일.md` | 응답 역할·톤·형식 커스텀 — 내장 스타일 4종 전환 + 커스텀 `output-styles/*.md` 생성(`keep-coding-instructions` 함정 안내) | v1.13 (2026-08-20) |
-| `06_루틴-자동화.md` | 클라우드 스케줄 에이전트(스케줄·API·GitHub 트리거) — repo 준비물+루틴 생성+정의 기록(docs/ROUTINES.md). Pro+ · research preview · 회사 게이트 | v1.12 (2026-08-20) |
+| `04_검증-자동화.md` | 검증 3종(hooks 게이트·gh/glab CLI·CI 통합) — git 호스트 감지 분기, 회사 정책 확인 게이트 | v1.16 (2026-08-21) |
+| `05_출력스타일.md` | 응답 역할·톤·형식 커스텀 — 내장 스타일 5종 전환 + 커스텀 `output-styles/*.md` 생성(`keep-coding-instructions` 함정 안내) | v1.13 (2026-08-20) |
+| `06_루틴-자동화.md` | 클라우드 스케줄 에이전트(스케줄·API·GitHub 트리거) — repo 준비물+루틴 생성+정의 기록(docs/ROUTINES.md). Pro+ · research preview · 회사 게이트 | v1.13 (2026-08-21) |
 | `index.html` | 사람용 안내 페이지(입문자 대상 사용법, GitHub Pages 랜딩) — 드롭인 아님, 설치 무관. **루트 고정**(Pages 진입점) | 2026-08-13 |
 | `pages/demo.html` | 사람용 설치 시연 페이지(터미널 재생형 인터랙티브 — 재생/챕터/배속/자막) — index.html과 동일 규칙(사람용 예외, 절차가 크게 바뀔 때만 갱신) | 2026-08-13 |
 | `pages/intro.html` | 사람용 1분 소개 영상 페이지(16:9 시네마틱 7장면 자동 전환 — 유튜브 소개용, 화면 녹화 시 영상화) — 사람용 예외 동일 | 2026-08-12 |
@@ -33,14 +33,14 @@ Claude Code 셋업·운영을 위한 **드롭인 지시 문서** 저장소. 코�
 - **전면 재검증+확장 조사는 `/reverify` 한 번으로**(`.claude/skills/reverify/` — 조사 에이전트 병렬→반영→후보 보고→기록·커밋 절차 내장). "최근 재검증" 날짜는 이 절차를 돌린 날에만 갱신(DEC-20260804-bsjeong87-02).
 - **기계적 검사는 커밋 전 `pwsh -File scripts/check.ps1`로**(드롭인 아님 — 이 저장소 유지보수 전용). 버전 4축·표 시간순/결번·표 파손·BOM·frontmatter·미러 해시·**규칙 대장**(`docs/RULES.md`) 7종. 판단이 필요 없는 것만 담으므로 여기서 잡히는 결함은 `/audit`이 볼 이유가 없다. **규칙을 고칠 땐 `docs/RULES.md`의 필수 목록을 열고 하나씩 지워 가며** 반영한다(사본은 범용 자족성이 요구하는 값이라 줄일 수 없고, 대신 추적한다).
 - **내부 정합성 전수조사는 `/audit` 한 번으로**(`.claude/skills/audit/` — 렌즈 전부(현재 A~F 6종) 병렬 조사→재검증→보고→승인 후 수정). 개정이 몰린 뒤 또는 분기 1회 권장.
-- **부피·밀도 정리는 `/optimize` 한 번으로**(`.claude/skills/optimize/` — 측정→압축(요지만)→기계 검사→적대적 diff 검토→실적용 테스트 내장). **유지보수 4축**: /reverify=외부 최신성 · /audit=내부 결함 · 실적용=경험 검증 · /optimize=비대 제거 — 감사는 늘리는 쪽, 최적화는 줄이는 쪽으로 편향돼 있어 교대로 돈다. 대량 개정이 몇 차례 쌓인 뒤 권장.
+- **부피·밀도 정리는 `/optimize` 한 번으로**(`.claude/skills/optimize/` — 측정→압축(요지만)→기계 검사→적대적 diff 검토→실적용 테스트 내장). **유지보수 4축**: /reverify=외부 최신성 · /audit=내부 결함 · 실적용=경험 검증(**실제 적용 + 환경형 시나리오 대입** — 팀 축은 대입 말고 발견 경로가 없다) · /optimize=비대 제거 — 감사는 늘리는 쪽, 최적화는 줄이는 쪽으로 편향돼 있어 교대로 돈다. 대량 개정이 몇 차례 쌓인 뒤 권장.
 
 ## global-config/ 백업 규칙
 - **화이트리스트만** 커밋: `CLAUDE.md`·`settings.json`·`skills/`·`commands/`·`output-styles/`. 통째 커밋 금지 — `.credentials.json`·`history.jsonl`·`projects/`·`sessions/`는 시크릿·대화기록. ([[DEC-20260720-bsjeong87-04]], `output-styles/` 추가는 [[DEC-20260810-bsjeong87-10]])
 - 원본(`~/.claude`)을 고쳐도 **자동 갱신되지 않는다** — 수동으로 다시 복사해 커밋.
 - `theme` 등 개인 취향 키는 문서 예시에서 제외하되 개인 설정에 남는 건 무방. ([[DEC-20260720-bsjeong87-03]])
 - **여러 PC가 갱신하면 미러는 갈라진다** — `settings.json`은 마지막 커밋 PC의 머신 종속 키를 갖는다. diff가 머신 종속 키뿐이면 정상, **구성 성격 키(`permissions.deny`·`hooks`·`attribution`·`autoMemoryEnabled`)가 다를 때만 실제 차이**로 본다(이 **포함 기준 한 줄이 정본** — 제외 키를 나열해 맞추면 사본마다 목록이 갈라진다). 복원은 통째 덮어쓰기가 아니라 병합([[DEC-20260721-bsjeong87-02]], 상세는 `global-config/README.md`).
-- 해시 대조(/wrap·/dropin-check)는 **줄바꿈을 정규화한 뒤** 비교한다 — 이 repo의 `.gitattributes`엔 EOL 지시(`text`/`eol`)가 없어 **워킹트리 줄바꿈이 그 PC의 `core.autocrlf` 설정에 좌우**되므로, 내용이 같아도 해시가 갈릴 수 있다(현재 이 PC는 `core.autocrlf=true`라 커밋본 LF·워킹트리 CRLF. 실제로 Claude Code가 LF로 쓰는 `~/.claude/settings.json`과 CRLF로 체크아웃된 `global-config/settings.json`이 상시 갈린다).
+- 해시 대조(/wrap·/dropin-check)는 **줄바꿈을 정규화한 뒤** 비교한다 — 이 repo의 `.gitattributes`엔 EOL 지시(`text`/`eol`)가 없어 **워킹트리 줄바꿈이 그 PC의 `core.autocrlf` 설정에 좌우**되므로, 내용이 같아도 해시가 갈릴 수 있다(이 PC는 `core.autocrlf=input`이라 커밋본·워킹트리 모두 LF지만, `true`인 PC에서는 CRLF로 체크아웃돼 Claude Code가 LF로 쓰는 `~/.claude/settings.json`과 상시 갈린다 — 정규화가 필요한 이유는 내 PC가 아니라 **PC마다 다르다는 사실**이다).
 - 미러 대조에서 글로벌 `CLAUDE.md`의 **`dropin-applied`로 시작하는 줄은 차이로 치지 않는다** — PC별 적용 기록이라 갈라져 있는 게 정상이다([[DEC-20260812-bsjeong87-11]]). 이 예외가 없으면 정본↔미러의 유일한 차이가 그 줄일 때 매번 오검출이 나고, 방향 판정을 거쳐 다른 PC의 기록을 덮어쓰게 된다.
 
 ## 환경
@@ -72,7 +72,7 @@ Claude Code 셋업·운영을 위한 **드롭인 지시 문서** 저장소. 코�
 - append-only(과거 수정·삭제 금지). 결정이 바뀌면 새 DEC + 기존에 "Superseded by DEC-…" 표시. 상호참조는 [[DEC-…]]·날짜.
 - /resume: **remote 있고 워킹트리 clean이면 `git pull --ff-only` 먼저**(아니면 `git fetch` 후 뒤처짐만 보고 — 병합은 사용자 결정) → **git status·브랜치로 미커밋(진행 중) 작업 발견** → 그다음 PROGRESS 최상단(**최근 ~5항목만** — 길면 항목당 앞 ~700자. 줄 수가 아니라 항목 수다, 통째 읽기 금지) + PROJECT_PLAN 현재 Phase + 최근 DEC 3건.
 - /wrap: PROGRESS append + 새 DEC + PROJECT_PLAN 체크박스 갱신 + **미커밋이면 경고**(커밋 전엔 다음 /resume가 git status로만 발견).
-- **미해소 `[Pending]`·`[Blocked]`는 PROJECT_PLAN "미해결/관찰 중"에 한 줄로 올려 닫힐 때까지 유지**한다. PROGRESS는 append 전용이고 /resume은 최근 ~5항목만 읽으므로, 그 항목이 5항목 창 밖으로 밀리는 순간 어느 절차도 다시 보지 않는다.
+- **미해소 `[Pending]`·`[Blocked]`는 PROJECT_PLAN "미해결/관찰 중"에 한 줄로 올려 닫힐 때까지 유지**한다. 닫을 땐 PROJECT_PLAN에서만 닫으므로 PROGRESS 마커는 남는다 — `/resume`은 그 마커를 **PROJECT_PLAN과 대조**해 거기 없으면 닫힌 것으로 본다(안 그러면 닫힌 항목을 매번 열린 것으로 보고한다). PROGRESS는 append 전용이고 /resume은 최근 ~5항목만 읽으므로, 그 항목이 5항목 창 밖으로 밀리는 순간 어느 절차도 다시 보지 않는다.
 - 정기 항목(재검증·점검 주기)은 PROJECT_PLAN에 **`다음 ○○: YYYY-MM경`** 형식으로 남긴다 — /resume의 "예정일 경과" 안내가 읽는 형식이라, 안 적으면 그 안내는 발화하지 않는다.
 
 ### 길이 관리
