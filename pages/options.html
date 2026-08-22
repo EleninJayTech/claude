@@ -739,6 +739,14 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
     파일 맨 위의 <code class="i">name:</code> 줄을 확인하면 대부분 해결됩니다.
   </p>
 
+  <h3><code>/resume</code>을 치면 같은 이름이 <b>여러 개</b> 떠요 — 잘못 깔린 건가요?</h3>
+  <p>
+    대부분 정상입니다. 팀 공유용으로 repo(<code class="i">.claude/skills/</code>)에도 넣고 실제 실행용으로 내 PC(<code class="i">~/.claude/skills/</code>)에도 넣는 구성이라,
+    한 PC에 같은 이름의 사본이 둘 있고 자동완성은 그걸 따로따로 보여줍니다. 어느 것을 골라도 <b>내 PC 쪽이 실행</b>됩니다(공식 우선순위).
+    확인할 것은 개수가 아니라 <b>두 사본의 내용이 같은가</b>입니다 — 다르면 Claude에게 “글로벌 스킬을 repo 사본으로 맞춰줘”라고 하세요.
+    예외: 옛 방식 폴더 <code class="i">~/.claude/commands/resume.md</code>가 남아 있어서 2개가 뜨는 경우는 그 파일을 지우면 됩니다.
+  </p>
+
   <h3>“문서 버전”이 계속 올라가는데 매번 따라가야 하나요?</h3>
   <p>
     아닙니다. 대부분의 버전 업은 <b>공식 문서를 다시 확인하고 “여전히 유효함”을 기록한 것</b>입니다.
@@ -751,7 +759,7 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
 <a class="totop" href="#toc">↑ 목차</a>
 
 <footer>
-  설치 옵션 사전 · 00_통합-설치.md 기준 · 2026-08-20<br>
+  설치 옵션 사전 · 00_통합-설치.md 기준 · 2026-08-23<br>
   각 항목의 정본은 해당 하위 문서(01~06)입니다. 이 페이지는 사람이 읽고 판단하기 위한 안내이며, 설치 절차 자체를 바꾸지 않습니다.<br>
   저장소: github.com/EleninJayTech/claude ·
   <a href="../index.html">사용법</a> · <a href="intro.html">소개 영상</a> · <a href="demo.html">설치 시연</a> · <a href="learn.html">학습 코스</a>
