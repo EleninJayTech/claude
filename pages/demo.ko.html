@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Claude Code 드롭인 문서 — 설치 시연</title>
+<meta name="description" content="문서를 넣고 한 문장 말하면 Claude Code 구성이 끝나는 과정을 영상처럼 보여주는 인터랙티브 시연 페이지.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎬</text></svg>">
+<meta property="og:title" content="Claude Code 드롭인 문서 — 설치 시연">
+<meta property="og:description" content="문서 하나, 한 문장으로 설치되는 과정을 영상처럼 재생하는 인터랙티브 시연.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://eleninjaytech.github.io/claude/pages/demo.html">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@700;900&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" rel="stylesheet">
+<style>
+:root{
+  --paper:#FCFCF8; --card:#FFFFFF; --ink:#20222E; --ink-soft:#5A5E70;
+  --marker:#FFD84D; --marker-soft:#FFF3C2;
+  --blue:#2B49C7; --blue-soft:#E8ECFB;
+  --line:#E5E4DB; --term:#1B1D27; --term-line:#2E3140;
+  --green:#7BC97E; --dim:#9EA3B5;
+  --serif:'Noto Serif KR','Nanum Myeongjo',serif;
+  --sans:'Pretendard Variable',Pretendard,'Malgun Gothic',sans-serif;
+  --mono:'IBM Plex Mono',Consolas,monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--sans);background:var(--paper);color:var(--ink);line-height:1.85;font-size:16.5px;
+  word-break:keep-all;overflow-wrap:break-word;
+  background-image:linear-gradient(#F1F0E7 1px,transparent 1px),linear-gradient(90deg,#F1F0E7 1px,transparent 1px);
+  background-size:26px 26px}
+p,li{text-wrap:pretty}
+::selection{background:var(--marker)}
+a{color:var(--blue)}
+:focus-visible{outline:3px solid var(--blue);outline-offset:2px;border-radius:4px}
+
+.wrap{max-width:900px;margin:0 auto;padding:48px 24px 80px}
+.eyebrow{font-family:var(--mono);font-size:13px;letter-spacing:.14em;color:var(--ink-soft);margin-bottom:14px}
+.eyebrow b{color:var(--blue);font-weight:600}
+h1{font-family:var(--serif);font-weight:900;font-size:clamp(26px,4.2vw,38px);line-height:1.5;letter-spacing:-.02em;text-wrap:balance}
+.mark{background:linear-gradient(transparent 58%, var(--marker) 58%, var(--marker) 92%, transparent 92%);padding:0 2px}
+p.sub{margin-top:14px;color:var(--ink-soft);max-width:38em}
+.backlink{font-family:var(--mono);font-size:13px}
+
+/* ── 플레이어 ── */
+.player{margin-top:28px;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px;box-shadow:0 18px 44px -20px rgba(32,34,46,.22)}
+.chrome{background:var(--term);border-radius:10px 10px 0 0;padding:10px 14px;display:flex;align-items:center;gap:8px}
+.chrome .dot{width:11px;height:11px;border-radius:50%}
+.chrome .title{margin-left:8px;font-family:var(--mono);font-size:12.5px;color:var(--dim)}
+.term{background:var(--term);border-radius:0 0 10px 10px;height:min(52dvh,430px);overflow-y:auto;padding:16px 18px 22px;font-family:var(--mono);font-size:13.5px;line-height:1.9;color:#E8E7DE;scroll-behavior:smooth}
+.term .ln{opacity:0;transform:translateY(3px);transition:opacity .25s,transform .25s;white-space:pre-wrap;word-break:break-word}
+.term .ln.show{opacity:1;transform:none}
+.term .cmd{color:#F2F1E9}
+.term .cmd .pr{color:var(--marker);font-weight:600}
+.term .cmd .typed{color:var(--marker-soft)}
+.term .out{color:#CFD2DE}
+.term .out .who{color:#D97757;font-weight:600}
+.term .ok{color:var(--green)}
+.term .note{color:var(--dim);border-left:2px solid var(--term-line);padding-left:10px;margin:4px 0}
+.term .ask{background:#2A2C3A;border:1px dashed #4A4E63;border-radius:8px;padding:8px 12px;margin:8px 0;color:#F0E6BE}
+.term .hr{color:#5A5E70;letter-spacing:.2em}
+.term .chk{display:flex;gap:10px;align-items:baseline;color:#CFD2DE}
+.term .chk .box{font-weight:600;color:var(--dim)}
+.term .chk.on .box{color:var(--marker)}
+.term .chk.on{color:#F2F1E9}
+.caret{display:inline-block;width:8px;background:var(--marker-soft);animation:blink 1s steps(1) infinite;height:1.1em;vertical-align:text-bottom}
+@keyframes blink{50%{opacity:0}}
+@media (prefers-reduced-motion:reduce){.term .ln{transition:none}.caret{animation:none}}
+
+/* 자막 */
+.caption{margin:14px 2px 4px;min-height:3.2em;border-left:3px solid var(--marker);padding:2px 0 2px 12px;font-size:14.5px;color:var(--ink-soft)}
+.caption b{color:var(--ink)}
+
+/* 컨트롤 */
+.controls{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin-top:12px}
+button{font-family:var(--mono);font-size:13.5px;border:1.5px solid var(--ink);background:var(--card);color:var(--ink);border-radius:8px;padding:8px 14px;cursor:pointer;transition:transform .18s,background .18s,border-color .18s,color .18s}
+button:hover{transform:translateY(-2px)}
+button:active{transform:translateY(0) scale(.97)}
+button.solid{background:var(--ink);color:var(--paper)}
+button[aria-pressed="true"]{background:var(--marker);border-color:var(--ink);color:var(--ink)}
+.bar{flex:1 1 160px;height:10px;background:var(--blue-soft);border-radius:6px;cursor:pointer;position:relative;min-width:120px}
+.bar .fill{position:absolute;inset:0 auto 0 0;width:0;background:var(--blue);border-radius:6px;transition:width .2s}
+.chapters{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.chapters button{font-size:12.5px;padding:6px 11px;border-width:1px;border-color:var(--line);color:var(--ink-soft)}
+.chapters button:hover{border-color:var(--ink);color:var(--ink)}
+.chapters button.cur{border-color:var(--ink);color:var(--ink);background:var(--marker-soft)}
+.hint{margin-top:10px;font-size:12.5px;color:var(--ink-soft);font-family:var(--mono)}
+
+/* 아래 안내 */
+.next{margin-top:26px;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:26px 28px;box-shadow:0 12px 32px -20px rgba(32,34,46,.16)}
+.next h2{font-family:var(--serif);font-size:20px;margin-bottom:8px}
+.say{font-family:var(--mono);font-size:14px;background:var(--ink);color:#F2F1E9;border-radius:10px;padding:14px 16px;margin:12px 0;line-height:2;overflow-x:auto}
+.say b{color:var(--marker)}
+footer{margin-top:36px;color:var(--ink-soft);font-size:13px;font-family:var(--mono);line-height:1.7}
+</style>
+</head>
+<body>
+<div style="max-width:900px;margin:0 auto;padding:14px 20px 0;font-family:var(--mono);font-size:13px;text-align:right;opacity:.75"><a href="demo.html" onclick="try{localStorage.setItem('lang','en')}catch(e){}">English</a> &middot; <b>한국어</b></div>
+<div class="wrap">
+
+<header>
+  <p class="eyebrow"><b>EleninJayTech / claude</b> · 설치 시연</p>
+  <h1>문서 하나, <span class="mark">한 문장</span>으로<br>설치되는 과정을 그대로 보여드립니다.</h1>
+  <p class="sub">아래 화면은 실제 설치 흐름을 재현한 <b>인터랙티브 시연</b>입니다. 재생을 누르면 영상처럼 진행되고, 챕터를 눌러 원하는 장면만 볼 수도 있습니다.</p>
+  <p class="backlink" style="margin-top:10px"><a href="../index.html">← 사용법 페이지로</a> · <a href="intro.html">1분 소개 영상</a> · <a href="options.html">설치 옵션 사전</a> · <a href="learn.html">학습 코스</a> · <a href="https://github.com/EleninJayTech/claude">GitHub 저장소 ↗</a></p>
+</header>
+
+<div class="player">
+  <div class="chrome" aria-hidden="true">
+    <span class="dot" style="background:#FF5F57"></span>
+    <span class="dot" style="background:#FEBC2E"></span>
+    <span class="dot" style="background:#28C840"></span>
+    <span class="title">Claude Code — my-project</span>
+  </div>
+  <div class="term" id="term" role="log" aria-label="설치 시연 터미널"></div>
+
+  <p class="caption" id="cap" aria-live="polite">▶ 재생을 누르면 시연이 시작됩니다. (스페이스바로도 재생/일시정지)</p>
+
+  <div class="controls">
+    <button class="solid" id="btnPlay" aria-pressed="false">▶ 재생</button>
+    <button id="btnRestart">↺ 처음부터</button>
+    <div class="bar" id="bar" role="slider" aria-label="진행" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" tabindex="0"><div class="fill" id="fill"></div></div>
+    <button id="btnSpeed" title="재생 속도">1×</button>
+  </div>
+  <div class="chapters" id="chapters" role="tablist" aria-label="챕터"></div>
+  <p class="hint">챕터: 클릭하면 그 장면부터 재생 · 진행 바: 클릭한 위치로 이동</p>
+</div>
+
+<div class="next">
+  <h2>직접 해보려면</h2>
+  <p>시연과 똑같이 하면 됩니다 — <a href="https://github.com/EleninJayTech/claude/blob/main/00_통합-설치.md">00_통합-설치.md ↗</a> 파일 하나를 내 작업 폴더에 넣고:</p>
+  <div class="say">"<b>00_통합-설치.md 를 학습해서 이 프로젝트에 적용해줘</b>"</div>
+  <p>이미 설치된 것이 있으면 그대로 둘지 먼저 물어보고, 말없이 덮어쓰지 않습니다. 문서 일곱 장이 각각 무엇을 하는지는 <a href="../index.html">사용법 페이지</a>에, 설치 중에 고르는 항목의 뜻은 <a href="options.html">설치 옵션 사전</a>에 있습니다. 처음부터 차근차근 배우려면 <a href="learn.html">설치 옵션 학습 코스</a>를 보세요.</p>
+</div>
+
+<footer>설치 시연 페이지 · 2026-08-24 · 이 페이지의 시연은 00~06 문서의 실제 절차(감지 → 모드·번들 선택 → 설치 → 증거 검증 → 적용 기록)를 재현한 것입니다. 디자인은 frontend-design 스킬 원칙을 따릅니다.</footer>
+</div>
+
+<script>
+"use strict";
+/* ── 시나리오: kind = hr(구분) | cmd(사용자 입력) | out(Claude) | ok(완료) | note(회색) | ask(질문) | chk(체크박스) ── */
+const CH = [];               // {label, step}
+const S  = [];               // steps
+function ch(label){ CH.push({label, step:S.length}); }
+function add(kind, text, opt){ S.push(Object.assign({kind, text}, opt||{})); }
+
+ch("소개");
+add("hr","── Claude Code 드롭인 문서 · 설치 시연 ──",{cap:"<b>3분 시연.</b> 새 프로젝트 폴더에 문서를 설치하는 과정을 처음부터 끝까지 보여드립니다."});
+add("out","이 저장소의 문서는 <span class='who'>\"말로 실행되는 설명서\"</span>입니다.");
+add("out","설정 파일을 몰라도 됩니다 — 문서를 넣고 한 문장 말하면 Claude가 알아서 진행합니다.");
+
+ch("① 한 문장");
+add("cmd","00_통합-설치.md 를 학습해서 이 프로젝트에 적용해줘",{cap:"<b>시작은 한 문장.</b> 00 문서 하나만 폴더에 넣으면 나머지 문서는 Claude가 저장소에서 가져옵니다."});
+add("out","<span class='who'>Claude</span> 문서를 읽었습니다. 먼저 이 폴더를 조사하겠습니다.");
+add("ok","✓ git 저장소 확인 — 새 프로젝트");
+add("ok","✓ 적용 기록(dropin-applied) 없음 → 첫 설치로 진행");
+add("ok","✓ 기술 스택 감지 — package.json 발견 (Node.js로 만드는 프로젝트)");
+add("ok","✓ 기존 Claude 구성 없음 — 덮어쓸 것이 없습니다",{cap:"묻기 전에 먼저 조사합니다. 이미 설치된 것이 있으면 <b>그대로 둘지/고칠지/새로 깔지</b>를 물어봅니다."});
+
+ch("② 고르기");
+add("out","<span class='who'>Claude</span> 설치 모드를 고르세요 — [최소] [권장] [전체] [사용자]",{cap:"<b>하나하나 고를 필요 없습니다.</b> 모드 하나면 조합이 정해집니다. 직접 고르고 싶을 때만 \"사용자\"를 선택하세요."});
+add("ask","모드는? → [권장] 선택  (Node 개발 프로젝트 감지 → 01+02+04 자동)",{cap:"<b>권장 = 방금 조사한 결과에 맞는 조합.</b> 개발 프로젝트면 01+02+04, 문서 폴더면 01만 — 프로젝트마다 다르게 골라집니다."});
+add("ask","얹을 번들은? — 디자인 / 검증 강화 / 무인 자동화 / 회사 / 응답 스타일 → (이번엔 없음)",{cap:"목적 <b>번들</b>을 얹으면 \"최소 + 디자인\"처럼 조합됩니다. 웹 화면 작업이 감지되면 디자인 번들이 미리 체크되어 나옵니다."});
+add("ask","산출물 언어는? → [한국어] 선택  (기본값은 대화 중인 언어)",{cap:"<b>문서의 언어가 아니라 만들어지는 것의 언어입니다.</b> English로 답하면 CLAUDE.md 본문·작업 일지·커밋 메시지·산출물 파일명이 전부 영어로 나옵니다."});
+add("chk","01 기반 공사 — 작업 일지 + 보안 잠금",{on:true,cap:"<b>권장 모드가 자동 체크한 결과입니다.</b> 확인만 하면 됩니다 — 물론 여기서 바꿀 수도 있습니다."});
+add("chk","02 AI 역할 분담 — 비싼 모델·싼 모델 팀",{on:true});
+add("chk","03 편의 기능 — 사용량 표시기·디자인 스킬 등",{on:false});
+add("chk","04 자동 검사 — 고칠 때마다 검사기 실행",{on:true});
+add("chk","05 말투·역할 바꾸기",{on:false});
+add("chk","06 자동 실행 예약 (Pro 이상)",{on:false});
+add("ask","운용 프로필은? → [표준] 선택  (Pro 요금제·사용량 관리 중이면 \"절약\")",{cap:"사용량이 적은 요금제라면 <b>절약 프로필</b>을 고르세요 — 품질이 중요한 순간은 그대로 두고 평상시 소비만 줄입니다."});
+
+ch("③ 설치와 증거");
+add("out","<span class='who'>Claude</span> 선택하신 3개 문서의 절차대로 설치합니다.",{cap:"<b>설치 중.</b> 각 문서가 자기 절차의 정본입니다 — 00은 입구일 뿐, 실제 설치는 01·02·04가 수행합니다."});
+add("ok","✓ CLAUDE.md — 프로젝트 사실 기록(스택·구조·규칙)");
+add("ok","✓ docs/ PROGRESS·DECISIONS·PROJECT_PLAN — 작업 일지 시스템");
+add("ok","✓ .claude/settings.json — 비밀번호·열쇠 파일 읽기 차단(deny)");
+add("ok","✓ /resume·/wrap 스킬 — 이어하기·마무리 명령");
+add("ok","✓ .claude/agents/ — AI 역할 분담표(어려운 일=비싼 모델, 단순 작업=싼 모델)");
+add("ok","✓ hooks 품질 게이트 — 파일을 고칠 때마다 검사기가 자동 실행");
+add("out","<span class='who'>Claude</span> 이제 검증합니다 — 말이 아니라 증거로 보고드립니다.",{cap:"<b>\"됐다\"로 끝나지 않습니다.</b> 실제로 검증을 실행한 출력(증거)을 보고받습니다."});
+add("ok","✓ \"/\" 입력 → /resume /wrap 자동완성 확인");
+add("ok","✓ docs/ 작업 일지 3종·CLAUDE.md 기록 규칙 — 이 프로젝트 안에 실제로 생겼는지 경로로 확인",{cap:"<b>글로벌 명령만 보고 끝내지 않습니다.</b> 이 프로젝트 안에 산출물이 실제로 만들어졌는지까지 봐야 진짜 검증입니다."});
+add("ok","✓ 일부러 포맷을 어긋나게 저장 → 검사기가 즉시 잡아냄");
+add("out","<span class='who'>Claude</span> 마지막으로 적용 기록을 남깁니다:");
+add("note","&lt;!-- dropin-applied: 2026-08-05 · 모드=권장 · 프로필=표준 · 언어=ko · 01 v○.○ · 02 v○.○ · 04 v○.○ · 미선택: 03, 05, 06 · 출처=사본 --&gt;",{cap:"<b>무엇을 설치했는지 기록이 남습니다.</b> 버전 자리(v○.○)엔 설치 시점의 실제 문서 버전이 들어가고, 나중에 문서가 업데이트되면 이 기록으로 바뀐 것만 확인합니다."});
+add("ok","✓ 설치 완료 — 저장(커밋)해 두면 팀원과 다음 세션이 그대로 이어받습니다");
+
+ch("④ 매일 루틴");
+add("cmd","/resume",{cap:"<b>하루의 시작.</b> AI는 원래 대화를 끄면 다 잊지만, 작업 일지 덕분에 어제를 기억합니다."});
+add("out","<span class='who'>Claude</span> 지난 세션: 로그인 화면 코드 정리(리팩터링) 완료. 다음 작업: 비밀번호 재설정 화면. 진행할까요?");
+add("cmd","비밀번호 재설정 화면 만들어줘. 완성되면 직접 열어서 확인까지 해줘");
+add("ok","✓ 구현 완료 — 브라우저로 열어 동작 확인(스크린샷 첨부)");
+add("cmd","/wrap",{cap:"<b>하루의 끝.</b> 오늘 한 일과 결정이 자동 기록됩니다 — 내일 /resume 하면 여기서 이어집니다."});
+add("ok","✓ 오늘 작업이 일지에 기록됨 · 저장 안 된 변경 경고 → 커밋 방법 안내");
+
+ch("⑤ 업데이트");
+add("cmd","00_통합-설치.md 를 다시 적용해줘",{cap:"<b>몇 달 뒤, 문서가 새 버전이 되었다면?</b> 처음부터 다시 깔지 않습니다."});
+add("out","<span class='who'>Claude</span> 적용 기록을 발견했습니다 — 01은 v○.○로 설치되어 있고, 현재 문서는 그보다 새 버전입니다.");
+add("out","<span class='who'>Claude</span> 그 사이 바뀐 내용은 2건입니다. (변경 요약 표시)");
+add("ask","바뀐 것만 반영할까요? 이전에 선택하지 않았던 03·05를 추가할까요?",{cap:"기록된 버전과 비교해 <b>바뀐 것만</b> 물어봅니다. 안 깔았던 문서를 나중에 추가하는 것도 이때 가능합니다."});
+
+ch("끝");
+add("hr","── 시연 끝 ──",{cap:"<b>준비되셨나요?</b> 아래 \"직접 해보려면\"의 한 문장이면 시작됩니다."});
+add("out","시작은 문서 한 개, 한 문장입니다.");
+add("note","github.com/EleninJayTech/claude");
+
+/* ── 엔진 ── */
+const term=document.getElementById("term"), cap=document.getElementById("cap"),
+      fill=document.getElementById("fill"), bar=document.getElementById("bar"),
+      btnPlay=document.getElementById("btnPlay"), btnRestart=document.getElementById("btnRestart"),
+      btnSpeed=document.getElementById("btnSpeed"), chWrap=document.getElementById("chapters");
+const RM=matchMedia("(prefers-reduced-motion: reduce)").matches;
+const SPEEDS=[1,1.5,2]; let spd=0, idx=0, playing=false, timer=null, typeTimer=null;
+
+CH.forEach((c,i)=>{ const b=document.createElement("button");
+  b.textContent=c.label; b.setAttribute("role","tab");
+  b.addEventListener("click",()=>{ seek(c.step); play(); });
+  chWrap.appendChild(b); c.btn=b; });
+
+function pause(){ playing=false; clearTimeout(timer); clearInterval(typeTimer);
+  btnPlay.textContent = idx>=S.length ? "↺ 다시 보기" : "▶ 재생";
+  btnPlay.setAttribute("aria-pressed","false"); }
+function play(){ if(idx>=S.length){ seek(0); }
+  playing=true; btnPlay.textContent="⏸ 일시정지"; btnPlay.setAttribute("aria-pressed","true"); next(); }
+function delay(ms){ return RM ? Math.min(ms,400)/SPEEDS[spd] : ms/SPEEDS[spd]; }
+
+function lineEl(st){ const d=document.createElement("div"); d.className="ln "+st.kind;
+  if(st.kind==="cmd"){ d.innerHTML="<span class='pr'>❯ </span><span class='typed'></span>"; }
+  else if(st.kind==="chk"){ d.classList.toggle("on",!!st.on);
+    d.innerHTML="<span class='box'>"+(st.on?"☑":"☐")+"</span><span>"+st.text+"</span>"; }
+  else{ d.innerHTML=st.text; }
+  term.appendChild(d); return d; }
+
+function renderInstant(st){ const d=lineEl(st);
+  if(st.kind==="cmd") d.querySelector(".typed").textContent=st.text;
+  d.classList.add("show"); if(st.cap) cap.innerHTML=st.cap; }
+
+function next(){ if(!playing) return;
+  if(idx>=S.length){ pause(); updateUI(); return; }
+  const st=S[idx];
+  if(st.cap) cap.innerHTML=st.cap;
+  const d=lineEl(st); requestAnimationFrame(()=>d.classList.add("show"));
+  term.scrollTop=term.scrollHeight;
+  let wait=700;
+  if(st.kind==="cmd" && !RM){
+    const tgt=d.querySelector(".typed"), caret=document.createElement("span"); caret.className="caret"; d.appendChild(caret);
+    let i=0; wait=st.text.length*34+900;
+    typeTimer=setInterval(()=>{ tgt.textContent=st.text.slice(0,++i); term.scrollTop=term.scrollHeight;
+      if(i>=st.text.length){ clearInterval(typeTimer); caret.remove(); } }, delay(34));
+  } else if(st.kind==="cmd"){ d.querySelector(".typed").textContent=st.text; wait=900; }
+  else if(st.kind==="chk"){ wait=520; }
+  else if(st.kind==="out"||st.kind==="ask"){ wait=1400; }
+  else if(st.kind==="ok"){ wait=620; }
+  else if(st.kind==="note"){ wait=1500; }
+  else if(st.kind==="hr"){ wait=1000; }
+  idx++; updateUI();
+  timer=setTimeout(next, delay(wait)); }
+
+function seek(n){ pause(); term.innerHTML=""; idx=0;
+  for(; idx<n && idx<S.length; idx++) renderInstant(S[idx]);
+  term.scrollTop=term.scrollHeight; updateUI(); }
+
+function updateUI(){ const p=Math.round(idx/S.length*100);
+  fill.style.width=p+"%"; bar.setAttribute("aria-valuenow",p);
+  let cur=0; CH.forEach((c,i)=>{ if(idx>=c.step) cur=i; });
+  CH.forEach((c,i)=>c.btn.classList.toggle("cur", i===cur && idx>0)); }
+
+btnPlay.addEventListener("click",()=>{ playing ? pause() : play(); });
+btnRestart.addEventListener("click",()=>{ seek(0); play(); });
+btnSpeed.addEventListener("click",()=>{ spd=(spd+1)%SPEEDS.length; btnSpeed.textContent=SPEEDS[spd]+"×"; });
+bar.addEventListener("click",e=>{ const r=bar.getBoundingClientRect();
+  seek(Math.round((e.clientX-r.left)/r.width*S.length)); play(); });
+document.addEventListener("keydown",e=>{ if(e.code==="Space" && !["BUTTON","A"].includes(e.target.tagName)){ e.preventDefault(); playing?pause():play(); } });
+updateUI();
+</script>
+</body>
+</html>

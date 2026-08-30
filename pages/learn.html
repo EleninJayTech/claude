@@ -1,0 +1,912 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Install Options Course — Claude Code Drop-in Documents</title>
+<meta name="description" content="Learn every install choice chapter by chapter, clicking through it yourself — so you know what you are choosing.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎓</text></svg>">
+<meta property="og:title" content="Install Options Course — Claude Code Drop-in Documents">
+<meta property="og:description" content="An interactive course through the install choices, chapter by chapter. Progress is kept in your browser.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://eleninjaytech.github.io/claude/pages/learn.html">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@700;900&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" rel="stylesheet">
+<style>
+:root{
+  --paper:#FCFCF8; --card:#FFFFFF; --ink:#20222E; --ink-soft:#5A5E70;
+  --marker:#FFD84D; --marker-soft:#FFF3C2;
+  --blue:#2B49C7; --blue-soft:#E8ECFB;
+  --green:#1B7A4B; --green-soft:#E3F3EA;
+  --red:#B3261E; --red-soft:#FBE9E7;
+  --line:#E5E4DB;
+  --serif:'Noto Serif KR','Nanum Myeongjo',serif;
+  --sans:'Pretendard Variable',Pretendard,'Malgun Gothic',sans-serif;
+  --mono:'IBM Plex Mono',Consolas,monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--sans);background:var(--paper);color:var(--ink);line-height:1.85;font-size:16.5px;
+  word-break:normal;overflow-wrap:break-word;
+  background-image:linear-gradient(#F1F0E7 1px,transparent 1px),linear-gradient(90deg,#F1F0E7 1px,transparent 1px);
+  background-size:26px 26px}
+p,li{text-wrap:pretty}
+::selection{background:var(--marker)}
+a{color:var(--blue)}
+:focus-visible{outline:3px solid var(--blue);outline-offset:2px;border-radius:4px}
+button{font-family:inherit;font-size:inherit;color:inherit;cursor:pointer}
+.mark{background:linear-gradient(transparent 58%, var(--marker) 58%, var(--marker) 92%, transparent 92%);padding:0 2px}
+code.i{font-family:var(--mono);font-size:.88em;background:var(--blue-soft);color:var(--blue);padding:1px 6px;border-radius:5px;word-break:break-all}
+
+/* ---------- 상단 진행 바 ---------- */
+.topbar{position:sticky;top:0;z-index:20;background:rgba(252,252,248,.94);backdrop-filter:blur(6px);border-bottom:1px solid var(--line)}
+.topbar-in{max-width:1120px;margin:0 auto;padding:10px 24px;display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.topbar .brand{font-family:var(--mono);font-size:12.5px;letter-spacing:.1em;color:var(--ink-soft);text-decoration:none}
+.topbar .brand b{color:var(--blue)}
+.pbar{flex:1;min-width:140px;height:10px;background:#EFEEE5;border-radius:6px;overflow:hidden;border:1px solid var(--line)}
+.pbar>i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--marker),#FFC93C);transition:width .35s ease}
+.pnum{font-family:var(--mono);font-size:12.5px;color:var(--ink-soft);white-space:nowrap}
+
+/* ---------- 레이아웃 ---------- */
+.wrap{max-width:1120px;margin:0 auto;padding:26px 24px 90px;display:grid;grid-template-columns:230px 1fr;gap:26px;align-items:start}
+@media (max-width:820px){.wrap{grid-template-columns:1fr;padding-top:14px}}
+
+/* ---------- 챕터 목차(사이드) ---------- */
+.side{position:sticky;top:66px}
+.side b.cap{font-family:var(--mono);font-size:12px;letter-spacing:.12em;color:var(--ink-soft);display:block;margin:2px 0 10px}
+.chaps{display:flex;flex-direction:column;gap:5px;list-style:none}
+.chaps button{display:flex;align-items:center;gap:9px;width:100%;text-align:left;background:var(--card);border:1px solid var(--line);border-radius:9px;padding:8px 11px;font-size:14px;transition:transform .12s,box-shadow .12s}
+.chaps button:hover{transform:translateX(2px)}
+.chaps button:active{transform:scale(.98)}
+.chaps button[aria-current="true"]{border-color:var(--ink);box-shadow:2px 2px 0 var(--marker)}
+.chaps .no{font-family:var(--mono);font-size:11.5px;color:var(--ink-soft);width:20px;flex:none}
+.chaps .st{margin-left:auto;flex:none;font-size:12px;width:18px;height:18px;border-radius:50%;border:1.5px solid var(--line);display:grid;place-items:center;color:transparent}
+.chaps button.done .st{background:var(--green-soft);border-color:var(--green);color:var(--green)}
+@media (max-width:820px){
+  .side{position:static}
+  .chaps{flex-direction:row;overflow-x:auto;padding-bottom:6px}
+  .chaps li{flex:none}
+  .chaps button{white-space:nowrap}
+  .chaps .st{margin-left:4px}
+}
+
+/* ---------- 챕터 본문 ---------- */
+.chapter{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:34px 36px 30px}
+@media (max-width:600px){.chapter{padding:22px 17px}}
+.chapter[hidden]{display:none}
+.eyebrow{font-family:var(--mono);font-size:12.5px;letter-spacing:.12em;color:var(--ink-soft);margin-bottom:10px}
+h1{font-family:var(--serif);font-weight:900;font-size:clamp(25px,3.6vw,36px);line-height:1.45;letter-spacing:-.02em;text-wrap:balance}
+h2{font-family:var(--serif);font-weight:900;font-size:clamp(22px,3vw,29px);line-height:1.45;letter-spacing:-.02em;text-wrap:balance;margin-bottom:4px}
+h3{font-size:16.5px;font-weight:700;margin:26px 0 10px;padding-bottom:6px;border-bottom:2px solid var(--marker-soft)}
+.chapter p{margin:12px 0}
+.chapter ul{margin:10px 0 10px 22px}
+.chapter li{margin:6px 0}
+.lead{color:var(--ink-soft)}
+
+.coach{display:flex;gap:12px;background:var(--marker-soft);border:1px solid #EFDD9A;border-radius:12px;padding:13px 16px;margin:18px 0 6px;font-size:14.5px}
+.coach .who{flex:none;font-size:22px;line-height:1.3}
+.coach b{display:block}
+.coach.warn{background:var(--red-soft);border-color:#F0C4BF}
+.coach.tip{background:var(--blue-soft);border-color:#C9D3F4}
+
+table{width:100%;border-collapse:collapse;margin:14px 0;font-size:14.5px}
+th,td{border:1px solid var(--line);padding:9px 12px;text-align:left;vertical-align:top}
+th{background:var(--marker-soft);font-family:var(--mono);font-size:12.5px}
+.tbl{overflow-x:auto}
+
+/* ---------- 하단 내비 ---------- */
+.chnav{display:flex;gap:10px;justify-content:space-between;align-items:center;margin-top:30px;padding-top:20px;border-top:1px dashed var(--line)}
+.btn{border:1px solid var(--ink);background:var(--card);border-radius:10px;padding:11px 20px;font-weight:700;font-size:15px;transition:transform .12s,box-shadow .12s;text-decoration:none;color:var(--ink)}
+.btn:hover{transform:translateY(-1px);box-shadow:3px 3px 0 var(--line)}
+.btn:active{transform:translateY(0) scale(.97);box-shadow:none}
+.btn.next{background:var(--marker);box-shadow:3px 3px 0 rgba(32,34,46,.16)}
+.btn.ghost{border-color:var(--line);font-weight:500;color:var(--ink-soft)}
+.btn[disabled]{opacity:.4;cursor:default;transform:none;box-shadow:none}
+
+/* ---------- 낱말 카드 ---------- */
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:12px;margin:16px 0}
+.fcard{perspective:900px;min-height:150px}
+.fcard>button{position:relative;width:100%;height:100%;min-height:150px;border:none;background:none;text-align:left;transform-style:preserve-3d;transition:transform .45s}
+.fcard.flip>button{transform:rotateY(180deg)}
+.face{position:absolute;inset:0;backface-visibility:hidden;border:1px solid var(--line);border-radius:12px;padding:15px 17px;background:#FEFEFC;display:flex;flex-direction:column;justify-content:center;gap:5px}
+.face.front{border-left:3px solid var(--marker)}
+.face.front .w{font-family:var(--serif);font-weight:900;font-size:20px}
+.face.front .hint{font-family:var(--mono);font-size:11.5px;color:var(--ink-soft)}
+.face.back{transform:rotateY(180deg);background:var(--ink);color:var(--paper);font-size:13.8px;line-height:1.7;justify-content:flex-start;padding-top:13px}
+.face.back .w{font-family:var(--mono);font-size:11.5px;color:var(--marker);margin-bottom:2px}
+.flipcount{font-family:var(--mono);font-size:12.5px;color:var(--ink-soft)}
+
+/* ---------- 단계(스테퍼) ---------- */
+.steps{list-style:none;margin:16px 0;display:flex;flex-direction:column;gap:8px}
+.steps>li>button{display:flex;gap:12px;align-items:baseline;width:100%;text-align:left;background:#FEFEFC;border:1px solid var(--line);border-radius:11px;padding:12px 16px;transition:box-shadow .15s}
+.steps>li>button:hover{box-shadow:0 8px 22px -16px rgba(32,34,46,.3)}
+.steps .sn{font-family:var(--mono);font-weight:600;font-size:12.5px;color:var(--blue);flex:none}
+.steps .st-t{font-weight:700}
+.steps .arrow{margin-left:auto;color:var(--ink-soft);transition:transform .2s;flex:none}
+.steps li.open .arrow{transform:rotate(90deg)}
+.steps .st-d{display:none;padding:4px 16px 12px 58px;font-size:14.5px;color:var(--ink-soft)}
+.steps li.open .st-d{display:block}
+@media (max-width:560px){.steps .st-d{padding-left:16px}}
+
+/* ---------- 시뮬레이터 ---------- */
+.sim{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:18px 0}
+@media (max-width:760px){.sim{grid-template-columns:1fr}}
+.q{border:1px solid var(--line);border-radius:12px;background:#FEFEFC;padding:16px 18px}
+.q .qt{font-family:var(--mono);font-size:12.5px;color:var(--ink-soft);margin-bottom:10px}
+.q .qt b{color:var(--blue)}
+.opts{display:flex;flex-direction:column;gap:8px}
+.opts button{display:block;width:100%;text-align:left;border:1px solid var(--line);background:var(--card);border-radius:10px;padding:10px 13px;transition:transform .1s,border-color .1s}
+.opts button:hover{transform:translateX(2px)}
+.opts button:active{transform:scale(.985)}
+.opts button[aria-pressed="true"]{border-color:var(--ink);box-shadow:2px 2px 0 var(--marker);background:#FFFDF2}
+.opts .on{font-weight:700;font-size:15px}
+.opts .od{display:block;font-size:13px;color:var(--ink-soft);line-height:1.6;margin-top:1px}
+.opts.row{flex-direction:row;flex-wrap:wrap}
+.opts.row button{width:auto}
+.subq{margin-top:12px;padding-top:12px;border-top:1px dashed var(--line)}
+.subq[hidden]{display:none}
+
+.plan{border:1.5px solid var(--ink);border-radius:12px;background:var(--card);padding:16px 18px;box-shadow:4px 4px 0 var(--marker-soft);align-self:start;position:sticky;top:74px}
+@media (max-width:760px){.plan{position:static}}
+.plan .pt{font-family:var(--mono);font-size:12.5px;letter-spacing:.1em;color:var(--ink-soft);border-bottom:1px dashed var(--line);padding-bottom:8px;margin-bottom:10px}
+.plan ul{list-style:none;margin:0}
+.plan li{margin:7px 0;padding-left:22px;position:relative;font-size:14.5px}
+.plan li::before{content:"✓";position:absolute;left:0;color:var(--green);font-weight:700}
+.plan li.off{color:var(--ink-soft)}
+.plan li.off::before{content:"—";color:var(--ink-soft)}
+.plan .why{font-size:13px;color:var(--ink-soft);margin-top:10px;padding-top:8px;border-top:1px dashed var(--line)}
+.plan .empty{color:var(--ink-soft);font-size:14px}
+.stamp{font-family:var(--mono);font-size:12px;background:var(--ink);color:#D9F2E4;border-radius:8px;padding:10px 12px;margin-top:12px;line-height:1.7;overflow-x:auto;white-space:pre}
+
+/* ---------- 토글 목록(ⓐ~ⓕ) ---------- */
+.tglrow{display:flex;align-items:flex-start;gap:11px;border:1px solid var(--line);border-radius:10px;padding:11px 14px;margin:8px 0;background:#FEFEFC}
+.tglrow input{width:19px;height:19px;margin-top:5px;accent-color:var(--blue);flex:none;cursor:pointer}
+.tglrow label{cursor:pointer;flex:1}
+.tglrow .tn{font-weight:700;font-size:15px}
+.tglrow .tn .id{font-family:var(--mono);color:var(--blue);font-size:13px;margin-right:5px}
+.tglrow .td{font-size:13.5px;color:var(--ink-soft);line-height:1.65}
+.tree{font-family:var(--mono);font-size:12.8px;line-height:1.85;background:var(--ink);color:#E8E9F1;border-radius:10px;padding:14px 16px;overflow-x:auto;white-space:pre}
+.tree .c{color:#8B90A5}
+.tree .y{color:var(--marker)}
+
+/* ---------- 아코디언(02·03·04 등) ---------- */
+details.acc{border:1px solid var(--line);border-radius:12px;background:#FEFEFC;margin:10px 0;overflow:hidden}
+details.acc summary{list-style:none;cursor:pointer;padding:13px 17px;font-weight:700;display:flex;gap:10px;align-items:baseline}
+details.acc summary::-webkit-details-marker{display:none}
+details.acc summary .id{font-family:var(--mono);font-size:12.5px;color:var(--blue);flex:none}
+details.acc summary::after{content:"+";margin-left:auto;font-family:var(--mono);color:var(--ink-soft)}
+details.acc[open] summary::after{content:"−"}
+details.acc .acc-b{padding:2px 17px 15px;font-size:14.8px}
+.badge{font-family:var(--mono);font-size:11.5px;font-weight:600;padding:2px 8px;border-radius:6px;white-space:nowrap;letter-spacing:.02em}
+.b-on{background:var(--green-soft);color:var(--green)}
+.b-off{background:#F1F1EA;color:var(--ink-soft)}
+.b-keep{background:var(--marker-soft);color:#8A6D00}
+.b-gate{background:var(--red-soft);color:var(--red)}
+
+/* ---------- 프리셋 ---------- */
+.presets{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}
+.presets button{border:1px solid var(--line);background:var(--card);border-radius:20px;padding:7px 15px;font-size:13.5px;transition:transform .1s}
+.presets button:hover{transform:translateY(-1px)}
+.presets button:active{transform:scale(.96)}
+.presets button[aria-pressed="true"]{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+
+/* ---------- 수료 ---------- */
+.cert{border:2px solid var(--ink);border-radius:14px;padding:28px 26px;text-align:center;background:
+  linear-gradient(var(--card),var(--card)) padding-box}
+.cert .big{font-size:44px}
+.cert h2{margin:8px 0 4px}
+.feedback{font-size:14px;border-radius:9px;padding:9px 13px;margin-top:10px;display:none}
+.feedback.show{display:block}
+.feedback.ok{background:var(--green-soft);color:var(--green)}
+
+footer{max-width:1120px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);font-size:13px;font-family:var(--mono);line-height:1.7}
+
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{transition:none!important;animation:none!important}
+  html{scroll-behavior:auto}
+}
+</style>
+</head>
+<body>
+<div style="max-width:1180px;margin:0 auto;padding:10px 22px 0;font-family:var(--mono);font-size:13px;text-align:right;color:var(--ink-soft)"><b>English</b> &middot; <a href="learn.ko.html" onclick="try{localStorage.setItem('lang','ko')}catch(e){}">한국어</a></div>
+
+<div class="topbar">
+  <div class="topbar-in">
+    <a class="brand" href="../index.html">&larr; <b>Drop-in documents</b> &middot; options course</a>
+    <div class="pbar" role="progressbar" aria-label="Course progress" aria-valuemin="0" aria-valuemax="10" aria-valuenow="0"><i id="pfill"></i></div>
+    <span class="pnum" id="pnum">0 / 10 done</span>
+  </div>
+</div>
+
+<div class="wrap">
+
+<nav class="side" aria-label="Chapter contents">
+  <b class="cap">Chapters</b>
+  <ul class="chaps" id="chaps"></ul>
+</nav>
+
+<main id="main">
+
+<!-- ═══ CH0 시작하기 ═══ -->
+<section class="chapter" data-ch="0" aria-labelledby="t0">
+  <p class="eyebrow">Chapter 0 &middot; about 2 minutes</p>
+  <h1 id="t0">The choices the installer offers,<br>learned by <span class="mark">clicking them</span></h1>
+  <p class="lead">
+    Drop this repository&rsquo;s documents into a project, say &ldquo;read this and apply it&rdquo;, and Claude asks you to make a few choices.
+    This course <b>recreates those questions as the real screens</b> and shows you, right there, <b>what gets created and what changes</b> for each option.
+  </p>
+  <ul>
+    <li>The chapters are built to be read <b>in order</b>, but you can jump around with the contents on the left.</li>
+    <li>When a simulator appears, <b>click through it</b>. It sticks far faster than reading alone.</li>
+    <li>Your progress is stored <b>in this browser only</b>. Nothing is sent to a server.</li>
+  </ul>
+  <div class="coach tip"><span class="who">📖</span><div>
+    <b>The dictionary to look things up, this course to learn the shape</b>
+    The same material is organized item by item in the <a href="options.html">install options dictionary</a>.
+    Mid-install, when you think &ldquo;what is this?&rdquo;, the dictionary is faster; for the whole picture the first time, this course is better.
+  </div></div>
+  <div class="feedback ok" id="resumeBox"></div>
+</section>
+
+<!-- ═══ CH1 낱말 8개 ═══ -->
+<section class="chapter" data-ch="1" aria-labelledby="t1" hidden>
+  <p class="eyebrow">Chapter 1 &middot; eight words</p>
+  <h2 id="t1">Start by flipping the cards</h2>
+  <p class="lead">Know these eight and every later choice reads clearly. Click a card to see its meaning.</p>
+  <p class="flipcount" id="flipcount">Cards seen: 0 / 8</p>
+  <div class="cards" id="cards"></div>
+  <div class="coach"><span class="who">💡</span><div>
+    <b>Why &ldquo;saving tokens&rdquo; keeps coming up</b>
+    Claude draws down your plan allowance in proportion to the characters (tokens) exchanged. So every document shares one principle:
+    <b>quality first, thrift second</b> &mdash; verification and record-keeping are never cut to save money.
+  </div></div>
+</section>
+
+<!-- ═══ CH2 설치의 흐름 ═══ -->
+<section class="chapter" data-ch="2" aria-labelledby="t2" hidden>
+  <p class="eyebrow">Chapter 2 &middot; how an install flows</p>
+  <h2 id="t2">Across five steps, questions come at only <span class="mark">two of them</span></h2>
+  <p class="lead">
+    Claude investigates before it asks. Anything the files can answer &mdash; what is already installed, whether this is git, which language the code is in &mdash;
+    is never asked; only <b>what the code cannot tell it</b>. Click each step for detail.
+  </p>
+  <ol class="steps" id="steps"></ol>
+  <div class="coach"><span class="who">📌</span><div>
+    <b>The detailed questions appear only in &ldquo;custom&rdquo; mode</b>
+    In minimal, recommended and full, the per-document items are <b>settled automatically at that mode&rsquo;s defaults</b>.
+    The safety questions (&ldquo;overwrite what is already here?&rdquo;, &ldquo;have you checked company policy?&rdquo;) are never skipped, in any mode.
+  </div></div>
+</section>
+
+<!-- ═══ CH3 기반 모드 ═══ -->
+<section class="chapter" data-ch="3" aria-labelledby="t3" hidden>
+  <p class="eyebrow">Chapter 3 &middot; the first big choice</p>
+  <h2 id="t3">Base mode &mdash; how much to install</h2>
+  <p class="lead">This is the first question a real install asks. Try each one and watch the plan on the right change.</p>
+  <div class="sim">
+    <div class="q">
+      <p class="qt"><b>Q.</b> Choose a base mode (pick one)</p>
+      <div class="opts" id="modeOpts" role="group" aria-label="Base mode selection"></div>
+      <div class="subq" id="situBox" hidden>
+        <p class="qt"><b>Recommended mode</b> combines differently depending on what is detected &mdash; try picking a situation</p>
+        <div class="opts" id="situOpts" role="group" aria-label="Situation selection"></div>
+      </div>
+    </div>
+    <div class="plan" aria-live="polite">
+      <p class="pt">&#128203; Install plan</p>
+      <div id="modePlan"><p class="empty">Pick a mode on the left.</p></div>
+    </div>
+  </div>
+  <div class="coach"><span class="who">🧭</span><div>
+    <b>Unsure? Choose &ldquo;recommended&rdquo;</b>
+    Recommended mode has Claude settle on a combination and then <b>show you in one line why it chose that</b> before confirming.
+    Even &ldquo;full&rdquo; never overwrites existing settings silently.
+  </div></div>
+</section>
+
+<!-- ═══ CH4 목적 번들 ═══ -->
+<section class="chapter" data-ch="4" aria-labelledby="t4" hidden>
+  <p class="eyebrow">Chapter 4 &middot; the second big choice</p>
+  <h2 id="t4">Purpose bundles &mdash; layered on top of the mode</h2>
+  <p class="lead">
+    A bundle is <b>unioned onto the base mode</b>. Pick &ldquo;recommended&rdquo; + &ldquo;design&rdquo; and the design extensions land on top of
+    whatever recommended selected. Toggle several on and off.
+  </p>
+  <div class="sim">
+    <div class="q">
+      <p class="qt"><b>Q.</b> Choose purpose bundles (zero or more)</p>
+      <div class="opts" id="bundleOpts" role="group" aria-label="Purpose bundle selection"></div>
+    </div>
+    <div class="plan" aria-live="polite">
+      <p class="pt">&#10133; What gets added</p>
+      <div id="bundlePlan"><p class="empty">Choosing none is fine &mdash; that is the default.</p></div>
+    </div>
+  </div>
+  <div class="coach warn"><span class="who">🏢</span><div>
+    <b>&ldquo;Company&rdquo; is a safeguard, not something installed</b>
+    Turning the company bundle on installs nothing new. What it does is <b>force an approval check</b> wherever code can leave the
+    building (CI, MCP, routines). For a company repository, always turn it on.
+  </div></div>
+</section>
+
+<!-- ═══ CH5 프로필 · 기존 설정 ═══ -->
+<section class="chapter" data-ch="5" aria-labelledby="t5" hidden>
+  <p class="eyebrow">Chapter 5 &middot; the remaining common questions</p>
+  <h2 id="t5">Operating profile, output language, and what is already there</h2>
+
+  <h3>Operating profile &mdash; standard / thrift</h3>
+  <div class="sim">
+    <div class="q">
+      <p class="qt"><b>Q.</b> Choose an operating profile</p>
+      <div class="opts" id="profOpts" role="group" aria-label="Operating profile selection"></div>
+    </div>
+    <div class="plan" aria-live="polite">
+      <p class="pt">&#9881;&#65039; What changes</p>
+      <div id="profPlan"><p class="empty">Pick a profile on the left.</p></div>
+    </div>
+  </div>
+
+  <h3>Output language &mdash; Korean / English</h3>
+  <p>This one is easy to misread: it is <b>not the language of the documents</b> but the language of <b>what the install produces</b>. The drop-in documents stay Korean &mdash; Claude executes them identically either way &mdash; while your answer here decides the language of the target <code class="i">CLAUDE.md</code> body, the <code class="i">docs/</code> entries, commit messages and generated filenames (<code class="i">docs/difficulty-matrix.md</code> vs <code class="i">docs/난이도-매트릭스.md</code>). Format keywords such as <code class="i">[topic][Done]</code> stay fixed in either language, because <code class="i">/resume</code> and <code class="i">/wrap</code> find them by those exact strings.</p>
+
+  <h3>If something is already installed &mdash; keep / reconcile / replace</h3>
+  <p>Asked for every item where existing settings are detected &mdash; <b>always</b>, whatever the mode. Click to see the difference.</p>
+  <div class="q">
+    <div class="opts row" id="keepOpts" role="group" aria-label="Existing-settings handling"></div>
+    <div class="feedback ok" id="keepFb"></div>
+  </div>
+</section>
+
+<!-- ═══ CH6 01 기본 셋업 ═══ -->
+<section class="chapter" data-ch="6" aria-labelledby="t6" hidden>
+  <p class="eyebrow">Chapter 6 &middot; items inside a document &#9312;</p>
+  <h2 id="t6">01 base setup &mdash; uncheck an item and its file disappears</h2>
+  <p class="lead">
+    Document 01 is the setup that <b>abolishes &ldquo;what was I doing yesterday?&rdquo;</b> Toggle the six items (&#9424;&ndash;&#9429;) &mdash;
+    the preview below changes to show <b>the files that actually get created</b>.
+  </p>
+  <div id="doc01Rows"></div>
+  <h3>Preview of the files created</h3>
+  <div class="tree" id="doc01Tree" aria-live="polite"></div>
+  <div class="coach warn"><span class="who">⚠️</span><div>
+    <b>Leave &#9425; security on unless you are removing it deliberately</b>
+    Turn it off and Claude may read <code class="i">.env</code> (your password file) by accident, leaving the contents in the transcript.
+    There is a reason &#9429; creates no file too &mdash; pinning effort in a config file
+    <b>silently overrides whatever you chose with <code class="i">/effort</code></b>.
+  </div></div>
+</section>
+
+<!-- ═══ CH7 02·03·04 ═══ -->
+<section class="chapter" data-ch="7" aria-labelledby="t7" hidden>
+  <p class="eyebrow">Chapter 7 &middot; items inside a document &#9313;</p>
+  <h2 id="t7">For development projects &mdash; 02 split &middot; 03 add-ons &middot; 04 verification</h2>
+  <p class="lead">Three documents that only mean something where there is code. Expand them one at a time.</p>
+
+  <details class="acc">
+    <summary><span class="id">02</span>Model split &mdash; expensive and cheap models, divided <span class="badge b-off">development only</span></summary>
+    <div class="acc-b">
+      <p>Installs a <b>subagent roster</b> that sends hard analysis and design to the stronger model and well-defined repetitive work to the cheaper one.
+      Push hard work onto a cheap model to save money and you get results that are almost right but wrong, and the rework costs more &mdash;
+      which is why <b>the triage itself always uses the stronger model</b>.</p>
+      <div class="tbl"><table>
+        <tr><th style="width:120px">Agent</th><th>What it does</th><th style="width:80px">Model</th></tr>
+        <tr><td><b>surveyor</b></td><td>Sweeps the structure broadly and mechanically into a list (no judgments)</td><td>sonnet</td></tr>
+        <tr><td><b>triage</b></td><td>Scores that sweep for difficulty &mdash; <b>the seat that matters most</b></td><td><b>opus</b></td></tr>
+        <tr><td><b>analyst</b></td><td>Analyzes the hard parts and writes the implementation spec</td><td>by difficulty</td></tr>
+        <tr><td><b>spec-writer</b></td><td>Pins down requirements for a new feature &mdash; step one of building something new</td><td><b>opus</b></td></tr>
+        <tr><td><b>implementer</b></td><td>Builds to the spec (nothing outside scope)</td><td>sonnet</td></tr>
+        <tr><td><b>parity-tester</b></td><td>Runs the tests and reports pass/diff only</td><td>haiku</td></tr>
+      </table></div>
+      <p>Agents are chosen <b>one at a time</b>, not as a block. Changing existing code &rarr; the five without spec-writer;
+      building something new &rarr; drop surveyor and triage and start <b>from spec-writer</b>. No reviewer is created &mdash;
+      the built-in <code class="i">/code-review</code> is already there.</p>
+      <p>There is <b>one more optional item</b> (unchecked by default) &mdash; a <code class="i">/plan-&lt;model&gt;</code> command that runs a
+      different model <b>only while planning</b>. When the plan is done it returns to your normal model by itself.</p>
+      <div class="coach warn" style="margin-top:8px"><span class="who">⚠️</span><div>
+        <b>Not installed in a repository with no code</b> A roster in a documentation-only place just adds files nobody uses. Claude detects that and tells you.
+      </div></div>
+    </div>
+  </details>
+
+  <details class="acc">
+    <summary><span class="id">03</span>Add-ons &mdash; status line, design skills, MCP, browser <span class="badge b-off">five optional</span></summary>
+    <div class="acc-b">
+      <ul>
+        <li><b>claude-hud</b> &mdash; a <b>status line</b> under the input box showing context and plan usage. Practically required on the thrift profile.</li>
+        <li><b>svg-design</b> &mdash; a rulebook for implementing SVG effects (hand-drawn, Gooey, glass, neon) correctly. For projects that build web screens.</li>
+        <li><b>frontend-design</b> &mdash; an official Anthropic skill that steers away from UI that looks AI-generated.</li>
+        <li><b>MCP servers</b> &mdash; connect external tools (GitHub, doc search, browser control). Which servers to attach is asked separately.</li>
+        <li><b>Browser verification</b> &mdash; lets <b>Claude open the screens it built, check them and fix them</b>.</li>
+      </ul>
+      <p>Choosing a skill brings two more questions &mdash; <b>scope</b> (your whole machine vs. this project only) and
+      <b>invocation</b> (Claude decides vs. only when you type <code class="i">/command</code>).</p>
+      <div class="coach warn" style="margin-top:8px"><span class="who">🔴</span><div>
+        <b>At work</b> MCP can send your conversation outside, and a connected browser can reach your logged-in sessions.
+        Connect only servers your organization allows, and narrow the extension&rsquo;s site permissions to localhost.
+      </div></div>
+    </div>
+  </details>
+
+  <details class="acc">
+    <summary><span class="id">04</span>Verification &mdash; machine checks instead of &ldquo;it&rsquo;s done&rdquo; <span class="badge b-on">the hook gate is the core</span></summary>
+    <div class="acc-b">
+      <ul>
+        <li><b>Hook quality gate</b> &mdash; a linter or syntax check runs <b>every time Claude edits a file</b>, and the failure output goes back to Claude, which fixes it itself. <b>Never dropped, even on the thrift profile</b> &mdash; less rework is the biggest saving there is.</li>
+        <li><b>Host CLI</b> (<code class="i">gh</code>/<code class="i">glab</code>) &mdash; lets Claude open PRs and read CI failure logs directly. <b>You sign in yourself</b>.</li>
+        <li><b>CI integration</b> &mdash; mention <code class="i">@claude</code> on a PR and it reviews or fixes. <span class="badge b-gate">&#128308; org approval required at work</span> &mdash; CI sends your code to the Anthropic API.</li>
+      </ul>
+      <p><b>Slow tests do not go in the hook</b> &mdash; minutes on every edit makes the session sluggish. That is CI&rsquo;s job.</p>
+    </div>
+  </details>
+</section>
+
+<!-- ═══ CH8 05·06 ═══ -->
+<section class="chapter" data-ch="8" aria-labelledby="t8" hidden>
+  <p class="eyebrow">Chapter 8 &middot; items inside a document &#9314;</p>
+  <h2 id="t8">05 output styles &middot; 06 routines</h2>
+
+  <details class="acc">
+    <summary><span class="id">05</span>Output styles &mdash; changing Claude&rsquo;s tone and role <span class="badge b-off">optional</span></summary>
+    <div class="acc-b">
+      <p>Pick one of the five built-ins (Default, Proactive, Explanatory, Learning, Concise), or write the role and tone you want into a single markdown file.
+      While you are learning, <b>Explanatory</b> &mdash; which explains why it did things that way as it goes &mdash; is the useful one.</p>
+      <div class="coach warn" style="margin:8px 0"><span class="who">🔴</span><div>
+        <b>The custom-style trap &mdash; <code class="i">keep-coding-instructions</code></b>
+        It defaults to false, and false makes Claude Code&rsquo;s <b>entire built-in coding guidance disappear</b> (verification habits and the minimal-change principle included).
+        If you will also be coding, set it to true.
+      </div></div>
+      <p>One more thing &mdash; switching a style <b>does not affect the current session</b>. The system prompt is read once, at session start, so open a new session after switching.</p>
+    </div>
+  </details>
+
+  <details class="acc">
+    <summary><span class="id">06</span>Routines &mdash; cloud jobs that run with your PC off <span class="badge b-gate">three gate questions</span></summary>
+    <div class="acc-b">
+      <p>Scheduled jobs that run unattended in the Anthropic cloud &mdash; nightly PR review, weekly doc checks, that sort of thing.
+      Before installing, <b>three things are always asked</b>, because the code cannot answer them.</p>
+      <ul>
+        <li>&#9312; Is your plan <b>Pro or above</b> (and is GitHub connected to your claude.ai account)?</li>
+        <li>&#9313; For a company repository &mdash; does your organization permit <b>cloud execution (code leaving the building)</b>?</li>
+        <li>&#9314; Is it a GitHub repository? (GitHub only, for now)</li>
+      </ul>
+      <div class="coach tip" style="margin-top:8px"><span class="who">💡</span><div>
+        <b>If it needs files on your machine, it is not a routine</b> Routines run in the cloud, where your files do not exist.
+        Use them only for &ldquo;must run with the computer off&rdquo;.
+      </div></div>
+    </div>
+  </details>
+</section>
+
+<!-- ═══ CH9 종합 연습 ═══ -->
+<section class="chapter" data-ch="9" aria-labelledby="t9" hidden>
+  <p class="eyebrow">Chapter 9 &middot; putting it together</p>
+  <h2 t9 id="t9">Combine it for your own situation</h2>
+  <p class="lead">
+    Combine the three choices you have learned (mode, bundles, profile) in one go.
+    Press a situation button to load the recommended combination, then change it yourself below.
+  </p>
+  <div class="presets" id="presets" role="group" aria-label="Situation presets"></div>
+  <div class="sim">
+    <div class="q">
+      <p class="qt"><b>Q.</b> Build it yourself</p>
+      <p class="qt" style="margin-bottom:6px">Base mode</p>
+      <div class="opts row" id="fMode"></div>
+      <div class="subq" id="fSituBox" hidden>
+        <p class="qt" style="margin-bottom:6px">Situation (for recommended mode)</p>
+        <div class="opts row" id="fSitu"></div>
+      </div>
+      <p class="qt" style="margin:12px 0 6px">Purpose bundles (multiple)</p>
+      <div class="opts row" id="fBundle"></div>
+      <p class="qt" style="margin:12px 0 6px">Operating profile</p>
+      <div class="opts row" id="fProf"></div>
+    </div>
+    <div class="plan" aria-live="polite">
+      <p class="pt">&#128203; Final install plan</p>
+      <div id="finalPlan"></div>
+      <div class="stamp" id="finalStamp"></div>
+      <p class="why">That last line is the record actually left at the bottom of <code class="i">CLAUDE.md</code> when the install finishes.
+      The version numbers (<span style="font-family:var(--mono)">v&#9675;.&#9675;</span>) are read from the documents at install time.
+      Run the install again later and Claude reads this line first, leading with &ldquo;here is what changed since&rdquo;.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ CH10 수료 ═══ -->
+<section class="chapter" data-ch="10" aria-labelledby="t10" hidden>
+  <p class="eyebrow">Chapter 10 &middot; wrapping up</p>
+  <div class="cert">
+    <div class="big" id="certEmoji">🎓</div>
+    <h2 id="t10">Course complete!</h2>
+    <p class="lead" id="certMsg"></p>
+  </div>
+  <h3>Three things to remember</h3>
+  <ul>
+    <li>Unsure? <b>Recommended mode</b> &mdash; Claude shows you why it combined things that way and asks you to confirm.</li>
+    <li>Whatever you choose, <b>nothing is overwritten without approval</b>, and secrets are neither read nor committed.</li>
+    <li>Skipping a checkbox is fine &mdash; <b>run it again later and add it</b>. The install record is there, so it picks up from where it was.</li>
+  </ul>
+  <h3>Where to next</h3>
+  <ul>
+    <li>To look up a confusing item &mdash; the <a href="options.html">install options dictionary</a></li>
+    <li>To see how an install actually flows &mdash; the <a href="demo.html">walkthrough</a> and the <a href="intro.html">1-minute intro</a></li>
+    <li>To get the documents &mdash; the <a href="../index.html">guide</a> and the <a href="https://github.com/EleninJayTech/claude">GitHub repository &#8599;</a></li>
+  </ul>
+  <p style="margin-top:22px"><button class="btn ghost" id="resetBtn">Reset progress</button></p>
+</section>
+
+<div class="chnav">
+  <button class="btn ghost" id="prevBtn">&larr; Back</button>
+  <button class="btn next" id="nextBtn">Mark done and continue &rarr;</button>
+</div>
+
+</main>
+</div>
+
+<footer>
+  Install options course &middot; 2026-08-24<br>
+  The source of truth for each item is its own document (01&ndash;06). This page exists for people to learn from; it does not change the install procedure. Progress is stored only in this browser&rsquo;s localStorage.<br>
+  저장소: github.com/EleninJayTech/claude ·
+  <a href="../index.html">Guide</a> &middot; <a href="intro.html">Intro</a> &middot; <a href="demo.html">Walkthrough</a> &middot; <a href="options.html">Dictionary</a>
+</footer>
+
+<script>
+'use strict';
+/* ───────── 데이터 ───────── */
+var CHAPTERS = ['Getting started','Eight words','Install flow','Base mode','Bundles','Profile','01 base setup','02\u00b703\u00b704','05\u00b706','Practice','Complete'];
+
+var TERMS = [
+  ['Drop-in document','A manual you drop into a folder; say one sentence and Claude reads it and follows it. It is prose, not a program, so "installing" really means creating a handful of config files.'],
+  ['Scope','How far a setting reaches. Global = every project on your machine (~/.claude/); project = this one folder (.claude/, and the team shares it once committed). It is the question "just me, or the team too?".'],
+  ['settings.json','Claude Code\u2019s config file. Mostly permissions \u2014 allow (run without asking), ask (prompt first), deny (forbid). Put .env under deny and reading your password file is blocked.'],
+  ['Hook','A rule saying "when this happens, run that command". Usually it runs a lint or syntax check right after a file is edited; on error the output goes back to Claude, which fixes it itself.'],
+  ['Skill / slash command','One SKILL.md file becomes the /name command. Create skills/resume/SKILL.md and you can type /resume. The contents are instructions: "when this happens, do that".'],
+  ['Subagent','A helper Claude running in its own workspace, separate from the main conversation. Each agent can use a different model, so hard analysis goes to the expensive one and repetitive work to the cheap one.'],
+  ['MCP','The standard for plugging outside tools into Claude. Connect GitHub, a browser or a doc search and Claude uses them directly. Think of it as a USB port.'],
+  ['effort','How hard the model thinks (low to max). Raising it improves hard judgment but costs more tokens and more waiting. A separate axis from which model you pick.']
+];
+
+var STEPS = [
+  ['STEP 1','Obtain documents','If the documents needed (01\u201306) are not in the folder, they are fetched from GitHub. No questions.'],
+  ['STEP 2','Detect environment','Inspects the prior install record (dropin-applied), existing config files and the project type. No questions.'],
+  ['STEP 3','The big choices','Asks for base mode, purpose bundles, operating profile and output language \u2014 chapters 3\u20135 of this course.'],
+  ['STEP 4','Run the install','Installs by each chosen document\u2019s procedure. Only in "custom" mode does it also ask about the per-document items (chapters 6\u20138).'],
+  ['STEP 5','Verify and record','Reports the result with evidence and leaves one install-record line at the bottom of CLAUDE.md.']
+];
+
+var MODES = {
+  minimal:{name:'Minimal', desc:'01 only \u2014 records and security, and only the essentials of those'},
+  rec:{name:'Recommended', desc:'Claude combines automatically from what it detected (the default)'},
+  full:{name:'Full', desc:'All of 01\u201306 \u2014 anything that does not apply is dropped and reported'},
+  custom:{name:'Custom', desc:'Pick the documents, and the items inside them too'}
+};
+var SITUS = {
+  newpc:{name:'New machine', docs:{'01':'global rules, security, /resume, /wrap','03':'claude-hud status line'}, why:'First setup on this machine, so: the global base plus a status line that shows usage.'},
+  dev:{name:'Development project', docs:{'01':'records and security','02':'model-split roster','04':'hook gate, CLI, CI'}, why:'There is code, so the split and automatic verification come too.'},
+  docsrepo:{name:'Documentation repo', docs:{'01':'records and security'}, why:'No build and no code, so 02 and 04 have nothing to act on.'},
+  applied:{name:'01 already installed', docs:{'01':'already there \u2014 re-apply check (only what drifted)'}, why:'Suggests only the still-missing documents that fit the situation.'}
+};
+var BUNDLES = {
+  design:{name:'Design', desc:'for projects that build web screens', docs:{'03':'svg-design \u00b7 frontend-design \u00b7 browser verification'}},
+  verify:{name:'Stronger verification', desc:'when tests or CI exist', docs:{'04':'hook gate + gh/glab CLI + CI integration'}},
+  auto:{name:'Unattended automation', desc:'only when you ask', docs:{'06':'cloud routines (pairing with 04 CI advised)'}},
+  style:{name:'Answer style', desc:'only when you ask', docs:{'05':'output styles'}},
+  company:{name:'Company', desc:'a safeguard modifier', docs:{}}
+};
+var DOCNAMES = {'01':'01 base setup','02':'02 model split','03':'03 add-ons','04':'04 verification','05':'05 output styles','06':'06 routines'};
+
+var DOC01 = [
+  ['a','\u24d0 Global behavior rules','Working habits such as "ask instead of guessing", applied machine-wide', true,
+    ['~/.claude/CLAUDE.md']],
+  ['b','\u24d1 Global security','Blocks reading .env and certificates, shell detours included (unchecking not advised)', true,
+    ['~/.claude/settings.json  <span class="c"># deny + hooks</span>']],
+  ['c','\u24d2 /resume \u00b7 /wrap \u00b7 audit skills','Session open/close commands plus setup audits \u2014 the practical core', true,
+    ['~/.claude/skills/resume/SKILL.md','~/.claude/skills/wrap/SKILL.md','~/.claude/skills/dropin-check/','~/.claude/skills/dropin-update/']],
+  ['d','\u24d3 Project record system','Three record files plus concurrent-edit protection', true,
+    ['docs/PROJECT_PLAN.md  <span class="c"># roadmap</span>','docs/PROGRESS.md      <span class="c"># session log</span>','docs/DECISIONS.md     <span class="c"># decision log</span>','.gitattributes        <span class="c"># merge=union</span>']],
+  ['e','\u24d4 Project permissions','What may run without asking', true,
+    ['.claude/settings.json  <span class="c"># allow / ask / deny</span>']],
+  ['f','\u24d5 effort guidance','Advice on when to raise and lower it \u2014 no file', true, []]
+];
+
+var PRESETS = [
+  ['New machine, Claude Code just installed', {mode:'rec',situ:'newpc',bundles:[],prof:'std'}],
+  ['Solo development project', {mode:'rec',situ:'dev',bundles:['verify'],prof:'std'}],
+  ['Project that builds web screens', {mode:'rec',situ:'dev',bundles:['design','verify'],prof:'std'}],
+  ['On Pro, worried about the allowance', {mode:'rec',situ:'dev',bundles:[],prof:'save'}],
+  ['Documentation-only repository', {mode:'minimal',situ:null,bundles:[],prof:'std'}],
+  ['Company repository', {mode:'rec',situ:'dev',bundles:['company'],prof:'std'}]
+];
+
+/* ───────── 진행도 ───────── */
+var KEY='dropin-learn-v1';
+var state;
+try{ state=JSON.parse(localStorage.getItem(KEY)||'{}'); }catch(e){ state={}; }
+if(!Array.isArray(state.done)) state.done=[];
+if(typeof state.last!=='number') state.last=0;
+function save(){ try{ localStorage.setItem(KEY,JSON.stringify(state)); }catch(e){} }
+
+var cur=0;
+var $=function(id){ return document.getElementById(id); };
+var chapEls=Array.prototype.slice.call(document.querySelectorAll('.chapter'));
+
+function renderNav(){
+  var ul=$('chaps'); ul.innerHTML='';
+  CHAPTERS.forEach(function(t,i){
+    var li=document.createElement('li');
+    var b=document.createElement('button');
+    b.innerHTML='<span class="no">'+i+'</span><span>'+t+'</span><span class="st">✓</span>';
+    b.setAttribute('aria-current', i===cur?'true':'false');
+    if(state.done.indexOf(i)>=0) b.classList.add('done');
+    b.addEventListener('click',function(){ goto(i); });
+    li.appendChild(b); ul.appendChild(li);
+  });
+  var n=Math.min(state.done.length,10);
+  $('pfill').style.width=(n/10*100)+'%';
+  $('pnum').textContent=n+' / 10 done';
+  document.querySelector('.pbar').setAttribute('aria-valuenow',n);
+}
+
+function goto(i){
+  cur=Math.max(0,Math.min(10,i));
+  chapEls.forEach(function(el){ el.hidden = +el.getAttribute('data-ch')!==cur; });
+  $('prevBtn').disabled = cur===0;
+  if(cur===10){
+    $('nextBtn').textContent='Back to start';
+    var all = state.done.length>=10;
+    $('certEmoji').textContent = all ? '🏅' : '🎓';
+    $('certMsg').textContent = all
+      ? 'All ten chapters done. When the installer asks, you now know what you are choosing.'
+      : (10-state.done.length)+' chapters still unread. Use the contents on the left and open the ones without a \u2713.';
+  }else{
+    $('nextBtn').textContent='Mark done and continue \u2192';
+  }
+  state.last=cur; save(); renderNav();
+  window.scrollTo({top:0});
+}
+
+$('prevBtn').addEventListener('click',function(){ goto(cur-1); });
+$('nextBtn').addEventListener('click',function(){
+  if(cur===10){ goto(0); return; }
+  if(state.done.indexOf(cur)<0) state.done.push(cur);
+  save(); goto(cur+1);
+});
+$('resetBtn').addEventListener('click',function(){
+  state={done:[],last:0}; save(); flipped={}; renderCards(); goto(0);
+});
+
+/* ───────── CH1 낱말 카드 ───────── */
+var flipped={};
+function renderCards(){
+  var box=$('cards'); box.innerHTML='';
+  TERMS.forEach(function(t,i){
+    var d=document.createElement('div'); d.className='fcard'+(flipped[i]?' flip':'');
+    var b=document.createElement('button');
+    b.setAttribute('aria-label',t[0]+' \u2014 click to reveal');
+    b.innerHTML='<span class="face front"><span class="w">'+t[0]+'</span><span class="hint">click to reveal \u2192</span></span>'
+      +'<span class="face back"><span class="w">'+t[0]+'</span>'+t[1]+'</span>';
+    b.addEventListener('click',function(){
+      flipped[i]=!flipped[i]; d.classList.toggle('flip');
+      var n=Object.keys(flipped).filter(function(k){return flipped[k];}).length;
+      var seen=Object.keys(flipped).length;
+      $('flipcount').textContent='Cards seen: '+seen+' / 8'+(seen>=8?' \u2014 all of them!':'');
+    });
+    d.appendChild(b); box.appendChild(d);
+  });
+}
+renderCards();
+
+/* ───────── CH2 스테퍼 ───────── */
+(function(){
+  var ol=$('steps');
+  STEPS.forEach(function(s){
+    var li=document.createElement('li');
+    var b=document.createElement('button');
+    b.innerHTML='<span class="sn">'+s[0]+'</span><span class="st-t">'+s[1]+'</span><span class="arrow">▸</span>';
+    var d=document.createElement('div'); d.className='st-d'; d.textContent=s[2];
+    b.addEventListener('click',function(){ li.classList.toggle('open'); });
+    li.appendChild(b); li.appendChild(d); ol.appendChild(li);
+  });
+})();
+
+/* ───────── 공용: 옵션 버튼 렌더 ───────── */
+function renderOpts(el, items, sel, onPick, multi){
+  el.innerHTML='';
+  items.forEach(function(it){
+    var b=document.createElement('button');
+    b.innerHTML='<span class="on">'+it.name+'</span>'+(it.desc?'<span class="od">'+it.desc+'</span>':'');
+    var on = multi ? sel.indexOf(it.key)>=0 : sel===it.key;
+    b.setAttribute('aria-pressed', on?'true':'false');
+    b.addEventListener('click',function(){ onPick(it.key); });
+    el.appendChild(b);
+  });
+}
+function keysOf(o){ return Object.keys(o).map(function(k){ var v=o[k]; return {key:k,name:v.name,desc:v.desc}; }); }
+
+/* ───────── 모드/번들 → 계획 계산 ───────── */
+function basePlan(mode, situ){
+  if(mode==='minimal') return {docs:{'01':'records and security (essentials only)'}, why:'The lightest possible start. Everything else can be added later, any time.'};
+  if(mode==='full') return {docs:{'01':'records and security','02':'model split (where there is code)','03':'add-ons','04':'verification (where there is code)','05':'output styles','06':'routines (if the gate passes)'}, why:'Installs everything, dropping and reporting whatever does not apply (02 in a code-less repository, for instance).'};
+  if(mode==='custom') return {docs:null, why:'Pick the documents, then the items inside them (chapters 6\u20138) all arrive as questions.'};
+  if(mode==='rec'){
+    var s=SITUS[situ||'dev'];
+    return {docs:s.docs, why:'Recommended \u00b7 '+s.name+' \u2192 '+s.why};
+  }
+  return {docs:{}, why:''};
+}
+function planHTML(docs, why){
+  var h='';
+  if(docs===null){ h='<p class="empty">A pick-it-yourself mode, so there is no fixed list.</p>'; }
+  else{
+    h='<ul>';
+    Object.keys(docs).sort().forEach(function(k){ h+='<li><b>'+DOCNAMES[k]+'</b> — '+docs[k]+'</li>'; });
+    h+='</ul>';
+  }
+  if(why) h+='<p class="why">'+why+'</p>';
+  return h;
+}
+
+/* ───────── CH3 모드 시뮬레이터 ───────── */
+var mSel=null, mSitu='dev';
+function drawMode(){
+  renderOpts($('modeOpts'), keysOf(MODES), mSel, function(k){ mSel=k; drawMode(); }, false);
+  $('situBox').hidden = mSel!=='rec';
+  if(mSel==='rec') renderOpts($('situOpts'), keysOf(SITUS).map(function(x){return {key:x.key,name:x.name};}), mSitu, function(k){ mSitu=k; drawMode(); }, false);
+  if(mSel){
+    var p=basePlan(mSel, mSitu);
+    $('modePlan').innerHTML=planHTML(p.docs,p.why);
+  }
+}
+drawMode();
+
+/* ───────── CH4 번들 시뮬레이터 ───────── */
+var bSel=[];
+function drawBundle(){
+  renderOpts($('bundleOpts'), keysOf(BUNDLES), bSel, function(k){
+    var i=bSel.indexOf(k); if(i>=0) bSel.splice(i,1); else bSel.push(k); drawBundle();
+  }, true);
+  var box=$('bundlePlan');
+  if(!bSel.length){ box.innerHTML='<p class="empty">Choosing none is fine \u2014 that is the default.</p>'; return; }
+  var h='<ul>';
+  bSel.forEach(function(k){
+    var b=BUNDLES[k];
+    if(k==='company'){ h+='<li><b>Company modifier</b> \u2014 installs nothing new; forces an org-approval check on CI, MCP and routines</li>'; return; }
+    Object.keys(b.docs).forEach(function(dk){ h+='<li><b>'+DOCNAMES[dk]+'</b> — '+b.docs[dk]+'</li>'; });
+  });
+  h+='</ul><p class="why">Where a bundle overlaps what the base mode already chose, it installs once (a union).</p>';
+  box.innerHTML=h;
+}
+drawBundle();
+
+/* ───────── CH5 프로필 · 유지/재구성/교체 ───────── */
+var PROFS={std:{name:'Standard',desc:'quality first (default)'},save:{name:'Thrift',desc:'Pro plan \u00b7 managing an allowance'}};
+var pSel=null;
+function drawProf(){
+  renderOpts($('profOpts'), keysOf(PROFS), pSel, function(k){ pSel=k; drawProf(); }, false);
+  var box=$('profPlan');
+  if(!pSel){ box.innerHTML='<p class="empty">Pick a profile on the left.</p>'; return; }
+  box.innerHTML = pSel==='std'
+    ? '<ul><li>effort stays at its default; hard work goes to the stronger model</li><li>The right answer most of the time</li></ul>'
+    : '<ul><li>Sessions start at <b>/effort medium</b></li><li>Subagents assigned mostly to Sonnet, with a smaller roster</li><li>claude-hud pre-checked \u2014 you cannot economize on what you cannot see</li></ul>'
+      +'<p class="why">Never cut: difficulty triage, final review, verification gates. Saving there costs more in rework.</p>';
+}
+drawProf();
+
+var KEEPS=[
+  {key:'keep',name:'Keep',fb:'Skipped, untouched. This one if the setting is working for you.'},
+  {key:'re',name:'Reconcile',fb:'Only what drifted is aligned. For keeping what you have while taking in the newer version.'},
+  {key:'rep',name:'Replace',fb:'The old one is removed and rebuilt. For cleaning up something thrown together earlier. You are always asked before anything is deleted.'}
+];
+var kSel=null;
+function drawKeep(){
+  renderOpts($('keepOpts'), KEEPS, kSel, function(k){ kSel=k; drawKeep(); }, false);
+  var f=$('keepFb');
+  var it=KEEPS.filter(function(x){return x.key===kSel;})[0];
+  if(it){ f.textContent=it.fb; f.classList.add('show'); }
+}
+drawKeep();
+
+/* ───────── CH6 01 항목 토글 ───────── */
+var d01={};
+(function(){
+  var box=$('doc01Rows');
+  DOC01.forEach(function(r){
+    d01[r[0]]=r[3];
+    var row=document.createElement('div'); row.className='tglrow';
+    var cb=document.createElement('input'); cb.type='checkbox'; cb.checked=r[3]; cb.id='d01-'+r[0];
+    var lb=document.createElement('label'); lb.htmlFor=cb.id;
+    lb.innerHTML='<span class="tn"><span class="id">'+r[1].slice(0,1)+'</span>'+r[1].slice(2)+'</span><span class="td"> — '+r[2]+'</span>';
+    cb.addEventListener('change',function(){ d01[r[0]]=cb.checked; drawTree(); });
+    row.appendChild(cb); row.appendChild(lb); box.appendChild(row);
+  });
+  drawTree();
+})();
+function drawTree(){
+  var lines=[];
+  DOC01.forEach(function(r){
+    if(!d01[r[0]]) return;
+    if(!r[4].length){ lines.push('<span class="c">('+r[1].slice(0,1)+' \u2014 creates no file, guidance only)</span>'); return; }
+    r[4].forEach(function(f){ lines.push('<span class="y">+</span> '+f); });
+  });
+  $('doc01Tree').innerHTML = lines.length ? lines.join('\n') : '<span class="c">(all off \u2014 no files are created)</span>';
+}
+
+/* ───────── CH9 종합 시뮬레이터 ───────── */
+var F={mode:'rec',situ:'dev',bundles:[],prof:'std',preset:-1};
+function drawFinal(){
+  var pr=$('presets'); pr.innerHTML='';
+  PRESETS.forEach(function(p,i){
+    var b=document.createElement('button');
+    b.textContent=p[0];
+    b.setAttribute('aria-pressed', F.preset===i?'true':'false');
+    b.addEventListener('click',function(){
+      F.preset=i; F.mode=p[1].mode; F.situ=p[1].situ||'dev'; F.bundles=p[1].bundles.slice(); F.prof=p[1].prof;
+      drawFinal();
+    });
+    pr.appendChild(b);
+  });
+  renderOpts($('fMode'), keysOf(MODES).map(function(x){return {key:x.key,name:x.name};}), F.mode, function(k){ F.mode=k; F.preset=-1; drawFinal(); }, false);
+  $('fSituBox').hidden = F.mode!=='rec';
+  if(F.mode==='rec') renderOpts($('fSitu'), keysOf(SITUS).map(function(x){return {key:x.key,name:x.name};}), F.situ, function(k){ F.situ=k; F.preset=-1; drawFinal(); }, false);
+  renderOpts($('fBundle'), keysOf(BUNDLES).map(function(x){return {key:x.key,name:x.name};}), F.bundles, function(k){
+    var i=F.bundles.indexOf(k); if(i>=0) F.bundles.splice(i,1); else F.bundles.push(k); F.preset=-1; drawFinal();
+  }, true);
+  renderOpts($('fProf'), keysOf(PROFS).map(function(x){return {key:x.key,name:x.name};}), F.prof, function(k){ F.prof=k; F.preset=-1; drawFinal(); }, false);
+
+  var base=basePlan(F.mode,F.situ);
+  var isCustom = base.docs===null;
+  var docs = isCustom ? {} : JSON.parse(JSON.stringify(base.docs));
+  var notes=[];
+  F.bundles.forEach(function(k){
+    var b=BUNDLES[k];
+    if(k==='company'){ notes.push('Company modifier: an org-approval gate on CI, MCP and routines'); return; }
+    Object.keys(b.docs).forEach(function(dk){
+      docs[dk] = docs[dk] ? docs[dk]+' + '+b.docs[dk] : b.docs[dk];
+    });
+  });
+  var h;
+  if(isCustom){
+    h='<p class="empty">A pick-it-yourself mode \u2014 you choose the documents and the items.'+(Object.keys(docs).length?' Below is what the chosen bundles add on top.':'')+'</p>';
+    if(Object.keys(docs).length) h+=planHTML(docs,'');
+    if(base.why) h+='<p class="why">'+base.why+'</p>';
+  } else {
+    h = planHTML(docs, base.why);
+  }
+  if(notes.length) h+='<p class="why">🏢 '+notes.join(' · ')+'</p>';
+  if(F.prof==='save') h+='<p class="why">&#128176; Thrift profile: start at effort medium, Sonnet-centric \u2014 but the verification gates stay.</p>';
+  $('finalPlan').innerHTML=h;
+
+  var modeLabel=MODES[F.mode].name + F.bundles.filter(function(k){return k!=='company';}).map(function(k){return '+'+BUNDLES[k].name;}).join('')
+    + (F.bundles.indexOf('company')>=0?'+company':'');
+  var chosen = Object.keys(docs).sort();
+  var un = ['01','02','03','04','05','06'].filter(function(k){ return chosen.indexOf(k)<0; });
+  var today = new Date().toISOString().slice(0,10);
+  var line='<!-- dropin-applied: '+today+' \u00b7 모드='+modeLabel+' \u00b7 프로필='+PROFS[F.prof].name+' \u00b7 언어=en';
+  chosen.forEach(function(k){ line+=' \u00b7 '+k+' v\u25cb.\u25cb'; });
+  if(un.length && !isCustom) line+=' \u00b7 미선택: '+un.join(', ');
+  line+=' \u00b7 출처=사본 -->';
+  $('finalStamp').textContent=line;
+}
+drawFinal();
+
+/* ───────── 시작 ───────── */
+renderNav();
+if(state.last>0 || state.done.length){
+  var rb=$('resumeBox');
+  rb.innerHTML='Last time you reached chapter '+state.last+' ('+CHAPTERS[state.last]+'). <button class="btn next" style="margin-left:8px;padding:6px 14px;font-size:13.5px" id="resumeGo">Continue \u2192</button>';
+  rb.classList.add('show');
+  document.getElementById('resumeGo').addEventListener('click',function(){ goto(state.last); });
+}
+goto(0);
+</script>
+
+<script>
+(function(){try{
+  if(localStorage.getItem('lang'))return;
+  if((navigator.language||'').toLowerCase().indexOf('ko')===0){
+    localStorage.setItem('lang','ko');location.replace('learn.ko.html');
+  }
+}catch(e){}})();
+</script>
+</body>
+</html>

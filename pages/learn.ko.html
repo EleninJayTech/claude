@@ -1,0 +1,904 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>설치 옵션 학습 코스 — Claude Code 드롭인 구성 문서</title>
+<meta name="description" content="설치할 때 나오는 모든 선택지를 챕터 순서대로, 직접 눌러 보면서 배운다. 고르면 무엇이 생기는지 즉시 보여주는 시뮬레이터 포함.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎓</text></svg>">
+<meta property="og:title" content="설치 옵션 학습 코스 — Claude Code 드롭인 구성 문서">
+<meta property="og:description" content="설치 선택지를 챕터별로, 눌러 보면서 배우는 인터랙티브 코스. 진행도는 브라우저에 저장됩니다.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://eleninjaytech.github.io/claude/pages/learn.html">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@700;900&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" rel="stylesheet">
+<style>
+:root{
+  --paper:#FCFCF8; --card:#FFFFFF; --ink:#20222E; --ink-soft:#5A5E70;
+  --marker:#FFD84D; --marker-soft:#FFF3C2;
+  --blue:#2B49C7; --blue-soft:#E8ECFB;
+  --green:#1B7A4B; --green-soft:#E3F3EA;
+  --red:#B3261E; --red-soft:#FBE9E7;
+  --line:#E5E4DB;
+  --serif:'Noto Serif KR','Nanum Myeongjo',serif;
+  --sans:'Pretendard Variable',Pretendard,'Malgun Gothic',sans-serif;
+  --mono:'IBM Plex Mono',Consolas,monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--sans);background:var(--paper);color:var(--ink);line-height:1.85;font-size:16.5px;
+  word-break:keep-all;overflow-wrap:break-word;
+  background-image:linear-gradient(#F1F0E7 1px,transparent 1px),linear-gradient(90deg,#F1F0E7 1px,transparent 1px);
+  background-size:26px 26px}
+p,li{text-wrap:pretty}
+::selection{background:var(--marker)}
+a{color:var(--blue)}
+:focus-visible{outline:3px solid var(--blue);outline-offset:2px;border-radius:4px}
+button{font-family:inherit;font-size:inherit;color:inherit;cursor:pointer}
+.mark{background:linear-gradient(transparent 58%, var(--marker) 58%, var(--marker) 92%, transparent 92%);padding:0 2px}
+code.i{font-family:var(--mono);font-size:.88em;background:var(--blue-soft);color:var(--blue);padding:1px 6px;border-radius:5px;word-break:break-all}
+
+/* ---------- 상단 진행 바 ---------- */
+.topbar{position:sticky;top:0;z-index:20;background:rgba(252,252,248,.94);backdrop-filter:blur(6px);border-bottom:1px solid var(--line)}
+.topbar-in{max-width:1120px;margin:0 auto;padding:10px 24px;display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.topbar .brand{font-family:var(--mono);font-size:12.5px;letter-spacing:.1em;color:var(--ink-soft);text-decoration:none}
+.topbar .brand b{color:var(--blue)}
+.pbar{flex:1;min-width:140px;height:10px;background:#EFEEE5;border-radius:6px;overflow:hidden;border:1px solid var(--line)}
+.pbar>i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--marker),#FFC93C);transition:width .35s ease}
+.pnum{font-family:var(--mono);font-size:12.5px;color:var(--ink-soft);white-space:nowrap}
+
+/* ---------- 레이아웃 ---------- */
+.wrap{max-width:1120px;margin:0 auto;padding:26px 24px 90px;display:grid;grid-template-columns:230px 1fr;gap:26px;align-items:start}
+@media (max-width:820px){.wrap{grid-template-columns:1fr;padding-top:14px}}
+
+/* ---------- 챕터 목차(사이드) ---------- */
+.side{position:sticky;top:66px}
+.side b.cap{font-family:var(--mono);font-size:12px;letter-spacing:.12em;color:var(--ink-soft);display:block;margin:2px 0 10px}
+.chaps{display:flex;flex-direction:column;gap:5px;list-style:none}
+.chaps button{display:flex;align-items:center;gap:9px;width:100%;text-align:left;background:var(--card);border:1px solid var(--line);border-radius:9px;padding:8px 11px;font-size:14px;transition:transform .12s,box-shadow .12s}
+.chaps button:hover{transform:translateX(2px)}
+.chaps button:active{transform:scale(.98)}
+.chaps button[aria-current="true"]{border-color:var(--ink);box-shadow:2px 2px 0 var(--marker)}
+.chaps .no{font-family:var(--mono);font-size:11.5px;color:var(--ink-soft);width:20px;flex:none}
+.chaps .st{margin-left:auto;flex:none;font-size:12px;width:18px;height:18px;border-radius:50%;border:1.5px solid var(--line);display:grid;place-items:center;color:transparent}
+.chaps button.done .st{background:var(--green-soft);border-color:var(--green);color:var(--green)}
+@media (max-width:820px){
+  .side{position:static}
+  .chaps{flex-direction:row;overflow-x:auto;padding-bottom:6px}
+  .chaps li{flex:none}
+  .chaps button{white-space:nowrap}
+  .chaps .st{margin-left:4px}
+}
+
+/* ---------- 챕터 본문 ---------- */
+.chapter{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:34px 36px 30px}
+@media (max-width:600px){.chapter{padding:22px 17px}}
+.chapter[hidden]{display:none}
+.eyebrow{font-family:var(--mono);font-size:12.5px;letter-spacing:.12em;color:var(--ink-soft);margin-bottom:10px}
+h1{font-family:var(--serif);font-weight:900;font-size:clamp(25px,3.6vw,36px);line-height:1.45;letter-spacing:-.02em;text-wrap:balance}
+h2{font-family:var(--serif);font-weight:900;font-size:clamp(22px,3vw,29px);line-height:1.45;letter-spacing:-.02em;text-wrap:balance;margin-bottom:4px}
+h3{font-size:16.5px;font-weight:700;margin:26px 0 10px;padding-bottom:6px;border-bottom:2px solid var(--marker-soft)}
+.chapter p{margin:12px 0}
+.chapter ul{margin:10px 0 10px 22px}
+.chapter li{margin:6px 0}
+.lead{color:var(--ink-soft)}
+
+.coach{display:flex;gap:12px;background:var(--marker-soft);border:1px solid #EFDD9A;border-radius:12px;padding:13px 16px;margin:18px 0 6px;font-size:14.5px}
+.coach .who{flex:none;font-size:22px;line-height:1.3}
+.coach b{display:block}
+.coach.warn{background:var(--red-soft);border-color:#F0C4BF}
+.coach.tip{background:var(--blue-soft);border-color:#C9D3F4}
+
+table{width:100%;border-collapse:collapse;margin:14px 0;font-size:14.5px}
+th,td{border:1px solid var(--line);padding:9px 12px;text-align:left;vertical-align:top}
+th{background:var(--marker-soft);font-family:var(--mono);font-size:12.5px}
+.tbl{overflow-x:auto}
+
+/* ---------- 하단 내비 ---------- */
+.chnav{display:flex;gap:10px;justify-content:space-between;align-items:center;margin-top:30px;padding-top:20px;border-top:1px dashed var(--line)}
+.btn{border:1px solid var(--ink);background:var(--card);border-radius:10px;padding:11px 20px;font-weight:700;font-size:15px;transition:transform .12s,box-shadow .12s;text-decoration:none;color:var(--ink)}
+.btn:hover{transform:translateY(-1px);box-shadow:3px 3px 0 var(--line)}
+.btn:active{transform:translateY(0) scale(.97);box-shadow:none}
+.btn.next{background:var(--marker);box-shadow:3px 3px 0 rgba(32,34,46,.16)}
+.btn.ghost{border-color:var(--line);font-weight:500;color:var(--ink-soft)}
+.btn[disabled]{opacity:.4;cursor:default;transform:none;box-shadow:none}
+
+/* ---------- 낱말 카드 ---------- */
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:12px;margin:16px 0}
+.fcard{perspective:900px;min-height:150px}
+.fcard>button{position:relative;width:100%;height:100%;min-height:150px;border:none;background:none;text-align:left;transform-style:preserve-3d;transition:transform .45s}
+.fcard.flip>button{transform:rotateY(180deg)}
+.face{position:absolute;inset:0;backface-visibility:hidden;border:1px solid var(--line);border-radius:12px;padding:15px 17px;background:#FEFEFC;display:flex;flex-direction:column;justify-content:center;gap:5px}
+.face.front{border-left:3px solid var(--marker)}
+.face.front .w{font-family:var(--serif);font-weight:900;font-size:20px}
+.face.front .hint{font-family:var(--mono);font-size:11.5px;color:var(--ink-soft)}
+.face.back{transform:rotateY(180deg);background:var(--ink);color:var(--paper);font-size:13.8px;line-height:1.7;justify-content:flex-start;padding-top:13px}
+.face.back .w{font-family:var(--mono);font-size:11.5px;color:var(--marker);margin-bottom:2px}
+.flipcount{font-family:var(--mono);font-size:12.5px;color:var(--ink-soft)}
+
+/* ---------- 단계(스테퍼) ---------- */
+.steps{list-style:none;margin:16px 0;display:flex;flex-direction:column;gap:8px}
+.steps>li>button{display:flex;gap:12px;align-items:baseline;width:100%;text-align:left;background:#FEFEFC;border:1px solid var(--line);border-radius:11px;padding:12px 16px;transition:box-shadow .15s}
+.steps>li>button:hover{box-shadow:0 8px 22px -16px rgba(32,34,46,.3)}
+.steps .sn{font-family:var(--mono);font-weight:600;font-size:12.5px;color:var(--blue);flex:none}
+.steps .st-t{font-weight:700}
+.steps .arrow{margin-left:auto;color:var(--ink-soft);transition:transform .2s;flex:none}
+.steps li.open .arrow{transform:rotate(90deg)}
+.steps .st-d{display:none;padding:4px 16px 12px 58px;font-size:14.5px;color:var(--ink-soft)}
+.steps li.open .st-d{display:block}
+@media (max-width:560px){.steps .st-d{padding-left:16px}}
+
+/* ---------- 시뮬레이터 ---------- */
+.sim{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:18px 0}
+@media (max-width:760px){.sim{grid-template-columns:1fr}}
+.q{border:1px solid var(--line);border-radius:12px;background:#FEFEFC;padding:16px 18px}
+.q .qt{font-family:var(--mono);font-size:12.5px;color:var(--ink-soft);margin-bottom:10px}
+.q .qt b{color:var(--blue)}
+.opts{display:flex;flex-direction:column;gap:8px}
+.opts button{display:block;width:100%;text-align:left;border:1px solid var(--line);background:var(--card);border-radius:10px;padding:10px 13px;transition:transform .1s,border-color .1s}
+.opts button:hover{transform:translateX(2px)}
+.opts button:active{transform:scale(.985)}
+.opts button[aria-pressed="true"]{border-color:var(--ink);box-shadow:2px 2px 0 var(--marker);background:#FFFDF2}
+.opts .on{font-weight:700;font-size:15px}
+.opts .od{display:block;font-size:13px;color:var(--ink-soft);line-height:1.6;margin-top:1px}
+.opts.row{flex-direction:row;flex-wrap:wrap}
+.opts.row button{width:auto}
+.subq{margin-top:12px;padding-top:12px;border-top:1px dashed var(--line)}
+.subq[hidden]{display:none}
+
+.plan{border:1.5px solid var(--ink);border-radius:12px;background:var(--card);padding:16px 18px;box-shadow:4px 4px 0 var(--marker-soft);align-self:start;position:sticky;top:74px}
+@media (max-width:760px){.plan{position:static}}
+.plan .pt{font-family:var(--mono);font-size:12.5px;letter-spacing:.1em;color:var(--ink-soft);border-bottom:1px dashed var(--line);padding-bottom:8px;margin-bottom:10px}
+.plan ul{list-style:none;margin:0}
+.plan li{margin:7px 0;padding-left:22px;position:relative;font-size:14.5px}
+.plan li::before{content:"✓";position:absolute;left:0;color:var(--green);font-weight:700}
+.plan li.off{color:var(--ink-soft)}
+.plan li.off::before{content:"—";color:var(--ink-soft)}
+.plan .why{font-size:13px;color:var(--ink-soft);margin-top:10px;padding-top:8px;border-top:1px dashed var(--line)}
+.plan .empty{color:var(--ink-soft);font-size:14px}
+.stamp{font-family:var(--mono);font-size:12px;background:var(--ink);color:#D9F2E4;border-radius:8px;padding:10px 12px;margin-top:12px;line-height:1.7;overflow-x:auto;white-space:pre}
+
+/* ---------- 토글 목록(ⓐ~ⓕ) ---------- */
+.tglrow{display:flex;align-items:flex-start;gap:11px;border:1px solid var(--line);border-radius:10px;padding:11px 14px;margin:8px 0;background:#FEFEFC}
+.tglrow input{width:19px;height:19px;margin-top:5px;accent-color:var(--blue);flex:none;cursor:pointer}
+.tglrow label{cursor:pointer;flex:1}
+.tglrow .tn{font-weight:700;font-size:15px}
+.tglrow .tn .id{font-family:var(--mono);color:var(--blue);font-size:13px;margin-right:5px}
+.tglrow .td{font-size:13.5px;color:var(--ink-soft);line-height:1.65}
+.tree{font-family:var(--mono);font-size:12.8px;line-height:1.85;background:var(--ink);color:#E8E9F1;border-radius:10px;padding:14px 16px;overflow-x:auto;white-space:pre}
+.tree .c{color:#8B90A5}
+.tree .y{color:var(--marker)}
+
+/* ---------- 아코디언(02·03·04 등) ---------- */
+details.acc{border:1px solid var(--line);border-radius:12px;background:#FEFEFC;margin:10px 0;overflow:hidden}
+details.acc summary{list-style:none;cursor:pointer;padding:13px 17px;font-weight:700;display:flex;gap:10px;align-items:baseline}
+details.acc summary::-webkit-details-marker{display:none}
+details.acc summary .id{font-family:var(--mono);font-size:12.5px;color:var(--blue);flex:none}
+details.acc summary::after{content:"+";margin-left:auto;font-family:var(--mono);color:var(--ink-soft)}
+details.acc[open] summary::after{content:"−"}
+details.acc .acc-b{padding:2px 17px 15px;font-size:14.8px}
+.badge{font-family:var(--mono);font-size:11.5px;font-weight:600;padding:2px 8px;border-radius:6px;white-space:nowrap;letter-spacing:.02em}
+.b-on{background:var(--green-soft);color:var(--green)}
+.b-off{background:#F1F1EA;color:var(--ink-soft)}
+.b-keep{background:var(--marker-soft);color:#8A6D00}
+.b-gate{background:var(--red-soft);color:var(--red)}
+
+/* ---------- 프리셋 ---------- */
+.presets{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}
+.presets button{border:1px solid var(--line);background:var(--card);border-radius:20px;padding:7px 15px;font-size:13.5px;transition:transform .1s}
+.presets button:hover{transform:translateY(-1px)}
+.presets button:active{transform:scale(.96)}
+.presets button[aria-pressed="true"]{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+
+/* ---------- 수료 ---------- */
+.cert{border:2px solid var(--ink);border-radius:14px;padding:28px 26px;text-align:center;background:
+  linear-gradient(var(--card),var(--card)) padding-box}
+.cert .big{font-size:44px}
+.cert h2{margin:8px 0 4px}
+.feedback{font-size:14px;border-radius:9px;padding:9px 13px;margin-top:10px;display:none}
+.feedback.show{display:block}
+.feedback.ok{background:var(--green-soft);color:var(--green)}
+
+footer{max-width:1120px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);font-size:13px;font-family:var(--mono);line-height:1.7}
+
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{transition:none!important;animation:none!important}
+  html{scroll-behavior:auto}
+}
+</style>
+</head>
+<body>
+<div style="max-width:1180px;margin:0 auto;padding:10px 22px 0;font-family:var(--mono);font-size:13px;text-align:right;color:var(--ink-soft)"><a href="learn.html" onclick="try{localStorage.setItem('lang','en')}catch(e){}">English</a> &middot; <b>한국어</b></div>
+
+<div class="topbar">
+  <div class="topbar-in">
+    <a class="brand" href="../index.html">← <b>드롭인 구성 문서</b> · 학습 코스</a>
+    <div class="pbar" role="progressbar" aria-label="코스 진행도" aria-valuemin="0" aria-valuemax="10" aria-valuenow="0"><i id="pfill"></i></div>
+    <span class="pnum" id="pnum">0 / 10 완료</span>
+  </div>
+</div>
+
+<div class="wrap">
+
+<nav class="side" aria-label="챕터 목차">
+  <b class="cap">챕터</b>
+  <ul class="chaps" id="chaps"></ul>
+</nav>
+
+<main id="main">
+
+<!-- ═══ CH0 시작하기 ═══ -->
+<section class="chapter" data-ch="0" aria-labelledby="t0">
+  <p class="eyebrow">챕터 0 · 약 2분</p>
+  <h1 id="t0">설치할 때 나오는 선택지,<br><span class="mark">눌러 보면서</span> 배웁니다</h1>
+  <p class="lead">
+    이 저장소의 문서를 프로젝트에 넣고 "학습해서 적용해줘"라고 하면, Claude가 몇 가지를 골라 달라고 물어봅니다.
+    이 코스는 그 질문들을 <b>실제 화면처럼 재현</b>해 두고, 옵션을 고르면 <b>무엇이 생기고 무엇이 달라지는지</b> 그 자리에서 보여줍니다.
+  </p>
+  <ul>
+    <li>챕터는 <b>순서대로</b> 보게 만들어져 있지만, 왼쪽 목차로 건너뛰어도 됩니다.</li>
+    <li>시뮬레이터가 나오면 <b>직접 눌러 보세요</b>. 읽기만 하는 것보다 훨씬 빨리 익숙해집니다.</li>
+    <li>진행도는 <b>이 브라우저에만</b> 저장됩니다. 서버로 전송되는 것은 없습니다.</li>
+  </ul>
+  <div class="coach tip"><span class="who">📖</span><div>
+    <b>찾아볼 땐 사전, 처음 훑을 땐 이 코스</b>
+    같은 내용을 항목별로 정리한 <a href="options.html">설치 옵션 사전</a>이 따로 있습니다.
+    설치 도중 "이게 뭐지?" 싶을 때는 사전이 빠르고, 전체 그림을 처음 익힐 때는 이 코스가 낫습니다.
+  </div></div>
+  <div class="feedback ok" id="resumeBox"></div>
+</section>
+
+<!-- ═══ CH1 낱말 8개 ═══ -->
+<section class="chapter" data-ch="1" aria-labelledby="t1" hidden>
+  <p class="eyebrow">챕터 1 · 낱말 8개</p>
+  <h2 id="t1">카드를 뒤집어 낱말부터</h2>
+  <p class="lead">이 여덟 개만 알면 뒤에 나오는 선택지가 전부 읽힙니다. 카드를 눌러 뜻을 확인하세요.</p>
+  <p class="flipcount" id="flipcount">확인한 카드: 0 / 8</p>
+  <div class="cards" id="cards"></div>
+  <div class="coach"><span class="who">💡</span><div>
+    <b>"토큰을 아낀다"는 말이 자주 나오는 이유</b>
+    Claude는 주고받은 글자 수(토큰)만큼 요금제 사용량을 씁니다. 그래서 모든 문서가
+    <b>1순위 품질, 2순위 절약</b>이라는 원칙을 공유합니다 — 아끼겠다고 검증이나 기록을 빼지는 않습니다.
+  </div></div>
+</section>
+
+<!-- ═══ CH2 설치의 흐름 ═══ -->
+<section class="chapter" data-ch="2" aria-labelledby="t2" hidden>
+  <p class="eyebrow">챕터 2 · 설치의 흐름</p>
+  <h2 id="t2">질문은 다섯 단계 중 <span class="mark">두 곳</span>에서만 나옵니다</h2>
+  <p class="lead">
+    Claude는 묻기 전에 먼저 조사합니다. 파일로 알 수 있는 것(이미 설치된 것, git 여부, 사용 언어)은 묻지 않고,
+    <b>코드로 알 수 없는 것만</b> 물어봅니다. 각 단계를 눌러 자세히 보세요.
+  </p>
+  <ol class="steps" id="steps"></ol>
+  <div class="coach"><span class="who">📌</span><div>
+    <b>세부 질문은 '사용자' 모드에서만 나옵니다</b>
+    최소·권장·전체 모드에서는 문서 안 세부 항목이 <b>모드가 정한 기본값으로 자동 확정</b>됩니다.
+    단, 안전 질문("이미 있는 걸 덮어쓸까요?", "회사 정책은 확인했나요?")은 어떤 모드에서도 생략되지 않습니다.
+  </div></div>
+</section>
+
+<!-- ═══ CH3 기반 모드 ═══ -->
+<section class="chapter" data-ch="3" aria-labelledby="t3" hidden>
+  <p class="eyebrow">챕터 3 · 첫 번째 큰 선택</p>
+  <h2 id="t3">기반 모드 — 얼마나 깔 것인가</h2>
+  <p class="lead">설치 때 실제로 받는 첫 질문입니다. 하나씩 골라 보고, 오른쪽 계획서가 어떻게 바뀌는지 확인하세요.</p>
+  <div class="sim">
+    <div class="q">
+      <p class="qt"><b>Q.</b> 기반 모드를 골라 주세요 (1개)</p>
+      <div class="opts" id="modeOpts" role="group" aria-label="기반 모드 선택"></div>
+      <div class="subq" id="situBox" hidden>
+        <p class="qt"><b>권장 모드</b>는 감지된 상황에 따라 조합이 달라집니다 — 상황을 골라 보세요</p>
+        <div class="opts" id="situOpts" role="group" aria-label="상황 선택"></div>
+      </div>
+    </div>
+    <div class="plan" aria-live="polite">
+      <p class="pt">📋 설치 계획서</p>
+      <div id="modePlan"><p class="empty">왼쪽에서 모드를 골라 보세요.</p></div>
+    </div>
+  </div>
+  <div class="coach"><span class="who">🧭</span><div>
+    <b>잘 모르겠으면 '권장'</b>
+    권장 모드는 Claude가 조합을 정한 뒤 <b>왜 그렇게 골랐는지 한 줄로 보여주고</b> 확인을 받습니다.
+    '전체'를 골라도 이미 있는 설정을 말없이 덮어쓰지는 않습니다.
+  </div></div>
+</section>
+
+<!-- ═══ CH4 목적 번들 ═══ -->
+<section class="chapter" data-ch="4" aria-labelledby="t4" hidden>
+  <p class="eyebrow">챕터 4 · 두 번째 큰 선택</p>
+  <h2 id="t4">목적 번들 — 모드 위에 얹는 것</h2>
+  <p class="lead">
+    번들은 기반 모드에 <b>합집합으로 더해집니다</b>. 예를 들어 '권장'+'디자인'이면, 권장이 고른 것 위에
+    디자인 확장이 얹힙니다. 여러 개를 켜고 꺼 보세요.
+  </p>
+  <div class="sim">
+    <div class="q">
+      <p class="qt"><b>Q.</b> 목적 번들을 골라 주세요 (0개 이상, 복수 선택)</p>
+      <div class="opts" id="bundleOpts" role="group" aria-label="목적 번들 선택"></div>
+    </div>
+    <div class="plan" aria-live="polite">
+      <p class="pt">➕ 얹히는 것</p>
+      <div id="bundlePlan"><p class="empty">아무것도 안 골라도 됩니다 — 그게 기본값입니다.</p></div>
+    </div>
+  </div>
+  <div class="coach warn"><span class="who">🏢</span><div>
+    <b>'회사'는 설치물이 아니라 안전장치입니다</b>
+    회사 번들을 켜면 새로 깔리는 것은 없습니다. 대신 코드가 밖으로 나갈 수 있는 항목(CI·MCP·루틴)에서
+    <b>조직 승인 확인을 강제</b>합니다. 회사 저장소라면 반드시 켜세요.
+  </div></div>
+</section>
+
+<!-- ═══ CH5 프로필 · 기존 설정 ═══ -->
+<section class="chapter" data-ch="5" aria-labelledby="t5" hidden>
+  <p class="eyebrow">챕터 5 · 나머지 공통 질문</p>
+  <h2 id="t5">운용 프로필, 산출물 언어, 그리고 이미 있을 때</h2>
+
+  <h3>운용 프로필 — 표준 / 절약</h3>
+  <div class="sim">
+    <div class="q">
+      <p class="qt"><b>Q.</b> 운용 프로필을 골라 주세요</p>
+      <div class="opts" id="profOpts" role="group" aria-label="운용 프로필 선택"></div>
+    </div>
+    <div class="plan" aria-live="polite">
+      <p class="pt">⚙️ 달라지는 것</p>
+      <div id="profPlan"><p class="empty">왼쪽에서 프로필을 골라 보세요.</p></div>
+    </div>
+  </div>
+
+  <h3>산출물 언어 — 한국어 / English</h3>
+  <p>오해하기 쉬운 항목입니다 — <b>문서의 언어가 아니라</b> <b>설치가 만들어 내는 것</b>의 언어입니다. 드롭인 문서는 한국어 그대로 두고(Claude는 어느 언어로든 같게 실행합니다), 이 답이 대상 <code class="i">CLAUDE.md</code> 본문·<code class="i">docs/</code> 기록·커밋 메시지·산출물 파일명(<code class="i">docs/난이도-매트릭스.md</code> ↔ <code class="i">docs/difficulty-matrix.md</code>)의 언어를 정합니다. <code class="i">[갈래][Done]</code> 같은 형식 키워드는 어느 언어에서도 고정입니다 — <code class="i">/resume</code>·<code class="i">/wrap</code>이 그 문자열로 찾기 때문입니다.</p>
+
+  <h3>이미 설치돼 있으면 — 유지 / 재구성 / 교체</h3>
+  <p>기존 설정이 감지된 항목마다, 모드와 상관없이 <b>항상</b> 물어봅니다. 눌러서 차이를 보세요.</p>
+  <div class="q">
+    <div class="opts row" id="keepOpts" role="group" aria-label="기존 설정 처리 선택"></div>
+    <div class="feedback ok" id="keepFb"></div>
+  </div>
+</section>
+
+<!-- ═══ CH6 01 기본 셋업 ═══ -->
+<section class="chapter" data-ch="6" aria-labelledby="t6" hidden>
+  <p class="eyebrow">챕터 6 · 문서 속 항목 ①</p>
+  <h2 id="t6">01 기본 셋업 — 체크를 끄면 파일이 사라집니다</h2>
+  <p class="lead">
+    01 문서는 <b>"어제 뭐 했더라"를 없애는</b> 구성입니다. 여섯 항목(ⓐ~ⓕ)을 켜고 꺼 보세요 —
+    아래 미리보기에서 <b>실제로 만들어지는 파일</b>이 바뀝니다.
+  </p>
+  <div id="doc01Rows"></div>
+  <h3>만들어지는 파일 미리보기</h3>
+  <div class="tree" id="doc01Tree" aria-live="polite"></div>
+  <div class="coach warn"><span class="who">⚠️</span><div>
+    <b>ⓑ 보안은 일부러 빼는 경우가 아니면 그대로 두세요</b>
+    끄면 Claude가 실수로 <code class="i">.env</code>(비밀번호 파일)를 읽고 그 내용이 대화에 남을 수 있습니다.
+    ⓕ가 파일을 안 만드는 것도 이유가 있습니다 — 설정 파일에 effort를 박으면
+    <b>내가 <code class="i">/effort</code>로 고른 값을 경고 없이 덮어쓰기 때문</b>입니다.
+  </div></div>
+</section>
+
+<!-- ═══ CH7 02·03·04 ═══ -->
+<section class="chapter" data-ch="7" aria-labelledby="t7" hidden>
+  <p class="eyebrow">챕터 7 · 문서 속 항목 ②</p>
+  <h2 id="t7">개발 프로젝트용 — 02 분담 · 03 확장 · 04 검증</h2>
+  <p class="lead">코드를 다루는 프로젝트에서만 의미가 있는 세 문서입니다. 하나씩 펼쳐 보세요.</p>
+
+  <details class="acc">
+    <summary><span class="id">02</span>모델 분담 — 비싼 모델과 싼 모델을 나눠 쓰기 <span class="badge b-off">개발 전용</span></summary>
+    <div class="acc-b">
+      <p>어려운 분석·설계는 상위 모델, 잘 정의된 반복 작업은 하위 모델에 맡기는 <b>서브에이전트 로스터</b>를 깝니다.
+      아끼려고 어려운 일을 싼 모델에 밀면 "거의 맞는데 틀린" 결과가 나와 재작업이 더 비쌉니다 —
+      그래서 <b>난이도 분류만큼은 상위 모델</b>이 합니다.</p>
+      <div class="tbl"><table>
+        <tr><th style="width:120px">에이전트</th><th>하는 일</th><th style="width:80px">기본 모델</th></tr>
+        <tr><td><b>surveyor</b></td><td>구조를 넓고 기계적으로 훑어 목록으로 남김 (판단 안 함)</td><td>sonnet</td></tr>
+        <tr><td><b>triage</b></td><td>훑은 결과에 난이도를 매김 — <b>가장 중요한 자리</b></td><td><b>opus</b></td></tr>
+        <tr><td><b>analyst</b></td><td>어려운 부분을 분석해 구현 명세를 씀</td><td>난이도별</td></tr>
+        <tr><td><b>spec-writer</b></td><td>새 기능의 요구를 확정해 명세를 씀 — 새로 만드는 일의 1단계</td><td><b>opus</b></td></tr>
+        <tr><td><b>implementer</b></td><td>명세대로 구현 (범위 밖은 안 건드림)</td><td>sonnet</td></tr>
+        <tr><td><b>parity-tester</b></td><td>테스트를 돌려 통과/차이만 보고</td><td>haiku</td></tr>
+      </table></div>
+      <p>에이전트는 통째가 아니라 <b>하나씩</b> 고릅니다. 기존 코드를 고치는 일이면 spec-writer를 뺀 5종,
+      새로 만드는 일이면 surveyor·triage 없이 <b>spec-writer부터</b> 시작합니다. 리뷰어는 따로 안 만듭니다 —
+      내장 <code class="i">/code-review</code>가 이미 있기 때문입니다.</p>
+      <p>여기에 <b>선택 항목이 하나 더</b> 있습니다(기본 해제) — <b>계획을 세울 때만</b> 다른 모델로 돌리는
+      <code class="i">/plan-&lt;모델&gt;</code> 명령. 계획이 끝나면 원래 모델로 저절로 돌아옵니다.</p>
+      <div class="coach warn" style="margin-top:8px"><span class="who">⚠️</span><div>
+        <b>코드가 없는 저장소면 설치하지 않습니다</b> 문서만 있는 곳에 로스터를 깔면 쓰지 않는 파일만 늘어납니다. Claude가 감지하고 알려줍니다.
+      </div></div>
+    </div>
+  </details>
+
+  <details class="acc">
+    <summary><span class="id">03</span>확장 기능 — 상태 표시줄·디자인 스킬·MCP·브라우저 <span class="badge b-off">선택 5종</span></summary>
+    <div class="acc-b">
+      <ul>
+        <li><b>claude-hud</b> — 입력창 아래 <b>상태 표시줄</b>. 컨텍스트·요금제 사용량이 보입니다. 절약 프로필이면 사실상 필수.</li>
+        <li><b>svg-design</b> — SVG 시각효과(손그림·Gooey·유리·네온)를 제대로 구현하게 하는 규칙집. 웹 화면 프로젝트용.</li>
+        <li><b>frontend-design</b> — Anthropic 공식 스킬. "AI가 만든 티가 나는 UI"를 피하게 합니다.</li>
+        <li><b>MCP 서버</b> — 외부 도구 연결(GitHub·문서 검색·브라우저 조작). 어떤 서버를 붙일지는 따로 물어봅니다.</li>
+        <li><b>브라우저 검증</b> — 만든 화면을 <b>Claude가 직접 열어 확인하고 고치게</b> 합니다.</li>
+      </ul>
+      <p>스킬을 고르면 두 가지를 더 물어봅니다 — <b>스코프</b>(내 PC 전체 vs 이 프로젝트만)와
+      <b>호출 방식</b>(Claude가 알아서 vs 내가 <code class="i">/명령</code>을 칠 때만).</p>
+      <div class="coach warn" style="margin-top:8px"><span class="who">🔴</span><div>
+        <b>회사라면</b> MCP는 대화 내용을 외부로 보낼 수 있고, 브라우저 연결은 로그인된 세션에 접근할 수 있습니다.
+        조직이 허용한 서버만 연결하고, 확장의 사이트 권한은 localhost로 최소화하세요.
+      </div></div>
+    </div>
+  </details>
+
+  <details class="acc">
+    <summary><span class="id">04</span>검증 자동화 — "됐다"는 말 대신 기계 검사 <span class="badge b-on">훅 게이트가 핵심</span></summary>
+    <div class="acc-b">
+      <ul>
+        <li><b>훅 품질 게이트</b> — Claude가 <b>파일을 고칠 때마다</b> 린터·문법 검사가 자동으로 돌고, 실패 출력이 Claude에게 돌아가 스스로 고칩니다. <b>절약 프로필이어도 빼지 않습니다</b> — 재작업이 줄어드는 게 가장 큰 절약이라서.</li>
+        <li><b>호스트 CLI</b>(<code class="i">gh</code>/<code class="i">glab</code>) — Claude가 PR을 만들고 CI 실패 로그를 직접 읽게 합니다. 로그인은 <b>본인이 직접</b> 합니다.</li>
+        <li><b>CI 통합</b> — PR에 <code class="i">@claude</code>를 멘션하면 리뷰·수정. <span class="badge b-gate">🔴 회사면 조직 승인 필요</span> — CI에서 코드가 Anthropic API로 전송됩니다.</li>
+      </ul>
+      <p>훅에 <b>느린 테스트는 넣지 않습니다</b> — 매번 몇 분씩 걸리면 세션이 답답해집니다. 그건 CI 몫입니다.</p>
+    </div>
+  </details>
+</section>
+
+<!-- ═══ CH8 05·06 ═══ -->
+<section class="chapter" data-ch="8" aria-labelledby="t8" hidden>
+  <p class="eyebrow">챕터 8 · 문서 속 항목 ③</p>
+  <h2 id="t8">05 출력 스타일 · 06 루틴</h2>
+
+  <details class="acc">
+    <summary><span class="id">05</span>출력 스타일 — Claude의 말투·역할 바꾸기 <span class="badge b-off">선택</span></summary>
+    <div class="acc-b">
+      <p>내장 5종(Default·Proactive·Explanatory·Learning·Concise) 중 고르거나, 원하는 역할·톤을 마크다운 파일 하나로 직접 만듭니다.
+      배우는 중이라면 <b>Explanatory</b>(왜 그렇게 했는지 설명하며 진행)가 유용합니다.</p>
+      <div class="coach warn" style="margin:8px 0"><span class="who">🔴</span><div>
+        <b>커스텀 스타일의 함정 — <code class="i">keep-coding-instructions</code></b>
+        기본값이 false인데, false면 Claude Code의 <b>내장 코딩 지침이 통째로 사라집니다</b>(검증 습관·최소 변경 원칙 포함).
+        코딩을 같이 할 거면 반드시 true로 두세요.
+      </div></div>
+      <p>또 하나 — 스타일을 바꿔도 <b>지금 세션에는 적용되지 않습니다</b>. 시스템 프롬프트는 세션 시작 때 한 번만 읽히니, 바꾼 뒤 새 세션을 여세요.</p>
+    </div>
+  </details>
+
+  <details class="acc">
+    <summary><span class="id">06</span>루틴 — PC를 꺼도 도는 클라우드 예약 작업 <span class="badge b-gate">게이트 3문</span></summary>
+    <div class="acc-b">
+      <p>Anthropic 클라우드에서 무인으로 도는 예약 작업입니다. 야간 PR 리뷰, 주간 문서 점검 같은 것.
+      설치 전에 <b>반드시 세 가지</b>를 묻습니다 — 코드로 확인할 수 없기 때문입니다.</p>
+      <ul>
+        <li>① 요금제가 <b>Pro 이상</b>인가 (+ claude.ai 계정에 GitHub 연결이 돼 있는가)</li>
+        <li>② 회사 저장소라면 — 조직이 <b>클라우드 실행(코드 반출)</b>을 허용하는가</li>
+        <li>③ GitHub 저장소인가 (현재 GitHub 전용)</li>
+      </ul>
+      <div class="coach tip" style="margin-top:8px"><span class="who">💡</span><div>
+        <b>내 PC의 파일이 필요하면 루틴이 아닙니다</b> 루틴은 클라우드에서 돌아서 내 파일이 없습니다.
+        "컴퓨터가 꺼져 있어도 돌아야 하는 것"에만 쓰세요.
+      </div></div>
+    </div>
+  </details>
+</section>
+
+<!-- ═══ CH9 종합 연습 ═══ -->
+<section class="chapter" data-ch="9" aria-labelledby="t9" hidden>
+  <p class="eyebrow">챕터 9 · 종합 연습</p>
+  <h2 t9 id="t9">내 상황으로 조합해 보기</h2>
+  <p class="lead">
+    지금까지 배운 세 가지 선택(모드·번들·프로필)을 한 번에 조합합니다.
+    상황 버튼을 누르면 추천 조합이 자동으로 들어가고, 아래에서 직접 바꿀 수도 있습니다.
+  </p>
+  <div class="presets" id="presets" role="group" aria-label="상황 프리셋"></div>
+  <div class="sim">
+    <div class="q">
+      <p class="qt"><b>Q.</b> 직접 조합하기</p>
+      <p class="qt" style="margin-bottom:6px">기반 모드</p>
+      <div class="opts row" id="fMode"></div>
+      <div class="subq" id="fSituBox" hidden>
+        <p class="qt" style="margin-bottom:6px">상황 (권장 모드일 때)</p>
+        <div class="opts row" id="fSitu"></div>
+      </div>
+      <p class="qt" style="margin:12px 0 6px">목적 번들 (복수)</p>
+      <div class="opts row" id="fBundle"></div>
+      <p class="qt" style="margin:12px 0 6px">운용 프로필</p>
+      <div class="opts row" id="fProf"></div>
+    </div>
+    <div class="plan" aria-live="polite">
+      <p class="pt">📋 최종 설치 계획서</p>
+      <div id="finalPlan"></div>
+      <div class="stamp" id="finalStamp"></div>
+      <p class="why">마지막 줄은 설치가 끝나면 <code class="i">CLAUDE.md</code> 맨 아래에 실제로 남는 기록입니다.
+      버전 숫자(<span style="font-family:var(--mono)">v○.○</span>)는 설치 시점의 문서에서 읽어 적습니다.
+      다음에 다시 설치를 돌리면 Claude가 이 줄을 먼저 읽고 "그 사이 무엇이 바뀌었는지"부터 보여줍니다.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ CH10 수료 ═══ -->
+<section class="chapter" data-ch="10" aria-labelledby="t10" hidden>
+  <p class="eyebrow">챕터 10 · 마무리</p>
+  <div class="cert">
+    <div class="big" id="certEmoji">🎓</div>
+    <h2 id="t10">코스 끝!</h2>
+    <p class="lead" id="certMsg"></p>
+  </div>
+  <h3>기억할 것 세 가지</h3>
+  <ul>
+    <li>잘 모르겠으면 <b>권장 모드</b> — Claude가 조합의 이유를 보여주고 확인받습니다.</li>
+    <li>어떤 선택을 해도 <b>승인 없이 덮어쓰지 않고</b>, 시크릿은 읽지도 커밋하지도 않습니다.</li>
+    <li>체크를 안 해도 <b>나중에 다시 돌려 추가</b>할 수 있습니다 — 설치 기록이 남아 있어서 이어서 갑니다.</li>
+  </ul>
+  <h3>다음으로</h3>
+  <ul>
+    <li>항목이 헷갈릴 때 찾아보기 — <a href="options.html">설치 옵션 사전</a></li>
+    <li>설치가 실제로 어떻게 흘러가는지 보기 — <a href="demo.html">설치 시연</a> · <a href="intro.html">1분 소개 영상</a></li>
+    <li>문서 받으러 가기 — <a href="../index.html">사용법 페이지</a> · <a href="https://github.com/EleninJayTech/claude">GitHub 저장소 ↗</a></li>
+  </ul>
+  <p style="margin-top:22px"><button class="btn ghost" id="resetBtn">진행도 초기화</button></p>
+</section>
+
+<div class="chnav">
+  <button class="btn ghost" id="prevBtn">← 이전</button>
+  <button class="btn next" id="nextBtn">완료하고 다음으로 →</button>
+</div>
+
+</main>
+</div>
+
+<footer>
+  설치 옵션 학습 코스 · 2026-08-24<br>
+  각 항목의 정본은 해당 하위 문서(01~06)입니다. 이 페이지는 사람이 배우기 위한 안내이며, 설치 절차 자체를 바꾸지 않습니다. 진행도는 이 브라우저의 localStorage에만 저장됩니다.<br>
+  저장소: github.com/EleninJayTech/claude ·
+  <a href="../index.html">사용법</a> · <a href="intro.html">소개 영상</a> · <a href="demo.html">설치 시연</a> · <a href="options.html">옵션 사전</a>
+</footer>
+
+<script>
+'use strict';
+/* ───────── 데이터 ───────── */
+var CHAPTERS = ['시작하기','낱말 8개','설치의 흐름','기반 모드','목적 번들','프로필','01 기본 셋업','02·03·04','05·06','종합 연습','수료'];
+
+var TERMS = [
+  ['드롭인 문서','폴더에 던져넣고(drop in) 한 문장 말하면 Claude가 읽고 따라 하는 설명서. 프로그램이 아니라 글이라서, 설치라고 해도 결국 설정 파일 몇 개를 만드는 일입니다.'],
+  ['스코프','설정이 어디까지 적용되는지. 글로벌 = 내 PC의 모든 프로젝트(~/.claude/), 프로젝트 = 이 폴더 하나(.claude/, 커밋하면 팀도 같이 씀). "나만 쓸지 팀도 쓸지"의 문제입니다.'],
+  ['settings.json','Claude Code의 설정 파일. 주로 권한을 적습니다 — allow(묻지 않고 실행) · ask(실행 전 물어봄) · deny(아예 금지). deny에 .env를 넣으면 비밀번호 파일 읽기가 차단됩니다.'],
+  ['훅(hook)','"이런 일이 생기면 이 명령을 자동 실행하라"는 규칙. 주로 파일을 고친 직후 린트·문법 검사를 돌리고, 에러가 나면 그 출력이 Claude에게 돌아가 스스로 고칩니다.'],
+  ['스킬 / 슬래시 명령','SKILL.md 파일 하나가 곧 /이름 명령이 됩니다. skills/resume/SKILL.md를 만들면 /resume를 칠 수 있습니다. 내용은 "이럴 땐 이렇게 해라"라는 지시문입니다.'],
+  ['서브에이전트','메인 대화와 별도 작업창에서 도는 보조 Claude. 에이전트마다 다른 모델을 지정할 수 있어서, 어려운 분석은 비싼 모델·반복 작업은 싼 모델에 맡깁니다.'],
+  ['MCP','Claude에 바깥 도구를 꽂는 규격. GitHub·브라우저·문서 검색을 연결해 Claude가 직접 쓰게 합니다. USB 포트라고 생각하면 됩니다.'],
+  ['effort(추론 강도)','"얼마나 깊이 생각할지" 조절하는 값(low~max). 높이면 어려운 판단이 좋아지는 대신 토큰과 대기 시간이 늘어납니다. 모델 선택과는 별개의 축입니다.']
+];
+
+var STEPS = [
+  ['STEP 1','문서 확보','설치에 필요한 문서(01~06)가 같은 폴더에 없으면 GitHub에서 가져옵니다. 질문 없음.'],
+  ['STEP 2','환경 감지','이전 적용 기록(dropin-applied), 기존 설정 파일, 프로젝트 유형을 조사합니다. 질문 없음.'],
+  ['STEP 3','큰 선택','기반 모드·목적 번들·운용 프로필을 물어봅니다 — 이 코스의 챕터 3~5가 여기입니다.'],
+  ['STEP 4','설치 실행','고른 문서의 절차대로 설치합니다. \'사용자\' 모드일 때만 문서 안 세부 항목(챕터 6~8)까지 물어봅니다.'],
+  ['STEP 5','검증·기록','실행 결과를 증거와 함께 보고하고, CLAUDE.md 맨 아래에 적용 기록 한 줄을 남깁니다.']
+];
+
+var MODES = {
+  minimal:{name:'최소', desc:'01만 — 기록 체계와 보안, 그것도 필수 항목만'},
+  rec:{name:'권장', desc:'감지된 상황에 따라 Claude가 자동 조합 (기본 추천)'},
+  full:{name:'전체', desc:'01~06 전부 — 해당 없는 것은 빼고 알려줌'},
+  custom:{name:'사용자', desc:'문서를 고르고, 그 안의 항목도 직접 고름'}
+};
+var SITUS = {
+  newpc:{name:'새 PC', docs:{'01':'글로벌 규칙·보안·/resume·/wrap','03':'claude-hud 상태 표시줄'}, why:'PC 첫 세팅이니 글로벌 기반 + 사용량이 보이는 상태 표시줄부터.'},
+  dev:{name:'개발 프로젝트', docs:{'01':'기록 체계·보안','02':'모델 분담 로스터','04':'훅 게이트·CLI·CI'}, why:'코드가 있으니 분담과 자동 검증까지.'},
+  docsrepo:{name:'문서 저장소', docs:{'01':'기록 체계·보안'}, why:'빌드·코드가 없어 02·04는 쓸 곳이 없습니다.'},
+  applied:{name:'이미 01이 있음', docs:{'01':'이미 있음 — 재적용 점검(어긋난 곳만 손봄)'}, why:'아직 없는 문서 중 상황에 맞는 것만 제안합니다.'}
+};
+var BUNDLES = {
+  design:{name:'디자인', desc:'웹 화면 프로젝트용', docs:{'03':'svg-design · frontend-design · 브라우저 검증'}},
+  verify:{name:'검증 강화', desc:'테스트·CI가 있을 때', docs:{'04':'훅 게이트 + gh/glab CLI + CI 통합'}},
+  auto:{name:'무인 자동화', desc:'직접 요청할 때만', docs:{'06':'클라우드 루틴 (+04 CI 병행 권장)'}},
+  style:{name:'응답 스타일', desc:'직접 요청할 때만', docs:{'05':'출력 스타일'}},
+  company:{name:'회사', desc:'안전장치 수정자', docs:{}}
+};
+var DOCNAMES = {'01':'01 기본 셋업','02':'02 모델 분담','03':'03 확장 기능','04':'04 검증 자동화','05':'05 출력 스타일','06':'06 루틴'};
+
+var DOC01 = [
+  ['a','ⓐ 글로벌 행동 규칙','"추측 말고 물어봐라" 같은 작업 습관을 PC 전체에 적용', true,
+    ['~/.claude/CLAUDE.md']],
+  ['b','ⓑ 글로벌 보안','.env·인증서 읽기 차단 + 셸 우회도 차단 (해제 비권장)', true,
+    ['~/.claude/settings.json  <span class="c"># deny + hooks</span>']],
+  ['c','ⓒ /resume · /wrap · 점검 스킬','세션 시작·마감 명령 + 구성 점검 명령 — 실질적 핵심', true,
+    ['~/.claude/skills/resume/SKILL.md','~/.claude/skills/wrap/SKILL.md','~/.claude/skills/dropin-check/','~/.claude/skills/dropin-update/']],
+  ['d','ⓓ 프로젝트 기록 체계','기록 3종 + 동시 편집 충돌 방지', true,
+    ['docs/PROJECT_PLAN.md  <span class="c"># 로드맵</span>','docs/PROGRESS.md      <span class="c"># 세션 로그</span>','docs/DECISIONS.md     <span class="c"># 결정 로그</span>','.gitattributes        <span class="c"># merge=union</span>']],
+  ['e','ⓔ 프로젝트 권한','무엇을 묻지 않고 실행해도 되는지', true,
+    ['.claude/settings.json  <span class="c"># allow / ask / deny</span>']],
+  ['f','ⓕ effort 가이드','언제 올리고 내릴지 안내만 — 파일 없음', true, []]
+];
+
+var PRESETS = [
+  ['Claude Code를 처음 깐 새 PC', {mode:'rec',situ:'newpc',bundles:[],prof:'std'}],
+  ['혼자 하는 개발 프로젝트', {mode:'rec',situ:'dev',bundles:['verify'],prof:'std'}],
+  ['웹 화면을 만드는 프로젝트', {mode:'rec',situ:'dev',bundles:['design','verify'],prof:'std'}],
+  ['Pro 요금제라 한도가 걱정', {mode:'rec',situ:'dev',bundles:[],prof:'save'}],
+  ['문서만 있는 저장소', {mode:'minimal',situ:null,bundles:[],prof:'std'}],
+  ['회사 저장소', {mode:'rec',situ:'dev',bundles:['company'],prof:'std'}]
+];
+
+/* ───────── 진행도 ───────── */
+var KEY='dropin-learn-v1';
+var state;
+try{ state=JSON.parse(localStorage.getItem(KEY)||'{}'); }catch(e){ state={}; }
+if(!Array.isArray(state.done)) state.done=[];
+if(typeof state.last!=='number') state.last=0;
+function save(){ try{ localStorage.setItem(KEY,JSON.stringify(state)); }catch(e){} }
+
+var cur=0;
+var $=function(id){ return document.getElementById(id); };
+var chapEls=Array.prototype.slice.call(document.querySelectorAll('.chapter'));
+
+function renderNav(){
+  var ul=$('chaps'); ul.innerHTML='';
+  CHAPTERS.forEach(function(t,i){
+    var li=document.createElement('li');
+    var b=document.createElement('button');
+    b.innerHTML='<span class="no">'+i+'</span><span>'+t+'</span><span class="st">✓</span>';
+    b.setAttribute('aria-current', i===cur?'true':'false');
+    if(state.done.indexOf(i)>=0) b.classList.add('done');
+    b.addEventListener('click',function(){ goto(i); });
+    li.appendChild(b); ul.appendChild(li);
+  });
+  var n=Math.min(state.done.length,10);
+  $('pfill').style.width=(n/10*100)+'%';
+  $('pnum').textContent=n+' / 10 완료';
+  document.querySelector('.pbar').setAttribute('aria-valuenow',n);
+}
+
+function goto(i){
+  cur=Math.max(0,Math.min(10,i));
+  chapEls.forEach(function(el){ el.hidden = +el.getAttribute('data-ch')!==cur; });
+  $('prevBtn').disabled = cur===0;
+  if(cur===10){
+    $('nextBtn').textContent='처음으로';
+    var all = state.done.length>=10;
+    $('certEmoji').textContent = all ? '🏅' : '🎓';
+    $('certMsg').textContent = all
+      ? '챕터 10개를 전부 완료했습니다. 이제 설치 질문이 나와도 무엇을 고르는지 알고 답할 수 있습니다.'
+      : '아직 안 본 챕터가 '+(10-state.done.length)+'개 있습니다. 왼쪽 목차에서 ✓ 없는 챕터를 눌러 마저 보세요.';
+  }else{
+    $('nextBtn').textContent='완료하고 다음으로 →';
+  }
+  state.last=cur; save(); renderNav();
+  window.scrollTo({top:0});
+}
+
+$('prevBtn').addEventListener('click',function(){ goto(cur-1); });
+$('nextBtn').addEventListener('click',function(){
+  if(cur===10){ goto(0); return; }
+  if(state.done.indexOf(cur)<0) state.done.push(cur);
+  save(); goto(cur+1);
+});
+$('resetBtn').addEventListener('click',function(){
+  state={done:[],last:0}; save(); flipped={}; renderCards(); goto(0);
+});
+
+/* ───────── CH1 낱말 카드 ───────── */
+var flipped={};
+function renderCards(){
+  var box=$('cards'); box.innerHTML='';
+  TERMS.forEach(function(t,i){
+    var d=document.createElement('div'); d.className='fcard'+(flipped[i]?' flip':'');
+    var b=document.createElement('button');
+    b.setAttribute('aria-label',t[0]+' — 눌러서 뜻 보기');
+    b.innerHTML='<span class="face front"><span class="w">'+t[0]+'</span><span class="hint">눌러서 뜻 보기 →</span></span>'
+      +'<span class="face back"><span class="w">'+t[0]+'</span>'+t[1]+'</span>';
+    b.addEventListener('click',function(){
+      flipped[i]=!flipped[i]; d.classList.toggle('flip');
+      var n=Object.keys(flipped).filter(function(k){return flipped[k];}).length;
+      var seen=Object.keys(flipped).length;
+      $('flipcount').textContent='확인한 카드: '+seen+' / 8'+(seen>=8?' — 전부 확인했습니다!':'');
+    });
+    d.appendChild(b); box.appendChild(d);
+  });
+}
+renderCards();
+
+/* ───────── CH2 스테퍼 ───────── */
+(function(){
+  var ol=$('steps');
+  STEPS.forEach(function(s){
+    var li=document.createElement('li');
+    var b=document.createElement('button');
+    b.innerHTML='<span class="sn">'+s[0]+'</span><span class="st-t">'+s[1]+'</span><span class="arrow">▸</span>';
+    var d=document.createElement('div'); d.className='st-d'; d.textContent=s[2];
+    b.addEventListener('click',function(){ li.classList.toggle('open'); });
+    li.appendChild(b); li.appendChild(d); ol.appendChild(li);
+  });
+})();
+
+/* ───────── 공용: 옵션 버튼 렌더 ───────── */
+function renderOpts(el, items, sel, onPick, multi){
+  el.innerHTML='';
+  items.forEach(function(it){
+    var b=document.createElement('button');
+    b.innerHTML='<span class="on">'+it.name+'</span>'+(it.desc?'<span class="od">'+it.desc+'</span>':'');
+    var on = multi ? sel.indexOf(it.key)>=0 : sel===it.key;
+    b.setAttribute('aria-pressed', on?'true':'false');
+    b.addEventListener('click',function(){ onPick(it.key); });
+    el.appendChild(b);
+  });
+}
+function keysOf(o){ return Object.keys(o).map(function(k){ var v=o[k]; return {key:k,name:v.name,desc:v.desc}; }); }
+
+/* ───────── 모드/번들 → 계획 계산 ───────── */
+function basePlan(mode, situ){
+  if(mode==='minimal') return {docs:{'01':'기록 체계·보안 (필수 항목만)'}, why:'가장 가볍게 시작합니다. 나머지는 나중에 언제든 추가할 수 있습니다.'};
+  if(mode==='full') return {docs:{'01':'기록 체계·보안','02':'모델 분담 (코드 있을 때)','03':'확장 기능','04':'검증 자동화 (코드 있을 때)','05':'출력 스타일','06':'루틴 (게이트 통과 시)'}, why:'전부 깔되, 해당 없는 것(코드 없는 저장소의 02 등)은 빼고 알려줍니다.'};
+  if(mode==='custom') return {docs:null, why:'문서를 고르고 → 그 안의 항목(챕터 6~8 내용)까지 전부 질문으로 나옵니다.'};
+  if(mode==='rec'){
+    var s=SITUS[situ||'dev'];
+    return {docs:s.docs, why:'권장 · '+s.name+' → '+s.why};
+  }
+  return {docs:{}, why:''};
+}
+function planHTML(docs, why){
+  var h='';
+  if(docs===null){ h='<p class="empty">직접 고르는 모드라 정해진 목록이 없습니다.</p>'; }
+  else{
+    h='<ul>';
+    Object.keys(docs).sort().forEach(function(k){ h+='<li><b>'+DOCNAMES[k]+'</b> — '+docs[k]+'</li>'; });
+    h+='</ul>';
+  }
+  if(why) h+='<p class="why">'+why+'</p>';
+  return h;
+}
+
+/* ───────── CH3 모드 시뮬레이터 ───────── */
+var mSel=null, mSitu='dev';
+function drawMode(){
+  renderOpts($('modeOpts'), keysOf(MODES), mSel, function(k){ mSel=k; drawMode(); }, false);
+  $('situBox').hidden = mSel!=='rec';
+  if(mSel==='rec') renderOpts($('situOpts'), keysOf(SITUS).map(function(x){return {key:x.key,name:x.name};}), mSitu, function(k){ mSitu=k; drawMode(); }, false);
+  if(mSel){
+    var p=basePlan(mSel, mSitu);
+    $('modePlan').innerHTML=planHTML(p.docs,p.why);
+  }
+}
+drawMode();
+
+/* ───────── CH4 번들 시뮬레이터 ───────── */
+var bSel=[];
+function drawBundle(){
+  renderOpts($('bundleOpts'), keysOf(BUNDLES), bSel, function(k){
+    var i=bSel.indexOf(k); if(i>=0) bSel.splice(i,1); else bSel.push(k); drawBundle();
+  }, true);
+  var box=$('bundlePlan');
+  if(!bSel.length){ box.innerHTML='<p class="empty">아무것도 안 골라도 됩니다 — 그게 기본값입니다.</p>'; return; }
+  var h='<ul>';
+  bSel.forEach(function(k){
+    var b=BUNDLES[k];
+    if(k==='company'){ h+='<li><b>회사 수정자</b> — 새 설치물 없음. CI·MCP·루틴에서 조직 승인 확인을 강제</li>'; return; }
+    Object.keys(b.docs).forEach(function(dk){ h+='<li><b>'+DOCNAMES[dk]+'</b> — '+b.docs[dk]+'</li>'; });
+  });
+  h+='</ul><p class="why">기반 모드가 이미 고른 문서와 겹치면 한 번만 설치됩니다(합집합).</p>';
+  box.innerHTML=h;
+}
+drawBundle();
+
+/* ───────── CH5 프로필 · 유지/재구성/교체 ───────── */
+var PROFS={std:{name:'표준',desc:'품질 우선 (기본)'},save:{name:'절약',desc:'Pro 요금제 · 한도 관리'}};
+var pSel=null;
+function drawProf(){
+  renderOpts($('profOpts'), keysOf(PROFS), pSel, function(k){ pSel=k; drawProf(); }, false);
+  var box=$('profPlan');
+  if(!pSel){ box.innerHTML='<p class="empty">왼쪽에서 프로필을 골라 보세요.</p>'; return; }
+  box.innerHTML = pSel==='std'
+    ? '<ul><li>effort 기본값 유지, 어려운 작업엔 상위 모델</li><li>대부분의 경우 이걸 고르면 됩니다</li></ul>'
+    : '<ul><li>세션을 <b>/effort medium</b>으로 시작</li><li>서브에이전트를 Sonnet 중심으로 배정, 로스터 축소</li><li>claude-hud 기본 체크 — 사용량이 보여야 아낄 수 있으니까</li></ul>'
+      +'<p class="why">안 깎는 것: 난이도 분류 · 최종 리뷰 · 검증 게이트. 여기서 아끼면 재작업이 더 비쌉니다.</p>';
+}
+drawProf();
+
+var KEEPS=[
+  {key:'keep',name:'유지',fb:'건드리지 않고 건너뜁니다. 잘 쓰고 있는 설정이라면 이것.'},
+  {key:'re',name:'재구성',fb:'어긋난 부분만 맞춥니다. 기존 걸 살리면서 새 버전 내용을 반영하고 싶을 때.'},
+  {key:'rep',name:'교체',fb:'기존 걸 지우고 새로 만듭니다. 예전에 대충 만들어 둔 걸 정리할 때. 지우기 전에 반드시 확인을 받습니다.'}
+];
+var kSel=null;
+function drawKeep(){
+  renderOpts($('keepOpts'), KEEPS, kSel, function(k){ kSel=k; drawKeep(); }, false);
+  var f=$('keepFb');
+  var it=KEEPS.filter(function(x){return x.key===kSel;})[0];
+  if(it){ f.textContent=it.fb; f.classList.add('show'); }
+}
+drawKeep();
+
+/* ───────── CH6 01 항목 토글 ───────── */
+var d01={};
+(function(){
+  var box=$('doc01Rows');
+  DOC01.forEach(function(r){
+    d01[r[0]]=r[3];
+    var row=document.createElement('div'); row.className='tglrow';
+    var cb=document.createElement('input'); cb.type='checkbox'; cb.checked=r[3]; cb.id='d01-'+r[0];
+    var lb=document.createElement('label'); lb.htmlFor=cb.id;
+    lb.innerHTML='<span class="tn"><span class="id">'+r[1].slice(0,1)+'</span>'+r[1].slice(2)+'</span><span class="td"> — '+r[2]+'</span>';
+    cb.addEventListener('change',function(){ d01[r[0]]=cb.checked; drawTree(); });
+    row.appendChild(cb); row.appendChild(lb); box.appendChild(row);
+  });
+  drawTree();
+})();
+function drawTree(){
+  var lines=[];
+  DOC01.forEach(function(r){
+    if(!d01[r[0]]) return;
+    if(!r[4].length){ lines.push('<span class="c">('+r[1].slice(0,1)+' — 만드는 파일 없음, 안내만)</span>'); return; }
+    r[4].forEach(function(f){ lines.push('<span class="y">+</span> '+f); });
+  });
+  $('doc01Tree').innerHTML = lines.length ? lines.join('\n') : '<span class="c">(모두 껐습니다 — 아무 파일도 만들지 않습니다)</span>';
+}
+
+/* ───────── CH9 종합 시뮬레이터 ───────── */
+var F={mode:'rec',situ:'dev',bundles:[],prof:'std',preset:-1};
+function drawFinal(){
+  var pr=$('presets'); pr.innerHTML='';
+  PRESETS.forEach(function(p,i){
+    var b=document.createElement('button');
+    b.textContent=p[0];
+    b.setAttribute('aria-pressed', F.preset===i?'true':'false');
+    b.addEventListener('click',function(){
+      F.preset=i; F.mode=p[1].mode; F.situ=p[1].situ||'dev'; F.bundles=p[1].bundles.slice(); F.prof=p[1].prof;
+      drawFinal();
+    });
+    pr.appendChild(b);
+  });
+  renderOpts($('fMode'), keysOf(MODES).map(function(x){return {key:x.key,name:x.name};}), F.mode, function(k){ F.mode=k; F.preset=-1; drawFinal(); }, false);
+  $('fSituBox').hidden = F.mode!=='rec';
+  if(F.mode==='rec') renderOpts($('fSitu'), keysOf(SITUS).map(function(x){return {key:x.key,name:x.name};}), F.situ, function(k){ F.situ=k; F.preset=-1; drawFinal(); }, false);
+  renderOpts($('fBundle'), keysOf(BUNDLES).map(function(x){return {key:x.key,name:x.name};}), F.bundles, function(k){
+    var i=F.bundles.indexOf(k); if(i>=0) F.bundles.splice(i,1); else F.bundles.push(k); F.preset=-1; drawFinal();
+  }, true);
+  renderOpts($('fProf'), keysOf(PROFS).map(function(x){return {key:x.key,name:x.name};}), F.prof, function(k){ F.prof=k; F.preset=-1; drawFinal(); }, false);
+
+  var base=basePlan(F.mode,F.situ);
+  var isCustom = base.docs===null;
+  var docs = isCustom ? {} : JSON.parse(JSON.stringify(base.docs));
+  var notes=[];
+  F.bundles.forEach(function(k){
+    var b=BUNDLES[k];
+    if(k==='company'){ notes.push('회사 수정자: CI·MCP·루틴에 조직 승인 게이트'); return; }
+    Object.keys(b.docs).forEach(function(dk){
+      docs[dk] = docs[dk] ? docs[dk]+' + '+b.docs[dk] : b.docs[dk];
+    });
+  });
+  var h;
+  if(isCustom){
+    h='<p class="empty">직접 고르는 모드 — 문서와 세부 항목은 직접 고릅니다.'+(Object.keys(docs).length?' 아래는 선택한 번들이 합집합으로 얹는 몫입니다.':'')+'</p>';
+    if(Object.keys(docs).length) h+=planHTML(docs,'');
+    if(base.why) h+='<p class="why">'+base.why+'</p>';
+  } else {
+    h = planHTML(docs, base.why);
+  }
+  if(notes.length) h+='<p class="why">🏢 '+notes.join(' · ')+'</p>';
+  if(F.prof==='save') h+='<p class="why">💰 절약 프로필: effort medium 시작 · Sonnet 중심 — 단 검증 게이트는 그대로.</p>';
+  $('finalPlan').innerHTML=h;
+
+  var modeLabel=MODES[F.mode].name + F.bundles.filter(function(k){return k!=='company';}).map(function(k){return '+'+BUNDLES[k].name;}).join('')
+    + (F.bundles.indexOf('company')>=0?'+회사':'');
+  var chosen = Object.keys(docs).sort();
+  var un = ['01','02','03','04','05','06'].filter(function(k){ return chosen.indexOf(k)<0; });
+  var today = new Date().toISOString().slice(0,10);
+  var line='<!-- dropin-applied: '+today+' · 모드='+modeLabel+' · 프로필='+PROFS[F.prof].name+' · 언어=ko';
+  chosen.forEach(function(k){ line+=' · '+k+' v○.○'; });
+  if(un.length && !isCustom) line+=' · 미선택: '+un.join(', ');
+  line+=' · 출처=사본 -->';
+  $('finalStamp').textContent=line;
+}
+drawFinal();
+
+/* ───────── 시작 ───────── */
+renderNav();
+if(state.last>0 || state.done.length){
+  var rb=$('resumeBox');
+  rb.innerHTML='지난번에 챕터 '+state.last+'('+CHAPTERS[state.last]+')까지 봤습니다. <button class="btn next" style="margin-left:8px;padding:6px 14px;font-size:13.5px" id="resumeGo">이어서 학습하기 →</button>';
+  rb.classList.add('show');
+  document.getElementById('resumeGo').addEventListener('click',function(){ goto(state.last); });
+}
+goto(0);
+</script>
+
+</body>
+</html>

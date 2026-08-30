@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Claude Code Setup Documents — How to Use</title>
+<meta name="description" content="Drop-in documents that finish your Claude Code setup after one sentence. A how-to guide.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@700;900&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" rel="stylesheet">
+<style>
+:root{
+  --paper:#FCFCF8; --card:#FFFFFF; --ink:#20222E; --ink-soft:#5A5E70;
+  --marker:#FFD84D; --marker-soft:#FFF3C2;
+  --blue:#2B49C7; --blue-soft:#E8ECFB;
+  --line:#E5E4DB;
+  --serif:'Noto Serif KR','Nanum Myeongjo',serif;
+  --sans:'Pretendard Variable',Pretendard,'Malgun Gothic',sans-serif;
+  --mono:'IBM Plex Mono',Consolas,monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--sans);background:var(--paper);color:var(--ink);line-height:1.85;font-size:16.5px;word-break:normal;overflow-wrap:break-word}
+::selection{background:var(--marker)}
+a{color:var(--blue)}
+:focus-visible{outline:3px solid var(--blue);outline-offset:2px;border-radius:4px}
+
+/* ---------- 히어로 ---------- */
+.hero{max-width:1040px;margin:0 auto;padding:64px 24px 30px;display:grid;grid-template-columns:1.15fr .85fr;gap:36px;align-items:center}
+@media (max-width:820px){.hero{grid-template-columns:1fr;padding-top:44px}}
+.eyebrow{font-family:var(--mono);font-size:13px;letter-spacing:.14em;color:var(--ink-soft);margin-bottom:18px}
+.eyebrow b{color:var(--blue);font-weight:600}
+h1{font-family:var(--serif);font-weight:900;font-size:clamp(30px,4.6vw,46px);line-height:1.5;letter-spacing:-.02em;text-wrap:balance}
+.mark{background:linear-gradient(transparent 58%, var(--marker) 58%, var(--marker) 92%, transparent 92%);padding:0 2px}
+.hero p.sub{margin-top:20px;color:var(--ink-soft);font-size:16.5px;max-width:34em}
+.cta{margin-top:28px;display:flex;gap:12px;flex-wrap:wrap}
+.btn{display:inline-block;font-family:var(--mono);font-size:14px;text-decoration:none;border-radius:8px;padding:11px 20px;border:1.5px solid var(--ink);transition:transform .15s}
+.btn:hover{transform:translateY(-2px)}
+.btn.solid{background:var(--ink);color:var(--paper)}
+.btn.ghost{color:var(--ink)}
+.btn.dict{background:var(--blue-soft);border-color:var(--blue);color:var(--blue)}
+.btn.course{background:#E3F3EA;border-color:#1B7A4B;color:#1B7A4B}
+.btn.repo{background:var(--marker);color:var(--ink)}
+
+/* ---------- 대표 이미지 (svg-design 레시피 데모) ---------- */
+.demo{position:relative}
+.demo svg.stage{width:100%;height:auto;display:block}
+.demo .caption{margin-top:10px;font-size:13px;color:var(--ink-soft);line-height:1.6;border-left:3px solid var(--marker);padding-left:10px}
+.demo .caption code{font-family:var(--mono);font-size:.92em}
+.blob{transform-box:fill-box;transform-origin:center}
+@media (prefers-reduced-motion:no-preference){
+  .blob.b1{animation:drift1 7s ease-in-out infinite alternate}
+  .blob.b2{animation:drift2 8s ease-in-out infinite alternate}
+  .blob.b3{animation:drift3 6.5s ease-in-out infinite alternate}
+  .blob.b4{animation:drift4 9s ease-in-out infinite alternate}
+  .blob.b5{animation:drift5 7.5s ease-in-out infinite alternate}
+  .blob.b6{animation:drift6 8.5s ease-in-out infinite alternate}
+  .blob.b7{animation:drift7 7s ease-in-out infinite alternate}
+}
+@keyframes drift1{to{transform:translate(46px,14px)}}
+@keyframes drift2{to{transform:translate(-40px,-10px)}}
+@keyframes drift3{to{transform:translate(18px,-26px)}}
+@keyframes drift4{to{transform:translate(-22px,24px)}}
+@keyframes drift5{to{transform:translate(30px,-18px)}}
+@keyframes drift6{to{transform:translate(-26px,20px)}}
+@keyframes drift7{to{transform:translate(24px,16px)}}
+
+/* ---------- 본문 공통 ---------- */
+main{max-width:1040px;margin:0 auto;padding:26px 24px 80px}
+section{margin:0 0 26px;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:34px 36px 28px}
+@media (max-width:600px){section{padding:24px 18px}}
+.h-row{display:flex;align-items:center;gap:13px;margin-bottom:4px}
+.h-row svg{flex:0 0 30px}
+h2{font-family:var(--serif);font-size:23px;font-weight:700}
+.goal{font-size:13.5px;color:var(--ink-soft);font-family:var(--mono);margin:2px 0 18px 43px}
+@media (max-width:600px){.goal{margin-left:0}}
+h3{font-size:16.5px;font-weight:700;margin:22px 0 8px}
+p{margin:10px 0}
+ul{margin:10px 0 10px 22px}
+li{margin:6px 0}
+code.i{font-family:var(--mono);font-size:.88em;background:var(--blue-soft);color:var(--blue);padding:1px 6px;border-radius:5px}
+
+/* 말하는 문장 = 프롬프트 카드 */
+.say{font-family:var(--mono);font-size:14.5px;background:var(--ink);color:#F2F1E9;border-radius:10px;padding:16px 18px;margin:14px 0;line-height:2;overflow-x:auto}
+.say b{color:var(--marker);font-weight:600}
+.say .dim{color:#9EA3B5}
+
+/* 문서 목록 = 체크리스트 */
+.doclist{list-style:none;margin:14px 0 4px}
+.doclist li{display:grid;grid-template-columns:34px 84px 1fr;gap:12px;padding:16px 4px;border-top:1px dashed var(--line);margin:0;align-items:start}
+.doclist li:first-child{border-top:0}
+@media (max-width:600px){.doclist li{grid-template-columns:30px 1fr}.doclist .no{grid-column:2}.doclist .desc{grid-column:1/-1}}
+.doclist .no{font-family:var(--mono);font-weight:600;font-size:15px;color:var(--blue)}
+.doclist .desc b{font-size:15.5px}
+.doclist .desc p{font-size:14px;color:var(--ink-soft);margin:4px 0}
+.doclist .desc a{font-family:var(--mono);font-size:13px}
+
+table{width:100%;border-collapse:collapse;margin:14px 0;font-size:14px}
+th,td{border:1px solid var(--line);padding:10px 12px;text-align:left;vertical-align:top}
+th{background:var(--marker-soft);font-family:var(--mono);font-size:13px}
+.tbl{overflow-x:auto}
+.note{border-radius:10px;padding:13px 16px;margin:16px 0 4px;font-size:14.5px;background:var(--marker-soft);border:1px solid #EFDD9A}
+.note b{display:block}
+
+/* 후원 */
+.support{text-align:center}
+.support img{height:48px;max-width:100%}
+footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);font-size:13px;font-family:var(--mono);line-height:1.7}
+</style>
+</head>
+<body>
+<div style="max-width:1040px;margin:0 auto;padding:16px 24px 0;font-family:var(--mono);font-size:13px;text-align:right;color:var(--ink-soft)"><b>English</b> &middot; <a href="index.ko.html" onclick="try{localStorage.setItem('lang','ko')}catch(e){}">한국어</a></div>
+
+<!-- ═══ SVG 필터 정의 (03 svg-design 레시피: Gooey + Squiggle) ═══ -->
+<svg width="0" height="0" aria-hidden="true" style="position:absolute">
+  <defs>
+    <!-- Gooey: blur → 알파 대비 극대화 → atop 합성 (03 §2 레시피) -->
+    <filter id="goo" color-interpolation-filters="sRGB">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="9" result="blur"/>
+      <feColorMatrix in="blur" mode="matrix" result="goo"
+        values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 19 -8"/>
+      <feComposite in="SourceGraphic" in2="goo" operator="atop"/>
+    </filter>
+    <!-- Squiggle: 저주파 노이즈로 손그림 떨림 윤곽 (정적 — 모션 최소화) -->
+    <filter id="squiggle" x="-10%" y="-10%" width="120%" height="120%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="7" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="4" xChannelSelector="R" yChannelSelector="G"/>
+    </filter>
+    <!-- 체크 표시 심볼 (형광펜 손그림 · squiggle 적용) -->
+    <symbol id="check" viewBox="0 0 30 30">
+      <rect x="2.5" y="2.5" width="25" height="25" rx="6" fill="none" stroke="#20222E" stroke-width="2" filter="url(#squiggle)"/>
+      <path d="M8 15.5 L13.5 21 L22.5 9.5" fill="none" stroke="#2B49C7" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round" filter="url(#squiggle)"/>
+    </symbol>
+  </defs>
+</svg>
+
+<!-- ═══ 히어로 ═══ -->
+<header class="hero">
+  <div>
+    <p class="eyebrow"><b>EleninJayTech / claude</b> &middot; Claude Code drop-in document repository</p>
+    <h1>Drop the files in,<br>say <span class="mark">one sentence</span>,<br>setup is done.</h1>
+    <p class="sub"><b>Claude Code</b> is Anthropic&rsquo;s AI tool that develops on your own machine while you simply talk to it. The documents here are <b>an instruction manual that executes itself</b> &mdash; like furniture instructions that also assemble the furniture. Drop them into a folder, say &ldquo;apply this&rdquo;, and Claude finishes the setup. You never have to touch a config file.</p>
+    <div class="cta">
+      <a class="btn solid" href="pages/intro.html">&#9654; 1-minute intro</a>
+      <a class="btn ghost" href="pages/demo.html">Watch the walkthrough</a>
+      <a class="btn dict" href="pages/options.html">Options dictionary</a>
+      <a class="btn course" href="pages/learn.html">Options course</a>
+      <a class="btn repo" href="https://github.com/EleninJayTech/claude">GitHub repository</a>
+      <a class="btn ghost" href="https://github.com/EleninJayTech/claude/blob/main/00_통합-설치.md">Open document 00</a>
+    </div>
+  </div>
+
+  <!-- 대표 이미지: 문서 4장이 Gooey로 합쳐져 하나의 구성이 되는 장면 -->
+  <div class="demo">
+    <svg class="stage" viewBox="0 0 460 380" role="img" aria-label="Animation of seven documents merging like liquid into a single setup">
+      <g filter="url(#goo)">
+        <circle class="blob b1" cx="150" cy="150" r="64" fill="#FFD84D"/>
+        <circle class="blob b2" cx="300" cy="130" r="52" fill="#FFCF1F"/>
+        <circle class="blob b3" cx="200" cy="255" r="58" fill="#FFE175"/>
+        <circle class="blob b4" cx="315" cy="245" r="44" fill="#F5C400"/>
+        <circle class="blob b5" cx="120" cy="260" r="40" fill="#FFDB60"/>
+        <circle class="blob b6" cx="243" cy="103" r="35" fill="#FFE9A0"/>
+        <circle class="blob b7" cx="88" cy="196" r="35" fill="#FFCF1F"/>
+      </g>
+      <g font-family="IBM Plex Mono,monospace" font-size="17" font-weight="600" fill="#20222E" text-anchor="middle">
+        <text x="150" y="156">00</text>
+        <text x="300" y="136">01</text>
+        <text x="200" y="261">02</text>
+        <text x="315" y="251">03</text>
+        <text x="120" y="266">04</text>
+        <text x="243" y="109">05</text>
+        <text x="88" y="202">06</text>
+      </g>
+      <g filter="url(#squiggle)">
+        <path d="M108 330 Q 230 356 352 330" fill="none" stroke="#2B49C7" stroke-width="3" stroke-linecap="round"/>
+        <path d="M338 322 L 352 330 L 336 340" fill="none" stroke="#2B49C7" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+      </g>
+      <text x="230" y="372" font-family="Pretendard Variable,sans-serif" font-size="14" fill="#5A5E70" text-anchor="middle">Seven documents, one setup</text>
+    </svg>
+    <p class="caption">This graphic is itself drawn with the <b>svg-design skill recipe from document 03</b> (Gooey filter <code>feColorMatrix 19&nbsp;-8</code> plus Squiggle hand-drawn jitter). Install it and Claude builds things like this for you.</p>
+  </div>
+</header>
+
+<main>
+
+<!-- 1 -->
+<section>
+  <div class="h-row"><svg width="30" height="30"><use href="#check"/></svg><h2>Three lines to use it</h2></div>
+  <p class="goal">Copy &rarr; say &rarr; choose</p>
+  <div class="say">
+    <span class="dim"># 1. Copy 00_통합-설치.md into your working folder</span><br>
+    <span class="dim"># 2. Open Claude Code and say:</span><br>
+    "<b>Read 00_통합-설치.md and apply it to this project</b>"<br>
+    <span class="dim"># 3. Pick an install mode &mdash; minimal / recommended / full / custom</span>
+  </div>
+  <ul>
+    <li>&ldquo;Project&rdquo; here means <b>the one folder you are working in</b>. For a whole-machine setup, say <b>&ldquo;apply it to this PC&rdquo;</b> instead.</li>
+    <li>You only need to copy <b>00</b> &mdash; Claude fetches the rest from this repository when it needs them.</li>
+    <li><b>The documents are written in Korean, and that is fine.</b> Claude executes them the same way in any language, and the installer asks which language the <b>generated files</b> should use &mdash; answer English and your <code class="i">CLAUDE.md</code>, work logs and commit messages all come out in English.</li>
+    <li>Pick <b>&ldquo;recommended&rdquo;</b> and the installer inspects your project and checks the fitting combination for you. Add purpose <b>bundles</b> (design, stronger verification, unattended automation) for combinations like <b>&ldquo;minimal + design&rdquo;</b>.</li>
+    <li>If something is already installed, Claude asks whether to <b>keep / reconcile / replace</b> it first. Nothing is overwritten silently.</li>
+    <li>Not sure what a question or checkbox means? The <a href="pages/options.html"><b>options dictionary</b></a> spells out &ldquo;what gets created / when to check it / what you lose by skipping&rdquo; for every item.</li>
+    <li>Want to learn the choices from scratch? The <a href="pages/learn.html"><b>options course</b></a> takes you chapter by chapter through a simulator you click yourself.</li>
+  </ul>
+</section>
+
+<!-- 2 -->
+<section>
+  <div class="h-row"><svg width="30" height="30"><use href="#check"/></svg><h2>What the seven documents do</h2></div>
+  <p class="goal">00 is the door &middot; 01 is the foundation &middot; 02&ndash;06 are reinforcement</p>
+  <ul class="doclist">
+    <li>
+      <svg width="26" height="26"><use href="#check"/></svg>
+      <span class="no">00</span>
+      <span class="desc"><b>The unified install menu.</b>
+        <p>Choose an install mode (minimal/recommended/full/custom) and bundles; it installs the matching subset of 01&ndash;06, each by its own procedure.</p>
+        <a href="https://github.com/EleninJayTech/claude/blob/main/00_통합-설치.md">00_통합-설치.md ↗</a></span>
+    </li>
+    <li>
+      <svg width="26" height="26"><use href="#check"/></svg>
+      <span class="no">01</span>
+      <span class="desc"><b>Foundation &mdash; memory and safety.</b>
+        <p>AI forgets everything when the chat closes. Document 01 builds a work-log system plus <code class="i">/resume</code> (pick up where you left off), <code class="i">/wrap</code> (close out the session), <code class="i">/dropin-check</code> (audit your setup) and <code class="i">/dropin-update</code> (refresh the documents), so <b>yesterday&rsquo;s work is still there today</b> &mdash; and it locks passwords and key files so the AI can neither read them nor send them anywhere.</p>
+        <a href="https://github.com/EleninJayTech/claude/blob/main/01_Claude-Code-통합구성-범용마스터.md">01_Claude-Code-통합구성-범용마스터.md ↗</a></span>
+    </li>
+    <li>
+      <svg width="26" height="26"><use href="#check"/></svg>
+      <span class="no">02</span>
+      <span class="desc"><b>Splitting work across models.</b>
+        <p>Claude has smart-but-expensive models and fast-but-cheap ones. Document 02 assembles a <b>small AI team</b> that routes hard judgment to the expensive model and routine work to the cheap one &mdash; quality held, bill reduced.</p>
+        <a href="https://github.com/EleninJayTech/claude/blob/main/02_모델분담-범용-플레이북.md">02_모델분담-범용-플레이북.md ↗</a></span>
+    </li>
+    <li>
+      <svg width="26" height="26"><use href="#check"/></svg>
+      <span class="no">03</span>
+      <span class="desc"><b>Convenience add-ons.</b>
+        <p><b>claude-hud</b> (a live meter of how much AI you have used today) &middot; <b>svg-design</b> (the graphics technique behind the yellow animation above) &middot; <b>frontend-design</b> (Anthropic&rsquo;s official design guidance for UI that doesn&rsquo;t look AI-generated &mdash; this page was built with it) &middot; <b>MCP</b> (connecting external tools) &middot; <b>browser verification</b> (the AI opens the screens it built and checks them).</p>
+        <a href="https://github.com/EleninJayTech/claude/blob/main/03_확장기능-설치-체크리스트.md">03_확장기능-설치-체크리스트.md ↗</a></span>
+    </li>
+    <li>
+      <svg width="26" height="26"><use href="#check"/></svg>
+      <span class="no">04</span>
+      <span class="desc"><b>The automatic inspector.</b>
+        <p>Checkers run every time the AI edits code, and once more before code is merged. Instead of the AI saying &ldquo;done&rdquo;, you get <b>proof the checks passed</b>.</p>
+        <a href="https://github.com/EleninJayTech/claude/blob/main/04_검증-자동화.md">04_검증-자동화.md ↗</a></span>
+    </li>
+    <li>
+      <svg width="26" height="26"><use href="#check"/></svg>
+      <span class="no">05</span>
+      <span class="desc"><b>Changing tone and role.</b>
+        <p>Reshape how answers come out &mdash; explanation-first, diagram-first, learning mode. Coding ability stays; only the style changes.</p>
+        <a href="https://github.com/EleninJayTech/claude/blob/main/05_출력스타일.md">05_출력스타일.md ↗</a></span>
+    </li>
+    <li>
+      <svg width="26" height="26"><use href="#check"/></svg>
+      <span class="no">06</span>
+      <span class="desc"><b>Scheduled runs.</b>
+        <p>Work runs in the cloud at set times even while your machine is off &mdash; nightly code review, weekly doc checks. Requires the Pro plan or above, and company code only after approval.</p>
+        <a href="https://github.com/EleninJayTech/claude/blob/main/06_루틴-자동화.md">06_루틴-자동화.md ↗</a></span>
+    </li>
+  </ul>
+</section>
+
+<!-- 3 -->
+<section>
+  <div class="h-row"><svg width="30" height="30"><use href="#check"/></svg><h2>What to say, by situation</h2></div>
+  <p class="goal">Find your row and say the sentence as-is</p>
+  <div class="tbl"><table>
+    <tr><th>Situation</th><th>What to tell Claude</th><th>Result</th></tr>
+    <tr><td>Setting up a new machine</td><td>"Read 00_통합-설치.md and apply it to <b>this PC</b>"</td><td>Base rules and security locks, plus a usage meter if you want one</td></tr>
+    <tr><td>Starting a new working folder</td><td>"Read 00_통합-설치.md and apply it to <b>this project</b>"</td><td>A work-log system plus resume/wrap commands</td></tr>
+    <tr><td>Don't want to pick</td><td>Answer <b>recommended</b> at the "mode" question</td><td>The combination matching your project, installed automatically</td></tr>
+    <tr><td>Mostly web UI work</td><td>Add the <b>design bundle</b> on top of a mode &mdash; "minimal + design"</td><td>A setup with the three design skills pre-checked</td></tr>
+    <tr><td>Add-ons only</td><td>"Apply 03_확장기능-설치-체크리스트.md"</td><td>Pick from five and install</td></tr>
+    <tr><td>Automatic checks only</td><td>"Apply 04_검증-자동화.md to this project"</td><td>Checks on every edit, plus one before merging</td></tr>
+    <tr><td>Pro plan (low allowance)</td><td>Answer <b>thrift</b> at the "operating profile" question</td><td>Quality-critical moments untouched; everyday consumption drops</td></tr>
+    <tr><td>Model split only</td><td>"Apply 02_모델분담-범용-플레이북.md to this project"</td><td>A team that splits work between expensive and cheap models</td></tr>
+    <tr><td>Change answer style</td><td>"Apply 05_출력스타일.md"</td><td>Switch among the five built-ins, or build your own</td></tr>
+    <tr><td>Schedule runs</td><td>"Apply 06_루틴-자동화.md to this project"</td><td>Cloud jobs that run overnight on their own (Pro and above)</td></tr>
+  </table></div>
+</section>
+
+<!-- 4 -->
+<section>
+  <div class="h-row"><svg width="30" height="30"><use href="#check"/></svg><h2>After install, every day</h2></div>
+  <p class="goal">The daily routine is two commands</p>
+  <div class="say">
+    <span class="dim"># Starting up &mdash; load yesterday's state</span><br>
+    <b>/resume</b>  <span class="dim">&larr; the AI reports first: "last time you got this far, next is this, right?"</span><br>
+    <span class="dim"># While working &mdash; ask for the verification too</span><br>
+    "Fix the login screen. <b>Then verify it actually works</b>"<br>
+    <span class="dim"># Wrapping up &mdash; write today into the log</span><br>
+    <b>/wrap</b>  <span class="dim">&larr; today's work and decisions are recorded automatically</span>
+  </div>
+  <ul>
+    <li>Those records are what let you resume tomorrow. You have to <b>commit after recording</b> for them to be found the next day &mdash; Claude walks you through it.</li>
+    <li>If the AI keeps spinning: run <code class="i">/clear</code> when you switch to unrelated work, and if the same problem survives two fix attempts, <code class="i">/clear</code> and ask again from scratch &mdash; that is usually faster.</li>
+  </ul>
+</section>
+
+<!-- 5 -->
+<section>
+  <div class="h-row"><svg width="30" height="30"><use href="#check"/></svg><h2>Frequently asked</h2></div>
+  <p class="goal">The questions everyone has at first</p>
+  <h3>What is Claude Code?</h3>
+  <p>An AI development tool from Anthropic. Say "build me a program that does this" as if you were chatting, and the AI creates and edits files directly on your machine. The documents in this repository configure that tool to run more safely and more capably.</p>
+  <h3>Can I use it without a development background?</h3>
+  <p>Yes. Dropping the files into a folder and saying one sentence is the whole job; Claude asks you about the rest as it goes. Hit a term you don't know and you can just ask Claude to "explain it simply".</p>
+  <h3>Why are the documents all plain markdown?</h3>
+  <p>Because they exist <b>for Claude to read and execute</b>, not for people. The human-facing guides are kept separately: this page plus the <a href="pages/intro.html">intro</a>, <a href="pages/demo.html">walkthrough</a>, <a href="pages/options.html">options dictionary</a> and <a href="pages/learn.html">options course</a> in the <code class="i">pages/</code> folder. That is also why the markdown stays Korean &mdash; Claude executes it identically either way, and the install asks separately which language your generated files should use.</p>
+  <h3>Can I trust the content?</h3>
+  <p>Every technical claim records the date it was checked against Anthropic's official documentation, and the whole set is re-checked every six months.</p>
+  <h3>Are passwords and secrets safe?</h3>
+  <p>Installing 01 locks passwords, certificates and key files so the AI can neither read them nor upload them. The underlying principle still holds, though: <b>real secrets do not belong in your working folder</b>.</p>
+  <div class="note"><b>The founding principle</b>Output quality comes first. Saving tokens is second, and only within what quality allows.</div>
+</section>
+
+<!-- 공유 링크 -->
+<section>
+  <div class="h-row"><svg width="30" height="30"><use href="#check"/></svg><h2>Share links</h2></div>
+  <p class="goal">Copy these addresses as-is when introducing the repo</p>
+  <p>&#9654;&#65039; 1-minute intro &mdash; <a href="pages/intro.html">https://eleninjaytech.github.io/claude/pages/intro.html</a></p>
+  <p>&#127916; Install walkthrough &mdash; <a href="pages/demo.html">https://eleninjaytech.github.io/claude/pages/demo.html</a></p>
+  <p>&#129517; Install options dictionary &mdash; <a href="pages/options.html">https://eleninjaytech.github.io/claude/pages/options.html</a></p>
+  <p>&#127891; Install options course &mdash; <a href="pages/learn.html">https://eleninjaytech.github.io/claude/pages/learn.html</a></p>
+  <p>&#128214; How-to guide (this page) &mdash; <a href="https://eleninjaytech.github.io/claude/">https://eleninjaytech.github.io/claude/</a></p>
+</section>
+
+<!-- 후원 -->
+<section class="support">
+  <div class="h-row" style="justify-content:center"><h2>&#9749; Support</h2></div>
+  <p>If these documents helped you, a coffee is always appreciated &#128522;</p>
+  <p style="margin-top:14px"><a href="https://www.buymeacoffee.com/eleninjaytech"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me a Coffee"></a></p>
+</section>
+
+</main>
+
+<footer>How-to page &middot; 2026-08-24 &middot; Repository: <a href="https://github.com/EleninJayTech/claude">github.com/EleninJayTech/claude</a> &middot; The install documents 00&ndash;06 (markdown) are the source of truth &mdash; this page is the human-facing guide. The hero graphic uses the 03 svg-design recipe (Gooey, Squiggle) and the layout follows the frontend-design skill principles.</footer>
+
+<script>
+(function(){try{
+  if(localStorage.getItem('lang'))return;
+  if((navigator.language||'').toLowerCase().indexOf('ko')===0){
+    localStorage.setItem('lang','ko');location.replace('index.ko.html');
+  }
+}catch(e){}})();
+</script>
+</body>
+</html>

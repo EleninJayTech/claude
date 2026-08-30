@@ -1,0 +1,804 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Install Options Dictionary — Claude Code Drop-in Documents</title>
+<meta name="description" content="Every checkbox and choice the 00 unified installer presents, explained item by item — so you can decide even while you are still learning to develop.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧭</text></svg>">
+<meta property="og:title" content="Install Options Dictionary — Claude Code Drop-in Documents">
+<meta property="og:description" content="Every install checkbox and choice, explained one by one at a beginner's level.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://eleninjaytech.github.io/claude/pages/options.html">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@700;900&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" rel="stylesheet">
+<style>
+:root{
+  --paper:#FCFCF8; --card:#FFFFFF; --ink:#20222E; --ink-soft:#5A5E70;
+  --marker:#FFD84D; --marker-soft:#FFF3C2;
+  --blue:#2B49C7; --blue-soft:#E8ECFB;
+  --green:#1B7A4B; --green-soft:#E3F3EA;
+  --red:#B3261E; --red-soft:#FBE9E7;
+  --line:#E5E4DB;
+  --serif:'Noto Serif KR','Nanum Myeongjo',serif;
+  --sans:'Pretendard Variable',Pretendard,'Malgun Gothic',sans-serif;
+  --mono:'IBM Plex Mono',Consolas,monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--sans);background:var(--paper);color:var(--ink);line-height:1.85;font-size:16.5px;
+  word-break:normal;overflow-wrap:break-word;
+  background-image:linear-gradient(#F1F0E7 1px,transparent 1px),linear-gradient(90deg,#F1F0E7 1px,transparent 1px);
+  background-size:26px 26px}
+p,li{text-wrap:pretty}
+::selection{background:var(--marker)}
+a{color:var(--blue)}
+:focus-visible{outline:3px solid var(--blue);outline-offset:2px;border-radius:4px}
+
+/* ---------- 히어로 ---------- */
+.hero{max-width:1040px;margin:0 auto;padding:60px 24px 22px}
+.eyebrow{font-family:var(--mono);font-size:13px;letter-spacing:.14em;color:var(--ink-soft);margin-bottom:16px}
+.eyebrow b{color:var(--blue);font-weight:600}
+h1{font-family:var(--serif);font-weight:900;font-size:clamp(29px,4.4vw,44px);line-height:1.5;letter-spacing:-.02em;text-wrap:balance}
+.mark{background:linear-gradient(transparent 58%, var(--marker) 58%, var(--marker) 92%, transparent 92%);padding:0 2px}
+.hero p.sub{margin-top:18px;color:var(--ink-soft);font-size:16.5px;max-width:42em}
+
+/* ---------- 본문 공통 ---------- */
+main{max-width:1040px;margin:0 auto;padding:20px 24px 80px}
+section{margin:0 0 26px;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:32px 34px 28px;scroll-margin-top:16px}
+@media (max-width:600px){section{padding:22px 17px}}
+h2{font-family:var(--serif);font-size:23px;font-weight:700;line-height:1.4}
+.goal{font-size:13.5px;color:var(--ink-soft);font-family:var(--mono);margin:6px 0 18px}
+h3{font-size:16.5px;font-weight:700;margin:26px 0 8px;padding-bottom:6px;border-bottom:2px solid var(--marker-soft)}
+p{margin:10px 0}
+ul{margin:10px 0 10px 22px}
+li{margin:6px 0}
+code.i{font-family:var(--mono);font-size:.88em;background:var(--blue-soft);color:var(--blue);padding:1px 6px;border-radius:5px;word-break:break-all}
+
+/* ---------- 목차 ---------- */
+nav.toc{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:22px 26px;margin:0 0 26px;scroll-margin-top:16px}
+nav.toc b{font-family:var(--mono);font-size:13px;letter-spacing:.1em;color:var(--ink-soft);display:block;margin-bottom:10px}
+nav.toc ol{margin:0 0 0 20px;font-size:15px;columns:2;column-gap:40px}
+@media (max-width:700px){nav.toc ol{columns:1}}
+nav.toc li{margin:5px 0;break-inside:avoid}
+nav.toc a{text-decoration:none;border-bottom:1px solid var(--blue-soft)}
+nav.toc a:hover{border-bottom-color:var(--blue)}
+
+/* ---------- 선택 항목 카드 ---------- */
+.opt{border:1px solid var(--line);border-left:3px solid var(--marker);border-radius:11px;padding:18px 20px;margin:14px 0;background:#FEFEFC;transition:box-shadow .2s,transform .2s}
+.opt:hover{transform:translateY(-1px);box-shadow:0 12px 30px -18px rgba(32,34,46,.22)}
+.opt-head{display:flex;flex-wrap:wrap;align-items:baseline;gap:9px;margin-bottom:4px}
+.opt-head .name{font-weight:700;font-size:16px}
+.opt-head .id{font-family:var(--mono);font-size:13px;color:var(--blue);font-weight:600}
+.opt .lead{color:var(--ink-soft);font-size:15px;margin:6px 0 12px}
+.opt dl{display:grid;grid-template-columns:96px 1fr;gap:6px 14px;font-size:15px;margin-top:10px}
+@media (max-width:560px){.opt dl{grid-template-columns:1fr;gap:2px}.opt dt{margin-top:9px}}
+.opt dt{font-family:var(--mono);font-size:12.5px;color:var(--ink-soft);padding-top:4px}
+.opt dd{margin:0}
+.opt dd code{font-family:var(--mono);font-size:.87em;background:#F3F3EC;padding:1px 5px;border-radius:4px;word-break:break-all}
+
+.badge{font-family:var(--mono);font-size:11.5px;font-weight:600;padding:2px 8px;border-radius:6px;white-space:nowrap;letter-spacing:.02em}
+.b-on{background:var(--green-soft);color:var(--green)}
+.b-off{background:#F1F1EA;color:var(--ink-soft)}
+.b-keep{background:var(--marker-soft);color:#8A6D00}
+.b-gate{background:var(--red-soft);color:var(--red)}
+
+table{width:100%;border-collapse:collapse;margin:14px 0;font-size:14.5px}
+th,td{border:1px solid var(--line);padding:10px 12px;text-align:left;vertical-align:top}
+th{background:var(--marker-soft);font-family:var(--mono);font-size:12.5px}
+.tbl{overflow-x:auto}
+.note{border-radius:10px;padding:13px 16px;margin:16px 0 4px;font-size:14.5px;background:var(--marker-soft);border:1px solid #EFDD9A}
+.note b{display:block}
+.note.warn{background:var(--red-soft);border-color:#F0C4BF}
+.note.tip{background:var(--blue-soft);border-color:#C9D3F4}
+footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);font-size:13px;font-family:var(--mono);line-height:1.7}
+
+/* 긴 문서용 — 목차로 돌아가기 */
+.totop{position:fixed;right:22px;bottom:22px;z-index:10;font-family:var(--mono);font-size:12.5px;background:var(--ink);color:var(--paper);text-decoration:none;padding:9px 14px;border-radius:8px;box-shadow:0 10px 24px -10px rgba(32,34,46,.5);transition:transform .15s}
+.totop:hover{transform:translateY(-2px)}
+.totop:active{transform:translateY(0) scale(.96)}
+</style>
+</head>
+<body>
+<div style="max-width:1040px;margin:0 auto;padding:16px 24px 0;font-family:var(--mono);font-size:13px;text-align:right;color:var(--ink-soft)"><b>English</b> &middot; <a href="options.ko.html" onclick="try{localStorage.setItem('lang','ko')}catch(e){}">한국어</a></div>
+
+<header class="hero">
+  <div class="eyebrow"><b>00_통합-설치.md</b> &middot; dictionary of install options</div>
+  <h1>Every <span class="mark">checkbox</span> the installer shows,<br>taken apart one by one</h1>
+  <p class="sub">
+    Drop these documents into a project, say &ldquo;read this and apply it&rdquo;, and Claude inspects your
+    environment and then asks you <b>what to install</b>. Every choice it can offer is collected here.
+    So that you never have to check everything just because you aren&rsquo;t sure, each item spells out
+    <b>which files it creates and what it changes</b>.
+  </p>
+  <p class="sub" style="margin-top:12px;font-size:14px">
+    <a href="../index.html">&larr; Back to the guide</a> &middot; <a href="intro.html">1-minute intro</a> &middot; <a href="demo.html">Walkthrough</a> &middot; <a href="learn.html">Course</a> &middot; <a href="https://github.com/EleninJayTech/claude">GitHub repository &#8599;</a>
+  </p>
+</header>
+
+<main>
+
+<nav class="toc" id="toc">
+  <b>Contents</b>
+  <ol>
+    <li><a href="#words">0. Eight words to know first</a> &mdash; scope, settings.json, hooks, subagents</li>
+    <li><a href="#flow">1. What order the questions come in</a></li>
+    <li><a href="#common">2. The five opening questions</a> &mdash; target &middot; mode &middot; bundles &middot; profile &middot; language</li>
+    <li><a href="#doc01">3. 01 Base setup</a> &mdash; record system and security (&#9424;&ndash;&#9429;)</li>
+    <li><a href="#doc02">4. 02 Model split</a> &mdash; the subagent roster</li>
+    <li><a href="#doc03">5. 03 Add-ons</a> &mdash; HUD &middot; design skills &middot; MCP &middot; browser</li>
+    <li><a href="#doc04">6. 04 Verification</a> &mdash; hook gates &middot; gh &middot; CI</li>
+    <li><a href="#doc05">7. 05 Output style</a> &mdash; changing tone and format</li>
+    <li><a href="#doc06">8. 06 Routines</a> &mdash; jobs that run while your PC is off</li>
+    <li><a href="#presets">9. If this is your first time, pick these</a></li>
+    <li><a href="#faq">10. Commonly confused</a></li>
+  </ol>
+</nav>
+
+<!-- ═══════════ 0. 용어 ═══════════ -->
+<section id="words">
+  <h2>0. Eight words to know first</h2>
+  <p class="goal">Know these and every choice below reads clearly</p>
+
+  <div class="tbl">
+  <table>
+    <tr><th style="width:150px">Word</th><th>Meaning</th></tr>
+    <tr>
+      <td><b>Drop-in document</b></td>
+      <td>&ldquo;A manual you drop into a folder, say one sentence, and it applies itself.&rdquo; The <code class="i">00</code>&ndash;<code class="i">06</code> files in this repository are exactly that. They are not a program but <b>prose Claude reads and follows</b>, so &ldquo;installing&rdquo; really means <b>creating a handful of config files</b>.</td>
+    </tr>
+    <tr>
+      <td><b>Scope</b></td>
+      <td>How far a setting reaches. <b>Global</b> = every project on your machine (stored in <code class="i">~/.claude/</code>). <b>Project</b> = this one folder (stored in <code class="i">&lt;project&gt;/.claude/</code>; commit it to git and your teammates get it too). When a choice says &ldquo;pick a scope&rdquo;, it is asking <b>just you, or the team as well</b>.</td>
+    </tr>
+    <tr>
+      <td><b>settings.json</b></td>
+      <td>Claude Code&rsquo;s config file. Mostly it records <b>permissions</b> &mdash; <code class="i">allow</code> (run without asking), <code class="i">ask</code> (prompt first), <code class="i">deny</code> (forbid outright). Put <code class="i">.env</code> under <code class="i">deny</code>, for instance, and any attempt to read your password file is blocked.</td>
+    </tr>
+    <tr>
+      <td><b>Hook</b></td>
+      <td>A rule saying &ldquo;when this happens, run that command automatically.&rdquo; These documents mostly use <b>PostToolUse</b> &mdash; it runs a linter or type check <b>right after Claude edits a file</b>. If it errors, the output goes back to Claude, which fixes it itself.</td>
+    </tr>
+    <tr>
+      <td><b>Skill / <code class="i">/command</code></b></td>
+      <td>A single markdown file named <code class="i">SKILL.md</code> becomes the <code class="i">/name</code> slash command. Create <code class="i">skills/resume/SKILL.md</code> and you can type <code class="i">/resume</code>. The contents are simply instructions: &ldquo;when this happens, do that.&rdquo;</td>
+    </tr>
+    <tr>
+      <td><b>Subagent</b></td>
+      <td>A helper Claude running in <b>its own workspace</b>, separate from the main conversation. Defined by <code class="i">.claude/agents/&lt;name&gt;.md</code>, and <b>each agent can use a different model</b>. Hard analysis to the expensive model, repetitive work to the cheap one &mdash; that is the core of document 02.</td>
+    </tr>
+    <tr>
+      <td><b>MCP</b></td>
+      <td>Model Context Protocol &mdash; <b>the standard for plugging outside tools into Claude</b>. Connect GitHub, a browser, or a document search and Claude uses them directly. Think of it as a USB port.</td>
+    </tr>
+    <tr>
+      <td><b>effort (reasoning depth)</b></td>
+      <td>How hard the model thinks: <code class="i">low &rarr; medium &rarr; high &rarr; xhigh &rarr; max</code>. Raising it improves hard design judgment but <b>costs more tokens and more waiting</b>. It is a separate axis from which model you pick.</td>
+    </tr>
+  </table>
+  </div>
+
+  <div class="note tip">
+    <b>&#128161; Why &ldquo;saving tokens&rdquo; keeps coming up</b>
+    Claude draws down your plan allowance in proportion to the characters (tokens) exchanged. So these documents share one principle: <b>first, the best possible result; second, savings that do not cost quality</b>.
+    Verification, record-keeping and the stronger model on hard work are never cut in the name of thrift.
+  </div>
+</section>
+
+<!-- ═══════════ 1. 흐름 ═══════════ -->
+<section id="flow">
+  <h2>1. What order the questions come in</h2>
+  <p class="goal">Inspect first &rarr; big choices &rarr; per-document details</p>
+
+  <p>
+    Claude <b>investigates before it asks</b>. It checks the files for what is already installed, whether this is a git
+    repository, which language the code is in, and then asks only about <b>what the code cannot tell it</b>.
+    The result is far fewer questions than you would expect.
+  </p>
+
+  <div class="tbl">
+  <table>
+    <tr><th style="width:64px">Step</th><th>What happens</th><th style="width:190px">What you choose</th></tr>
+    <tr><td><b>STEP 1</b></td><td>Obtain the documents needed (01&ndash;06) &mdash; fetched from GitHub if not in the folder</td><td>Nothing</td></tr>
+    <tr><td><b>STEP 2</b></td><td>Detect the environment &mdash; prior install record (<code class="i">dropin-applied</code>), existing config files, project type</td><td>Nothing</td></tr>
+    <tr><td><b>STEP 3</b></td><td><b>The big choices</b> &mdash; the five questions in &sect;2 below</td><td>Base mode &middot; bundles &middot; profile &middot; output language</td></tr>
+    <tr><td><b>STEP 4</b></td><td>Install by each chosen document&rsquo;s own procedure. <b>Only in &ldquo;custom&rdquo; mode</b> does it also ask about the per-document items (&sect;3&ndash;&sect;8)</td><td>Depends on the mode</td></tr>
+    <tr><td><b>STEP 5</b></td><td>Verify, report, and leave one install-record line at the bottom of <code class="i">CLAUDE.md</code></td><td>Approving the commit</td></tr>
+  </table>
+  </div>
+
+  <div class="note">
+    <b>&#128204; Outside &ldquo;custom&rdquo; mode the detailed questions are skipped</b>
+    Choose minimal, recommended or full and the per-document items are <b>settled automatically at that mode&rsquo;s defaults</b>.
+    So &sect;3&ndash;&sect;8 below are what you read either when you want to choose yourself, or when you want to know what gets switched on for you.
+    The <b>safety questions</b> (overwrite what is already here? have you checked company policy?) are never skipped, in any mode.
+  </div>
+</section>
+
+<!-- ═══════════ 2. 공통 질문 ═══════════ -->
+<section id="common">
+  <h2>2. The five opening questions</h2>
+  <p class="goal">Answer these and the install runs itself</p>
+
+  <h3>2-1. Target &mdash; this PC, or this project</h3>
+  <p>Asked only when it is ambiguous. Choose <b>PC</b> and settings land in <code class="i">~/.claude/</code> (your account folder); choose <b>project</b> and they land in this folder&rsquo;s <code class="i">.claude/</code>. Most people do the PC setup once, then go project by project.</p>
+
+  <h3>2-2. Base mode &mdash; one of four (single choice)</h3>
+
+  <div class="opt">
+    <div class="opt-head"><span class="name">Minimal</span><span class="badge b-off">01 only</span></div>
+    <p class="lead">Only the record system and security. Even within the document, only the essentials.</p>
+    <dl>
+      <dt>What appears</dt><dd>A global <code>settings.json</code> (security locks), the <code>/resume</code>, <code>/wrap</code> and audit skills (<code>/dropin-check</code>, <code>/dropin-update</code>), and three <code>docs/</code> files in the project</dd>
+      <dt>Choose it when</dt><dd>The repository is documentation with no code, or you just want the basics first</dd>
+    </dl>
+  </div>
+
+  <div class="opt">
+    <div class="opt-head"><span class="name">Recommended</span><span class="id">default</span><span class="badge b-on">auto-combined per situation</span></div>
+    <p class="lead">Claude combines things based on what it detected and <b>shows you in one line why it chose that</b>.</p>
+    <dl>
+      <dt>The rule</dt><dd>New PC &rarr; 01 (global) + 03 (HUD) / development project &rarr; 01+02+04 / documentation or non-code repository &rarr; 01 only / somewhere 01 already exists &rarr; only what is still missing and needed</dd>
+      <dt>Choose it when</dt><dd><b>Most of the time.</b> If you are unsure, this is the answer</dd>
+    </dl>
+  </div>
+
+  <div class="opt">
+    <div class="opt-head"><span class="name">Full</span><span class="badge b-off">all of 01&ndash;06</span></div>
+    <p class="lead">Anything that does not apply (02 in a repository with no code, say) is dropped and reported.</p>
+    <dl>
+      <dt>Note</dt><dd>Even &ldquo;full&rdquo; <b>never overwrites existing settings silently</b> &mdash; it asks keep / reconcile / replace every time</dd>
+      <dt>Choose it when</dt><dd>You want a new project set up properly and have time to answer questions</dd>
+    </dl>
+  </div>
+
+  <div class="opt">
+    <div class="opt-head"><span class="name">Custom</span><span class="badge b-off">two-stage manual choice</span></div>
+    <p class="lead">Pick the documents, then pick the items inside them. Everything in &sect;3&ndash;&sect;8 below arrives as a question.</p>
+    <dl>
+      <dt>Choose it when</dt><dd>You want exactly what you need and nothing else &mdash; typically after one install has taught you the structure</dd>
+    </dl>
+  </div>
+
+  <h3>2-3. Purpose bundles &mdash; zero or more (multi-select)</h3>
+  <p>Bundles are <b>unioned onto the base mode</b>. Pick &ldquo;recommended&rdquo; + &ldquo;design&rdquo; and the design extensions are added to whatever recommended selected.</p>
+
+  <div class="tbl">
+  <table>
+    <tr><th style="width:130px">Bundle</th><th>What it adds</th><th style="width:200px">When it is pre-checked</th></tr>
+    <tr><td><b>Design</b><br><span style="font-size:12.5px;color:var(--ink-soft)">web publishing</span></td><td>From 03: <b>svg-design</b> (SVG visual-effect recipes) &middot; <b>frontend-design</b> (UI that doesn&rsquo;t look AI-made) &middot; <b>browser verification</b> (Claude opens the screens it built and checks them)</td><td>Pre-checked when a frontend stack is detected</td></tr>
+    <tr><td><b>Stronger verification</b></td><td>All of 04 &mdash; hook quality gates + <code class="i">gh</code>/<code class="i">glab</code> CLI + CI integration</td><td>Pre-checked when tests or CI config are detected</td></tr>
+    <tr><td><b>Unattended automation</b></td><td>06 cloud routines (pairing with 04 CI is recommended)</td><td>Not detectable &mdash; <b>only when you ask for it</b></td></tr>
+    <tr><td><b>Company</b></td><td>Installs nothing new. It is <b>a modifier that tightens the safeguards</b> &mdash; CI requires an org-policy check, MCP is limited to approved servers, routines require org approval</td><td>Applied automatically once you say it is a company repository</td></tr>
+    <tr><td><b>Answer style</b></td><td>05 output styles</td><td>Not detectable &mdash; only when you ask for it</td></tr>
+  </table>
+  </div>
+
+  <h3>2-4. Operating profile &mdash; standard / thrift</h3>
+  <div class="opt">
+    <div class="opt-head"><span class="name">Standard</span><span class="badge b-on">default</span></div>
+    <p class="lead">Quality first. Leaves effort at its default and uses the stronger model for hard work.</p>
+  </div>
+  <div class="opt">
+    <div class="opt-head"><span class="name">Thrift</span><span class="badge b-keep">Pro plan &middot; managing an allowance</span></div>
+    <p class="lead">For when the usage allowance matters. What it cuts is <b>only defaults and waste</b>.</p>
+    <dl>
+      <dt>What changes</dt><dd>Sessions start at <code>/effort medium</code> &middot; subagents are assigned mostly to Sonnet &middot; a smaller roster &middot; claude-hud pre-checked (you cannot economize on what you cannot see)</dd>
+      <dt>What is never cut</dt><dd>Difficulty triage &middot; final review &middot; verification gates. <b>Saving here costs more in rework</b></dd>
+    </dl>
+  </div>
+
+  <h3>2-5. Output language &mdash; Korean / English</h3>
+  <p><b>This is the language of what gets generated, not the language of the documents.</b> The drop-in documents (00&ndash;06) are written in Korean and there is no translation, because Claude executes them identically either way. This question decides the language of <b>what the install produces</b>.</p>
+  <div class="opt">
+    <div class="opt-head"><span class="name">Language</span><span class="badge b-on">default = the language you are chatting in</span></div>
+    <p class="lead">Your answer sets the language of the <b>target <code>CLAUDE.md</code> body, the <code>docs/</code> record entries, commit messages and generated filenames</b>.</p>
+    <dl>
+      <dt>Filenames change too</dt><dd><code>docs/난이도-매트릭스.md</code> &harr; <code>docs/difficulty-matrix.md</code>, <code>docs/핸드오프-규약.md</code> &harr; <code>docs/handoff-protocol.md</code>. <b>If one already exists under another name, that name is kept</b></dd>
+      <dt>What does not change</dt><dd>Format keywords &mdash; markers like <code>[topic][Done]</code> and <code>dropin-applied</code> are <b>fixed regardless of language</b>, because <code>/resume</code>, <code>/wrap</code> and the check script find them by those exact strings</dd>
+      <dt>If records already exist</dt><dd>Their language wins &mdash; mixing languages inside one file splits the record that <code>/resume</code> reads</dd>
+      <dt>Where it is stored</dt><dd>As <code>언어=ko</code> or <code>언어=en</code> in the install record, so it survives re-application</dd>
+    </dl>
+  </div>
+
+  <h3>2-6. If something is already installed &mdash; keep / reconcile / replace</h3>
+  <p>Asked separately for each item where existing settings were detected. Asked <b>always</b>, whatever the mode.</p>
+  <ul>
+    <li><b>Keep</b> &mdash; skipped, untouched. This one if it is working for you.</li>
+    <li><b>Reconcile</b> &mdash; only the parts that drifted are aligned. For keeping what you have while taking in the newer version.</li>
+    <li><b>Replace</b> &mdash; the old one is removed and rebuilt. For cleaning up something you threw together earlier.</li>
+  </ul>
+</section>
+
+<!-- ═══════════ 3. 01 ═══════════ -->
+<section id="doc01">
+  <h2>3. 01 Base setup &mdash; records and security</h2>
+  <p class="goal">Six items &#9424;&ndash;&#9429; (multi-select &middot; all pre-checked)</p>
+
+  <p>
+    What this document does is <b>abolish &ldquo;what was I doing yesterday?&rdquo;</b> It has your work recorded to files
+    so the next session picks up with a single <code class="i">/resume</code>. Secret protection is layered on top.
+  </p>
+
+  <div class="opt">
+    <div class="opt-head"><span class="id">&#9424;</span><span class="name">Global behavior rules</span><span class="badge b-on">pre-checked</span></div>
+    <p class="lead">Applies <b>working habits for Claude</b> &mdash; &ldquo;ask instead of guessing&rdquo;, &ldquo;build nothing beyond what was asked&rdquo; &mdash; across your whole machine.</p>
+    <dl>
+      <dt>File created</dt><dd><code>~/.claude/CLAUDE.md</code></dd>
+      <dt>Example contents</dt><dd>State assumptions &middot; simplicity first &middot; don&rsquo;t touch code outside scope &middot; no re-printing whole files &middot; never read <code>.env</code></dd>
+      <dt>Can I skip it</dt><dd>If you already run your own global rules, answer &ldquo;keep&rdquo;</dd>
+    </dl>
+  </div>
+
+  <div class="opt">
+    <div class="opt-head"><span class="id">&#9425;</span><span class="name">Global security</span><span class="badge b-keep">unchecking not advised</span></div>
+    <p class="lead">Blocks Claude from reading password and certificate files, and warns you when the conversation is about to be compacted.</p>
+    <dl>
+      <dt>File created</dt><dd><code>permissions.deny</code> and <code>hooks</code> in <code>~/.claude/settings.json</code></dd>
+      <dt>What it blocks</dt><dd>Reading <code>.env</code>, <code>*.pem</code>, <code>*.key</code> &mdash; and the <b>shell-command detour</b> such as <code>cat .env</code> along with it</dd>
+      <dt>Limits</dt><dd>It cannot stop a Python or Node script from opening the file itself. <b>The real fix is keeping secrets out of the repository</b></dd>
+      <dt>If you skip it</dt><dd>Claude may read a password by accident and it stays in the transcript. <b>Leave it on unless you are skipping it deliberately</b></dd>
+    </dl>
+  </div>
+
+  <div class="opt">
+    <div class="opt-head"><span class="id">&#9426;</span><span class="name"><code>/resume</code> &middot; <code>/wrap</code> &middot; audit skills</span><span class="badge b-on">pre-checked</span></div>
+    <p class="lead">Two slash commands for opening and closing a session, plus two for auditing your setup. <b>This is the practical heart of the whole thing.</b></p>
+    <dl>
+      <dt>Files created</dt><dd><code>skills/resume/SKILL.md</code> &middot; <code>skills/wrap/SKILL.md</code> &middot; <code>skills/dropin-check/</code> &middot; <code>skills/dropin-update/</code></dd>
+      <dt><code>/resume</code></dt><dd>Pulls from the remote first if there is one, finds <b>uncommitted changes</b> (work in progress), reads the last records, plan and recent decisions, and reports &ldquo;last time X, next is Y?&rdquo;. If the install is old (30+ days) it suggests an audit</dd>
+      <dt><code>/wrap</code></dt><dd>Appends today&rsquo;s work to the record, files new decisions, updates the plan checkboxes, and <b>warns you if nothing is committed</b></dd>
+      <dt><code>/dropin-check</code></dt><dd><b>Audits only</b> whether your setup matches the documents&rsquo; current version (changes nothing)</dd>
+      <dt><code>/dropin-update</code></dt><dd>If the document copies in your project are stale, <b>asks first</b> and then replaces them with the current ones</dd>
+      <dt>Variants</dt><dd>resume and wrap come in three shapes depending on your environment &mdash; the basic single-repository form, a split form for a team sharing one repository, and a unified form for several repositories under one folder</dd>
+    </dl>
+  </div>
+
+  <div class="opt">
+    <div class="opt-head"><span class="id">&#9427;</span><span class="name">Project record system</span><span class="badge b-on">pre-checked</span></div>
+    <p class="lead">Decides <b>where and in what format</b> records are kept, and pins those rules into the project&rsquo;s <code class="i">CLAUDE.md</code>.</p>
+    <dl>
+      <dt>Files created</dt><dd><code>docs/PROJECT_PLAN.md</code> (roadmap) &middot; <code>docs/PROGRESS.md</code> (session log) &middot; <code>docs/DECISIONS.md</code> (decision log) &middot; <code>.gitattributes</code></dd>
+      <dt>The core rule</dt><dd>Records are <b>appended at the top only</b>; past lines are never edited. When your thinking changes you add a new decision and mark the old one &ldquo;superseded&rdquo;</dd>
+      <dt><code>.gitattributes</code></dt><dd><code>merge=union</code> &mdash; when two people append at once, <b>both entries survive with no git conflict</b></dd>
+    </dl>
+  </div>
+
+  <div class="opt">
+    <div class="opt-head"><span class="id">&#9428;</span><span class="name">Project permissions</span><span class="badge b-on">pre-checked</span></div>
+    <p class="lead">Decides <b>what may run without asking</b> in this project.</p>
+    <dl>
+      <dt>File created</dt><dd><code>.claude/settings.json</code></dd>
+      <dt>allow examples</dt><dd><code>git status</code>, <code>git diff</code>, <code>npm run</code>, <code>./gradlew</code> &mdash; <b>safe and frequent</b></dd>
+      <dt>ask examples</dt><dd><code>git push --force</code>, <code>git reset --hard</code>, <code>rm -rf</code> &mdash; <b>hard to undo</b></dd>
+      <dt>Note</dt><dd>Allowing everything with <code>Bash(*)</code> is a personal choice and <b>is not recommended for teams</b></dd>
+    </dl>
+  </div>
+
+  <div class="opt">
+    <div class="opt-head"><span class="id">&#9429;</span><span class="name">effort guidance</span><span class="badge b-off">advice only &middot; no file</span></div>
+    <p class="lead">You are told when to raise and lower reasoning depth. No config file is written.</p>
+    <dl>
+      <dt>Why no file</dt><dd>Pinning <code>effortLevel</code> in the project settings <b>silently overrides whatever you chose with <code>/effort</code></b>, with no warning. Better to leave the default and change it with <code>/effort</code> when you need to</dd>
+    </dl>
+  </div>
+
+  <h3>Confirmed alongside &mdash; the project type</h3>
+  <p>Determined from the files, then merely confirmed with you: &ldquo;here is how I read it&rdquo;.</p>
+  <div class="tbl">
+  <table>
+    <tr><th style="width:120px">Type</th><th>The situation</th></tr>
+    <tr><td><b>B (single)</b></td><td>One git repository. The most common case</td></tr>
+    <tr><td><b>A-1 (unified)</b></td><td>Several repositories side by side <b>under one parent folder</b> &mdash; start Claude in the parent and it sees them all</td></tr>
+    <tr><td><b>A-2 (unified)</b></td><td>Several repositories <b>scattered</b> around &mdash; needs the <code class="i">--add-dir</code> option</td></tr>
+    <tr><td><b>Mixed</b></td><td>git repositories and <b>plain folders (no git)</b> mixed under one parent &mdash; each folder gets the treatment that fits it</td></tr>
+    <tr><td><b>Non-git folder</b></td><td>A folder with no git at all &mdash; git is suggested, and if you decline, only the record system is installed</td></tr>
+    <tr><td><b>+ MSA split</b></td><td>On top of the above, <b>several people editing the same part of one repository at once</b> &rarr; the record folders are split per unit (not per build module, but <b>per unit people actually divide</b>). Unnecessary if you work alone</td></tr>
+  </table>
+  </div>
+  <p>For a bundle of repositories (A-1, A-2, mixed) two things are confirmed <b>per repository</b>: &#9312; <b>company or personal</b> (a personal folder can hold company repositories, so this is never asked once for all) and &#9313; <b>whether to install into the sub-repositories too</b> (installing from the parent still leaves the choice per repository). Teammates installing from different places (parent folder vs. individual repository) do not collide.</p>
+</section>
+
+<!-- ═══════════ 4. 02 ═══════════ -->
+<section id="doc02">
+  <h2>4. 02 Model split &mdash; the subagent roster</h2>
+  <p class="goal">&#9424;&ndash;&#9428; plus per-agent selection &middot; development projects only</p>
+
+  <p>
+    A setup that <b>splits expensive and cheap models by how hard the work is</b>. Hard analysis and design go to the
+    stronger model; well-defined repetitive work goes to the cheaper one. Push hard work onto a cheap model to save money and
+    <b>you get results that are almost right but wrong, and the rework costs more</b> &mdash; which is why the triage itself always uses the stronger model.
+  </p>
+
+  <div class="note warn">
+    <b>&#9888;&#65039; Not installed in a repository with no code</b>
+    Installing a roster in a documentation-only repository just adds files nobody uses. If the scan finds no build and no code, Claude says so and stops.
+  </div>
+
+  <h3>Items &#9424;&ndash;&#9428;</h3>
+  <div class="opt">
+    <div class="opt-head"><span class="id">&#9424;</span><span class="name">Difficulty rubric</span><span class="badge b-on">pre-checked</span></div>
+    <p class="lead">The reference table for <b>what counts as hard</b> in this project. Without it there is nothing to route on.</p>
+    <dl>
+      <dt>File created</dt><dd><code>docs/difficulty-matrix.md</code> (<code>docs/난이도-매트릭스.md</code> when the output language is Korean)</dd>
+      <dt>Hard</dt><dd>Cryptography, authentication, concurrency, state management, external integration contracts, huge tangled files, performance-critical paths</dd>
+      <dt>Easy</dt><dd>Plain CRUD, lookups, fixed-format conversions, boilerplate</dd>
+    </dl>
+  </div>
+
+  <div class="opt">
+    <div class="opt-head"><span class="id">&#9425;</span><span class="name">The roster &mdash; chosen agent by agent</span></div>
+    <p class="lead">Not as a block but <b>one at a time</b>. Only those matching the work you are doing are pre-checked.</p>
+    <div class="tbl">
+      <table>
+        <tr><th style="width:130px">Agent</th><th>What it does</th><th style="width:88px">Default model</th></tr>
+        <tr><td><b>surveyor</b></td><td>Sweeps the structure broadly and mechanically into lists and tables. <b>Makes no judgments</b></td><td>sonnet</td></tr>
+        <tr><td><b>triage</b></td><td>Scores the sweep against the rubric. <b>The highest-leverage seat</b></td><td><b>opus</b></td></tr>
+        <tr><td><b>analyst</b></td><td>Analyzes hard modules in depth and writes the implementation spec (success criteria, samples, risks)</td><td>by difficulty</td></tr>
+        <tr><td><b>spec-writer</b></td><td>Pins down requirements for new features and writes the spec &mdash; a wrong spec means everything downstream is rework, hence the expensive model</td><td><b>opus</b></td></tr>
+        <tr><td><b>implementer</b></td><td>Builds from the spec. <b>Touches nothing outside scope</b></td><td>sonnet</td></tr>
+        <tr><td><b>parity-tester</b></td><td>Runs the tests and reports pass/diff only, fast. Root-cause analysis goes back upstream</td><td>haiku</td></tr>
+      </table>
+    </div>
+    <dl>
+      <dt>How to choose</dt><dd><b>Changing existing code</b> (migration, refactor) &rarr; the five without spec-writer. <b>Building something new</b> &rarr; drop surveyor and triage and start from <b>spec-writer</b></dd>
+      <dt>Where they live</dt><dd><b>Shared with the team</b> = the project&rsquo;s <code>.claude/agents/</code> (committed, everyone uses them) / <b>personal experiment</b> = <code>~/.claude/agents/</code> (your machine only). Asked in every mode</dd>
+      <dt>Parallel option</dt><dd>When the job is large and the slices never touch the same files, running <b>several implementers at once</b> (<code>isolation: worktree</code>) is offered as a choice</dd>
+    </dl>
+  </div>
+
+  <div class="opt">
+    <div class="opt-head"><span class="id">&#9426;</span><span class="name">Custom reviewer</span><span class="badge b-off">unchecked by default</span></div>
+    <p class="lead">An agent for code review. <b>Not created by default</b> &mdash; Claude Code already ships <code class="i">/code-review</code>.</p>
+    <dl>
+      <dt>Check it when</dt><dd>You have <b>project-specific criteria</b> the built-in review cannot know &mdash; cross-checking spec against implementation, enforcing domain conventions</dd>
+      <dt>Note</dt><dd>The built-ins are <code>/code-review</code> (general) and <code>/simplify</code> (simplification only &mdash; it does not hunt bugs)</dd>
+    </dl>
+  </div>
+
+  <div class="opt">
+    <div class="opt-head"><span class="id">&#9427;</span><span class="name">Handoff document protocol</span><span class="badge b-on">pre-checked</span></div>
+    <p class="lead">The rule that results pass between stages <b>as files</b>. Handing them over as a chat summary leaks content and fails.</p>
+    <dl>
+      <dt>File created</dt><dd><code>docs/handoff-protocol.md</code> (<code>docs/핸드오프-규약.md</code> in Korean; if a protocol already exists under another name, that name is kept) &mdash; which stage leaves what in which file</dd>
+    </dl>
+  </div>
+
+  <div class="opt">
+    <div class="opt-head"><span class="id">&#9428;</span><span class="name">Planning-only model command</span><span class="badge b-off">unchecked by default</span></div>
+    <p class="lead">Creates one <code class="i">/plan-&lt;model&gt;</code> command that runs a different model <b>only while planning</b>. When the plan is done it <b>returns to your normal model by itself</b> &mdash; nothing to undo.</p>
+    <dl>
+      <dt>Why build it yourself</dt><dd>The only combination Claude Code ships is <code>opusplan</code> (plan = Opus, execute = Sonnet). Any other pairing &mdash; <b>planning with Fable</b>, say &mdash; only exists if you make it</dd>
+      <dt>File created</dt><dd>One <code>skills/plan-&lt;model&gt;/SKILL.md</code>. Whether it stays on your machine or is shared with the team is asked together with &#9425;</dd>
+      <dt>Check it when</dt><dd>You want a specific model just for the planning stage. Most projects do not, so it is <b>unchecked by default</b></dd>
+    </dl>
+  </div>
+</section>
+
+<!-- ═══════════ 5. 03 ═══════════ -->
+<section id="doc03">
+  <h2>5. 03 Add-ons &mdash; a five-item checklist</h2>
+  <p class="goal">Multi-select; for skills you also choose scope and invocation</p>
+
+  <div class="opt">
+    <div class="opt-head"><span class="id">&sect;1</span><span class="name">claude-hud</span><span class="badge b-keep">user scope</span></div>
+    <p class="lead">A plugin that draws a <b>status line</b> under the input box, showing how much context you have used and how much of your plan allowance is gone.</p>
+    <dl>
+      <dt>How to install</dt><dd>In a session: <code>/plugin marketplace add jarrodwatts/claude-hud</code> &rarr; <code>/plugin install claude-hud</code> &rarr; <code>/reload-plugins</code> &rarr; <code>/claude-hud:setup</code></dd>
+      <dt>Requires</dt><dd>Node.js 18 or newer</dd>
+      <dt>Choose it when</dt><dd><b>Practically required on the thrift profile</b> &mdash; economizing on what you cannot see is guesswork</dd>
+      <dt>Note</dt><dd>If you already run another status line, you are always asked before replacing it</dd>
+    </dl>
+  </div>
+
+  <div class="opt">
+    <div class="opt-head"><span class="id">&sect;2</span><span class="name">svg-design</span><span class="badge b-off">design bundle</span></div>
+    <p class="lead">A rulebook for <b>implementing SVG filter effects correctly</b> &mdash; hand-drawn jitter, droplets merging (Gooey), glass refraction, neon type.</p>
+    <dl>
+      <dt>File created</dt><dd><code>skills/svg-design/SKILL.md</code></dd>
+      <dt>Mistakes it prevents</dt><dd>Duplicate filter ids breaking the page &middot; effects clipped in Safari &middot; settings that wreck performance &middot; turning text into images so it <b>cannot be copied or read by a screen reader</b> &middot; XSS when external input flows in</dd>
+      <dt>Choose it when</dt><dd>You build web screens yourself. Backend or app projects do not need it</dd>
+    </dl>
+  </div>
+
+  <div class="opt">
+    <div class="opt-head"><span class="id">&sect;3</span><span class="name">frontend-design</span><span class="badge b-off">design bundle</span></div>
+    <p class="lead">An official Anthropic skill. Steers away from <b>UI that looks AI-generated</b> (predictable fonts, purple gradients, excessive animation) toward deliberate design that fits the subject.</p>
+    <dl>
+      <dt>How to install</dt><dd>As a bundle with <code>/plugin marketplace add anthropics/skills</code>, or individually with <code>npx skills add &hellip; --skill frontend-design</code></dd>
+      <dt>Difference from svg-design</dt><dd>This one covers <b>design direction and the UI as a whole</b>; svg-design covers <b>implementing SVG filter effects</b>. Installing both causes no conflict</dd>
+    </dl>
+  </div>
+
+  <div class="opt">
+    <div class="opt-head"><span class="id">&sect;4</span><span class="name">MCP servers</span><span class="badge b-off">optional</span></div>
+    <p class="lead">Connects external tools to Claude. Which servers to attach is <b>asked separately, as a list</b>.</p>
+    <dl>
+      <dt>Examples</dt><dd>GitHub (read PRs, issues, CI logs) &middot; Context7 (fetch current library docs) &middot; Playwright (drive a browser)</dd>
+      <dt>Scope</dt><dd><b>This repo, just you</b> (default) / <b>shared with the team</b> = commit <code>.mcp.json</code> (each teammate approves on first run) / <b>you, every project</b> = <code>claude mcp add --scope user</code></dd>
+      <dt>At work &#128308;</dt><dd>An MCP server <b>can send your conversation outside</b>. If you handle internal code, connect only servers your organization allows. Put tokens in environment variables, never directly in <code>.mcp.json</code></dd>
+    </dl>
+  </div>
+
+  <div class="opt">
+    <div class="opt-head"><span class="id">&sect;5</span><span class="name">Browser verification</span><span class="badge b-off">design bundle</span></div>
+    <p class="lead">Lets <b>Claude open the screens it built and fix them</b>. It completes the loop: build &rarr; check itself &rarr; fix.</p>
+    <dl>
+      <dt>Three routes</dt><dd>On the desktop app, the <b>built-in browser</b> (nothing to install) / with Chrome from the CLI or an IDE, the <b>Claude in Chrome extension</b> &mdash; installing the extension alone does not connect it; you must activate with <code>claude --chrome</code> or <code>/chrome</code> and authenticate with <code>/login</code> (no WSL support) / anything else is reference only</dd>
+      <dt>At work &#128308;</dt><dd>Connecting a browser also reaches <b>your logged-in sessions</b>. Keep the extension&rsquo;s site permissions narrowed to <code>localhost</code> and staging</dd>
+    </dl>
+  </div>
+
+  <h3>Two follow-up questions for any skill</h3>
+  <div class="tbl">
+  <table>
+    <tr><th style="width:120px">Question</th><th>Choices</th></tr>
+    <tr>
+      <td><b>Scope</b></td>
+      <td><b>Global</b> (<code class="i">~/.claude/skills/</code>) &mdash; available in every project on your machine / <b>project</b> (<code class="i">.claude/skills/</code>) &mdash; this repository only; commit it and the team shares it</td>
+    </tr>
+    <tr>
+      <td><b>Invocation</b></td>
+      <td><b>Automatic</b> &mdash; Claude loads it when it detects relevant work (default) / <b>manual only</b> &mdash; it runs only when you type <code class="i">/svg-design</code> (adds one <code class="i">disable-model-invocation: true</code> line to the file)</td>
+    </tr>
+  </table>
+  </div>
+</section>
+
+<!-- ═══════════ 6. 04 ═══════════ -->
+<section id="doc04">
+  <h2>6. 04 Verification &mdash; a three-item checklist</h2>
+  <p class="goal">Machinery that stops &ldquo;I verified it&rdquo; from being just words</p>
+
+  <p>
+    Document 01 already carries the rule that <b>actual command output</b>, not the sentence &ldquo;I ran the tests&rdquo;, is what counts as evidence.
+    But rules get forgotten, by people and by AI alike. So 04 <b>mechanizes it with two gates</b> &mdash; on every file edit (hooks), and before merging (CI).
+  </p>
+
+  <div class="opt">
+    <div class="opt-head"><span class="id">&sect;1</span><span class="name">Hook quality gate</span><span class="badge b-on">highest impact</span></div>
+    <p class="lead">A linter or syntax check runs automatically <b>every time Claude edits a file</b>. On failure the output goes back to Claude, which fixes it itself.</p>
+    <dl>
+      <dt>File changed</dt><dd><code>hooks.PostToolUse</code> in <code>.claude/settings.json</code></dd>
+      <dt>Example commands</dt><dd>Flutter &rarr; <code>flutter analyze</code> &middot; JS &rarr; <code>node --check</code> &middot; TS &rarr; <code>npm run check-types</code></dd>
+      <dt>What not to put here</dt><dd><b>Slow tests.</b> Minutes on every edit makes the session sluggish and burns tokens &mdash; that is CI&rsquo;s job</dd>
+      <dt>Even on the thrift profile</dt><dd><b>This is never dropped.</b> Less rework is the biggest saving there is</dd>
+      <dt>Scope</dt><dd><b>Shared with the team</b> = project (committed &rarr; <b>applies to everyone</b>, so get approval for a company repository) / <b>you, every project</b> = global / <b>you, this repo only</b> = <code>.claude/settings.local.json</code> (not committed &mdash; use this when the command is stack-specific and would break elsewhere)</dd>
+      <dt>Strictness</dt><dd><b>Blocking</b> (stop on failure and fix immediately) / <b>warn only</b> (report and continue) &mdash; asked together with the scope</dd>
+    </dl>
+  </div>
+
+  <div class="opt">
+    <div class="opt-head"><span class="id">&sect;2</span><span class="name">Host CLI (<code>gh</code> / <code>glab</code>)</span><span class="badge b-off">optional</span></div>
+    <p class="lead">The command-line tool that lets Claude open PRs, read issues, and <b>read CI failure logs directly so it can fix them</b>.</p>
+    <dl>
+      <dt>Which one</dt><dd>GitHub &rarr; <code>gh</code> / GitLab (including self-hosted) &rarr; <code>glab</code> / any other host &rarr; not installed</dd>
+      <dt>Install</dt><dd>Windows: <code>winget install GitHub.cli</code>; macOS: <code>brew install gh</code> &rarr; then <code>gh auth login</code></dd>
+      <dt>Authentication</dt><dd><b>You sign in yourself</b>, in a browser. Claude never creates or stores a token</dd>
+    </dl>
+  </div>
+
+  <div class="opt">
+    <div class="opt-head"><span class="id">&sect;3</span><span class="name">CI integration</span><span class="badge b-gate">&#128308; org approval required at work</span></div>
+    <p class="lead">Claude joins the review at the PR stage. Mention <code class="i">@claude</code> on a PR and it reviews or fixes.</p>
+    <dl>
+      <dt>GitHub</dt><dd>Creates <code>.github/workflows/claude.yml</code> &mdash; the official action <code>anthropics/claude-code-action@v1</code></dd>
+      <dt>GitLab and others</dt><dd>GitLab uses the canonical template from the official CI/CD integration (beta); other hosts fall back to calling <code>claude -p "&hellip;"</code> directly in a CI step</dd>
+      <dt>Requires</dt><dd><code>ANTHROPIC_API_KEY</code> in the repository secrets (Pro/Max subscribers can use <code>CLAUDE_CODE_OAUTH_TOKEN</code> instead); GitLab needs an access token too. <b>Claude cannot add these for you &mdash; you register them yourself</b></dd>
+      <dt>At work &#128308;</dt><dd>CI <b>sends your code to the Anthropic API</b>. Check your organization&rsquo;s external-AI policy first. Without approval, it is not installed</dd>
+    </dl>
+  </div>
+</section>
+
+<!-- ═══════════ 7. 05 ═══════════ -->
+<section id="doc05">
+  <h2>7. 05 Output style &mdash; changing tone and format</h2>
+  <p class="goal">Two items (multi-select)</p>
+
+  <div class="note tip">
+    <b>&#128161; How this differs from CLAUDE.md</b>
+    <b>CLAUDE.md</b> holds <b>facts and rules</b> &mdash; &ldquo;this project uses Flutter and the tests run with this command&rdquo;.
+    An <b>output style</b> changes <b>Claude&rsquo;s role itself</b> by modifying the system prompt, so it lives at a different layer. Do not write the same thing in both.
+  </div>
+
+  <div class="opt">
+    <div class="opt-head"><span class="id">&sect;1</span><span class="name">Switch a built-in style</span><span class="badge b-off">no file created</span></div>
+    <p class="lead">You simply pick one of the five that already exist.</p>
+    <div class="tbl">
+      <table>
+        <tr><th style="width:130px">Style</th><th>Character</th></tr>
+        <tr><td><b>Default</b></td><td>The baseline, tuned for software work</td></tr>
+        <tr><td><b>Proactive</b></td><td>More autonomous &mdash; infers and acts without asking about most things (your permission settings still hold)</td></tr>
+        <tr><td><b>Explanatory</b></td><td>Works while <b>explaining</b> why it implemented things that way. Useful while you are learning</td></tr>
+        <tr><td><b>Learning</b></td><td>Adds <code class="i">TODO(human)</code> markers so <b>you write some of the code yourself</b></td></tr>
+        <tr><td><b>Concise</b></td><td>Leads with the result and drops preamble and narration &mdash; the thoroughness of the work is unchanged</td></tr>
+      </table>
+    </div>
+    <dl>
+      <dt>How to switch</dt><dd>Output style in the <code>/config</code> menu. <b>The old <code>/output-style</code> command has been removed</b></dd>
+      <dt>&#9888;&#65039; Gotcha</dt><dd><b>It does not affect the current session</b> &mdash; the system prompt is read once, at session start. After switching, run <code>/clear</code> or open a new session</dd>
+    </dl>
+  </div>
+
+  <div class="opt">
+    <div class="opt-head"><span class="id">&sect;2</span><span class="name">Create a custom style</span><span class="badge b-off">optional</span></div>
+    <p class="lead">Write the role, tone and format you want into a single markdown file.</p>
+    <dl>
+      <dt>File created</dt><dd><code>output-styles/&lt;name&gt;.md</code></dd>
+      <dt>Follow-up questions</dt><dd><b>Purpose</b> (which role and tone) &middot; <b>scope</b> (global or project) &middot; <b>whether to keep the coding instructions</b> &middot; <b>where to switch it on</b> (which settings file gets the activation key &mdash; a <b>separate axis</b> from where the file lives: the default picker saves only to this repo&rsquo;s personal settings, so a globally-created style still will not activate in other projects) &middot; and if you also chose a built-in switch, <b>which one is active now</b></dd>
+      <dt>&#128308; Gotcha</dt><dd><code>keep-coding-instructions</code> defaults to <b>false</b>, and false makes Claude Code&rsquo;s <b>entire built-in coding guidance disappear</b> &mdash; verification habits and the minimal-change principle included. <b>If you will also be coding, set it to <code>true</code></b>. Use false only for a genuinely different role, such as writer or analyst</dd>
+      <dt>Cost</dt><dd>The style body is <b>a fixed cost loaded into the system prompt every session</b>. Keep it to a few dozen lines</dd>
+      <dt>Where it does not apply</dt><dd>Not to subagents &mdash; each of those uses its own prompt</dd>
+    </dl>
+  </div>
+</section>
+
+<!-- ═══════════ 8. 06 ═══════════ -->
+<section id="doc06">
+  <h2>8. 06 Routines &mdash; jobs that run while your PC is off</h2>
+  <p class="goal">Three items once the gate is passed &middot; research preview</p>
+
+  <p>
+    A routine is <b>a scheduled job that runs unattended in the Anthropic cloud</b>. Even with your machine off, it clones the
+    repository at the appointed time, does the work, and leaves the result as a PR or a comment &mdash; nightly PR review, weekly doc checks, that sort of thing.
+  </p>
+
+  <div class="note warn">
+    <b>&#128308; &sect;1 Preconditions &mdash; fail these and nothing is installed</b>
+    &#9312; Is your plan <b>Pro or above</b>, with access to Claude Code on the web?<br>
+    &#9313; For a company repository &mdash; does your organization permit <b>cloud execution (code leaving the building)</b>? A routine <b>clones the entire repository to the cloud</b> and the prompt is stored there too<br>
+    &#9314; Is it a GitHub repository? (GitHub only, for now)<br>
+    &#9315; Is GitHub <b>connected</b> to your claude.ai account? If not, you build the whole prompt and schedule and <b>the final save is rejected</b> (observed in practice)<br>
+    None of these can be checked from the code, so they are <b>always asked</b>.
+  </div>
+
+  <div class="opt">
+    <div class="opt-head"><span class="id">&sect;2</span><span class="name">Repository prerequisites</span><span class="badge b-off">optional</span></div>
+    <p class="lead">Groundwork so the job actually works in the cloud.</p>
+    <dl>
+      <dt>The key point</dt><dd>A routine <b>cannot use the personal MCP servers registered on your machine</b>. If it needs them, commit them to the repository as <code>.mcp.json</code></dd>
+      <dt>What comes along</dt><dd><code>CLAUDE.md</code> and <code>.claude/settings.json</code> are in the clone, so they <b>apply unchanged</b> &mdash; document 01&rsquo;s record rules stay alive in cloud runs too</dd>
+    </dl>
+  </div>
+
+  <div class="opt">
+    <div class="opt-head"><span class="id">&sect;3</span><span class="name">Creating a routine &mdash; pick one of three triggers</span></div>
+    <div class="tbl">
+      <table>
+        <tr><th style="width:110px">Trigger</th><th>How to create it</th><th style="width:190px">Example use</th></tr>
+        <tr><td><b>Schedule</b></td><td><code class="i">/schedule &lt;plain English&gt;</code> &mdash; minimum interval one hour; one-off runs allowed</td><td>Weekly doc checks, backlog grooming</td></tr>
+        <tr><td><b>API</b></td><td>Create it on the web, then call it with a dedicated token</td><td>Monitoring alert &rarr; investigate cause &rarr; draft PR</td></tr>
+        <tr><td><b>GitHub</b></td><td>Create on the web or with <code>/schedule</code> &mdash; events such as PR opened or merged, plus filters</td><td>Checklist review when a PR opens</td></tr>
+      </table>
+    </div>
+    <dl>
+      <dt>Decided alongside</dt><dd>Target repository &middot; the prompt &middot; the connectors it needs (<b>everything is included by default, so remove what you do not need</b> &mdash; least privilege)</dd>
+      <dt>On the thrift profile</dt><dd>You are advised to start <b>weekly</b>. Routine runs consume your plan allowance too</dd>
+    </dl>
+  </div>
+
+  <div class="opt">
+    <div class="opt-head"><span class="id">&sect;4</span><span class="name">Definition record: <code>docs/ROUTINES.md</code></span><span class="badge b-on">recommended</span></div>
+    <p class="lead">A routine&rsquo;s configuration <b>lives only in your claude.ai account, never in the repository</b>. Move accounts, or have a teammate recreate it, and there is nothing to reproduce it from. So each one gets written down in the repository.</p>
+  </div>
+
+  <div class="note tip">
+    <b>&#128161; When a routine is the wrong tool</b>
+    <b>If it needs files or tools on your own machine, it is not a routine</b> &mdash; it runs in the cloud, where your files do not exist.
+    Use the desktop app&rsquo;s scheduled tasks, or <code class="i">/loop</code> inside a session, instead.
+    Routines are for &ldquo;must run with the computer off&rdquo; and &ldquo;react to GitHub events&rdquo; only.
+  </div>
+</section>
+
+<!-- ═══════════ 9. 프리셋 ═══════════ -->
+<section id="presets">
+  <h2>9. If this is your first time, pick these</h2>
+  <p class="goal">Recommended combinations by situation</p>
+
+  <div class="tbl">
+  <table>
+    <tr><th style="width:180px">Situation</th><th style="width:150px">Mode &middot; bundles &middot; profile</th><th>Why</th></tr>
+    <tr>
+      <td><b>A new machine, Claude Code just installed</b></td>
+      <td>Recommended / no bundles / standard</td>
+      <td>Global rules, security, <code class="i">/resume</code>, <code class="i">/wrap</code> and the status line. That alone kills &ldquo;what was I doing yesterday?&rdquo;</td>
+    </tr>
+    <tr>
+      <td><b>A solo development project</b></td>
+      <td>Recommended / stronger verification / standard</td>
+      <td>Records, model split, and automatic checks on every edit. Even solo, the hook gate has the biggest payoff</td>
+    </tr>
+    <tr>
+      <td><b>A project that builds web screens</b></td>
+      <td>Recommended / design + stronger verification / standard</td>
+      <td>Design skills plus browser verification give you build &rarr; open it yourself &rarr; fix</td>
+    </tr>
+    <tr>
+      <td><b>On Pro and worried about the allowance</b></td>
+      <td>Recommended / no bundles / <b>thrift</b></td>
+      <td>Start at lower effort while watching usage on the status line. The verification gates stay</td>
+    </tr>
+    <tr>
+      <td><b>A documentation-only repository</b></td>
+      <td>Minimal / no bundles / standard</td>
+      <td>02 (model split) and 04 (build verification) have nothing to act on. The record system is enough</td>
+    </tr>
+    <tr>
+      <td><b>A company repository</b></td>
+      <td>Recommended / <b>company</b> + whatever you need / standard</td>
+      <td>The &ldquo;company&rdquo; bundle installs nothing; it is <b>a safeguard</b> &mdash; it forces an approval check wherever code leaves the building (CI, MCP, routines)</td>
+    </tr>
+  </table>
+  </div>
+</section>
+
+<!-- ═══════════ 10. FAQ ═══════════ -->
+<section id="faq">
+  <h2>10. Commonly confused</h2>
+
+  <h3>Can I run it again if it is already installed?</h3>
+  <p>
+    Yes &mdash; that is the intended use. When an install finishes, a line like this is left at the bottom of <code class="i">CLAUDE.md</code>:
+  </p>
+  <p><code class="i">&lt;!-- dropin-applied: 2026-08-05 &middot; 모드=권장+디자인 &middot; 프로필=표준 &middot; 언어=en &middot; 01 v&#9675;.&#9675; &middot; 02 v&#9675;.&#9675; &middot; 미선택: 05, 06 &middot; 출처=사본 --&gt;</code></p>
+  <p>
+    Run it again later and Claude reads that line first, then <b>summarizes what changed in the documents since</b>.
+    Even at the same version it asks &ldquo;shall I audit the existing items? add what you skipped last time?&rdquo;,
+    and if something was <b>left pending</b> last time (&ldquo;awaiting gh authentication&rdquo;, say) it checks whether that is now resolved.
+    If it is resolved but you still do not want it, that is recorded as &ldquo;not selected&rdquo; &mdash; so the same question stops coming back.
+  </p>
+
+  <h3>If I skip a checkbox, is it gone for good?</h3>
+  <p>You can run it again any time and add it. The documents are independent, so order barely matters &mdash; though 02 flows naturally once 01&rsquo;s record system is in place.</p>
+
+  <h3>I am worried something will get overwritten</h3>
+  <p>
+    The principle running through the whole install is <b>&ldquo;never overwrite without approval&rdquo;</b>. Detected settings always
+    prompt keep / reconcile / replace, and edits to <code class="i">settings.json</code> <b>merge just that key</b> rather than replacing the file.
+    Secrets (<code class="i">.env</code>, keys, certificates) are neither read nor committed.
+  </p>
+
+  <h3>I installed it but <code>/resume</code> does not appear in autocomplete</h3>
+  <p>
+    Restart the IDE or terminal. If that does not do it, checking the folder and file name
+    (<code class="i">skills/resume/SKILL.md</code>) and the <code class="i">name:</code> line at the top of the file solves it in nearly every case.
+  </p>
+
+  <h3>Typing <code>/resume</code> shows <b>several</b> entries with the same name &mdash; did it install wrong?</h3>
+  <p>
+    Usually that is correct. The setup puts a copy in the repo (<code class="i">.claude/skills/</code>) to share with the team and another on
+    your machine (<code class="i">~/.claude/skills/</code>) to actually run, so one machine holds two copies of the same name and autocomplete lists them
+    separately. Whichever you pick, <b>the one on your machine runs</b> (the official precedence). What matters is not the count but
+    <b>whether the two copies have the same content</b> &mdash; if they differ, tell Claude to &ldquo;align the global skill with the repo copy&rdquo;.
+    The exception: two entries caused by a leftover <code class="i">~/.claude/commands/resume.md</code> from the old style &mdash; delete that file.
+  </p>
+
+  <h3>The &ldquo;document version&rdquo; keeps climbing &mdash; must I keep up every time?</h3>
+  <p>
+    No. Most version bumps are simply <b>a re-check against the official documentation, recording that it still holds</b>.
+    Changes that actually alter what gets installed are bold in the version table, so judging from the summary Claude shows you on re-application is enough.
+  </p>
+</section>
+
+</main>
+
+<a class="totop" href="#toc">&uarr; Contents</a>
+
+<footer>
+  Install options dictionary &middot; based on 00_통합-설치.md &middot; 2026-08-24<br>
+  The source of truth for each item is its own document (01&ndash;06). This page exists so people can read and judge; it does not change the install procedure itself.<br>
+  Repository: github.com/EleninJayTech/claude &middot;
+  <a href="../index.html">Guide</a> &middot; <a href="intro.html">Intro</a> &middot; <a href="demo.html">Walkthrough</a> &middot; <a href="learn.html">Course</a>
+</footer>
+
+<script>
+(function(){try{
+  if(localStorage.getItem('lang'))return;
+  if((navigator.language||'').toLowerCase().indexOf('ko')===0){
+    localStorage.setItem('lang','ko');location.replace('options.ko.html');
+  }
+}catch(e){}})();
+</script>
+</body>
+</html>
