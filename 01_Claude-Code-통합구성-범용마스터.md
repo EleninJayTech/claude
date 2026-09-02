@@ -1,6 +1,6 @@
 # Claude Code 통합 구성 — 범용 마스터 (드롭인 적용)
 
-> **문서 버전: v1.62** · 최종 갱신: **2026-09-02** · **최근 재검증: 2026-08-20** · 기준: Claude Code v2.1.237 (Opus 5 · Sonnet 5 · Fable 5)
+> **문서 버전: v1.63** · 최종 갱신: **2026-09-02** · **최근 재검증: 2026-08-20** · 기준: Claude Code v2.1.237 (Opus 5 · Sonnet 5 · Fable 5)
 >
 > | 버전 | 날짜 | 변경 내용 |
 > | --- | --- | --- |
@@ -35,6 +35,7 @@
 > | v1.60 | 2026-09-02 | **§D-7 프롬프트 캐시 친화 운영 신설** — 캐시를 깨는/지키는 행동, `/compact`보다 `/clear`(·`/rewind`), TTL 버킷 2개와 `promptCacheTtl`, `/usage` 측정. §G 흐름도에 한 줄 |
 > | v1.61 | 2026-09-02 | §F-2 `allowed-tools`에 **신뢰 주의** — 워크스페이스 신뢰가 이 키를 막지 않고 스킬이 스스로 도구 권한을 넓힐 수 있다(공식 확인). §F-1이 `.claude/skills` 커밋을 권하면서 그 단서를 빠뜨리고 있었다 |
 > | v1.62 | 2026-09-02 | §F-5 `.gitignore`에 **`.claude/worktrees/`** — 안 걸면 격리 checkout 내용물이 메인 체크아웃에서 통째로 untracked로 뜬다(공식 Tip) |
+> | v1.63 | 2026-09-02 | **다음 세션이 이어받을 것은 항목 앞쪽·PROJECT_PLAN에**(§F-1 + §F-2 wrap 템플릿 A·B·C, 대장 R34) — 계획서 경로·다음 행동을 PROGRESS 항목 **끝**에 붙이면 /resume의 700자 컷 밖이라 도달하지 않는다(실측: 1,572자 항목의 경로가 1,418자 지점) |
 > ※ 갱신 시: 이 표에 한 줄 추가 + 하단 "문서 정보" 날짜 수정 + §L 재검증 체크리스트 수행.
 
 > **사용법**: 이 파일을 아무 프로젝트 루트(또는 `docs/`)에 넣고 Claude에게
@@ -278,6 +279,7 @@ New-Item -ItemType Directory -Path .claude/skills/dropin-update -Force
 - /wrap: PROGRESS append + 새 DEC + PROJECT_PLAN 체크박스 갱신 + **미커밋이면 경고**(커밋 전엔 다음 /resume가 git status로만 발견).
 - **미해소 `[Pending]`·`[Blocked]`는 PROJECT_PLAN "미해결/관찰 중"에 한 줄로 올려 닫힐 때까지 유지**한다. 닫는 것은 PROJECT_PLAN에서만 일어나므로 PROGRESS 마커는 남는다 — `/resume`은 그 마커를 **PROJECT_PLAN과 대조**해 거기 없으면 닫힌 것으로 본다(안 그러면 닫힌 항목을 매번 열린 것으로 보고한다). PROGRESS는 append 전용이고 /resume은 최근 ~5항목만 읽으므로, 그 항목이 5항목 창 밖으로 밀리는 순간 어느 절차도 다시 보지 않는다.
 - 정기 항목(재검증·점검 주기)은 PROJECT_PLAN에 **`다음 ○○: YYYY-MM경`** 형식으로 남긴다 — /resume의 "예정일 경과" 안내가 읽는 형식이라, 안 적으면 그 안내는 발화하지 않는다. 반대로 그 안내는 **미완료 항목만** 읽는다(`[x]`·취소선으로 종결된 항목은 제외) — 종결 시 예정일 문자열을 지우지 않아도 되고, 지우면 이력이 사라진다.
+- **다음 세션이 이어받을 것**(`docs/plans/` 계획서 경로·다음 행동)은 **PROGRESS 항목 끝에 두지 않는다** — 항목 **앞쪽**에 적고, 세션 이후에도 유효하면 **PROJECT_PLAN**에 한 줄로 올린다. 항목 끝은 /resume의 **700자 컷**에 잘려 도달하지 않는다(경로·다음 계획을 끝에 붙이는 관행이 흔해 실제로 잘린다 — 파일은 남는데 가리키는 손가락만 잘린다). 다음 행동이 **없으면 없다고 적는다** — 안 적으면 다음 세션이 미해결 목록에서 재구성하게 되고, 그 재구성이 맞았는지 확인할 방법이 없다.
 
 ### 길이 관리
 - PROGRESS·DECISIONS가 약 800줄 **또는 약 120KB**(먼저 닿는 쪽)를 넘으면 가장 오래된 항목부터 docs/archive/로 옮기고 활성 파일 **최상단(제목 바로 아래) 포인터 한 줄**("이전 기록: docs/archive/…"). 두 축인 이유 — 1항목=1줄로 적는 저장소는 줄 수가 임계의 4분의 1일 때 이미 100KB를 넘는다. **얼마나 자를지는 달력이 아니라 목표치로 정한다** — 활성 파일이 **임계의 절반 이하**가 될 때까지(가능하면 날짜 경계에 맞춰). 분기·월 같은 달력 단위는 부피와 무관해서, 그 단위로 잘라도 임계 아래로 못 내려가면 매 세션 다시 발화한다. 맨 아래가 아니라 최상단인 이유 — /resume가 최근 ~5항목만 읽어 아래 포인터는 보이지 않는다. 이후 append는 **포인터 줄 아래부터**(포인터 최상단 고정). **과거 이력 검색은 활성 파일이 아니라 `docs/` 폴더 단위로**(아카이브 자동 포함) — 파일만 검색하면 "기록 없음"으로 오판한다.
@@ -320,7 +322,7 @@ description: 세션 시작 시 원격 최신화(clean이면 git pull --ff-only)�
 name: wrap
 description: 세션 종료 시 docs/PROGRESS.md 최상단에 오늘 작업 append, 새 결정 DECISIONS, PROJECT_PLAN 체크박스, 미커밋 경고, 변경 파일 보고.
 ---
-# /wrap — docs/PROGRESS.md 최상단 append(작업/결정/다음/미해결 — **§F-6 양식** `[갈래][Done|Pending|Blocked|Reverted] … — @작성자 (브랜치) YYYY-MM-DD`, **갈래·날짜를 비우지 않는다**. 되돌림은 `[Reverted]` 새 항목 append + 원항목 표시) + 새 DEC + PROJECT_PLAN 체크박스(+ 있으면 `docs/WBS.md` 등 파생 뷰 동기화 — SSOT=PROJECT_PLAN). 미커밋이면 경고. 변경 파일 보고. append 후 PROGRESS·DECISIONS 부피 확인 — ~800줄 **또는 ~120KB** 초과면 아카이브(docs/archive/ 이동+최상단 포인터 — 가장 오래된 항목부터 활성 파일이 임계의 절반 이하가 될 때까지) 안내(/resume는 최근 ~5항목만 읽어 감지 못 함). + 이번 세션에 `~/.claude/`나 저장소 `global-config/`를 고쳤으면 화이트리스트 5종 해시 대조(클론 없으면 생략) — 차이 시 어느 쪽이 최신인지 판정해 방향 보고+복사 안내(`settings.json`은 키 단위 — **구성 성격 키(`permissions.deny`·`hooks`·`attribution`·`autoMemoryEnabled`)의 차이만** 실제 차이로 보고 나머지는 전부 머신 종속으로 제외. 이 **포함 기준이 정본**이고 괄호는 예시다 — 제외 키를 나열해 맞추면 사본마다 목록이 갈라진다, DEC-20260721-bsjeong87-02. 글로벌 `CLAUDE.md`의 `dropin-applied` 줄도 PC별 값이라 차이로 치지 않는다. **줄바꿈을 정규화한 뒤 비교** — 저장소에 EOL 지시가 없으면 워킹트리 줄바꿈이 그 PC의 `core.autocrlf`에 좌우돼 내용이 같아도 해시가 갈린다).
+# /wrap — docs/PROGRESS.md 최상단 append(작업/결정/다음/미해결 — **§F-6 양식** `[갈래][Done|Pending|Blocked|Reverted] … — @작성자 (브랜치) YYYY-MM-DD`, **갈래·날짜를 비우지 않는다**. 되돌림은 `[Reverted]` 새 항목 append + 원항목 표시. **다음 세션이 이어받을 것**(`docs/plans/` 계획서 경로·다음 행동)은 항목 **앞쪽**에 적고 PROJECT_PLAN에도 한 줄 — 항목 끝은 /resume의 **700자 컷**에 잘려 도달하지 않는다. 다음 행동이 없으면 없다고 적는다) + 새 DEC + PROJECT_PLAN 체크박스(+ 있으면 `docs/WBS.md` 등 파생 뷰 동기화 — SSOT=PROJECT_PLAN). 미커밋이면 경고. 변경 파일 보고. append 후 PROGRESS·DECISIONS 부피 확인 — ~800줄 **또는 ~120KB** 초과면 아카이브(docs/archive/ 이동+최상단 포인터 — 가장 오래된 항목부터 활성 파일이 임계의 절반 이하가 될 때까지) 안내(/resume는 최근 ~5항목만 읽어 감지 못 함). + 이번 세션에 `~/.claude/`나 저장소 `global-config/`를 고쳤으면 화이트리스트 5종 해시 대조(클론 없으면 생략) — 차이 시 어느 쪽이 최신인지 판정해 방향 보고+복사 안내(`settings.json`은 키 단위 — **구성 성격 키(`permissions.deny`·`hooks`·`attribution`·`autoMemoryEnabled`)의 차이만** 실제 차이로 보고 나머지는 전부 머신 종속으로 제외. 이 **포함 기준이 정본**이고 괄호는 예시다 — 제외 키를 나열해 맞추면 사본마다 목록이 갈라진다, DEC-20260721-bsjeong87-02. 글로벌 `CLAUDE.md`의 `dropin-applied` 줄도 PC별 값이라 차이로 치지 않는다. **줄바꿈을 정규화한 뒤 비교** — 저장소에 EOL 지시가 없으면 워킹트리 줄바꿈이 그 PC의 `core.autocrlf`에 좌우돼 내용이 같아도 해시가 갈린다).
 **폴백**: 비-git 폴더면 git status·커밋 단계를 건너뛰고 기록 append만. `docs/`가 없거나 **기록 3종이 제자리에 없으면**(`PROJECT_PLAN`은 repo `docs/` 루트, `PROGRESS`·`DECISIONS`는 대상 단위 — flat이면 둘 다 `docs/`) 있는 파일에만 기록하고 **없는 것을 지목해** "01 §E-1 기록 체계 미설치"를 알린다(PROJECT_PLAN 부재면 미해결 승격이, DECISIONS 부재면 새 결정이 갈 곳을 잃는다. 저장되지 않은 몫을 명시하고 요약을 출력). 단 `docs/PROGRESS.md`가 없는데 `docs/<하위>/PROGRESS.md`가 있으면 **단위분할 repo**이니 미설치가 아니라 §F-2 B로 교체를 안내한다(resume과 같은 판정).
 ```
 
@@ -347,6 +349,7 @@ description: 단위분할 마무리. 대상 단위 docs/<단위>/PROGRESS.md에 
 # /wrap (솔루션-aware)
 대상 단위 판별 후 docs/<단위>/PROGRESS.md 최상단에 §F-6 양식으로 기록(`[갈래][Done|Pending|Blocked|Reverted] … — @작성자 (브랜치) YYYY-MM-DD` — **갈래·날짜를 비우지 않는다**). 되돌림은 [Reverted] 새 항목 append + 원항목 표시(revert가 지운 줄은 되살린다).
 **폴백**: 단위 폴더가 없는 단일 repo면 `docs/PROGRESS.md`에 A와 동일하게. 비-git 폴더면 git status·커밋 단계를 건너뛰고 기록만. `docs/`가 없거나 **기록 3종이 제자리에 없으면**(`PROJECT_PLAN`은 repo `docs/` 루트, `PROGRESS`·`DECISIONS`는 대상 단위 — flat이면 둘 다 `docs/`) 있는 파일에만 append하고 **없는 것을 지목해** "01 §E-1 기록 체계 미설치"를 알린다(PROJECT_PLAN 부재면 미해결 승격이, DECISIONS 부재면 새 결정이 갈 곳을 잃는다).
+**다음 세션이 이어받을 것**(`docs/plans/` 계획서 경로·다음 행동)은 항목 **앞쪽**에 적고 PROJECT_PLAN에도 한 줄 — 항목 끝은 /resume의 **700자 컷**에 잘려 도달하지 않는다. 다음 행동이 없으면 없다고 적는다.
 다른 단위도 바뀌면 그 단위에 [공통] 교차 한 줄. 미커밋이면 경고. 완료 모호 시 확인 후 기록.
 append 후 해당 PROGRESS·DECISIONS 부피 확인 — ~800줄 또는 ~120KB 초과면 아카이브 안내(가장 오래된 항목부터 임계의 절반 이하까지).
 이번 세션에 `~/.claude/`나 저장소 `global-config/`를 고쳤으면 화이트리스트 5종 해시 대조(클론 없으면 생략) — 차이 시 방향 판정+복사 안내. **판정 기준은 A와 동일**(구성 성격 4키만 실제 차이·포함 기준이 정본·글로벌 `CLAUDE.md`의 `dropin-applied` 줄 제외·줄바꿈 정규화 후 비교).
@@ -375,7 +378,7 @@ description: 통합 마무리. 건드린 repo마다 <repo>/docs[/<단위>]/PROGR
 ---
 # /wrap (통합)
 1) 각 repo git status로 변경 감지(**폴백**: 단일 repo면 그 repo만 — 3)·4)는 생략해 A와 동일. 비-git 폴더면 git 단계를 건너뛰고 기록만). 2) 변경 repo마다 docs[/<단위>]/PROGRESS.md 최상단 append(§F-6 양식 — `[갈래][…] … — @작성자 (브랜치) YYYY-MM-DD`, **갈래·날짜를 비우지 않는다**. 되돌림은 [Reverted] 새 항목 + 원항목 표시)(**폴백**: 그 단위에 `docs/`가 없거나 **기록 3종이 제자리에 없으면**(`PROJECT_PLAN`은 repo `docs/` 루트, `PROGRESS`·`DECISIONS`는 그 단위) 있는 파일에만 append하고 **없는 것을 지목해** "01 §E-1 기록 체계 미설치"를 알린다(PROJECT_PLAN 부재면 미해결 승격이, DECISIONS 부재면 새 결정이 갈 곳을 잃는다). **루트는 예외** — 얇은 라우터의 루트 `docs/`엔 PROGRESS·DECISIONS·PROJECT_PLAN이 없는 것이 정상이니(`INDEX.md`·워크스페이스 레이어 산출물은 함께 있을 수 있다) 미설치로 보지 않는다).
-3) 여러 repo면 주 대상 본문 + 나머지 [공통] 교차. 4) (선택) 루트 docs/INDEX.md 크로스-repo 한 줄+링크.
+3) 여러 repo면 주 대상 본문 + 나머지 [공통] 교차. 4) (선택) 루트 docs/INDEX.md 크로스-repo 한 줄+링크. **다음 세션이 이어받을 것**(`docs/plans/` 계획서 경로·다음 행동)은 항목 **앞쪽**에 적고 PROJECT_PLAN에도 한 줄 — 항목 끝은 /resume의 **700자 컷**에 잘려 도달하지 않는다. 다음 행동이 없으면 없다고 적는다.
 5) repo별 변경 파일 보고 + 미커밋 경고. 커밋은 repo별 따로(팀 양식). append한 PROGRESS·DECISIONS가 ~800줄 또는 ~120KB 초과면 아카이브 안내(가장 오래된 항목부터 임계의 절반 이하까지).
 6) 이번 세션에 `~/.claude/`나 저장소 `global-config/`를 고쳤으면 화이트리스트 5종 해시 대조(클론 없으면 생략) — 차이 시 방향 판정+복사 안내. **판정 기준은 A와 동일**(구성 성격 4키만 실제 차이·포함 기준이 정본·글로벌 `CLAUDE.md`의 `dropin-applied` 줄 제외·줄바꿈 정규화 후 비교).
 ```
@@ -565,5 +568,5 @@ Claude Code는 매주 바뀐다. 6개월마다 30분:
 ## 핵심 출처 🟢
 IDE 통합·`--add-dir`(ide-integrations·large-codebases) / permissions·deny 한계 / hooks / skills / memory·auto-memory — 모두 `code.claude.com/docs` 및 `docs.anthropic.com`.
 
-**문서 정보** — 통합 마스터(범용) **v1.62**. 변경 이력은 최상단 버전 표 참조(유래: 8개 소스 통합 초판 — `v1.0~v1.32` 병합 행).
+**문서 정보** — 통합 마스터(범용) **v1.63**. 변경 이력은 최상단 버전 표 참조(유래: 8개 소스 통합 초판 — `v1.0~v1.32` 병합 행).
 최종 갱신: 2026-09-02 · 최근 재검증: 2026-08-20 / 참조: Claude Code v2.1.237, Opus 5(v2.1.219+) · Sonnet 5(v2.1.197+) · Fable 5(v2.1.170+).
