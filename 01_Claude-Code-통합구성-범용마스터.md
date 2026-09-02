@@ -1,6 +1,6 @@
 # Claude Code 통합 구성 — 범용 마스터 (드롭인 적용)
 
-> **문서 버전: v1.64** · 최종 갱신: **2026-09-02** · **최근 재검증: 2026-08-20** · 기준: Claude Code v2.1.237 (Opus 5 · Sonnet 5 · Fable 5)
+> **문서 버전: v1.65** · 최종 갱신: **2026-09-02** · **최근 재검증: 2026-09-02** · 기준: Claude Code v2.1.258 (Opus 5 · Sonnet 5 · Fable 5.1)
 >
 > | 버전 | 날짜 | 변경 내용 |
 > | --- | --- | --- |
@@ -37,6 +37,7 @@
 > | v1.62 | 2026-09-02 | §F-5 `.gitignore`에 **`.claude/worktrees/`** — 안 걸면 격리 checkout 내용물이 메인 체크아웃에서 통째로 untracked로 뜬다(공식 Tip) |
 > | v1.63 | 2026-09-02 | **다음 세션이 이어받을 것은 항목 앞쪽·PROJECT_PLAN에**(§F-1 + §F-2 wrap 템플릿 A·B·C, 대장 R34) — 계획서 경로·다음 행동을 PROGRESS 항목 **끝**에 붙이면 /resume의 700자 컷 밖이라 도달하지 않는다(실측: 1,572자 항목의 경로가 1,418자 지점) |
 > | v1.64 | 2026-09-02 | **/audit 8차(회귀) 반영 12건** — §D-7 근거 포인터를 번호→내용으로(02 재번호에 깨짐)·`/clear`는 **`/wrap` 뒤에**(훅 게이트 없음)+§D-3 `SessionStart` `clear` 매처·`model:` 오버라이드 스킬은 캐시 예외·§L에 **캐시 축**과 frontmatter 4키 · R34 보강: §F-2 A·B·C에 **조건절**("세션 이후에도 유효하면")·배치 절("미해결/관찰 중")·종결자("이어받은 세션의 /wrap이 닫는다") 복원, B·C 계획서 경로를 단위 경로로, §E-1에 `plans/`, /resume 서술에 "미해결/관찰 중"·"다음 행동 없음이면 재구성 금지", §F-2 A·B resume에 R25 대조 · §D-2→05 참조 정정·ⓕ에 §D-7·`claude --resume` 표기 |
+> | v1.65 | 2026-09-02 | 전면 재검증(v2.1.258) — §D-6 `/effort` **모델별 저장**(`modelSettings` — `effortLevel`은 기본값으로 격하, `s` 세션 한정)·Fable 5.1 hold 없음 · §D-7 플러그인은 **MCP 제공형만** 캐시를 깨고 advisor 토글은 무해, CLAUDE.md는 `/compact`에도 재로드, `/cost` 병기 · §F-2 확장 키 **7종 추가**(`when_to_use`·`agent`·`hooks`·`paths`·`background`·`shell`·`disallowed-tools`)+**`allowed-tools`는 제한이 아님** · §J-1 auto 기본화 날짜 🟡 · §L 🟡 3건 재작성 |
 > ※ 갱신 시: 이 표에 한 줄 추가 + 하단 "문서 정보" 날짜 수정 + §L 재검증 체크리스트 수행.
 
 > **사용법**: 이 파일을 아무 프로젝트 루트(또는 `docs/`)에 넣고 Claude에게
@@ -173,10 +174,10 @@ New-Item -ItemType Directory -Path .claude/skills/dropin-update -Force
 ### D-5. 확인 — `claude` → `/` → `/resume`·`/wrap`·`/dropin-check`·`/dropin-update` 자동완성 **+ 글로벌 `settings.json`의 `deny` 시크릿 차단 실측**(스킬 4종은 파일 복사만으로 뜨므로 자동완성만 보면 ⓑ가 통째로 빠져도 "성공"이 된다). **ⓐ를 적용했으면 `/context`의 Memory files 목록에 `~/.claude/CLAUDE.md`가 실제로 있는지도 본다** — 파일이 존재하는 것과 **세션에 로드되는 것**은 다르고, 로드되지 않으면 그 행동 규칙은 없는 것과 같다. 파일 실재만 확인하면 위치·제외 설정 때문에 안 읽히는 경우를 통째로 놓친다.
 
 ### D-6. 추론 강도(effort) 제어 — `/effort` 🟢
-세션의 **사고(reasoning) 깊이**를 조절하는 슬래시 명령. 고른 값은 settings.json **`effortLevel`** 키에 저장돼 **새 세션 기본값**이 된다.
+세션의 **사고(reasoning) 깊이**를 조절하는 슬래시 명령. 고른 값은 **모델별로** settings.json `modelSettings`에 저장된다(v2.1.257+ — 모델마다 자기 저장값을 갖고, **`effortLevel`은 저장값 없는 모델의 기본값**으로 격하. `s`를 붙이면 세션 한정, `/effort auto`는 활성 모델의 저장값 제거).
 - **단계(낮음→높음)**: `low` → `medium` → `high` → `xhigh` → `max`. **기본값은 `high`**(Opus 4.7만 `xhigh`).
 - **모델별 지원**: Fable 5 · Opus 5 · Sonnet 5 · Opus 4.8 · Opus 4.7 = 전 단계(`xhigh` 포함). Opus 4.6 · Sonnet 4.6 = `xhigh` 없음(low/medium/high/max). 미지원 단계를 지정하면 **바로 아래 지원 단계로 자동 폴백**(예: Opus 4.6에서 xhigh→high).
-- **기본값 hold 차이**: Fable 5·Opus 4.8·4.7은 첫 실행 시 그 모델의 기본 effort를 강제 적용하고 명시적으로 바꿀 때까지 유지(hold)하지만, **Opus 5는 hold가 없어 이전에 설정한 값이 그대로 승계**된다.
+- **기본값 hold 차이**: Fable 5·Opus 4.8·4.7은 첫 실행 시 그 모델의 기본 effort를 강제 적용하고 명시적으로 바꿀 때까지 유지(hold)하지만, **Opus 5·Fable 5.1은 hold가 없어 이전에 설정한 값이 그대로 승계**된다.
 - **`/effort xhigh`**: high보다 깊은 추론, **최대(max) 바로 아래**. (안내문: *"Deeper reasoning than high, just below maximum"*)
 - **`/effort` (인자 없이)**: 대화형 슬라이더. `/effort auto`는 모델 기본값으로 리셋. `/model` 화면에서도 좌우 화살표로 effort 조절 가능.
 - **저장 제한**: `effortLevel`에 저장되는 건 `low`~`xhigh`뿐. **`max`는 세션 한정**(단 `CLAUDE_CODE_EFFORT_LEVEL`로는 지속 지정 가능).
@@ -202,12 +203,12 @@ New-Item -ItemType Directory -Path .claude/skills/dropin-update -Force
 
 ### D-7. 프롬프트 캐시 친화 운영 🟢
 매 턴 대화 전체가 다시 실려가되, 요청 앞부분이 직전과 **같으면 캐시에서 읽는다**(정가의 ~10%). 한 곳이라도 바뀌면 **그 뒤 전부**를 다시 처리한다 — 절약의 두 번째 축은 "덜 쓰기"가 아니라 **"재처리 안 당하기"** 다. 표준·절약 프로필 공통.
-- **캐시를 깨는 행동** — 작업 중엔 피하고, 필요하면 **세션 시작에 몰아서** 한다: `/model` 전환 · `/effort` 변경(effort도 캐시 키다 — 02 §F 운용 원칙의 "강도 상향은 새 세션" 항목) · fast mode 켜기 · MCP 서버 연결/해제(도구가 **비deferred**로 프리픽스에 실린 경우만) · 플러그인 활성/비활성 · **도구 이름 단독 deny 규칙** 추가·제거(`Bash` 형태. `Bash(rm *)` 같은 스코프 규칙은 무해) · `/compact` · 업그레이드 후 `claude --resume`(가장 비싼 한 턴이 된다).
-- **캐시를 지키는 행동** — 마음껏: plan mode 진입·이탈 · 스킬·커맨드 호출(**예외: `model:`/`effort:` 오버라이드 스킬** — 호출 턴이 다른 모델로 가 컨텍스트 전체를 비캐시 1회, 02 §F) · `/recap` · `/rewind` · 권한 모드 전환 · 파일 편집 · CLAUDE.md 편집 · 출력 스타일 변경. 단 뒤 둘은 **세션 중엔 적용도 안 된다**(다음 `/clear`·재시작에 로드 — 05).
+- **캐시를 깨는 행동** — 작업 중엔 피하고, 필요하면 **세션 시작에 몰아서** 한다: `/model` 전환 · `/effort` 변경(effort도 캐시 키다 — 02 §F 운용 원칙의 "강도 상향은 새 세션" 항목) · fast mode 켜기 · MCP 서버 연결/해제(도구가 **비deferred**로 프리픽스에 실린 경우만) · **MCP 서버를 제공하는** 플러그인 활성/비활성(스킬·커맨드·훅·테마만 주는 플러그인은 무해) · **도구 이름 단독 deny 규칙** 추가·제거(`Bash` 형태. `Bash(rm *)` 같은 스코프 규칙은 무해) · `/compact` · 업그레이드 후 `claude --resume`(가장 비싼 한 턴이 된다).
+- **캐시를 지키는 행동** — 마음껏: plan mode 진입·이탈 · 스킬·커맨드 호출(**예외: `model:`/`effort:` 오버라이드 스킬** — 호출 턴이 다른 모델로 가 컨텍스트 전체를 비캐시 1회, 02 §F) · `/recap` · `/rewind` · 권한 모드 전환 · advisor 켜고 끄기 · 파일 편집 · CLAUDE.md 편집(다음 `/clear`·`/compact`·재시작에 로드) · 출력 스타일 변경(다음 `/clear`·재시작에만 — 05). 뒤 둘은 **세션 중엔 적용도 안 된다**.
 - **예외 `opusplan`**: plan 경계마다 모델이 바뀌어 **토글 1회 = 캐시 리셋**이다(02 §F).
 - **`/compact`보다 `/clear`**: `/clear`는 요청을 보내지 않아 **비용 0**(단 **`/wrap` 뒤에** — `/clear`엔 훅 게이트가 없어 기록 안 된 결정이 그대로 사라진다), `/compact`는 요약을 만드는 **그 자체로 큰 요청**이다(캐시가 식은 오래된 세션에서 가장 비싸다 — §D-3 `manual` 게이트를 걸었다면 `/wrap` 뒤에). 가 본 길을 통째로 버릴 땐 `/rewind`가 더 싸다 — 이미 캐시된 지점으로 되감기 때문이다.
 - **수명(TTL)은 버킷 2개**: 구독 플랜 한도 안에선 **메인 대화만 1시간**, 서브에이전트·워크플로·컴팩션은 **5분**. usage credits 소진 후·**API 키·클라우드는 전부 5분** — 이 경우 자리를 비웠다 돌아올 때 전체를 다시 읽는다. 늘리려면 `settings.json`에 `"promptCacheTtl": "1h"`(서브에이전트까지면 `"subagentPromptCacheTtl": "1h"`) — 값은 `5m`·`1h`만 유효.
-- **범위는 머신+작업 디렉터리**다(시스템 프롬프트에 cwd가 박힌다) — **워크트리마다 캐시가 갈린다**. **측정**은 `/usage` → `Prompt cache (main)` 줄(캐시 비율·미스·웜 여부). 미스가 매 턴 쌓이면 위 "깨는 행동" 하나가 작업 중에 일어나고 있다는 뜻이다. 같은 화면이 스킬·서브에이전트·플러그인·MCP별 **사용량 귀속**도 보여준다 — 측정 없는 절약은 감이다(§D-6).
+- **범위는 머신+작업 디렉터리**다(시스템 프롬프트에 cwd가 박힌다) — **워크트리마다 캐시가 갈린다**. **측정**은 `/usage`(v2.1.251+ — `/cost`·상태줄 `prompt_cache`도 같은 값) → `Prompt cache (main)` 줄(캐시 비율·미스·웜 여부). 미스가 매 턴 쌓이면 위 "깨는 행동" 하나가 작업 중에 일어나고 있다는 뜻이다. 같은 화면이 스킬·서브에이전트·플러그인·MCP별 **사용량 귀속**도 보여준다 — 측정 없는 절약은 감이다(§D-6).
 
 ---
 
@@ -301,7 +302,7 @@ New-Item -ItemType Directory -Path .claude/skills/dropin-update -Force
 > **C ⊃ B ⊃ A** — 한 PC에 여러 환경이 섞이면(단위분할 repo + 통합 워크스페이스 + 단일 repo) **가장 넓은 것 하나**를 고른다. 각 변형이 좁은 환경용 폴백을 갖추므로 넓은 쪽이 좁은 쪽을 안전하게 포함한다. 글로벌은 PC당 하나뿐이라 "환경마다 다른 것"은 성립하지 않는다.
 
 > 참고(2026-07 현행): **커스텀 커맨드(`.claude/commands/`)는 스킬로 통합**됐다 — 둘 다 `/이름`을 만들고 동작이 같으며 스킬 쪽이 상위집합(보조 파일·frontmatter 확장). frontmatter에서 `name:`은 이제 선택(폴더명이 기본 명령명), `description:`은 권장(Claude의 자동 로드 판단 기준).
-> ⚠️ **중복 등록 방지**: 스킬 설치 전 **같은 이름의 구형 커맨드**(`~/.claude/commands/<이름>.md`·프로젝트 `.claude/commands/`)가 있는지 확인하고 있으면 삭제한다 — 방치하면 `/` 자동완성에 같은 명령이 2개 뜨고, 구형을 고르면 옛 내용이 실행된다(정본은 `skills/`). 필요 시 확장 키: `disable-model-invocation: true`(수동 호출 전용), `user-invocable: false`(Claude 전용), `model:`·`effort:`(스킬 실행 중 오버라이드), `context: fork`(서브에이전트에서 실행), `allowed-tools:`(그 턴 무프롬프트 도구 허용 — 🔴 **워크스페이스 신뢰가 이 키를 막지 않는다**: repo에 커밋된 프로젝트 스킬은 신뢰한 적 없는 폴더에서도, `-p` 실행에서도 이 허용이 적용된다. 스킬은 **스스로에게 넓은 도구 권한을 줄 수 있으므로**, 남의 repo에서 Claude Code를 처음 돌리기 전에 `.claude/skills/*`의 이 키를 본다 — §F-1이 `.claude/skills` 커밋을 권하는 만큼 **받는 쪽에도 같은 값이 청구된다**), `argument-hint:`(자동완성 인자 힌트), `arguments:`(명명 인자 — 본문 `$이름` 치환, 위치 순 매핑·공백 포함 값은 따옴표).
+> ⚠️ **중복 등록 방지**: 스킬 설치 전 **같은 이름의 구형 커맨드**(`~/.claude/commands/<이름>.md`·프로젝트 `.claude/commands/`)가 있는지 확인하고 있으면 삭제한다 — 방치하면 `/` 자동완성에 같은 명령이 2개 뜨고, 구형을 고르면 옛 내용이 실행된다(정본은 `skills/`). 필요 시 확장 키: `disable-model-invocation: true`(수동 호출 전용), `user-invocable: false`(Claude 전용), `model:`·`effort:`(스킬 실행 중 오버라이드), `context: fork`(서브에이전트에서 실행)·`agent:`(fork 시 서브에이전트 유형)·`background:`(fork 기본 true), `when_to_use:`(description에 이어붙는 트리거 문구 — 1,536자 상한 공유), `paths:`(글롭 매칭 파일 작업 때만 자동 로드, 쉼표 구분), `hooks:`(호출 시 등록돼 세션 끝까지), `shell:`(bash|powershell), `allowed-tools:`(그 턴 무프롬프트 도구 허용 — **제한이 아니다**: 목록에 없는 도구도 호출 가능하고 권한 설정을 따른다, 제한은 `disallowed-tools:`. 또 🔴 **워크스페이스 신뢰가 이 키를 막지 않는다**: repo에 커밋된 프로젝트 스킬은 신뢰한 적 없는 폴더에서도, `-p` 실행에서도 이 허용이 적용된다. 스킬은 **스스로에게 넓은 도구 권한을 줄 수 있으므로**, 남의 repo에서 Claude Code를 처음 돌리기 전에 `.claude/skills/*`의 이 키를 본다 — §F-1이 `.claude/skills` 커밋을 권하는 만큼 **받는 쪽에도 같은 값이 청구된다**), `argument-hint:`(자동완성 인자 힌트), `arguments:`(명명 인자 — 본문 `$이름` 치환, 위치 순 매핑·공백 포함 값은 따옴표).
 > ⚠️ **`SKILL.md`는 BOM 없이 UTF-8로 쓴다**: 파일 앞에 BOM(`EF BB BF`)이 붙으면 **frontmatter가 인식되지 않아** 그 스킬이 조용히 죽는다 — 오류도 경고도 없고 `/` 메뉴에 안 뜨는 것으로만 나타나(2026-08-12 실버그) 원인을 엉뚱한 데서 찾게 된다. PowerShell의 `Out-File`·`Set-Content`는 판본에 따라 BOM을 붙이므로 편집 도구로 쓰거나 인코딩을 명시한다.
 > ⚠️ **동명 스킬 우선순위(공식, 2026-08-12 확인)**: **enterprise > personal > project** — 프로젝트 `.claude/skills/`는 글로벌(개인) 동명 스킬을 덮지 **못한다**(같은 이름이면 개인 쪽이 실행. 스킬과 커맨드가 같은 이름이면 스킬 우선). 따라서 **B·C를 선택하면 글로벌 기본형(A)을 그 내용으로 교체(또는 제거)** — 한 이름 한 정의. B를 repo에 커밋해 공유해도 개인 글로벌에 동명 기본형이 있는 PC에선 개인 쪽이 실행되므로 팀에 고지한다.
 >
@@ -528,7 +529,7 @@ CLAUDE.local.md
 
 ### J-1. 권한 모드 운용 — auto mode 🟢
 "매번 승인(manual)"과 "전부 스킵(`--dangerously-skip-permissions`)" 사이의 중간지대. **별도 분류기 모델**(기본 Sonnet 5)이 각 액션을 실행 전 심사해 안전한 것은 통과시키고, 요청 범위를 벗어난 행동·미인식 인프라 대상·읽은 콘텐츠(프롬프트 인젝션)에서 유래한 행동을 차단한다.
-- **켜기**: **Pro·Max·Team은 2026-08-14부터 auto가 기본 시작 모드**(v2.1.220+). 바꾸려면 `Shift+Tab` 순환(auto에서 첫 타는 `default`, 이후 `default`→`acceptEdits`→`plan`→`default`) 또는 `--permission-mode`. 기본 시작 모드 고정은 `defaultMode: "auto"` — 단 **user/managed 스코프만 유효**(프로젝트·로컬 settings에선 무시됨: repo가 스스로 권한을 올리는 걸 막는 설계, v2.1.142+).
+- **켜기**: **Pro·Max·Team은 auto가 기본 시작 모드**(🟡 도입 버전·날짜 미확인 — 2026-09-02 changelog 2.1.220 항목에 해당 문장 없음). 바꾸려면 `Shift+Tab` 순환(auto에서 첫 타는 `default`, 이후 `default`→`acceptEdits`→`plan`→`default`) 또는 `--permission-mode`. 기본 시작 모드 고정은 `defaultMode: "auto"` — 단 **user/managed 스코프만 유효**(프로젝트·로컬 settings에선 무시됨: repo가 스스로 권한을 올리는 걸 막는 설계, v2.1.142+).
 - **규칙과의 관계**: 명시적 **ask 규칙은 auto mode에서도 프롬프트 강제**, deny는 그대로 차단(분류기가 deny를 뚫지 못함). `rm -rf /`·`~` 같은 파괴 명령은 분류기가 심사(v2.1.218+), 요청하지 않은 파괴적 git 명령·트랜스크립트 조작은 차단.
 - **회사 환경 주의** 🔴: Team·Enterprise도 **기본 제공**(옵트아웃)이고, 관리자가 managed settings `permissions.disableAutoMode: "disable"`로 조직 전체를 끌 수 있다 — **조직 정책이 항상 우선**이며 이 문서로 우회 구성하지 않는다. 프로바이더는 API·Claude Platform on AWS·Bedrock·Google Cloud·Foundry 모두 기본 제공(v2.1.207+), 단 모델 하한이 다르다 — API·Claude Platform on AWS는 Opus 4.6+·Sonnet 4.6+·Fable 5, Bedrock 등 서드파티는 Sonnet 5·Opus 4.7+·Fable 5.
 - **한계**: 프롬프트를 줄일 뿐 안전 보장이 아니다 — 방향을 신뢰하는 작업에만 쓰고, 민감 작업(배포·시크릿 인접·대량 삭제)은 manual/plan으로 내려서 검토한다. plan mode 중에도 분류기가 셸 명령을 심사한다(`useAutoModeDuringPlan` 기본 on, v2.1.218+).
@@ -557,7 +558,7 @@ CLAUDE.local.md
 ## L. 유지보수 (6개월마다 재검증) ⭐
 Claude Code는 매주 바뀐다. 6개월마다 30분:
 - `code.claude.com/docs/en/whats-new` 최신 항목 확인.
-- 🔴🟡: **현재 없음**(2026-08-20 `sandbox.credentials` 스키마 확인으로 마지막 항목 해소). 조회 팁 — `settings` 레퍼런스는 페이지가 길어 fetch가 알파벳 중간에서 잘린다. sandbox·attribution 절은 `settings.md` 원문을 직접 받아야 보인다.
+- 🟡(2026-09-02): ⓐ `modelSettings`(모델별 effort 저장) vs `effortLevel` 우선순위 — settings 레퍼런스 본문 잘림으로 미확인 ⓑ 스킬 `effort:` 오버라이드의 턴 경계 명문(`model:`은 턴 한정 확정) ⓒ §J-1 auto 기본 시작 모드의 도입 버전·날짜. 확인된 것: `defaultMode` 프로젝트/로컬 무시 대상은 `auto`·`bypassPermissions` 둘 다(v2.1.257+). 조회 팁 — `settings` 레퍼런스는 페이지가 길어 fetch가 알파벳 중간에서 잘린다. sandbox·attribution 절은 `settings.md` 원문을 직접 받아야 보인다.
 - 정기 확인(2026-08-20 전부 유효): deny의 서브프로세스 우회 한계, **샌드박스 네이티브 Windows 미지원**(macOS·Linux·WSL2만 — sandboxing), `sandbox.credentials` 스키마(`files[]`={path,mode}·`envVars[]`={name,mode}, mode=`deny`|`mask` + `extract`·`decode`·`injectHosts`·`awsPairs`·`sigv4`), `attribution` 스키마, auto-memory 한도(MEMORY.md 200줄/25KB).
 - **dev container 격리 경로**(§J 격리 3단) — feature 이미지·이그레스 방화벽 스크립트 구성이 유지되는지, 네이티브 Windows 대안이라는 위치가 바뀌지 않았는지(내장 샌드박스가 Windows를 지원하기 시작하면 이 줄의 근거가 사라진다).
 - `/model` 최신 정책(별칭이 가리키는 실제 모델·`best`의 해석), `claude --version`.
@@ -572,5 +573,5 @@ Claude Code는 매주 바뀐다. 6개월마다 30분:
 ## 핵심 출처 🟢
 IDE 통합·`--add-dir`(ide-integrations·large-codebases) / permissions·deny 한계 / hooks / skills / memory·auto-memory — 모두 `code.claude.com/docs` 및 `docs.anthropic.com`.
 
-**문서 정보** — 통합 마스터(범용) **v1.64**. 변경 이력은 최상단 버전 표 참조(유래: 8개 소스 통합 초판 — `v1.0~v1.32` 병합 행).
-최종 갱신: 2026-09-02 · 최근 재검증: 2026-08-20 / 참조: Claude Code v2.1.237, Opus 5(v2.1.219+) · Sonnet 5(v2.1.197+) · Fable 5(v2.1.170+).
+**문서 정보** — 통합 마스터(범용) **v1.65**. 변경 이력은 최상단 버전 표 참조(유래: 8개 소스 통합 초판 — `v1.0~v1.32` 병합 행).
+최종 갱신: 2026-09-02 · 최근 재검증: 2026-09-02 / 참조: Claude Code v2.1.258, Opus 5(v2.1.219+) · Sonnet 5(v2.1.197+) · Fable 5.1(v2.1.255+).
