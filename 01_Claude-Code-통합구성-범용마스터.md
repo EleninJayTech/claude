@@ -1,6 +1,6 @@
 # Claude Code 통합 구성 — 범용 마스터 (드롭인 적용)
 
-> **문서 버전: v1.61** · 최종 갱신: **2026-09-02** · **최근 재검증: 2026-08-20** · 기준: Claude Code v2.1.237 (Opus 5 · Sonnet 5 · Fable 5)
+> **문서 버전: v1.62** · 최종 갱신: **2026-09-02** · **최근 재검증: 2026-08-20** · 기준: Claude Code v2.1.237 (Opus 5 · Sonnet 5 · Fable 5)
 >
 > | 버전 | 날짜 | 변경 내용 |
 > | --- | --- | --- |
@@ -34,6 +34,7 @@
 > | v1.59 | 2026-08-31 | §F-2에 **`SKILL.md` BOM 금지**(frontmatter가 인식되지 않아 스킬이 조용히 죽는다 — R31 사본), §L에 **자기 점검(갱신 의식)** 한 줄 |
 > | v1.60 | 2026-09-02 | **§D-7 프롬프트 캐시 친화 운영 신설** — 캐시를 깨는/지키는 행동, `/compact`보다 `/clear`(·`/rewind`), TTL 버킷 2개와 `promptCacheTtl`, `/usage` 측정. §G 흐름도에 한 줄 |
 > | v1.61 | 2026-09-02 | §F-2 `allowed-tools`에 **신뢰 주의** — 워크스페이스 신뢰가 이 키를 막지 않고 스킬이 스스로 도구 권한을 넓힐 수 있다(공식 확인). §F-1이 `.claude/skills` 커밋을 권하면서 그 단서를 빠뜨리고 있었다 |
+> | v1.62 | 2026-09-02 | §F-5 `.gitignore`에 **`.claude/worktrees/`** — 안 걸면 격리 checkout 내용물이 메인 체크아웃에서 통째로 untracked로 뜬다(공식 Tip) |
 > ※ 갱신 시: 이 표에 한 줄 추가 + 하단 "문서 정보" 날짜 수정 + §L 재검증 체크리스트 수행.
 
 > **사용법**: 이 파일을 아무 프로젝트 루트(또는 `docs/`)에 넣고 Claude에게
@@ -444,6 +445,7 @@ docs/**/DECISIONS.md   merge=union
 .claude/cache/
 .claude/sessions/
 .claude/logs/
+.claude/worktrees/   # claude --worktree·에이전트 isolation이 만드는 격리 checkout
 # Claude 개인 구성 (커밋 금지)
 .claude/settings.local.json
 .claude/*.local.md
@@ -563,5 +565,5 @@ Claude Code는 매주 바뀐다. 6개월마다 30분:
 ## 핵심 출처 🟢
 IDE 통합·`--add-dir`(ide-integrations·large-codebases) / permissions·deny 한계 / hooks / skills / memory·auto-memory — 모두 `code.claude.com/docs` 및 `docs.anthropic.com`.
 
-**문서 정보** — 통합 마스터(범용) **v1.61**. 변경 이력은 최상단 버전 표 참조(유래: 8개 소스 통합 초판 — `v1.0~v1.32` 병합 행).
+**문서 정보** — 통합 마스터(범용) **v1.62**. 변경 이력은 최상단 버전 표 참조(유래: 8개 소스 통합 초판 — `v1.0~v1.32` 병합 행).
 최종 갱신: 2026-09-02 · 최근 재검증: 2026-08-20 / 참조: Claude Code v2.1.237, Opus 5(v2.1.219+) · Sonnet 5(v2.1.197+) · Fable 5(v2.1.170+).
