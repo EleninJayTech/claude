@@ -359,9 +359,10 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
     <div class="opt-head"><span class="id">&#9427;</span><span class="name">Project record system</span><span class="badge b-on">pre-checked</span></div>
     <p class="lead">Decides <b>where and in what format</b> records are kept, and pins those rules into the project&rsquo;s <code class="i">CLAUDE.md</code>.</p>
     <dl>
-      <dt>Files created</dt><dd><code>docs/PROJECT_PLAN.md</code> (roadmap) &middot; <code>docs/PROGRESS.md</code> (session log) &middot; <code>docs/DECISIONS.md</code> (decision log) &middot; <code>.gitattributes</code></dd>
+      <dt>Files created</dt><dd><code>docs/PROJECT_PLAN.md</code> (roadmap) &middot; <code>docs/PROGRESS.md</code> (session log) &middot; <code>docs/DECISIONS.md</code> (decision log) &middot; <code>.gitattributes</code> &middot; <code>.gitignore</code></dd>
       <dt>The core rule</dt><dd>Records are <b>appended at the top only</b>; past lines are never edited. When your thinking changes you add a new decision and mark the old one &ldquo;superseded&rdquo;</dd>
       <dt><code>.gitattributes</code></dt><dd><code>merge=union</code> &mdash; when two people append at once, <b>both entries survive with no git conflict</b></dd>
+      <dt><code>.gitignore</code></dt><dd>Keeps personal settings (<code>.claude/settings.local.json</code>) and isolated work folders (<code>.claude/worktrees/</code>) out of commits &mdash; without it, the contents of an isolated checkout all show up as untracked</dd>
     </dl>
   </div>
 
@@ -377,10 +378,15 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
   </div>
 
   <div class="opt">
-    <div class="opt-head"><span class="id">&#9429;</span><span class="name">effort guidance</span><span class="badge b-off">advice only &middot; no file</span></div>
-    <p class="lead">You are told when to raise and lower reasoning depth. No config file is written.</p>
+    <div class="opt-head"><span class="id">&#9429;</span><span class="name">effort &amp; cache guidance</span><span class="badge b-off">advice only &middot; no file</span></div>
+    <p class="lead">You are told when to raise and lower reasoning depth, and <b>which habits keep the conversation cache intact</b>. No config file is written.</p>
     <dl>
       <dt>Why no file</dt><dd>Pinning <code>effortLevel</code> in the project settings <b>silently overrides whatever you chose with <code>/effort</code></b>, with no warning. Better to leave the default and change it with <code>/effort</code> when you need to</dd>
+      <dt>Why the cache is money</dt><dd>Every turn resends the whole conversation, but when the front of it matches the previous turn it is <b>read from cache at roughly 10% of the price</b>. Change one thing and everything after it is reprocessed &mdash; the second axis of thrift is not &ldquo;use less&rdquo; but <b>&ldquo;avoid being reprocessed&rdquo;</b></dd>
+      <dt>Avoid mid-task</dt><dd><code>/model</code> switches, <code>/effort</code> changes, turning on fast mode, <code>/compact</code> &mdash; all of these break the cache. When you need them, <b>batch them at the start of a session</b></dd>
+      <dt>Free to do</dt><dd>Entering and leaving plan mode, calling skills and commands, <code>/rewind</code>, editing files, switching permission modes &mdash; the cache survives</dd>
+      <dt><code>/clear</code> over <code>/compact</code></dt><dd><code>/clear</code> sends no request, so it <b>costs nothing</b>, while <code>/compact</code> is itself a large request that builds a summary. Do it <b>after <code>/wrap</code></b> though &mdash; <code>/clear</code> has no safety gate, so unrecorded decisions vanish with it</dd>
+      <dt>Measuring</dt><dd>The <code>Prompt cache</code> line in <code>/usage</code>. Misses piling up every turn mean one of the breaking actions above is happening mid-task</dd>
     </dl>
   </div>
 
@@ -786,7 +792,7 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
 <a class="totop" href="#toc">&uarr; Contents</a>
 
 <footer>
-  Install options dictionary &middot; based on 00_통합-설치.md &middot; 2026-08-24<br>
+  Install options dictionary &middot; based on 00_통합-설치.md &middot; 2026-09-03<br>
   The source of truth for each item is its own document (01&ndash;06). This page exists so people can read and judge; it does not change the install procedure itself.<br>
   Repository: github.com/EleninJayTech/claude &middot;
   <a href="../index.html">Guide</a> &middot; <a href="intro.html">Intro</a> &middot; <a href="demo.html">Walkthrough</a> &middot; <a href="learn.html">Course</a>

@@ -374,6 +374,8 @@ footer{max-width:1120px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
     끄면 Claude가 실수로 <code class="i">.env</code>(비밀번호 파일)를 읽고 그 내용이 대화에 남을 수 있습니다.
     ⓕ가 파일을 안 만드는 것도 이유가 있습니다 — 설정 파일에 effort를 박으면
     <b>내가 <code class="i">/effort</code>로 고른 값을 경고 없이 덮어쓰기 때문</b>입니다.
+    ⓕ는 <b>캐시 습관</b>도 함께 안내합니다 — 작업 중 <code class="i">/model</code>·<code class="i">/effort</code>를 바꾸면
+    대화 캐시가 깨져 그 뒤 전부를 정가로 다시 처리합니다. 바꿀 일이 있으면 세션 시작에 몰아서 하세요.
   </div></div>
 </section>
 
@@ -544,7 +546,7 @@ footer{max-width:1120px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
 </div>
 
 <footer>
-  설치 옵션 학습 코스 · 2026-08-24<br>
+  설치 옵션 학습 코스 · 2026-09-03<br>
   각 항목의 정본은 해당 하위 문서(01~06)입니다. 이 페이지는 사람이 배우기 위한 안내이며, 설치 절차 자체를 바꾸지 않습니다. 진행도는 이 브라우저의 localStorage에만 저장됩니다.<br>
   저장소: github.com/EleninJayTech/claude ·
   <a href="../index.html">사용법</a> · <a href="intro.html">소개 영상</a> · <a href="demo.html">설치 시연</a> · <a href="options.html">옵션 사전</a>
@@ -563,7 +565,8 @@ var TERMS = [
   ['스킬 / 슬래시 명령','SKILL.md 파일 하나가 곧 /이름 명령이 됩니다. skills/resume/SKILL.md를 만들면 /resume를 칠 수 있습니다. 내용은 "이럴 땐 이렇게 해라"라는 지시문입니다.'],
   ['서브에이전트','메인 대화와 별도 작업창에서 도는 보조 Claude. 에이전트마다 다른 모델을 지정할 수 있어서, 어려운 분석은 비싼 모델·반복 작업은 싼 모델에 맡깁니다.'],
   ['MCP','Claude에 바깥 도구를 꽂는 규격. GitHub·브라우저·문서 검색을 연결해 Claude가 직접 쓰게 합니다. USB 포트라고 생각하면 됩니다.'],
-  ['effort(추론 강도)','"얼마나 깊이 생각할지" 조절하는 값(low~max). 높이면 어려운 판단이 좋아지는 대신 토큰과 대기 시간이 늘어납니다. 모델 선택과는 별개의 축입니다.']
+  ['effort(추론 강도)','"얼마나 깊이 생각할지" 조절하는 값(low~max). 높이면 어려운 판단이 좋아지는 대신 토큰과 대기 시간이 늘어납니다. 모델 선택과는 별개의 축입니다.'],
+  ['프롬프트 캐시','매 턴 대화 전체가 다시 실려가는데, 앞부분이 직전과 같으면 캐시에서 읽어 값이 ~10%로 떨어집니다. 작업 중 모델·강도를 바꾸면 캐시가 깨져 그 뒤 전부를 정가로 다시 처리합니다. /usage에서 적중률을 봅니다.']
 ];
 
 var STEPS = [
@@ -603,10 +606,10 @@ var DOC01 = [
   ['c','ⓒ /resume · /wrap · 점검 스킬','세션 시작·마감 명령 + 구성 점검 명령 — 실질적 핵심', true,
     ['~/.claude/skills/resume/SKILL.md','~/.claude/skills/wrap/SKILL.md','~/.claude/skills/dropin-check/','~/.claude/skills/dropin-update/']],
   ['d','ⓓ 프로젝트 기록 체계','기록 3종 + 동시 편집 충돌 방지', true,
-    ['docs/PROJECT_PLAN.md  <span class="c"># 로드맵</span>','docs/PROGRESS.md      <span class="c"># 세션 로그</span>','docs/DECISIONS.md     <span class="c"># 결정 로그</span>','.gitattributes        <span class="c"># merge=union</span>']],
+    ['docs/PROJECT_PLAN.md  <span class="c"># 로드맵</span>','docs/PROGRESS.md      <span class="c"># 세션 로그</span>','docs/DECISIONS.md     <span class="c"># 결정 로그</span>','.gitattributes        <span class="c"># merge=union</span>','.gitignore            <span class="c"># 개인 설정·격리 폴더 제외</span>']],
   ['e','ⓔ 프로젝트 권한','무엇을 묻지 않고 실행해도 되는지', true,
     ['.claude/settings.json  <span class="c"># allow / ask / deny</span>']],
-  ['f','ⓕ effort 가이드','언제 올리고 내릴지 안내만 — 파일 없음', true, []]
+  ['f','ⓕ effort · 캐시 가이드','강도를 언제 올리고 내릴지 + 캐시 깨지 않는 습관 — 파일 없음', true, []]
 ];
 
 var PRESETS = [

@@ -374,6 +374,8 @@ footer{max-width:1120px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
     Turn it off and Claude may read <code class="i">.env</code> (your password file) by accident, leaving the contents in the transcript.
     There is a reason &#9429; creates no file too &mdash; pinning effort in a config file
     <b>silently overrides whatever you chose with <code class="i">/effort</code></b>.
+    &#9429; also covers <b>cache habits</b> &mdash; switching <code class="i">/model</code> or <code class="i">/effort</code> mid-task
+    breaks the conversation cache, so everything after it is reprocessed at full price. Batch such changes at the start of a session.
   </div></div>
 </section>
 
@@ -544,7 +546,7 @@ footer{max-width:1120px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
 </div>
 
 <footer>
-  Install options course &middot; 2026-08-24<br>
+  Install options course &middot; 2026-09-03<br>
   The source of truth for each item is its own document (01&ndash;06). This page exists for people to learn from; it does not change the install procedure. Progress is stored only in this browser&rsquo;s localStorage.<br>
   저장소: github.com/EleninJayTech/claude ·
   <a href="../index.html">Guide</a> &middot; <a href="intro.html">Intro</a> &middot; <a href="demo.html">Walkthrough</a> &middot; <a href="options.html">Dictionary</a>
@@ -563,7 +565,8 @@ var TERMS = [
   ['Skill / slash command','One SKILL.md file becomes the /name command. Create skills/resume/SKILL.md and you can type /resume. The contents are instructions: "when this happens, do that".'],
   ['Subagent','A helper Claude running in its own workspace, separate from the main conversation. Each agent can use a different model, so hard analysis goes to the expensive one and repetitive work to the cheap one.'],
   ['MCP','The standard for plugging outside tools into Claude. Connect GitHub, a browser or a doc search and Claude uses them directly. Think of it as a USB port.'],
-  ['effort','How hard the model thinks (low to max). Raising it improves hard judgment but costs more tokens and more waiting. A separate axis from which model you pick.']
+  ['effort','How hard the model thinks (low to max). Raising it improves hard judgment but costs more tokens and more waiting. A separate axis from which model you pick.'],
+  ['Prompt cache','Every turn resends the whole conversation, but when the front of it matches the previous turn it is read from cache at roughly 10% of the price. Changing the model or effort mid-task breaks it, and everything after is reprocessed at full price. Check the hit rate in /usage.']
 ];
 
 var STEPS = [
@@ -603,10 +606,10 @@ var DOC01 = [
   ['c','\u24d2 /resume \u00b7 /wrap \u00b7 audit skills','Session open/close commands plus setup audits \u2014 the practical core', true,
     ['~/.claude/skills/resume/SKILL.md','~/.claude/skills/wrap/SKILL.md','~/.claude/skills/dropin-check/','~/.claude/skills/dropin-update/']],
   ['d','\u24d3 Project record system','Three record files plus concurrent-edit protection', true,
-    ['docs/PROJECT_PLAN.md  <span class="c"># roadmap</span>','docs/PROGRESS.md      <span class="c"># session log</span>','docs/DECISIONS.md     <span class="c"># decision log</span>','.gitattributes        <span class="c"># merge=union</span>']],
+    ['docs/PROJECT_PLAN.md  <span class="c"># roadmap</span>','docs/PROGRESS.md      <span class="c"># session log</span>','docs/DECISIONS.md     <span class="c"># decision log</span>','.gitattributes        <span class="c"># merge=union</span>','.gitignore            <span class="c"># excludes personal + isolated dirs</span>']],
   ['e','\u24d4 Project permissions','What may run without asking', true,
     ['.claude/settings.json  <span class="c"># allow / ask / deny</span>']],
-  ['f','\u24d5 effort guidance','Advice on when to raise and lower it \u2014 no file', true, []]
+  ['f','\u24d5 effort &amp; cache guidance','When to raise or lower it, plus habits that keep the cache \u2014 no file', true, []]
 ];
 
 var PRESETS = [
