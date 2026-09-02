@@ -1,6 +1,6 @@
 # Claude Code 통합 구성 — 범용 마스터 (드롭인 적용)
 
-> **문서 버전: v1.63** · 최종 갱신: **2026-09-02** · **최근 재검증: 2026-08-20** · 기준: Claude Code v2.1.237 (Opus 5 · Sonnet 5 · Fable 5)
+> **문서 버전: v1.64** · 최종 갱신: **2026-09-02** · **최근 재검증: 2026-08-20** · 기준: Claude Code v2.1.237 (Opus 5 · Sonnet 5 · Fable 5)
 >
 > | 버전 | 날짜 | 변경 내용 |
 > | --- | --- | --- |
@@ -36,6 +36,7 @@
 > | v1.61 | 2026-09-02 | §F-2 `allowed-tools`에 **신뢰 주의** — 워크스페이스 신뢰가 이 키를 막지 않고 스킬이 스스로 도구 권한을 넓힐 수 있다(공식 확인). §F-1이 `.claude/skills` 커밋을 권하면서 그 단서를 빠뜨리고 있었다 |
 > | v1.62 | 2026-09-02 | §F-5 `.gitignore`에 **`.claude/worktrees/`** — 안 걸면 격리 checkout 내용물이 메인 체크아웃에서 통째로 untracked로 뜬다(공식 Tip) |
 > | v1.63 | 2026-09-02 | **다음 세션이 이어받을 것은 항목 앞쪽·PROJECT_PLAN에**(§F-1 + §F-2 wrap 템플릿 A·B·C, 대장 R34) — 계획서 경로·다음 행동을 PROGRESS 항목 **끝**에 붙이면 /resume의 700자 컷 밖이라 도달하지 않는다(실측: 1,572자 항목의 경로가 1,418자 지점) |
+> | v1.64 | 2026-09-02 | **/audit 8차(회귀) 반영 12건** — §D-7 근거 포인터를 번호→내용으로(02 재번호에 깨짐)·`/clear`는 **`/wrap` 뒤에**(훅 게이트 없음)+§D-3 `SessionStart` `clear` 매처·`model:` 오버라이드 스킬은 캐시 예외·§L에 **캐시 축**과 frontmatter 4키 · R34 보강: §F-2 A·B·C에 **조건절**("세션 이후에도 유효하면")·배치 절("미해결/관찰 중")·종결자("이어받은 세션의 /wrap이 닫는다") 복원, B·C 계획서 경로를 단위 경로로, §E-1에 `plans/`, /resume 서술에 "미해결/관찰 중"·"다음 행동 없음이면 재구성 금지", §F-2 A·B resume에 R25 대조 · §D-2→05 참조 정정·ⓕ에 §D-7·`claude --resume` 표기 |
 > ※ 갱신 시: 이 표에 한 줄 추가 + 하단 "문서 정보" 날짜 수정 + §L 재검증 체크리스트 수행.
 
 > **사용법**: 이 파일을 아무 프로젝트 루트(또는 `docs/`)에 넣고 Claude에게
@@ -67,7 +68,7 @@
 **STEP 2 — 부족분 질문(모르는 것만, §I).** 특히: (a) 환경 유형 확정, (b) **동시성 3분기**(ⓐ 혼자 / ⓑ 여러 명·**서로 다른 갈래** / ⓒ 여러 명·같은 갈래), (c) 커밋 양식, (d) 자주 함께 고치는 repo(→ `additionalDirectories`). 이미 코드로 안 것은 "이렇게 이해했다"로 확인만.
 
 **STEP 3 — 구성 항목 선택 확인 → 필요한 것만 생성.** 감지 결과를 바탕으로 아래 항목을 **선택 목록(다중 선택)으로 제시**하고, 체크된 것만 생성한다(전부 기본 체크, 이미 있는 항목은 "유지/재구성" 표기):
-- ⓐ 글로벌 행동 규칙(§D-2 CLAUDE.md) ⓑ 글로벌 보안(§D-3 deny·hooks) ⓒ `/resume`·`/wrap`·점검 스킬 dropin-check/update(§D-4·F-2) ⓓ 프로젝트 기록 체계(§E·F-1: docs/·CLAUDE.md·.gitattributes·§F-5 .gitignore) ⓔ 프로젝트 권한(§F-3 settings.json) ⓕ effort 가이드(§D-6, 안내만)
+- ⓐ 글로벌 행동 규칙(§D-2 CLAUDE.md) ⓑ 글로벌 보안(§D-3 deny·hooks) ⓒ `/resume`·`/wrap`·점검 스킬 dropin-check/update(§D-4·F-2) ⓓ 프로젝트 기록 체계(§E·F-1: docs/·CLAUDE.md·.gitattributes·§F-5 .gitignore) ⓔ 프로젝트 권한(§F-3 settings.json) ⓕ effort·캐시 가이드(§D-6·D-7, 안내만)
 - **00의 모드별 기본값**(00 STEP 3에서 왔을 때 — 사용자 모드가 아니면 이 매핑으로 자동 확정하고 질문 생략): **최소 = ⓑⓒⓓ**(보안+스킬+기록 체계 — ⓒ를 빼면 §F-1 블록이 전제하는 `/resume`·`/wrap`이 없고 §D-5의 4종 자동완성 검증도 통과 불가라, "기반"이 성립하지 않는다) / **권장·전체 = ⓐ~ⓕ 전부**. 어느 쪽이든 ⓑ는 빼지 않는다.
 - **대상이 글로벌(PC)뿐이면 ⓓⓔ는 빼고 ⓐⓑⓒ(+ⓕ)만 적용한다** — ⓓ 프로젝트 기록 체계·ⓔ 프로젝트 권한은 대상 repo가 있어야 의미가 있는데, 00 §C-1의 "새 PC → 01(글로벌)+03"으로 들어오면 모드가 질문을 생략하므로 그대로 두면 claude를 띄운 임의 폴더에 `docs/`·`.gitattributes`·`.claude/settings.json`이 말없이 생긴다(00 STEP 5의 기록 예시 `01 vX.Y(글로벌만)`이 가리키는 상태가 이것이다).
 - §D~F에서 **해당 시나리오 부분만** 골라 생성. 불필요한 것(단일 repo에 MSA 단위분할 등)은 만들지 않는다. 단 **ⓑ 보안(deny·시크릿 차단)은 해제를 권하지 않는다** — 사용자가 명시적으로 빼는 경우에만 제외하고 위험을 고지한다.
@@ -154,7 +155,9 @@ New-Item -ItemType Directory -Path .claude/skills/dropin-update -Force
     "PreCompact": [ { "matcher": "auto", "hooks": [
       { "type": "command", "command": "echo \"[PreCompact] auto-compact 발동 - 기록 안 된 결정이 있었다면 압축 후 즉시 /wrap. 다음엔 한도 전에 /wrap > /clear > /resume 권장\" 1>&2", "async": true } ] } ],
     "SessionStart": [ { "matcher": "compact", "hooks": [
-      { "type": "command", "command": "echo 'compact 후 컨텍스트 복구: docs/PROGRESS.md 최상단과 docs/PROJECT_PLAN.md를 다시 읽고 현재 상태를 재확인하라. 압축 전 미기록 결정이 있었다면 먼저 /wrap을 안내하라.'" } ] } ]
+      { "type": "command", "command": "echo 'compact 후 컨텍스트 복구: docs/PROGRESS.md 최상단과 docs/PROJECT_PLAN.md를 다시 읽고 현재 상태를 재확인하라. 압축 전 미기록 결정이 있었다면 먼저 /wrap을 안내하라.'" } ] },
+      { "matcher": "clear", "hooks": [
+      { "type": "command", "command": "echo 'clear 후 새 컨텍스트: /resume으로 재개하라. 직전 세션에 미기록 결정이 있었다면 먼저 /wrap을 안내하라.'" } ] } ]
   }
 }
 ```
@@ -199,10 +202,10 @@ New-Item -ItemType Directory -Path .claude/skills/dropin-update -Force
 
 ### D-7. 프롬프트 캐시 친화 운영 🟢
 매 턴 대화 전체가 다시 실려가되, 요청 앞부분이 직전과 **같으면 캐시에서 읽는다**(정가의 ~10%). 한 곳이라도 바뀌면 **그 뒤 전부**를 다시 처리한다 — 절약의 두 번째 축은 "덜 쓰기"가 아니라 **"재처리 안 당하기"** 다. 표준·절약 프로필 공통.
-- **캐시를 깨는 행동** — 작업 중엔 피하고, 필요하면 **세션 시작에 몰아서** 한다: `/model` 전환 · `/effort` 변경(effort도 캐시 키다 — 02 §F 운용 원칙 ④) · fast mode 켜기 · MCP 서버 연결/해제(도구가 **비deferred**로 프리픽스에 실린 경우만) · 플러그인 활성/비활성 · **도구 이름 단독 deny 규칙** 추가·제거(`Bash` 형태. `Bash(rm *)` 같은 스코프 규칙은 무해) · `/compact` · 업그레이드 후 `resume`(가장 비싼 한 턴이 된다).
-- **캐시를 지키는 행동** — 마음껏: plan mode 진입·이탈 · 스킬·커맨드 호출 · `/recap` · `/rewind` · 권한 모드 전환 · 파일 편집 · CLAUDE.md 편집 · 출력 스타일 변경. 단 뒤 둘은 **세션 중엔 적용도 안 된다**(다음 `/clear`·재시작에 로드 — §D-2·05).
+- **캐시를 깨는 행동** — 작업 중엔 피하고, 필요하면 **세션 시작에 몰아서** 한다: `/model` 전환 · `/effort` 변경(effort도 캐시 키다 — 02 §F 운용 원칙의 "강도 상향은 새 세션" 항목) · fast mode 켜기 · MCP 서버 연결/해제(도구가 **비deferred**로 프리픽스에 실린 경우만) · 플러그인 활성/비활성 · **도구 이름 단독 deny 규칙** 추가·제거(`Bash` 형태. `Bash(rm *)` 같은 스코프 규칙은 무해) · `/compact` · 업그레이드 후 `claude --resume`(가장 비싼 한 턴이 된다).
+- **캐시를 지키는 행동** — 마음껏: plan mode 진입·이탈 · 스킬·커맨드 호출(**예외: `model:`/`effort:` 오버라이드 스킬** — 호출 턴이 다른 모델로 가 컨텍스트 전체를 비캐시 1회, 02 §F) · `/recap` · `/rewind` · 권한 모드 전환 · 파일 편집 · CLAUDE.md 편집 · 출력 스타일 변경. 단 뒤 둘은 **세션 중엔 적용도 안 된다**(다음 `/clear`·재시작에 로드 — 05).
 - **예외 `opusplan`**: plan 경계마다 모델이 바뀌어 **토글 1회 = 캐시 리셋**이다(02 §F).
-- **`/compact`보다 `/clear`**: `/clear`는 요청을 보내지 않아 **비용 0**, `/compact`는 요약을 만드는 **그 자체로 큰 요청**이다(캐시가 식은 오래된 세션에서 가장 비싸다 — §D-3 `manual` 게이트를 걸었다면 `/wrap` 뒤에). 가 본 길을 통째로 버릴 땐 `/rewind`가 더 싸다 — 이미 캐시된 지점으로 되감기 때문이다.
+- **`/compact`보다 `/clear`**: `/clear`는 요청을 보내지 않아 **비용 0**(단 **`/wrap` 뒤에** — `/clear`엔 훅 게이트가 없어 기록 안 된 결정이 그대로 사라진다), `/compact`는 요약을 만드는 **그 자체로 큰 요청**이다(캐시가 식은 오래된 세션에서 가장 비싸다 — §D-3 `manual` 게이트를 걸었다면 `/wrap` 뒤에). 가 본 길을 통째로 버릴 땐 `/rewind`가 더 싸다 — 이미 캐시된 지점으로 되감기 때문이다.
 - **수명(TTL)은 버킷 2개**: 구독 플랜 한도 안에선 **메인 대화만 1시간**, 서브에이전트·워크플로·컴팩션은 **5분**. usage credits 소진 후·**API 키·클라우드는 전부 5분** — 이 경우 자리를 비웠다 돌아올 때 전체를 다시 읽는다. 늘리려면 `settings.json`에 `"promptCacheTtl": "1h"`(서브에이전트까지면 `"subagentPromptCacheTtl": "1h"`) — 값은 `5m`·`1h`만 유효.
 - **범위는 머신+작업 디렉터리**다(시스템 프롬프트에 cwd가 박힌다) — **워크트리마다 캐시가 갈린다**. **측정**은 `/usage` → `Prompt cache (main)` 줄(캐시 비율·미스·웜 여부). 미스가 매 턴 쌓이면 위 "깨는 행동" 하나가 작업 중에 일어나고 있다는 뜻이다. 같은 화면이 스킬·서브에이전트·플러그인·MCP별 **사용량 귀속**도 보여준다 — 측정 없는 절약은 감이다(§D-6).
 
@@ -214,7 +217,7 @@ New-Item -ItemType Directory -Path .claude/skills/dropin-update -Force
 > `CLAUDE.md` 사실은 스택·DB·아키텍처·제약. 행동 규칙(글로벌)과 중복 금지, 30~200줄. **없으면 `/init`으로 초안 생성 후 다듬기**(코드베이스 분석해 빌드·테스트 명령을 채워줌. `CLAUDE_CODE_NEW_INIT=1`이면 대화형 다단계 — CLAUDE.md+스킬+hooks까지 제안 후 승인받아 생성).
 
 ### E-1. 🅱️ 단일 repo (B)
-- `docs/` **flat**: `PROJECT_PLAN.md` · `PROGRESS.md` · `DECISIONS.md` (§F-6 양식).
+- `docs/` **flat**: `PROJECT_PLAN.md` · `PROGRESS.md` · `DECISIONS.md` (§F-6 양식). 계획서를 쓰는 repo는 `docs/plans/`(단위 분할이면 `docs/<단위>/plans/`) — 02 ⓔ 산출물, 없어도 된다.
 - 스킬: 글로벌 기본형(§F-2 A) 사용. `.gitattributes` merge=union(§F-4)은 **동시성 ⓑ·ⓒ면 필수**(§I 2).
 - 커밋: `git add CLAUDE.md docs .claude .gitignore` → 한 repo에서 커밋.
 
@@ -275,7 +278,7 @@ New-Item -ItemType Directory -Path .claude/skills/dropin-update -Force
 ### 세션 워크플로 규율
 - 작업 요청엔 **성공 기준·검증 명령**(테스트/빌드/재현 스크립트)을 함께 받는다. 구현 후 그 검증을 실행해 **증거(출력)로 보고** — "됐다"는 말로 끝내지 않는다.
 - append-only(과거 수정·삭제 금지). 결정이 바뀌면 새 DEC + 기존에 "Superseded by DEC-…" 표시. 상호참조는 [[DEC-…]]·날짜.
-- /resume: **remote 있고 워킹트리 clean이면 `git pull --ff-only` 먼저**(아니면 `git fetch` 후 뒤처짐만 보고 — 병합은 사용자 결정) → **git status·브랜치로 미커밋(진행 중) 작업 발견** → 그다음 PROGRESS 최상단(**최근 ~5항목만** — 길면 항목당 앞 ~700자. 줄 수가 아니라 항목 수다, 통째 읽기 금지. **상단 날짜가 역순이면 날짜 기준**으로 다시 고른다 — 장수 통합 브랜치 병합 뒤엔 최상단이 최근이 아니다) + PROJECT_PLAN 현재 Phase + 최근 DEC 3건. **다인 공유 파일이면 최상단 5항목이 남의 갈래로 채워진다** — 현재 브랜치·PWD가 가리키는 갈래를 우선 읽고 나머지는 갈래별 한 줄로 요약한다.
+- /resume: **remote 있고 워킹트리 clean이면 `git pull --ff-only` 먼저**(아니면 `git fetch` 후 뒤처짐만 보고 — 병합은 사용자 결정) → **git status·브랜치로 미커밋(진행 중) 작업 발견** → 그다음 PROGRESS 최상단(**최근 ~5항목만** — 길면 항목당 앞 ~700자. 줄 수가 아니라 항목 수다, 통째 읽기 금지. **상단 날짜가 역순이면 날짜 기준**으로 다시 고른다 — 장수 통합 브랜치 병합 뒤엔 최상단이 최근이 아니다) + PROJECT_PLAN(현재 Phase·**미해결/관찰 중** — 인계 항목이 여기 있다) + 최근 DEC 3건. **다인 공유 파일이면 최상단 5항목이 남의 갈래로 채워진다** — 현재 브랜치·PWD가 가리키는 갈래를 우선 읽고 나머지는 갈래별 한 줄로 요약한다.
 - /wrap: PROGRESS append + 새 DEC + PROJECT_PLAN 체크박스 갱신 + **미커밋이면 경고**(커밋 전엔 다음 /resume가 git status로만 발견).
 - **미해소 `[Pending]`·`[Blocked]`는 PROJECT_PLAN "미해결/관찰 중"에 한 줄로 올려 닫힐 때까지 유지**한다. 닫는 것은 PROJECT_PLAN에서만 일어나므로 PROGRESS 마커는 남는다 — `/resume`은 그 마커를 **PROJECT_PLAN과 대조**해 거기 없으면 닫힌 것으로 본다(안 그러면 닫힌 항목을 매번 열린 것으로 보고한다). PROGRESS는 append 전용이고 /resume은 최근 ~5항목만 읽으므로, 그 항목이 5항목 창 밖으로 밀리는 순간 어느 절차도 다시 보지 않는다.
 - 정기 항목(재검증·점검 주기)은 PROJECT_PLAN에 **`다음 ○○: YYYY-MM경`** 형식으로 남긴다 — /resume의 "예정일 경과" 안내가 읽는 형식이라, 안 적으면 그 안내는 발화하지 않는다. 반대로 그 안내는 **미완료 항목만** 읽는다(`[x]`·취소선으로 종결된 항목은 제외) — 종결 시 예정일 문자열을 지우지 않아도 되고, 지우면 이력이 사라진다.
@@ -313,7 +316,7 @@ New-Item -ItemType Directory -Path .claude/skills/dropin-update -Force
 name: resume
 description: 세션 시작 시 원격 최신화(clean이면 git pull --ff-only)·git status로 미커밋 작업 먼저 확인 후 CLAUDE.md·docs/PROGRESS.md 최상단·PROJECT_PLAN.md를 읽고 지난 상태·다음 작업 보고.
 ---
-# /resume — remote 있고 워킹트리 clean이면 `git pull --ff-only` 먼저(아니면 `git fetch` 후 뒤처짐만 보고) → git status·브랜치로 미커밋(진행 중) 작업 발견 → CLAUDE.md(**프로젝트+글로벌 `~/.claude/CLAUDE.md`** — 글로벌만 적용한 PC에선 글로벌 줄이 유일한 기록), docs/PROGRESS.md(최상단 최근 ~5항목(상단 날짜가 역순이면 **날짜 기준**)만 — 길면 항목당 앞 ~700자. **다인 공유면 현재 브랜치·PWD가 가리키는 갈래를 우선** 읽고 남의 갈래는 한 줄 요약), docs/DECISIONS.md 최근 3건(최상단 Read limit), PROJECT_PLAN.md를 읽고 "지난 X, 다음 Y?" 보고. + 조건부 안내: dropin-applied 30일 경과면 `/dropin-check`·`/dropin-update`, PROJECT_PLAN 예정일 경과 항목(**미완료 항목만** — `[x]`·취소선 종결 항목 제외), dropin-applied 괄호의 조치 대기 메모·`게이트 차단(사유)`·**`소스없음(사유)`/`확보 실패(사유)`**(예: gh 인증 대기 / 06 게이트 차단(조직 미승인) / 04 소스없음(네트워크 차단) — 해소됐다면 재적용으로 설치+기록 갱신) 안내.
+# /resume — remote 있고 워킹트리 clean이면 `git pull --ff-only` 먼저(아니면 `git fetch` 후 뒤처짐만 보고) → git status·브랜치로 미커밋(진행 중) 작업 발견 → CLAUDE.md(**프로젝트+글로벌 `~/.claude/CLAUDE.md`** — 글로벌만 적용한 PC에선 글로벌 줄이 유일한 기록), docs/PROGRESS.md(최상단 최근 ~5항목(상단 날짜가 역순이면 **날짜 기준**)만 — 길면 항목당 앞 ~700자. **다인 공유면 현재 브랜치·PWD가 가리키는 갈래를 우선** 읽고 남의 갈래는 한 줄 요약), docs/DECISIONS.md 최근 3건(최상단 Read limit), PROJECT_PLAN.md를 읽고 "지난 X, 다음 Y?" 보고(PROGRESS의 `[Pending]`·`[Blocked]`는 PROJECT_PLAN "미해결/관찰 중"**과 대조**해 거기 없으면 닫힌 것으로 본다 · 항목이 **다음 행동 없음**을 명시하면 Y를 재구성하지 말고 새 작업을 묻는다). + 조건부 안내: dropin-applied 30일 경과면 `/dropin-check`·`/dropin-update`, PROJECT_PLAN 예정일 경과 항목(**미완료 항목만** — `[x]`·취소선 종결 항목 제외), dropin-applied 괄호의 조치 대기 메모·`게이트 차단(사유)`·**`소스없음(사유)`/`확보 실패(사유)`**(예: gh 인증 대기 / 06 게이트 차단(조직 미승인) / 04 소스없음(네트워크 차단) — 해소됐다면 재적용으로 설치+기록 갱신) 안내.
 **폴백**: 비-git 폴더면 pull·status 단계를 건너뛰고 docs 체계만 읽는다. `docs/PROGRESS.md`가 없는데 `docs/<하위>/PROGRESS.md`가 있으면 **단위분할 repo**다 — A로는 대상 단위를 판별할 수 없으니 그 사실을 알리고 §F-2 B로 교체를 안내한다(조용히 빈손으로 끝내지 않는다).
 ```
 ```markdown
@@ -322,7 +325,7 @@ description: 세션 시작 시 원격 최신화(clean이면 git pull --ff-only)�
 name: wrap
 description: 세션 종료 시 docs/PROGRESS.md 최상단에 오늘 작업 append, 새 결정 DECISIONS, PROJECT_PLAN 체크박스, 미커밋 경고, 변경 파일 보고.
 ---
-# /wrap — docs/PROGRESS.md 최상단 append(작업/결정/다음/미해결 — **§F-6 양식** `[갈래][Done|Pending|Blocked|Reverted] … — @작성자 (브랜치) YYYY-MM-DD`, **갈래·날짜를 비우지 않는다**. 되돌림은 `[Reverted]` 새 항목 append + 원항목 표시. **다음 세션이 이어받을 것**(`docs/plans/` 계획서 경로·다음 행동)은 항목 **앞쪽**에 적고 PROJECT_PLAN에도 한 줄 — 항목 끝은 /resume의 **700자 컷**에 잘려 도달하지 않는다. 다음 행동이 없으면 없다고 적는다) + 새 DEC + PROJECT_PLAN 체크박스(+ 있으면 `docs/WBS.md` 등 파생 뷰 동기화 — SSOT=PROJECT_PLAN). 미커밋이면 경고. 변경 파일 보고. append 후 PROGRESS·DECISIONS 부피 확인 — ~800줄 **또는 ~120KB** 초과면 아카이브(docs/archive/ 이동+최상단 포인터 — 가장 오래된 항목부터 활성 파일이 임계의 절반 이하가 될 때까지) 안내(/resume는 최근 ~5항목만 읽어 감지 못 함). + 이번 세션에 `~/.claude/`나 저장소 `global-config/`를 고쳤으면 화이트리스트 5종 해시 대조(클론 없으면 생략) — 차이 시 어느 쪽이 최신인지 판정해 방향 보고+복사 안내(`settings.json`은 키 단위 — **구성 성격 키(`permissions.deny`·`hooks`·`attribution`·`autoMemoryEnabled`)의 차이만** 실제 차이로 보고 나머지는 전부 머신 종속으로 제외. 이 **포함 기준이 정본**이고 괄호는 예시다 — 제외 키를 나열해 맞추면 사본마다 목록이 갈라진다, DEC-20260721-bsjeong87-02. 글로벌 `CLAUDE.md`의 `dropin-applied` 줄도 PC별 값이라 차이로 치지 않는다. **줄바꿈을 정규화한 뒤 비교** — 저장소에 EOL 지시가 없으면 워킹트리 줄바꿈이 그 PC의 `core.autocrlf`에 좌우돼 내용이 같아도 해시가 갈린다).
+# /wrap — docs/PROGRESS.md 최상단 append(작업/결정/다음/미해결 — **§F-6 양식** `[갈래][Done|Pending|Blocked|Reverted] … — @작성자 (브랜치) YYYY-MM-DD`, **갈래·날짜를 비우지 않는다**. 되돌림은 `[Reverted]` 새 항목 append + 원항목 표시. **다음 세션이 이어받을 것**(`docs/plans/` 계획서 경로·다음 행동)은 항목 **앞쪽**에 적고, 세션 이후에도 유효하면 PROJECT_PLAN "미해결/관찰 중"에도 한 줄(이어받은 세션의 /wrap이 닫는다) — 항목 끝은 /resume의 **700자 컷**에 잘려 도달하지 않는다. 다음 행동이 없으면 없다고 적는다) + 새 DEC + PROJECT_PLAN 체크박스(+ 있으면 `docs/WBS.md` 등 파생 뷰 동기화 — SSOT=PROJECT_PLAN). 미커밋이면 경고. 변경 파일 보고. append 후 PROGRESS·DECISIONS 부피 확인 — ~800줄 **또는 ~120KB** 초과면 아카이브(docs/archive/ 이동+최상단 포인터 — 가장 오래된 항목부터 활성 파일이 임계의 절반 이하가 될 때까지) 안내(/resume는 최근 ~5항목만 읽어 감지 못 함). + 이번 세션에 `~/.claude/`나 저장소 `global-config/`를 고쳤으면 화이트리스트 5종 해시 대조(클론 없으면 생략) — 차이 시 어느 쪽이 최신인지 판정해 방향 보고+복사 안내(`settings.json`은 키 단위 — **구성 성격 키(`permissions.deny`·`hooks`·`attribution`·`autoMemoryEnabled`)의 차이만** 실제 차이로 보고 나머지는 전부 머신 종속으로 제외. 이 **포함 기준이 정본**이고 괄호는 예시다 — 제외 키를 나열해 맞추면 사본마다 목록이 갈라진다, DEC-20260721-bsjeong87-02. 글로벌 `CLAUDE.md`의 `dropin-applied` 줄도 PC별 값이라 차이로 치지 않는다. **줄바꿈을 정규화한 뒤 비교** — 저장소에 EOL 지시가 없으면 워킹트리 줄바꿈이 그 PC의 `core.autocrlf`에 좌우돼 내용이 같아도 해시가 갈린다).
 **폴백**: 비-git 폴더면 git status·커밋 단계를 건너뛰고 기록 append만. `docs/`가 없거나 **기록 3종이 제자리에 없으면**(`PROJECT_PLAN`은 repo `docs/` 루트, `PROGRESS`·`DECISIONS`는 대상 단위 — flat이면 둘 다 `docs/`) 있는 파일에만 기록하고 **없는 것을 지목해** "01 §E-1 기록 체계 미설치"를 알린다(PROJECT_PLAN 부재면 미해결 승격이, DECISIONS 부재면 새 결정이 갈 곳을 잃는다. 저장되지 않은 몫을 명시하고 요약을 출력). 단 `docs/PROGRESS.md`가 없는데 `docs/<하위>/PROGRESS.md`가 있으면 **단위분할 repo**이니 미설치가 아니라 §F-2 B로 교체를 안내한다(resume과 같은 판정).
 ```
 
@@ -337,7 +340,7 @@ description: 단위분할 재개. git status로 미커밋 작업 먼저, 대상 
 0) remote 있고 clean이면 `git pull --ff-only` 먼저(아니면 fetch 후 뒤처짐 보고) → git status·현재 브랜치 확인 — 미커밋/비-main 브랜치면 그 단위 작업 우선(untracked일 수 있음).
 1) 대상 단위 판별: PWD가 <단위> 안 → 그 단위 / 브랜치명(feature/<단위>) / 불명확하면 질문.
    **폴백**: `docs/<단위>/`가 없는 단일 repo면 단위 판별을 건너뛰고 `docs/`(flat) 기준으로 A와 동일하게 진행. 비-git 폴더면 0)도 건너뛴다.
-2) docs/<단위>/PROGRESS.md 최상단(최근 ~5항목(상단 날짜가 역순이면 **날짜 기준**) — 다인 공유면 현재 브랜치·PWD가 가리키는 **갈래를 우선** 읽고 남의 갈래는 한 줄 요약) + docs/PROJECT_PLAN.md + 최근 DEC 3건 → "이 단위 지난 X, 다음 Y?" 보고.
+2) docs/<단위>/PROGRESS.md 최상단(최근 ~5항목(상단 날짜가 역순이면 **날짜 기준**) — 다인 공유면 현재 브랜치·PWD가 가리키는 **갈래를 우선** 읽고 남의 갈래는 한 줄 요약) + docs/PROJECT_PLAN.md + 최근 DEC 3건 → "이 단위 지난 X, 다음 Y?" 보고(`[Pending]`·`[Blocked]`는 PROJECT_PLAN "미해결/관찰 중"**과 대조**해 거기 없으면 닫힌 것 · 항목이 **다음 행동 없음**을 명시하면 Y를 재구성하지 말고 새 작업을 묻는다).
 3) 조건부 안내: dropin-applied 30일 경과면 /dropin-check·/dropin-update, PROJECT_PLAN 예정일 경과 항목(**미완료 항목만** — `[x]`·취소선 제외), dropin-applied 괄호의 조치 대기 메모·`게이트 차단(사유)`·`소스없음(사유)`/`확보 실패(사유)` 안내(대상 CLAUDE.md + 글로벌 `~/.claude/CLAUDE.md` 둘 다).
 ```
 ```markdown
@@ -349,7 +352,7 @@ description: 단위분할 마무리. 대상 단위 docs/<단위>/PROGRESS.md에 
 # /wrap (솔루션-aware)
 대상 단위 판별 후 docs/<단위>/PROGRESS.md 최상단에 §F-6 양식으로 기록(`[갈래][Done|Pending|Blocked|Reverted] … — @작성자 (브랜치) YYYY-MM-DD` — **갈래·날짜를 비우지 않는다**). 되돌림은 [Reverted] 새 항목 append + 원항목 표시(revert가 지운 줄은 되살린다).
 **폴백**: 단위 폴더가 없는 단일 repo면 `docs/PROGRESS.md`에 A와 동일하게. 비-git 폴더면 git status·커밋 단계를 건너뛰고 기록만. `docs/`가 없거나 **기록 3종이 제자리에 없으면**(`PROJECT_PLAN`은 repo `docs/` 루트, `PROGRESS`·`DECISIONS`는 대상 단위 — flat이면 둘 다 `docs/`) 있는 파일에만 append하고 **없는 것을 지목해** "01 §E-1 기록 체계 미설치"를 알린다(PROJECT_PLAN 부재면 미해결 승격이, DECISIONS 부재면 새 결정이 갈 곳을 잃는다).
-**다음 세션이 이어받을 것**(`docs/plans/` 계획서 경로·다음 행동)은 항목 **앞쪽**에 적고 PROJECT_PLAN에도 한 줄 — 항목 끝은 /resume의 **700자 컷**에 잘려 도달하지 않는다. 다음 행동이 없으면 없다고 적는다.
+**다음 세션이 이어받을 것**(`docs/<단위>/plans/` 계획서 경로·다음 행동)은 항목 **앞쪽**에 적고, 세션 이후에도 유효하면 PROJECT_PLAN "미해결/관찰 중"에도 한 줄(이어받은 세션의 /wrap이 닫는다) — 항목 끝은 /resume의 **700자 컷**에 잘려 도달하지 않는다. 다음 행동이 없으면 없다고 적는다.
 다른 단위도 바뀌면 그 단위에 [공통] 교차 한 줄. 미커밋이면 경고. 완료 모호 시 확인 후 기록.
 append 후 해당 PROGRESS·DECISIONS 부피 확인 — ~800줄 또는 ~120KB 초과면 아카이브 안내(가장 오래된 항목부터 임계의 절반 이하까지).
 이번 세션에 `~/.claude/`나 저장소 `global-config/`를 고쳤으면 화이트리스트 5종 해시 대조(클론 없으면 생략) — 차이 시 방향 판정+복사 안내. **판정 기준은 A와 동일**(구성 성격 4키만 실제 차이·포함 기준이 정본·글로벌 `CLAUDE.md`의 `dropin-applied` 줄 제외·줄바꿈 정규화 후 비교).
@@ -366,7 +369,7 @@ description: 통합 워크스페이스 재개. 루트+하위 repo git status로 
 0) 루트+하위 repo 각각: remote 있고 clean이면 `git pull --ff-only` 먼저(아니면 fetch 후 뒤처짐 보고) → git status·브랜치로 미커밋(진행 중) 작업 발견.
 1) 대상 repo(+단위) 판별: PWD > 브랜치 > 질문.
    **폴백**: 하위 repo가 없는 단일 repo면 0)·1)을 그 repo에만 수행하고 **INDEX만 생략**한다 — **단위 판별은 유지**한다(단일 repo인데 `docs/<단위>/`로 쪼갠 경우가 흔하다. A로 강등하면 그 기록을 못 찾는다). 비-git 폴더면 0)을 건너뛰고 docs 체계만 읽는다.
-2) <repo>/docs[/<단위>]/PROGRESS.md 최상단(최근 ~5항목(상단 날짜가 역순이면 **날짜 기준**) — 다인 공유면 현재 브랜치·PWD가 가리키는 **갈래를 우선** 읽고 남의 갈래는 한 줄 요약) + 최근 DEC 3건 + <repo>/PROJECT_PLAN.md + 루트 docs/INDEX.md 최근 항목 → 보고.
+2) <repo>/docs[/<단위>]/PROGRESS.md 최상단(최근 ~5항목(상단 날짜가 역순이면 **날짜 기준**) — 다인 공유면 현재 브랜치·PWD가 가리키는 **갈래를 우선** 읽고 남의 갈래는 한 줄 요약) + 최근 DEC 3건 + <repo>/PROJECT_PLAN.md + 루트 docs/INDEX.md 최근 항목 → 보고(`[Pending]`·`[Blocked]`는 PROJECT_PLAN "미해결/관찰 중"**과 대조**해 거기 없으면 닫힌 것 · 항목이 **다음 행동 없음**을 명시하면 다음 행동을 재구성하지 말고 새 작업을 묻는다).
    **대상이 루트(워크스페이스 전체)면 하위 각 repo PROGRESS 최상단 ~2항목도 훑어** 최근 활동을 repo당 한 줄로 보고(팀원이 하위에서 남긴 기록은 INDEX에 없다).
 3) 조건부 안내: dropin-applied 30일 경과면 /dropin-check·/dropin-update, 예정일 경과 항목(**미완료 항목만** — `[x]`·취소선 제외), 조치 대기 메모·`게이트 차단(사유)`·`소스없음(사유)`/`확보 실패(사유)` 안내(대상 CLAUDE.md + 글로벌 `~/.claude/CLAUDE.md` 둘 다).
 ```
@@ -378,7 +381,7 @@ description: 통합 마무리. 건드린 repo마다 <repo>/docs[/<단위>]/PROGR
 ---
 # /wrap (통합)
 1) 각 repo git status로 변경 감지(**폴백**: 단일 repo면 그 repo만 — 3)·4)는 생략해 A와 동일. 비-git 폴더면 git 단계를 건너뛰고 기록만). 2) 변경 repo마다 docs[/<단위>]/PROGRESS.md 최상단 append(§F-6 양식 — `[갈래][…] … — @작성자 (브랜치) YYYY-MM-DD`, **갈래·날짜를 비우지 않는다**. 되돌림은 [Reverted] 새 항목 + 원항목 표시)(**폴백**: 그 단위에 `docs/`가 없거나 **기록 3종이 제자리에 없으면**(`PROJECT_PLAN`은 repo `docs/` 루트, `PROGRESS`·`DECISIONS`는 그 단위) 있는 파일에만 append하고 **없는 것을 지목해** "01 §E-1 기록 체계 미설치"를 알린다(PROJECT_PLAN 부재면 미해결 승격이, DECISIONS 부재면 새 결정이 갈 곳을 잃는다). **루트는 예외** — 얇은 라우터의 루트 `docs/`엔 PROGRESS·DECISIONS·PROJECT_PLAN이 없는 것이 정상이니(`INDEX.md`·워크스페이스 레이어 산출물은 함께 있을 수 있다) 미설치로 보지 않는다).
-3) 여러 repo면 주 대상 본문 + 나머지 [공통] 교차. 4) (선택) 루트 docs/INDEX.md 크로스-repo 한 줄+링크. **다음 세션이 이어받을 것**(`docs/plans/` 계획서 경로·다음 행동)은 항목 **앞쪽**에 적고 PROJECT_PLAN에도 한 줄 — 항목 끝은 /resume의 **700자 컷**에 잘려 도달하지 않는다. 다음 행동이 없으면 없다고 적는다.
+3) 여러 repo면 주 대상 본문 + 나머지 [공통] 교차. 4) (선택) 루트 docs/INDEX.md 크로스-repo 한 줄+링크. **다음 세션이 이어받을 것**(`<repo>/docs[/<단위>]/plans/` 계획서 경로·다음 행동)은 항목 **앞쪽**에 적고, 세션 이후에도 유효하면 PROJECT_PLAN "미해결/관찰 중"에도 한 줄(이어받은 세션의 /wrap이 닫는다) — 항목 끝은 /resume의 **700자 컷**에 잘려 도달하지 않는다. 다음 행동이 없으면 없다고 적는다.
 5) repo별 변경 파일 보고 + 미커밋 경고. 커밋은 repo별 따로(팀 양식). append한 PROGRESS·DECISIONS가 ~800줄 또는 ~120KB 초과면 아카이브 안내(가장 오래된 항목부터 임계의 절반 이하까지).
 6) 이번 세션에 `~/.claude/`나 저장소 `global-config/`를 고쳤으면 화이트리스트 5종 해시 대조(클론 없으면 생략) — 차이 시 방향 판정+복사 안내. **판정 기준은 A와 동일**(구성 성격 4키만 실제 차이·포함 기준이 정본·글로벌 `CLAUDE.md`의 `dropin-applied` 줄 제외·줄바꿈 정규화 후 비교).
 ```
@@ -558,7 +561,8 @@ Claude Code는 매주 바뀐다. 6개월마다 30분:
 - 정기 확인(2026-08-20 전부 유효): deny의 서브프로세스 우회 한계, **샌드박스 네이티브 Windows 미지원**(macOS·Linux·WSL2만 — sandboxing), `sandbox.credentials` 스키마(`files[]`={path,mode}·`envVars[]`={name,mode}, mode=`deny`|`mask` + `extract`·`decode`·`injectHosts`·`awsPairs`·`sigv4`), `attribution` 스키마, auto-memory 한도(MEMORY.md 200줄/25KB).
 - **dev container 격리 경로**(§J 격리 3단) — feature 이미지·이그레스 방화벽 스크립트 구성이 유지되는지, 네이티브 Windows 대안이라는 위치가 바뀌지 않았는지(내장 샌드박스가 Windows를 지원하기 시작하면 이 줄의 근거가 사라진다).
 - `/model` 최신 정책(별칭이 가리키는 실제 모델·`best`의 해석), `claude --version`.
-- `/effort` 단계 명칭·모델별 지원 범위·`ultracode` 동작, 에이전트·스킬 frontmatter `effort:` 키 유지 여부(§D-6, 2026-07-20 확정).
+- `/effort` 단계 명칭·모델별 지원 범위·`ultracode` 동작, 에이전트·스킬 frontmatter 키 생존 — `effort:`·`arguments:`·`allowed-tools`·`disable-model-invocation`(정본 §F-2. `effort:`는 2026-07-20 확정).
+- **§D-7 캐시 축** — TTL 버킷(5분/1시간)·`promptCacheTtl`/`subagentPromptCacheTtl` 값 집합·`/usage`의 `Prompt cache` 줄·**effort가 캐시 키**라는 동작·캐시를 깨는/지키는 행동 목록(공식 prompt-caching·costs 문서).
 - §F-2 **A·B·C 전 템플릿**의 폴백(비-git·`docs/` 부재·단위 없음·단일 repo)·**조건부 안내 어휘**(조치 대기·`게이트 차단`·`소스없음`/`확보 실패` — 새 어휘가 늘 때마다 템플릿 3곳도 함께 늘려야 한다)·**미러 대조 판정 기준**(구성 성격 4키·포함 기준 정본·`dropin-applied` 줄 제외·줄바꿈 정규화)이 배포된 글로벌 스킬 실물과 일치하는지 — 문서만 고치고 스킬을 빠뜨리면(또는 그 반대로) 같은 공백이 방향만 바꿔 재발한다. **점검 범위에서 A를 빼지 말 것**: 단일 repo 신규 설치자가 쓰는 것이 A다(도입 경위는 버전 표 v1.26·v1.29 행).
 - **자기 점검(갱신 의식)** — 재검증·개정은 기억이 아니라 **당일 공식 문서** 조회로 한다(확인 못 한 항목엔 🟡을 단다). 고쳤으면 ① 버전 표에 한 줄(무엇을 왜) ② 헤더·푸터의 버전과 "최종 갱신"·"최근 재검증" 날짜 ③ 저장소 `CLAUDE.md` 구성물 표 ④ 이 체크리스트 ⑤ 기계 검사 통과를 빠짐없이 한다. 버전은 네 곳에 있고 **하나만 빠져도 4축이 어긋난다** — 골격 규칙의 정본은 `docs/DOC_CONTRACT.md`다.
 - ✅ 해소된 과거 항목(재확인 불필요): CLAUDE.local.md deprecation 우려 → **계속 지원**(2026-07-20 확인, `.gitignore` 추가 권장 유지).
@@ -568,5 +572,5 @@ Claude Code는 매주 바뀐다. 6개월마다 30분:
 ## 핵심 출처 🟢
 IDE 통합·`--add-dir`(ide-integrations·large-codebases) / permissions·deny 한계 / hooks / skills / memory·auto-memory — 모두 `code.claude.com/docs` 및 `docs.anthropic.com`.
 
-**문서 정보** — 통합 마스터(범용) **v1.63**. 변경 이력은 최상단 버전 표 참조(유래: 8개 소스 통합 초판 — `v1.0~v1.32` 병합 행).
+**문서 정보** — 통합 마스터(범용) **v1.64**. 변경 이력은 최상단 버전 표 참조(유래: 8개 소스 통합 초판 — `v1.0~v1.32` 병합 행).
 최종 갱신: 2026-09-02 · 최근 재검증: 2026-08-20 / 참조: Claude Code v2.1.237, Opus 5(v2.1.219+) · Sonnet 5(v2.1.197+) · Fable 5(v2.1.170+).
