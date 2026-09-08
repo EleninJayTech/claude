@@ -1,6 +1,8 @@
-# Claude Code Setup Documents
+# Dandi — Claude Code Setup Documents
 
 > **English** · [한국어](README.ko.md)
+
+> **Dandi** (단디) is a Korean dialect word for *"properly, without gaps."* That is the whole promise of these documents: detect → install → verify — and always a way back.
 
 > **Claude Code** is Anthropic's tool that writes and runs code on your own machine while you just talk to it.
 > The documents in this repository are **an instruction manual that executes itself** — they configure Claude Code for your machine and your project.
