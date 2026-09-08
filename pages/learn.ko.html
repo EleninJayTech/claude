@@ -415,7 +415,7 @@ footer{max-width:1120px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
   </details>
 
   <details class="acc">
-    <summary><span class="id">03</span>확장 기능 — 상태 표시줄·디자인 스킬·MCP·브라우저·기능 문서 <span class="badge b-off">선택 6종</span></summary>
+    <summary><span class="id">03</span>확장 기능 — 상태 표시줄·디자인 스킬·MCP·브라우저·기능 문서·코드 리팩터링 <span class="badge b-off">선택 7종</span></summary>
     <div class="acc-b">
       <ul>
         <li><b>claude-hud</b> — 입력창 아래 <b>상태 표시줄</b>. 컨텍스트·요금제 사용량이 보입니다. 절약 프로필이면 사실상 필수.</li>
@@ -424,6 +424,7 @@ footer{max-width:1120px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
         <li><b>MCP 서버</b> — 외부 도구 연결(GitHub·문서 검색·브라우저 조작). 어떤 서버를 붙일지는 따로 물어봅니다.</li>
         <li><b>브라우저 검증</b> — 만든 화면을 <b>Claude가 직접 열어 확인하고 고치게</b> 합니다.</li>
         <li><b>기능 문서 스킬 세트</b>(6종) — 코드와 실제 화면을 보고 <b>기능마다 명세</b>를 써 두고, 거기 적힌 테스트를 돌리고, 문서를 안 고친 커밋을 막고, 릴리스 노트까지 만듭니다. 6종을 한 세트로 깔며, 문서만 있는 저장소는 대상이 아닙니다.</li>
+        <li><b>refactor</b> — 코드를 정리하고(중복 통합·구조 정리·낡은 문법 제거) <b>동작이 그대로인지까지 증명</b>합니다 — 호출처·계약·데이터 형식·실제 실행. 후보를 표로 보여주고 고른 것만 고칩니다. 문서만 있는 저장소는 대상이 아닙니다.</li>
       </ul>
       <p>스킬을 고르면 두 가지를 더 물어봅니다 — <b>스코프</b>(내 PC 전체 vs 이 프로젝트만)와
       <b>호출 방식</b>(Claude가 알아서 vs 내가 <code class="i">/명령</code>을 칠 때만).</p>

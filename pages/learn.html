@@ -415,7 +415,7 @@ footer{max-width:1120px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
   </details>
 
   <details class="acc">
-    <summary><span class="id">03</span>Add-ons &mdash; status line, design skills, MCP, browser, feature docs <span class="badge b-off">six optional</span></summary>
+    <summary><span class="id">03</span>Add-ons &mdash; status line, design skills, MCP, browser, feature docs, refactor <span class="badge b-off">seven optional</span></summary>
     <div class="acc-b">
       <ul>
         <li><b>claude-hud</b> &mdash; a <b>status line</b> under the input box showing context and plan usage. Practically required on the thrift profile.</li>
@@ -424,6 +424,7 @@ footer{max-width:1120px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
         <li><b>MCP servers</b> &mdash; connect external tools (GitHub, doc search, browser control). Which servers to attach is asked separately.</li>
         <li><b>Browser verification</b> &mdash; lets <b>Claude open the screens it built, check them and fix them</b>.</li>
         <li><b>Feature-doc skill set</b> (6 skills) &mdash; writes a <b>spec per feature</b> from the code and the real screen, then runs the tests written in it, blocks commits that skip the doc, and builds release notes. Installed as one set; not for documentation-only repositories.</li>
+        <li><b>refactor</b> &mdash; cleans up code (merging duplicates, tidying structure, clearing dated syntax) and then <b>proves the behaviour did not change</b> &mdash; call sites, contracts, data formats, an actual test run. Shows you the candidates and only changes what you pick. Not for documentation-only repositories.</li>
       </ul>
       <p>Choosing a skill brings two more questions &mdash; <b>scope</b> (your whole machine vs. this project only) and
       <b>invocation</b> (Claude decides vs. only when you type <code class="i">/command</code>).</p>
