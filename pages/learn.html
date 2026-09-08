@@ -333,7 +333,7 @@ footer{max-width:1120px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
 <!-- ═══ CH5 프로필 · 기존 설정 ═══ -->
 <section class="chapter" data-ch="5" aria-labelledby="t5" hidden>
   <p class="eyebrow">Chapter 5 &middot; the remaining common questions</p>
-  <h2 id="t5">Operating profile, output language, and what is already there</h2>
+  <h2 id="t5">Operating profile, output language, name alias, and what is already there</h2>
 
   <h3>Operating profile &mdash; standard / thrift</h3>
   <div class="sim">
@@ -349,6 +349,9 @@ footer{max-width:1120px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
 
   <h3>Output language &mdash; Korean / English</h3>
   <p>This one is easy to misread: it is <b>not the language of the documents</b> but the language of <b>what the install produces</b>. The drop-in documents stay Korean &mdash; Claude executes them identically either way &mdash; while your answer here decides the language of the target <code class="i">CLAUDE.md</code> body, the <code class="i">docs/</code> entries, commit messages and generated filenames (<code class="i">docs/difficulty-matrix.md</code> vs <code class="i">docs/난이도-매트릭스.md</code>). Format keywords such as <code class="i">[topic][Done]</code> stay fixed in either language, because <code class="i">/resume</code> and <code class="i">/wrap</code> find them by those exact strings.</p>
+
+  <h3>Skill name alias &mdash; none / prefix / suffix</h3>
+  <p>The skill names being installed (<code class="i">resume</code>, <code class="i">wrap</code>, <code class="i">svg-design</code>) are common ones. If a <b>different skill of the same name</b> already sits on your machine, that one wins &mdash; the install reports success but the wrong thing runs, or what you were using gets buried. This question is the way out: attach the nickname <b>Dandi</b> to get <code class="i">dandi-resume</code> (prefix) or <code class="i">resume-dandi</code> (suffix). <b>Off by default</b> &mdash; the installer looks for collisions first and only suggests it where it finds one. <b>The six feature-doc skills call each other by name, so they move together</b>. Details in the <a href="options.html#common">options dictionary, 2-7</a>.</p>
 
   <h3>If something is already installed &mdash; keep / reconcile / replace</h3>
   <p>Asked for every item where existing settings are detected &mdash; <b>always</b>, whatever the mode. Click to see the difference.</p>
@@ -573,7 +576,7 @@ var TERMS = [
 var STEPS = [
   ['STEP 1','Obtain documents','If the documents needed (01\u201306) are not in the folder, they are fetched from GitHub. No questions.'],
   ['STEP 2','Detect environment','Inspects the prior install record (dropin-applied), existing config files and the project type. No questions.'],
-  ['STEP 3','The big choices','Asks for base mode, purpose bundles, operating profile and output language \u2014 chapters 3\u20135 of this course.'],
+  ['STEP 3','The big choices','Asks for base mode, purpose bundles, operating profile, output language and skill name alias \u2014 chapters 3\u20135 of this course.'],
   ['STEP 4','Run the install','Installs by each chosen document\u2019s procedure. Only in "custom" mode does it also ask about the per-document items (chapters 6\u20138).'],
   ['STEP 5','Verify and record','Reports the result with evidence and leaves one install-record line at the bottom of CLAUDE.md.']
 ];

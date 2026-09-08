@@ -308,6 +308,20 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
     <li><b>재구성</b> — 어긋난 부분만 맞춥니다. 기존 걸 살리면서 새 버전 내용을 반영하고 싶을 때.</li>
     <li><b>교체</b> — 기존 걸 지우고 새로 만듭니다. 예전에 대충 만들어둔 걸 정리할 때.</li>
   </ul>
+
+  <h3>2-7. 스킬 이름 별칭 — 없음 / 앞 / 뒤 / 고른 것만</h3>
+  <p><b>이름이 겹칠 때를 위한 안전장치입니다.</b> 설치되는 스킬 이름(<code class="i">resume</code>·<code class="i">wrap</code>·<code class="i">svg-design</code>…)은 흔해서, 내 PC에 <b>같은 이름의 다른 스킬</b>이 이미 있으면 그쪽이 이깁니다 — 설치는 됐는데 눌러 보면 엉뚱한 게 돌거나, 반대로 내가 쓰던 게 덮입니다.</p>
+  <div class="opt">
+    <div class="opt-head"><span class="name">별칭</span><span class="badge b-off">기본 = 없음</span></div>
+    <p class="lead">이 문서 묶음의 애칭 <b>단디</b>를 이름에 붙여 충돌을 피합니다 — <code class="i">dandi-resume</code>(앞) 또는 <code class="i">resume-dandi</code>(뒤).</p>
+    <dl>
+      <dt>기본은 안 붙임</dt><dd>설치 전에 <b>같은 이름이 있는지 먼저 찾아보고</b>, 있을 때만 그 스킬을 체크해 권합니다. 충돌이 없으면 안 붙이는 편이 낫습니다 — 이름이 길어지고 팀원이 다른 이름으로 부르게 됩니다</dd>
+      <dt>고를 수 있는 것</dt><dd><b>없음</b> / <b>전부</b> / <b>고른 것만</b>, 그리고 <b>앞이냐 뒤냐</b>. 글자도 바꿀 수 있습니다(<code class="i">dandi</code> 대신 팀 이름 등 — 소문자·숫자·하이픈만)</dd>
+      <dt>안 붙는 자리</dt><dd><code class="i">frontend-design</code>을 <b>플러그인으로</b> 깔면 폴더를 마켓이 만들어 별칭이 안 붙습니다. 붙이려면 <code class="i">npx</code>·수동 복사 경로를 고르세요</dd>
+      <dt>묶음으로 움직이는 것</dt><dd><b>기능 문서 세트 6종</b>은 서로를 이름으로 부르기 때문에 <b>여섯 개 전부</b> 붙이거나 전혀 안 붙이거나 둘 중 하나입니다</dd>
+      <dt>남는 자리</dt><dd>적용 기록에 <code class="i">별칭=없음</code>·<code class="i">별칭=dandi-*</code>처럼 남아 재적용 때 유지됩니다(<code class="i">*</code>가 원래 이름 자리). 나중에 바꾸려 하면 <b>기존 걸 옮길지, 새 이름으로 하나 더 깔지</b>를 물어봅니다</dd>
+    </dl>
+  </div>
 </section>
 
 <!-- ═══════════ 3. 01 ═══════════ -->
@@ -547,7 +561,7 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
     </dl>
   </div>
 
-  <h3>스킬을 고르면 따라오는 질문 2개</h3>
+  <h3>스킬을 고르면 따라오는 질문 3개</h3>
   <div class="tbl">
   <table>
     <tr><th style="width:120px">질문</th><th>선택지</th></tr>
@@ -558,6 +572,10 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
     <tr>
       <td><b>호출 방식</b></td>
       <td><b>자동 판단</b> — 관련 작업이 감지되면 Claude가 알아서 불러 씀(기본) / <b>수동 호출 전용</b> — 내가 <code class="i">/svg-design</code>이라고 쳐야만 동작(파일에 <code class="i">disable-model-invocation: true</code> 한 줄이 추가됨)</td>
+    </tr>
+    <tr>
+      <td><b>이름 별칭</b></td>
+      <td><b>없음</b>(기본) / <b>앞</b>(<code class="i">dandi-svg-design</code>) / <b>뒤</b>(<code class="i">svg-design-dandi</code>) — 같은 이름의 다른 스킬과 부딪칠 때 쓰는 회피 수단. 자세한 건 <b>2-7</b></td>
     </tr>
   </table>
   </div>

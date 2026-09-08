@@ -310,6 +310,20 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
     <li><b>Reconcile</b> &mdash; only the parts that drifted are aligned. For keeping what you have while taking in the newer version.</li>
     <li><b>Replace</b> &mdash; the old one is removed and rebuilt. For cleaning up something you threw together earlier.</li>
   </ul>
+
+  <h3>2-7. Skill name alias &mdash; none / prefix / suffix / only the ones you pick</h3>
+  <p><b>A safeguard for when names collide.</b> The skill names installed here (<code class="i">resume</code>, <code class="i">wrap</code>, <code class="i">svg-design</code>&hellip;) are common ones. If a <b>different skill of the same name</b> already exists on your machine, that one wins &mdash; the install succeeds but the wrong thing runs, or the one you were using gets buried.</p>
+  <div class="opt">
+    <div class="opt-head"><span class="name">Alias</span><span class="badge b-off">default = none</span></div>
+    <p class="lead">Attaches this project&rsquo;s nickname <b>Dandi</b> to the name to dodge the collision &mdash; <code class="i">dandi-resume</code> (prefix) or <code class="i">resume-dandi</code> (suffix).</p>
+    <dl>
+      <dt>Off by default</dt><dd>The installer <b>looks for same-named skills first</b> and only suggests an alias for the ones it finds. With no collision, leaving it off is better &mdash; names get longer and your teammates end up calling it something else</dd>
+      <dt>What you choose</dt><dd><b>None</b> / <b>all</b> / <b>only the ones you pick</b>, and <b>prefix or suffix</b>. The word itself is yours to change (a team name instead of <code class="i">dandi</code> &mdash; lowercase, digits and hyphens only)</dd>
+      <dt>Where it cannot apply</dt><dd>Installing <code class="i">frontend-design</code> <b>as a plugin</b> lets the marketplace create the folder, so no alias attaches. Pick the <code class="i">npx</code> or manual-copy route if you want one</dd>
+      <dt>What moves as a set</dt><dd>The <b>six feature-doc skills</b> call each other by name, so it is <b>all six or none</b> &mdash; never a subset</dd>
+      <dt>Where it is stored</dt><dd>The install record keeps <code class="i">별칭=없음</code> or <code class="i">별칭=dandi-*</code> and reuses it next time (<code class="i">*</code> marks where the original name goes). Change it later and you are asked whether to <b>rename what exists or install a second copy under the new name</b></dd>
+    </dl>
+  </div>
 </section>
 
 <!-- ═══════════ 3. 01 ═══════════ -->
@@ -549,7 +563,7 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
     </dl>
   </div>
 
-  <h3>Two follow-up questions for any skill</h3>
+  <h3>Three follow-up questions for any skill</h3>
   <div class="tbl">
   <table>
     <tr><th style="width:120px">Question</th><th>Choices</th></tr>
@@ -560,6 +574,10 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
     <tr>
       <td><b>Invocation</b></td>
       <td><b>Automatic</b> &mdash; Claude loads it when it detects relevant work (default) / <b>manual only</b> &mdash; it runs only when you type <code class="i">/svg-design</code> (adds one <code class="i">disable-model-invocation: true</code> line to the file)</td>
+    </tr>
+    <tr>
+      <td><b>Name alias</b></td>
+      <td><b>None</b> (default) / <b>prefix</b> (<code class="i">dandi-svg-design</code>) / <b>suffix</b> (<code class="i">svg-design-dandi</code>) &mdash; the way out when a different skill already holds the name. Details in <b>2-7</b></td>
     </tr>
   </table>
   </div>

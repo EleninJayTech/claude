@@ -333,7 +333,7 @@ footer{max-width:1120px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
 <!-- ═══ CH5 프로필 · 기존 설정 ═══ -->
 <section class="chapter" data-ch="5" aria-labelledby="t5" hidden>
   <p class="eyebrow">챕터 5 · 나머지 공통 질문</p>
-  <h2 id="t5">운용 프로필, 산출물 언어, 그리고 이미 있을 때</h2>
+  <h2 id="t5">운용 프로필, 산출물 언어, 이름 별칭, 그리고 이미 있을 때</h2>
 
   <h3>운용 프로필 — 표준 / 절약</h3>
   <div class="sim">
@@ -349,6 +349,9 @@ footer{max-width:1120px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
 
   <h3>산출물 언어 — 한국어 / English</h3>
   <p>오해하기 쉬운 항목입니다 — <b>문서의 언어가 아니라</b> <b>설치가 만들어 내는 것</b>의 언어입니다. 드롭인 문서는 한국어 그대로 두고(Claude는 어느 언어로든 같게 실행합니다), 이 답이 대상 <code class="i">CLAUDE.md</code> 본문·<code class="i">docs/</code> 기록·커밋 메시지·산출물 파일명(<code class="i">docs/난이도-매트릭스.md</code> ↔ <code class="i">docs/difficulty-matrix.md</code>)의 언어를 정합니다. <code class="i">[갈래][Done]</code> 같은 형식 키워드는 어느 언어에서도 고정입니다 — <code class="i">/resume</code>·<code class="i">/wrap</code>이 그 문자열로 찾기 때문입니다.</p>
+
+  <h3>스킬 이름 별칭 — 없음 / 앞 / 뒤</h3>
+  <p>설치되는 스킬 이름(<code class="i">resume</code>·<code class="i">wrap</code>·<code class="i">svg-design</code>)은 흔합니다. 내 PC에 <b>같은 이름의 다른 스킬</b>이 이미 있으면 그쪽이 이겨서, 설치는 됐는데 눌러 보면 엉뚱한 게 돌거나 쓰던 게 덮입니다. 이 질문이 그 회피 수단입니다 — 애칭 <b>단디</b>를 붙여 <code class="i">dandi-resume</code>(앞) 또는 <code class="i">resume-dandi</code>(뒤)로 만듭니다. <b>기본은 안 붙임</b>이고, 설치 전에 같은 이름이 있는지 찾아본 뒤 있을 때만 권합니다. <b>기능 문서 세트 6종은 서로를 이름으로 부르니 여섯 개가 함께 움직입니다</b>. 자세한 건 <a href="options.ko.html#common">옵션 사전 2-7</a>.</p>
 
   <h3>이미 설치돼 있으면 — 유지 / 재구성 / 교체</h3>
   <p>기존 설정이 감지된 항목마다, 모드와 상관없이 <b>항상</b> 물어봅니다. 눌러서 차이를 보세요.</p>
@@ -573,7 +576,7 @@ var TERMS = [
 var STEPS = [
   ['STEP 1','문서 확보','설치에 필요한 문서(01~06)가 같은 폴더에 없으면 GitHub에서 가져옵니다. 질문 없음.'],
   ['STEP 2','환경 감지','이전 적용 기록(dropin-applied), 기존 설정 파일, 프로젝트 유형을 조사합니다. 질문 없음.'],
-  ['STEP 3','큰 선택','기반 모드·목적 번들·운용 프로필을 물어봅니다 — 이 코스의 챕터 3~5가 여기입니다.'],
+  ['STEP 3','큰 선택','기반 모드·목적 번들·운용 프로필·산출물 언어·스킬 이름 별칭을 물어봅니다 — 이 코스의 챕터 3~5가 여기입니다.'],
   ['STEP 4','설치 실행','고른 문서의 절차대로 설치합니다. \'사용자\' 모드일 때만 문서 안 세부 항목(챕터 6~8)까지 물어봅니다.'],
   ['STEP 5','검증·기록','실행 결과를 증거와 함께 보고하고, CLAUDE.md 맨 아래에 적용 기록 한 줄을 남깁니다.']
 ];

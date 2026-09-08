@@ -1,6 +1,6 @@
 # Claude Code 통합 구성 — 범용 마스터 (드롭인 적용)
 
-> **문서 버전: v1.66** · 최종 갱신: **2026-09-03** · **최근 재검증: 2026-09-02** · 기준: Claude Code v2.1.258 (Opus 5 · Sonnet 5 · Fable 5.1)
+> **문서 버전: v1.67** · 최종 갱신: **2026-09-08** · **최근 재검증: 2026-09-02** · 기준: Claude Code v2.1.258 (Opus 5 · Sonnet 5 · Fable 5.1)
 >
 > | 버전 | 날짜 | 변경 내용 |
 > | --- | --- | --- |
@@ -20,6 +20,7 @@
 > | v1.64 | 2026-09-02 | **/audit 8차(회귀) 반영 12건** — §D-7 근거 포인터를 번호→내용으로(02 재번호에 깨짐)·`/clear`는 **`/wrap` 뒤에**(훅 게이트 없음)+§D-3 `SessionStart` `clear` 매처·`model:` 오버라이드 스킬은 캐시 예외·§L에 **캐시 축**과 frontmatter 4키 · R34 보강: §F-2 A·B·C에 **조건절**("세션 이후에도 유효하면")·배치 절("미해결/관찰 중")·종결자("이어받은 세션의 /wrap이 닫는다") 복원, B·C 계획서 경로를 단위 경로로, §E-1에 `plans/`, /resume 서술에 "미해결/관찰 중"·"다음 행동 없음이면 재구성 금지", §F-2 A·B resume에 R25 대조 · §D-2→05 참조 정정·ⓕ에 §D-7·`claude --resume` 표기 |
 > | v1.65 | 2026-09-02 | 전면 재검증(v2.1.258) — §D-6 `/effort` **모델별 저장**(`modelSettings` — `effortLevel`은 기본값으로 격하, `s` 세션 한정)·Fable 5.1 hold 없음 · §D-7 플러그인은 **MCP 제공형만** 캐시를 깨고 advisor 토글은 무해, CLAUDE.md는 `/compact`에도 재로드, `/cost` 병기 · §F-2 확장 키 **7종 추가**(`when_to_use`·`agent`·`hooks`·`paths`·`background`·`shell`·`disallowed-tools`)+**`allowed-tools`는 제한이 아님** · §J-1 auto 기본화 날짜 🟡 · §L 🟡 3건 재작성 |
 > | v1.66 | 2026-09-03 | **최적화**: R20 적용 — 구 행 v1.33~v1.51을 축 요약 행에 병합(버전 행 15개) |
+> | v1.67 | 2026-09-08 | **스킬 이름 별칭**(00 STEP 3 `별칭=`) 적용 규칙 — §D-1 폴더명+`name:` 동시 변경, §D-4 **원본 경로는 불변**(raw 404 방지), §D-5 검증은 붙인 이름으로, §F-2 서두에 **치환 규칙**(`/<이름>` 토큰만·같은 회차 대상만·wrap→resume **편도** 참조 주의), §F-1 블록도 같은 범위 |
 > ※ 갱신 시: 이 표에 한 줄 추가 + 하단 "문서 정보" 날짜 수정 + §L 재검증 체크리스트 수행.
 
 > **사용법**: 이 파일을 아무 프로젝트 루트(또는 `docs/`)에 넣고 Claude에게
@@ -51,7 +52,7 @@
 **STEP 2 — 부족분 질문(모르는 것만, §I).** 특히: (a) 환경 유형 확정, (b) **동시성 3분기**(ⓐ 혼자 / ⓑ 여러 명·**서로 다른 갈래** / ⓒ 여러 명·같은 갈래), (c) 커밋 양식, (d) 자주 함께 고치는 repo(→ `additionalDirectories`). 이미 코드로 안 것은 "이렇게 이해했다"로 확인만.
 
 **STEP 3 — 구성 항목 선택 확인 → 필요한 것만 생성.** 감지 결과를 바탕으로 아래 항목을 **선택 목록(다중 선택)으로 제시**하고, 체크된 것만 생성한다(전부 기본 체크, 이미 있는 항목은 "유지/재구성" 표기):
-- ⓐ 글로벌 행동 규칙(§D-2 CLAUDE.md) ⓑ 글로벌 보안(§D-3 deny·hooks) ⓒ `/resume`·`/wrap`·점검 스킬 dropin-check/update(§D-4·F-2) ⓓ 프로젝트 기록 체계(§E·F-1: docs/·CLAUDE.md·.gitattributes·§F-5 .gitignore) ⓔ 프로젝트 권한(§F-3 settings.json) ⓕ effort·캐시 가이드(§D-6·D-7, 안내만)
+- ⓐ 글로벌 행동 규칙(§D-2 CLAUDE.md) ⓑ 글로벌 보안(§D-3 deny·hooks) ⓒ `/resume`·`/wrap`·점검 스킬 dropin-check/update(§D-4·F-2 — 이름에 **별칭**을 붙일지는 00 STEP 3가 묻는다. 단독 적용이면 그 자리에서 묻고 기본은 `별칭=없음`) ⓓ 프로젝트 기록 체계(§E·F-1: docs/·CLAUDE.md·.gitattributes·§F-5 .gitignore) ⓔ 프로젝트 권한(§F-3 settings.json) ⓕ effort·캐시 가이드(§D-6·D-7, 안내만)
 - **00의 모드별 기본값**(00 STEP 3에서 왔을 때 — 사용자 모드가 아니면 이 매핑으로 자동 확정하고 질문 생략): **최소 = ⓑⓒⓓ**(보안+스킬+기록 체계 — ⓒ를 빼면 §F-1 블록이 전제하는 `/resume`·`/wrap`이 없고 §D-5의 4종 자동완성 검증도 통과 불가라, "기반"이 성립하지 않는다) / **권장·전체 = ⓐ~ⓕ 전부**. 어느 쪽이든 ⓑ는 빼지 않는다.
 - **대상이 글로벌(PC)뿐이면 ⓓⓔ는 빼고 ⓐⓑⓒ(+ⓕ)만 적용한다** — ⓓ 프로젝트 기록 체계·ⓔ 프로젝트 권한은 대상 repo가 있어야 의미가 있는데, 00 §C-1의 "새 PC → 01(글로벌)+03"으로 들어오면 모드가 질문을 생략하므로 그대로 두면 claude를 띄운 임의 폴더에 `docs/`·`.gitattributes`·`.claude/settings.json`이 말없이 생긴다(00 STEP 5의 기록 예시 `01 vX.Y(글로벌만)`이 가리키는 상태가 이것이다).
 - §D~F에서 **해당 시나리오 부분만** 골라 생성. 불필요한 것(단일 repo에 MSA 단위분할 등)은 만들지 않는다. 단 **ⓑ 보안(deny·시크릿 차단)은 해제를 권하지 않는다** — 사용자가 명시적으로 빼는 경우에만 제외하고 위험을 고지한다.
@@ -102,6 +103,7 @@ New-Item -ItemType Directory -Path .claude/skills/dropin-check -Force
 New-Item -ItemType Directory -Path .claude/skills/dropin-update -Force
 ```
 > 4종이다 — §D-4가 뒤 2종을 복사해 넣고 §D-5가 4종 자동완성을 성공 기준으로 삼는다.
+> **별칭**: 00 STEP 3의 `별칭=`이 `없음`이 아니면 **위 폴더명에 그대로 적용**한다(`dandi-resume`·`resume-dandi`). 폴더명을 바꾸면 **각 `SKILL.md`의 frontmatter `name:`도 같은 값으로** 바꾼다 — 둘이 다르면 그 스킬은 호출되지 않는다. 본문 치환 규칙은 §F-2 서두. **00 없이 단독 적용이면 그 자리에서 묻는다**(기본 `없음`).
 
 ### D-2. 글로벌 `CLAUDE.md` (행동 규칙) — `~/.claude/CLAUDE.md`
 > ⚠️ 아래는 **최소 골격**이지 실제 구성의 전부가 아니다. 문서 저장소 클론이 있으면 **정본은 `global-config/CLAUDE.md`** — 그걸 복사하고 이 블록은 대조용으로만 쓴다(골격만 보고 재구성하면 스킬 카탈로그 절 같은 확장분이 통째로 누락된다). 클론이 없을 때만 이 블록으로 시작한다. **복사할 때 맨 아래 `dropin-applied` 줄은 빼거나 이 PC 기준으로 다시 쓴다** — 그 줄은 미러를 마지막에 커밋한 PC의 기록이라, 그대로 옮기면 새 PC가 하지도 않은 설치를 했다고 주장하고 `/dropin-check`가 그것을 1차 근거로 믿는다.
@@ -151,9 +153,9 @@ New-Item -ItemType Directory -Path .claude/skills/dropin-update -Force
 > 위 블록은 **최소 예시이고 정본이 아니다** — 이 저장소를 클론했다면 `global-config/settings.json`이 실물 스냅샷이다(§D-2의 `CLAUDE.md`와 같은 처리). 복원 경로가 둘(미러 병합 / 이 블록으로 재구성)이라 명시하지 않으면 PC마다 hooks 구성이 갈린다.
 
 ### D-4. 기본 `/resume`·`/wrap` + 점검·최신화 스킬 (단일 repo용 기본형) — §F-2 A 참조. (통합/MSA는 §F-2 B·C — 동명 스킬은 **개인(글로벌)이 프로젝트를 이기므로** 글로벌 쪽을 교체한다, §F-2 주의)
-- **`/dropin-check`**(적용 상태 점검, 읽기 전용)·**`/dropin-update`**(문서 사본 최신화, 승인 후 교체)는 환경 무관 **글로벌 스킬** — 문서 저장소의 `global-config/skills/<이름>/SKILL.md`를 `~/.claude/skills/<이름>/`로 복사한다(로컬 클론 없으면 raw: `https://raw.githubusercontent.com/EleninJayTech/claude/main/global-config/skills/dropin-check/SKILL.md` · 같은 경로의 `dropin-update`). 설치 전 같은 이름 구형 `commands/`가 있으면 제거(§F-2 주의). 두 스킬은 **설치 유형 무관 동작 보장** — 프로젝트 사본 / 로컬 클론 참조 / raw 직접(사본·클론을 나중에 지워도 계속 동작), 판별 근거는 00 STEP 5 기록의 `출처=` 필드(그 필드가 도입된 이후 기록 — 없으면 두 스킬이 사본→클론→raw 순으로 판별한다).
+- **`/dropin-check`**(적용 상태 점검, 읽기 전용)·**`/dropin-update`**(문서 사본 최신화, 승인 후 교체)는 환경 무관 **글로벌 스킬** — 문서 저장소의 `global-config/skills/<이름>/SKILL.md`를 `~/.claude/skills/<이름>/`로 복사한다(로컬 클론 없으면 raw: `https://raw.githubusercontent.com/EleninJayTech/claude/main/global-config/skills/dropin-check/SKILL.md` · 같은 경로의 `dropin-update`). 설치 전 같은 이름 구형 `commands/`가 있으면 제거(§F-2 주의). 두 스킬은 **설치 유형 무관 동작 보장** — 프로젝트 사본 / 로컬 클론 참조 / raw 직접(사본·클론을 나중에 지워도 계속 동작), 판별 근거는 00 STEP 5 기록의 `출처=` 필드(그 필드가 도입된 이후 기록 — 없으면 두 스킬이 사본→클론→raw 순으로 판별한다). **별칭은 받는 쪽 폴더명에만 붙인다** — 복사 **원본** 경로(`global-config/skills/dropin-check/…`·위 raw URL)는 문서 저장소 쪽이라 **바뀌지 않는다**. 원본까지 별칭으로 바꿔 부르면 raw가 404다.
 
-### D-5. 확인 — `claude` → `/` → `/resume`·`/wrap`·`/dropin-check`·`/dropin-update` 자동완성 **+ 글로벌 `settings.json`의 `deny` 시크릿 차단 실측**(스킬 4종은 파일 복사만으로 뜨므로 자동완성만 보면 ⓑ가 통째로 빠져도 "성공"이 된다). **ⓐ를 적용했으면 `/context`의 Memory files 목록에 `~/.claude/CLAUDE.md`가 실제로 있는지도 본다** — 파일이 존재하는 것과 **세션에 로드되는 것**은 다르고, 로드되지 않으면 그 행동 규칙은 없는 것과 같다. 파일 실재만 확인하면 위치·제외 설정 때문에 안 읽히는 경우를 통째로 놓친다.
+### D-5. 확인 — `claude` → `/` → `/resume`·`/wrap`·`/dropin-check`·`/dropin-update`(**별칭을 붙였으면 붙인 이름으로** — `/dandi-resume` 식. 원래 이름으로 찾으면 정상 설치를 실패로 오판한다) 자동완성 **+ 글로벌 `settings.json`의 `deny` 시크릿 차단 실측**(스킬 4종은 파일 복사만으로 뜨므로 자동완성만 보면 ⓑ가 통째로 빠져도 "성공"이 된다). **ⓐ를 적용했으면 `/context`의 Memory files 목록에 `~/.claude/CLAUDE.md`가 실제로 있는지도 본다** — 파일이 존재하는 것과 **세션에 로드되는 것**은 다르고, 로드되지 않으면 그 행동 규칙은 없는 것과 같다. 파일 실재만 확인하면 위치·제외 설정 때문에 안 읽히는 경우를 통째로 놓친다.
 
 ### D-6. 추론 강도(effort) 제어 — `/effort` 🟢
 세션의 **사고(reasoning) 깊이**를 조절하는 슬래시 명령. 고른 값은 **모델별로** settings.json `modelSettings`에 저장된다(v2.1.257+ — 모델마다 자기 저장값을 갖고, **`effortLevel`은 저장값 없는 모델의 기본값**으로 격하. `s`를 붙이면 세션 한정, `/effort auto`는 활성 모델의 저장값 제거).
@@ -240,6 +242,7 @@ New-Item -ItemType Directory -Path .claude/skills/dropin-update -Force
 
 ### F-1. 문서·기록 규칙 블록 ⭐ (각 repo `CLAUDE.md` 끝에 추가 — **이 블록 하나가 정본**)
 > **언어**: 아래 블록과 이 블록이 규정하는 산출물(`CLAUDE.md` 본문·`docs/` 기록 항목·커밋 메시지)은 00 STEP 3의 **`언어=ko|en`** 값으로 쓴다(00 없이 단독 적용이면 그 자리에서 묻는다). 형식·키워드(`[갈래][상태]`·`Done`/`Pending`·`dropin-applied`)는 **언어와 무관하게 그대로** 둔다 — `/resume`·`/wrap`·`check.ps1`이 그 문자열로 찾는다.
+> **별칭**: 00 STEP 3의 `별칭=`이 `없음`이 아니면 아래 블록의 **`/resume`·`/wrap` 호출 토큰도 붙인 이름으로** 바꾼다(§F-2 서두의 치환 규칙과 같은 범위 — 별칭을 붙인 스킬만). 이 블록은 각 프로젝트 `CLAUDE.md`에 복붙되므로, 여기서 안 바꾸면 **팀원이 문서를 보고 없는 명령을 친다**.
 ```markdown
 ## 문서·기록 규칙 (Claude가 자동 적용)
 
@@ -281,6 +284,8 @@ New-Item -ItemType Directory -Path .claude/skills/dropin-update -Force
 
 ### F-2. `/resume`·`/wrap` 스킬 (환경에 맞는 것 하나 선택)
 
+> **별칭 치환 규칙**(00 STEP 3 `별칭=`): 치환 대상은 **`/<원래이름>` 토큰**뿐이다 — 슬래시 붙은 호출 형태만 바꾸고, `${CLAUDE_SKILL_DIR}` 같은 런타임 변수·파일 경로·설명 문장 속 낱말은 건드리지 않는다. **같은 회차에 별칭을 붙인 스킬끼리만** 치환한다 — 별칭을 안 붙인 스킬을 가리키는 참조를 함께 바꾸면 **없는 명령을 가리킨다**. ⚠️ **상호 참조는 편도라 놓치기 쉽다**: 아래 A·B·C 모두 **wrap 본문이 `/resume`을 언급**하지만 resume 본문은 `/wrap`을 언급하지 않는다(대신 `/dropin-check`·`/dropin-update`를 언급한다) — "서로 참조하니 양쪽만 보면 된다"고 넘기면 wrap 쪽 3곳이 남는다. 이 규칙은 **§F-1 블록에도 그대로 적용**된다(그 블록에 `/resume`·`/wrap`이 8줄 있고, 각 프로젝트 `CLAUDE.md`에 복붙된다).
+>
 > **C ⊃ B ⊃ A** — 한 PC에 여러 환경이 섞이면(단위분할 repo + 통합 워크스페이스 + 단일 repo) **가장 넓은 것 하나**를 고른다. 각 변형이 좁은 환경용 폴백을 갖추므로 넓은 쪽이 좁은 쪽을 안전하게 포함한다. 글로벌은 PC당 하나뿐이라 "환경마다 다른 것"은 성립하지 않는다.
 
 > 참고(2026-07 현행): **커스텀 커맨드(`.claude/commands/`)는 스킬로 통합**됐다 — 둘 다 `/이름`을 만들고 동작이 같으며 스킬 쪽이 상위집합(보조 파일·frontmatter 확장). frontmatter에서 `name:`은 이제 선택(폴더명이 기본 명령명), `description:`은 권장(Claude의 자동 로드 판단 기준).
@@ -555,5 +560,5 @@ Claude Code는 매주 바뀐다. 6개월마다 30분:
 ## 핵심 출처 🟢
 IDE 통합·`--add-dir`(ide-integrations·large-codebases) / permissions·deny 한계 / hooks / skills / memory·auto-memory — 모두 `code.claude.com/docs` 및 `docs.anthropic.com`.
 
-**문서 정보** — 통합 마스터(범용) **v1.66**. 변경 이력은 최상단 버전 표 참조(유래: 8개 소스 통합 초판 — 최상단 병합 행).
-최종 갱신: 2026-09-03 · 최근 재검증: 2026-09-02 / 참조: Claude Code v2.1.258, Opus 5(v2.1.219+) · Sonnet 5(v2.1.197+) · Fable 5.1(v2.1.255+).
+**문서 정보** — 통합 마스터(범용) **v1.67**. 변경 이력은 최상단 버전 표 참조(유래: 8개 소스 통합 초판 — 최상단 병합 행).
+최종 갱신: 2026-09-08 · 최근 재검증: 2026-09-02 / 참조: Claude Code v2.1.258, Opus 5(v2.1.219+) · Sonnet 5(v2.1.197+) · Fable 5.1(v2.1.255+).
