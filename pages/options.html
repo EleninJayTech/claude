@@ -563,6 +563,19 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
     </dl>
   </div>
 
+  <div class="opt">
+    <div class="opt-head"><span class="id">§8</span><span class="name">refactor</span><span class="badge b-off">no bundle &middot; full / pick-it-yourself</span></div>
+    <p class="lead">One skill that makes code cleaner <b>and then checks that it still behaves the same</b>. It merges duplicated functions, tidies structure and clears out dated syntax &mdash; then traces what the change touched, across call sites, contracts, data formats and an actual run.</p>
+    <dl>
+      <dt>Picking the scope</dt><dd>Defaults to <b>what you worked on recently</b>. You can point it at <code>all</code> (the whole project), a path, or a commit range; add <code>check</code> and it <b>only verifies, changing nothing</b></dd>
+      <dt>It asks before it edits</dt><dd>Candidates come back as a table &mdash; <b>what / why / risk / how many callers</b> &mdash; and only what you pick gets changed. Nothing is touched before you approve</dd>
+      <dt>What it won't do</dt><dd>New features and bug fixes. Mixing those with a refactor makes it impossible to tell what broke, so a bug it spots along the way goes <b>into the report, not into the code</b></dd>
+      <dt>Pick this when</dt><dd>You have a project with code that has been around a while. <b>A docs-only repo is not a target</b> &mdash; nothing to refactor, nothing to run. It also works on projects with no tests at all (it writes before/after comparison tests of its own)</dd>
+      <dt>How it relates to §7</dt><dd><b>They are separate.</b> With §7 installed, verification gains one more layer &mdash; "do the feature docs' test cases still pass?" &mdash; and without it, that line is simply skipped. <b>Either one alone is fine</b></dd>
+      <dt>Removing it</dt><dd>Delete one folder and you're done (it installs no hooks or settings). The <code class="i">docs/refactor/</code> reports and the tests it wrote are data &mdash; they stay</dd>
+    </dl>
+  </div>
+
   <h3>Three follow-up questions for any skill</h3>
   <div class="tbl">
   <table>
