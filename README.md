@@ -5,10 +5,10 @@
 > **Dandi** (단디) is a Korean dialect word for *"properly, without gaps."* That is the whole promise of these documents: detect → install → verify — and always a way back.
 
 > **Claude Code** is Anthropic's tool that writes and runs code on your own machine while you just talk to it.
-> The documents in this repository are **an instruction manual that executes itself** — they configure Claude Code for your machine and your project.
+> The Dandi documents are **an instruction manual that executes itself** — they configure Claude Code for your machine and your project.
 > Think of furniture instructions that also assemble the furniture: drop a file in, say one sentence, and setup is done.
 
-## Share links (copy these when introducing the repo)
+## Share links (copy these when introducing Dandi)
 
 | Page | URL |
 | --- | --- |
@@ -52,7 +52,7 @@
 | [`index.html`](index.html) | **The human-facing guide** (GitHub Pages landing) — [view on the web](https://eleninjaytech.github.io/claude/) |
 | [`pages/`](pages/) | The rest of the human-facing pages — [intro](pages/intro.html) · [walkthrough](pages/demo.html) · [options dictionary](pages/options.html) · [options course](pages/learn.html) |
 
-## Principles behind this repository
+## Principles behind Dandi
 
 - **Output quality comes first.** Saving on AI usage (tokens) is second, and only within what quality allows.
 - **Checked, not remembered.** Every technical claim records the date it was verified against Anthropic's official documentation, and is re-checked every six months.
