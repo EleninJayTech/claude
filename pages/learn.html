@@ -412,7 +412,7 @@ footer{max-width:1120px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
   </details>
 
   <details class="acc">
-    <summary><span class="id">03</span>Add-ons &mdash; status line, design skills, MCP, browser <span class="badge b-off">five optional</span></summary>
+    <summary><span class="id">03</span>Add-ons &mdash; status line, design skills, MCP, browser, feature docs <span class="badge b-off">six optional</span></summary>
     <div class="acc-b">
       <ul>
         <li><b>claude-hud</b> &mdash; a <b>status line</b> under the input box showing context and plan usage. Practically required on the thrift profile.</li>
@@ -420,6 +420,7 @@ footer{max-width:1120px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
         <li><b>frontend-design</b> &mdash; an official Anthropic skill that steers away from UI that looks AI-generated.</li>
         <li><b>MCP servers</b> &mdash; connect external tools (GitHub, doc search, browser control). Which servers to attach is asked separately.</li>
         <li><b>Browser verification</b> &mdash; lets <b>Claude open the screens it built, check them and fix them</b>.</li>
+        <li><b>Feature-doc skill set</b> (6 skills) &mdash; writes a <b>spec per feature</b> from the code and the real screen, then runs the tests written in it, blocks commits that skip the doc, and builds release notes. Installed as one set; not for documentation-only repositories.</li>
       </ul>
       <p>Choosing a skill brings two more questions &mdash; <b>scope</b> (your whole machine vs. this project only) and
       <b>invocation</b> (Claude decides vs. only when you type <code class="i">/command</code>).</p>
@@ -546,7 +547,7 @@ footer{max-width:1120px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
 </div>
 
 <footer>
-  Install options course &middot; 2026-09-03<br>
+  Install options course &middot; 2026-09-08<br>
   The source of truth for each item is its own document (01&ndash;06). This page exists for people to learn from; it does not change the install procedure. Progress is stored only in this browser&rsquo;s localStorage.<br>
   저장소: github.com/EleninJayTech/claude ·
   <a href="../index.html">Guide</a> &middot; <a href="intro.html">Intro</a> &middot; <a href="demo.html">Walkthrough</a> &middot; <a href="options.html">Dictionary</a>
@@ -594,6 +595,7 @@ var BUNDLES = {
   verify:{name:'Stronger verification', desc:'when tests or CI exist', docs:{'04':'hook gate + gh/glab CLI + CI integration'}},
   auto:{name:'Unattended automation', desc:'only when you ask', docs:{'06':'cloud routines (pairing with 04 CI advised)'}},
   style:{name:'Answer style', desc:'only when you ask', docs:{'05':'output styles'}},
+  featdoc:{name:'Feature documentation', desc:'code projects with real screens', docs:{'03':'feature-doc skill set (6) — spec per feature, tests, commit guard'}},
   company:{name:'Company', desc:'a safeguard modifier', docs:{}}
 };
 var DOCNAMES = {'01':'01 base setup','02':'02 model split','03':'03 add-ons','04':'04 verification','05':'05 output styles','06':'06 routines'};

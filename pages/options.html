@@ -272,6 +272,7 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
     <tr><td><b>Unattended automation</b></td><td>06 cloud routines (pairing with 04 CI is recommended)</td><td>Not detectable &mdash; <b>only when you ask for it</b></td></tr>
     <tr><td><b>Company</b></td><td>Installs nothing new. It is <b>a modifier that tightens the safeguards</b> &mdash; CI requires an org-policy check, MCP is limited to approved servers, routines require org approval</td><td>Applied automatically once you say it is a company repository</td></tr>
     <tr><td><b>Answer style</b></td><td>05 output styles</td><td>Not detectable &mdash; only when you ask for it</td></tr>
+    <tr><td><b>Feature documentation</b></td><td>From 03: the <b>feature-doc skill set</b> &mdash; six skills that write a spec per feature, run the tests written in it, and block commits that change code without updating the doc</td><td>Pre-checked when an existing <code class="i">docs/features/</code> is detected. <b>Skipped for non-code repositories</b></td></tr>
   </table>
   </div>
 
@@ -536,6 +537,18 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
     </dl>
   </div>
 
+  <div class="opt">
+    <div class="opt-head"><span class="id">&sect;7</span><span class="name">Feature-doc skill set</span><span class="badge b-off">feature documentation bundle</span></div>
+    <p class="lead">Six skills that keep a <b>written spec for every feature</b> and keep it honest. Claude reads the code <i>and</i> opens the real screen, writes what it actually saw into <code class="i">docs/features/</code>, and from then on that folder drives the tests, the commit guard and the release notes.</p>
+    <dl>
+      <dt>The six</dt><dd><b>feature-docs</b> (write and update the specs) &middot; <b>feature-test</b> (run the test cases written in them, on the real screen) &middot; <b>feature-doc-audit</b> (find which docs have gone stale, no test run needed) &middot; <b>feature-doc-guard</b> (block a commit that changes code without touching its doc) &middot; <b>test-to-script</b> (turn test cases into Playwright/Maestro scripts) &middot; <b>release-notes</b> (build release notes from the doc history)</dd>
+      <dt>Installed together, always</dt><dd>They share one folder layout, so a partial install leaves the rest quietly broken. Start with <code>/feature-docs init</code> &mdash; the other five refuse to run until it exists</dd>
+      <dt>Needs</dt><dd><b>Python 3</b> for two of them (audit and guard). Without it the other four still work, and the install is recorded as pending so it is not forgotten</dd>
+      <dt>Choose it when</dt><dd>The project has real features and real screens. <b>Not for documentation-only repositories</b> &mdash; there is nothing to specify or run</dd>
+      <dt>Removing it</dt><dd>Uninstall <b>the guard first</b> (<code>/feature-doc-guard uninstall</code>), then delete the folders. The other order leaves a commit hook with nothing left to remove it, and commits keep getting blocked. Your <code class="i">docs/features/</code> is data &mdash; it is kept, not deleted</dd>
+    </dl>
+  </div>
+
   <h3>Two follow-up questions for any skill</h3>
   <div class="tbl">
   <table>
@@ -792,7 +805,7 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
 <a class="totop" href="#toc">&uarr; Contents</a>
 
 <footer>
-  Install options dictionary &middot; based on 00_통합-설치.md &middot; 2026-09-03<br>
+  Install options dictionary &middot; based on 00_통합-설치.md &middot; 2026-09-08<br>
   The source of truth for each item is its own document (01&ndash;06). This page exists so people can read and judge; it does not change the install procedure itself.<br>
   Repository: github.com/EleninJayTech/claude &middot;
   <a href="../index.html">Guide</a> &middot; <a href="intro.html">Intro</a> &middot; <a href="demo.html">Walkthrough</a> &middot; <a href="learn.html">Course</a>

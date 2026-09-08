@@ -270,6 +270,7 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
     <tr><td><b>무인 자동화</b></td><td>06 클라우드 루틴 (+04 CI 병행 권장)</td><td>감지 불가 — <b>직접 요청할 때만</b></td></tr>
     <tr><td><b>회사</b></td><td>새로 설치되는 건 없음. <b>안전장치를 조이는 수정자</b>입니다 — CI는 조직 정책 확인 필수, MCP는 허용된 서버만, 루틴은 조직 승인 필수</td><td>“회사 저장소예요”라고 답하면 자동 적용</td></tr>
     <tr><td><b>응답 스타일</b></td><td>05 출력 스타일</td><td>감지 불가 — 직접 요청할 때만</td></tr>
+    <tr><td><b>기능 문서화</b></td><td>03의 <b>기능 문서 스킬 세트</b> — 기능마다 명세를 쓰고, 거기 적힌 테스트를 돌리고, 문서를 안 고친 커밋을 막는 6종</td><td>기존 <code class="i">docs/features/</code>가 감지되면 기본 체크. <b>코드 없는 저장소는 제외</b></td></tr>
   </table>
   </div>
 
@@ -534,6 +535,18 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
     </dl>
   </div>
 
+  <div class="opt">
+    <div class="opt-head"><span class="id">§7</span><span class="name">기능 문서 스킬 세트</span><span class="badge b-off">기능 문서화 번들</span></div>
+    <p class="lead">기능마다 <b>명세를 써 두고 그 명세가 낡지 않게 지키는</b> 스킬 6종입니다. Claude가 코드를 읽고 <i>실제 화면까지 열어</i> 본 것을 <code class="i">docs/features/</code>에 적어 두면, 그다음부터는 그 폴더가 테스트·커밋 가드·릴리스 노트를 굴립니다.</p>
+    <dl>
+      <dt>6종</dt><dd><b>feature-docs</b>(명세 작성·갱신) · <b>feature-test</b>(명세에 적힌 테스트를 실제 화면에서 실행) · <b>feature-doc-audit</b>(테스트 없이 낡은 문서 찾기) · <b>feature-doc-guard</b>(문서를 안 고친 코드 커밋 차단) · <b>test-to-script</b>(테스트를 Playwright·Maestro 스크립트로 변환) · <b>release-notes</b>(문서 이력으로 릴리스 노트 작성)</dd>
+      <dt>항상 6종을 함께</dt><dd>같은 폴더 구조를 공유해서, 일부만 깔면 나머지가 조용히 실패합니다. 시작은 <code>/feature-docs init</code> — 나머지 다섯은 그게 없으면 실행을 거부합니다</dd>
+      <dt>필요한 것</dt><dd>6종 중 2종(audit·guard)이 <b>Python 3</b>을 씁니다. 없어도 나머지 4종은 동작하고, 설치는 “대기”로 기록돼 잊히지 않습니다</dd>
+      <dt>이럴 때 고르세요</dt><dd>실제 기능과 화면이 있는 프로젝트. <b>문서만 있는 저장소는 대상이 아닙니다</b> — 명세할 기능도 돌릴 화면도 없습니다</dd>
+      <dt>지울 때</dt><dd><b>가드를 먼저</b> 지웁니다(<code>/feature-doc-guard uninstall</code>). 순서를 바꾸면 커밋 훅만 남고 그걸 지울 수단이 사라져 커밋이 계속 막힙니다. <code class="i">docs/features/</code>는 데이터라 지우지 않고 남깁니다</dd>
+    </dl>
+  </div>
+
   <h3>스킬을 고르면 따라오는 질문 2개</h3>
   <div class="tbl">
   <table>
@@ -789,7 +802,7 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
 <a class="totop" href="#toc">↑ 목차</a>
 
 <footer>
-  설치 옵션 사전 · 00_통합-설치.md 기준 · 2026-09-03<br>
+  설치 옵션 사전 · 00_통합-설치.md 기준 · 2026-09-08<br>
   각 항목의 정본은 해당 하위 문서(01~06)입니다. 이 페이지는 사람이 읽고 판단하기 위한 안내이며, 설치 절차 자체를 바꾸지 않습니다.<br>
   저장소: github.com/EleninJayTech/claude ·
   <a href="../index.html">사용법</a> · <a href="intro.html">소개 영상</a> · <a href="demo.html">설치 시연</a> · <a href="learn.html">학습 코스</a>
