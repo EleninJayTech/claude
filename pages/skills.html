@@ -107,6 +107,22 @@ p.sub{margin-top:14px;color:var(--ink-soft);max-width:42em}
 .flow .leaf{font-family:var(--mono);font-size:12.5px;border:1px dashed var(--line);border-radius:10px;padding:10px 12px}
 .flow .leaf b{display:block;font-family:var(--sans);font-size:13px;color:var(--ink-soft);font-weight:400;margin-top:3px}
 
+/* ── 도입 순서 ── */
+.path{margin-top:18px;display:grid;gap:2px}
+.path .p{display:grid;grid-template-columns:30px 1fr;gap:14px;align-items:start;
+  background:var(--card);border:1px solid var(--line);padding:13px 16px}
+.path .p:first-child{border-radius:14px 14px 0 0}
+.path .p:last-child{border-radius:0 0 14px 14px}
+.path .p + .p{border-top:none;margin-top:-2px}
+.path .k{font-family:var(--mono);font-size:12px;color:var(--blue);letter-spacing:.08em;padding-top:3px}
+.path .c{font-family:var(--mono);font-size:13.5px;font-weight:600}
+.path .c .sl{color:var(--dim)}
+.path .w{font-size:14px;color:var(--ink-soft);line-height:1.7;margin-top:3px}
+.path .p.gate{background:var(--marker-soft);border-color:#EBD383}
+.path .p.loop{background:var(--blue-soft);border-color:#C9D2F3}
+.path .p.loop .k{color:#22307F}
+.pathnote{font-size:14px;color:var(--ink-soft);margin-top:12px}
+
 /* ── 하루 흐름 ── */
 .day{margin-top:18px;border-left:2px solid var(--line);padding-left:20px;display:grid;gap:16px}
 .step{position:relative}
@@ -273,6 +289,61 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
     </div>
   </div>
 
+  <h3 style="margin-top:34px">The order to switch them on</h3>
+  <p class="lead">The fan above shows what connects to what, not what to do first. Adopting them in this order means each step is useful on the day you take it &mdash; and the two that constrain you arrive after the thing they constrain is worth trusting.</p>
+  <div class="path">
+    <div class="p gate">
+      <div class="k">1</div>
+      <div>
+        <div class="c"><span class="sl">/</span>feature-docs init</div>
+        <div class="w">The door, and the only step with no alternative &mdash; four of the other five stop with &ldquo;run init first&rdquo; until <code>docs/features/</code> exists. It reads the whole codebase, so give it a quiet slot rather than squeezing it in before a release.</div>
+      </div>
+    </div>
+    <div class="p">
+      <div class="k">2</div>
+      <div>
+        <div class="c"><span class="sl">/</span>feature-test</div>
+        <div class="w">Before you trust the spec, watch it run. Step 1 wrote down what the code <em>appears</em> to do; this is the first thing that checks whether that is actually true. A spec that is wrong is much cheaper to fix here than after step 3 starts enforcing it.</div>
+      </div>
+    </div>
+    <div class="p">
+      <div class="k">3</div>
+      <div>
+        <div class="c"><span class="sl">/</span>feature-doc-guard install</div>
+        <div class="w">Lock it only once it is worth locking. Install the commit guard over a spec you have not verified and every commit is now blocked by a document you do not believe &mdash; the usual outcome is that someone disables the guard, permanently.</div>
+      </div>
+    </div>
+    <div class="p loop">
+      <div class="k">4</div>
+      <div>
+        <div class="c"><span class="sl">/</span>feature-docs sync</div>
+        <div class="w">From here it is a loop, not a step. Run it after each change; the guard from step 3 is what reminds you when you forget. This is the one you will use hundreds of times &mdash; the other five are occasional.</div>
+      </div>
+    </div>
+    <div class="p">
+      <div class="k">5</div>
+      <div>
+        <div class="c"><span class="sl">/</span>test-to-script</div>
+        <div class="w">After a case has been run by hand enough times to annoy you. It converts that case into Playwright or Maestro, and <code>/feature-test</code> then prefers the script automatically. Doing this on day one means automating cases you do not yet know are worth keeping.</div>
+      </div>
+    </div>
+    <div class="p">
+      <div class="k">6</div>
+      <div>
+        <div class="c"><span class="sl">/</span>feature-doc-audit</div>
+        <div class="w">Periodic rather than reactive &mdash; it needs elapsed time before it has anything to find. Light enough to schedule: <code>claude -p "/feature-doc-audit"</code> on a weekly timer is the usual arrangement.</div>
+      </div>
+    </div>
+    <div class="p">
+      <div class="k">7</div>
+      <div>
+        <div class="c"><span class="sl">/</span>release-notes</div>
+        <div class="w">Release day. It is the one skill here that does <em>not</em> stop without <code>init</code> &mdash; with no feature docs it falls back to reading <code>git log</code> alone. It still works; it just produces a list of commits instead of a list of features.</div>
+      </div>
+    </div>
+  </div>
+  <p class="pathnote"><b>Steps 1&ndash;3 are a one-time setup; 4 is the everyday habit.</b> If you only ever adopt part of the set, adopt that prefix &mdash; steps 5&ndash;7 each pay off later, and none of them is a prerequisite for the others. What you should not do is skip step 2 to reach step 3 faster.</p>
+
   <div class="cards">
 
     <article class="skill" data-g="docs">
@@ -373,6 +444,7 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
         <dt>Use when</dt><dd>Duplication has piled up, a structure needs untangling, a runtime version moved, or something is slow. Never for a new feature or a bug fix &mdash; keeping those out of the same change is the whole premise.</dd>
         <dt>It does</dt><dd>Picks a scope (uncommitted work by default), shows you a table of candidates and <strong>waits for your approval</strong>, refactors, then verifies across baselines, call-site contracts, characterization tests, static checks and real runs.</dd>
         <dt>You get</dt><dd>A report in the chat, saved to <code>docs/refactor/</code> on request. It never commits &mdash; you do, ideally one change per commit.</dd>
+        <dt>When to run</dt><dd><strong>Right after a feature works and before you commit it</strong>, as its own change. Not while you are still adding to it &mdash; a refactor mixed into a feature commit is one nobody can review or revert separately. Not on code you have no way to exercise either: the verification stage is most of this skill's value, and without a test or a runnable path it has nothing to compare against. On a scope you are unsure about, run <code>/refactor check</code> first &mdash; it verifies without touching a line.</dd>
       </dl>
       <div class="warn"><b>Read the front matter correctly.</b> <code>allowed-tools</code> <em>widens</em> what runs without a prompt; it is not a sandbox. This skill can edit files despite the git-only list. The key that restricts is <code>disallowed-tools</code>.</div>
       <div class="tags"><span class="tag">edits source</span><span class="tag">approval gate</span><span class="tag"><code>check</code> = verify only</span></div>

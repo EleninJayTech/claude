@@ -106,6 +106,22 @@ p.sub{margin-top:14px;color:var(--ink-soft);max-width:38em}
 .flow .leaf{font-family:var(--mono);font-size:12.5px;border:1px dashed var(--line);border-radius:10px;padding:10px 12px}
 .flow .leaf b{display:block;font-family:var(--sans);font-size:13px;color:var(--ink-soft);font-weight:400;margin-top:3px}
 
+/* ── 도입 순서 ── */
+.path{margin-top:18px;display:grid;gap:2px}
+.path .p{display:grid;grid-template-columns:30px 1fr;gap:14px;align-items:start;
+  background:var(--card);border:1px solid var(--line);padding:13px 16px}
+.path .p:first-child{border-radius:14px 14px 0 0}
+.path .p:last-child{border-radius:0 0 14px 14px}
+.path .p + .p{border-top:none;margin-top:-2px}
+.path .k{font-family:var(--mono);font-size:12px;color:var(--blue);letter-spacing:.08em;padding-top:3px}
+.path .c{font-family:var(--mono);font-size:13.5px;font-weight:600}
+.path .c .sl{color:var(--dim)}
+.path .w{font-size:14px;color:var(--ink-soft);line-height:1.7;margin-top:3px}
+.path .p.gate{background:var(--marker-soft);border-color:#EBD383}
+.path .p.loop{background:var(--blue-soft);border-color:#C9D2F3}
+.path .p.loop .k{color:#22307F}
+.pathnote{font-size:14px;color:var(--ink-soft);margin-top:12px}
+
 /* ── 하루 흐름 ── */
 .day{margin-top:18px;border-left:2px solid var(--line);padding-left:20px;display:grid;gap:16px}
 .step{position:relative}
@@ -271,6 +287,61 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
     </div>
   </div>
 
+  <h3 style="margin-top:34px">켜는 순서</h3>
+  <p class="lead">위 그림은 무엇이 무엇에 이어지는지를 보여줄 뿐 무엇부터 할지는 말해주지 않는다. 아래 순서로 들이면 어느 단계든 그날 바로 쓸모가 있고, 사람을 묶는 두 가지는 묶을 값어치가 생긴 뒤에 온다.</p>
+  <div class="path">
+    <div class="p gate">
+      <div class="k">1</div>
+      <div>
+        <div class="c"><span class="sl">/</span>feature-docs init</div>
+        <div class="w">출입문이자 건너뛸 수 없는 유일한 단계다. 나머지 다섯 중 넷은 <code>docs/features/</code>가 생길 때까지 &ldquo;먼저 init을 실행하라&rdquo;며 멈춘다. 코드베이스를 통째로 읽으므로 릴리스 직전에 끼워 넣지 말고 한가한 시간을 준다.</div>
+      </div>
+    </div>
+    <div class="p">
+      <div class="k">2</div>
+      <div>
+        <div class="c"><span class="sl">/</span>feature-test</div>
+        <div class="w">명세를 믿기 전에 돌아가는 걸 눈으로 본다. 1단계가 적어 둔 것은 코드가 그렇게 <em>보인다</em>는 내용이고, 그게 실제로 맞는지 처음 확인하는 자리가 여기다. 틀린 명세는 3단계가 강제하기 시작한 뒤보다 지금 고치는 편이 훨씬 싸다.</div>
+      </div>
+    </div>
+    <div class="p">
+      <div class="k">3</div>
+      <div>
+        <div class="c"><span class="sl">/</span>feature-doc-guard install</div>
+        <div class="w">잠글 값어치가 생긴 뒤에만 잠근다. 검증하지 않은 명세 위에 커밋 가드를 걸면 믿지도 않는 문서가 모든 커밋을 막게 되고, 그러면 누군가 가드를 꺼버린다. 한 번 꺼진 가드는 대개 다시 켜지지 않는다.</div>
+      </div>
+    </div>
+    <div class="p loop">
+      <div class="k">4</div>
+      <div>
+        <div class="c"><span class="sl">/</span>feature-docs sync</div>
+        <div class="w">여기서부터는 단계가 아니라 반복이다. 코드를 고칠 때마다 돌리고, 잊으면 3단계의 가드가 알려준다. 수백 번 쓰게 될 유일한 스킬이고 나머지 다섯은 어쩌다 한 번이다.</div>
+      </div>
+    </div>
+    <div class="p">
+      <div class="k">5</div>
+      <div>
+        <div class="c"><span class="sl">/</span>test-to-script</div>
+        <div class="w">같은 케이스를 손으로 돌리기 지겨워졌을 때 넘어온다. 그 케이스를 Playwright나 Maestro로 바꿔 두면 <code>/feature-test</code>가 알아서 스크립트 쪽을 쓴다. 첫날 하면 계속 쓸지도 모르는 케이스를 자동화하게 된다.</div>
+      </div>
+    </div>
+    <div class="p">
+      <div class="k">6</div>
+      <div>
+        <div class="c"><span class="sl">/</span>feature-doc-audit</div>
+        <div class="w">일이 터져서가 아니라 주기로 돌린다. 시간이 흘러야 찾아낼 거리가 생기기 때문이다. 가벼워서 <code>claude -p "/feature-doc-audit"</code>를 주간 타이머에 걸어두는 방식이 흔하다.</div>
+      </div>
+    </div>
+    <div class="p">
+      <div class="k">7</div>
+      <div>
+        <div class="c"><span class="sl">/</span>release-notes</div>
+        <div class="w">릴리스 날에 쓴다. 여섯 중 <code>init</code> 없이도 <em>멈추지 않는</em> 유일한 스킬이라, 기능 문서가 없으면 <code>git log</code>만 읽고 만든다. 돌아가긴 한다 &mdash; 다만 결과가 기능 목록이 아니라 커밋 목록이 된다.</div>
+      </div>
+    </div>
+  </div>
+  <p class="pathnote"><b>1~3은 한 번 하는 설치고, 4가 매일 하는 습관이다.</b> 일부만 들일 생각이면 앞에서부터 끊어 들인다 &mdash; 5~7은 각각 나중에 값을 하고 서로의 전제도 아니다. 하지 말아야 할 것은 3단계를 빨리 보려고 2단계를 건너뛰는 것이다.</p>
+
   <div class="cards">
 
     <article class="skill" data-g="docs">
@@ -371,6 +442,7 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
         <dt>언제</dt><dd>중복이 쌓였을 때, 구조를 풀어야 할 때, 런타임 버전이 올랐을 때, 느릴 때. 기능 추가·버그 수정에는 쓰지 않는다 &mdash; 그 둘을 리팩터링과 한 변경에 섞지 않는 것이 이 스킬의 전제다.</dd>
         <dt>하는 일</dt><dd>범위를 정하고(기본은 미커밋 작업), 후보 표를 보여 준 뒤 <strong>승인을 기다린다</strong>. 리팩터링한 다음엔 기준선 테스트·호출처 계약·특성화 테스트·정적 검사·실제 실행으로 검증한다.</dd>
         <dt>결과</dt><dd>채팅 보고서, 요청하면 <code>docs/refactor/</code>에 저장. 커밋은 하지 않는다 &mdash; 그건 사용자 몫이고, 변경 하나가 커밋 하나가 되도록 권한다.</dd>
+        <dt>언제 돌리나</dt><dd><strong>기능이 돌아가기 시작한 직후, 커밋하기 전에</strong> 별도 변경으로 돌린다. 아직 기능을 붙이는 중이면 아니다 &mdash; 리팩터링이 기능 커밋에 섞이면 리뷰도 되돌리기도 따로 할 수 없다. 돌려볼 방법이 없는 코드에도 쓰지 않는다. 이 스킬의 값어치는 대부분 검증 단계에 있는데, 테스트도 실행 경로도 없으면 무엇과 비교할지가 없다. 범위가 미덥지 않으면 <code>/refactor check</code>를 먼저 돌린다 &mdash; 한 줄도 건드리지 않고 검증만 한다.</dd>
       </dl>
       <div class="warn"><b>frontmatter를 오해하지 말 것.</b> <code>allowed-tools</code>는 프롬프트 없이 돌 것을 <em>넓히는</em> 키이지 울타리가 아니다. git 명령만 적혀 있어도 이 스킬은 파일을 고칠 수 있다. 진짜 제한은 <code>disallowed-tools</code>다.</div>
       <div class="tags"><span class="tag">소스를 고침</span><span class="tag">승인 게이트</span><span class="tag"><code>check</code>는 검증만</span></div>
