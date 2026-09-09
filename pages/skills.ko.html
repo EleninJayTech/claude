@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>스킬 카탈로그 — 단디 · Claude Code 드롭인 문서</title>
+<meta name="description" content="단디가 설치하는 스킬 전부를 입문자 눈높이로 정리했다. 무엇을 하고, 언제 부르고, 무엇을 남기고, 어디서 걸리는지.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧰</text></svg>">
+<meta property="og:title" content="스킬 카탈로그 — Claude Code 드롭인 문서">
+<meta property="og:description" content="스킬 13종, 슬래시 하나 거리. 각각이 무엇을 하고 언제 손이 가는지.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://eleninjaytech.github.io/claude/pages/skills.ko.html">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@700;900&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" rel="stylesheet">
+<style>
+:root{
+  --paper:#FCFCF8; --card:#FFFFFF; --ink:#20222E; --ink-soft:#5A5E70;
+  --marker:#FFD84D; --marker-soft:#FFF3C2;
+  --blue:#2B49C7; --blue-soft:#E8ECFB;
+  --line:#E5E4DB; --term:#1B1D27;
+  --green:#1E7F4C; --green-soft:#E3F3EA;
+  --red:#B3261E; --red-soft:#FBE9E7;
+  --dim:#9EA3B5;
+  --serif:'Noto Serif KR','Nanum Myeongjo',serif;
+  --sans:'Pretendard Variable',Pretendard,'Malgun Gothic',sans-serif;
+  --mono:'IBM Plex Mono',Consolas,monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--sans);background:var(--paper);color:var(--ink);line-height:1.85;font-size:16.5px;
+  word-break:keep-all;overflow-wrap:break-word;
+  background-image:linear-gradient(#F1F0E7 1px,transparent 1px),linear-gradient(90deg,#F1F0E7 1px,transparent 1px);
+  background-size:26px 26px}
+p,li{text-wrap:pretty}
+::selection{background:var(--marker)}
+a{color:var(--blue)}
+:focus-visible{outline:3px solid var(--blue);outline-offset:2px;border-radius:4px}
+code{font-family:var(--mono);font-size:.88em;background:#F3F2EA;border:1px solid var(--line);border-radius:5px;padding:1px 5px}
+
+.wrap{max-width:1000px;margin:0 auto;padding:48px 24px 80px}
+.eyebrow{font-family:var(--mono);font-size:13px;letter-spacing:.14em;color:var(--ink-soft);margin-bottom:14px}
+.eyebrow b{color:var(--blue);font-weight:600}
+h1{font-family:var(--serif);font-weight:900;font-size:clamp(25px,4.2vw,37px);line-height:1.55;letter-spacing:-.02em;text-wrap:balance}
+h2{font-family:var(--serif);font-weight:900;font-size:clamp(20px,2.8vw,25px);line-height:1.55;margin-top:56px}
+h3{font-family:var(--serif);font-weight:700;font-size:18px;margin-top:30px}
+.mark{background:linear-gradient(transparent 58%, var(--marker) 58%, var(--marker) 92%, transparent 92%);padding:0 2px}
+p.sub{margin-top:14px;color:var(--ink-soft);max-width:38em}
+.backlink{font-family:var(--mono);font-size:13px}
+.lead{margin-top:14px;max-width:40em}
+
+/* ── 개념 3장 ── */
+.basics{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px;margin-top:22px}
+.basic{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px 20px}
+.basic .n{font-family:var(--mono);font-size:12px;color:var(--blue);letter-spacing:.1em}
+.basic b{display:block;margin:6px 0 6px;font-size:16px}
+.basic p{font-size:14.5px;color:var(--ink-soft);line-height:1.8}
+
+/* ── 도구 막대 ── */
+.toolbar{position:sticky;top:0;z-index:20;margin-top:34px;padding:12px 0;
+  background:var(--paper);box-shadow:0 8px 10px -10px rgba(32,34,46,.45);display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.toolbar input{font-family:var(--sans);font-size:14.5px;padding:9px 13px;border:1px solid var(--line);
+  border-radius:999px;background:var(--card);min-width:min(260px,100%);color:var(--ink)}
+.chip{font-family:var(--mono);font-size:12.5px;padding:8px 13px;border-radius:999px;border:1px solid var(--line);
+  background:var(--card);color:var(--ink-soft);cursor:pointer}
+.chip[aria-pressed="true"]{background:var(--ink);color:#FFF;border-color:var(--ink)}
+.count{font-family:var(--mono);font-size:12.5px;color:var(--dim);margin-left:auto}
+
+/* ── 그룹 ── */
+.group{margin-top:44px;scroll-margin-top:70px}
+.group > .ghead{display:flex;flex-wrap:wrap;align-items:baseline;gap:10px;border-bottom:2px solid var(--ink);padding-bottom:8px}
+.ghead h2{margin:0}
+.ghead .src{font-family:var(--mono);font-size:12.5px;color:var(--ink-soft)}
+.gnote{margin-top:12px;font-size:14.5px;color:var(--ink-soft);max-width:44em}
+
+/* ── 카드 ── */
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(310px,1fr));gap:16px;margin-top:18px}
+.skill{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:20px 22px 18px;
+  box-shadow:0 14px 34px -26px rgba(32,34,46,.35);display:flex;flex-direction:column}
+.skill .cmd{font-family:var(--mono);font-size:15.5px;font-weight:600;color:var(--ink)}
+.skill .cmd .sl{color:var(--blue)}
+.skill .args{font-family:var(--mono);font-size:12.5px;color:var(--dim);margin-top:3px}
+.skill .one{margin-top:10px;font-size:15px;line-height:1.75}
+.skill dl{margin-top:14px;display:grid;grid-template-columns:auto 1fr;gap:6px 12px;font-size:14px;line-height:1.75}
+.skill dt{font-family:var(--mono);font-size:11.5px;letter-spacing:.04em;color:var(--blue);padding-top:4px;white-space:nowrap}
+.skill dd{color:var(--ink-soft)}
+.tags{margin-top:auto;padding-top:14px;display:flex;flex-wrap:wrap;gap:6px}
+.tag{font-family:var(--mono);font-size:11.5px;padding:3px 9px;border-radius:999px;background:#F3F2EA;
+  border:1px solid var(--line);color:var(--ink-soft)}
+.tag.hand{background:var(--marker-soft);border-color:#EBD383;color:#7A5B00}
+.tag.need{background:var(--blue-soft);border-color:#C9D2F3;color:#2B49C7}
+.warn{margin-top:12px;font-size:13.5px;line-height:1.8;background:var(--red-soft);border-left:3px solid var(--red);
+  border-radius:0 8px 8px 0;padding:9px 12px;color:#7C2019}
+.warn b{color:var(--red)}
+.warn.soft{background:#FFFBEC;border-left-color:#E0B63A;color:#6B5312}
+.warn.soft b{color:#8A6A16}
+
+/* ── 파이프라인 ── */
+.flow{margin-top:20px;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:22px;overflow-x:auto}
+.flow .row{display:flex;align-items:center;gap:12px;min-width:520px}
+.flow .node{font-family:var(--mono);font-size:13px;border:1px solid var(--line);border-radius:10px;
+  padding:9px 12px;background:var(--paper);white-space:nowrap}
+.flow .node.entry{background:var(--marker-soft);border-color:#EBD383;font-weight:600}
+.flow .node.store{background:var(--blue-soft);border-color:#C9D2F3;color:#22307F;font-weight:600}
+.flow .arrow{color:var(--dim);font-family:var(--mono)}
+.flow .fan{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:10px;margin-top:14px;min-width:520px}
+.flow .leaf{font-family:var(--mono);font-size:12.5px;border:1px dashed var(--line);border-radius:10px;padding:10px 12px}
+.flow .leaf b{display:block;font-family:var(--sans);font-size:13px;color:var(--ink-soft);font-weight:400;margin-top:3px}
+
+/* ── 하루 흐름 ── */
+.day{margin-top:18px;border-left:2px solid var(--line);padding-left:20px;display:grid;gap:16px}
+.step{position:relative}
+.step::before{content:"";position:absolute;left:-27px;top:9px;width:11px;height:11px;border-radius:50%;
+  background:var(--marker);border:2px solid var(--paper)}
+.step .t{font-family:var(--mono);font-size:13.5px;font-weight:600}
+.step p{font-size:14.5px;color:var(--ink-soft);margin-top:2px}
+
+/* ── 표 ── */
+.tablewrap{overflow-x:auto;margin-top:16px;border:1px solid var(--line);border-radius:14px;background:var(--card)}
+table{border-collapse:collapse;width:100%;min-width:560px;font-size:14.5px}
+th,td{text-align:left;padding:11px 14px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-family:var(--mono);font-size:12px;letter-spacing:.04em;color:var(--ink-soft);background:#FAFAF4}
+tr:last-child td{border-bottom:none}
+td code{white-space:nowrap}
+
+/* ── 함정 ── */
+.traps{margin-top:18px;display:grid;gap:12px}
+.trap{background:var(--card);border:1px solid var(--line);border-left:3px solid var(--marker);
+  border-radius:0 14px 14px 0;padding:16px 20px}
+.trap b{font-size:15px}
+.trap p{font-size:14.5px;color:var(--ink-soft);margin-top:5px}
+
+.empty{display:none;margin-top:26px;font-family:var(--mono);font-size:14px;color:var(--ink-soft)}
+footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
+  font-family:var(--mono);font-size:12.5px;color:var(--dim);line-height:1.9}
+@media (max-width:520px){
+  .toolbar{position:static}
+  .skill dl{grid-template-columns:1fr;gap:2px 0}
+  .skill dt{padding-top:8px}
+}
+</style>
+</head>
+<body>
+<div style="max-width:1000px;margin:0 auto;padding:14px 20px 0;font-family:var(--mono);font-size:13px;text-align:right;opacity:.75"><a href="skills.html" onclick="try{localStorage.setItem('lang','en')}catch(e){}">English</a> &middot; <b>한국어</b></div>
+<div class="wrap">
+
+<header>
+  <p class="eyebrow"><b>단디</b> &middot; EleninJayTech / claude &middot; 스킬 카탈로그</p>
+  <h1>스킬 13종, <span class="mark">슬래시 하나 거리</span> &mdash;<br>각각이 실제로 무엇을 하는지.</h1>
+  <p class="sub">스킬은 Claude가 필요할 때만 읽어 오는 지시 폴더다. 단디는 그중 13종을 설치한다. 이 페이지는 그 안내서다 &mdash; 무엇을 하고, 언제 부르고, 디스크에 무엇을 남기고, 어디서 걸리는지.</p>
+  <p class="backlink" style="margin-top:10px"><a href="../index.ko.html">&larr; 안내 페이지로</a> &middot; <a href="intro.ko.html">1분 소개</a> &middot; <a href="demo.ko.html">설치 시연</a> &middot; <a href="options.ko.html">옵션 사전</a> &middot; <a href="learn.ko.html">학습 코스</a> &middot; <a href="https://github.com/EleninJayTech/claude">GitHub 저장소 &#8599;</a></p>
+</header>
+
+<h2 style="margin-top:44px">스킬이 대체 뭔가</h2>
+<p class="lead">한 번도 안 써 봤다면 이렇게 생각하면 된다. 스킬은 실행하는 프로그램도 아니고 import 하는 라이브러리도 아니다. <code>SKILL.md</code> 하나가 든 폴더이고, Claude는 필요할 때만 그 파일을 읽는다. 그래서 13종을 깔아 둬도 부르기 전까지는 아무 비용이 없다.</p>
+<div class="basics">
+  <div class="basic">
+    <span class="n">01</span>
+    <b>SKILL.md 한 장이 든 폴더</b>
+    <p>맨 위 frontmatter에 이름과 설명이 있고, 본문이 Claude가 따를 절차다. 어떤 스킬은 <code>references/</code>·<code>scripts/</code>에 파일을 더 갖는데, 이건 곁다리가 아니라 스킬의 일부다. 빠뜨리면 스킬은 떠도 속이 빈 채로 돈다.</p>
+  </div>
+  <div class="basic">
+    <span class="n">02</span>
+    <b>부르는 방법은 두 가지</b>
+    <p><code>/이름</code>을 직접 치거나, Claude가 <em>설명</em>과 내 요청을 맞춰 보고 알아서 불러온다. 브라우저를 조작하거나 소스를 고치는 스킬은 일부러 수동 호출 전용으로 둔다.</p>
+  </div>
+  <div class="basic">
+    <span class="n">03</span>
+    <b>사는 곳도 두 군데</b>
+    <p><code>~/.claude/skills/</code>는 이 PC의 내 것, repo 안 <code>.claude/skills/</code>는 git으로 팀과 나눠 쓰는 것. 이름이 겹치면 <strong>개인 쪽이 이긴다</strong> &mdash; 프로젝트 사본은 그냥 실행되지 않는다.</p>
+  </div>
+</div>
+<p class="lead" style="margin-top:16px">목록에 들어가기 전에 하나만 더. 설치할 때 스킬 이름에 접두·접미(<em>별칭</em>, 예: <code>feature-docs-dandi</code>)를 붙였다면, 아래 <code>/명령</code>은 전부 그 별칭을 얹어서 읽으면 된다.</p>
+
+<div class="toolbar" role="search">
+  <label for="q" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)">스킬 검색</label>
+  <input id="q" type="search" placeholder="이름이나 할 일로 걸러 보기 — 테스트, 커밋, 릴리스…" autocomplete="off">
+  <button class="chip" data-g="all" aria-pressed="true">전체 13</button>
+  <button class="chip" data-g="session" aria-pressed="false">세션 4</button>
+  <button class="chip" data-g="docs" aria-pressed="false">기능 문서 6</button>
+  <button class="chip" data-g="code" aria-pressed="false">코드 1</button>
+  <button class="chip" data-g="design" aria-pressed="false">디자인 2</button>
+  <span class="count" id="count">13종 표시 중</span>
+</div>
+
+<!-- ══════════ 세션 ══════════ -->
+<section class="group" data-g="session">
+  <div class="ghead">
+    <h2 style="margin-top:0">세션을 여닫는 넷</h2>
+    <span class="src">01 §D-4가 설치 &middot; 글로벌 스코프</span>
+  </div>
+  <p class="gnote">이 넷이 셋업의 맥박이다. 둘은 매 세션을 열고 닫고, 나머지 둘은 내 구성이 원본 문서에서 얼마나 밀렸는지 알려 준다.</p>
+  <div class="cards">
+
+    <article class="skill" data-g="session">
+      <div class="cmd"><span class="sl">/</span>resume</div>
+      <div class="args">인수 없음</div>
+      <p class="one">어디까지 했는지를 기억이 아니라 git과 기록으로 되짚어 세션을 연다.</p>
+      <dl>
+        <dt>언제</dt><dd>세션을 시작할 때마다, 그리고 <code>/clear</code> 직후에 다시.</dd>
+        <dt>하는 일</dt><dd>워킹트리가 깨끗하면 <code>--ff-only</code>로 당기고, <code>git status</code>로 미커밋 작업부터 찾는다. 그다음 <code>PROGRESS.md</code> 최상단과 최근 결정 3건, <code>PROJECT_PLAN.md</code>를 읽는다.</dd>
+        <dt>결과</dt><dd>"지난번엔 X를 했고 다음은 Y인가요?" 형태의 짧은 보고. 점검 예정일이 지났으면 그 안내도 함께.</dd>
+      </dl>
+      <div class="warn soft"><b>알아 둘 것.</b> 최근 5항목만, 항목당 앞 700자까지만 읽는다. 다음 세션이 이어받아야 할 내용은 항목 <em>앞쪽</em>에 적어야 한다 &mdash; 끝에 붙이면 컷 밖이라 영영 읽히지 않는다.</div>
+      <div class="tags"><span class="tag">글로벌</span><span class="tag">거의 읽기만</span></div>
+    </article>
+
+    <article class="skill" data-g="session">
+      <div class="cmd"><span class="sl">/</span>wrap</div>
+      <div class="args">인수 없음</div>
+      <p class="one">오늘 한 일을 기록에 남겨 세션을 닫는다. 다음 <code>/resume</code>이 읽을 것을 만드는 쪽이다.</p>
+      <dl>
+        <dt>언제</dt><dd>작업을 접기 전에. <code>/clear</code> 앞에서는 반드시.</dd>
+        <dt>하는 일</dt><dd><code>PROGRESS.md</code>에 한 줄 append, 새 결정은 <code>DEC-YYYYMMDD-작성자</code>로 등재, <code>PROJECT_PLAN.md</code> 체크박스 갱신. 미커밋이 남았으면 경고한다.</dd>
+        <dt>결과</dt><dd><code>[갈래][Done] 설명 — @작성자 (브랜치) 날짜</code> 양식의 기록 한 줄.</dd>
+      </dl>
+      <div class="warn soft"><b>알아 둘 것.</b> 기록은 append 전용이다. 결정이 바뀌면 지우지 않고 새 결정을 쓰고 옛 결정에 "Superseded by"를 단다.</div>
+      <div class="tags"><span class="tag">글로벌</span><span class="tag">기록을 쓴다</span></div>
+    </article>
+
+    <article class="skill" data-g="session">
+      <div class="cmd"><span class="sl">/</span>dropin-check</div>
+      <div class="args">인수 없음 &middot; 읽기 전용</div>
+      <p class="one">이 PC의 구성이 그것을 만든 문서에서 얼마나 뒤처졌는지만 알려 준다.</p>
+      <dl>
+        <dt>언제</dt><dd><code>/resume</code>이 "적용 기록이 30일 넘었다"고 안내했을 때, 또는 그냥 어긋난 데가 있나 궁금할 때.</dd>
+        <dt>하는 일</dt><dd>프로젝트의 <code>dropin-applied</code> 기록과 글로벌 <code>~/.claude</code>를 문서 저장소의 현재 버전과 대조하고, 차이만 보고한다.</dd>
+        <dt>결과</dt><dd>차이 보고서. 설치도 수정도 하지 않는다.</dd>
+      </dl>
+      <div class="tags"><span class="tag">글로벌</span><span class="tag">쓰기 없음</span></div>
+    </article>
+
+    <article class="skill" data-g="session">
+      <div class="cmd"><span class="sl">/</span>dropin-update</div>
+      <div class="args">인수 없음</div>
+      <p class="one">드롭인 문서 사본을 최신으로 바꾼다 &mdash; 문서만이다. 그 문서가 설명하는 구성은 건드리지 않는다.</p>
+      <dl>
+        <dt>언제</dt><dd><code>/dropin-check</code>가 문서 사본이 배포본보다 낡았다고 보고했을 때.</dd>
+        <dt>하는 일</dt><dd>문서가 여기 온 경로부터 가린다 &mdash; 프로젝트에 복사됐는지, 로컬 클론을 참조하는지, raw로 직접 받는지. 그에 맞는 방식으로, 승인을 받고 갱신한다.</dd>
+        <dt>결과</dt><dd>새 문서 파일. 구성 재적용은 별도 단계이고 00 문서가 맡는다.</dd>
+      </dl>
+      <div class="warn soft"><b>알아 둘 것.</b> 문서 원본 저장소 안에서는 실행을 거부한다 &mdash; 거기서는 <code>git pull</code>이 갱신 경로다.</div>
+      <div class="tags"><span class="tag">글로벌</span><span class="tag">먼저 묻는다</span></div>
+    </article>
+
+  </div>
+</section>
+
+<!-- ══════════ 기능 문서 ══════════ -->
+<section class="group" data-g="docs">
+  <div class="ghead">
+    <h2 style="margin-top:0">기능 문서 · 테스트 · 릴리스</h2>
+    <span class="src">03 §7이 설치 &middot; 6종 세트</span>
+  </div>
+  <p class="gnote">이 여섯은 손잡이가 여섯 개 달린 기계 하나다. <code>docs/features/</code> 아래 같은 파일명과 frontmatter 키를 나눠 쓰기 때문에 통째로 깔거나 통째로 안 깔거나 둘 중 하나다 &mdash; 일부만 깔면 나머지가 에러 없이 조용히 실패한다. 입구는 <code>/feature-docs init</code>이고, 나머지 다섯은 그게 돌기 전엔 스스로 멈춘다.</p>
+
+  <div class="flow" aria-label="여섯 스킬이 이어지는 방식">
+    <div class="row">
+      <span class="node entry">/feature-docs init</span>
+      <span class="arrow">&rarr;</span>
+      <span class="node store">docs/features/</span>
+      <span class="arrow">&rarr;</span>
+      <span class="node">00_inventory · 03_test_index · F-001…</span>
+    </div>
+    <div class="fan">
+      <div class="leaf">/feature-test<b>실제 화면에서 케이스를 돌린다</b></div>
+      <div class="leaf">/test-to-script<b>케이스를 Playwright · Maestro로</b></div>
+      <div class="leaf">/feature-doc-audit<b>뒤처진 문서를 찾는다</b></div>
+      <div class="leaf">/feature-doc-guard<b>문서 뺀 커밋을 막는다</b></div>
+      <div class="leaf">/release-notes<b>이력을 기능 단위로 묶는다</b></div>
+      <div class="leaf">/feature-docs sync<b>바뀐 것을 문서에 되먹인다</b></div>
+    </div>
+  </div>
+
+  <div class="cards">
+
+    <article class="skill" data-g="docs">
+      <div class="cmd"><span class="sl">/</span>feature-docs</div>
+      <div class="args">init | sync [기준 커밋·태그]</div>
+      <p class="one">프로그램이 실제로 뭘 하는지를 두 번 확인해 적는다 &mdash; 코드에서 한 번, 돌아가는 화면에서 한 번.</p>
+      <dl>
+        <dt>언제</dt><dd>명세가 아직 없는 프로젝트엔 <code>init</code>(증분으로 돌아서 코드가 커도 괜찮다), 기능을 추가·수정한 뒤엔 <code>sync</code>.</dd>
+        <dt>하는 일</dt><dd>스택을 스스로 탐지하고 기능을 훑은 뒤, Chrome MCP나 에뮬레이터로 실제 화면을 조작한다. 모든 서술에 그때의 커밋·브랜치·앱 버전을 함께 남긴다.</dd>
+        <dt>결과</dt><dd><code>docs/features/</code> &mdash; 기능 인벤토리, 화면 이동 지도, 데이터 모델, 테스트 인덱스, 기능당 파일 하나, 스크린샷.</dd>
+      </dl>
+      <div class="warn soft"><b>알아 둘 것.</b> 추측으로 채우지 않는다. 코드로만 확인한 것은 그렇게 표시하고, 삭제·결제·발송처럼 되돌릴 수 없는 동작은 실행하지 않고 코드로만 적은 뒤 미검증으로 남긴다.</div>
+      <div class="tags"><span class="tag need">입구</span><span class="tag">문서를 쓴다</span><span class="tag">화면을 조작</span></div>
+    </article>
+
+    <article class="skill" data-g="docs">
+      <div class="cmd"><span class="sl">/</span>feature-test</div>
+      <div class="args">[F-003 | TC-F003-01] — 없으면 전체</div>
+      <p class="one">명세에 적힌 테스트 케이스를 실제 화면에서 돌리고, 실패하면 누구 탓인지를 가린다.</p>
+      <dl>
+        <dt>언제</dt><dd>기능이 아직 멀쩡한지 확인해야 할 때 &mdash; 릴리스 전이나 위험한 변경 뒤.</dd>
+        <dt>하는 일</dt><dd>케이스를 적힌 그대로 따라가고, 변환된 스크립트가 등록돼 있으면 그쪽을 먼저 쓴다. 실패는 (A) 코드 버그 · (B) 문서 노후 · (C) 환경 문제 · (D) 판정 불가 중 하나로 분류한다.</dd>
+        <dt>결과</dt><dd><code>docs/features/test_reports/</code>에 날짜·커밋이 박힌 리포트와 스크린샷. 채팅에는 요약만 나오고, 새로 실패한 것과 새로 통과한 것을 구분해 준다.</dd>
+      </dl>
+      <div class="warn soft"><b>알아 둘 것.</b> 아무것도 고치지 않는다 &mdash; 문서도 코드도. 문서 노후로 판정된 것조차 승인을 받아 <code>/feature-docs sync</code>가 따로 고친다. 브라우저를 직접 조작하므로 수동 호출 전용으로 둔다.</div>
+      <div class="tags"><span class="tag hand">수동 호출</span><span class="tag need">init 필요</span><span class="tag">화면을 조작</span></div>
+    </article>
+
+    <article class="skill" data-g="docs">
+      <div class="cmd"><span class="sl">/</span>feature-doc-audit</div>
+      <div class="args">[뒤처짐 기준 커밋 수, 기본 5]</div>
+      <p class="one">브라우저도 테스트도 없이, git과의 산수만으로 문서 건강을 재는 싼 점검.</p>
+      <dl>
+        <dt>언제</dt><dd>주 1회, 또는 전체 테스트를 돌리지 않고 어느 기능부터 sync 할지만 알고 싶을 때.</dd>
+        <dt>하는 일</dt><dd><code>HEAD</code>보다 뒤처진 문서, 남아 있는 미확인 항목, 인벤토리 불일치, 사라진 파일을 가리키는 코드 참조, 테스트 인덱스 누락을 뽑는다.</dd>
+        <dt>결과</dt><dd>표와 sync 우선순위. 가벼워서 스케줄러에 걸어도 된다 &mdash; <code>claude -p "/feature-doc-audit"</code>.</dd>
+      </dl>
+      <div class="warn"><b>함정.</b> Python 3가 필요하다. 확인은 <code>python --version</code>이 아니라 <code>python -c "print(1)"</code>로 한다 &mdash; 윈도우 앱 실행 별칭 스텁은 버전 질문에 대답하고 exit 0까지 주면서 정작 아무 일도 안 한다.</div>
+      <div class="tags"><span class="tag need">init 필요</span><span class="tag need">Python 3 필요</span><span class="tag">쓰기 없음</span></div>
+    </article>
+
+    <article class="skill" data-g="docs">
+      <div class="cmd"><span class="sl">/</span>feature-doc-guard</div>
+      <div class="args">install | uninstall | check</div>
+      <p class="one">코드는 움직였는데 문서는 그대로인 커밋을 그 자리에서 세운다.</p>
+      <dl>
+        <dt>언제</dt><dd>명세가 생긴 다음, 그것이 아무의 기억에도 의존하지 않고 유지되길 바랄 때.</dd>
+        <dt>하는 일</dt><dd>가드를 두 겹 건다 &mdash; <code>.git/hooks/pre-commit</code> 훅과 Claude Code <code>PreToolUse</code> 훅. 스테이징된 소스 파일을 그 파일을 담당하는 기능으로 역추적해, 그 기능 문서가 함께 스테이징되지 않았으면 커밋을 막는다.</dd>
+        <dt>결과</dt><dd>빠진 문서 목록과 함께 멈춘 커밋. 어느 기능에도 안 걸리는 파일은 경고만 하고 막지는 않는다. 급할 때 우회는 <code>FEATURE_DOC_GUARD=0</code>.</dd>
+      </dl>
+      <div class="warn"><b>제거엔 순서가 있다.</b> 스킬 폴더를 지우기 <em>전에</em> <code>/feature-doc-guard uninstall</code>부터. 폴더를 먼저 지우면 pre-commit 훅만 남아 커밋이 계속 막히는데, 화면 어디에도 원인이 안 보인다.</div>
+      <div class="tags"><span class="tag need">init 필요</span><span class="tag need">Python 3 필요</span><span class="tag">훅을 설치</span></div>
+    </article>
+
+    <article class="skill" data-g="docs">
+      <div class="cmd"><span class="sl">/</span>test-to-script</div>
+      <div class="args">[F-003 | TC-F003-01] — 없으면 미변환 전부</div>
+      <p class="one">손으로 돌리던 케이스를 새벽 세 시에도 도는 스크립트로 바꾼다.</p>
+      <dl>
+        <dt>언제</dt><dd>테스트를 CI나 스케줄러에 올리고 싶을 때. 무인 실행에는 이 단계가 필수다 &mdash; Chrome MCP는 진짜 브라우저를 요구해서, 없으면 조용히 실패한다.</dd>
+        <dt>하는 일</dt><dd>케이스를 Playwright(웹)나 Maestro(안드로이드·iOS)로 변환하고, 셀렉터가 약한 자리엔 <code>data-testid</code>를 제안한다. 변환 결과는 <code>04_script_map.md</code>에 등록한다.</dd>
+        <dt>결과</dt><dd>돌아가는 테스트 파일, 그리고 등록된 케이스에 대해 <code>/feature-test</code>가 자동으로 스크립트를 먼저 쓰는 동작.</dd>
+      </dl>
+      <div class="warn soft"><b>알아 둘 것.</b> 기본이 수동 호출 전용이다. 셀렉터를 안정화한다는 건 결국 소스를 고친다는 뜻이라서 그렇다.</div>
+      <div class="tags"><span class="tag hand">수동 호출</span><span class="tag need">init 필요</span><span class="tag">소스를 고침</span></div>
+    </article>
+
+    <article class="skill" data-g="docs">
+      <div class="cmd"><span class="sl">/</span>release-notes</div>
+      <div class="args">[시작 태그] [끝 태그 — 없으면 HEAD]</div>
+      <p class="one">커밋 로그가 아니라 기능 문서에서 만들어, 사용자가 읽을 수 있는 릴리스 노트를 쓴다.</p>
+      <dl>
+        <dt>언제</dt><dd>릴리스를 자르면서 이번에 뭐가 바뀌었는지 알려야 할 때.</dd>
+        <dt>하는 일</dt><dd>각 기능 문서의 변경 이력, 버전 이력, git log, 마지막 테스트 리포트를 모아 기능 단위로 묶는다. 한 기능에 걸린 커밋 여러 개는 한 줄이 된다.</dd>
+        <dt>결과</dt><dd><code>docs/releases/&lt;태그&gt;.md</code> &mdash; 신규·변경·수정·제거·내부 변경·테스트로 나뉘고, 아직 어느 문서에도 안 잡힌 커밋은 따로 모아 준다.</dd>
+      </dl>
+      <div class="warn soft"><b>알아 둘 것.</b> 지어내지 않는다. 커밋 메시지가 애매하면 diff를 열어 보고, 그래도 모르면 확인이 필요하다고 표시해 남긴다.</div>
+      <div class="tags"><span class="tag need">init 필요</span><span class="tag">문서를 쓴다</span></div>
+    </article>
+
+  </div>
+</section>
+
+<!-- ══════════ 코드 ══════════ -->
+<section class="group" data-g="code">
+  <div class="ghead">
+    <h2 style="margin-top:0">코드 품질</h2>
+    <span class="src">03 §8이 설치 &middot; 단독으로 선다</span>
+  </div>
+  <p class="gnote">위 여섯과는 독립이다. 기능 문서가 있으면 검증 단계에서 한 겹 더 쓰고, 없으면 그 줄만 건너뛰고 나머지가 온전히 돈다.</p>
+  <div class="cards">
+
+    <article class="skill" data-g="code">
+      <div class="cmd"><span class="sl">/</span>refactor</div>
+      <div class="args">[all | 경로 | 커밋A..커밋B | check [범위]] [nocheck]</div>
+      <p class="one">동작을 바꾸지 않고 코드를 좋게 만들고, 동작이 안 바뀌었음을 증명까지 한다.</p>
+      <dl>
+        <dt>언제</dt><dd>중복이 쌓였을 때, 구조를 풀어야 할 때, 런타임 버전이 올랐을 때, 느릴 때. 기능 추가·버그 수정에는 쓰지 않는다 &mdash; 그 둘을 리팩터링과 한 변경에 섞지 않는 것이 이 스킬의 전제다.</dd>
+        <dt>하는 일</dt><dd>범위를 정하고(기본은 미커밋 작업), 후보 표를 보여 준 뒤 <strong>승인을 기다린다</strong>. 리팩터링한 다음엔 기준선 테스트·호출처 계약·특성화 테스트·정적 검사·실제 실행으로 검증한다.</dd>
+        <dt>결과</dt><dd>채팅 보고서, 요청하면 <code>docs/refactor/</code>에 저장. 커밋은 하지 않는다 &mdash; 그건 사용자 몫이고, 변경 하나가 커밋 하나가 되도록 권한다.</dd>
+      </dl>
+      <div class="warn"><b>frontmatter를 오해하지 말 것.</b> <code>allowed-tools</code>는 프롬프트 없이 돌 것을 <em>넓히는</em> 키이지 울타리가 아니다. git 명령만 적혀 있어도 이 스킬은 파일을 고칠 수 있다. 진짜 제한은 <code>disallowed-tools</code>다.</div>
+      <div class="tags"><span class="tag">소스를 고침</span><span class="tag">승인 게이트</span><span class="tag"><code>check</code>는 검증만</span></div>
+    </article>
+
+  </div>
+</section>
+
+<!-- ══════════ 디자인 ══════════ -->
+<section class="group" data-g="design">
+  <div class="ghead">
+    <h2 style="margin-top:0">프론트엔드 디자인</h2>
+    <span class="src">03 §2·§3이 설치 &middot; 선택 항목</span>
+  </div>
+  <p class="gnote">UI를 만들 때만 의미가 있는 둘이다. 기록을 쓰지도 훅을 걸지도 않고, Claude가 프론트엔드 코드를 쓰는 방식만 바꾼다.</p>
+  <div class="cards">
+
+    <article class="skill" data-g="design">
+      <div class="cmd"><span class="sl">/</span>svg-design</div>
+      <div class="args">인수 없음 — 원하는 효과를 말하면 된다</div>
+      <p class="one">SVG 필터 효과 &mdash; 손그림 떨림, 뭉치는 방울, 유리 굴절, 네온 텍스트 &mdash; 를 진짜 브라우저에서도 살아남게 만든다.</p>
+      <dl>
+        <dt>언제</dt><dd>인라인 SVG 필터를 짤 때, React·Next.js 컴포넌트로 감쌀 때, 크롬에선 멀쩡한데 사파리에서 깨질 때.</dd>
+        <dt>하는 일</dt><dd>틀리기 쉬운 규칙을 대신 들고 있는다 &mdash; hydration이 안 깨지게 <code>useId()</code>로 필터 id를 뽑고, WebKit이 잘라 먹지 않게 블러 둘레에 여백을 주고, 폰에서 프레임이 안 죽게 옥타브를 제한한다.</dd>
+        <dt>결과</dt><dd>접근성이 있고 매 렌더마다 GPU 캐시를 날리지 않는 필터 코드.</dd>
+      </dl>
+      <div class="tags"><span class="tag">글로벌</span><span class="tag">프론트엔드 전용</span></div>
+    </article>
+
+    <article class="skill" data-g="design">
+      <div class="cmd"><span class="sl">/</span>frontend-design</div>
+      <div class="args">인수 없음 — 만들 UI를 말하면 된다</div>
+      <p class="one">AI가 만든 페이지들이 하나같이 닮아 보이는 그 기본값에서 화면을 밀어낸다.</p>
+      <dl>
+        <dt>언제</dt><dd>새 화면을 시작할 때, 또는 만들고 보니 템플릿 티가 날 때.</dd>
+        <dt>하는 일</dt><dd>색·타이포·레이아웃에 대해 뚜렷한 관점을 먼저 세우게 한다. 컴포넌트 라이브러리의 기본값이 아니라 그 화면이 다루는 소재에서 출발한다.</dd>
+        <dt>결과</dt><dd>마크업을 짜기 전에 나오는 디자인 방향. 바꾸는 값이 싼 유일한 시점이다.</dd>
+      </dl>
+      <div class="warn soft"><b>알아 둘 것.</b> 이 하나는 Anthropic이 배포하고 <code>npx skills add -g</code>로 깔린다. 그래서 단디 문서와 무관하게 자기 주기로 갱신된다.</div>
+      <div class="tags"><span class="tag">글로벌</span><span class="tag">프론트엔드 전용</span></div>
+    </article>
+
+  </div>
+</section>
+
+<p class="empty" id="empty">걸리는 스킬이 없다. 검색어를 지워 보라.</p>
+
+<h2>하루를, 스킬이 나오는 순서대로</h2>
+<p class="lead">하루에 13종을 다 쓰지는 않는다. 실제 한 주는 이쪽에 가깝다.</p>
+<div class="day">
+  <div class="step"><div class="t">/resume</div><p>세션을 연다. pull, 미커밋 작업, 최근 기록, 예정일. 감을 잡는 데 30초쯤.</p></div>
+  <div class="step"><div class="t">— 여기서 실제로 만든다 —</div><p>평범한 작업이다. 스킬이 낄 자리가 아니다.</p></div>
+  <div class="step"><div class="t">/refactor</div><p>기능이 돌기 시작하면 정리는 별도 변경으로. 승인 게이트가 있어서 뭐가 움직이기 전에 후보 표를 먼저 본다.</p></div>
+  <div class="step"><div class="t">/feature-docs sync</div><p>바꾼 것을 명세에 되먹인다. <code>/feature-doc-guard</code>를 깔았다면 이걸 해야 커밋이 통과한다.</p></div>
+  <div class="step"><div class="t">/feature-test F-003</div><p>영향받은 기능의 케이스만 실제 화면에서. 전체 실행은 릴리스 날에 한다.</p></div>
+  <div class="step"><div class="t">/wrap</div><p>오늘을 기록에 남기고 미커밋을 경고한다. <code>/clear</code> 앞에서는 반드시.</p></div>
+  <div class="step"><div class="t">/release-notes v1.0.0</div><p>릴리스 날에만. 나머지 날들이 쌓아 둔 기능 문서를 읽는다.</p></div>
+</div>
+
+<h2>사람들이 자주 걸리는 여섯</h2>
+<div class="traps">
+  <div class="trap"><b>개인 사본이, 조용히 이긴다.</b><p><code>~/.claude/skills/</code>와 프로젝트 <code>.claude/skills/</code>에 같은 이름이 있으면 개인 쪽이 돌고 프로젝트 쪽은 영영 안 돈다. 에러도 안 난다. 팀이 공유한 스킬이 어느 한 PC에서만 "안 되는" 이유는 대개 이거다.</p></div>
+  <div class="trap"><b><code>allowed-tools</code>는 허가지 울타리가 아니다.</b><p>프롬프트 없이 돌 것을 넓히는 키다. git 명령만 적힌 스킬도 파일을 고칠 수 있다. 실제로 막는 키는 <code>disallowed-tools</code>다.</p></div>
+  <div class="trap"><b>기능 문서 6종은 한 덩어리다.</b><p>서로를 이름으로 부르고 <code>docs/features/</code> 아래 파일명을 나눠 쓴다. 일부만 깔면 나머지가 조용히 실패한다. 별칭을 붙인다면 여섯 전부에 붙이거나 하나도 안 붙이거나다.</p></div>
+  <div class="trap"><b>없는 Python도 대답은 한다.</b><p>윈도우의 앱 실행 별칭은 숫자 없는 <code>Python</code>만 찍고 exit 0을 준다. 두 스킬이 진짜 Python에 기대므로, <code>python -c "print(1)"</code>로 <code>1</code>이 찍히는지까지 봐야 한다.</p></div>
+  <div class="trap"><b>가드는 스킬보다 먼저 걷는다.</b><p>커밋 가드를 걷는 절차가 스킬 안에 들어 있다. 폴더를 먼저 지우면 훅만 남아 커밋이 계속 실패하는데, 원인은 화면 어디에도 없다.</p></div>
+  <div class="trap"><b>별칭은 두 군데를 고치는 일이다.</b><p>폴더 이름을 바꾸는 건 절반이고, frontmatter의 <code>name:</code>도 같은 값이어야 한다. 둘이 다르면 스킬은 아예 안 뜨고, 왜 안 뜨는지도 안 알려 준다.</p></div>
+</div>
+
+<h2>어느 문서가 무엇을 설치하나</h2>
+<div class="tablewrap">
+<table>
+  <thead><tr><th>스킬</th><th>문서</th><th>기본 스코프</th><th>제거</th></tr></thead>
+  <tbody>
+    <tr><td><code>/resume</code> <code>/wrap</code> <code>/dropin-check</code> <code>/dropin-update</code></td><td>01 §D-4</td><td>글로벌 &mdash; <code>~/.claude/skills/</code></td><td>폴더 삭제. <code>docs/</code> 기록은 남긴다 &mdash; 그건 데이터다.</td></tr>
+    <tr><td><code>/svg-design</code></td><td>03 §2</td><td>글로벌</td><td>폴더 삭제.</td></tr>
+    <tr><td><code>/frontend-design</code></td><td>03 §3</td><td>글로벌, <code>npx skills add -g</code></td><td>같은 도구로 제거.</td></tr>
+    <tr><td>기능 문서 6종</td><td>03 §7</td><td>글로벌 &mdash; 팀·CI가 공유해야 하면 프로젝트 스코프</td><td>가드부터 걷고 여섯 폴더. <code>docs/features/</code>는 남긴다.</td></tr>
+    <tr><td><code>/refactor</code></td><td>03 §8</td><td>글로벌</td><td>폴더 삭제. 걷을 훅도, 되돌릴 커밋도 없다.</td></tr>
+  </tbody>
+</table>
+</div>
+<p class="lead" style="margin-top:16px">전부 제거 절차가 문서에 적혀 있는데, 이건 의도한 것이다. 되돌릴 수 없는 설치는 애초에 선택지를 준 게 아니기 때문이다. 감지·설치·검증·제거 4단 전체는 각 문서에 있다. 설치할 때 나오는 질문의 뜻은 <a href="options.ko.html">옵션 사전</a>에, 처음부터 차근히 밟아 보려면 <a href="learn.ko.html">학습 코스</a>에 있다.</p>
+
+<footer>단디(Dandi) &middot; 스킬 카탈로그 &middot; 2026-09-09 &middot; 01 §D-4 · 03 §2 · §3 · §7 · §8이 설치하는 스킬 13종. 명령은 별칭 없이 적었으니, 설치할 때 별칭을 골랐다면 그것을 얹어 읽으면 된다.</footer>
+
+</div>
+<script>
+(function(){
+  var q=document.getElementById('q'), chips=[].slice.call(document.querySelectorAll('.chip')),
+      cards=[].slice.call(document.querySelectorAll('.skill')),
+      groups=[].slice.call(document.querySelectorAll('.group')),
+      count=document.getElementById('count'), empty=document.getElementById('empty'), g='all';
+
+  function apply(){
+    var t=(q.value||'').trim().toLowerCase(), n=0;
+    cards.forEach(function(c){
+      var okG = (g==='all' || c.dataset.g===g),
+          okT = (!t || c.textContent.toLowerCase().indexOf(t)>-1);
+      c.hidden = !(okG&&okT);
+      if(!c.hidden) n++;
+    });
+    groups.forEach(function(s){
+      var any=[].slice.call(s.querySelectorAll('.skill')).some(function(c){return !c.hidden});
+      s.hidden=!any;
+    });
+    count.textContent = n===13 ? '13종 표시 중' : '13종 중 '+n+'종';
+    empty.style.display = n ? 'none' : 'block';
+  }
+  q.addEventListener('input', apply);
+  chips.forEach(function(b){
+    b.addEventListener('click', function(){
+      g=b.dataset.g;
+      chips.forEach(function(o){o.setAttribute('aria-pressed', String(o===b))});
+      apply();
+      document.querySelector('.toolbar').scrollIntoView({block:'start'});
+    });
+  });
+  apply();
+})();
+</script>
+</body>
+</html>

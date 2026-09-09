@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Skill Catalog — Dandi · Claude Code Drop-in Documents</title>
+<meta name="description" content="Every skill Dandi installs, explained for a first-week developer: what it does, when to call it, what it leaves behind, and where it bites.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧰</text></svg>">
+<meta property="og:title" content="Skill Catalog — Claude Code Drop-in Documents">
+<meta property="og:description" content="Thirteen skills, one slash away. What each one does and when to reach for it.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://eleninjaytech.github.io/claude/pages/skills.html">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@700;900&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" rel="stylesheet">
+<style>
+:root{
+  --paper:#FCFCF8; --card:#FFFFFF; --ink:#20222E; --ink-soft:#5A5E70;
+  --marker:#FFD84D; --marker-soft:#FFF3C2;
+  --blue:#2B49C7; --blue-soft:#E8ECFB;
+  --line:#E5E4DB; --term:#1B1D27;
+  --green:#1E7F4C; --green-soft:#E3F3EA;
+  --red:#B3261E; --red-soft:#FBE9E7;
+  --dim:#9EA3B5;
+  --serif:'Noto Serif KR','Nanum Myeongjo',serif;
+  --sans:'Pretendard Variable',Pretendard,'Malgun Gothic',sans-serif;
+  --mono:'IBM Plex Mono',Consolas,monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--sans);background:var(--paper);color:var(--ink);line-height:1.85;font-size:16.5px;
+  word-break:normal;overflow-wrap:break-word;
+  background-image:linear-gradient(#F1F0E7 1px,transparent 1px),linear-gradient(90deg,#F1F0E7 1px,transparent 1px);
+  background-size:26px 26px}
+p,li{text-wrap:pretty}
+::selection{background:var(--marker)}
+a{color:var(--blue)}
+:focus-visible{outline:3px solid var(--blue);outline-offset:2px;border-radius:4px}
+code{font-family:var(--mono);font-size:.88em;background:#F3F2EA;border:1px solid var(--line);border-radius:5px;padding:1px 5px}
+
+.wrap{max-width:1000px;margin:0 auto;padding:48px 24px 80px}
+.eyebrow{font-family:var(--mono);font-size:13px;letter-spacing:.14em;color:var(--ink-soft);margin-bottom:14px}
+.eyebrow b{color:var(--blue);font-weight:600}
+h1{font-family:var(--serif);font-weight:900;font-size:clamp(26px,4.2vw,38px);line-height:1.5;letter-spacing:-.02em;text-wrap:balance}
+h2{font-family:var(--serif);font-weight:900;font-size:clamp(20px,2.8vw,25px);line-height:1.5;margin-top:56px}
+h3{font-family:var(--serif);font-weight:700;font-size:18px;margin-top:30px}
+.mark{background:linear-gradient(transparent 58%, var(--marker) 58%, var(--marker) 92%, transparent 92%);padding:0 2px}
+p.sub{margin-top:14px;color:var(--ink-soft);max-width:42em}
+.backlink{font-family:var(--mono);font-size:13px}
+.lead{margin-top:14px;max-width:44em}
+
+/* ── 개념 3장 ── */
+.basics{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px;margin-top:22px}
+.basic{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px 20px}
+.basic .n{font-family:var(--mono);font-size:12px;color:var(--blue);letter-spacing:.1em}
+.basic b{display:block;margin:6px 0 6px;font-size:16px}
+.basic p{font-size:14.5px;color:var(--ink-soft);line-height:1.75}
+
+/* ── 도구 막대 ── */
+.toolbar{position:sticky;top:0;z-index:20;margin-top:34px;padding:12px 0;
+  background:var(--paper);box-shadow:0 8px 10px -10px rgba(32,34,46,.45);display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.toolbar input{font-family:var(--sans);font-size:14.5px;padding:9px 13px;border:1px solid var(--line);
+  border-radius:999px;background:var(--card);min-width:min(260px,100%);color:var(--ink)}
+.chip{font-family:var(--mono);font-size:12.5px;padding:8px 13px;border-radius:999px;border:1px solid var(--line);
+  background:var(--card);color:var(--ink-soft);cursor:pointer}
+.chip[aria-pressed="true"]{background:var(--ink);color:#FFF;border-color:var(--ink)}
+.count{font-family:var(--mono);font-size:12.5px;color:var(--dim);margin-left:auto}
+
+/* ── 그룹 ── */
+.group{margin-top:44px;scroll-margin-top:70px}
+.group > .ghead{display:flex;flex-wrap:wrap;align-items:baseline;gap:10px;border-bottom:2px solid var(--ink);padding-bottom:8px}
+.ghead h2{margin:0}
+.ghead .src{font-family:var(--mono);font-size:12.5px;color:var(--ink-soft)}
+.gnote{margin-top:12px;font-size:14.5px;color:var(--ink-soft);max-width:46em}
+
+/* ── 카드 ── */
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(310px,1fr));gap:16px;margin-top:18px}
+.skill{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:20px 22px 18px;
+  box-shadow:0 14px 34px -26px rgba(32,34,46,.35);display:flex;flex-direction:column}
+.skill .cmd{font-family:var(--mono);font-size:15.5px;font-weight:600;color:var(--ink)}
+.skill .cmd .sl{color:var(--blue)}
+.skill .args{font-family:var(--mono);font-size:12.5px;color:var(--dim);margin-top:3px}
+.skill .one{margin-top:10px;font-size:15px;line-height:1.7}
+.skill dl{margin-top:14px;display:grid;grid-template-columns:auto 1fr;gap:6px 12px;font-size:14px;line-height:1.7}
+.skill dt{font-family:var(--mono);font-size:11.5px;letter-spacing:.06em;color:var(--blue);
+  text-transform:uppercase;padding-top:4px;white-space:nowrap}
+.skill dd{color:var(--ink-soft)}
+.tags{margin-top:auto;padding-top:14px;display:flex;flex-wrap:wrap;gap:6px}
+.tag{font-family:var(--mono);font-size:11.5px;padding:3px 9px;border-radius:999px;background:#F3F2EA;
+  border:1px solid var(--line);color:var(--ink-soft)}
+.tag.hand{background:var(--marker-soft);border-color:#EBD383;color:#7A5B00}
+.tag.need{background:var(--blue-soft);border-color:#C9D2F3;color:#2B49C7}
+.warn{margin-top:12px;font-size:13.5px;line-height:1.7;background:var(--red-soft);border-left:3px solid var(--red);
+  border-radius:0 8px 8px 0;padding:9px 12px;color:#7C2019}
+.warn b{color:var(--red)}
+.warn.soft{background:#FFFBEC;border-left-color:#E0B63A;color:#6B5312}
+.warn.soft b{color:#8A6A16}
+
+/* ── 파이프라인 ── */
+.flow{margin-top:20px;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:22px;overflow-x:auto}
+.flow .row{display:flex;align-items:center;gap:12px;min-width:520px}
+.flow .node{font-family:var(--mono);font-size:13px;border:1px solid var(--line);border-radius:10px;
+  padding:9px 12px;background:var(--paper);white-space:nowrap}
+.flow .node.entry{background:var(--marker-soft);border-color:#EBD383;font-weight:600}
+.flow .node.store{background:var(--blue-soft);border-color:#C9D2F3;color:#22307F;font-weight:600}
+.flow .arrow{color:var(--dim);font-family:var(--mono)}
+.flow .fan{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:10px;margin-top:14px;min-width:520px}
+.flow .leaf{font-family:var(--mono);font-size:12.5px;border:1px dashed var(--line);border-radius:10px;padding:10px 12px}
+.flow .leaf b{display:block;font-family:var(--sans);font-size:13px;color:var(--ink-soft);font-weight:400;margin-top:3px}
+
+/* ── 하루 흐름 ── */
+.day{margin-top:18px;border-left:2px solid var(--line);padding-left:20px;display:grid;gap:16px}
+.step{position:relative}
+.step::before{content:"";position:absolute;left:-27px;top:9px;width:11px;height:11px;border-radius:50%;
+  background:var(--marker);border:2px solid var(--paper)}
+.step .t{font-family:var(--mono);font-size:13.5px;font-weight:600}
+.step p{font-size:14.5px;color:var(--ink-soft);margin-top:2px}
+
+/* ── 표 ── */
+.tablewrap{overflow-x:auto;margin-top:16px;border:1px solid var(--line);border-radius:14px;background:var(--card)}
+table{border-collapse:collapse;width:100%;min-width:540px;font-size:14.5px}
+th,td{text-align:left;padding:11px 14px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-family:var(--mono);font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-soft);
+  background:#FAFAF4}
+tr:last-child td{border-bottom:none}
+td code{white-space:nowrap}
+
+/* ── 함정 ── */
+.traps{margin-top:18px;display:grid;gap:12px}
+.trap{background:var(--card);border:1px solid var(--line);border-left:3px solid var(--marker);
+  border-radius:0 14px 14px 0;padding:16px 20px}
+.trap b{font-size:15px}
+.trap p{font-size:14.5px;color:var(--ink-soft);margin-top:5px}
+
+.empty{display:none;margin-top:26px;font-family:var(--mono);font-size:14px;color:var(--ink-soft)}
+footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
+  font-family:var(--mono);font-size:12.5px;color:var(--dim);line-height:1.9}
+@media (max-width:520px){
+  .toolbar{position:static}
+  .skill dl{grid-template-columns:1fr;gap:2px 0}
+  .skill dt{padding-top:8px}
+}
+</style>
+</head>
+<body>
+<div style="max-width:1000px;margin:0 auto;padding:14px 20px 0;font-family:var(--mono);font-size:13px;text-align:right;opacity:.75"><b>English</b> &middot; <a href="skills.ko.html" onclick="try{localStorage.setItem('lang','ko')}catch(e){}">한국어</a></div>
+<div class="wrap">
+
+<header>
+  <p class="eyebrow"><b>Dandi</b> &middot; EleninJayTech / claude &middot; skill catalog</p>
+  <h1>Thirteen skills, <span class="mark">one slash away</span> &mdash;<br>here is what each one actually does.</h1>
+  <p class="sub">A skill is a folder of instructions Claude loads on demand. Dandi installs thirteen of them. This page is the field guide: what each does, when to reach for it, what it leaves on disk, and the places it bites.</p>
+  <p class="backlink" style="margin-top:10px"><a href="../index.html">&larr; Back to the guide</a> &middot; <a href="intro.html">1-minute intro</a> &middot; <a href="demo.html">Install walkthrough</a> &middot; <a href="options.html">Options dictionary</a> &middot; <a href="learn.html">Course</a> &middot; <a href="https://github.com/EleninJayTech/claude">GitHub repository &#8599;</a></p>
+</header>
+
+<h2 style="margin-top:44px">First, what is a skill?</h2>
+<p class="lead">If you have never used one: a skill is not a plugin you launch and not a library you import. It is a folder with a <code>SKILL.md</code> inside, and Claude reads it only when it is needed &mdash; so having thirteen installed costs you nothing until you call one.</p>
+<div class="basics">
+  <div class="basic">
+    <span class="n">01</span>
+    <b>A folder with a SKILL.md</b>
+    <p>The front matter carries the name and a description; the body is the procedure Claude follows. Some skills ship extra files under <code>references/</code> or <code>scripts/</code> &mdash; those are part of the skill, not optional extras.</p>
+  </div>
+  <div class="basic">
+    <span class="n">02</span>
+    <b>Two ways to run</b>
+    <p>Type <code>/name</code> to call it yourself, or let Claude match the <em>description</em> to what you asked and load it on its own. Skills that touch your browser or your source code are set to manual-only on purpose.</p>
+  </div>
+  <div class="basic">
+    <span class="n">03</span>
+    <b>Two places to live</b>
+    <p><code>~/.claude/skills/</code> is yours on this machine; <code>.claude/skills/</code> inside a repo is shared with the team through git. If the same name exists in both, <strong>the personal one wins</strong> &mdash; the project copy simply never runs.</p>
+  </div>
+</div>
+<p class="lead" style="margin-top:16px">One more thing before the list: during install you may have given the skills a name prefix or suffix (an <em>alias</em>, like <code>feature-docs-dandi</code>). If you did, read every <code>/command</code> below with your alias applied.</p>
+
+<div class="toolbar" role="search">
+  <label class="sr" for="q" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)">Filter skills</label>
+  <input id="q" type="search" placeholder="Filter by name or task — e.g. test, commit, release" autocomplete="off">
+  <button class="chip" data-g="all" aria-pressed="true">All 13</button>
+  <button class="chip" data-g="session" aria-pressed="false">Session 4</button>
+  <button class="chip" data-g="docs" aria-pressed="false">Feature docs 6</button>
+  <button class="chip" data-g="code" aria-pressed="false">Code 1</button>
+  <button class="chip" data-g="design" aria-pressed="false">Design 2</button>
+  <span class="count" id="count">13 shown</span>
+</div>
+
+<!-- ══════════ GROUP: session ══════════ -->
+<section class="group" data-g="session">
+  <div class="ghead">
+    <h2 style="margin-top:0">Running a session</h2>
+    <span class="src">installed by document 01 §D-4 &middot; global scope</span>
+  </div>
+  <p class="gnote">These four are the heartbeat of the setup. Two of them open and close every session; the other two tell you whether your configuration has drifted behind the documents it came from.</p>
+  <div class="cards">
+
+    <article class="skill" data-g="session">
+      <div class="cmd"><span class="sl">/</span>resume</div>
+      <div class="args">no arguments</div>
+      <p class="one">Opens the session by reconstructing where you left off &mdash; from git and from your own records, not from memory.</p>
+      <dl>
+        <dt>Use when</dt><dd>At the very start of a session, and again after <code>/clear</code>.</dd>
+        <dt>It does</dt><dd>Pulls with <code>--ff-only</code> if the tree is clean, finds uncommitted work through <code>git status</code>, then reads the top of <code>PROGRESS.md</code>, the last three decisions, and <code>PROJECT_PLAN.md</code>.</dd>
+        <dt>You get</dt><dd>A short "last time you did X, next is Y?" report, plus reminders when a scheduled check has come due.</dd>
+      </dl>
+      <div class="warn soft"><b>Worth knowing.</b> It reads only the ~5 newest entries, capped at ~700 characters each. Anything the next session must pick up belongs at the <em>front</em> of an entry &mdash; text at the end falls outside the cap and is never read.</div>
+      <div class="tags"><span class="tag">global</span><span class="tag">read-mostly</span></div>
+    </article>
+
+    <article class="skill" data-g="session">
+      <div class="cmd"><span class="sl">/</span>wrap</div>
+      <div class="args">no arguments</div>
+      <p class="one">Closes the session by writing today into the record, so the next <code>/resume</code> has something to find.</p>
+      <dl>
+        <dt>Use when</dt><dd>Before you stop working &mdash; and always before <code>/clear</code>.</dd>
+        <dt>It does</dt><dd>Appends an entry to <code>PROGRESS.md</code>, adds any new decision as <code>DEC-YYYYMMDD-&lt;author&gt;</code>, ticks the boxes in <code>PROJECT_PLAN.md</code>, and warns you if changes are still uncommitted.</dd>
+        <dt>You get</dt><dd>One line per session, in the fixed shape <code>[topic][Done] … — @author (branch) date</code>.</dd>
+      </dl>
+      <div class="warn soft"><b>Worth knowing.</b> Records are append-only. When a decision changes you add a new one and mark the old "Superseded by" &mdash; you never edit history in place.</div>
+      <div class="tags"><span class="tag">global</span><span class="tag">writes records</span></div>
+    </article>
+
+    <article class="skill" data-g="session">
+      <div class="cmd"><span class="sl">/</span>dropin-check</div>
+      <div class="args">no arguments &middot; read-only</div>
+      <p class="one">Tells you whether the configuration on this machine has fallen behind the documents that produced it.</p>
+      <dl>
+        <dt>Use when</dt><dd><code>/resume</code> says the install record is over 30 days old, or you simply want to know if anything drifted.</dd>
+        <dt>It does</dt><dd>Compares the project's <code>dropin-applied</code> record and your global <code>~/.claude</code> against the current versions in the document repository, and reports differences only.</dd>
+        <dt>You get</dt><dd>A difference report. Nothing is installed, nothing is edited.</dd>
+      </dl>
+      <div class="tags"><span class="tag">global</span><span class="tag">no writes</span></div>
+    </article>
+
+    <article class="skill" data-g="session">
+      <div class="cmd"><span class="sl">/</span>dropin-update</div>
+      <div class="args">no arguments</div>
+      <p class="one">Brings your copies of the drop-in documents up to date &mdash; the documents themselves, not the configuration they describe.</p>
+      <dl>
+        <dt>Use when</dt><dd><code>/dropin-check</code> reported that your document copies are older than the published ones.</dd>
+        <dt>It does</dt><dd>Works out how the documents got here &mdash; copied into the project, referenced from a local clone, or read straight from raw URLs &mdash; and updates each in the way that fits, after asking.</dd>
+        <dt>You get</dt><dd>Refreshed document files. Re-applying the configuration is a separate step, driven by document 00.</dd>
+      </dl>
+      <div class="warn soft"><b>Worth knowing.</b> It refuses to run inside the source repository itself &mdash; there, <code>git pull</code> is the update path.</div>
+      <div class="tags"><span class="tag">global</span><span class="tag">asks first</span></div>
+    </article>
+
+  </div>
+</section>
+
+<!-- ══════════ GROUP: docs ══════════ -->
+<section class="group" data-g="docs">
+  <div class="ghead">
+    <h2 style="margin-top:0">Feature docs, tests, releases</h2>
+    <span class="src">installed by document 03 §7 &middot; a set of six</span>
+  </div>
+  <p class="gnote">These six are one machine with six levers. They share the same file names and front-matter keys under <code>docs/features/</code>, so they are installed together or not at all &mdash; a partial install fails quietly rather than loudly. <code>/feature-docs init</code> is the door; the other five refuse to start until it has run.</p>
+
+  <div class="flow" aria-label="How the six skills connect">
+    <div class="row">
+      <span class="node entry">/feature-docs init</span>
+      <span class="arrow">&rarr;</span>
+      <span class="node store">docs/features/</span>
+      <span class="arrow">&rarr;</span>
+      <span class="node">00_inventory · 03_test_index · F-001…</span>
+    </div>
+    <div class="fan">
+      <div class="leaf">/feature-test<b>runs the cases on the real screen</b></div>
+      <div class="leaf">/test-to-script<b>turns cases into Playwright · Maestro</b></div>
+      <div class="leaf">/feature-doc-audit<b>finds docs that fell behind</b></div>
+      <div class="leaf">/feature-doc-guard<b>blocks commits that skip the doc</b></div>
+      <div class="leaf">/release-notes<b>groups the history by feature</b></div>
+      <div class="leaf">/feature-docs sync<b>folds the changes back in</b></div>
+    </div>
+  </div>
+
+  <div class="cards">
+
+    <article class="skill" data-g="docs">
+      <div class="cmd"><span class="sl">/</span>feature-docs</div>
+      <div class="args">init | sync [base commit or tag]</div>
+      <p class="one">Writes down what the program actually does, checked twice: once in the code, once on the running screen.</p>
+      <dl>
+        <dt>Use when</dt><dd><code>init</code> for a project with no spec yet (it works incrementally, so a big codebase is fine); <code>sync</code> after you add or change a feature.</dd>
+        <dt>It does</dt><dd>Detects the stack, walks the features, drives the real UI through Chrome MCP or an emulator, and records every claim with the commit, branch and app version it was observed at.</dd>
+        <dt>You get</dt><dd><code>docs/features/</code> &mdash; an inventory, a screen-flow map, a data model, a test index, one file per feature, and screenshots.</dd>
+      </dl>
+      <div class="warn soft"><b>Worth knowing.</b> It never guesses. Code-only evidence is labelled as such, and destructive actions (delete, payment, send) are documented from the code and marked unverified rather than executed.</div>
+      <div class="tags"><span class="tag need">entry point</span><span class="tag">writes docs</span><span class="tag">drives the UI</span></div>
+    </article>
+
+    <article class="skill" data-g="docs">
+      <div class="cmd"><span class="sl">/</span>feature-test</div>
+      <div class="args">[F-003 | TC-F003-01] — all if omitted</div>
+      <p class="one">Runs the test cases from the spec on the real screen and, when one fails, works out whose fault it is.</p>
+      <dl>
+        <dt>Use when</dt><dd>You want to know whether features still work &mdash; before a release, or after a risky change.</dd>
+        <dt>It does</dt><dd>Follows each case exactly as written, prefers a converted script when one is registered, and files every failure as (A) code bug, (B) stale doc, (C) environment, or (D) not enough evidence.</dd>
+        <dt>You get</dt><dd>A dated report under <code>docs/features/test_reports/</code> with screenshots, and a summary in the chat that separates newly failing from newly passing.</dd>
+      </dl>
+      <div class="warn soft"><b>Worth knowing.</b> It fixes nothing &mdash; not the docs, not the code. Even a confirmed stale doc is repaired afterwards by <code>/feature-docs sync</code>, with your approval. It is set to manual-only, because it operates your browser.</div>
+      <div class="tags hand"><span class="tag hand">manual only</span><span class="tag need">needs init</span><span class="tag">drives the UI</span></div>
+    </article>
+
+    <article class="skill" data-g="docs">
+      <div class="cmd"><span class="sl">/</span>feature-doc-audit</div>
+      <div class="args">[commits-behind threshold, default 5]</div>
+      <p class="one">A cheap health check on the docs &mdash; no browser, no tests, just arithmetic against git.</p>
+      <dl>
+        <dt>Use when</dt><dd>Weekly, or whenever you want to know which feature to sync first without paying for a full test run.</dd>
+        <dt>It does</dt><dd>Finds docs lagging behind <code>HEAD</code>, leftover unverified items, inventory mismatches, code references pointing at files that no longer exist, and cases missing from the test index.</dd>
+        <dt>You get</dt><dd>A table and a suggested sync order. Light enough to schedule: <code>claude -p "/feature-doc-audit"</code>.</dd>
+      </dl>
+      <div class="warn"><b>The trap.</b> Needs Python 3. Check it with <code>python -c "print(1)"</code>, not <code>python --version</code> &mdash; a Windows app-execution stub answers the version call and exits 0 while doing nothing at all.</div>
+      <div class="tags"><span class="tag need">needs init</span><span class="tag need">needs Python 3</span><span class="tag">no writes</span></div>
+    </article>
+
+    <article class="skill" data-g="docs">
+      <div class="cmd"><span class="sl">/</span>feature-doc-guard</div>
+      <div class="args">install | uninstall | check</div>
+      <p class="one">Stops the commit where the code moved and the doc did not.</p>
+      <dl>
+        <dt>Use when</dt><dd>Once the spec exists and you want it to stay true without anyone having to remember.</dd>
+        <dt>It does</dt><dd>Installs two guards &mdash; a <code>.git/hooks/pre-commit</code> hook and a Claude Code <code>PreToolUse</code> hook &mdash; that trace each staged source file back to the feature that owns it and block the commit if that feature's doc is not staged too.</dd>
+        <dt>You get</dt><dd>A blocked commit with the list of missing docs. Unmapped files only produce a warning, never a block. Emergency bypass: <code>FEATURE_DOC_GUARD=0</code>.</dd>
+      </dl>
+      <div class="warn"><b>Remove it in order.</b> Run <code>/feature-doc-guard uninstall</code> <em>before</em> deleting the skill folder. Delete the folder first and the pre-commit hook stays behind, blocking commits with no visible way to lift it.</div>
+      <div class="tags"><span class="tag need">needs init</span><span class="tag need">needs Python 3</span><span class="tag">installs hooks</span></div>
+    </article>
+
+    <article class="skill" data-g="docs">
+      <div class="cmd"><span class="sl">/</span>test-to-script</div>
+      <div class="args">[F-003 | TC-F003-01] — all unconverted if omitted</div>
+      <p class="one">Turns the hand-run cases into scripts a machine can run at three in the morning.</p>
+      <dl>
+        <dt>Use when</dt><dd>You want tests in CI or on a scheduler. Unattended runs need this &mdash; Chrome MCP wants a real browser and fails quietly without one.</dd>
+        <dt>It does</dt><dd>Converts cases to Playwright (web) or Maestro (Android, iOS), proposes <code>data-testid</code> attributes where the selectors are fragile, and registers the mapping in <code>04_script_map.md</code>.</dd>
+        <dt>You get</dt><dd>Runnable test files, plus <code>/feature-test</code> automatically preferring the script for every case it registered.</dd>
+      </dl>
+      <div class="warn soft"><b>Worth knowing.</b> Manual-only by default, because stabilising selectors means editing your source.</div>
+      <div class="tags"><span class="tag hand">manual only</span><span class="tag need">needs init</span><span class="tag">edits source</span></div>
+    </article>
+
+    <article class="skill" data-g="docs">
+      <div class="cmd"><span class="sl">/</span>release-notes</div>
+      <div class="args">[from tag] [to tag — HEAD if omitted]</div>
+      <p class="one">Writes release notes a user can read, built from the feature docs rather than from the commit log.</p>
+      <dl>
+        <dt>Use when</dt><dd>You are cutting a release and need to say what changed in it.</dd>
+        <dt>It does</dt><dd>Collects the change history in each feature doc, the version history, the git log and the latest test report, then groups everything by feature &mdash; several commits on one feature become one line.</dd>
+        <dt>You get</dt><dd><code>docs/releases/&lt;tag&gt;.md</code>, split into new, changed, fixed, removed, internal, and tests &mdash; with a separate list of commits no doc covers yet.</dd>
+      </dl>
+      <div class="warn soft"><b>Worth knowing.</b> It refuses to invent. When a commit message is unclear it reads the diff, and if that still does not settle it the line is marked for you to confirm.</div>
+      <div class="tags"><span class="tag need">needs init</span><span class="tag">writes docs</span></div>
+    </article>
+
+  </div>
+</section>
+
+<!-- ══════════ GROUP: code ══════════ -->
+<section class="group" data-g="code">
+  <div class="ghead">
+    <h2 style="margin-top:0">Code quality</h2>
+    <span class="src">installed by document 03 §8 &middot; stands alone</span>
+  </div>
+  <p class="gnote">Independent of the six above. It will use the feature docs if they happen to be there, and works perfectly well when they are not.</p>
+  <div class="cards">
+
+    <article class="skill" data-g="code">
+      <div class="cmd"><span class="sl">/</span>refactor</div>
+      <div class="args">[all | path | commitA..commitB | check [scope]] [nocheck]</div>
+      <p class="one">Improves the code without changing what it does &mdash; and then proves it did not change what it does.</p>
+      <dl>
+        <dt>Use when</dt><dd>Duplication has piled up, a structure needs untangling, a runtime version moved, or something is slow. Never for a new feature or a bug fix &mdash; keeping those out of the same change is the whole premise.</dd>
+        <dt>It does</dt><dd>Picks a scope (uncommitted work by default), shows you a table of candidates and <strong>waits for your approval</strong>, refactors, then verifies across baselines, call-site contracts, characterization tests, static checks and real runs.</dd>
+        <dt>You get</dt><dd>A report in the chat, saved to <code>docs/refactor/</code> on request. It never commits &mdash; you do, ideally one change per commit.</dd>
+      </dl>
+      <div class="warn"><b>Read the front matter correctly.</b> <code>allowed-tools</code> <em>widens</em> what runs without a prompt; it is not a sandbox. This skill can edit files despite the git-only list. The key that restricts is <code>disallowed-tools</code>.</div>
+      <div class="tags"><span class="tag">edits source</span><span class="tag">approval gate</span><span class="tag"><code>check</code> = verify only</span></div>
+    </article>
+
+  </div>
+</section>
+
+<!-- ══════════ GROUP: design ══════════ -->
+<section class="group" data-g="design">
+  <div class="ghead">
+    <h2 style="margin-top:0">Front-end design</h2>
+    <span class="src">installed by document 03 §2 and §3 &middot; optional</span>
+  </div>
+  <p class="gnote">Two skills that only matter if you build UI. Neither writes records or installs hooks &mdash; they shape how Claude writes front-end code when you ask for it.</p>
+  <div class="cards">
+
+    <article class="skill" data-g="design">
+      <div class="cmd"><span class="sl">/</span>svg-design</div>
+      <div class="args">no arguments — describe the effect you want</div>
+      <p class="one">Builds SVG filter effects &mdash; hand-drawn wobble, gooey blobs, liquid glass, neon text &mdash; that survive contact with real browsers.</p>
+      <dl>
+        <dt>Use when</dt><dd>You are writing inline SVG filters, wrapping one in a React or Next.js component, or an effect looks right in Chrome and wrong in Safari.</dd>
+        <dt>It does</dt><dd>Carries the rules that are easy to get wrong: unique filter ids from <code>useId()</code> so hydration does not break, padding around blur so WebKit stops clipping, and octave limits so phones keep their frame rate.</dd>
+        <dt>You get</dt><dd>Filter code that is accessible and does not thrash the GPU cache on every render.</dd>
+      </dl>
+      <div class="tags"><span class="tag">global</span><span class="tag">front-end only</span></div>
+    </article>
+
+    <article class="skill" data-g="design">
+      <div class="cmd"><span class="sl">/</span>frontend-design</div>
+      <div class="args">no arguments — describe the UI</div>
+      <p class="one">Pushes a new interface away from the default look that every AI-generated page shares.</p>
+      <dl>
+        <dt>Use when</dt><dd>Starting a new screen, or reshaping one that came out looking templated.</dd>
+        <dt>It does</dt><dd>Asks for a deliberate point of view on palette, typography and layout, grounded in the subject rather than in a component library's defaults.</dd>
+        <dt>You get</dt><dd>Design direction before the markup, which is the only point where it is cheap to change.</dd>
+      </dl>
+      <div class="warn soft"><b>Worth knowing.</b> This one is published by Anthropic and installed with <code>npx skills add -g</code>, so it updates on its own schedule rather than with the Dandi documents.</div>
+      <div class="tags"><span class="tag">global</span><span class="tag">front-end only</span></div>
+    </article>
+
+  </div>
+</section>
+
+<p class="empty" id="empty">Nothing matches that filter. Try clearing the search box.</p>
+
+<h2>A day, in the order the skills come up</h2>
+<p class="lead">You will not use thirteen skills in a day. A realistic week looks closer to this.</p>
+<div class="day">
+  <div class="step"><div class="t">/resume</div><p>Opens the session. Pull, uncommitted work, the last few entries, what is due. Roughly thirty seconds before you have your bearings.</p></div>
+  <div class="step"><div class="t">— you build the thing —</div><p>Ordinary work. No skill required.</p></div>
+  <div class="step"><div class="t">/refactor</div><p>Once the feature works, tidy it as a separate change. The approval gate means you see the candidate list before anything moves.</p></div>
+  <div class="step"><div class="t">/feature-docs sync</div><p>Folds what you changed into the spec. If <code>/feature-doc-guard</code> is installed, the commit will not go through until you do.</p></div>
+  <div class="step"><div class="t">/feature-test F-003</div><p>Runs just the affected feature's cases on the real screen. Full runs are for release day.</p></div>
+  <div class="step"><div class="t">/wrap</div><p>Writes today into the record and warns about anything uncommitted. Always before <code>/clear</code>.</p></div>
+  <div class="step"><div class="t">/release-notes v1.0.0</div><p>Release day only. Reads the feature docs the rest of the week built up.</p></div>
+</div>
+
+<h2>Six things that surprise people</h2>
+<div class="traps">
+  <div class="trap"><b>The personal copy wins, silently.</b><p>Same skill name in <code>~/.claude/skills/</code> and in the project's <code>.claude/skills/</code>? The personal one runs and the project one never does &mdash; with no error to tell you. This is the most common reason a team's shared skill "does not work" on one machine.</p></div>
+  <div class="trap"><b><code>allowed-tools</code> is a permission, not a fence.</b><p>It widens what may run without prompting. A skill listing only git commands can still edit your files. The key that actually restricts is <code>disallowed-tools</code>.</p></div>
+  <div class="trap"><b>The six feature skills are one unit.</b><p>They call each other by name and share file names under <code>docs/features/</code>. Install a subset and the rest fail quietly. If you use an alias, apply it to all six &mdash; or to none.</p></div>
+  <div class="trap"><b>A Python that is not there can still answer.</b><p>On Windows, the app-execution stub prints <code>Python</code> with no number and exits 0. Two skills depend on real Python; verify with <code>python -c "print(1)"</code> and look for the <code>1</code>.</p></div>
+  <div class="trap"><b>Uninstall the guard before deleting its skill.</b><p>The instructions for removing the commit guard live inside the skill. Delete the folder first and only the hook remains &mdash; commits keep failing and the cause is nowhere on screen.</p></div>
+  <div class="trap"><b>An alias is two edits, not one.</b><p>Renaming the folder is half of it; the <code>name:</code> in the front matter has to match. If they differ the skill never loads, and nothing says why.</p></div>
+</div>
+
+<h2>Where each one comes from</h2>
+<div class="tablewrap">
+<table>
+  <thead><tr><th>Skills</th><th>Document</th><th>Default scope</th><th>Removal</th></tr></thead>
+  <tbody>
+    <tr><td><code>/resume</code> <code>/wrap</code> <code>/dropin-check</code> <code>/dropin-update</code></td><td>01 §D-4</td><td>global &mdash; <code>~/.claude/skills/</code></td><td>Delete the folder. Records under <code>docs/</code> stay &mdash; they are data.</td></tr>
+    <tr><td><code>/svg-design</code></td><td>03 §2</td><td>global</td><td>Delete the folder.</td></tr>
+    <tr><td><code>/frontend-design</code></td><td>03 §3</td><td>global, via <code>npx skills add -g</code></td><td>Remove through the same tool.</td></tr>
+    <tr><td>the six feature skills</td><td>03 §7</td><td>global &mdash; project scope if the team and CI must share them</td><td>Guard first, then the six folders. <code>docs/features/</code> stays.</td></tr>
+    <tr><td><code>/refactor</code></td><td>03 §8</td><td>global</td><td>Delete the folder. No hooks to unwind, no commits to revert.</td></tr>
+  </tbody>
+</table>
+</div>
+<p class="lead" style="margin-top:16px">Every one of these has a documented removal path, which is deliberate: an install you cannot reverse was never really a choice. The full procedures &mdash; detect, install, verify, remove &mdash; are in the documents themselves. For what each install question means, see the <a href="options.html">options dictionary</a>; to work through it step by step, take the <a href="learn.html">course</a>.</p>
+
+<footer>Dandi &middot; Skill catalog &middot; 2026-09-09 &middot; Thirteen skills installed by documents 01 §D-4, 03 §2, §3, §7 and §8. Commands are shown without an alias; apply yours if you chose one at install time.</footer>
+
+</div>
+<script>
+(function(){
+  var q=document.getElementById('q'), chips=[].slice.call(document.querySelectorAll('.chip')),
+      cards=[].slice.call(document.querySelectorAll('.skill')),
+      groups=[].slice.call(document.querySelectorAll('.group')),
+      count=document.getElementById('count'), empty=document.getElementById('empty'), g='all';
+
+  function apply(){
+    var t=(q.value||'').trim().toLowerCase(), n=0;
+    cards.forEach(function(c){
+      var okG = (g==='all' || c.dataset.g===g),
+          okT = (!t || c.textContent.toLowerCase().indexOf(t)>-1);
+      c.hidden = !(okG&&okT);
+      if(!c.hidden) n++;
+    });
+    groups.forEach(function(s){
+      var any=[].slice.call(s.querySelectorAll('.skill')).some(function(c){return !c.hidden});
+      s.hidden=!any;
+    });
+    count.textContent = n===13 ? '13 shown' : n+' of 13 shown';
+    empty.style.display = n ? 'none' : 'block';
+  }
+  q.addEventListener('input', apply);
+  chips.forEach(function(b){
+    b.addEventListener('click', function(){
+      g=b.dataset.g;
+      chips.forEach(function(o){o.setAttribute('aria-pressed', String(o===b))});
+      apply();
+      document.querySelector('.toolbar').scrollIntoView({block:'start'});
+    });
+  });
+  apply();
+})();
+</script>
+<script>
+(function(){try{
+  if(localStorage.getItem('lang'))return;
+  if((navigator.language||'').toLowerCase().indexOf('ko')===0){
+    localStorage.setItem('lang','ko');location.replace('skills.ko.html');
+  }
+}catch(e){}})();
+</script>
+</body>
+</html>

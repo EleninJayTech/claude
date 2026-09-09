@@ -16,6 +16,7 @@
 | 🎬 **설치 시연** — 영상처럼 재생되는 인터랙티브 터미널 시연 | https://eleninjaytech.github.io/claude/pages/demo.html |
 | 🧭 **설치 옵션 사전** — 설치 중 나오는 선택 항목 전부를 입문자 눈높이로 | https://eleninjaytech.github.io/claude/pages/options.html |
 | 🎓 **설치 옵션 학습 코스** — 선택지를 챕터별로 직접 눌러 보며 배우는 인터랙티브 코스 | https://eleninjaytech.github.io/claude/pages/learn.html |
+| 🧰 **스킬 카탈로그** — 문서가 설치하는 스킬 전부를 신입 개발자 눈높이로 | https://eleninjaytech.github.io/claude/pages/skills.html |
 | 📖 **사용법 안내** — 처음이라면 여기부터, 개발을 몰라도 이해 가능 | https://eleninjaytech.github.io/claude/ |
 
 ## 사용법 (세 줄)
@@ -49,7 +50,7 @@
 | [`05_출력스타일.md`](05_출력스타일.md) | **말투·역할 바꾸기.** 답변 방식을 원하는 대로 — 설명 위주, 다이어그램 먼저, 학습 모드 등. 코딩 실력은 유지한 채 스타일만 바꿉니다 |
 | [`06_루틴-자동화.md`](06_루틴-자동화.md) | **자동 실행 예약.** 내 컴퓨터가 꺼져 있어도 클라우드에서 정해진 시간에 AI가 알아서 작업(야간 코드 검토·주간 문서 점검 등) — Pro 요금제 이상, 회사에서는 승인 후 |
 | [`index.html`](index.html) | **사람용 안내 페이지**(GitHub Pages 랜딩) — [웹에서 보기](https://eleninjaytech.github.io/claude/) |
-| [`pages/`](pages/) | 나머지 사람용 페이지 — [소개 영상](pages/intro.html) · [설치 시연](pages/demo.html) · [설치 옵션 사전](pages/options.html) · [설치 옵션 학습 코스](pages/learn.html) |
+| [`pages/`](pages/) | 나머지 사람용 페이지 — [소개 영상](pages/intro.html) · [설치 시연](pages/demo.html) · [설치 옵션 사전](pages/options.html) · [설치 옵션 학습 코스](pages/learn.html) · [스킬 카탈로그](pages/skills.html) |
 
 ## 단디의 원칙
 

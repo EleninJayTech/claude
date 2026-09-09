@@ -16,6 +16,7 @@
 | 🎬 **Install walkthrough** — an interactive terminal replay that plays like a film | https://eleninjaytech.github.io/claude/pages/demo.html |
 | 🧭 **Install options dictionary** — every choice the installer asks, explained for beginners | https://eleninjaytech.github.io/claude/pages/options.html |
 | 🎓 **Install options course** — an interactive course where you click through the choices yourself | https://eleninjaytech.github.io/claude/pages/learn.html |
+| 🧰 **Skill catalog** — every skill the documents install, explained for a first-week developer | https://eleninjaytech.github.io/claude/pages/skills.html |
 | 📖 **How to use** — start here; no development background needed | https://eleninjaytech.github.io/claude/ |
 
 ## How to use it (three lines)
@@ -50,7 +51,7 @@
 | [`05_출력스타일.md`](05_출력스타일.md) | **Changing tone and role.** Answers the way you want them — explanation-first, diagram-first, learning mode. Coding ability stays; only the style changes |
 | [`06_루틴-자동화.md`](06_루틴-자동화.md) | **Scheduled runs.** Work happens in the cloud at set times even while your machine is off (nightly code review, weekly doc checks) — Pro plan or above, and with approval at companies |
 | [`index.html`](index.html) | **The human-facing guide** (GitHub Pages landing) — [view on the web](https://eleninjaytech.github.io/claude/) |
-| [`pages/`](pages/) | The rest of the human-facing pages — [intro](pages/intro.html) · [walkthrough](pages/demo.html) · [options dictionary](pages/options.html) · [options course](pages/learn.html) |
+| [`pages/`](pages/) | The rest of the human-facing pages — [intro](pages/intro.html) · [walkthrough](pages/demo.html) · [options dictionary](pages/options.html) · [options course](pages/learn.html) · [skill catalog](pages/skills.html) |
 
 ## Principles behind Dandi
 
