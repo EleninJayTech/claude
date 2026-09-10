@@ -164,12 +164,12 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
 <header>
   <p class="eyebrow"><b>Dandi</b> &middot; EleninJayTech / claude &middot; skill catalog</p>
   <h1>Thirteen skills, <span class="mark">one slash away</span> &mdash;<br>here is what each one actually does.</h1>
-  <p class="sub">A skill is a folder of instructions Claude loads on demand. Dandi installs thirteen of them. This page is the field guide: what each does, when to reach for it, what it leaves on disk, and the places it bites.</p>
+  <p class="sub">A skill is a folder of instructions Claude loads on demand. Dandi installs fourteen of them. This page is the field guide: what each does, when to reach for it, what it leaves on disk, and the places it bites.</p>
   <p class="backlink" style="margin-top:10px"><a href="../index.html">&larr; Back to the guide</a> &middot; <a href="intro.html">1-minute intro</a> &middot; <a href="demo.html">Install walkthrough</a> &middot; <a href="options.html">Options dictionary</a> &middot; <a href="learn.html">Course</a> &middot; <a href="https://github.com/EleninJayTech/claude">GitHub repository &#8599;</a></p>
 </header>
 
 <h2 style="margin-top:44px">First, what is a skill?</h2>
-<p class="lead">If you have never used one: a skill is not a plugin you launch and not a library you import. It is a folder with a <code>SKILL.md</code> inside, and Claude reads it only when it is needed &mdash; so having thirteen installed costs you nothing until you call one.</p>
+<p class="lead">If you have never used one: a skill is not a plugin you launch and not a library you import. It is a folder with a <code>SKILL.md</code> inside, and Claude reads it only when it is needed &mdash; so having fourteen installed costs you nothing until you call one.</p>
 <div class="basics">
   <div class="basic">
     <span class="n">01</span>
@@ -192,12 +192,13 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
 <div class="toolbar" role="search">
   <label class="sr" for="q" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)">Filter skills</label>
   <input id="q" type="search" placeholder="Filter by name or task — e.g. test, commit, release" autocomplete="off">
-  <button class="chip" data-g="all" aria-pressed="true">All 13</button>
+  <button class="chip" data-g="all" aria-pressed="true">All 14</button>
   <button class="chip" data-g="session" aria-pressed="false">Session 4</button>
   <button class="chip" data-g="docs" aria-pressed="false">Feature docs 6</button>
   <button class="chip" data-g="code" aria-pressed="false">Code 1</button>
+  <button class="chip" data-g="plan" aria-pressed="false">Planning 1</button>
   <button class="chip" data-g="design" aria-pressed="false">Design 2</button>
-  <span class="count" id="count">13 shown</span>
+  <span class="count" id="count">14 shown</span>
 </div>
 
 <!-- ══════════ GROUP: session ══════════ -->
@@ -453,6 +454,30 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
   </div>
 </section>
 
+<section class="group" data-g="plan">
+  <div class="ghead">
+    <h2 style="margin-top:0">Planning with another model</h2>
+    <span class="src">installed by document 02 STEP 3 ⓔ &middot; off by default</span>
+  </div>
+  <p class="gnote">Separate from everything above. It plans; it does not implement. The name ends in the model you picked at install time &mdash; <code>/plan-fable</code>, <code>/plan-opus</code> and so on.</p>
+  <div class="cards">
+
+    <article class="skill" data-g="plan">
+      <div class="cmd"><span class="sl">/</span>plan-&lt;model&gt;</div>
+      <div class="args">what to plan &middot; manual call only</div>
+      <p class="one">Plans a change with a stronger model than your session uses, writes it down, and stops before any code.</p>
+      <dl>
+        <dt>Use when</dt><dd>A change could go several ways and you want the judgement made before anyone starts typing. Not for a routine change with one obvious path.</dd>
+        <dt>It does</dt><dd>Enters plan mode, reads only what it needs, and writes a plan that a cheaper model can follow without exploring again: what is confirmed, small steps, a check for each step, and the reason behind each decision.</dd>
+        <dt>You get</dt><dd>A plan file copied to <code>docs/plans/</code>. The turn ends there &mdash; you start the implementation with a new prompt, on your usual model.</dd>
+      </dl>
+      <div class="warn soft"><b>Worth knowing.</b> That one turn runs on the other model, and caches are per model, so the conversation so far is re-read once without cache. Call it early in a session or right after <code>/clear</code>.</div>
+      <div class="tags"><span class="tag">global or project</span><span class="tag">off by default</span><span class="tag">no code changes</span></div>
+    </article>
+
+  </div>
+</section>
+
 <!-- ══════════ GROUP: design ══════════ -->
 <section class="group" data-g="design">
   <div class="ghead">
@@ -493,7 +518,7 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
 <p class="empty" id="empty">Nothing matches that filter. Try clearing the search box.</p>
 
 <h2>A day, in the order the skills come up</h2>
-<p class="lead">You will not use thirteen skills in a day. A realistic week looks closer to this.</p>
+<p class="lead">You will not use fourteen skills in a day. A realistic week looks closer to this.</p>
 <div class="day">
   <div class="step"><div class="t">/resume</div><p>Opens the session. Pull, uncommitted work, the last few entries, what is due. Roughly thirty seconds before you have your bearings.</p></div>
   <div class="step"><div class="t">— you build the thing —</div><p>Ordinary work. No skill required.</p></div>
@@ -524,12 +549,13 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
     <tr><td><code>/frontend-design</code></td><td>03 §3</td><td>global, via <code>npx skills add -g</code></td><td>Remove through the same tool.</td></tr>
     <tr><td>the six feature skills</td><td>03 §7</td><td>global &mdash; project scope if the team and CI must share them</td><td>Guard first, then the six folders. <code>docs/features/</code> stays.</td></tr>
     <tr><td><code>/refactor</code></td><td>03 §8</td><td>global</td><td>Delete the folder. No hooks to unwind, no commits to revert.</td></tr>
+    <tr><td><code>/plan-&lt;model&gt;</code></td><td>02 STEP 3 ⓔ</td><td>asked at install &mdash; global or project</td><td>Delete the folder, and the model usage table it created.</td></tr>
   </tbody>
 </table>
 </div>
 <p class="lead" style="margin-top:16px">Every one of these has a documented removal path, which is deliberate: an install you cannot reverse was never really a choice. The full procedures &mdash; detect, install, verify, remove &mdash; are in the documents themselves. For what each install question means, see the <a href="options.html">options dictionary</a>; to work through it step by step, take the <a href="learn.html">course</a>.</p>
 
-<footer>Dandi &middot; Skill catalog &middot; 2026-09-09 &middot; Thirteen skills installed by documents 01 §D-4, 03 §2, §3, §7 and §8. Commands are shown without an alias; apply yours if you chose one at install time.</footer>
+<footer>Dandi &middot; Skill catalog &middot; 2026-09-11 &middot; Fourteen skills installed by documents 01 §D-4, 02 STEP 3 ⓔ, 03 §2, §3, §7 and §8. Commands are shown without an alias; apply yours if you chose one at install time.</footer>
 
 </div>
 <script>
@@ -551,7 +577,7 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
       var any=[].slice.call(s.querySelectorAll('.skill')).some(function(c){return !c.hidden});
       s.hidden=!any;
     });
-    count.textContent = n===13 ? '13 shown' : n+' of 13 shown';
+    count.textContent = n===14 ? '14 shown' : n+' of 14 shown';
     empty.style.display = n ? 'none' : 'block';
   }
   q.addEventListener('input', apply);

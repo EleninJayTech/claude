@@ -273,8 +273,8 @@ footer{max-width:1120px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
   </p>
   <ol class="steps" id="steps"></ol>
   <div class="coach"><span class="who">📌</span><div>
-    <b>The detailed questions appear only in &ldquo;custom&rdquo; mode</b>
-    In minimal, recommended and full, the per-document items are <b>settled automatically at that mode&rsquo;s defaults</b>.
+    <b>Most detailed questions appear only in &ldquo;custom&rdquo; mode</b>
+    In minimal, recommended and full, the per-document items are <b>settled automatically at that mode&rsquo;s defaults</b>. Items that are <b>off by default</b> are the exception &mdash; they are always asked, bundled into one round.
     The safety questions (&ldquo;overwrite what is already here?&rdquo;, &ldquo;have you checked company policy?&rdquo;) are never skipped, in any mode.
   </div></div>
 </section>
@@ -463,7 +463,7 @@ footer{max-width:1120px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
         It defaults to false, and false makes Claude Code&rsquo;s <b>entire built-in coding guidance disappear</b> (verification habits and the minimal-change principle included).
         If you will also be coding, set it to true.
       </div></div>
-      <p>One more thing &mdash; switching a style <b>does not affect the current session</b>. The system prompt is read once, at session start, so open a new session after switching.</p>
+      <p>One more thing &mdash; switching a style <b>takes effect from your next message</b> (v2.1.251+). Only editing a style <i>file</i> needs a restart, because files are read at startup.</p>
     </div>
   </details>
 
@@ -551,7 +551,7 @@ footer{max-width:1120px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
 </div>
 
 <footer>
-  Dandi &middot; Install options course &middot; 2026-09-08<br>
+  Dandi &middot; Install options course &middot; 2026-09-11<br>
   The source of truth for each item is its own document (01&ndash;06). This page exists for people to learn from; it does not change the install procedure. Progress is stored only in this browser&rsquo;s localStorage.<br>
   저장소: github.com/EleninJayTech/claude ·
   <a href="../index.html">Guide</a> &middot; <a href="intro.html">Intro</a> &middot; <a href="demo.html">Walkthrough</a> &middot; <a href="options.html">Dictionary</a> &middot; <a href="skills.html">Skill catalog</a>
@@ -735,7 +735,7 @@ function keysOf(o){ return Object.keys(o).map(function(k){ var v=o[k]; return {k
 /* ───────── 모드/번들 → 계획 계산 ───────── */
 function basePlan(mode, situ){
   if(mode==='minimal') return {docs:{'01':'records and security (essentials only)'}, why:'The lightest possible start. Everything else can be added later, any time.'};
-  if(mode==='full') return {docs:{'01':'records and security','02':'model split (where there is code)','03':'add-ons','04':'verification (where there is code)','05':'output styles','06':'routines (if the gate passes)'}, why:'Installs everything, dropping and reporting whatever does not apply (02 in a code-less repository, for instance).'};
+  if(mode==='full') return {docs:{'01':'records and security','02':'model split (where there is code)','03':'add-ons','04':'verification (where there is code)','05':'output styles','06':'routines (if the gate passes)'}, why:'Installs every document (items that are off by default are still asked), dropping and reporting whatever does not apply (02 in a code-less repository, for instance).'};
   if(mode==='custom') return {docs:null, why:'Pick the documents, then the items inside them (chapters 6\u20138) all arrive as questions.'};
   if(mode==='rec'){
     var s=SITUS[situ||'dev'];

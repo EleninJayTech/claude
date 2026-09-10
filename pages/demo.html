@@ -168,6 +168,7 @@ add("chk","03 Add-ons — usage meter, design skills and so on",{on:false});
 add("chk","04 Automatic checks — a checker runs on every edit",{on:true});
 add("chk","05 Changing tone and role",{on:false});
 add("chk","06 Scheduled runs (Pro and above)",{on:false});
+add("ask","Show the items that are off by default? — 02 ⓒ custom reviewer · ⓔ plan-only model command → (not this time)",{cap:"<b>Items that are off by default are always shown, bundled into one question, whatever the mode.</b> They are not switched on for you and not hidden from you — and whatever you leave off is recorded, so it can be offered again later."});
 add("ask","Operating profile? → [standard]  (choose \"thrift\" if you are managing a Pro allowance)",{cap:"On a plan with a smaller allowance, choose the <b>thrift profile</b> — quality-critical moments stay untouched while everyday consumption drops."});
 
 ch("③ Install and evidence");
@@ -183,7 +184,7 @@ add("ok","✓ Typed \"/\" → /resume and /wrap confirmed in autocomplete");
 add("ok","✓ docs/ three work-log files and the CLAUDE.md record rules — confirmed by path, inside this project",{cap:"<b>Checking the global commands is not enough.</b> Real verification means confirming the artifacts were created inside this project too."});
 add("ok","✓ Saved a deliberately malformed file → the checker caught it immediately");
 add("out","<span class='who'>Claude</span> Finally, leaving the install record:");
-add("note","&lt;!-- dropin-applied: 2026-08-05 · 모드=recommended · 프로필=standard · 언어=en · 01 v○.○ · 02 v○.○ · 04 v○.○ · 미선택: 03, 05, 06 · 출처=사본 --&gt;",{cap:"<b>A record of what was installed stays behind.</b> The version slots (v○.○) hold the real document versions at install time, and the keys stay fixed in any language so the tooling can find them."});
+add("note","&lt;!-- dropin-applied: 2026-09-11 · 모드=recommended · 프로필=standard · 언어=en · 01 v○.○ · 02 v○.○(ⓒ·ⓔ 미선택) · 04 v○.○ · 미선택: 03, 05, 06 · 출처=사본 --&gt;",{cap:"<b>A record of what was installed stays behind.</b> The version slots (v○.○) hold the real document versions at install time, and the keys stay fixed in any language so the tooling can find them."});
 add("ok","✓ Install complete — commit it and your teammates and your next session pick up exactly here");
 
 ch("④ Daily routine");

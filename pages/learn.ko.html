@@ -273,8 +273,8 @@ footer{max-width:1120px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
   </p>
   <ol class="steps" id="steps"></ol>
   <div class="coach"><span class="who">📌</span><div>
-    <b>세부 질문은 '사용자' 모드에서만 나옵니다</b>
-    최소·권장·전체 모드에서는 문서 안 세부 항목이 <b>모드가 정한 기본값으로 자동 확정</b>됩니다.
+    <b>세부 질문은 대부분 '사용자' 모드에서만 나옵니다</b>
+    최소·권장·전체 모드에서는 문서 안 세부 항목이 <b>모드가 정한 기본값으로 자동 확정</b>됩니다. 예외는 <b>기본으로 꺼져 있는 항목</b> — 어떤 모드에서도 한 번에 묶어 물어봅니다.
     단, 안전 질문("이미 있는 걸 덮어쓸까요?", "회사 정책은 확인했나요?")은 어떤 모드에서도 생략되지 않습니다.
   </div></div>
 </section>
@@ -463,7 +463,7 @@ footer{max-width:1120px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
         기본값이 false인데, false면 Claude Code의 <b>내장 코딩 지침이 통째로 사라집니다</b>(검증 습관·최소 변경 원칙 포함).
         코딩을 같이 할 거면 반드시 true로 두세요.
       </div></div>
-      <p>또 하나 — 스타일을 바꿔도 <b>지금 세션에는 적용되지 않습니다</b>. 시스템 프롬프트는 세션 시작 때 한 번만 읽히니, 바꾼 뒤 새 세션을 여세요.</p>
+      <p>또 하나 — 스타일을 바꾸면 <b>다음 메시지부터 바로 적용됩니다</b>(v2.1.251+). 스타일 <i>파일</i>을 고쳤을 때만 재시작이 필요합니다 — 파일은 시작할 때만 읽힙니다.</p>
     </div>
   </details>
 
@@ -551,7 +551,7 @@ footer{max-width:1120px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
 </div>
 
 <footer>
-  단디 · 설치 옵션 학습 코스 · 2026-09-08<br>
+  단디 · 설치 옵션 학습 코스 · 2026-09-11<br>
   각 항목의 정본은 해당 하위 문서(01~06)입니다. 이 페이지는 사람이 배우기 위한 안내이며, 설치 절차 자체를 바꾸지 않습니다. 진행도는 이 브라우저의 localStorage에만 저장됩니다.<br>
   저장소: github.com/EleninJayTech/claude ·
   <a href="../index.html">사용법</a> · <a href="intro.html">소개 영상</a> · <a href="demo.html">설치 시연</a> · <a href="options.html">옵션 사전</a> · <a href="skills.ko.html">스킬 카탈로그</a>
@@ -735,7 +735,7 @@ function keysOf(o){ return Object.keys(o).map(function(k){ var v=o[k]; return {k
 /* ───────── 모드/번들 → 계획 계산 ───────── */
 function basePlan(mode, situ){
   if(mode==='minimal') return {docs:{'01':'기록 체계·보안 (필수 항목만)'}, why:'가장 가볍게 시작합니다. 나머지는 나중에 언제든 추가할 수 있습니다.'};
-  if(mode==='full') return {docs:{'01':'기록 체계·보안','02':'모델 분담 (코드 있을 때)','03':'확장 기능','04':'검증 자동화 (코드 있을 때)','05':'출력 스타일','06':'루틴 (게이트 통과 시)'}, why:'전부 깔되, 해당 없는 것(코드 없는 저장소의 02 등)은 빼고 알려줍니다.'};
+  if(mode==='full') return {docs:{'01':'기록 체계·보안','02':'모델 분담 (코드 있을 때)','03':'확장 기능','04':'검증 자동화 (코드 있을 때)','05':'출력 스타일','06':'루틴 (게이트 통과 시)'}, why:'문서는 전부 깔되(기본 해제 항목은 따로 물어봅니다), 해당 없는 것(코드 없는 저장소의 02 등)은 빼고 알려줍니다.'};
   if(mode==='custom') return {docs:null, why:'문서를 고르고 → 그 안의 항목(챕터 6~8 내용)까지 전부 질문으로 나옵니다.'};
   if(mode==='rec'){
     var s=SITUS[situ||'dev'];

@@ -123,7 +123,7 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
   <ol>
     <li><a href="#words">0. 먼저 알아둘 낱말 8개</a> — 스코프·settings.json·훅·서브에이전트 같은 말부터</li>
     <li><a href="#flow">1. 질문은 어떤 순서로 나오나</a></li>
-    <li><a href="#common">2. 맨 처음 공통 질문 5가지</a> — 대상 · 모드 · 번들 · 프로필 · 언어</li>
+    <li><a href="#common">2. 맨 처음 공통 질문</a> — 대상 · 모드 · 번들 · 프로필 · 언어</li>
     <li><a href="#doc01">3. 01 기본 셋업</a> — 기록 체계와 보안 (ⓐ~ⓕ)</li>
     <li><a href="#doc02">4. 02 모델 분담</a> — 서브에이전트 로스터</li>
     <li><a href="#doc03">5. 03 확장 기능</a> — HUD · 디자인 스킬 · MCP · 브라우저</li>
@@ -207,8 +207,8 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
   </div>
 
   <div class="note">
-    <b>📌 ‘사용자’ 모드가 아니면 세부 질문은 생략됩니다</b>
-    최소·권장·전체 모드를 고르면 문서 안의 세부 항목은 <b>모드가 정한 기본값으로 자동 확정</b>됩니다.
+    <b>📌 ‘사용자’ 모드가 아니면 세부 질문은 대부분 자동으로 정해집니다</b>
+    최소·권장·전체 모드를 고르면 문서 안의 세부 항목은 <b>모드가 정한 기본값으로 자동 확정</b>됩니다. 단 <b>기본으로 꺼져 있는 항목</b>은 어떤 모드에서도 한 번에 묶어 물어봅니다 — 켜 주지도 감추지도 않습니다.
     즉 아래 §3~§8은 “직접 고르고 싶을 때 읽는 부분”이자, “자동으로 뭐가 켜지는지 알고 싶을 때 읽는 부분”입니다.
     다만 <b>안전 질문</b>(이미 있는 걸 덮어쓸까요? 회사 정책은 확인했나요?)은 어떤 모드에서도 생략되지 않습니다.
   </div>
@@ -216,7 +216,7 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
 
 <!-- ═══════════ 2. 공통 질문 ═══════════ -->
 <section id="common">
-  <h2>2. 맨 처음 공통 질문 5가지</h2>
+  <h2>2. 맨 처음 공통 질문</h2>
   <p class="goal">여기만 답하면 설치가 굴러갑니다</p>
 
   <h3>2-1. 적용 대상 — 이 PC인가, 이 프로젝트인가</h3>
@@ -497,7 +497,7 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
 
 <!-- ═══════════ 5. 03 ═══════════ -->
 <section id="doc03">
-  <h2>5. 03 확장 기능 — 5종 체크리스트</h2>
+  <h2>5. 03 확장 기능 — 체크리스트</h2>
   <p class="goal">복수 선택 + 스킬은 스코프·호출 방식을 추가로 고름</p>
 
   <div class="opt">
@@ -562,7 +562,7 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
   </div>
 
   <div class="opt">
-    <div class="opt-head"><span class="id">§8</span><span class="name">refactor</span><span class="badge b-off">번들 없음 · 전체/직접 선택</span></div>
+    <div class="opt-head"><span class="id">§8</span><span class="name">refactor</span><span class="badge b-off">기본 해제 · 직접 선택</span></div>
     <p class="lead">코드를 <b>더 깔끔하게 고치되 동작은 그대로인지</b>까지 확인해 주는 스킬 하나입니다. 중복된 함수를 합치고 구조를 정리하고 낡은 문법을 걷어낸 다음, 그 변경이 무엇을 건드렸는지 호출처·계약·데이터 형식·실제 실행으로 되짚습니다.</p>
     <dl>
       <dt>고르는 범위</dt><dd>기본은 <b>최근 작업분</b>. <code>all</code>(프로젝트 전체) · 폴더 경로 · 커밋 구간을 지정할 수 있고, <code>check</code>를 붙이면 <b>고치지 않고 검사만</b> 합니다</dd>
@@ -665,7 +665,7 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
     </div>
     <dl>
       <dt>바꾸는 법</dt><dd><code>/config</code> 메뉴의 Output style. <b>옛 <code>/output-style</code> 명령은 제거됐습니다</b></dd>
-      <dt>⚠️ 함정</dt><dd><b>지금 세션에는 적용되지 않습니다</b> — 시스템 프롬프트는 세션 시작 때 한 번만 읽힙니다. 바꾼 뒤 <code>/clear</code>하거나 새 세션을 여세요</dd>
+      <dt>⚠️ 함정</dt><dd><b>전환은 다음 메시지부터 바로 적용됩니다</b>(Claude Code v2.1.251+). 다만 스타일 <i>파일</i>을 고친 경우는 다릅니다 — 파일은 시작할 때만 읽히니 재시작해야 반영됩니다</dd>
     </dl>
   </div>
 
@@ -833,7 +833,7 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
 <a class="totop" href="#toc">↑ 목차</a>
 
 <footer>
-  단디 · 설치 옵션 사전 · 00_통합-설치.md 기준 · 2026-09-08<br>
+  단디 · 설치 옵션 사전 · 00_통합-설치.md 기준 · 2026-09-11<br>
   각 항목의 정본은 해당 하위 문서(01~06)입니다. 이 페이지는 사람이 읽고 판단하기 위한 안내이며, 설치 절차 자체를 바꾸지 않습니다.<br>
   저장소: github.com/EleninJayTech/claude ·
   <a href="../index.html">사용법</a> · <a href="intro.html">소개 영상</a> · <a href="demo.html">설치 시연</a> · <a href="learn.html">학습 코스</a> · <a href="skills.ko.html">스킬 카탈로그</a>

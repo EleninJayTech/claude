@@ -1,6 +1,6 @@
 # Claude Code 통합 구성 — 범용 마스터 (드롭인 적용)
 
-> **문서 버전: v1.70** · 최종 갱신: **2026-09-10** · **최근 재검증: 2026-09-02** · 기준: Claude Code v2.1.258 (Opus 5 · Sonnet 5 · Fable 5.1)
+> **문서 버전: v1.71** · 최종 갱신: **2026-09-11** · **최근 재검증: 2026-09-02** · 기준: Claude Code v2.1.258 (Opus 5 · Sonnet 5 · Fable 5.1)
 >
 > | 버전 | 날짜 | 변경 내용 |
 > | --- | --- | --- |
@@ -24,6 +24,7 @@
 > | v1.68 | 2026-09-09 | §F-2 **동명 스킬 계보 판정**(C⊃B⊃A는 §F-1 규약을 공유할 때만 — 외부 저작 동명이 있으면 글로벌에 두지 않는다) · §E-4 **소유 축 분리**(개인/팀, 층과 별개) · §D-2 템플릿 §0 **우선순위 판정**(프로젝트 우선, deny·시크릿은 엄격한 쪽 — 공식은 미규정) · §B 혼합형 **비-git 단위 기록 위치 우선순위** · §F-1 **말투 평서체(R36)**·아카이브 즉시 푸시·조건부 예정일 당김 · 화이트리스트 개수 표기 제거(R14) |
 > | v1.69 | 2026-09-10 | 🔴 **배포 저장소 자족성** — §D-2·§D-3의 "미러가 정본" 분기 제거(그 블록이 유일한 정본 · 어느 저장소로 깔든 같은 결과), §D-2 골격에 **§9 스킬 적용 범위 절** 신설(누락분의 실체였다), §F-2 A·B·C 미러 대조를 **유지보수자 전용**으로 게이트, C wrap에 **드롭인 세션 교차기록**(미러에만 있던 2026-08-13 처방 전파). 배포본만 가진 설치자가 없는 파일로 보내져 골격조차 못 깐 신고에서 출발 |
 > | v1.70 | 2026-09-10 | §D-7 **출력 스타일 서술 정정** — 전환은 v2.1.251+ **다음 메시지부터 즉시 적용**(옛 서술 "세션 중엔 적용도 안 된다"는 그 이전 동작), 캐시는 **환경별**(claude.ai·Console 계정=대화 메시지로 전달돼 유지 / Bedrock·GCP·Foundry=시스템 프롬프트라 전체 재처리 → "깨는 행동"에도 조건부 등재), **스타일 파일 내용 편집은 여전히 재시작**. CLAUDE.md 편집 서술에 **중첩 `CLAUDE.md`·`paths:` rules 예외**(로드 전 편집은 적용) — 공식 prompt-caching·output-styles 2026-09-10 조회 |
+> | v1.71 | 2026-09-11 | §D-2 미러 배제 선언에 **§D-4 배포 자산 예외**(`global-config/skills/dropin-*` 2종), `dropin-applied` 줄은 00 STEP 5가 새로 쓴다 · §D-3에 **선택 확장 `manual` 게이트 코드 블록**(Windows 전용) · §F-2 A·B·C 미러 단계 사유 정정(배포본의 `global-config/`는 미러가 아니다)·개발 클론 탐색 실패는 "미확인" · C resume의 PROJECT_PLAN 경로를 `docs/`로 |
 > ※ 갱신 시: 이 표에 한 줄 추가 + 하단 "문서 정보" 날짜 수정 + §L 재검증 체크리스트 수행.
 
 > **사용법**: 이 파일을 아무 프로젝트 루트(또는 `docs/`)에 넣고 Claude에게
@@ -109,7 +110,7 @@ New-Item -ItemType Directory -Path .claude/skills/dropin-update -Force
 > **별칭**: 00 STEP 3의 `별칭=`이 `없음`이 아니면 **위 폴더명에 그대로 적용**한다(`dandi-resume`·`resume-dandi`). 폴더명을 바꾸면 **각 `SKILL.md`의 frontmatter `name:`도 같은 값으로** 바꾼다 — 둘이 다르면 그 스킬은 호출되지 않는다. 본문 치환 규칙은 §F-2 서두. **00 없이 단독 적용이면 그 자리에서 묻는다**(기본 `없음`).
 
 ### D-2. 글로벌 `CLAUDE.md` (행동 규칙) — `~/.claude/CLAUDE.md`
-> 🔴 **아래 블록이 유일한 정본이다 — 이것만으로 완전한 글로벌 `CLAUDE.md`가 나온다.** 어느 저장소를 가졌든 **설치 결과는 같아야 하므로**(개발 저장소로 깔든 배포 저장소로 깔든 동일한 최신 구성), 설치는 **문서 블록만** 보고 한다. **`global-config/` 미러를 설치 소스로 쓰지 않는다** — 그것은 유지보수자가 자기 PC의 `~/.claude`를 되살리려고 두는 **사설 백업**이고 개발 저장소(`claude-dev`, 비공개)에만 있어, 미러를 읽는 순간 **가진 저장소에 따라 결과가 갈린다**(가진 사람은 개인 스킬·머신 키까지 얹힌 구성을, 없는 사람은 골격을 받는다). 미러를 "정본"으로 가리키던 옛 문언은 배포본 설치자를 **없는 파일로 보내 골격조차 못 깔게 했다**(2026-09-10 실제 신고). 이 블록에 부족한 것이 있으면 **그것은 이 블록의 결함**이니 여기를 고친다 — 사용자가 다른 데서 구해 오게 하지 않는다. **복사할 때 맨 아래 `dropin-applied` 줄은 빼거나 이 PC 기준으로 다시 쓴다** — 그 줄은 미러를 마지막에 커밋한 PC의 기록이라, 그대로 옮기면 새 PC가 하지도 않은 설치를 했다고 주장하고 `/dropin-check`가 그것을 1차 근거로 믿는다.
+> 🔴 **아래 블록이 유일한 정본이다 — 이것만으로 완전한 글로벌 `CLAUDE.md`가 나온다.** 어느 저장소를 가졌든 **설치 결과는 같아야 하므로**(개발 저장소로 깔든 배포 저장소로 깔든 동일한 최신 구성), 설치는 **문서 블록만** 보고 한다. **`global-config/` 미러를 설치 소스로 쓰지 않는다**(예외: §D-4의 `global-config/skills/dropin-check`·`dropin-update` 2종은 배포되는 설치 자산이다) — 그것은 유지보수자가 자기 PC의 `~/.claude`를 되살리려고 두는 **사설 백업**이고 개발 저장소(`claude-dev`, 비공개)에만 있어, 미러를 읽는 순간 **가진 저장소에 따라 결과가 갈린다**(가진 사람은 개인 스킬·머신 키까지 얹힌 구성을, 없는 사람은 골격을 받는다). 미러를 "정본"으로 가리키던 옛 문언은 배포본 설치자를 **없는 파일로 보내 골격조차 못 깔게 했다**(2026-09-10 실제 신고). 이 블록에 부족한 것이 있으면 **그것은 이 블록의 결함**이니 여기를 고친다 — 사용자가 다른 데서 구해 오게 하지 않는다. **`dropin-applied` 줄은 00 STEP 5가 이 PC 기준으로 새로 쓴다** — 다른 PC의 줄을 옮기면 하지도 않은 설치를 주장하고 `/dropin-check`가 그것을 1차 근거로 믿는다.
 ```markdown
 # CLAUDE.md (Global)
 ## 0. 우선순위 — 프로젝트 CLAUDE.md와 모순되면 프로젝트가 이긴다(나중 로드·더 구체). 단 deny·시크릿·확인 요구는 엄격한 쪽.
@@ -156,8 +157,25 @@ New-Item -ItemType Directory -Path .claude/skills/dropin-update -Force
 > 🔴 **deny 현행 동작**: ① Read/Edit deny는 파일 도구 + Bash 안의 인식되는 파일 명령(`cat`/`head`/`tail`/`sed` 등)까지 적용. Read deny는 같은 경로 **Edit·Write도 차단**(편집 v2.1.208+·쓰기 v2.1.228+, NotebookEdit만 미포함). ② `cat`·`ls`·`head`·`grep` 등은 **기본 무프롬프트 읽기전용 내장 명령**(목록 비설정)이라, 특정 명령에 프롬프트를 강제하려면 위처럼 ask/deny 규칙이 필요. ③ python/node 스크립트가 파일을 직접 여는 **서브프로세스 우회는 여전히 가능** → **근본은 시크릿을 레포에서 분리**(§C-7), OS 수준 차단은 샌드박스(§J). ④ **PowerShell 툴 규칙은 별칭을 자동 정규화** — `PowerShell(Get-Content *)` 하나로 `gc`·`type`·별칭까지 매칭(대소문자 무관). `Bash(...)` 문자열 매칭엔 정규화가 없으므로 Git Bash 병용 환경은 기존 3종(type/Get-Content/gc)도 유지. ⑤ deny는 **집합**이라 배열 순서는 무관하다(실물과 순서가 달라도 차이 아님). ⑥ 경로 규칙 참고: 맨 파일명은 gitignore 의미로 **모든 깊이에 매칭**(`Read(.env)` ≡ `Read(**/.env)`), Windows 경로는 POSIX 정규화(`//c/**/.env`). **앵커는 슬래시 개수가 정한다** — `path`·`./path`·`**/x`는 **작업 디렉터리**, `/path`(슬래시 **하나**)는 **그 설정 파일의 위치**, `//path`는 파일시스템 루트, `~/path`는 홈이다. 함정은 슬래시 하나다: 사용자 설정의 `Read(/secrets/**)`는 절대 경로처럼 보이지만 실제로는 `~/.claude/secrets/**`를 막는다. 위 목록이 `**/`로 시작하는 것은 작업 디렉터리 기준으로 그 프로젝트를 덮기 위해서이고, **상위 디렉터리나 다른 프로젝트까지** 덮으려면 `//**/` 형태가 필요하다. hooks 매처는 **`|` 또는 `,`로 나열한 정확 문자열, 그 밖의 문자가 섞이면 정규식** — 철자 엄격(`SessionStart`=`startup`·`resume`·`clear`·`compact`·`fork`, `PreCompact`=`auto`·`manual`).
 > 🟡 `includeCoAuthoredBy`는 deprecated → `attribution` 객체(`commit`·`pr`·`sessionUrl`)로 대체. 빈 문자열 `""` = 표기 숨김이되, **전부 없애려면 `sessionUrl: false`까지 필요**(기본 true — 클라우드·Remote Control 세션에서 `Claude-Session` 트레일러가 붙는다).
 > 🟡 테마(dark/light)는 settings.json 문서화 키가 아님(2026-07-20 확인) — 세션에서 **`/config`**(또는 `/theme`)로 설정.
-> 선택 확장(실사용 예): `attribution`에 `"sessionUrl": false`(세션 URL 표기 제어), `SessionStart`에 `"startup"` 매처(새 세션 시작 시 안내 한 줄 — 예: `echo '[시스템] 통합 워크스페이스 초기화 완료'`), `PreCompact`에 `"manual"` 매처(`/compact` 선행 `/wrap` 게이트 — exit 2로 압축을 실제 차단, 판정은 `docs/**/PROGRESS.md` 변경 유무) — 위 예시와 같은 자리에 추가해 쓸 수 있다.
+> 선택 확장(실사용 예): `attribution`에 `"sessionUrl": false`(세션 URL 표기 제어), `SessionStart`에 `"startup"` 매처(새 세션 시작 시 안내 한 줄 — 예: `echo '[시스템] 통합 워크스페이스 초기화 완료'`), `PreCompact`에 `"manual"` 매처(`/compact` 선행 `/wrap` 게이트 — exit 2로 압축을 실제 차단, 판정은 `docs/**/PROGRESS.md` 변경 유무) — 위 예시와 같은 자리에 추가해 쓸 수 있다(`manual` 게이트는 코드가 길어 아래에 따로 싣는다).
 > 🔴 **위 블록이 유일한 정본이다** — §D-2와 같은 이유(설치 결과는 가진 저장소와 무관하게 같아야 한다). 구성 성격 키(`permissions.deny`·`hooks`·`attribution`·`autoMemoryEnabled`)는 **여기서 완결된다**. `global-config/settings.json`(개발 저장소 전용 사설 백업)은 설치 소스가 아니며, 거기에만 있는 deny 항목은 **그 PC의 개인·업무 경로**라 애초에 배포 대상이 아니다(사내 시크릿 폴더 패턴 등 — 공개하면 §6 익명화 위반). 그러므로 **미러가 더 길다고 이 블록이 부족한 것이 아니다** — 부족한 것은 여기에 채우고, 개인 경로는 각 PC의 `settings.json`에 직접 추가한다.
+
+**선택 확장 — `PreCompact` `manual` 게이트**(Windows 전용 — `"shell": "powershell"`. macOS·Linux엔 병합하지 않는다: 실행할 수 없는 셸을 부른다). `/compact`를 직접 실행할 때 `/wrap` 흔적(`docs/**/PROGRESS.md`가 미커밋 변경이나 직전 커밋에 있음 — 비-git 폴더면 오늘 수정)이 없으면 exit 2로 막고, 5분 안에 다시 실행하면 통과시킨다. 쓰려면 위 블록 `hooks.PreCompact` 배열에 이 항목을 더한다:
+
+```json
+{
+  "matcher": "manual",
+  "hooks": [
+    {
+      "type": "command",
+      "shell": "powershell",
+      "timeout": 15,
+      "statusMessage": "wrap-gate: /wrap 선행 확인 중",
+      "command": "$d=@(Get-ChildItem docs -Recurse -Filter PROGRESS.md -EA SilentlyContinue); if($d.Count -eq 0){ Write-Output '[wrap-gate] 이 폴더에서 기록 파일(docs/**/PROGRESS.md)을 찾지 못함 - 참고: /wrap > /clear > /resume 권장'; exit 0 }; $k=((Get-Location).Path.ToLower() -replace '[^a-z0-9]','_'); if($k.Length -gt 80){ $k=$k.Substring($k.Length-80) }; $m=Join-Path $env:TEMP ('claude-compact-override-'+$k); if((Test-Path $m) -and (((Get-Date)-(Get-Item $m).LastWriteTime).TotalMinutes -lt 5)){ [System.IO.File]::Delete($m); Write-Output '[wrap-gate] override 확인 - 압축 진행'; exit 0 }; if(Test-Path $m){ [System.IO.File]::Delete($m) }; $git=[bool](git rev-parse --is-inside-work-tree 2>$null); if($git){ $ok=([bool](@(git status --porcelain 2>$null) -match 'PROGRESS\\.md')) -or ([bool](@(git diff-tree --no-commit-id --name-only -r HEAD 2>$null) -match 'PROGRESS\\.md')); $why='PROGRESS.md가 직전 커밋에도 미커밋 변경에도 없음' } else { $ok=[bool](@($d | Where-Object { $_.LastWriteTime.Date -eq (Get-Date).Date })); $why='비-git 폴더 - PROGRESS.md가 오늘 수정되지 않음' }; if($ok){ Write-Output '[wrap-gate] /wrap 흔적 확인(PROGRESS.md 변경) - 압축 진행. 참고: /clear > /resume이 요약 왜곡 없이 더 안전하다'; exit 0 }; New-Item -ItemType File -Path $m -Force | Out-Null; [Console]::Error.WriteLine('[wrap-gate] /compact 차단 - /wrap 흔적 없음('+$why+'). 권장: /wrap > /clear > /resume. 그래도 압축하려면 5분 내 /compact 재실행'); exit 2"
+    }
+  ]
+}
+```
 
 ### D-4. 기본 `/resume`·`/wrap` + 점검·최신화 스킬 (단일 repo용 기본형) — §F-2 A 참조. (통합/MSA는 §F-2 B·C — 동명 스킬은 **개인(글로벌)이 프로젝트를 이기므로** 글로벌 쪽을 교체한다, §F-2 주의)
 - **`/dropin-check`**(적용 상태 점검, 읽기 전용)·**`/dropin-update`**(문서 사본 최신화, 승인 후 교체)는 환경 무관 **글로벌 스킬** — 문서 저장소의 `global-config/skills/<이름>/SKILL.md`를 `~/.claude/skills/<이름>/`로 복사한다(로컬 클론 없으면 raw: `https://raw.githubusercontent.com/EleninJayTech/claude/main/global-config/skills/dropin-check/SKILL.md` · 같은 경로의 `dropin-update`). 설치 전 같은 이름 구형 `commands/`가 있으면 제거(§F-2 주의). 두 스킬은 **설치 유형 무관 동작 보장** — 프로젝트 사본 / 로컬 클론 참조 / raw 직접(사본·클론을 나중에 지워도 계속 동작), 판별 근거는 00 STEP 5 기록의 `출처=` 필드(그 필드가 도입된 이후 기록 — 없으면 두 스킬이 사본→클론→raw 순으로 판별한다). **별칭은 받는 쪽 폴더명에만 붙인다** — 복사 **원본** 경로(`global-config/skills/dropin-check/…`·위 raw URL)는 문서 저장소 쪽이라 **바뀌지 않는다**. 원본까지 별칭으로 바꿔 부르면 raw가 404다.
@@ -322,7 +340,7 @@ description: 세션 시작 시 원격 최신화(clean이면 git pull --ff-only)�
 name: wrap
 description: 세션 종료 시 docs/PROGRESS.md 최상단에 오늘 작업 append, 새 결정 DECISIONS, PROJECT_PLAN 체크박스, 미커밋 경고, 변경 파일 보고.
 ---
-# /wrap — docs/PROGRESS.md 최상단 append(작업/결정/다음/미해결 — **§F-6 양식** `[갈래][Done|Pending|Blocked|Reverted] … — @작성자 (브랜치) YYYY-MM-DD`, **갈래·날짜를 비우지 않는다**. 되돌림은 `[Reverted]` 새 항목 append + 원항목 표시. **다음 세션이 이어받을 것**(`docs/plans/` 계획서 경로·다음 행동)은 항목 **앞쪽**에 적고, 세션 이후에도 유효하면 PROJECT_PLAN "미해결/관찰 중"에도 한 줄(이어받은 세션의 /wrap이 닫는다) — 항목 끝은 /resume의 **700자 컷**에 잘려 도달하지 않는다. 다음 행동이 없으면 없다고 적는다) + 새 DEC + PROJECT_PLAN 체크박스(+ 있으면 `docs/WBS.md` 등 파생 뷰 동기화 — SSOT=PROJECT_PLAN). 미커밋이면 경고. 변경 파일 보고. append 후 PROGRESS·DECISIONS 부피 확인 — ~800줄 **또는 ~120KB** 초과면 아카이브(docs/archive/ 이동+최상단 포인터 — 가장 오래된 항목부터 활성 파일이 임계의 절반 이하가 될 때까지) 안내(/resume는 최근 ~5항목만 읽어 감지 못 함). + **(유지보수자 전용 단계 — remote가 `EleninJayTech/claude-dev`인 개발 저장소 클론이 있을 때만. 배포 저장소(`claude`) 클론에는 `global-config/` 미러가 없으므로 이 단계는 조용히 생략하고 결함으로 보고하지 않는다)** 이번 세션에 `~/.claude/`나 그 저장소 `global-config/`를 고쳤으면 화이트리스트(정본은 개발 저장소 `global-config/README.md` 표) 해시 대조 — 차이 시 어느 쪽이 최신인지 판정해 방향 보고+복사 안내(`settings.json`은 키 단위 — **구성 성격 키(`permissions.deny`·`hooks`·`attribution`·`autoMemoryEnabled`)의 차이만** 실제 차이로 보고 나머지는 전부 머신 종속으로 제외. 이 **포함 기준이 정본**이고 괄호는 예시다 — 제외 키를 나열해 맞추면 사본마다 목록이 갈라진다, DEC-20260721-bsjeong87-02. 글로벌 `CLAUDE.md`의 `dropin-applied` 줄도 PC별 값이라 차이로 치지 않는다. **줄바꿈을 정규화한 뒤 비교** — 저장소에 EOL 지시가 없으면 워킹트리 줄바꿈이 그 PC의 `core.autocrlf`에 좌우돼 내용이 같아도 해시가 갈린다).
+# /wrap — docs/PROGRESS.md 최상단 append(작업/결정/다음/미해결 — **§F-6 양식** `[갈래][Done|Pending|Blocked|Reverted] … — @작성자 (브랜치) YYYY-MM-DD`, **갈래·날짜를 비우지 않는다**. 되돌림은 `[Reverted]` 새 항목 append + 원항목 표시. **다음 세션이 이어받을 것**(`docs/plans/` 계획서 경로·다음 행동)은 항목 **앞쪽**에 적고, 세션 이후에도 유효하면 PROJECT_PLAN "미해결/관찰 중"에도 한 줄(이어받은 세션의 /wrap이 닫는다) — 항목 끝은 /resume의 **700자 컷**에 잘려 도달하지 않는다. 다음 행동이 없으면 없다고 적는다) + 새 DEC + PROJECT_PLAN 체크박스(+ 있으면 `docs/WBS.md` 등 파생 뷰 동기화 — SSOT=PROJECT_PLAN). 미커밋이면 경고. 변경 파일 보고. append 후 PROGRESS·DECISIONS 부피 확인 — ~800줄 **또는 ~120KB** 초과면 아카이브(docs/archive/ 이동+최상단 포인터 — 가장 오래된 항목부터 활성 파일이 임계의 절반 이하가 될 때까지) 안내(/resume는 최근 ~5항목만 읽어 감지 못 함). + **(유지보수자 전용 단계 — remote가 `EleninJayTech/claude-dev`인 개발 저장소 클론이 있을 때만. 배포 저장소(`claude`) 클론의 `global-config/`엔 배포용 `skills/dropin-*` 2종뿐이라 미러가 아니다 — 거기서는 조용히 생략하고 결함으로 보고하지 않는다. 유지보수자 PC인데 개발 클론을 찾지 못했으면 생략 대신 "미러 대조 미확인" 한 줄)** 이번 세션에 `~/.claude/`나 그 저장소 `global-config/`를 고쳤으면 화이트리스트(정본은 개발 저장소 `global-config/README.md` 표) 해시 대조 — 차이 시 어느 쪽이 최신인지 판정해 방향 보고+복사 안내(`settings.json`은 키 단위 — **구성 성격 키(`permissions.deny`·`hooks`·`attribution`·`autoMemoryEnabled`)의 차이만** 실제 차이로 보고 나머지는 전부 머신 종속으로 제외. 이 **포함 기준이 정본**이고 괄호는 예시다 — 제외 키를 나열해 맞추면 사본마다 목록이 갈라진다, DEC-20260721-bsjeong87-02. 글로벌 `CLAUDE.md`의 `dropin-applied` 줄도 PC별 값이라 차이로 치지 않는다. **줄바꿈을 정규화한 뒤 비교** — 저장소에 EOL 지시가 없으면 워킹트리 줄바꿈이 그 PC의 `core.autocrlf`에 좌우돼 내용이 같아도 해시가 갈린다).
 **폴백**: 비-git 폴더면 git status·커밋 단계를 건너뛰고 기록 append만. `docs/`가 없거나 **기록 3종이 제자리에 없으면**(`PROJECT_PLAN`은 repo `docs/` 루트, `PROGRESS`·`DECISIONS`는 대상 단위 — flat이면 둘 다 `docs/`) 있는 파일에만 기록하고 **없는 것을 지목해** "01 §E-1 기록 체계 미설치"를 알린다(PROJECT_PLAN 부재면 미해결 승격이, DECISIONS 부재면 새 결정이 갈 곳을 잃는다. 저장되지 않은 몫을 명시하고 요약을 출력). 단 `docs/PROGRESS.md`가 없는데 `docs/<하위>/PROGRESS.md`가 있으면 **단위분할 repo**이니 미설치가 아니라 §F-2 B로 교체를 안내한다(resume과 같은 판정).
 ```
 
@@ -352,7 +370,7 @@ description: 단위분할 마무리. 대상 단위 docs/<단위>/PROGRESS.md에 
 **다음 세션이 이어받을 것**(`docs/<단위>/plans/` 계획서 경로·다음 행동)은 항목 **앞쪽**에 적고, 세션 이후에도 유효하면 PROJECT_PLAN "미해결/관찰 중"에도 한 줄(이어받은 세션의 /wrap이 닫는다) — 항목 끝은 /resume의 **700자 컷**에 잘려 도달하지 않는다. 다음 행동이 없으면 없다고 적는다.
 다른 단위도 바뀌면 그 단위에 [공통] 교차 한 줄. 미커밋이면 경고. 완료 모호 시 확인 후 기록.
 append 후 해당 PROGRESS·DECISIONS 부피 확인 — ~800줄 또는 ~120KB 초과면 아카이브 안내(가장 오래된 항목부터 임계의 절반 이하까지).
-**(유지보수자 전용 단계 — remote가 `EleninJayTech/claude-dev`인 개발 저장소 클론이 있을 때만. 배포 저장소(`claude`) 클론에는 `global-config/` 미러가 없으므로 이 단계는 조용히 생략하고 결함으로 보고하지 않는다)** 이번 세션에 `~/.claude/`나 그 저장소 `global-config/`를 고쳤으면 화이트리스트(정본은 개발 저장소 `global-config/README.md` 표) 해시 대조 — 차이 시 방향 판정+복사 안내. **판정 기준은 A와 동일**(구성 성격 4키만 실제 차이·포함 기준이 정본·글로벌 `CLAUDE.md`의 `dropin-applied` 줄 제외·줄바꿈 정규화 후 비교).
+**(유지보수자 전용 단계 — remote가 `EleninJayTech/claude-dev`인 개발 저장소 클론이 있을 때만. 배포 저장소(`claude`) 클론의 `global-config/`엔 배포용 `skills/dropin-*` 2종뿐이라 미러가 아니다 — 거기서는 조용히 생략하고 결함으로 보고하지 않는다. 유지보수자 PC인데 개발 클론을 찾지 못했으면 생략 대신 "미러 대조 미확인" 한 줄)** 이번 세션에 `~/.claude/`나 그 저장소 `global-config/`를 고쳤으면 화이트리스트(정본은 개발 저장소 `global-config/README.md` 표) 해시 대조 — 차이 시 방향 판정+복사 안내. **판정 기준은 A와 동일**(구성 성격 4키만 실제 차이·포함 기준이 정본·글로벌 `CLAUDE.md`의 `dropin-applied` 줄 제외·줄바꿈 정규화 후 비교).
 ```
 
 **C) 통합형** (루트 통합 레이어 — **개인 글로벌 `~/.claude/skills/`의 기본형(A)을 이 내용으로 교체**. 루트 `.claude/skills/`에만 두면 동명 개인 스킬이 이겨 실행되지 않는다, 위 주의)
@@ -366,7 +384,7 @@ description: 통합 워크스페이스 재개. 루트+하위 repo git status로 
 0) 루트+하위 repo 각각: remote 있고 clean이면 `git pull --ff-only` 먼저(아니면 fetch 후 뒤처짐 보고) → git status·브랜치로 미커밋(진행 중) 작업 발견.
 1) 대상 repo(+단위) 판별: PWD > 브랜치 > 질문.
    **폴백**: 하위 repo가 없는 단일 repo면 0)·1)을 그 repo에만 수행하고 **INDEX만 생략**한다 — **단위 판별은 유지**한다(단일 repo인데 `docs/<단위>/`로 쪼갠 경우가 흔하다. A로 강등하면 그 기록을 못 찾는다). 비-git 폴더면 0)을 건너뛰고 docs 체계만 읽는다.
-2) <repo>/docs[/<단위>]/PROGRESS.md 최상단(최근 ~5항목(상단 날짜가 역순이면 **날짜 기준**) — 다인 공유면 현재 브랜치·PWD가 가리키는 **갈래를 우선** 읽고 남의 갈래는 한 줄 요약) + 최근 DEC 3건 + <repo>/PROJECT_PLAN.md + 루트 docs/INDEX.md 최근 항목 → 보고(`[Pending]`·`[Blocked]`는 PROJECT_PLAN "미해결/관찰 중"**과 대조**해 거기 없으면 닫힌 것 · 항목이 **다음 행동 없음**을 명시하면 다음 행동을 재구성하지 말고 새 작업을 묻는다).
+2) <repo>/docs[/<단위>]/PROGRESS.md 최상단(최근 ~5항목(상단 날짜가 역순이면 **날짜 기준**) — 다인 공유면 현재 브랜치·PWD가 가리키는 **갈래를 우선** 읽고 남의 갈래는 한 줄 요약) + 최근 DEC 3건 + <repo>/docs/PROJECT_PLAN.md + 루트 docs/INDEX.md 최근 항목 → 보고(`[Pending]`·`[Blocked]`는 PROJECT_PLAN "미해결/관찰 중"**과 대조**해 거기 없으면 닫힌 것 · 항목이 **다음 행동 없음**을 명시하면 다음 행동을 재구성하지 말고 새 작업을 묻는다).
    **대상이 루트(워크스페이스 전체)면 하위 각 repo PROGRESS 최상단 ~2항목도 훑어** 최근 활동을 repo당 한 줄로 보고(팀원이 하위에서 남긴 기록은 INDEX에 없다).
 3) 조건부 안내: dropin-applied 30일 경과면 /dropin-check·/dropin-update, 예정일 경과 항목(**미완료 항목만** — `[x]`·취소선 제외), 조치 대기 메모·`게이트 차단(사유)`·`소스없음(사유)`/`확보 실패(사유)` 안내(대상 CLAUDE.md + 글로벌 `~/.claude/CLAUDE.md` 둘 다).
 ```
@@ -380,7 +398,7 @@ description: 통합 마무리. 건드린 repo마다 <repo>/docs[/<단위>]/PROGR
 1) 각 repo git status로 변경 감지(**폴백**: 단일 repo면 그 repo만 — 3)·4)는 생략해 A와 동일. 비-git 폴더면 git 단계를 건너뛰고 기록만). **드롭인 적용·재적용 세션이면 대상 프로젝트도 "변경된 repo"다** — 주 대상에만 적고 대상 프로젝트의 교차 기록을 빠뜨리기 쉽다(2026-08-13 하루에 두 번 재발). 2) 변경 repo마다 docs[/<단위>]/PROGRESS.md 최상단 append(§F-6 양식 — `[갈래][…] … — @작성자 (브랜치) YYYY-MM-DD`, **갈래·날짜를 비우지 않는다**. 되돌림은 [Reverted] 새 항목 + 원항목 표시)(**폴백**: 그 단위에 `docs/`가 없거나 **기록 3종이 제자리에 없으면**(`PROJECT_PLAN`은 repo `docs/` 루트, `PROGRESS`·`DECISIONS`는 그 단위) 있는 파일에만 append하고 **없는 것을 지목해** "01 §E-1 기록 체계 미설치"를 알린다(PROJECT_PLAN 부재면 미해결 승격이, DECISIONS 부재면 새 결정이 갈 곳을 잃는다). **루트는 예외** — 얇은 라우터의 루트 `docs/`엔 PROGRESS·DECISIONS·PROJECT_PLAN이 없는 것이 정상이니(`INDEX.md`·워크스페이스 레이어 산출물은 함께 있을 수 있다) 미설치로 보지 않는다).
 3) 여러 repo면 주 대상 본문 + 나머지 [공통] 교차. 4) (선택) 루트 docs/INDEX.md 크로스-repo 한 줄+링크. **다음 세션이 이어받을 것**(`<repo>/docs[/<단위>]/plans/` 계획서 경로·다음 행동)은 항목 **앞쪽**에 적고, 세션 이후에도 유효하면 PROJECT_PLAN "미해결/관찰 중"에도 한 줄(이어받은 세션의 /wrap이 닫는다) — 항목 끝은 /resume의 **700자 컷**에 잘려 도달하지 않는다. 다음 행동이 없으면 없다고 적는다.
 5) repo별 변경 파일 보고 + 미커밋 경고. 커밋은 repo별 따로(팀 양식). append한 PROGRESS·DECISIONS가 ~800줄 또는 ~120KB 초과면 아카이브 안내(가장 오래된 항목부터 임계의 절반 이하까지).
-6) **(유지보수자 전용 단계 — remote가 `EleninJayTech/claude-dev`인 개발 저장소 클론이 있을 때만. 배포 저장소(`claude`) 클론에는 `global-config/` 미러가 없으므로 이 단계는 조용히 생략하고 결함으로 보고하지 않는다)** 이번 세션에 `~/.claude/`나 그 저장소 `global-config/`를 고쳤으면 화이트리스트(정본은 개발 저장소 `global-config/README.md` 표) 해시 대조 — 차이 시 방향 판정+복사 안내. **판정 기준은 A와 동일**(구성 성격 4키만 실제 차이·포함 기준이 정본·글로벌 `CLAUDE.md`의 `dropin-applied` 줄 제외·줄바꿈 정규화 후 비교).
+6) **(유지보수자 전용 단계 — remote가 `EleninJayTech/claude-dev`인 개발 저장소 클론이 있을 때만. 배포 저장소(`claude`) 클론의 `global-config/`엔 배포용 `skills/dropin-*` 2종뿐이라 미러가 아니다 — 거기서는 조용히 생략하고 결함으로 보고하지 않는다. 유지보수자 PC인데 개발 클론을 찾지 못했으면 생략 대신 "미러 대조 미확인" 한 줄)** 이번 세션에 `~/.claude/`나 그 저장소 `global-config/`를 고쳤으면 화이트리스트(정본은 개발 저장소 `global-config/README.md` 표) 해시 대조 — 차이 시 방향 판정+복사 안내. **판정 기준은 A와 동일**(구성 성격 4키만 실제 차이·포함 기준이 정본·글로벌 `CLAUDE.md`의 `dropin-applied` 줄 제외·줄바꿈 정규화 후 비교).
 ```
 
 **D) 루트 라우터 `CLAUDE.md`** (통합 레이어)
@@ -569,5 +587,5 @@ Claude Code는 매주 바뀐다. 6개월마다 30분:
 ## 핵심 출처 🟢
 IDE 통합·`--add-dir`(ide-integrations·large-codebases) / permissions·deny 한계 / hooks / skills / memory·auto-memory — 모두 `code.claude.com/docs` 및 `docs.anthropic.com`.
 
-**문서 정보** — 통합 마스터(범용) **v1.70**. 변경 이력은 최상단 버전 표 참조(유래: 8개 소스 통합 초판 — 최상단 병합 행).
-최종 갱신: 2026-09-10 · 최근 재검증: 2026-09-02 / 참조: Claude Code v2.1.258, Opus 5(v2.1.219+) · Sonnet 5(v2.1.197+) · Fable 5.1(v2.1.255+).
+**문서 정보** — 통합 마스터(범용) **v1.71**. 변경 이력은 최상단 버전 표 참조(유래: 8개 소스 통합 초판 — 최상단 병합 행).
+최종 갱신: 2026-09-11 · 최근 재검증: 2026-09-02 / 참조: Claude Code v2.1.258, Opus 5(v2.1.219+) · Sonnet 5(v2.1.197+) · Fable 5.1(v2.1.255+).
