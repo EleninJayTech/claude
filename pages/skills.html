@@ -7,7 +7,7 @@
 <meta name="description" content="Every skill Dandi installs, explained for a first-week developer: what it does, when to call it, what it leaves behind, and where it bites.">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧰</text></svg>">
 <meta property="og:title" content="Skill Catalog — Claude Code Drop-in Documents">
-<meta property="og:description" content="Thirteen skills, one slash away. What each one does and when to reach for it.">
+<meta property="og:description" content="Fifteen skills, one slash away. What each one does and when to reach for it.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://eleninjaytech.github.io/claude/pages/skills.html">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -163,13 +163,13 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
 
 <header>
   <p class="eyebrow"><b>Dandi</b> &middot; EleninJayTech / claude &middot; skill catalog</p>
-  <h1>Thirteen skills, <span class="mark">one slash away</span> &mdash;<br>here is what each one actually does.</h1>
-  <p class="sub">A skill is a folder of instructions Claude loads on demand. Dandi installs fourteen of them. This page is the field guide: what each does, when to reach for it, what it leaves on disk, and the places it bites.</p>
+  <h1>Fifteen skills, <span class="mark">one slash away</span> &mdash;<br>here is what each one actually does.</h1>
+  <p class="sub">A skill is a folder of instructions Claude loads on demand. Dandi installs fifteen of them. This page is the field guide: what each does, when to reach for it, what it leaves on disk, and the places it bites.</p>
   <p class="backlink" style="margin-top:10px"><a href="../index.html">&larr; Back to the guide</a> &middot; <a href="intro.html">1-minute intro</a> &middot; <a href="demo.html">Install walkthrough</a> &middot; <a href="options.html">Options dictionary</a> &middot; <a href="learn.html">Course</a> &middot; <a href="https://github.com/EleninJayTech/claude">GitHub repository &#8599;</a></p>
 </header>
 
 <h2 style="margin-top:44px">First, what is a skill?</h2>
-<p class="lead">If you have never used one: a skill is not a plugin you launch and not a library you import. It is a folder with a <code>SKILL.md</code> inside, and Claude reads it only when it is needed &mdash; so having fourteen installed costs you nothing until you call one.</p>
+<p class="lead">If you have never used one: a skill is not a plugin you launch and not a library you import. It is a folder with a <code>SKILL.md</code> inside, and Claude reads it only when it is needed &mdash; so having fifteen installed costs you nothing until you call one.</p>
 <div class="basics">
   <div class="basic">
     <span class="n">01</span>
@@ -192,13 +192,13 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
 <div class="toolbar" role="search">
   <label class="sr" for="q" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)">Filter skills</label>
   <input id="q" type="search" placeholder="Filter by name or task — e.g. test, commit, release" autocomplete="off">
-  <button class="chip" data-g="all" aria-pressed="true">All 14</button>
+  <button class="chip" data-g="all" aria-pressed="true">All 15</button>
   <button class="chip" data-g="session" aria-pressed="false">Session 4</button>
   <button class="chip" data-g="docs" aria-pressed="false">Feature docs 6</button>
   <button class="chip" data-g="code" aria-pressed="false">Code 1</button>
   <button class="chip" data-g="plan" aria-pressed="false">Planning 1</button>
-  <button class="chip" data-g="design" aria-pressed="false">Design 2</button>
-  <span class="count" id="count">14 shown</span>
+  <button class="chip" data-g="design" aria-pressed="false">Design 3</button>
+  <span class="count" id="count">15 shown</span>
 </div>
 
 <!-- ══════════ GROUP: session ══════════ -->
@@ -482,9 +482,9 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
 <section class="group" data-g="design">
   <div class="ghead">
     <h2 style="margin-top:0">Front-end design</h2>
-    <span class="src">installed by document 03 §2 and §3 &middot; optional</span>
+    <span class="src">installed by document 03 §2, §3 and §9 &middot; optional</span>
   </div>
-  <p class="gnote">Two skills that only matter if you build UI. Neither writes records or installs hooks &mdash; they shape how Claude writes front-end code when you ask for it.</p>
+  <p class="gnote">Three skills that only matter if you build UI. None of them writes records or installs hooks &mdash; they shape how Claude designs and writes front-end code when you ask for it.</p>
   <div class="cards">
 
     <article class="skill" data-g="design">
@@ -512,13 +512,26 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
       <div class="tags"><span class="tag">global</span><span class="tag">front-end only</span></div>
     </article>
 
+    <article class="skill" data-g="design">
+      <div class="cmd"><span class="sl">/</span>kr-ui-guide</div>
+      <div class="args">no arguments — it loads itself for UI, icon and colour work</div>
+      <p class="one">Holds a screen for Korean users to the rules Korean services converged on &mdash; and does the contrast maths instead of eyeballing it.</p>
+      <dl>
+        <dt>Use when</dt><dd>Designing a flow, choosing or drawing icons, or settling a palette, dark mode or design tokens for a Korean-audience product.</dd>
+        <dt>It does</dt><dd>Loads only the summary for the kind of work at hand, applies seven hard rules (contrast, bright colours as surfaces only, state by shape as well as colour, 44pt/48dp targets, labelled icons, one accent action, no dark patterns), and cites the principle or checklist item behind each proposal.</dd>
+        <dt>You get</dt><dd>A design proposal with its reasoning, a self-check against the checklist, and every colour pair given with a calculated contrast ratio.</dd>
+      </dl>
+      <div class="warn soft"><b>Worth knowing.</b> The case studies name real brands. The skill takes the principle, never the brand&rsquo;s colour or icon, and treats the reports&rsquo; conversion figures as unverified.</div>
+      <div class="tags"><span class="tag">global</span><span class="tag">Korean audience</span></div>
+    </article>
+
   </div>
 </section>
 
 <p class="empty" id="empty">Nothing matches that filter. Try clearing the search box.</p>
 
 <h2>A day, in the order the skills come up</h2>
-<p class="lead">You will not use fourteen skills in a day. A realistic week looks closer to this.</p>
+<p class="lead">You will not use fifteen skills in a day. A realistic week looks closer to this.</p>
 <div class="day">
   <div class="step"><div class="t">/resume</div><p>Opens the session. Pull, uncommitted work, the last few entries, what is due. Roughly thirty seconds before you have your bearings.</p></div>
   <div class="step"><div class="t">— you build the thing —</div><p>Ordinary work. No skill required.</p></div>
@@ -549,13 +562,14 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
     <tr><td><code>/frontend-design</code></td><td>03 §3</td><td>global, via <code>npx skills add -g</code></td><td>Remove through the same tool.</td></tr>
     <tr><td>the six feature skills</td><td>03 §7</td><td>global &mdash; project scope if the team and CI must share them</td><td>Guard first, then the six folders. <code>docs/features/</code> stays.</td></tr>
     <tr><td><code>/refactor</code></td><td>03 §8</td><td>global</td><td>Delete the folder. No hooks to unwind, no commits to revert.</td></tr>
+    <tr><td><code>/kr-ui-guide</code></td><td>03 §9</td><td>global</td><td>Delete the folder. It leaves nothing else behind.</td></tr>
     <tr><td><code>/plan-&lt;model&gt;</code></td><td>02 STEP 3 ⓔ</td><td>asked at install &mdash; global or project</td><td>Delete the folder, and the model usage table it created.</td></tr>
   </tbody>
 </table>
 </div>
 <p class="lead" style="margin-top:16px">Every one of these has a documented removal path, which is deliberate: an install you cannot reverse was never really a choice. The full procedures &mdash; detect, install, verify, remove &mdash; are in the documents themselves. For what each install question means, see the <a href="options.html">options dictionary</a>; to work through it step by step, take the <a href="learn.html">course</a>.</p>
 
-<footer>Dandi &middot; Skill catalog &middot; 2026-09-11 &middot; Fourteen skills installed by documents 01 §D-4, 02 STEP 3 ⓔ, 03 §2, §3, §7 and §8. Commands are shown without an alias; apply yours if you chose one at install time.</footer>
+<footer>Dandi &middot; Skill catalog &middot; 2026-09-13 &middot; Fifteen skills installed by documents 01 §D-4, 02 STEP 3 ⓔ, 03 §2, §3, §7, §8 and §9. Commands are shown without an alias; apply yours if you chose one at install time.</footer>
 
 </div>
 <script>
@@ -577,7 +591,7 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
       var any=[].slice.call(s.querySelectorAll('.skill')).some(function(c){return !c.hidden});
       s.hidden=!any;
     });
-    count.textContent = n===14 ? '14 shown' : n+' of 14 shown';
+    count.textContent = n===cards.length ? cards.length+' shown' : n+' of '+cards.length+' shown';
     empty.style.display = n ? 'none' : 'block';
   }
   q.addEventListener('input', apply);

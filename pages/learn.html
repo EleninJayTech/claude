@@ -415,7 +415,7 @@ footer{max-width:1120px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
   </details>
 
   <details class="acc">
-    <summary><span class="id">03</span>Add-ons &mdash; status line, design skills, MCP, browser, feature docs, refactor <span class="badge b-off">seven optional</span></summary>
+    <summary><span class="id">03</span>Add-ons &mdash; status line, design skills, MCP, browser, feature docs, refactor, Korean UI guide <span class="badge b-off">all optional</span></summary>
     <div class="acc-b">
       <ul>
         <li><b>claude-hud</b> &mdash; a <b>status line</b> under the input box showing context and plan usage. Practically required on the thrift profile.</li>
@@ -425,6 +425,7 @@ footer{max-width:1120px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
         <li><b>Browser verification</b> &mdash; lets <b>Claude open the screens it built, check them and fix them</b>.</li>
         <li><b>Feature-doc skill set</b> (6 skills) &mdash; writes a <b>spec per feature</b> from the code and the real screen, then runs the tests written in it, blocks commits that skip the doc, and builds release notes. Installed as one set; not for documentation-only repositories.</li>
         <li><b>refactor</b> &mdash; cleans up code (merging duplicates, tidying structure, clearing dated syntax) and then <b>proves the behaviour did not change</b> &mdash; call sites, contracts, data formats, an actual test run. Shows you the candidates and only changes what you pick. Not for documentation-only repositories.</li>
+        <li><b>kr-ui-guide</b> &mdash; design rules from research on Korean services (UX patterns, icons, colour). Claude <b>calculates contrast</b> for the colours it proposes and checks screens against the checklists. For Korean-audience UI; it does not copy any brand's look.</li>
       </ul>
       <p>Choosing a skill brings two more questions &mdash; <b>scope</b> (your whole machine vs. this project only) and
       <b>invocation</b> (Claude decides vs. only when you type <code class="i">/command</code>).</p>
@@ -551,7 +552,7 @@ footer{max-width:1120px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
 </div>
 
 <footer>
-  Dandi &middot; Install options course &middot; 2026-09-11<br>
+  Dandi &middot; Install options course &middot; 2026-09-13<br>
   The source of truth for each item is its own document (01&ndash;06). This page exists for people to learn from; it does not change the install procedure. Progress is stored only in this browser&rsquo;s localStorage.<br>
   저장소: github.com/EleninJayTech/claude ·
   <a href="../index.html">Guide</a> &middot; <a href="intro.html">Intro</a> &middot; <a href="demo.html">Walkthrough</a> &middot; <a href="options.html">Dictionary</a> &middot; <a href="skills.html">Skill catalog</a>
@@ -595,7 +596,7 @@ var SITUS = {
   applied:{name:'01 already installed', docs:{'01':'already there \u2014 re-apply check (only what drifted)'}, why:'Suggests only the still-missing documents that fit the situation.'}
 };
 var BUNDLES = {
-  design:{name:'Design', desc:'for projects that build web screens', docs:{'03':'svg-design \u00b7 frontend-design \u00b7 browser verification'}},
+  design:{name:'Design', desc:'for projects that build web screens', docs:{'03':'svg-design \u00b7 frontend-design \u00b7 browser verification \u00b7 kr-ui-guide (Korean output only)'}},
   verify:{name:'Stronger verification', desc:'when tests or CI exist', docs:{'04':'hook gate + gh/glab CLI + CI integration'}},
   auto:{name:'Unattended automation', desc:'only when you ask', docs:{'06':'cloud routines (pairing with 04 CI advised)'}},
   style:{name:'Answer style', desc:'only when you ask', docs:{'05':'output styles'}},

@@ -7,7 +7,7 @@
 <meta name="description" content="단디가 설치하는 스킬 전부를 입문자 눈높이로 정리했다. 무엇을 하고, 언제 부르고, 무엇을 남기고, 어디서 걸리는지.">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧰</text></svg>">
 <meta property="og:title" content="스킬 카탈로그 — Claude Code 드롭인 문서">
-<meta property="og:description" content="스킬 14종, 슬래시 하나 거리. 각각이 무엇을 하고 언제 손이 가는지.">
+<meta property="og:description" content="스킬 15종, 슬래시 하나 거리. 각각이 무엇을 하고 언제 손이 가는지.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://eleninjaytech.github.io/claude/pages/skills.ko.html">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -161,13 +161,13 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
 
 <header>
   <p class="eyebrow"><b>단디</b> &middot; EleninJayTech / claude &middot; 스킬 카탈로그</p>
-  <h1>스킬 14종, <span class="mark">슬래시 하나 거리</span> &mdash;<br>각각이 실제로 무엇을 하는지.</h1>
-  <p class="sub">스킬은 Claude가 필요할 때만 읽어 오는 지시 폴더다. 단디는 그중 14종을 설치한다. 이 페이지는 그 안내서다 &mdash; 무엇을 하고, 언제 부르고, 디스크에 무엇을 남기고, 어디서 걸리는지.</p>
+  <h1>스킬 15종, <span class="mark">슬래시 하나 거리</span> &mdash;<br>각각이 실제로 무엇을 하는지.</h1>
+  <p class="sub">스킬은 Claude가 필요할 때만 읽어 오는 지시 폴더다. 단디는 그중 15종을 설치한다. 이 페이지는 그 안내서다 &mdash; 무엇을 하고, 언제 부르고, 디스크에 무엇을 남기고, 어디서 걸리는지.</p>
   <p class="backlink" style="margin-top:10px"><a href="../index.ko.html">&larr; 안내 페이지로</a> &middot; <a href="intro.ko.html">1분 소개</a> &middot; <a href="demo.ko.html">설치 시연</a> &middot; <a href="options.ko.html">옵션 사전</a> &middot; <a href="learn.ko.html">학습 코스</a> &middot; <a href="https://github.com/EleninJayTech/claude">GitHub 저장소 &#8599;</a></p>
 </header>
 
 <h2 style="margin-top:44px">스킬이 대체 뭔가</h2>
-<p class="lead">한 번도 안 써 봤다면 이렇게 생각하면 된다. 스킬은 실행하는 프로그램도 아니고 import 하는 라이브러리도 아니다. <code>SKILL.md</code> 하나가 든 폴더이고, Claude는 필요할 때만 그 파일을 읽는다. 그래서 14종을 깔아 둬도 부르기 전까지는 아무 비용이 없다.</p>
+<p class="lead">한 번도 안 써 봤다면 이렇게 생각하면 된다. 스킬은 실행하는 프로그램도 아니고 import 하는 라이브러리도 아니다. <code>SKILL.md</code> 하나가 든 폴더이고, Claude는 필요할 때만 그 파일을 읽는다. 그래서 15종을 깔아 둬도 부르기 전까지는 아무 비용이 없다.</p>
 <div class="basics">
   <div class="basic">
     <span class="n">01</span>
@@ -190,13 +190,13 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
 <div class="toolbar" role="search">
   <label for="q" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)">스킬 검색</label>
   <input id="q" type="search" placeholder="이름이나 할 일로 걸러 보기 — 테스트, 커밋, 릴리스…" autocomplete="off">
-  <button class="chip" data-g="all" aria-pressed="true">전체 14</button>
+  <button class="chip" data-g="all" aria-pressed="true">전체 15</button>
   <button class="chip" data-g="session" aria-pressed="false">세션 4</button>
   <button class="chip" data-g="docs" aria-pressed="false">기능 문서 6</button>
   <button class="chip" data-g="code" aria-pressed="false">코드 1</button>
   <button class="chip" data-g="plan" aria-pressed="false">계획 1</button>
-  <button class="chip" data-g="design" aria-pressed="false">디자인 2</button>
-  <span class="count" id="count">14종 표시 중</span>
+  <button class="chip" data-g="design" aria-pressed="false">디자인 3</button>
+  <span class="count" id="count">15종 표시 중</span>
 </div>
 
 <!-- ══════════ 세션 ══════════ -->
@@ -480,9 +480,9 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
 <section class="group" data-g="design">
   <div class="ghead">
     <h2 style="margin-top:0">프론트엔드 디자인</h2>
-    <span class="src">03 §2·§3이 설치 &middot; 선택 항목</span>
+    <span class="src">03 §2·§3·§9가 설치 &middot; 선택 항목</span>
   </div>
-  <p class="gnote">UI를 만들 때만 의미가 있는 둘이다. 기록을 쓰지도 훅을 걸지도 않고, Claude가 프론트엔드 코드를 쓰는 방식만 바꾼다.</p>
+  <p class="gnote">UI를 만들 때만 의미가 있는 셋이다. 기록을 쓰지도 훅을 걸지도 않고, Claude가 화면을 설계하고 프론트엔드 코드를 쓰는 방식만 바꾼다.</p>
   <div class="cards">
 
     <article class="skill" data-g="design">
@@ -510,13 +510,26 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
       <div class="tags"><span class="tag">글로벌</span><span class="tag">프론트엔드 전용</span></div>
     </article>
 
+    <article class="skill" data-g="design">
+      <div class="cmd"><span class="sl">/</span>kr-ui-guide</div>
+      <div class="args">인수 없음 — UI·아이콘·색 작업이면 스스로 불린다</div>
+      <p class="one">한국 사용자 대상 화면을 국내 서비스들이 수렴한 기준에 맞춰 잰다 &mdash; 명도 대비는 눈대중이 아니라 계산으로.</p>
+      <dl>
+        <dt>언제</dt><dd>한국 사용자 대상 서비스의 흐름을 설계하거나, 아이콘을 고르거나 그리거나, 팔레트·다크모드·디자인 토큰을 정할 때.</dd>
+        <dt>하는 일</dt><dd>작업 종류에 맞는 정리본만 불러오고, 필수 기준 일곱 가지(대비·밝은 유채색은 면으로만·상태는 형태로도·44pt/48dp·아이콘 라벨·강조 액션 하나·다크패턴 금지)를 적용하고, 제안마다 근거가 된 원칙·체크리스트 항목을 단다.</dd>
+        <dt>결과</dt><dd>근거가 붙은 설계 제안, 체크리스트 자가 점검, 그리고 계산한 대비값이 붙은 색 쌍.</dd>
+      </dl>
+      <div class="warn soft"><b>알아 둘 것.</b> 사례에 실제 브랜드가 나온다. 스킬은 원리만 가져오고 브랜드의 색·아이콘은 쓰지 않으며, 보고서의 전환율 수치는 검증되지 않은 것으로 다룬다.</div>
+      <div class="tags"><span class="tag">글로벌</span><span class="tag">한국 사용자 대상</span></div>
+    </article>
+
   </div>
 </section>
 
 <p class="empty" id="empty">걸리는 스킬이 없다. 검색어를 지워 보라.</p>
 
 <h2>하루를, 스킬이 나오는 순서대로</h2>
-<p class="lead">하루에 14종을 다 쓰지는 않는다. 실제 한 주는 이쪽에 가깝다.</p>
+<p class="lead">하루에 15종을 다 쓰지는 않는다. 실제 한 주는 이쪽에 가깝다.</p>
 <div class="day">
   <div class="step"><div class="t">/resume</div><p>세션을 연다. pull, 미커밋 작업, 최근 기록, 예정일. 감을 잡는 데 30초쯤.</p></div>
   <div class="step"><div class="t">— 여기서 실제로 만든다 —</div><p>평범한 작업이다. 스킬이 낄 자리가 아니다.</p></div>
@@ -547,13 +560,14 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
     <tr><td><code>/frontend-design</code></td><td>03 §3</td><td>글로벌, <code>npx skills add -g</code></td><td>같은 도구로 제거.</td></tr>
     <tr><td>기능 문서 6종</td><td>03 §7</td><td>글로벌 &mdash; 팀·CI가 공유해야 하면 프로젝트 스코프</td><td>가드부터 걷고 여섯 폴더. <code>docs/features/</code>는 남긴다.</td></tr>
     <tr><td><code>/refactor</code></td><td>03 §8</td><td>글로벌</td><td>폴더 삭제. 걷을 훅도, 되돌릴 커밋도 없다.</td></tr>
+    <tr><td><code>/kr-ui-guide</code></td><td>03 §9</td><td>글로벌</td><td>폴더 삭제. 따로 남기는 것이 없다.</td></tr>
     <tr><td><code>/plan-&lt;모델&gt;</code></td><td>02 STEP 3 ⓔ</td><td>설치 때 묻는다 &mdash; 글로벌 또는 프로젝트</td><td>폴더 삭제. 함께 만든 모델 운용표도 지운다.</td></tr>
   </tbody>
 </table>
 </div>
 <p class="lead" style="margin-top:16px">전부 제거 절차가 문서에 적혀 있는데, 이건 의도한 것이다. 되돌릴 수 없는 설치는 애초에 선택지를 준 게 아니기 때문이다. 감지·설치·검증·제거 4단 전체는 각 문서에 있다. 설치할 때 나오는 질문의 뜻은 <a href="options.ko.html">옵션 사전</a>에, 처음부터 차근히 밟아 보려면 <a href="learn.ko.html">학습 코스</a>에 있다.</p>
 
-<footer>단디(Dandi) &middot; 스킬 카탈로그 &middot; 2026-09-11 &middot; 01 §D-4 · 02 STEP 3 ⓔ · 03 §2 · §3 · §7 · §8이 설치하는 스킬 14종. 명령은 별칭 없이 적었으니, 설치할 때 별칭을 골랐다면 그것을 얹어 읽으면 된다.</footer>
+<footer>단디(Dandi) &middot; 스킬 카탈로그 &middot; 2026-09-13 &middot; 01 §D-4 · 02 STEP 3 ⓔ · 03 §2 · §3 · §7 · §8 · §9가 설치하는 스킬 15종. 명령은 별칭 없이 적었으니, 설치할 때 별칭을 골랐다면 그것을 얹어 읽으면 된다.</footer>
 
 </div>
 <script>
@@ -575,7 +589,7 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
       var any=[].slice.call(s.querySelectorAll('.skill')).some(function(c){return !c.hidden});
       s.hidden=!any;
     });
-    count.textContent = n===14 ? '14종 표시 중' : '14종 중 '+n+'종';
+    count.textContent = n===cards.length ? cards.length+'종 표시 중' : cards.length+'종 중 '+n+'종';
     empty.style.display = n ? 'none' : 'block';
   }
   q.addEventListener('input', apply);
