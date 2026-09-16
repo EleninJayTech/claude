@@ -30,7 +30,7 @@ description: 드롭인 구성 최신성 점검(읽기 전용). 대상 프로젝�
 - 🔴 **먼저 게이트**: 이 절은 **remote가 `EleninJayTech/claude-dev`(정본·비공개)인 클론**이 있을 때만 도는 **유지보수자 전용** 절이고, `global-config/` 미러는 **설치 소스가 아니다**(R38 — 배포 저장소 하나로 같은 결과가 나와야 한다). `global-config/` 미러는 그 저장소에만 있고 **배포 저장소(`EleninJayTech/claude`)에는 `skills/dropin-check`·`dropin-update` 둘뿐**이다. 배포본 클론을 미러로 삼아 대조하면 사용자의 정상적인 `CLAUDE.md`·`settings.json`·스킬 전부가 **"백업에 없음"으로 무더기 오보**된다(2026-09-10 실제 신고). **폴더 이름·경로로 판별하지 않는다**(remote로만).
 - **정본 클론이 없으면**(배포본만 있거나 클론이 없으면) 이 절은 **"해당 없음 — 미러 대조는 정본 저장소 유지보수용"** 한 줄로 보고하고 건너뛴다. 결함이 아니라 **일반 설치의 정상 상태**이므로 권고 목록에 올리지 않는다. §1의 GitHub API 폴백은 드롭인 문서의 헤더·버전 표만을 위한 것이라 `global-config/` 전문 대조를 대신하지 못한다. 추측 비교 금지.
 - 화이트리스트 정본은 정본 저장소의 `global-config/README.md` 표다. **그 파일도 배포되지 않으므로** 위 게이트를 통과한 경우에만 참조한다.
-- 대조 대상: `~/.claude`의 `CLAUDE.md`·`settings.json`·`skills/`·`commands/`·`output-styles/`를 정본 저장소 `global-config/`와 파일 단위로(없음/내용 다름).
+- 대조 대상: `~/.claude`의 `CLAUDE.md`·`settings.json`·`skills/`·`commands/`·`output-styles/`를 정본 저장소 `global-config/`와 파일 단위로(없음/내용 다름). 단 `skills/synced/`(claude.ai 계정 동기화 스킬)는 백업 대상이 아니라 대조하지 않는다.
 - `settings.json`은 **구성 성격 키(`permissions.deny`·`hooks`·`attribution`·`autoMemoryEnabled`)의 차이만** 보고한다 —
   그 밖은 전부 머신 종속이라 달라도 정상(model·theme·outputStyle·enabledPlugins·statusLine·effortLevel·modelSettings·autoUpdatesChannel·
   마켓플레이스 소스 형식 등, DEC-20260721-bsjeong87-02). 괄호는 예시이므로 **제외 목록을 늘리지 말고 포함 기준으로 판정**한다.
