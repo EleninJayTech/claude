@@ -210,7 +210,7 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
     <tr><th class="grp" colspan="4" scope="colgroup">기능 문서·테스트·릴리스 &middot; 03 §7</th></tr>
     <tr><td><code>/feature-docs</code></td><td><code>init</code> | <code>sync [기준]</code></td><td>처음 문서화할 때, 바뀐 것을 반영할 때</td><td><code>docs/features/</code> 전체</td></tr>
     <tr><td><code>/feature-test</code></td><td><code>[F-003 | TC-F003-01]</code> &mdash; 없으면 전체</td><td>명세의 케이스를 실제로 돌려 볼 때</td><td>날짜 박힌 리포트와 스크린샷</td></tr>
-    <tr><td><code>/feature-doc-audit</code></td><td><code>[기준 커밋 수, 기본 5]</code></td><td>문서가 얼마나 낡았는지 싸게 잴 때</td><td>표와 sync 우선순위</td></tr>
+    <tr><td><code>/feature-doc-audit</code></td><td><code>[기준 커밋 수, 기본 5]</code></td><td>문서가 얼마나 낡았는지 싸게 잴 때</td><td>채팅에 표와 sync 우선순위</td></tr>
     <tr><td><code>/feature-doc-guard</code></td><td><code>install</code> | <code>uninstall</code> | <code>check</code></td><td>문서 없는 커밋이 계속 들어올 때</td><td>훅, 또는 멈춘 커밋</td></tr>
     <tr><td><code>/test-to-script</code></td><td><code>[F-003 | TC-F003-01]</code> &mdash; 없으면 미변환 전부</td><td>손으로 돌리던 케이스를 자동화할 때</td><td>실행 가능한 테스트 파일</td></tr>
     <tr><td><code>/release-notes</code></td><td><code>[시작 태그] [끝 태그]</code></td><td>버전을 내보내기 직전</td><td><code>docs/releases/&lt;태그&gt;.md</code></td></tr>
@@ -256,7 +256,7 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
       <p class="one">어디까지 했는지를 기억이 아니라 git과 기록으로 되짚어 세션을 연다.</p>
       <dl>
         <dt>언제</dt><dd>세션을 시작할 때마다, 그리고 <code>/clear</code> 직후에 다시.</dd>
-        <dt>하는 일</dt><dd>워킹트리가 깨끗하면 <code>--ff-only</code>로 당기고, <code>git status</code>로 미커밋 작업부터 찾는다. 그다음 <code>PROGRESS.md</code> 최상단과 최근 결정 3건, <code>PROJECT_PLAN.md</code>를 읽는다.</dd>
+        <dt>하는 일</dt><dd>워킹트리가 깨끗하면 <code>--ff-only</code>로 당기고, <code>git status</code>로 미커밋 작업부터 찾는다. 그 미커밋은 같은 폴더에서 도는 다른 세션의 것일 수도 있어서, 내 작업으로 단정해 잇거나 커밋하지 않고 먼저 확인한다. 그다음 <code>PROGRESS.md</code> 최상단과 최근 결정 3건, <code>PROJECT_PLAN.md</code>를 읽는다.</dd>
         <dt>결과</dt><dd>"지난번엔 X를 했고 다음은 Y인가요?" 형태의 짧은 보고. 점검 예정일이 지났으면 그 안내도 함께.</dd>
       </dl>
       <div class="warn soft"><b>알아 둘 것.</b> 최근 5항목만, 항목당 앞 700자까지만 읽는다. 다음 세션이 이어받아야 할 내용은 항목 <em>앞쪽</em>에 적어야 한다 &mdash; 끝에 붙이면 컷 밖이라 영영 읽히지 않는다.</div>
@@ -269,7 +269,7 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
       <p class="one">오늘 한 일을 기록에 남겨 세션을 닫는다. 다음 <code>/resume</code>이 읽을 것을 만드는 쪽이다.</p>
       <dl>
         <dt>언제</dt><dd>작업을 접기 전에. <code>/clear</code> 앞에서는 반드시.</dd>
-        <dt>하는 일</dt><dd><code>PROGRESS.md</code>에 한 줄 append, 새 결정은 <code>DEC-YYYYMMDD-작성자</code>로 등재, <code>PROJECT_PLAN.md</code> 체크박스 갱신. 미커밋이 남았으면 경고한다.</dd>
+        <dt>하는 일</dt><dd><code>PROGRESS.md</code>에 한 줄 append, 새 결정은 <code>DEC-YYYYMMDD-작성자</code>로 등재, <code>PROJECT_PLAN.md</code> 체크박스 갱신. 미커밋이 남았으면 경고한다. 바뀐 파일은 이 세션이 고친 것만 보고하고, 그 밖의 미커밋은 &ldquo;세션 밖 변경&rdquo;으로 따로 표시한다 &mdash; 다른 세션의 미완성 변경이 내 커밋에 섞이지 않게.</dd>
         <dt>결과</dt><dd><code>[갈래][Done] 설명 — @작성자 (브랜치) 날짜</code> 양식의 기록 한 줄.</dd>
       </dl>
       <div class="warn soft"><b>알아 둘 것.</b> 기록은 append 전용이다. 결정이 바뀌면 지우지 않고 새 결정을 쓰고 옛 결정에 "Superseded by"를 단다.</div>
@@ -282,8 +282,8 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
       <p class="one">이 PC의 구성이 그것을 만든 문서에서 얼마나 뒤처졌는지만 알려 준다.</p>
       <dl>
         <dt>언제</dt><dd><code>/resume</code>이 "적용 기록이 30일 넘었다"고 안내했을 때, 또는 그냥 어긋난 데가 있나 궁금할 때.</dd>
-        <dt>하는 일</dt><dd>프로젝트의 <code>dropin-applied</code> 기록과 글로벌 <code>~/.claude</code>를 문서 저장소의 현재 버전과 대조하고, 차이만 보고한다.</dd>
-        <dt>결과</dt><dd>차이 보고서. 설치도 수정도 하지 않는다.</dd>
+        <dt>하는 일</dt><dd>프로젝트와 글로벌 <code>~/.claude/CLAUDE.md</code>에 남은 <code>dropin-applied</code> 기록을 문서 저장소의 현재 버전과 대조하고, 차이만 보고한다. 설치된 플러그인 버전도 기록과 맞춰 본다.</dd>
+        <dt>결과</dt><dd>차이 보고서. 설치도 수정도 하지 않는다. 오프라인이거나 <code>git fetch</code>가 실패해 문서 쪽을 못 봤으면 &ldquo;최신&rdquo;이라 하지 않고 &ldquo;문서 기준 미확인&rdquo;으로 보고한다.</dd>
       </dl>
       <div class="tags"><span class="tag">글로벌</span><span class="tag">쓰기 없음</span></div>
     </article>
@@ -294,7 +294,7 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
       <p class="one">드롭인 문서 사본을 최신으로 바꾼다 &mdash; 문서만이다. 그 문서가 설명하는 구성은 건드리지 않는다.</p>
       <dl>
         <dt>언제</dt><dd><code>/dropin-check</code>가 문서 사본이 배포본보다 낡았다고 보고했을 때.</dd>
-        <dt>하는 일</dt><dd>문서가 여기 온 경로부터 가린다 &mdash; 프로젝트에 복사됐는지, 로컬 클론을 참조하는지, raw로 직접 받는지. 그에 맞는 방식으로, 승인을 받고 갱신한다.</dd>
+        <dt>하는 일</dt><dd>문서가 여기 온 경로부터 가린다 &mdash; 프로젝트에 복사됐는지, 로컬 클론을 참조하는지, raw로 직접 받는지. 프로젝트 밖 폴더를 알려 주면 그게 git 클론인지부터 본다 &mdash; 클론이면 <code>git pull</code>로, 아니면 사본으로 다룬다. 그에 맞는 방식으로, 승인을 받고 갱신한다.</dd>
         <dt>결과</dt><dd>새 문서 파일. 구성 재적용은 별도 단계이고 00 문서가 맡는다.</dd>
       </dl>
       <div class="warn soft"><b>알아 둘 것.</b> 문서 원본 저장소 안에서는 실행을 거부한다 &mdash; 거기서는 <code>git pull</code>이 갱신 경로다.</div>
@@ -372,7 +372,7 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
       <div class="k">6</div>
       <div>
         <div class="c"><span class="sl">/</span>feature-doc-audit</div>
-        <div class="w">일이 터져서가 아니라 주기로 돌린다. 시간이 흘러야 찾아낼 거리가 생기기 때문이다. 가벼워서 <code>claude -p "/feature-doc-audit"</code>를 주간 타이머에 걸어두는 방식이 흔하다.</div>
+        <div class="w">일이 터져서가 아니라 주기로 돌린다. 시간이 흘러야 찾아낼 거리가 생기기 때문이다. 다만 결과는 채팅에만 나오고 파일로 남지 않아서, 타이머에 걸어 무인으로 돌리면 아무도 못 보고 사라진다. 주 1회쯤 직접 부르는 편이 맞다.</div>
       </div>
     </div>
     <div class="p">
@@ -420,7 +420,7 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
       <dl>
         <dt>언제</dt><dd>주 1회, 또는 전체 테스트를 돌리지 않고 어느 기능부터 sync 할지만 알고 싶을 때.</dd>
         <dt>하는 일</dt><dd><code>HEAD</code>보다 뒤처진 문서, 남아 있는 미확인 항목, 인벤토리 불일치, 사라진 파일을 가리키는 코드 참조, 테스트 인덱스 누락을 뽑는다.</dd>
-        <dt>결과</dt><dd>표와 sync 우선순위. 가벼워서 스케줄러에 걸어도 된다 &mdash; <code>claude -p "/feature-doc-audit"</code>.</dd>
+        <dt>결과</dt><dd>표와 sync 우선순위 &mdash; 채팅에만 나온다. 남겨 두고 싶으면 그렇게 말하면 <code>docs/features/audit_reports/</code>에 날짜 파일로 저장한다. 그래서 <code>claude -p</code>로 스케줄러에 걸면 결과가 어디에도 남지 않는다.</dd>
       </dl>
       <div class="warn"><b>함정.</b> Python 3가 필요하다. 확인은 <code>python --version</code>이 아니라 <code>python -c "print(1)"</code>로 한다 &mdash; 윈도우 앱 실행 별칭 스텁은 버전 질문에 대답하고 exit 0까지 주면서 정작 아무 일도 안 한다.</div>
       <div class="tags"><span class="tag need">init 필요</span><span class="tag need">Python 3 필요</span><span class="tag">쓰기 없음</span></div>
@@ -548,7 +548,7 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
         <dt>하는 일</dt><dd>색·타이포·레이아웃에 대해 뚜렷한 관점을 먼저 세우게 한다. 컴포넌트 라이브러리의 기본값이 아니라 그 화면이 다루는 소재에서 출발한다.</dd>
         <dt>결과</dt><dd>마크업을 짜기 전에 나오는 디자인 방향. 바꾸는 값이 싼 유일한 시점이다.</dd>
       </dl>
-      <div class="warn soft"><b>알아 둘 것.</b> 이 하나는 Anthropic이 배포하고 <code>npx skills add -g</code>로 깔린다. 그래서 단디 문서와 무관하게 자기 주기로 갱신된다.</div>
+      <div class="warn soft"><b>알아 둘 것.</b> 이 하나는 Anthropic이 배포하고, 플러그인(<code>/plugin install</code>)이나 <code>npx skills add</code>로 깔린다. 그래서 단디 문서와 무관하게 자기 주기로 갱신된다. 스킬 이름 별칭은 npx·수동 복사 경로에만 붙고 플러그인 경로에는 붙지 않는다.</div>
       <div class="tags"><span class="tag">글로벌</span><span class="tag">프론트엔드 전용</span></div>
     </article>
 
@@ -597,19 +597,19 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
 <table>
   <thead><tr><th>스킬</th><th>문서</th><th>기본 스코프</th><th>제거</th></tr></thead>
   <tbody>
-    <tr><td><code>/resume</code> <code>/wrap</code> <code>/dropin-check</code> <code>/dropin-update</code></td><td>01 §D-4</td><td>글로벌 &mdash; <code>~/.claude/skills/</code></td><td>폴더 삭제. <code>docs/</code> 기록은 남긴다 &mdash; 그건 데이터다.</td></tr>
+    <tr><td><code>/resume</code> <code>/wrap</code> <code>/dropin-check</code> <code>/dropin-update</code></td><td>01 §D-4</td><td>글로벌 &mdash; <code>~/.claude/skills/</code></td><td>폴더 삭제. 쌓인 <code>docs/</code> 기록은 묻되 기본으로 남긴다 &mdash; 그건 데이터다.</td></tr>
     <tr><td><code>/svg-design</code></td><td>03 §2</td><td>글로벌</td><td>폴더 삭제.</td></tr>
-    <tr><td><code>/frontend-design</code></td><td>03 §3</td><td>글로벌, <code>npx skills add -g</code></td><td>같은 도구로 제거.</td></tr>
-    <tr><td>기능 문서 6종</td><td>03 §7</td><td>글로벌 &mdash; 팀·CI가 공유해야 하면 프로젝트 스코프</td><td>가드부터 걷고 여섯 폴더. <code>docs/features/</code>는 남긴다.</td></tr>
-    <tr><td><code>/refactor</code></td><td>03 §8</td><td>글로벌</td><td>폴더 삭제. 걷을 훅도, 되돌릴 커밋도 없다.</td></tr>
+    <tr><td><code>/frontend-design</code></td><td>03 §3</td><td>글로벌 &mdash; 플러그인 또는 <code>npx skills add -g</code></td><td>폴더 삭제. npx가 링크만 걸어 뒀으면 링크가 가리키는 실체까지 지운다.</td></tr>
+    <tr><td>기능 문서 6종</td><td>03 §7</td><td>글로벌 &mdash; 팀·CI가 공유해야 하면 프로젝트 스코프</td><td>가드부터 걷고 여섯 폴더. <code>docs/features/</code>와 <code>tests/e2e/</code>는 남긴다.</td></tr>
+    <tr><td><code>/refactor</code></td><td>03 §8</td><td>글로벌</td><td>폴더 삭제. 걷을 훅도, 되돌릴 커밋도 없다. <code>docs/refactor/</code> 보고서는 남긴다.</td></tr>
     <tr><td><code>/kr-ui-guide</code></td><td>03 §9</td><td>글로벌</td><td>폴더 삭제. 프로젝트 CLAUDE.md에 선택적 오버라이드 절을 추가했으면 그것도 지운다.</td></tr>
-    <tr><td><code>/plan-&lt;모델&gt;</code></td><td>02 STEP 3 ⓔ</td><td>설치 때 묻는다 &mdash; 글로벌 또는 프로젝트</td><td>폴더 삭제. 함께 만든 모델 운용표도 지운다.</td></tr>
+    <tr><td><code>/plan-&lt;모델&gt;</code></td><td>02 STEP 3 ⓔ</td><td>설치 때 묻는다 &mdash; 글로벌 또는 프로젝트</td><td>폴더 삭제. 함께 만든 모델 운용표와, <code>CLAUDE.md</code>·핸드오프 규약에 적어 둔 이 명령 안내 줄도 지운다.</td></tr>
   </tbody>
 </table>
 </div>
 <p class="lead" style="margin-top:16px">전부 제거 절차가 문서에 적혀 있는데, 이건 의도한 것이다. 되돌릴 수 없는 설치는 애초에 선택지를 준 게 아니기 때문이다. 감지·설치·검증·제거 4단 전체는 각 문서에 있다. 설치할 때 나오는 질문의 뜻은 <a href="options.ko.html">옵션 사전</a>에, 처음부터 차근히 밟아 보려면 <a href="learn.ko.html">학습 코스</a>에 있다.</p>
 
-<footer>단디(Dandi) &middot; 스킬 카탈로그 &middot; 2026-09-16 &middot; 01 §D-4 · 02 STEP 3 ⓔ · 03 §2 · §3 · §7 · §8 · §9가 설치하는 스킬 15종. 명령은 별칭 없이 적었으니, 설치할 때 별칭을 골랐다면 그것을 얹어 읽으면 된다.</footer>
+<footer>단디(Dandi) &middot; 스킬 카탈로그 &middot; 2026-09-17 &middot; 01 §D-4 · 02 STEP 3 ⓔ · 03 §2 · §3 · §7 · §8 · §9가 설치하는 스킬 15종. 명령은 별칭 없이 적었으니, 설치할 때 별칭을 골랐다면 그것을 얹어 읽으면 된다.</footer>
 
 </div>
 <script>

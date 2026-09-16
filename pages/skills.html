@@ -212,7 +212,7 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
     <tr><th class="grp" colspan="4" scope="colgroup">Feature docs, tests, releases &middot; 03 §7</th></tr>
     <tr><td><code>/feature-docs</code></td><td><code>init</code> | <code>sync [base]</code></td><td>First write-up, or folding in what changed</td><td>All of <code>docs/features/</code></td></tr>
     <tr><td><code>/feature-test</code></td><td><code>[F-003 | TC-F003-01]</code> &mdash; all if omitted</td><td>You want the spec&rsquo;s cases actually run</td><td>A dated report with screenshots</td></tr>
-    <tr><td><code>/feature-doc-audit</code></td><td><code>[threshold, default 5]</code></td><td>A cheap staleness check, schedulable</td><td>A table and a suggested sync order</td></tr>
+    <tr><td><code>/feature-doc-audit</code></td><td><code>[threshold, default 5]</code></td><td>A cheap staleness check</td><td>A table and a suggested sync order, in chat</td></tr>
     <tr><td><code>/feature-doc-guard</code></td><td><code>install</code> | <code>uninstall</code> | <code>check</code></td><td>Commits keep landing without their docs</td><td>The hooks, or a blocked commit</td></tr>
     <tr><td><code>/test-to-script</code></td><td><code>[F-003 | TC-F003-01]</code> &mdash; all unconverted</td><td>Hand-run cases should run themselves</td><td>Runnable test files</td></tr>
     <tr><td><code>/release-notes</code></td><td><code>[from tag] [to tag]</code></td><td>A version is about to ship</td><td><code>docs/releases/&lt;tag&gt;.md</code></td></tr>
@@ -258,7 +258,7 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
       <p class="one">Opens the session by reconstructing where you left off &mdash; from git and from your own records, not from memory.</p>
       <dl>
         <dt>Use when</dt><dd>At the very start of a session, and again after <code>/clear</code>.</dd>
-        <dt>It does</dt><dd>Pulls with <code>--ff-only</code> if the tree is clean, finds uncommitted work through <code>git status</code>, then reads the top of <code>PROGRESS.md</code>, the last three decisions, and <code>PROJECT_PLAN.md</code>.</dd>
+        <dt>It does</dt><dd>Pulls with <code>--ff-only</code> if the tree is clean, finds uncommitted work through <code>git status</code> &mdash; which may belong to another session running in the same folder, so it asks before treating it as yours, continuing it or committing it &mdash; then reads the top of <code>PROGRESS.md</code>, the last three decisions, and <code>PROJECT_PLAN.md</code>.</dd>
         <dt>You get</dt><dd>A short "last time you did X, next is Y?" report, plus reminders when a scheduled check has come due.</dd>
       </dl>
       <div class="warn soft"><b>Worth knowing.</b> It reads only the ~5 newest entries, capped at ~700 characters each. Anything the next session must pick up belongs at the <em>front</em> of an entry &mdash; text at the end falls outside the cap and is never read.</div>
@@ -271,7 +271,7 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
       <p class="one">Closes the session by writing today into the record, so the next <code>/resume</code> has something to find.</p>
       <dl>
         <dt>Use when</dt><dd>Before you stop working &mdash; and always before <code>/clear</code>.</dd>
-        <dt>It does</dt><dd>Appends an entry to <code>PROGRESS.md</code>, adds any new decision as <code>DEC-YYYYMMDD-&lt;author&gt;</code>, ticks the boxes in <code>PROJECT_PLAN.md</code>, and warns you if changes are still uncommitted.</dd>
+        <dt>It does</dt><dd>Appends an entry to <code>PROGRESS.md</code>, adds any new decision as <code>DEC-YYYYMMDD-&lt;author&gt;</code>, ticks the boxes in <code>PROJECT_PLAN.md</code>, and warns you if changes are still uncommitted. It reports only the files this session edited and lists any other uncommitted changes separately as &ldquo;outside this session&rdquo;, so another session's half-done work does not slip into your commit.</dd>
         <dt>You get</dt><dd>One line per session, in the fixed shape <code>[topic][Done] … — @author (branch) date</code>.</dd>
       </dl>
       <div class="warn soft"><b>Worth knowing.</b> Records are append-only. When a decision changes you add a new one and mark the old "Superseded by" &mdash; you never edit history in place.</div>
@@ -284,8 +284,8 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
       <p class="one">Tells you whether the configuration on this machine has fallen behind the documents that produced it.</p>
       <dl>
         <dt>Use when</dt><dd><code>/resume</code> says the install record is over 30 days old, or you simply want to know if anything drifted.</dd>
-        <dt>It does</dt><dd>Compares the project's <code>dropin-applied</code> record and your global <code>~/.claude</code> against the current versions in the document repository, and reports differences only.</dd>
-        <dt>You get</dt><dd>A difference report. Nothing is installed, nothing is edited.</dd>
+        <dt>It does</dt><dd>Compares the <code>dropin-applied</code> records in the project and in your global <code>~/.claude/CLAUDE.md</code> against the current versions in the document repository, and reports differences only. It also checks installed plugin versions against the record.</dd>
+        <dt>You get</dt><dd>A difference report. Nothing is installed, nothing is edited. If it is offline or <code>git fetch</code> fails and it cannot see the documents, it does not call you up to date &mdash; it reports &ldquo;not checked against the documents&rdquo;.</dd>
       </dl>
       <div class="tags"><span class="tag">global</span><span class="tag">no writes</span></div>
     </article>
@@ -296,7 +296,7 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
       <p class="one">Brings your copies of the drop-in documents up to date &mdash; the documents themselves, not the configuration they describe.</p>
       <dl>
         <dt>Use when</dt><dd><code>/dropin-check</code> reported that your document copies are older than the published ones.</dd>
-        <dt>It does</dt><dd>Works out how the documents got here &mdash; copied into the project, referenced from a local clone, or read straight from raw URLs &mdash; and updates each in the way that fits, after asking.</dd>
+        <dt>It does</dt><dd>Works out how the documents got here &mdash; copied into the project, referenced from a local clone, or read straight from raw URLs &mdash; and updates each in the way that fits, after asking. If you point it at a folder outside the project, it first checks whether that folder is a git clone: a clone gets <code>git pull</code>, anything else is treated as a copy.</dd>
         <dt>You get</dt><dd>Refreshed document files. Re-applying the configuration is a separate step, driven by document 00.</dd>
       </dl>
       <div class="warn soft"><b>Worth knowing.</b> It refuses to run inside the source repository itself &mdash; there, <code>git pull</code> is the update path.</div>
@@ -374,7 +374,7 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
       <div class="k">6</div>
       <div>
         <div class="c"><span class="sl">/</span>feature-doc-audit</div>
-        <div class="w">Periodic rather than reactive &mdash; it needs elapsed time before it has anything to find. Light enough to schedule: <code>claude -p "/feature-doc-audit"</code> on a weekly timer is the usual arrangement.</div>
+        <div class="w">Periodic rather than reactive &mdash; it needs elapsed time before it has anything to find. Its output goes to the chat only and is not saved to a file, so running it unattended on a timer leaves nothing behind. Call it yourself about once a week.</div>
       </div>
     </div>
     <div class="p">
@@ -422,7 +422,7 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
       <dl>
         <dt>Use when</dt><dd>Weekly, or whenever you want to know which feature to sync first without paying for a full test run.</dd>
         <dt>It does</dt><dd>Finds docs lagging behind <code>HEAD</code>, leftover unverified items, inventory mismatches, code references pointing at files that no longer exist, and cases missing from the test index.</dd>
-        <dt>You get</dt><dd>A table and a suggested sync order. Light enough to schedule: <code>claude -p "/feature-doc-audit"</code>.</dd>
+        <dt>You get</dt><dd>A table and a suggested sync order, in the chat only. Ask and it saves a dated file under <code>docs/features/audit_reports/</code>. That is also why scheduling it with <code>claude -p</code> leaves no result anywhere.</dd>
       </dl>
       <div class="warn"><b>The trap.</b> Needs Python 3. Check it with <code>python -c "print(1)"</code>, not <code>python --version</code> &mdash; a Windows app-execution stub answers the version call and exits 0 while doing nothing at all.</div>
       <div class="tags"><span class="tag need">needs init</span><span class="tag need">needs Python 3</span><span class="tag">no writes</span></div>
@@ -550,7 +550,7 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
         <dt>It does</dt><dd>Asks for a deliberate point of view on palette, typography and layout, grounded in the subject rather than in a component library's defaults.</dd>
         <dt>You get</dt><dd>Design direction before the markup, which is the only point where it is cheap to change.</dd>
       </dl>
-      <div class="warn soft"><b>Worth knowing.</b> This one is published by Anthropic and installed with <code>npx skills add -g</code>, so it updates on its own schedule rather than with the Dandi documents.</div>
+      <div class="warn soft"><b>Worth knowing.</b> This one is published by Anthropic and installed as a plugin (<code>/plugin install</code>) or with <code>npx skills add</code>, so it updates on its own schedule rather than with the Dandi documents. A skill-name alias only applies on the npx or manual-copy routes, not the plugin route.</div>
       <div class="tags"><span class="tag">global</span><span class="tag">front-end only</span></div>
     </article>
 
@@ -599,19 +599,19 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
 <table>
   <thead><tr><th>Skills</th><th>Document</th><th>Default scope</th><th>Removal</th></tr></thead>
   <tbody>
-    <tr><td><code>/resume</code> <code>/wrap</code> <code>/dropin-check</code> <code>/dropin-update</code></td><td>01 §D-4</td><td>global &mdash; <code>~/.claude/skills/</code></td><td>Delete the folder. Records under <code>docs/</code> stay &mdash; they are data.</td></tr>
+    <tr><td><code>/resume</code> <code>/wrap</code> <code>/dropin-check</code> <code>/dropin-update</code></td><td>01 §D-4</td><td>global &mdash; <code>~/.claude/skills/</code></td><td>Delete the folder. Accumulated records under <code>docs/</code> stay by default (you are asked) &mdash; they are data.</td></tr>
     <tr><td><code>/svg-design</code></td><td>03 §2</td><td>global</td><td>Delete the folder.</td></tr>
-    <tr><td><code>/frontend-design</code></td><td>03 §3</td><td>global, via <code>npx skills add -g</code></td><td>Remove through the same tool.</td></tr>
-    <tr><td>the six feature skills</td><td>03 §7</td><td>global &mdash; project scope if the team and CI must share them</td><td>Guard first, then the six folders. <code>docs/features/</code> stays.</td></tr>
-    <tr><td><code>/refactor</code></td><td>03 §8</td><td>global</td><td>Delete the folder. No hooks to unwind, no commits to revert.</td></tr>
+    <tr><td><code>/frontend-design</code></td><td>03 §3</td><td>global &mdash; plugin or <code>npx skills add -g</code></td><td>Delete the folder. If npx only left a link, delete what the link points to as well.</td></tr>
+    <tr><td>the six feature skills</td><td>03 §7</td><td>global &mdash; project scope if the team and CI must share them</td><td>Guard first, then the six folders. <code>docs/features/</code> and <code>tests/e2e/</code> stay.</td></tr>
+    <tr><td><code>/refactor</code></td><td>03 §8</td><td>global</td><td>Delete the folder. No hooks to unwind, no commits to revert. Reports in <code>docs/refactor/</code> stay.</td></tr>
     <tr><td><code>/kr-ui-guide</code></td><td>03 §9</td><td>global</td><td>Delete the folder. If a project <code>CLAUDE.md</code> got the optional override block, delete that too.</td></tr>
-    <tr><td><code>/plan-&lt;model&gt;</code></td><td>02 STEP 3 ⓔ</td><td>asked at install &mdash; global or project</td><td>Delete the folder, and the model usage table it created.</td></tr>
+    <tr><td><code>/plan-&lt;model&gt;</code></td><td>02 STEP 3 ⓔ</td><td>asked at install &mdash; global or project</td><td>Delete the folder, the model usage table it created, and the lines about this command it added to <code>CLAUDE.md</code> and the handoff protocol.</td></tr>
   </tbody>
 </table>
 </div>
 <p class="lead" style="margin-top:16px">Every one of these has a documented removal path, which is deliberate: an install you cannot reverse was never really a choice. The full procedures &mdash; detect, install, verify, remove &mdash; are in the documents themselves. For what each install question means, see the <a href="options.html">options dictionary</a>; to work through it step by step, take the <a href="learn.html">course</a>.</p>
 
-<footer>Dandi &middot; Skill catalog &middot; 2026-09-16 &middot; Fifteen skills installed by documents 01 §D-4, 02 STEP 3 ⓔ, 03 §2, §3, §7, §8 and §9. Commands are shown without an alias; apply yours if you chose one at install time.</footer>
+<footer>Dandi &middot; Skill catalog &middot; 2026-09-17 &middot; Fifteen skills installed by documents 01 §D-4, 02 STEP 3 ⓔ, 03 §2, §3, §7, §8 and §9. Commands are shown without an alias; apply yours if you chose one at install time.</footer>
 
 </div>
 <script>

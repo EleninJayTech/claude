@@ -200,9 +200,10 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
     <li><b>The documents are written in Korean, and that is fine.</b> Claude executes them the same way in any language, and the installer asks which language the <b>generated files</b> should use &mdash; answer English and your <code class="i">CLAUDE.md</code>, work logs and commit messages all come out in English.</li>
     <li>Pick <b>&ldquo;recommended&rdquo;</b> and the installer inspects your project and checks the fitting combination for you. Add purpose <b>bundles</b> (design, stronger verification, unattended automation) for combinations like <b>&ldquo;minimal + design&rdquo;</b>.</li>
     <li>If something is already installed, Claude asks whether to <b>keep / reconcile / replace</b> it first. Nothing is overwritten silently.</li>
+    <li>Changed your mind later? Run 00 again and it asks both what to <b>add</b> and what to <b>remove</b>. Removing takes out only what the install created &mdash; the work logs you have built up stay.</li>
     <li>Not sure what a question or checkbox means? The <a href="pages/options.html"><b>options dictionary</b></a> spells out &ldquo;what gets created / when to check it / what you lose by skipping&rdquo; for every item.</li>
     <li>Want to learn the choices from scratch? The <a href="pages/learn.html"><b>options course</b></a> takes you chapter by chapter through a simulator you click yourself.</li>
-    <li>Wondering what the installed <b>skills</b> actually do? The <a href="pages/skills.html"><b>skill catalog</b></a> explains all fifteen &mdash; what each does, when to call it, and where it bites.</li>
+    <li>Wondering what the installed <b>skills</b> actually do? The <a href="pages/skills.html"><b>skill catalog</b></a> explains every one &mdash; what each does, when to call it, and where it bites.</li>
   </ul>
 </section>
 
@@ -257,7 +258,7 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
       <svg width="26" height="26"><use href="#check"/></svg>
       <span class="no">06</span>
       <span class="desc"><b>Scheduled runs.</b>
-        <p>Work runs in the cloud at set times even while your machine is off &mdash; nightly code review, weekly doc checks. Requires the Pro plan or above, and company code only after approval.</p>
+        <p>Work runs in the cloud at set times even while your machine is off &mdash; nightly code review, weekly doc checks. Requires the Pro plan or above and a GitHub repository, and company code only after approval.</p>
         <a href="https://github.com/EleninJayTech/claude/blob/main/06_루틴-자동화.md">06_루틴-자동화.md ↗</a></span>
     </li>
   </ul>
@@ -297,6 +298,7 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
   <ul>
     <li>Those records are what let you resume tomorrow. You have to <b>commit after recording</b> for them to be found the next day &mdash; Claude walks you through it.</li>
     <li>If the AI keeps spinning: run <code class="i">/clear</code> when you switch to unrelated work, and if the same problem survives two fix attempts, <code class="i">/clear</code> and ask again from scratch &mdash; that is usually faster.</li>
+    <li>Don&rsquo;t run two Claude sessions in <b>the same folder</b> at once &mdash; their unsaved changes get mixed together. Open the second task with <code class="i">claude --worktree &lt;name&gt;</code> instead.</li>
   </ul>
 </section>
 
@@ -326,6 +328,7 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
   <p>&#129517; Install options dictionary &mdash; <a href="pages/options.html">https://eleninjaytech.github.io/claude/pages/options.html</a></p>
   <p>&#127891; Install options course &mdash; <a href="pages/learn.html">https://eleninjaytech.github.io/claude/pages/learn.html</a></p>
   <p>&#129520; Skill catalog &mdash; <a href="pages/skills.html">https://eleninjaytech.github.io/claude/pages/skills.html</a></p>
+  <p>&#128221; Latest release notes (what changed) &mdash; <a href="https://github.com/EleninJayTech/claude/releases/latest">https://github.com/EleninJayTech/claude/releases/latest</a></p>
   <p>&#128214; How-to guide (this page) &mdash; <a href="https://eleninjaytech.github.io/claude/">https://eleninjaytech.github.io/claude/</a></p>
 </section>
 
@@ -338,7 +341,7 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
 
 </main>
 
-<footer>Dandi &middot; How-to page &middot; 2026-09-13 &middot; Repository: <a href="https://github.com/EleninJayTech/claude">github.com/EleninJayTech/claude</a> &middot; The install documents 00&ndash;06 (markdown) are the source of truth &mdash; this page is the human-facing guide. The hero graphic uses the 03 svg-design recipe (Gooey, Squiggle) and the layout follows the frontend-design skill principles.</footer>
+<footer>Dandi &middot; How-to page &middot; 2026-09-17 &middot; Repository: <a href="https://github.com/EleninJayTech/claude">github.com/EleninJayTech/claude</a> &middot; <a href="https://github.com/EleninJayTech/claude/releases/latest">Latest release notes</a> &middot; The install documents 00&ndash;06 (markdown) are the source of truth &mdash; this page is the human-facing guide. The hero graphic uses the 03 svg-design recipe (Gooey, Squiggle) and the layout follows the frontend-design skill principles.</footer>
 
 <script>
 (function(){try{

@@ -17,6 +17,7 @@
 | 🧭 **Install options dictionary** — every choice the installer asks, explained for beginners | https://eleninjaytech.github.io/claude/pages/options.html |
 | 🎓 **Install options course** — an interactive course where you click through the choices yourself | https://eleninjaytech.github.io/claude/pages/learn.html |
 | 🧰 **Skill catalog** — every skill the documents install, explained for a first-week developer | https://eleninjaytech.github.io/claude/pages/skills.html |
+| 📝 **Latest release notes** — what changed in the newest release | https://github.com/EleninJayTech/claude/releases/latest |
 | 📖 **How to use** — start here; no development background needed | https://eleninjaytech.github.io/claude/ |
 
 ## How to use it (three lines)
@@ -33,7 +34,7 @@
 - **You only need to copy `00`.** Claude fetches the rest from this repository on its own.
 - **The documents are written in Korean, and that is fine** — Claude reads and executes them the same way in any language. During install you are asked which language the *generated files* should use, so an English answer gives you an English `CLAUDE.md`, English work logs, and English commit messages.
 - **Pick "recommended"** and the installer inspects your project and checks the fitting combination for you. You can add purpose **bundles** (design, stronger verification, unattended automation) on top — "minimal + design", for example.
-- **If something is already installed**, you are asked whether to **keep / reconcile / replace** it first. Nothing is overwritten silently.
+- **If something is already installed**, you are asked whether to **keep / reconcile / replace** it first. Nothing is overwritten silently. Run 00 again later and it asks both what to **add** and what to **remove** — removing takes out only what the install created, and the work logs you have built up stay.
 - **Teams and multi-repository setups are supported.** Teammates who install from different places (a parent folder vs. an individual repository) do not collide, and a personal folder holding company repositories is checked **per repository**. Settings shared with the team (committed) and settings that stay yours are also asked about separately.
 - **On the Pro plan (lower usage allowance)**, choose the **thrift** operating profile during install — quality-critical moments (hard judgment calls, final review) stay untouched while everyday consumption drops.
 - Every question and checkbox the installer shows is documented item by item in the [**install options dictionary**](pages/options.html). To learn it from the ground up, take the [**install options course**](pages/learn.html) — you click through a simulator as you go.
@@ -49,7 +50,7 @@
 | [`03_확장기능-설치-체크리스트.md`](03_확장기능-설치-체크리스트.md) | **Convenience add-ons.** Live usage meter (claude-hud) · animated graphics techniques (svg-design) · UI that doesn't look AI-generated (frontend-design) · external tool connections (MCP) · letting the AI open and check the screens it built (browser verification) · per-feature specs with tests, commit guard and release notes (feature-doc skill set) · behaviour-preserving code cleanup with side-effect verification (refactor) · UI/UX, icon and colour guidance from research on Korean services (kr-ui-guide) |
 | [`04_검증-자동화.md`](04_검증-자동화.md) | **The automatic inspector.** Checkers run every time the AI edits code, and again before code is merged — you get **proof the checks passed** instead of the AI saying "done" |
 | [`05_출력스타일.md`](05_출력스타일.md) | **Changing tone and role.** Answers the way you want them — explanation-first, diagram-first, learning mode. Coding ability stays; only the style changes |
-| [`06_루틴-자동화.md`](06_루틴-자동화.md) | **Scheduled runs.** Work happens in the cloud at set times even while your machine is off (nightly code review, weekly doc checks) — Pro plan or above, and with approval at companies |
+| [`06_루틴-자동화.md`](06_루틴-자동화.md) | **Scheduled runs.** Work happens in the cloud at set times even while your machine is off (nightly code review, weekly doc checks) — Pro plan or above and a GitHub repository, and with approval at companies |
 | [`index.html`](index.html) | **The human-facing guide** (GitHub Pages landing) — [view on the web](https://eleninjaytech.github.io/claude/) |
 | [`pages/`](pages/) | The rest of the human-facing pages — [intro](pages/intro.html) · [walkthrough](pages/demo.html) · [options dictionary](pages/options.html) · [options course](pages/learn.html) · [skill catalog](pages/skills.html) |
 

@@ -199,9 +199,10 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
     <li>파일은 00 하나만 복사해도 됩니다 — 나머지 문서는 필요할 때 Claude가 인터넷(이 저장소)에서 가져옵니다.</li>
     <li><b>"권장"</b>을 고르면 프로젝트를 조사한 결과에 맞는 조합이 자동으로 골라집니다. 목적 <b>번들</b>(디자인·검증 강화·무인 자동화 등)을 얹어 <b>"최소 + 디자인"</b>처럼 조합할 수도 있습니다.</li>
     <li>이미 설치된 것이 있으면 Claude가 <b>그대로 둘지 / 고칠지 / 새로 깔지</b>를 먼저 물어봅니다. 말없이 덮어쓰지 않습니다.</li>
+    <li>나중에 마음이 바뀌면 00을 다시 적용하세요 — <b>더 깔 것</b>뿐 아니라 <b>뺄 것</b>도 물어봅니다. 빼면 설치가 만든 것만 지우고, 그동안 쌓인 작업 기록은 그대로 둡니다.</li>
     <li>설치 중에 나오는 질문·체크 항목이 무슨 뜻인지 모르겠다면 <a href="pages/options.html"><b>설치 옵션 사전</b></a>을 보세요 — 항목마다 "생기는 파일 / 체크할 때 / 뺄 때"를 풀어 뒀습니다.</li>
     <li>선택지를 처음부터 차근차근 익히고 싶다면 <a href="pages/learn.html"><b>설치 옵션 학습 코스</b></a> — 챕터 순서대로, 시뮬레이터를 직접 눌러 보면서 배우는 인터랙티브 코스입니다.</li>
-    <li>설치된 <b>스킬</b>이 각각 뭘 하는지 궁금하다면 <a href="pages/skills.ko.html"><b>스킬 카탈로그</b></a> — 15종 전부를 무엇을 하고 언제 부르고 어디서 걸리는지로 정리했습니다.</li>
+    <li>설치된 <b>스킬</b>이 각각 뭘 하는지 궁금하다면 <a href="pages/skills.ko.html"><b>스킬 카탈로그</b></a> — 전부를 무엇을 하고 언제 부르고 어디서 걸리는지로 정리했습니다.</li>
   </ul>
 </section>
 
@@ -256,7 +257,7 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
       <svg width="26" height="26"><use href="#check"/></svg>
       <span class="no">06</span>
       <span class="desc"><b>자동 실행 예약.</b>
-        <p>내 컴퓨터가 꺼져 있어도 클라우드에서 정해진 시간에 AI가 알아서 작업합니다 — 야간 코드 검토, 주간 문서 점검 등. Pro 요금제 이상이 필요하고, 회사 코드는 승인을 받은 뒤에만 씁니다.</p>
+        <p>내 컴퓨터가 꺼져 있어도 클라우드에서 정해진 시간에 AI가 알아서 작업합니다 — 야간 코드 검토, 주간 문서 점검 등. Pro 요금제 이상과 GitHub 저장소가 필요하고, 회사 코드는 승인을 받은 뒤에만 씁니다.</p>
         <a href="https://github.com/EleninJayTech/claude/blob/main/06_루틴-자동화.md">06_루틴-자동화.md ↗</a></span>
     </li>
   </ul>
@@ -296,6 +297,7 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
   <ul>
     <li>기록 덕분에 내일 다시 켜도 이어서 할 수 있습니다. <b>기록 후 저장(커밋)까지</b> 해야 다음 날 찾습니다 — Claude가 방법을 안내합니다.</li>
     <li>AI가 자꾸 헛돌면: 다른 일로 넘어갈 때 <code class="i">/clear</code>(대화 초기화), 같은 문제를 두 번 고쳐줘도 안 되면 역시 <code class="i">/clear</code> 후 새로 요청하는 게 빠릅니다.</li>
+    <li><b>같은 폴더</b>에서 Claude 세션 두 개를 동시에 돌리지 마세요 — 서로 저장 안 된 변경이 섞입니다. 두 번째 작업은 <code class="i">claude --worktree &lt;이름&gt;</code>으로 따로 여세요.</li>
   </ul>
 </section>
 
@@ -325,6 +327,7 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
   <p>🧭 설치 옵션 사전 — <a href="pages/options.html">https://eleninjaytech.github.io/claude/pages/options.html</a></p>
   <p>🎓 설치 옵션 학습 코스 — <a href="pages/learn.html">https://eleninjaytech.github.io/claude/pages/learn.html</a></p>
   <p>🧰 스킬 카탈로그 — <a href="pages/skills.html">https://eleninjaytech.github.io/claude/pages/skills.html</a></p>
+  <p>📝 최신 릴리스 노트(무엇이 바뀌었나) — <a href="https://github.com/EleninJayTech/claude/releases/latest">https://github.com/EleninJayTech/claude/releases/latest</a></p>
   <p>📖 사용법 안내(이 페이지) — <a href="https://eleninjaytech.github.io/claude/">https://eleninjaytech.github.io/claude/</a></p>
 </section>
 
@@ -337,7 +340,7 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
 
 </main>
 
-<footer>단디 · 사용법 페이지 · 2026-09-13 · 저장소: <a href="https://github.com/EleninJayTech/claude">github.com/EleninJayTech/claude</a> · 설치 문서 정본은 00~06 md — 이 페이지는 사람용 안내이며, 대표 이미지는 03 svg-design 레시피(Gooey·Squiggle)로, 디자인은 frontend-design 스킬 원칙으로 만들었습니다.</footer>
+<footer>단디 · 사용법 페이지 · 2026-09-17 · 저장소: <a href="https://github.com/EleninJayTech/claude">github.com/EleninJayTech/claude</a> · <a href="https://github.com/EleninJayTech/claude/releases/latest">최신 릴리스 노트</a> · 설치 문서 정본은 00~06 md — 이 페이지는 사람용 안내이며, 대표 이미지는 03 svg-design 레시피(Gooey·Squiggle)로, 디자인은 frontend-design 스킬 원칙으로 만들었습니다.</footer>
 
 </body>
 </html>

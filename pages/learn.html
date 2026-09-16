@@ -313,6 +313,7 @@ footer{max-width:1120px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
     A bundle is <b>unioned onto the base mode</b>. Pick &ldquo;recommended&rdquo; + &ldquo;design&rdquo; and the design extensions land on top of
     whatever recommended selected. Toggle several on and off.
   </p>
+  <p>The real install screen shows <b>at most four choices per question</b>, so when there is more to pick from &mdash; bundles, for instance &mdash; the question is split into several. Nothing gets squeezed into one box or dropped for lack of room.</p>
   <div class="sim">
     <div class="q">
       <p class="qt"><b>Q.</b> Choose purpose bundles (zero or more)</p>
@@ -350,8 +351,8 @@ footer{max-width:1120px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
   <h3>Output language &mdash; Korean / English</h3>
   <p>This one is easy to misread: it is <b>not the language of the documents</b> but the language of <b>what the install produces</b>. The drop-in documents stay Korean &mdash; Claude executes them identically either way &mdash; while your answer here decides the language of the target <code class="i">CLAUDE.md</code> body, the <code class="i">docs/</code> entries, commit messages and generated filenames (<code class="i">docs/difficulty-matrix.md</code> vs <code class="i">docs/난이도-매트릭스.md</code>). Format keywords such as <code class="i">[topic][Done]</code> stay fixed in either language, because <code class="i">/resume</code> and <code class="i">/wrap</code> find them by those exact strings.</p>
 
-  <h3>Skill name alias &mdash; none / prefix / suffix</h3>
-  <p>The skill names being installed (<code class="i">resume</code>, <code class="i">wrap</code>, <code class="i">svg-design</code>) are common ones. If a <b>different skill of the same name</b> already sits on your machine, that one wins &mdash; the install reports success but the wrong thing runs, or what you were using gets buried. This question is the way out: attach the nickname <b>Dandi</b> to get <code class="i">dandi-resume</code> (prefix) or <code class="i">resume-dandi</code> (suffix). <b>Off by default</b> &mdash; the installer looks for collisions first and only suggests it where it finds one. <b>The six feature-doc skills call each other by name, so they move together</b>. Details in the <a href="options.html#common">options dictionary, 2-7</a>.</p>
+  <h3>Skill name alias &mdash; none / all / selected only</h3>
+  <p>The skill names being installed (<code class="i">resume</code>, <code class="i">wrap</code>, <code class="i">svg-design</code>) are common ones. If a <b>different skill of the same name</b> already sits on your machine, that one wins &mdash; the install reports success but the wrong thing runs, or what you were using gets buried. This question is the way out: attach the nickname <b>Dandi</b> to get <code class="i">dandi-resume</code> (prefix) or <code class="i">resume-dandi</code> (suffix). If you choose to attach one, it goes on to ask for the text (default <code class="i">dandi</code>) and the position (prefix/suffix); with <b>selected only</b> you tick the skills from the install list yourself. <b>None is the default</b> &mdash; the installer looks for collisions first, and if it finds any it suggests &ldquo;selected only&rdquo; with just those skills ticked. <b>The six feature-doc skills call each other by name, so they move together</b>. Details in the <a href="options.html#common">options dictionary, 2-7</a>.</p>
 
   <h3>If something is already installed &mdash; keep / reconcile / replace</h3>
   <p>Asked for every item where existing settings are detected &mdash; <b>always</b>, whatever the mode. Click to see the difference.</p>
@@ -406,6 +407,8 @@ footer{max-width:1120px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
       <p>Agents are chosen <b>one at a time</b>, not as a block. Changing existing code &rarr; the five without spec-writer;
       building something new &rarr; drop surveyor and triage and start <b>from spec-writer</b>. No reviewer is created &mdash;
       the built-in <code class="i">/code-review</code> is already there.</p>
+      <p>Each agent file also carries its <b>reasoning effort</b> next to the model, so you do not pick it every time you call one.
+      You are also asked whether the roster is <b>shared with the team</b> (committed to the project) or <b>just for you</b> (your machine).</p>
       <p>There is <b>one more optional item</b> (unchecked by default) &mdash; a <code class="i">/plan-&lt;model&gt;</code> command that runs a
       different model <b>only while planning</b>. When the plan is done it returns to your normal model by itself.</p>
       <div class="coach warn" style="margin-top:8px"><span class="who">⚠️</span><div>
@@ -423,7 +426,7 @@ footer{max-width:1120px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
         <li><b>frontend-design</b> &mdash; an official Anthropic skill that steers away from UI that looks AI-generated.</li>
         <li><b>MCP servers</b> &mdash; connect external tools (GitHub, doc search, browser control). Which servers to attach is asked separately.</li>
         <li><b>Browser verification</b> &mdash; lets <b>Claude open the screens it built, check them and fix them</b>.</li>
-        <li><b>Feature-doc skill set</b> (6 skills) &mdash; writes a <b>spec per feature</b> from the code and the real screen, then runs the tests written in it, blocks commits that skip the doc, and builds release notes. Installed as one set; not for documentation-only repositories.</li>
+        <li><b>Feature-doc skill set</b> (6 skills) &mdash; writes a <b>spec per feature</b> from the code and the real screen, then runs the tests written in it, blocks commits that skip the doc, and builds release notes. Installed as one set; not for documentation-only repositories. The <b>commit guard</b>, which blocks every teammate&rsquo;s commits, starts unchecked and is asked about separately.</li>
         <li><b>refactor</b> &mdash; cleans up code (merging duplicates, tidying structure, clearing dated syntax) and then <b>proves the behaviour did not change</b> &mdash; call sites, contracts, data formats, an actual test run. Shows you the candidates and only changes what you pick. Not for documentation-only repositories.</li>
         <li><b>kr-ui-guide</b> &mdash; design rules from research on Korean services (UX patterns, icons, colour). Claude <b>calculates contrast</b> for the colours it proposes and checks screens against the checklists. For Korean-audience UI; it does not copy any brand's look.</li>
       </ul>
@@ -440,7 +443,7 @@ footer{max-width:1120px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
     <summary><span class="id">04</span>Verification &mdash; machine checks instead of &ldquo;it&rsquo;s done&rdquo; <span class="badge b-on">the hook gate is the core</span></summary>
     <div class="acc-b">
       <ul>
-        <li><b>Hook quality gate</b> &mdash; a linter or syntax check runs <b>every time Claude edits a file</b>, and the failure output goes back to Claude, which fixes it itself. <b>Never dropped, even on the thrift profile</b> &mdash; less rework is the biggest saving there is.</li>
+        <li><b>Hook quality gate</b> &mdash; a linter or syntax check runs <b>every time Claude edits a file</b>, and the failure output goes back to Claude, which fixes it itself. <b>Never dropped, even on the thrift profile</b> &mdash; less rework is the biggest saving there is. Choosing it also asks for the <b>scope</b> (team-shared / your whole machine / just you, this project only) and the <b>strength</b> (block on failure / warn only).</li>
         <li><b>Host CLI</b> (<code class="i">gh</code>/<code class="i">glab</code>) &mdash; lets Claude open PRs and read CI failure logs directly. <b>You sign in yourself</b>.</li>
         <li><b>CI integration</b> &mdash; mention <code class="i">@claude</code> on a PR and it reviews or fixes. <span class="badge b-gate">&#128308; org approval required at work</span> &mdash; CI sends your code to the Anthropic API.</li>
       </ul>
@@ -459,6 +462,7 @@ footer{max-width:1120px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
     <div class="acc-b">
       <p>Pick one of the five built-ins (Default, Proactive, Explanatory, Learning, Concise), or write the role and tone you want into a single markdown file.
       While you are learning, <b>Explanatory</b> &mdash; which explains why it did things that way as it goes &mdash; is the useful one.</p>
+      <p>When you write your own, you are asked separately <b>where the style file lives</b> (your whole machine / this project) and <b>where the switch-on setting goes</b> (just you, this project / your whole machine / the whole team) &mdash; a file placed machine-wide still stays off in other projects if the setting only lives in this one.</p>
       <div class="coach warn" style="margin:8px 0"><span class="who">🔴</span><div>
         <b>The custom-style trap &mdash; <code class="i">keep-coding-instructions</code></b>
         It defaults to false, and false makes Claude Code&rsquo;s <b>entire built-in coding guidance disappear</b> (verification habits and the minimal-change principle included).
@@ -469,14 +473,15 @@ footer{max-width:1120px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
   </details>
 
   <details class="acc">
-    <summary><span class="id">06</span>Routines &mdash; cloud jobs that run with your PC off <span class="badge b-gate">three gate questions</span></summary>
+    <summary><span class="id">06</span>Routines &mdash; cloud jobs that run with your PC off <span class="badge b-gate">gates first</span></summary>
     <div class="acc-b">
       <p>Scheduled jobs that run unattended in the Anthropic cloud &mdash; nightly PR review, weekly doc checks, that sort of thing.
-      Before installing, <b>three things are always asked</b>, because the code cannot answer them.</p>
+      Before installing, <b>the following is always asked</b>, because the code cannot answer it.</p>
       <ul>
         <li>&#9312; Is your plan <b>Pro or above</b> (and is GitHub connected to your claude.ai account)?</li>
         <li>&#9313; For a company repository &mdash; does your organization permit <b>cloud execution (code leaving the building)</b>?</li>
-        <li>&#9314; Is it a GitHub repository? (GitHub only, for now)</li>
+        <li>&#9314; Is it a GitHub repository? (GitHub only, for now &mdash; if not, it is recorded as &ldquo;not applicable&rdquo; and not asked again)</li>
+        <li>&#9315; <b>Is the job safe to run unattended?</b> &mdash; a routine never stops to ask for approval, so nothing hard to undo (deploys, deletions, outbound messages) goes in it</li>
       </ul>
       <div class="coach tip" style="margin-top:8px"><span class="who">💡</span><div>
         <b>If it needs files on your machine, it is not a routine</b> Routines run in the cloud, where your files do not exist.
@@ -515,6 +520,7 @@ footer{max-width:1120px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
       <div class="stamp" id="finalStamp"></div>
       <p class="why">That last line is the record actually left at the bottom of <code class="i">CLAUDE.md</code> when the install finishes.
       The version numbers (<span style="font-family:var(--mono)">v&#9675;.&#9675;</span>) are read from the documents at install time.
+      The operating profile can differ per machine, so it is kept not here but in <b>your machine&rsquo;s global record</b> (<code class="i">~/.claude/CLAUDE.md</code>).
       Run the install again later and Claude reads this line first, leading with &ldquo;here is what changed since&rdquo;.</p>
     </div>
   </div>
@@ -532,7 +538,7 @@ footer{max-width:1120px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
   <ul>
     <li>Unsure? <b>Recommended mode</b> &mdash; Claude shows you why it combined things that way and asks you to confirm.</li>
     <li>Whatever you choose, <b>nothing is overwritten without approval</b>, and secrets are neither read nor committed.</li>
-    <li>Skipping a checkbox is fine &mdash; <b>run it again later and add it</b>. The install record is there, so it picks up from where it was.</li>
+    <li>Skipping a checkbox is fine &mdash; <b>run it again later and add it</b>, or <b>take out something already installed</b>. The install record is there, so it picks up from where it was. Removal deletes only what the install created; the work records built up meanwhile are kept by default.</li>
   </ul>
   <h3>Where to next</h3>
   <ul>
@@ -552,7 +558,7 @@ footer{max-width:1120px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
 </div>
 
 <footer>
-  Dandi &middot; Install options course &middot; 2026-09-16<br>
+  Dandi &middot; Install options course &middot; 2026-09-17<br>
   The source of truth for each item is its own document (01&ndash;06). This page exists for people to learn from; it does not change the install procedure. Progress is stored only in this browser&rsquo;s localStorage.<br>
   저장소: github.com/EleninJayTech/claude ·
   <a href="../index.html">Guide</a> &middot; <a href="intro.html">Intro</a> &middot; <a href="demo.html">Walkthrough</a> &middot; <a href="options.html">Dictionary</a> &middot; <a href="skills.html">Skill catalog</a>
@@ -579,7 +585,7 @@ var STEPS = [
   ['STEP 1','Obtain documents','If the documents needed (01\u201306) are not in the folder, they are fetched from GitHub. No questions.'],
   ['STEP 2','Detect environment','Inspects the prior install record (dropin-applied), existing config files and the project type. No questions.'],
   ['STEP 3','The big choices','Asks for base mode, purpose bundles, operating profile, output language and skill name alias \u2014 chapters 3\u20135 of this course.'],
-  ['STEP 4','Run the install','Installs by each chosen document\u2019s procedure. Only in "custom" mode does it also ask about the per-document items (chapters 6\u20138).'],
+  ['STEP 4','Run the install','Installs by each chosen document\u2019s procedure. Only "custom" mode asks about each per-document item (chapters 6\u20138), but items that are off by default and safety questions such as scope come up in every mode.'],
   ['STEP 5','Verify and record','Reports the result with evidence and leaves one install-record line at the bottom of CLAUDE.md.']
 ];
 
@@ -591,14 +597,14 @@ var MODES = {
 };
 var SITUS = {
   newpc:{name:'New machine', docs:{'01':'global rules, security, /resume, /wrap','03':'claude-hud status line'}, why:'First setup on this machine, so: the global base plus a status line that shows usage.'},
-  dev:{name:'Development project', docs:{'01':'records and security','02':'model-split roster','04':'hook gate, CLI, CI'}, why:'There is code, so the split and automatic verification come too.'},
+  dev:{name:'Development project', docs:{'01':'records and security','02':'model-split roster','04':'hook gate (+ CLI and CI if detected)'}, why:'There is code, so the split and automatic verification come too.'},
   docsrepo:{name:'Documentation repo', docs:{'01':'records and security'}, why:'No build and no code, so 02 and 04 have nothing to act on.'},
   applied:{name:'01 already installed', docs:{'01':'already there \u2014 re-apply check (only what drifted)'}, why:'Suggests only the still-missing documents that fit the situation.'}
 };
 var BUNDLES = {
   design:{name:'Design', desc:'for projects that build web screens', docs:{'03':'svg-design \u00b7 frontend-design \u00b7 browser verification \u00b7 kr-ui-guide (Korean output only)'}},
   verify:{name:'Stronger verification', desc:'when tests or CI exist', docs:{'04':'hook gate + gh/glab CLI + CI integration'}},
-  auto:{name:'Unattended automation', desc:'only when you ask', docs:{'06':'cloud routines (pairing with 04 CI advised)'}},
+  auto:{name:'Unattended automation', desc:'only when you ask', docs:{'06':'cloud routines \u2014 GitHub repositories only (pairing with 04 CI advised)'}},
   style:{name:'Answer style', desc:'only when you ask', docs:{'05':'output styles'}},
   featdoc:{name:'Feature documentation', desc:'code projects with real screens', docs:{'03':'feature-doc skill set (6) — spec per feature, tests, commit guard'}},
   company:{name:'Company', desc:'a safeguard modifier', docs:{}}
@@ -892,7 +898,7 @@ function drawFinal(){
   var chosen = Object.keys(docs).sort();
   var un = ['01','02','03','04','05','06'].filter(function(k){ return chosen.indexOf(k)<0; });
   var today = new Date().toISOString().slice(0,10);
-  var line='<!-- dropin-applied: '+today+' \u00b7 모드='+modeLabel+' \u00b7 프로필='+PROFS[F.prof].name+' \u00b7 언어=en';
+  var line='<!-- dropin-applied: '+today+' \u00b7 모드='+modeLabel+' \u00b7 언어=en \u00b7 별칭=없음 \u00b7 00 v\u25cb.\u25cb';
   chosen.forEach(function(k){ line+=' \u00b7 '+k+' v\u25cb.\u25cb'; });
   if(un.length && !isCustom) line+=' \u00b7 미선택: '+un.join(', ');
   line+=' \u00b7 출처=사본 -->';

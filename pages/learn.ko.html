@@ -313,6 +313,7 @@ footer{max-width:1120px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
     번들은 기반 모드에 <b>합집합으로 더해집니다</b>. 예를 들어 '권장'+'디자인'이면, 권장이 고른 것 위에
     디자인 확장이 얹힙니다. 여러 개를 켜고 꺼 보세요.
   </p>
+  <p>실제 설치 화면은 <b>한 질문에 선택지를 4개까지만</b> 보여 줍니다. 그래서 번들처럼 고를 게 많으면 질문이 몇 개로 나뉘어 나옵니다 — 칸이 모자란다고 한 칸에 묶거나 빼 버리지 않습니다.</p>
   <div class="sim">
     <div class="q">
       <p class="qt"><b>Q.</b> 목적 번들을 골라 주세요 (0개 이상, 복수 선택)</p>
@@ -350,8 +351,8 @@ footer{max-width:1120px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
   <h3>산출물 언어 — 한국어 / English</h3>
   <p>오해하기 쉬운 항목입니다 — <b>문서의 언어가 아니라</b> <b>설치가 만들어 내는 것</b>의 언어입니다. 드롭인 문서는 한국어 그대로 두고(Claude는 어느 언어로든 같게 실행합니다), 이 답이 대상 <code class="i">CLAUDE.md</code> 본문·<code class="i">docs/</code> 기록·커밋 메시지·산출물 파일명(<code class="i">docs/난이도-매트릭스.md</code> ↔ <code class="i">docs/difficulty-matrix.md</code>)의 언어를 정합니다. <code class="i">[갈래][Done]</code> 같은 형식 키워드는 어느 언어에서도 고정입니다 — <code class="i">/resume</code>·<code class="i">/wrap</code>이 그 문자열로 찾기 때문입니다.</p>
 
-  <h3>스킬 이름 별칭 — 없음 / 앞 / 뒤</h3>
-  <p>설치되는 스킬 이름(<code class="i">resume</code>·<code class="i">wrap</code>·<code class="i">svg-design</code>)은 흔합니다. 내 PC에 <b>같은 이름의 다른 스킬</b>이 이미 있으면 그쪽이 이겨서, 설치는 됐는데 눌러 보면 엉뚱한 게 돌거나 쓰던 게 덮입니다. 이 질문이 그 회피 수단입니다 — 애칭 <b>단디</b>를 붙여 <code class="i">dandi-resume</code>(앞) 또는 <code class="i">resume-dandi</code>(뒤)로 만듭니다. <b>기본은 안 붙임</b>이고, 설치 전에 같은 이름이 있는지 찾아본 뒤 있을 때만 권합니다. <b>기능 문서 세트 6종은 서로를 이름으로 부르니 여섯 개가 함께 움직입니다</b>. 자세한 건 <a href="options.ko.html#common">옵션 사전 2-7</a>.</p>
+  <h3>스킬 이름 별칭 — 없음 / 전부 / 고른 것만</h3>
+  <p>설치되는 스킬 이름(<code class="i">resume</code>·<code class="i">wrap</code>·<code class="i">svg-design</code>)은 흔합니다. 내 PC에 <b>같은 이름의 다른 스킬</b>이 이미 있으면 그쪽이 이겨서, 설치는 됐는데 눌러 보면 엉뚱한 게 돌거나 쓰던 게 덮입니다. 이 질문이 그 회피 수단입니다 — 애칭 <b>단디</b>를 붙여 <code class="i">dandi-resume</code>(앞) 또는 <code class="i">resume-dandi</code>(뒤)로 만듭니다. 붙이기로 하면 붙일 글자(기본 <code class="i">dandi</code>)와 위치(앞/뒤)를 이어서 묻고, <b>고른 것만</b>이면 설치할 스킬 목록에서 직접 고릅니다. <b>기본은 없음</b>이고, 설치 전에 같은 이름이 있는지 찾아본 뒤 있으면 그 스킬만 체크한 '고른 것만'을 권합니다. <b>기능 문서 세트 6종은 서로를 이름으로 부르니 여섯 개가 함께 움직입니다</b>. 자세한 건 <a href="options.ko.html#common">옵션 사전 2-7</a>.</p>
 
   <h3>이미 설치돼 있으면 — 유지 / 재구성 / 교체</h3>
   <p>기존 설정이 감지된 항목마다, 모드와 상관없이 <b>항상</b> 물어봅니다. 눌러서 차이를 보세요.</p>
@@ -406,6 +407,8 @@ footer{max-width:1120px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
       <p>에이전트는 통째가 아니라 <b>하나씩</b> 고릅니다. 기존 코드를 고치는 일이면 spec-writer를 뺀 5종,
       새로 만드는 일이면 surveyor·triage 없이 <b>spec-writer부터</b> 시작합니다. 리뷰어는 따로 안 만듭니다 —
       내장 <code class="i">/code-review</code>가 이미 있기 때문입니다.</p>
+      <p>에이전트 파일에는 모델과 함께 <b>추론 강도(effort)</b>도 미리 적혀 있어서, 부를 때마다 고를 필요가 없습니다.
+      로스터를 <b>팀과 공유할지</b>(프로젝트에 커밋) <b>나만 쓸지</b>(내 PC)도 함께 물어봅니다.</p>
       <p>여기에 <b>선택 항목이 하나 더</b> 있습니다(기본 해제) — <b>계획을 세울 때만</b> 다른 모델로 돌리는
       <code class="i">/plan-&lt;모델&gt;</code> 명령. 계획이 끝나면 원래 모델로 저절로 돌아옵니다.</p>
       <div class="coach warn" style="margin-top:8px"><span class="who">⚠️</span><div>
@@ -423,7 +426,7 @@ footer{max-width:1120px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
         <li><b>frontend-design</b> — Anthropic 공식 스킬. "AI가 만든 티가 나는 UI"를 피하게 합니다.</li>
         <li><b>MCP 서버</b> — 외부 도구 연결(GitHub·문서 검색·브라우저 조작). 어떤 서버를 붙일지는 따로 물어봅니다.</li>
         <li><b>브라우저 검증</b> — 만든 화면을 <b>Claude가 직접 열어 확인하고 고치게</b> 합니다.</li>
-        <li><b>기능 문서 스킬 세트</b>(6종) — 코드와 실제 화면을 보고 <b>기능마다 명세</b>를 써 두고, 거기 적힌 테스트를 돌리고, 문서를 안 고친 커밋을 막고, 릴리스 노트까지 만듭니다. 6종을 한 세트로 깔며, 문서만 있는 저장소는 대상이 아닙니다.</li>
+        <li><b>기능 문서 스킬 세트</b>(6종) — 코드와 실제 화면을 보고 <b>기능마다 명세</b>를 써 두고, 거기 적힌 테스트를 돌리고, 문서를 안 고친 커밋을 막고, 릴리스 노트까지 만듭니다. 6종을 한 세트로 깔며, 문서만 있는 저장소는 대상이 아닙니다. 팀원 전원의 커밋을 막는 <b>커밋 가드</b>는 기본으로 꺼 둔 채 따로 물어봅니다.</li>
         <li><b>refactor</b> — 코드를 정리하고(중복 통합·구조 정리·낡은 문법 제거) <b>동작이 그대로인지까지 증명</b>합니다 — 호출처·계약·데이터 형식·실제 실행. 후보를 표로 보여주고 고른 것만 고칩니다. 문서만 있는 저장소는 대상이 아닙니다.</li>
         <li><b>kr-ui-guide</b> — 국내 서비스 리서치(UX 패턴·아이콘·색)에서 추린 설계 기준. 제안하는 색의 <b>명도 대비를 계산</b>하고 화면을 체크리스트로 점검합니다. 한국 사용자 대상 UI용이며, 특정 브랜드의 모양을 베끼지 않습니다.</li>
       </ul>
@@ -440,7 +443,7 @@ footer{max-width:1120px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
     <summary><span class="id">04</span>검증 자동화 — "됐다"는 말 대신 기계 검사 <span class="badge b-on">훅 게이트가 핵심</span></summary>
     <div class="acc-b">
       <ul>
-        <li><b>훅 품질 게이트</b> — Claude가 <b>파일을 고칠 때마다</b> 린터·문법 검사가 자동으로 돌고, 실패 출력이 Claude에게 돌아가 스스로 고칩니다. <b>절약 프로필이어도 빼지 않습니다</b> — 재작업이 줄어드는 게 가장 큰 절약이라서.</li>
+        <li><b>훅 품질 게이트</b> — Claude가 <b>파일을 고칠 때마다</b> 린터·문법 검사가 자동으로 돌고, 실패 출력이 Claude에게 돌아가 스스로 고칩니다. <b>절약 프로필이어도 빼지 않습니다</b> — 재작업이 줄어드는 게 가장 큰 절약이라서. 고르면 <b>적용 범위</b>(팀 공유 / 내 PC 전체 / 나만·이 프로젝트만)와 <b>강도</b>(실패하면 막기 / 경고만)를 함께 물어봅니다.</li>
         <li><b>호스트 CLI</b>(<code class="i">gh</code>/<code class="i">glab</code>) — Claude가 PR을 만들고 CI 실패 로그를 직접 읽게 합니다. 로그인은 <b>본인이 직접</b> 합니다.</li>
         <li><b>CI 통합</b> — PR에 <code class="i">@claude</code>를 멘션하면 리뷰·수정. <span class="badge b-gate">🔴 회사면 조직 승인 필요</span> — CI에서 코드가 Anthropic API로 전송됩니다.</li>
       </ul>
@@ -459,6 +462,7 @@ footer{max-width:1120px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
     <div class="acc-b">
       <p>내장 5종(Default·Proactive·Explanatory·Learning·Concise) 중 고르거나, 원하는 역할·톤을 마크다운 파일 하나로 직접 만듭니다.
       배우는 중이라면 <b>Explanatory</b>(왜 그렇게 했는지 설명하며 진행)가 유용합니다.</p>
+      <p>직접 만들 때는 <b>스타일 파일을 어디 둘지</b>(내 PC 전체 / 이 프로젝트)와 <b>켜는 설정을 어디 쓸지</b>(나만·이 프로젝트 / 내 PC 전체 / 팀 전원)를 따로 물어봅니다 — 파일을 PC 전체에 둬도, 켜는 설정이 이 프로젝트에만 있으면 다른 프로젝트에선 켜지지 않습니다.</p>
       <div class="coach warn" style="margin:8px 0"><span class="who">🔴</span><div>
         <b>커스텀 스타일의 함정 — <code class="i">keep-coding-instructions</code></b>
         기본값이 false인데, false면 Claude Code의 <b>내장 코딩 지침이 통째로 사라집니다</b>(검증 습관·최소 변경 원칙 포함).
@@ -469,14 +473,15 @@ footer{max-width:1120px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
   </details>
 
   <details class="acc">
-    <summary><span class="id">06</span>루틴 — PC를 꺼도 도는 클라우드 예약 작업 <span class="badge b-gate">게이트 3문</span></summary>
+    <summary><span class="id">06</span>루틴 — PC를 꺼도 도는 클라우드 예약 작업 <span class="badge b-gate">게이트 먼저</span></summary>
     <div class="acc-b">
       <p>Anthropic 클라우드에서 무인으로 도는 예약 작업입니다. 야간 PR 리뷰, 주간 문서 점검 같은 것.
-      설치 전에 <b>반드시 세 가지</b>를 묻습니다 — 코드로 확인할 수 없기 때문입니다.</p>
+      설치 전에 <b>반드시</b> 아래를 묻습니다 — 코드로 확인할 수 없기 때문입니다.</p>
       <ul>
         <li>① 요금제가 <b>Pro 이상</b>인가 (+ claude.ai 계정에 GitHub 연결이 돼 있는가)</li>
         <li>② 회사 저장소라면 — 조직이 <b>클라우드 실행(코드 반출)</b>을 허용하는가</li>
-        <li>③ GitHub 저장소인가 (현재 GitHub 전용)</li>
+        <li>③ GitHub 저장소인가 (현재 GitHub 전용 — 아니면 '해당 없음'으로 기록하고 다음에 다시 묻지 않습니다)</li>
+        <li>④ <b>무인으로 돌려도 되는 일인가</b> — 루틴은 실행 중에 승인을 묻지 않으니, 배포·삭제·외부 발송처럼 되돌리기 어려운 일은 맡기지 않습니다</li>
       </ul>
       <div class="coach tip" style="margin-top:8px"><span class="who">💡</span><div>
         <b>내 PC의 파일이 필요하면 루틴이 아닙니다</b> 루틴은 클라우드에서 돌아서 내 파일이 없습니다.
@@ -515,6 +520,7 @@ footer{max-width:1120px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
       <div class="stamp" id="finalStamp"></div>
       <p class="why">마지막 줄은 설치가 끝나면 <code class="i">CLAUDE.md</code> 맨 아래에 실제로 남는 기록입니다.
       버전 숫자(<span style="font-family:var(--mono)">v○.○</span>)는 설치 시점의 문서에서 읽어 적습니다.
+      운용 프로필은 PC마다 다를 수 있어 이 줄이 아니라 <b>내 PC의 글로벌 기록</b>(<code class="i">~/.claude/CLAUDE.md</code>)에 남습니다.
       다음에 다시 설치를 돌리면 Claude가 이 줄을 먼저 읽고 "그 사이 무엇이 바뀌었는지"부터 보여줍니다.</p>
     </div>
   </div>
@@ -532,7 +538,7 @@ footer{max-width:1120px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
   <ul>
     <li>잘 모르겠으면 <b>권장 모드</b> — Claude가 조합의 이유를 보여주고 확인받습니다.</li>
     <li>어떤 선택을 해도 <b>승인 없이 덮어쓰지 않고</b>, 시크릿은 읽지도 커밋하지도 않습니다.</li>
-    <li>체크를 안 해도 <b>나중에 다시 돌려 추가</b>할 수 있습니다 — 설치 기록이 남아 있어서 이어서 갑니다.</li>
+    <li>체크를 안 해도 <b>나중에 다시 돌려 추가</b>할 수 있고, 반대로 <b>이미 깐 것을 뺄</b> 수도 있습니다 — 설치 기록이 남아 있어서 이어서 갑니다. 뺄 때는 설치가 만든 것만 지우고, 그동안 쌓인 작업 기록은 기본으로 남깁니다.</li>
   </ul>
   <h3>다음으로</h3>
   <ul>
@@ -552,7 +558,7 @@ footer{max-width:1120px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
 </div>
 
 <footer>
-  단디 · 설치 옵션 학습 코스 · 2026-09-16<br>
+  단디 · 설치 옵션 학습 코스 · 2026-09-17<br>
   각 항목의 정본은 해당 하위 문서(01~06)입니다. 이 페이지는 사람이 배우기 위한 안내이며, 설치 절차 자체를 바꾸지 않습니다. 진행도는 이 브라우저의 localStorage에만 저장됩니다.<br>
   저장소: github.com/EleninJayTech/claude ·
   <a href="../index.html">사용법</a> · <a href="intro.html">소개 영상</a> · <a href="demo.html">설치 시연</a> · <a href="options.html">옵션 사전</a> · <a href="skills.ko.html">스킬 카탈로그</a>
@@ -579,7 +585,7 @@ var STEPS = [
   ['STEP 1','문서 확보','설치에 필요한 문서(01~06)가 같은 폴더에 없으면 GitHub에서 가져옵니다. 질문 없음.'],
   ['STEP 2','환경 감지','이전 적용 기록(dropin-applied), 기존 설정 파일, 프로젝트 유형을 조사합니다. 질문 없음.'],
   ['STEP 3','큰 선택','기반 모드·목적 번들·운용 프로필·산출물 언어·스킬 이름 별칭을 물어봅니다 — 이 코스의 챕터 3~5가 여기입니다.'],
-  ['STEP 4','설치 실행','고른 문서의 절차대로 설치합니다. \'사용자\' 모드일 때만 문서 안 세부 항목(챕터 6~8)까지 물어봅니다.'],
+  ['STEP 4','설치 실행','고른 문서의 절차대로 설치합니다. 문서 안 세부 항목(챕터 6~8)을 하나하나 묻는 건 \'사용자\' 모드일 때뿐이지만, 기본으로 꺼져 있는 항목과 적용 범위(스코프) 같은 안전 질문은 어느 모드에서나 나옵니다.'],
   ['STEP 5','검증·기록','실행 결과를 증거와 함께 보고하고, CLAUDE.md 맨 아래에 적용 기록 한 줄을 남깁니다.']
 ];
 
@@ -591,14 +597,14 @@ var MODES = {
 };
 var SITUS = {
   newpc:{name:'새 PC', docs:{'01':'글로벌 규칙·보안·/resume·/wrap','03':'claude-hud 상태 표시줄'}, why:'PC 첫 세팅이니 글로벌 기반 + 사용량이 보이는 상태 표시줄부터.'},
-  dev:{name:'개발 프로젝트', docs:{'01':'기록 체계·보안','02':'모델 분담 로스터','04':'훅 게이트·CLI·CI'}, why:'코드가 있으니 분담과 자동 검증까지.'},
+  dev:{name:'개발 프로젝트', docs:{'01':'기록 체계·보안','02':'모델 분담 로스터','04':'훅 게이트(+감지되면 CLI·CI)'}, why:'코드가 있으니 분담과 자동 검증까지.'},
   docsrepo:{name:'문서 저장소', docs:{'01':'기록 체계·보안'}, why:'빌드·코드가 없어 02·04는 쓸 곳이 없습니다.'},
   applied:{name:'이미 01이 있음', docs:{'01':'이미 있음 — 재적용 점검(어긋난 곳만 손봄)'}, why:'아직 없는 문서 중 상황에 맞는 것만 제안합니다.'}
 };
 var BUNDLES = {
   design:{name:'디자인', desc:'웹 화면 프로젝트용', docs:{'03':'svg-design · frontend-design · 브라우저 검증 · kr-ui-guide(산출물 언어 한국어일 때)'}},
   verify:{name:'검증 강화', desc:'테스트·CI가 있을 때', docs:{'04':'훅 게이트 + gh/glab CLI + CI 통합'}},
-  auto:{name:'무인 자동화', desc:'직접 요청할 때만', docs:{'06':'클라우드 루틴 (+04 CI 병행 권장)'}},
+  auto:{name:'무인 자동화', desc:'직접 요청할 때만', docs:{'06':'클라우드 루틴 — GitHub 저장소만 (+04 CI 병행 권장)'}},
   style:{name:'응답 스타일', desc:'직접 요청할 때만', docs:{'05':'출력 스타일'}},
   featdoc:{name:'기능 문서화', desc:'화면이 있는 코드 프로젝트', docs:{'03':'기능 문서 스킬 세트 6종 — 기능별 명세·테스트·커밋 가드'}},
   company:{name:'회사', desc:'안전장치 수정자', docs:{}}
@@ -892,7 +898,7 @@ function drawFinal(){
   var chosen = Object.keys(docs).sort();
   var un = ['01','02','03','04','05','06'].filter(function(k){ return chosen.indexOf(k)<0; });
   var today = new Date().toISOString().slice(0,10);
-  var line='<!-- dropin-applied: '+today+' · 모드='+modeLabel+' · 프로필='+PROFS[F.prof].name+' · 언어=ko';
+  var line='<!-- dropin-applied: '+today+' · 모드='+modeLabel+' · 언어=ko · 별칭=없음 · 00 v○.○';
   chosen.forEach(function(k){ line+=' · '+k+' v○.○'; });
   if(un.length && !isCustom) line+=' · 미선택: '+un.join(', ');
   line+=' · 출처=사본 -->';
