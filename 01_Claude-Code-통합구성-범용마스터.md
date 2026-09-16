@@ -1,6 +1,6 @@
 # Claude Code 통합 구성 — 범용 마스터 (드롭인 적용)
 
-> **문서 버전: v1.80** · 최종 갱신: **2026-09-17** · **최근 재검증: 2026-09-16** · 기준: Claude Code v2.1.273 (Opus 5 · Sonnet 5 · Fable 5.1)
+> **문서 버전: v1.81** · 최종 갱신: **2026-09-17** · **최근 재검증: 2026-09-16** · 기준: Claude Code v2.1.273 (Opus 5 · Sonnet 5 · Fable 5.1)
 >
 > | 버전 | 날짜 | 변경 내용 |
 > | --- | --- | --- |
@@ -26,7 +26,7 @@
 > | v1.70 | 2026-09-10 | §D-7 **출력 스타일 서술 정정** — 전환은 v2.1.251+ **다음 메시지부터 즉시 적용**(옛 서술 "세션 중엔 적용도 안 된다"는 그 이전 동작), 캐시는 **환경별**(claude.ai·Console 계정=대화 메시지로 전달돼 유지 / Bedrock·GCP·Foundry=시스템 프롬프트라 전체 재처리 → "깨는 행동"에도 조건부 등재), **스타일 파일 내용 편집은 여전히 재시작**. CLAUDE.md 편집 서술에 **중첩 `CLAUDE.md`·`paths:` rules 예외**(로드 전 편집은 적용) — 공식 prompt-caching·output-styles 2026-09-10 조회 |
 > | v1.71 | 2026-09-11 | §D-2 미러 배제 선언에 **§D-4 배포 자산 예외**(`global-config/skills/dropin-*` 2종), `dropin-applied` 줄은 00 STEP 5가 새로 쓴다 · §D-3에 **선택 확장 `manual` 게이트 코드 블록**(Windows 전용) · §F-2 A·B·C 미러 단계 사유 정정(배포본의 `global-config/`는 미러가 아니다)·개발 클론 탐색 실패는 "미확인" · C resume의 PROJECT_PLAN 경로를 `docs/`로 |
 > | v1.72 | 2026-09-13 | §A STEP 2 동시성 질문에 **다른 질문의 답으로 추정 금지** — 첫 배포본 스모크(2026-09-12)에서 03 §5 게이트의 '개인 프로젝트' 답을 ⓐ 혼자로 추정해 확정하고 설치 뒤에야 알렸다(ⓑ부터 `merge=union`이 필수라 갈림길이다) |
-> | v1.73 | 2026-09-13 | **같은 폴더 동시 세션** — §G에 동시 세션 금지 한 줄(두 번째 작업은 `claude -w`, 대화 이어받기는 `-n`·`/rename`으로 이름을 붙여 `--resume <이름>` — `-c`는 그 폴더의 가장 최근 대화 하나만 연다) · §F-1·§F-2 A·B·C resume·wrap에 **세션 밖 변경**(R42 — resume은 미커밋을 내 작업으로 단정하지 않고, wrap 보고는 이 세션이 편집한 파일 기준) · §L 세션 분리 축. `merge=union`은 git 병합 때만 동작해 같은 폴더의 두 세션엔 무력하다 |
+> | v1.73 | 2026-09-13 | **같은 폴더 동시 세션** — §G에 동시 세션 금지 한 줄(두 번째 작업은 `claude --worktree`, 대화 이어받기는 `-n`·`/rename`으로 이름을 붙여 `--resume <이름>` — `-c`는 그 폴더의 가장 최근 대화 하나만 연다) · §F-1·§F-2 A·B·C resume·wrap에 **세션 밖 변경**(R42 — resume은 미커밋을 내 작업으로 단정하지 않고, wrap 보고는 이 세션이 편집한 파일 기준) · §L 세션 분리 축. `merge=union`은 git 병합 때만 동작해 같은 폴더의 두 세션엔 무력하다 |
 > | v1.74 | 2026-09-16 | **/audit 11차(회귀) 반영 2건** — 동시 세션 금지 한 줄을 **§F-1(SSOT)에도 편입**(§G에만 있어 프로젝트 `CLAUDE.md`에 안 실리고 있었다 — resume·wrap의 R42는 사후 완화일 뿐), 표기 `-w`→**`--worktree`로 통일**(§F-5·02 §C는 원래 전체형을 쓰는데 §G·§L만 축약형이었다) |
 > | v1.75 | 2026-09-16 | 전면 재검증(v2.1.273) — §L ⓐⓒ 종결(`modelSettings`>`effortLevel` 확정, auto mode 도입 v2.1.228+/233+·2026-08-14), §J-1 **오류 2건 정정**("Team·Enterprise 기본 auto" → Enterprise는 기본 manual / "Fable 5" 모델 하한 → "Fable 모델"), §D-7 **Fable 5.1 effort-캐시 예외**(v2.1.260+)·**출력 스타일 전환 캐시 서술 환경별 구분 제거**(회귀 정정, 공식은 이제 전 환경 통일), §J `sandbox.credentials` 확장 옵션 8종 본문 반영, §F-2 frontmatter 3키 추가(`metadata`·`license`·`compatibility`) |
 > | v1.76 | 2026-09-16 | **최적화**: 압축(규칙 불변) — v1.63 행의 예시 실측값 제거 |
@@ -34,6 +34,7 @@
 > | v1.78 | 2026-09-16 | **/audit 12차(회귀) 반영 4건** — ⓕ 실측을 §검증 **②→①**로 이동(산출물이 글로벌 파일인데 "글로벌 전용이면 ② 갈음" 규칙에 걸려 ⓕ가 설치되는 경로에서 유일한 검증이 사라졌다), §D-6 블록을 **하위 모델 한 줄로** 축소(상위 두 줄은 기본값과 같은 no-op — 세대마다 갈 ID만 늘린다), `modelSettings`를 **머신 종속으로 판정**해 미러 대조 제외 명시, 절약 프로필 머리글을 `모델 배정 하향`으로 정정(effort는 프로필로 갈리지 않는다) |
 > | v1.79 | 2026-09-17 | **/audit 13차(전수) [상] 반영** — STEP 3 끝에 **선택 해제·제거 절차** 한 줄 신설(01 전문에 `제거:`가 §D-6 ⓕ 1건뿐이었다 — ⓐⓑⓕ는 기존 사용자 파일에 얹는 블록·키라 파일 삭제가 아니라고 명시, ⓒⓓ는 파일·폴더 삭제). `docs/RULES.md` R29 필수 목록에 `01` 등록 |
 > | v1.80 | 2026-09-17 | **/audit 13차(전수) [중] 반영 3건** — STEP 4 §검증 ⓐ를 §D-5와 같은 "`~/.claude/CLAUDE.md` 실재 + `/context` Memory files 로드 확인"으로 통일, §검증에 글로벌 단독 적용 시 스코프·머신 한정자 형식(`dropin-applied(글로벌 · 머신=<별칭>)`) 명시, 별칭 치환 규칙의 하드코딩 개수(`8줄`·`3곳`) 제거하고 "전부"로(R14 — v1.74 동시 세션 줄 편입 이후 실물과 어긋나 있었다) |
+> | v1.81 | 2026-09-17 | **/audit 13차·12차 [하] 반영** — §L 자기 버전 인용을 이전 서술로 일반화(R20 병합 대비), 별칭 치환 변경이력의 `claude -w`→`--worktree` 정정, 최소 모드가 글로벌 전용 대상에선 ⓓⓔ 제외가 우선함을 명시, `modelSettings` 권장 블록에 "가용 모델 실측 확인" 안내 추가, §D-2 팁에 전역 `rules/` 백업 미대상 고지 |
 > ※ 갱신 시: 이 표에 한 줄 추가 + 하단 "문서 정보" 날짜 수정 + §L 재검증 체크리스트 수행.
 
 > **사용법**: 이 파일을 아무 프로젝트 루트(또는 `docs/`)에 넣고 Claude에게
@@ -66,7 +67,7 @@
 
 **STEP 3 — 구성 항목 선택 확인 → 필요한 것만 생성.** 감지 결과를 바탕으로 아래 항목을 **선택 목록(다중 선택)으로 제시**하고, 체크된 것만 생성한다(전부 기본 체크, 이미 있는 항목은 "유지/재구성" 표기):
 - ⓐ 글로벌 행동 규칙(§D-2 CLAUDE.md) ⓑ 글로벌 보안(§D-3 deny·hooks) ⓒ `/resume`·`/wrap`·점검 스킬 dropin-check/update(§D-4·F-2 — 이름에 **별칭**을 붙일지는 00 STEP 3가 묻는다. 단독 적용이면 그 자리에서 묻고 기본은 `별칭=없음`) ⓓ 프로젝트 기록 체계(§E·F-1: docs/·CLAUDE.md·.gitattributes·§F-5 .gitignore) ⓔ 프로젝트 권한(§F-3 settings.json) ⓕ effort 묶음·캐시 가이드(§D-6 `modelSettings` 모델별 저장값을 `~/.claude/settings.json`에 기록 + §D-7 캐시 습관은 안내)
-- **00의 모드별 기본값**(00 STEP 3에서 왔을 때 — 사용자 모드가 아니면 이 매핑으로 자동 확정하고 질문 생략): **최소 = ⓑⓒⓓ**(보안+스킬+기록 체계 — ⓒ를 빼면 §F-1 블록이 전제하는 `/resume`·`/wrap`이 없고 §D-5의 4종 자동완성 검증도 통과 불가라, "기반"이 성립하지 않는다) / **권장·전체 = ⓐ~ⓕ 전부**. 어느 쪽이든 ⓑ는 빼지 않는다.
+- **00의 모드별 기본값**(00 STEP 3에서 왔을 때 — 사용자 모드가 아니면 이 매핑으로 자동 확정하고 질문 생략): **최소 = ⓑⓒⓓ**(보안+스킬+기록 체계 — ⓒ를 빼면 §F-1 블록이 전제하는 `/resume`·`/wrap`이 없고 §D-5의 4종 자동완성 검증도 통과 불가라, "기반"이 성립하지 않는다) / **권장·전체 = ⓐ~ⓕ 전부**. 어느 쪽이든 ⓑ는 빼지 않는다. **이 매핑은 대상에 프로젝트가 있다고 전제한다** — 대상이 글로벌(PC)뿐이면 아래 줄의 ⓓⓔ 제외가 **이 매핑보다 우선**해 최소 모드도 ⓑⓒ만 남는다.
 - **대상이 글로벌(PC)뿐이면 ⓓⓔ는 빼고 ⓐⓑⓒ(+ⓕ)만 적용한다** — ⓓ 프로젝트 기록 체계·ⓔ 프로젝트 권한은 대상 repo가 있어야 의미가 있는데, 00 §C-1의 "새 PC → 01(글로벌)+03"으로 들어오면 모드가 질문을 생략하므로 그대로 두면 claude를 띄운 임의 폴더에 `docs/`·`.gitattributes`·`.claude/settings.json`이 말없이 생긴다(00 STEP 5의 기록 예시 `01 vX.Y(글로벌만)`이 가리키는 상태가 이것이다).
 - §D~F에서 **해당 시나리오 부분만** 골라 생성. 불필요한 것(단일 repo에 MSA 단위분할 등)은 만들지 않는다. 단 **ⓑ 보안(deny·시크릿 차단)은 해제를 권하지 않는다** — 사용자가 명시적으로 빼는 경우에만 제외하고 위험을 고지한다.
 - **선택 해제·제거 절차** (4단 규약의 01 몫 — ⓐⓑⓕ는 **기존 사용자 파일에 블록·키를 얹는** 산출물이라 되돌림이 파일 삭제가 아니다): ⓐ `~/.claude/CLAUDE.md`의 §D-2 블록만 제거(파일은 남긴다) ⓑ `~/.claude/settings.json`의 §D-3 deny·hooks 키만 제거(파일은 남긴다) ⓒ `~/.claude/skills/{resume,wrap,dropin-check,dropin-update}/`(별칭을 붙였으면 그 이름) 폴더 삭제 ⓓ 프로젝트 `docs/`(§E·F-1 산출물) 폴더 삭제 + `CLAUDE.md`의 §F-1 SSOT 블록·`.gitattributes`의 §F-1 줄·`.gitignore`의 §F-5 줄만 제거(파일은 남긴다) ⓔ 프로젝트 `.claude/settings.json`의 §F-3 권한 키만 제거(파일은 남긴다) ⓕ `~/.claude/settings.json`의 §D-6 `modelSettings` 키만 제거(파일은 남긴다). **주의**: ⓐⓑⓕ는 PC 전역 파일이라 다른 프로젝트·다른 드롭인 항목도 같이 쓴다 — 지우기 전에 적용 기록(`dropin-applied`)으로 그 블록·키가 우리 산출물인지 먼저 확인하고, 아니면 지우지 않는다. 제거 후 기록의 01 괄호에서 해당 항목을 뺀다.
@@ -116,7 +117,7 @@ New-Item -ItemType Directory -Path .claude/skills/wrap -Force
 New-Item -ItemType Directory -Path .claude/skills/dropin-check -Force
 New-Item -ItemType Directory -Path .claude/skills/dropin-update -Force
 ```
-> 4종이다 — §D-4가 뒤 2종을 복사해 넣고 §D-5가 4종 자동완성을 성공 기준으로 삼는다.
+> 위 폴더들이다(개수는 세지 않는다 — R14, 늘어나면 이 문장 대신 위 코드블록이 정본이다) — §D-4가 뒤 두 스킬을 복사해 넣고 §D-5가 **위 폴더 전부**의 자동완성을 성공 기준으로 삼는다.
 > **별칭**: 00 STEP 3의 `별칭=`이 `없음`이 아니면 **위 폴더명에 그대로 적용**한다(`dandi-resume`·`resume-dandi`). 폴더명을 바꾸면 **각 `SKILL.md`의 frontmatter `name:`도 같은 값으로** 바꾼다 — 둘이 다르면 그 스킬은 호출되지 않는다. 본문 치환 규칙은 §F-2 서두. **00 없이 단독 적용이면 그 자리에서 묻는다**(기본 `없음`).
 
 ### D-2. 글로벌 `CLAUDE.md` (행동 규칙) — `~/.claude/CLAUDE.md`
@@ -136,7 +137,7 @@ New-Item -ItemType Directory -Path .claude/skills/dropin-update -Force
 ```
 > 🔴 **§9를 빼지 않는다** — 위 블록에서 유일하게 **이번 설치의 결과로 채워지는 절**이라, 없으면 깐 스킬을 언제 쓰는지 아무 데도 적히지 않는다. 스킬을 하나도 안 깔았으면 절 자체를 생략한다(빈 절을 남기지 않는다). **개인 PC의 실제 §9를 베껴 넣지 않는다** — 그 PC에만 있는 스킬이 섞이면 없는 명령을 가리킨다.
 > 🔴 **§0의 근거**: 공식은 두 파일의 우선순위를 **정하지 않는다** — 로드 순서만 "넓은 범위 → 구체적인 범위"(사용자 다음에 프로젝트)이고, *"두 규칙이 모순되면 Claude가 임의로 하나를 고를 수 있다"*고만 적는다(2026-09-09 확인). 그래서 §0은 **우리가 정하는 판정 규칙**이지 공식 동작이 아니며, **모순을 남겨도 된다는 허가도 아니다** — 겹치는 규칙은 한쪽에서 지우는 것이 먼저고 §0은 그럼에도 남은 충돌의 최후 판정이다.
-> 팁: CLAUDE.md가 200줄을 넘보면 **`.claude/rules/*.md`** 로 주제별 분리(전역 `~/.claude/rules/`도 지원). rules 파일에 `paths:` frontmatter(glob)를 주면 **해당 경로 파일을 다룰 때만 로드**돼 컨텍스트를 아낀다. HTML 주석(`<!-- -->`)은 로드 시 제거되므로 유지보수 메모용으로 사용 가능.
+> 팁: CLAUDE.md가 200줄을 넘보면 **`.claude/rules/*.md`** 로 주제별 분리(전역 `~/.claude/rules/`도 지원). rules 파일에 `paths:` frontmatter(glob)를 주면 **해당 경로 파일을 다룰 때만 로드**돼 컨텍스트를 아낀다. HTML 주석(`<!-- -->`)은 로드 시 제거되므로 유지보수 메모용으로 사용 가능. **전역 `~/.claude/rules/`는 이 저장소의 `global-config/` 백업·`/wrap` 미러 대조 대상이 아니다** — 이 팁을 따라 전역 rules를 쓰면 그 내용은 새 PC 복원 때 함께 살아나지 않으니, 백업이 필요하면 직접 챙긴다.
 
 ### D-3. 글로벌 `settings.json` (deny + hooks) — `~/.claude/settings.json`
 ```json
@@ -203,7 +204,7 @@ New-Item -ItemType Directory -Path .claude/skills/dropin-update -Force
 - **`ultracode`**: `/effort ultracode` — effort 단계가 아니라 Claude Code 설정. 모델엔 `xhigh`를 보내면서 굵직한 작업마다 **동적 워크플로(멀티에이전트 오케스트레이션)** 를 얹는다. 세션 한정, 토큰 소모 큼.
 - **`ultrathink`**: 프롬프트에 이 단어를 넣으면 **그 턴만** 깊은 추론 요청(세션 설정 불변). "think hard" 류는 키워드가 아님.
 - **스코프**: `effortLevel`은 **User·Project·Local** 지원, 우선순위 **Managed > CLI > Local > Project > User**. 세션 1회 오버라이드는 `--effort` 플래그·`CLAUDE_CODE_EFFORT_LEVEL` 환경변수(환경변수가 최우선).
-- **권장 — 모델별 저장값을 묶어 둔다**(`~/.claude/settings.json`, User 스코프). 그러면 `/model`로 모델만 고르면 강도가 따라와, 매 작업 `/effort`를 다시 판단하지 않는다(02 §F-1 운용표의 `(자동)` 열 — 적지 않은 모델은 그 모델의 기본값이 그대로 `(자동)`이다):
+- **권장 — 모델별 저장값을 묶어 둔다**(`~/.claude/settings.json`, User 스코프). 그러면 `/model`로 모델만 고르면 강도가 따라와, 매 작업 `/effort`를 다시 판단하지 않는다(02 §F-1 운용표의 `(자동)` 열 — 적지 않은 모델은 그 모델의 기본값이 그대로 `(자동)`이다). **키는 아래 예시를 베끼지 않는다** — `/model` 목록에서 **이 PC가 실제로 쓸 수 있는 모델의 전체 ID**를 먼저 읽고 그 값으로 채운다(Pro 요금제·Foundry 등에서 키가 가용 모델과 안 맞으면 저장은 되지만 아무 모델에도 적용되지 않는다):
   ```json
   {
     "modelSettings": {
@@ -601,7 +602,7 @@ CLAUDE.local.md
 Claude Code는 매주 바뀐다. 6개월마다 30분:
 - `code.claude.com/docs/en/whats-new` 최신 항목 확인.
 - §D-6 `modelSettings` 예시의 **모델 ID 키**가 현행 라인업인지(전체 ID라 세대 교체마다 낡는다 — `claude-fable-5` → `claude-fable-5-1`이 실례) · **hold 모델 목록**이 그대로인지.
-- ✅(2026-09-16 종결) ⓐ `modelSettings`(모델별 저장값)가 `effortLevel`(저장값 없는 모델의 폴백)을 이긴다 — settings 레퍼런스 원문 재확인(01 v1.65 서술 그대로 확정). ⓒ §J-1 auto 기본 시작 모드 도입 = macOS/Linux/WSL v2.1.228+·네이티브 Windows v2.1.233+, 2026-08-14(§J-1 본문에 반영).
+- ✅(2026-09-16 종결) ⓐ `modelSettings`(모델별 저장값)가 `effortLevel`(저장값 없는 모델의 폴백)을 이긴다 — settings 레퍼런스 원문 재확인(이전 재검증 서술 그대로 확정 — 특정 버전 행을 인용하지 않는다. R20 병합되면 근거가 사라진다). ⓒ §J-1 auto 기본 시작 모드 도입 = macOS/Linux/WSL v2.1.228+·네이티브 Windows v2.1.233+, 2026-08-14(§J-1 본문에 반영).
 - 🟡(2026-09-16 재확인 — 부분 진전) ⓑ 스킬 `effort:` 오버라이드의 턴 경계: 공식 문구 *"frontmatter effort applies when that skill or subagent is active, overriding the session level but not the environment variable"*는 확보했으나 "다음 턴에 세션 값으로 복귀한다"는 명시적 문장은 여전히 없다(`model:`은 턴 한정으로 이미 확정).
 - 정기 확인(2026-09-16 전부 유효): deny의 서브프로세스 우회 한계, **샌드박스 네이티브 Windows 미지원**(macOS·Linux·WSL2만 — sandboxing), `sandbox.credentials` 스키마(`files[]`={path,mode}·`envVars[]`={name,mode}, mode=`deny`|`mask` + `extract`·`decode`·`maskClaims`·`maskDuplicates`·`onExtractNoMatch`·`injectHosts`·`awsPairs`·`sigv4`, v2.1.224+ 확장 8종 — §J 본문에도 반영), `attribution` 스키마, auto-memory 한도(MEMORY.md 200줄/25KB).
 - **dev container 격리 경로**(§J 격리 3단) — feature 이미지·이그레스 방화벽 스크립트 구성이 유지되는지, 네이티브 Windows 대안이라는 위치가 바뀌지 않았는지(내장 샌드박스가 Windows를 지원하기 시작하면 이 줄의 근거가 사라진다).
@@ -618,5 +619,5 @@ Claude Code는 매주 바뀐다. 6개월마다 30분:
 ## 핵심 출처 🟢
 IDE 통합·`--add-dir`(ide-integrations·large-codebases) / permissions·deny 한계 / hooks / skills / memory·auto-memory — 모두 `code.claude.com/docs` 및 `docs.anthropic.com`.
 
-**문서 정보** — 통합 마스터(범용) **v1.80**. 변경 이력은 최상단 버전 표 참조(유래: 8개 소스 통합 초판 — 최상단 병합 행).
+**문서 정보** — 통합 마스터(범용) **v1.81**. 변경 이력은 최상단 버전 표 참조(유래: 8개 소스 통합 초판 — 최상단 병합 행).
 최종 갱신: 2026-09-17 · 최근 재검증: 2026-09-16 / 참조: Claude Code v2.1.273, Opus 5(v2.1.219+) · Sonnet 5(v2.1.197+) · Fable 5.1(v2.1.255+).

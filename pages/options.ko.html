@@ -123,7 +123,7 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
   <ol>
     <li><a href="#words">0. 먼저 알아둘 낱말 8개</a> — 스코프·settings.json·훅·서브에이전트 같은 말부터</li>
     <li><a href="#flow">1. 질문은 어떤 순서로 나오나</a></li>
-    <li><a href="#common">2. 맨 처음 공통 질문</a> — 대상 · 모드 · 번들 · 프로필 · 언어</li>
+    <li><a href="#common">2. 맨 처음 공통 질문</a> — 어떤 문서를 고르든 먼저 묻는 것들</li>
     <li><a href="#doc01">3. 01 기본 셋업</a> — 기록 체계와 보안 (ⓐ~ⓕ)</li>
     <li><a href="#doc02">4. 02 모델 분담</a> — 서브에이전트 로스터</li>
     <li><a href="#doc03">5. 03 확장 기능</a> — HUD · 디자인 스킬 · MCP · 브라우저</li>
@@ -452,13 +452,13 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
     <p class="lead">통째로가 아니라 <b>하나씩</b> 고릅니다. 지금 하는 일에 맞는 것만 기본 체크됩니다.</p>
     <div class="tbl">
       <table>
-        <tr><th style="width:130px">에이전트</th><th>하는 일</th><th style="width:88px">기본 모델</th></tr>
-        <tr><td><b>surveyor</b></td><td>구조를 넓고 기계적으로 훑어 목록·표로 남김. <b>판단은 하지 않음</b></td><td>sonnet</td></tr>
-        <tr><td><b>triage</b></td><td>훑은 결과를 rubric에 대고 난이도를 매김. <b>가장 레버리지가 큰 자리</b></td><td><b>opus</b></td></tr>
-        <tr><td><b>analyst</b></td><td>어려운 모듈을 상세 분석해 구현 명세(성공 기준·샘플·위험)를 씀</td><td>난이도별</td></tr>
-        <tr><td><b>spec-writer</b></td><td>새로 만들 기능의 요구를 확정해 명세로 씀 — 명세가 틀리면 뒤가 전부 재작업이라 비싼 모델</td><td><b>opus</b></td></tr>
-        <tr><td><b>implementer</b></td><td>명세를 보고 실제 구현. <b>범위 밖은 건드리지 않음</b></td><td>sonnet</td></tr>
-        <tr><td><b>parity-tester</b></td><td>테스트를 돌려 통과/차이만 빠르게 보고. 원인 분석은 위 단계로 넘김</td><td>haiku</td></tr>
+        <tr><th style="width:130px">에이전트</th><th>하는 일</th><th style="width:88px">기본 모델</th><th style="width:70px">effort</th></tr>
+        <tr><td><b>surveyor</b></td><td>구조를 넓고 기계적으로 훑어 목록·표로 남김. <b>판단은 하지 않음</b></td><td>sonnet</td><td>medium</td></tr>
+        <tr><td><b>triage</b></td><td>훑은 결과를 rubric에 대고 난이도를 매김. <b>가장 레버리지가 큰 자리</b></td><td><b>opus</b></td><td>high</td></tr>
+        <tr><td><b>analyst</b></td><td>어려운 모듈을 상세 분석해 구현 명세(성공 기준·샘플·위험)를 씀</td><td>난이도별</td><td>medium~xhigh</td></tr>
+        <tr><td><b>spec-writer</b></td><td>새로 만들 기능의 요구를 확정해 명세로 씀 — 명세가 틀리면 뒤가 전부 재작업이라 비싼 모델</td><td><b>opus</b></td><td>high</td></tr>
+        <tr><td><b>implementer</b></td><td>명세를 보고 실제 구현. <b>범위 밖은 건드리지 않음</b></td><td>sonnet</td><td>medium</td></tr>
+        <tr><td><b>parity-tester</b></td><td>테스트를 돌려 통과/차이만 빠르게 보고. 원인 분석은 위 단계로 넘김</td><td>haiku</td><td>low</td></tr>
       </table>
     </div>
     <dl>
@@ -490,7 +490,7 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
     <p class="lead"><b>계획을 세울 때만</b> 다른 모델로 돌리는 <code class="i">/plan-&lt;모델&gt;</code> 명령을 하나 만듭니다. 계획이 끝나면 <b>원래 모델로 저절로 돌아옵니다</b> — 되돌리는 조작이 필요 없습니다.</p>
     <dl>
       <dt>왜 직접 만드나</dt><dd>Claude Code에 내장된 조합은 <code>opusplan</code>(계획=Opus · 실행=Sonnet) 하나뿐입니다. 그 밖의 조합 — 예를 들어 <b>계획만 Fable로</b> — 은 만들어야 생깁니다</dd>
-      <dt>만들 파일</dt><dd><code>skills/plan-&lt;모델&gt;/SKILL.md</code>와 <code>docs/모델-운용표.md</code> 두 개(지울 때도 둘 다). 내 PC에만 둘지 팀과 공유할지는 ⓑ와 함께 물어봅니다</dd>
+      <dt>만들 파일</dt><dd><code>skills/plan-&lt;모델&gt;/SKILL.md</code>와 <code>docs/모델-운용표.md</code> 두 개(지울 때도 둘 다). 운용표는 "상황 · 모델 · effort" 3열로, 어떤 작업을 어느 모델·강도로 보낼지 한 표에 정리합니다. 내 PC에만 둘지 팀과 공유할지는 ⓑ와 함께 물어봅니다</dd>
       <dt>체크할 때</dt><dd>계획 단계에서만 특정 모델을 쓰고 싶을 때. 대부분은 필요 없어 <b>기본 해제</b>입니다</dd>
     </dl>
   </div>
@@ -848,7 +848,7 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
 <a class="totop" href="#toc">↑ 목차</a>
 
 <footer>
-  단디 · 설치 옵션 사전 · 00_통합-설치.md 기준 · 2026-09-16<br>
+  단디 · 설치 옵션 사전 · 00_통합-설치.md 기준 · 2026-09-17<br>
   각 항목의 정본은 해당 하위 문서(01~06)입니다. 이 페이지는 사람이 읽고 판단하기 위한 안내이며, 설치 절차 자체를 바꾸지 않습니다.<br>
   저장소: github.com/EleninJayTech/claude ·
   <a href="../index.html">사용법</a> · <a href="intro.html">소개 영상</a> · <a href="demo.html">설치 시연</a> · <a href="learn.html">학습 코스</a> · <a href="skills.ko.html">스킬 카탈로그</a>
