@@ -394,7 +394,7 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
     <div class="opt-head"><span class="id">ⓕ</span><span class="name">effort 묶음 · 캐시 가이드</span><span class="badge">개인 설정에 <code>modelSettings</code> 기록</span></div>
     <p class="lead"><b>모델마다 추론 강도를 미리 묶어 둡니다</b> — 그러면 모델만 고르면 강도가 따라와서, 작업마다 다시 판단할 일이 없습니다. 캐시를 깨지 않는 습관은 설명으로 함께 듣습니다.</p>
     <dl>
-      <dt>무엇이 적히나</dt><dd><code>~/.claude/settings.json</code>(내 PC 개인 설정)에 <code>modelSettings</code> 한 덩어리. 어려운 일을 맡는 모델은 <code>high</code>, 정형·단순 작업을 맡는 모델은 <code>medium</code>입니다 — <b>강도를 낮춰도 품질이 안 떨어지는 일</b>에만 낮추는 것이라 절약과 품질이 같은 방향입니다</dd>
+      <dt>무엇이 적히나</dt><dd><code>~/.claude/settings.json</code>(내 PC 개인 설정)에 <code>modelSettings</code> 한 덩어리. 정형·단순 작업을 맡는 모델만 <code>medium</code>으로 적어 둡니다(나머지 모델은 기본값 그대로). <b>강도를 낮춰도 품질이 안 떨어지는 일</b>에만 낮추는 것이라 절약과 품질이 같은 방향입니다</dd>
       <dt>왜 프로젝트가 아니라 개인 설정인가</dt><dd>프로젝트 설정에 <code>effortLevel</code>을 박으면 <b>내가 <code>/effort</code>로 고른 값을 조용히 덮어씁니다</b>. 경고도 안 뜹니다. 게다가 그 파일은 커밋돼 팀 전원에게 강제됩니다. 그래서 모델별 값은 <b>내 PC에만</b> 둡니다</dd>
       <dt>캐시가 왜 돈인가</dt><dd>매 턴 대화 전체가 다시 실려가는데, 앞부분이 직전과 <b>같으면 캐시에서 읽어 값이 ~10%</b>로 떨어집니다. 한 곳이라도 바뀌면 그 뒤 전부를 다시 처리합니다 — 절약의 둘째 축은 “덜 쓰기”가 아니라 <b>“재처리 안 당하기”</b>입니다</dd>
       <dt>작업 중 피할 것</dt><dd><code>/model</code> 전환 · <code>/effort</code> 변경 · fast mode 켜기 · <code>/compact</code> — 전부 캐시를 깹니다. 필요하면 <b>세션 시작에 몰아서</b> 하세요</dd>
