@@ -55,9 +55,15 @@
 
 ## Principles behind Dandi
 
-- **Output quality comes first.** Saving on AI usage (tokens) is second, and only within what quality allows.
+- **Output quality comes first.** Saving on AI usage (tokens) is second — but where more depth would not buy better work, the cheaper option is simply the right one, not a compromise.
 - **Checked, not remembered.** Every technical claim records the date it was verified against Anthropic's official documentation, and is re-checked every six months.
-- **Same behavior everywhere.** Nothing that only works in one project or on one machine goes in.
+- **Same behavior everywhere.** Nothing that only works in one project or on one machine goes in. The documents detect your environment first, then generate.
+- **Always a way back.** No install step ships without its removal step — a setup you cannot undo never gave you a choice. Existing configuration is never overwritten silently; you are asked to keep, rebuild, or replace.
+- **What you received is enough.** Someone who has only this public repository gets the same result as someone with the full development history.
+- **The work survives the session.** What was done and why is written to files, so the next session picks up from the record instead of from memory.
+- **A beginner can get there alone.** Every choice you meet during setup is explained at beginner level, in English and Korean.
+
+**What Dandi is not** — not code (documents only; no build, no tests), not a replacement or wrapper for Claude Code (it decides how to combine the official features and defers to the official docs where they are authoritative), and not an install-everything bundle (you pick what you need).
 
 ---
 

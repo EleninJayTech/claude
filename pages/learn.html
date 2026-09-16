@@ -375,8 +375,8 @@ footer{max-width:1120px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
   <div class="coach warn"><span class="who">⚠️</span><div>
     <b>Leave &#9425; security on unless you are removing it deliberately</b>
     Turn it off and Claude may read <code class="i">.env</code> (your password file) by accident, leaving the contents in the transcript.
-    There is a reason &#9429; creates no file too &mdash; pinning effort in a config file
-    <b>silently overrides whatever you chose with <code class="i">/effort</code></b>.
+    There is a reason &#9429; writes to your <em>personal</em> settings and not the project's &mdash; pinning effort in a project config
+    <b>silently overrides whatever you chose with <code class="i">/effort</code></b>, and that file is committed to the whole team.
     &#9429; also covers <b>cache habits</b> &mdash; switching <code class="i">/model</code> or <code class="i">/effort</code> mid-task
     breaks the conversation cache, so everything after it is reprocessed at full price. Batch such changes at the start of a session.
   </div></div>
@@ -552,7 +552,7 @@ footer{max-width:1120px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
 </div>
 
 <footer>
-  Dandi &middot; Install options course &middot; 2026-09-13<br>
+  Dandi &middot; Install options course &middot; 2026-09-16<br>
   The source of truth for each item is its own document (01&ndash;06). This page exists for people to learn from; it does not change the install procedure. Progress is stored only in this browser&rsquo;s localStorage.<br>
   저장소: github.com/EleninJayTech/claude ·
   <a href="../index.html">Guide</a> &middot; <a href="intro.html">Intro</a> &middot; <a href="demo.html">Walkthrough</a> &middot; <a href="options.html">Dictionary</a> &middot; <a href="skills.html">Skill catalog</a>
@@ -616,7 +616,8 @@ var DOC01 = [
     ['docs/PROJECT_PLAN.md  <span class="c"># roadmap</span>','docs/PROGRESS.md      <span class="c"># session log</span>','docs/DECISIONS.md     <span class="c"># decision log</span>','.gitattributes        <span class="c"># merge=union</span>','.gitignore            <span class="c"># excludes personal + isolated dirs</span>']],
   ['e','\u24d4 Project permissions','What may run without asking', true,
     ['.claude/settings.json  <span class="c"># allow / ask / deny</span>']],
-  ['f','\u24d5 effort &amp; cache guidance','When to raise or lower it, plus habits that keep the cache \u2014 no file', true, []]
+  ['f','\u24d5 effort bundle &amp; cache guidance','Reasoning depth bundled per model, plus habits that keep the cache', true,
+    ['~/.claude/settings.json  <span class="c"># modelSettings (per-model effort)</span>']]
 ];
 
 var PRESETS = [

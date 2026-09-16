@@ -375,8 +375,8 @@ footer{max-width:1120px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
   <div class="coach warn"><span class="who">⚠️</span><div>
     <b>ⓑ 보안은 일부러 빼는 경우가 아니면 그대로 두세요</b>
     끄면 Claude가 실수로 <code class="i">.env</code>(비밀번호 파일)를 읽고 그 내용이 대화에 남을 수 있습니다.
-    ⓕ가 파일을 안 만드는 것도 이유가 있습니다 — 설정 파일에 effort를 박으면
-    <b>내가 <code class="i">/effort</code>로 고른 값을 경고 없이 덮어쓰기 때문</b>입니다.
+    ⓕ가 프로젝트가 아니라 <em>내 PC 개인 설정</em>에 쓰는 것도 이유가 있습니다 — 프로젝트 설정에 effort를 박으면
+    <b>내가 <code class="i">/effort</code>로 고른 값을 경고 없이 덮어쓰고</b>, 그 파일은 커밋돼 팀 전원에게 강제됩니다.
     ⓕ는 <b>캐시 습관</b>도 함께 안내합니다 — 작업 중 <code class="i">/model</code>·<code class="i">/effort</code>를 바꾸면
     대화 캐시가 깨져 그 뒤 전부를 정가로 다시 처리합니다. 바꿀 일이 있으면 세션 시작에 몰아서 하세요.
   </div></div>
@@ -552,7 +552,7 @@ footer{max-width:1120px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
 </div>
 
 <footer>
-  단디 · 설치 옵션 학습 코스 · 2026-09-13<br>
+  단디 · 설치 옵션 학습 코스 · 2026-09-16<br>
   각 항목의 정본은 해당 하위 문서(01~06)입니다. 이 페이지는 사람이 배우기 위한 안내이며, 설치 절차 자체를 바꾸지 않습니다. 진행도는 이 브라우저의 localStorage에만 저장됩니다.<br>
   저장소: github.com/EleninJayTech/claude ·
   <a href="../index.html">사용법</a> · <a href="intro.html">소개 영상</a> · <a href="demo.html">설치 시연</a> · <a href="options.html">옵션 사전</a> · <a href="skills.ko.html">스킬 카탈로그</a>
@@ -616,7 +616,8 @@ var DOC01 = [
     ['docs/PROJECT_PLAN.md  <span class="c"># 로드맵</span>','docs/PROGRESS.md      <span class="c"># 세션 로그</span>','docs/DECISIONS.md     <span class="c"># 결정 로그</span>','.gitattributes        <span class="c"># merge=union</span>','.gitignore            <span class="c"># 개인 설정·격리 폴더 제외</span>']],
   ['e','ⓔ 프로젝트 권한','무엇을 묻지 않고 실행해도 되는지', true,
     ['.claude/settings.json  <span class="c"># allow / ask / deny</span>']],
-  ['f','ⓕ effort · 캐시 가이드','강도를 언제 올리고 내릴지 + 캐시 깨지 않는 습관 — 파일 없음', true, []]
+  ['f','ⓕ effort 묶음 · 캐시 가이드','모델마다 추론 강도를 묶어 두기 + 캐시 깨지 않는 습관', true,
+    ['~/.claude/settings.json  <span class="c"># modelSettings (모델별 강도)</span>']]
 ];
 
 var PRESETS = [

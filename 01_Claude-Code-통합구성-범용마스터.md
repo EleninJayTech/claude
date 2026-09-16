@@ -1,6 +1,6 @@
 # Claude Code 통합 구성 — 범용 마스터 (드롭인 적용)
 
-> **문서 버전: v1.76** · 최종 갱신: **2026-09-16** · **최근 재검증: 2026-09-16** · 기준: Claude Code v2.1.273 (Opus 5 · Sonnet 5 · Fable 5.1)
+> **문서 버전: v1.77** · 최종 갱신: **2026-09-16** · **최근 재검증: 2026-09-16** · 기준: Claude Code v2.1.273 (Opus 5 · Sonnet 5 · Fable 5.1)
 >
 > | 버전 | 날짜 | 변경 내용 |
 > | --- | --- | --- |
@@ -30,6 +30,7 @@
 > | v1.74 | 2026-09-16 | **/audit 11차(회귀) 반영 2건** — 동시 세션 금지 한 줄을 **§F-1(SSOT)에도 편입**(§G에만 있어 프로젝트 `CLAUDE.md`에 안 실리고 있었다 — resume·wrap의 R42는 사후 완화일 뿐), 표기 `-w`→**`--worktree`로 통일**(§F-5·02 §C는 원래 전체형을 쓰는데 §G·§L만 축약형이었다) |
 > | v1.75 | 2026-09-16 | 전면 재검증(v2.1.273) — §L ⓐⓒ 종결(`modelSettings`>`effortLevel` 확정, auto mode 도입 v2.1.228+/233+·2026-08-14), §J-1 **오류 2건 정정**("Team·Enterprise 기본 auto" → Enterprise는 기본 manual / "Fable 5" 모델 하한 → "Fable 모델"), §D-7 **Fable 5.1 effort-캐시 예외**(v2.1.260+)·**출력 스타일 전환 캐시 서술 환경별 구분 제거**(회귀 정정, 공식은 이제 전 환경 통일), §J `sandbox.credentials` 확장 옵션 8종 본문 반영, §F-2 frontmatter 3키 추가(`metadata`·`license`·`compatibility`) |
 > | v1.76 | 2026-09-16 | **최적화**: 압축(규칙 불변) — v1.63 행의 예시 실측값 제거 |
+> | v1.77 | 2026-09-16 | §D-6 **모델별 저장값 묶음**(`modelSettings` 권장 블록 — 전체 모델 ID 키·hold 주의·감지/검증/제거) — 모델만 고르면 강도가 따라오게 해 매 작업 `/effort` 판단을 없앤다. **하위 모델 `medium`을 기본값으로**(절약 옵션이 아니다 — 02 §F-1이 그 모델로 보내는 정형·단순 작업은 강도를 더 줘도 품질이 오르지 않는다. 단 테스트·리팩터링·리뷰는 high로 올린다), `/model` 전환 시 적용 값 서술 정정(직전 선택이 아니라 그 모델의 저장값). **STEP 3 ⓕ가 `안내만`에서 파일을 쓰는 항목으로** — §검증에 `modelSettings` 실측 추가, 사람용 옵션·학습 페이지의 "no file" 서술 동반 갱신. 02 v1.57과 짝 · **목표**: 1(매 작업 판단을 없애 동일 품질에서 절약) · 8(설치 중 보이는 항목의 산출물 변경을 사람용 문서에 반영) |
 > ※ 갱신 시: 이 표에 한 줄 추가 + 하단 "문서 정보" 날짜 수정 + §L 재검증 체크리스트 수행.
 
 > **사용법**: 이 파일을 아무 프로젝트 루트(또는 `docs/`)에 넣고 Claude에게
@@ -61,13 +62,13 @@
 **STEP 2 — 부족분 질문(모르는 것만, §I).** 특히: (a) 환경 유형 확정, (b) **동시성 3분기**(ⓐ 혼자 / ⓑ 여러 명·**서로 다른 갈래** / ⓒ 여러 명·같은 갈래 — **다른 질문의 답으로 추정하지 않는다**: 게이트의 '개인 프로젝트'는 참여 인원이 아니고, 추정해 확정한 뒤 끝에 알리는 것은 확인이 아니라 사후 고지다), (c) 커밋 양식, (d) 자주 함께 고치는 repo(→ `additionalDirectories`). 이미 코드로 안 것은 "이렇게 이해했다"로 확인만.
 
 **STEP 3 — 구성 항목 선택 확인 → 필요한 것만 생성.** 감지 결과를 바탕으로 아래 항목을 **선택 목록(다중 선택)으로 제시**하고, 체크된 것만 생성한다(전부 기본 체크, 이미 있는 항목은 "유지/재구성" 표기):
-- ⓐ 글로벌 행동 규칙(§D-2 CLAUDE.md) ⓑ 글로벌 보안(§D-3 deny·hooks) ⓒ `/resume`·`/wrap`·점검 스킬 dropin-check/update(§D-4·F-2 — 이름에 **별칭**을 붙일지는 00 STEP 3가 묻는다. 단독 적용이면 그 자리에서 묻고 기본은 `별칭=없음`) ⓓ 프로젝트 기록 체계(§E·F-1: docs/·CLAUDE.md·.gitattributes·§F-5 .gitignore) ⓔ 프로젝트 권한(§F-3 settings.json) ⓕ effort·캐시 가이드(§D-6·D-7, 안내만)
+- ⓐ 글로벌 행동 규칙(§D-2 CLAUDE.md) ⓑ 글로벌 보안(§D-3 deny·hooks) ⓒ `/resume`·`/wrap`·점검 스킬 dropin-check/update(§D-4·F-2 — 이름에 **별칭**을 붙일지는 00 STEP 3가 묻는다. 단독 적용이면 그 자리에서 묻고 기본은 `별칭=없음`) ⓓ 프로젝트 기록 체계(§E·F-1: docs/·CLAUDE.md·.gitattributes·§F-5 .gitignore) ⓔ 프로젝트 권한(§F-3 settings.json) ⓕ effort 묶음·캐시 가이드(§D-6 `modelSettings` 모델별 저장값을 `~/.claude/settings.json`에 기록 + §D-7 캐시 습관은 안내)
 - **00의 모드별 기본값**(00 STEP 3에서 왔을 때 — 사용자 모드가 아니면 이 매핑으로 자동 확정하고 질문 생략): **최소 = ⓑⓒⓓ**(보안+스킬+기록 체계 — ⓒ를 빼면 §F-1 블록이 전제하는 `/resume`·`/wrap`이 없고 §D-5의 4종 자동완성 검증도 통과 불가라, "기반"이 성립하지 않는다) / **권장·전체 = ⓐ~ⓕ 전부**. 어느 쪽이든 ⓑ는 빼지 않는다.
 - **대상이 글로벌(PC)뿐이면 ⓓⓔ는 빼고 ⓐⓑⓒ(+ⓕ)만 적용한다** — ⓓ 프로젝트 기록 체계·ⓔ 프로젝트 권한은 대상 repo가 있어야 의미가 있는데, 00 §C-1의 "새 PC → 01(글로벌)+03"으로 들어오면 모드가 질문을 생략하므로 그대로 두면 claude를 띄운 임의 폴더에 `docs/`·`.gitattributes`·`.claude/settings.json`이 말없이 생긴다(00 STEP 5의 기록 예시 `01 vX.Y(글로벌만)`이 가리키는 상태가 이것이다).
 - §D~F에서 **해당 시나리오 부분만** 골라 생성. 불필요한 것(단일 repo에 MSA 단위분할 등)은 만들지 않는다. 단 **ⓑ 보안(deny·시크릿 차단)은 해제를 권하지 않는다** — 사용자가 명시적으로 빼는 경우에만 제외하고 위험을 고지한다.
 
 **STEP 4 — 확인.** 무엇을 만들었는지 요약 보고 → **§검증** → 승인 후 커밋 안내(§E 커밋 규칙).
-**§검증** — 두 축을 **둘 다** 증거로 낸다(대상이 **글로벌 전용**이면 ⓓⓔ를 안 만드니 ②는 `해당 없음`을 명시해 갈음하고, ①의 ⓐ·ⓑ 실측이 필수 증거다 — 위 "글로벌(PC)뿐이면" 규칙과 짝). ① **글로벌**: `/` 자동완성으로 `/resume`·`/wrap`·`/dropin-check`·`/dropin-update`(§D-5 — 자동완성을 볼 수 없는 비대화형 실행이면 스킬 4종 실물 파일 존재로 대체). ⓐ를 적용했으면 `~/.claude/CLAUDE.md` 실재, **ⓑ는 글로벌 `settings.json`의 `deny` 시크릿 차단(+hooks를 넣었으면 `hooks` 키)을 실측**한다 — "빼지 않는다"로 필수화한 항목인데 이 확인이 없으면 프로젝트 deny만 보게 된다. §F-2 **B·C를 골랐으면 스킬 본문이 해당 변형인지 내용으로 확인**(예: B의 단위 판별 서술) — 실물 존재만 보면 A가 그대로 남아 있어도 통과한다. ② **프로젝트 산출물**: 이번에 만든 것의 **파일 경로를 실제로 조회해** 보고 — ⓓ `docs/PROJECT_PLAN.md`·`PROGRESS.md`·`DECISIONS.md`(단위 분할이면 그 경로)·`CLAUDE.md`의 §F-1 블록·`.gitattributes`(`git check-attr merge docs/PROGRESS.md` = `union`) / ⓔ `.claude/settings.json`(JSON 파싱 성공 + `deny`에 시크릿 차단 존재 + `additionalDirectories`가 있으면 각 경로가 **이 머신에 실재하고 상대 경로**인지 — §F-3 폴백으로 `.claude/settings.local.json`에 절대경로를 넣었으면 **그 파일의 경로도 같은 기준으로 실재 확인**) / §F-5를 적용했으면 `.gitignore`의 개인 파일 패턴, A-1(통합)이면 루트 라우터 `CLAUDE.md`(§F-2 D) 실재도 함께. **①만 보면 검증이 통과한다** — 그 넷은 글로벌 스킬이라 이 프로젝트에 아무것도 안 만들어도 뜬다(신규 설치에서 `docs/`가 통째로 빠져도 "검증 OK"가 나온다). **적용 기록**: 대상 `CLAUDE.md` 맨 아래 `<!-- dropin-applied: … -->` 한 줄에 이 문서의 **현재 버전**(최상단 "문서 버전" 표기에서 읽음)을 `01 vX.Y` 형식으로 추가/갱신한다(형식·재적용 규칙은 00 §A — 00 없이 단독 적용해도 남긴다).
+**§검증** — 두 축을 **둘 다** 증거로 낸다(대상이 **글로벌 전용**이면 ⓓⓔ를 안 만드니 ②는 `해당 없음`을 명시해 갈음하고, ①의 ⓐ·ⓑ 실측이 필수 증거다 — 위 "글로벌(PC)뿐이면" 규칙과 짝). ① **글로벌**: `/` 자동완성으로 `/resume`·`/wrap`·`/dropin-check`·`/dropin-update`(§D-5 — 자동완성을 볼 수 없는 비대화형 실행이면 스킬 4종 실물 파일 존재로 대체). ⓐ를 적용했으면 `~/.claude/CLAUDE.md` 실재, **ⓑ는 글로벌 `settings.json`의 `deny` 시크릿 차단(+hooks를 넣었으면 `hooks` 키)을 실측**한다 — "빼지 않는다"로 필수화한 항목인데 이 확인이 없으면 프로젝트 deny만 보게 된다. §F-2 **B·C를 골랐으면 스킬 본문이 해당 변형인지 내용으로 확인**(예: B의 단위 판별 서술) — 실물 존재만 보면 A가 그대로 남아 있어도 통과한다. ② **프로젝트 산출물**: 이번에 만든 것의 **파일 경로를 실제로 조회해** 보고 — ⓓ `docs/PROJECT_PLAN.md`·`PROGRESS.md`·`DECISIONS.md`(단위 분할이면 그 경로)·`CLAUDE.md`의 §F-1 블록·`.gitattributes`(`git check-attr merge docs/PROGRESS.md` = `union`) / ⓔ `.claude/settings.json`(JSON 파싱 성공 + `deny`에 시크릿 차단 존재 + `additionalDirectories`가 있으면 각 경로가 **이 머신에 실재하고 상대 경로**인지 — §F-3 폴백으로 `.claude/settings.local.json`에 절대경로를 넣었으면 **그 파일의 경로도 같은 기준으로 실재 확인**) / §F-5를 적용했으면 `.gitignore`의 개인 파일 패턴, A-1(통합)이면 루트 라우터 `CLAUDE.md`(§F-2 D) 실재도 함께. **ⓕ를 골랐으면 `~/.claude/settings.json`의 `modelSettings` 키를 실측**한다(§D-6 — 안내만 하던 항목이 파일을 쓰는 항목이 됐으므로, 실측 없이는 "골랐다"와 "적용됐다"가 갈린다). **①만 보면 검증이 통과한다** — 그 넷은 글로벌 스킬이라 이 프로젝트에 아무것도 안 만들어도 뜬다(신규 설치에서 `docs/`가 통째로 빠져도 "검증 OK"가 나온다). **적용 기록**: 대상 `CLAUDE.md` 맨 아래 `<!-- dropin-applied: … -->` 한 줄에 이 문서의 **현재 버전**(최상단 "문서 버전" 표기에서 읽음)을 `01 vX.Y` 형식으로 추가/갱신한다(형식·재적용 규칙은 00 §A — 00 없이 단독 적용해도 남긴다).
 
 > 원칙: **승인 없이 대량 변경·커밋하지 않는다.** 시크릿(.env·키·인증서)은 읽지도 커밋하지도 않는다.
 
@@ -198,8 +199,25 @@ New-Item -ItemType Directory -Path .claude/skills/dropin-update -Force
 - **`ultracode`**: `/effort ultracode` — effort 단계가 아니라 Claude Code 설정. 모델엔 `xhigh`를 보내면서 굵직한 작업마다 **동적 워크플로(멀티에이전트 오케스트레이션)** 를 얹는다. 세션 한정, 토큰 소모 큼.
 - **`ultrathink`**: 프롬프트에 이 단어를 넣으면 **그 턴만** 깊은 추론 요청(세션 설정 불변). "think hard" 류는 키워드가 아님.
 - **스코프**: `effortLevel`은 **User·Project·Local** 지원, 우선순위 **Managed > CLI > Local > Project > User**. 세션 1회 오버라이드는 `--effort` 플래그·`CLAUDE_CODE_EFFORT_LEVEL` 환경변수(환경변수가 최우선).
+- **권장 — 모델별 저장값을 묶어 둔다**(`~/.claude/settings.json`, User 스코프). 그러면 `/model`로 모델만 고르면 강도가 따라와, 매 작업 `/effort`를 다시 판단하지 않는다(02 §F-1 운용표의 `(자동)` 열이 이 값이다):
+  ```json
+  {
+    "modelSettings": {
+      "claude-opus-5":    { "effortLevel": "high" },
+      "claude-fable-5-1": { "effortLevel": "high" },
+      "claude-sonnet-5":  { "effortLevel": "medium" }
+    }
+  }
+  ```
+  - 키는 **전체 모델 ID**다(`opus` 같은 별칭은 안 된다) — `/effort`에서 Enter로 확정할 때 CLI가 쓰는 키와 같아야 병합된다. 세대가 바뀌면 키도 갈아야 한다(`claude-fable-5` → `claude-fable-5-1`).
+  - **하위 모델이 `medium`인 것은 절약 옵션이 아니라 기본값이다.** 02 §F-1 운용표가 그 모델로 보내는 일은 **정형 반복 변환·단순 수정**인데, 거기에 강도를 더 줘도 품질이 오르지 않는다 — 오히려 불필요한 추상화·예외 처리를 얹는 과잉 설계가 난다. **품질이 같으면 싼 쪽이 옳다**는 기준(§0 원칙)이 그대로 적용되는 자리다. 상위 모델의 어려운 작업은 `high` 그대로 두므로, 아끼는 구간과 아끼지 않는 구간이 모델 경계로 갈린다.
+    - ⚠️ **그 모델로 테스트 작성·리팩터링·코드 리뷰를 돌릴 땐 세션에서 `high`로 올린다** — 엣지 케이스와 부작용을 봐야 하는 작업이라 여기선 강도가 품질로 이어진다(02 §F-1의 해당 행).
+    - 나머지 모델의 기본값은 이미 `high`라 위 블록의 두 줄은 현 동작을 고정하는 쪽이다 — 값을 바꾸는 게 아니라 **바꿀 자리를 만들어 두는** 의미가 크다.
+  - **hold 주의**: Fable 5·Opus 4.8·4.7은 첫 실행 때 모델 기본 effort를 잡고 저장값을 무시한다 — `/effort <값>` Enter로 한 번 확정해야 묶음이 산다. Opus 5·Fable 5.1·Sonnet 5는 hold가 없다.
+  - 감지: 이미 `modelSettings`가 있으면 **유지/재구성/교체**를 묻는다(R27). 검증: `/model <모델>` 뒤 `/effort` 슬라이더가 그 값을 가리킨다. 제거: 해당 키 삭제 또는 `/effort auto`.
+  - 프로젝트 `.claude/settings.json`엔 넣지 않는다(아래 함정과 같은 이유 — 팀 전원에게 강제된다).
 - **절약 프로필** (Pro 요금제·한도 관리 사용자 — 00 STEP 3에서 선택): 절약은 품질 유지 전제의 2순위이므로 **기본값 하향 + 낭비 제거**로만 아낀다.
-  - 세션을 `/effort medium`으로 시작하고, 어려운 작업(설계·동시성·상태머신 등)에 들어갈 때만 그때 `/effort high`↑ — 작업이 끝나면 되돌린다. `ultracode`·`max`는 비권장(토큰 소모 큼).
+  - 위 묶음이 이미 하위 모델을 `medium`으로 두므로 **절약 프로필이 따로 더 내릴 자리는 상위 모델뿐인데, 거기서 아끼면 재작업이 더 비싸다**(아래 불변). 절약의 실제 레버는 effort가 아니라 **모델 열**(02 §F 절약 배정 — Sonnet 메인 + advisor)과 아래 컨텍스트 습관이다. 묶음을 안 쓰면 세션을 `/effort medium`으로 시작하고 어려운 작업에 들어갈 때만 `/effort high`↑(슬라이더 `s`로 세션 한정 — Enter는 저장값을 바꾼다). `ultracode`·`max`는 비권장(토큰 소모 큼).
   - 컨텍스트 절약 습관: 무관한 작업 전 `/clear`, 긴 세션은 `/compact <초점>`(§D-3 `manual` 게이트를 걸었으면 `/wrap` 뒤에 쓴다), CLAUDE.md 200줄 이하 + `.claude/rules/` 경로 스코프(§D-2 팁) — 매 턴 실려가는 고정 비용을 줄이는 게 가장 큰 절약.
   - **줄이지 않는 것**(품질 불변): 트리아지·최종 리뷰의 상위 모델(02 §F), 검증 게이트(04) — 여기서 아끼면 재작업이 더 비싸다.
   - 한도 가시화: claude-hud(03) 설치를 권장 — 측정 없는 절약은 감이다.
@@ -211,7 +229,7 @@ New-Item -ItemType Directory -Path .claude/skills/dropin-update -Force
   - 실제 사례: 서브에이전트를 강하게 돌릴 의도로 프로젝트에 `"effortLevel": "xhigh"`를 박아둔 경우 — **서브에이전트엔 아무 영향이 없고 메인 세션만 계속 xhigh로 시작**하는 상태가 된다. 키를 제거해 사용자 `/effort`를 따르도록 정리하는 게 맞다.
 - **그래도 프로젝트에 고정할 만한 경우**: 팀 전원이 같은 성격의 작업만 하는 repo(예: 대량 정형 마이그레이션 전용)에서 매번 올리는 걸 잊는 게 더 큰 손해일 때. 이때도 `xhigh`보다 **`high`가 무난**하다(품질 차이 대비 토큰·지연 부담이 급하게 커지는 구간이 xhigh 이상).
 - **트레이드오프**: 높일수록 복잡한 설계·디버깅·마이그레이션 판단 품질↑, 대신 **토큰·지연 증가**. 어려운 전환/설계/리버스는 `high`~`xhigh`, 단순 편집·조회는 `low`~`medium` 권장. 상시 `max`는 비용 대비 비권장.
-- `/model`(모델 선택)과 짝 명령: 모델에 따라 사용 가능한 단계가 다르다(위 모델별 지원 참고). 모델을 처음 바꾸면 **그 모델의 기본 effort가 적용**되니(이전 선택 무시) 필요하면 `/effort`를 다시 실행.
+- `/model`(모델 선택)과 짝 명령: 모델에 따라 사용 가능한 단계가 다르다(위 모델별 지원 참고). 모델을 바꾸면 **그 모델의 저장값**(위 `modelSettings` 묶음, 없으면 모델 기본값)이 적용된다 — 직전 모델에서 고른 값이 따라오지 않는다. hold 모델(Fable 5·Opus 4.8·4.7)만 첫 실행에 모델 기본이 저장값을 이긴다.
 - Enterprise 조직은 역할별 **effort 상한**을 걸 수 있다(상한 초과 지정 시 상한으로 클램프).
 > ✅ 확정(2026-07-20, code.claude.com/docs/en/model-config·/sub-agents·/skills 재검증): 단계 명칭 low~max + ultracode(설정), 서브에이전트·스킬 frontmatter 키는 **`effort:`**, `effortLevel` 저장은 low~xhigh만.
 
@@ -579,6 +597,7 @@ CLAUDE.local.md
 ## L. 유지보수 (6개월마다 재검증) ⭐
 Claude Code는 매주 바뀐다. 6개월마다 30분:
 - `code.claude.com/docs/en/whats-new` 최신 항목 확인.
+- §D-6 `modelSettings` 예시의 **모델 ID 키**가 현행 라인업인지(전체 ID라 세대 교체마다 낡는다 — `claude-fable-5` → `claude-fable-5-1`이 실례) · **hold 모델 목록**이 그대로인지.
 - ✅(2026-09-16 종결) ⓐ `modelSettings`(모델별 저장값)가 `effortLevel`(저장값 없는 모델의 폴백)을 이긴다 — settings 레퍼런스 원문 재확인(01 v1.65 서술 그대로 확정). ⓒ §J-1 auto 기본 시작 모드 도입 = macOS/Linux/WSL v2.1.228+·네이티브 Windows v2.1.233+, 2026-08-14(§J-1 본문에 반영).
 - 🟡(2026-09-16 재확인 — 부분 진전) ⓑ 스킬 `effort:` 오버라이드의 턴 경계: 공식 문구 *"frontmatter effort applies when that skill or subagent is active, overriding the session level but not the environment variable"*는 확보했으나 "다음 턴에 세션 값으로 복귀한다"는 명시적 문장은 여전히 없다(`model:`은 턴 한정으로 이미 확정).
 - 정기 확인(2026-09-16 전부 유효): deny의 서브프로세스 우회 한계, **샌드박스 네이티브 Windows 미지원**(macOS·Linux·WSL2만 — sandboxing), `sandbox.credentials` 스키마(`files[]`={path,mode}·`envVars[]`={name,mode}, mode=`deny`|`mask` + `extract`·`decode`·`maskClaims`·`maskDuplicates`·`onExtractNoMatch`·`injectHosts`·`awsPairs`·`sigv4`, v2.1.224+ 확장 8종 — §J 본문에도 반영), `attribution` 스키마, auto-memory 한도(MEMORY.md 200줄/25KB).
@@ -596,5 +615,5 @@ Claude Code는 매주 바뀐다. 6개월마다 30분:
 ## 핵심 출처 🟢
 IDE 통합·`--add-dir`(ide-integrations·large-codebases) / permissions·deny 한계 / hooks / skills / memory·auto-memory — 모두 `code.claude.com/docs` 및 `docs.anthropic.com`.
 
-**문서 정보** — 통합 마스터(범용) **v1.76**. 변경 이력은 최상단 버전 표 참조(유래: 8개 소스 통합 초판 — 최상단 병합 행).
+**문서 정보** — 통합 마스터(범용) **v1.77**. 변경 이력은 최상단 버전 표 참조(유래: 8개 소스 통합 초판 — 최상단 병합 행).
 최종 갱신: 2026-09-16 · 최근 재검증: 2026-09-16 / 참조: Claude Code v2.1.273, Opus 5(v2.1.219+) · Sonnet 5(v2.1.197+) · Fable 5.1(v2.1.255+).
