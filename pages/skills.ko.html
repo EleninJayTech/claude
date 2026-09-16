@@ -137,6 +137,12 @@ th,td{text-align:left;padding:11px 14px;border-bottom:1px solid var(--line);vert
 th{font-family:var(--mono);font-size:12px;letter-spacing:.04em;color:var(--ink-soft);background:#FAFAF4}
 tr:last-child td{border-bottom:none}
 td code{white-space:nowrap}
+.quick td{line-height:1.55;padding-top:9px;padding-bottom:9px}
+.quick td:first-child{white-space:nowrap}
+.quick td:nth-child(2){font-family:var(--mono);font-size:12.5px;color:var(--ink-soft)}
+.quick td:nth-child(2) code{white-space:normal;background:none;border:none;padding:0;font-size:1em;color:inherit}
+.quick th.grp{font-family:var(--sans);text-transform:none;letter-spacing:0;font-size:12.5px;font-weight:700;
+  color:var(--ink);background:var(--marker-soft)}
 
 /* ── 함정 ── */
 .traps{margin-top:18px;display:grid;gap:12px}
@@ -186,6 +192,42 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
   </div>
 </div>
 <p class="lead" style="margin-top:16px">목록에 들어가기 전에 하나만 더. 설치할 때 스킬 이름에 접두·접미(<em>별칭</em>, 예: <code>feature-docs-dandi</code>)를 붙였다면, 아래 <code>/명령</code>은 전부 그 별칭을 얹어서 읽으면 된다.</p>
+
+<h2 style="margin-top:40px">한눈에 보기</h2>
+<p class="lead">무엇을 하는 스킬인지는 아는데 이름과 인수만 다시 확인하고 싶을 때 쓴다. 각 줄의 자세한 카드는 아래에 있다.</p>
+<div class="tablewrap">
+<table class="quick">
+  <thead>
+    <tr><th scope="col">스킬</th><th scope="col">인수</th><th scope="col">언제</th><th scope="col">남는 것</th></tr>
+  </thead>
+  <tbody>
+    <tr><th class="grp" colspan="4" scope="colgroup">세션 운영 &middot; 01 §D-4</th></tr>
+    <tr><td><code>/resume</code></td><td>없음</td><td>세션을 열 때, <code>/clear</code> 직후</td><td>&ldquo;지난번 X, 다음 Y?&rdquo; 보고</td></tr>
+    <tr><td><code>/wrap</code></td><td>없음</td><td>세션을 닫을 때</td><td>PROGRESS 한 줄·새 결정·계획 체크</td></tr>
+    <tr><td><code>/dropin-check</code></td><td>없음 &middot; 읽기 전용</td><td>이 PC 구성이 뒤처졌는지 의심될 때</td><td>차이 보고서 &mdash; 설치는 하지 않는다</td></tr>
+    <tr><td><code>/dropin-update</code></td><td>없음</td><td>문서 사본 자체가 낡았을 때</td><td>새 문서 파일(재적용은 00이 맡는다)</td></tr>
+
+    <tr><th class="grp" colspan="4" scope="colgroup">기능 문서·테스트·릴리스 &middot; 03 §7</th></tr>
+    <tr><td><code>/feature-docs</code></td><td><code>init</code> | <code>sync [기준]</code></td><td>처음 문서화할 때, 바뀐 것을 반영할 때</td><td><code>docs/features/</code> 전체</td></tr>
+    <tr><td><code>/feature-test</code></td><td><code>[F-003 | TC-F003-01]</code> &mdash; 없으면 전체</td><td>명세의 케이스를 실제로 돌려 볼 때</td><td>날짜 박힌 리포트와 스크린샷</td></tr>
+    <tr><td><code>/feature-doc-audit</code></td><td><code>[기준 커밋 수, 기본 5]</code></td><td>문서가 얼마나 낡았는지 싸게 잴 때</td><td>표와 sync 우선순위</td></tr>
+    <tr><td><code>/feature-doc-guard</code></td><td><code>install</code> | <code>uninstall</code> | <code>check</code></td><td>문서 없는 커밋이 계속 들어올 때</td><td>훅, 또는 멈춘 커밋</td></tr>
+    <tr><td><code>/test-to-script</code></td><td><code>[F-003 | TC-F003-01]</code> &mdash; 없으면 미변환 전부</td><td>손으로 돌리던 케이스를 자동화할 때</td><td>실행 가능한 테스트 파일</td></tr>
+    <tr><td><code>/release-notes</code></td><td><code>[시작 태그] [끝 태그]</code></td><td>버전을 내보내기 직전</td><td><code>docs/releases/&lt;태그&gt;.md</code></td></tr>
+
+    <tr><th class="grp" colspan="4" scope="colgroup">코드 품질 &middot; 03 §8</th></tr>
+    <tr><td><code>/refactor</code></td><td><code>[all | 경로 | 커밋A..커밋B | check [범위]] [nocheck]</code></td><td>동작은 그대로 두고 코드만 정리할 때</td><td>보고서 &mdash; 커밋은 직접 한다</td></tr>
+
+    <tr><th class="grp" colspan="4" scope="colgroup">다른 모델로 계획 &middot; 02 STEP 3 ⓔ</th></tr>
+    <tr><td><code>/plan-&lt;모델&gt;</code></td><td>계획할 대상 &middot; 수동 전용</td><td>코드 전에 정할 설계 갈래가 여럿일 때</td><td><code>docs/plans/</code>의 계획 파일</td></tr>
+
+    <tr><th class="grp" colspan="4" scope="colgroup">프론트엔드 디자인 &middot; 03 §2 · §3 · §9</th></tr>
+    <tr><td><code>/svg-design</code></td><td>없음 &mdash; 원하는 효과를 말한다</td><td>SVG 필터 효과를 만들거나 고칠 때</td><td>진짜 브라우저에서 살아남는 필터 코드</td></tr>
+    <tr><td><code>/frontend-design</code></td><td>없음 &mdash; 만들 UI를 말한다</td><td>새 화면의 시각 방향을 잡을 때</td><td>마크업 전에 정해지는 디자인 방향</td></tr>
+    <tr><td><code>/kr-ui-guide</code></td><td>없음 &mdash; 스스로 불린다</td><td>한국 사용자 대상 UI·아이콘·색 작업</td><td>대비 계산과 토큰이 붙은 설계안</td></tr>
+  </tbody>
+</table>
+</div>
 
 <div class="toolbar" role="search">
   <label for="q" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)">스킬 검색</label>

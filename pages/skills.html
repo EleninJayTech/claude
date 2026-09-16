@@ -139,6 +139,12 @@ th{font-family:var(--mono);font-size:12px;letter-spacing:.06em;text-transform:up
   background:#FAFAF4}
 tr:last-child td{border-bottom:none}
 td code{white-space:nowrap}
+.quick td{line-height:1.55;padding-top:9px;padding-bottom:9px}
+.quick td:first-child{white-space:nowrap}
+.quick td:nth-child(2){font-family:var(--mono);font-size:12.5px;color:var(--ink-soft)}
+.quick td:nth-child(2) code{white-space:normal;background:none;border:none;padding:0;font-size:1em;color:inherit}
+.quick th.grp{font-family:var(--sans);text-transform:none;letter-spacing:0;font-size:12.5px;font-weight:700;
+  color:var(--ink);background:var(--marker-soft)}
 
 /* ── 함정 ── */
 .traps{margin-top:18px;display:grid;gap:12px}
@@ -188,6 +194,42 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
   </div>
 </div>
 <p class="lead" style="margin-top:16px">One more thing before the list: during install you may have given the skills a name prefix or suffix (an <em>alias</em>, like <code>feature-docs-dandi</code>). If you did, read every <code>/command</code> below with your alias applied.</p>
+
+<h2 style="margin-top:40px">At a glance</h2>
+<p class="lead">For when you already know what a skill does and only need the name and the arguments back. Every row has a full card further down.</p>
+<div class="tablewrap">
+<table class="quick">
+  <thead>
+    <tr><th scope="col">Skill</th><th scope="col">Arguments</th><th scope="col">Reach for it when</th><th scope="col">Leaves behind</th></tr>
+  </thead>
+  <tbody>
+    <tr><th class="grp" colspan="4" scope="colgroup">Running a session &middot; 01 §D-4</th></tr>
+    <tr><td><code>/resume</code></td><td>none</td><td>A session starts, or you just ran <code>/clear</code></td><td>A &ldquo;last time X, next Y?&rdquo; report</td></tr>
+    <tr><td><code>/wrap</code></td><td>none</td><td>A session ends</td><td>One PROGRESS line, a new decision, plan ticks</td></tr>
+    <tr><td><code>/dropin-check</code></td><td>none &middot; read-only</td><td>You suspect this machine has drifted</td><td>A difference report &mdash; nothing installed</td></tr>
+    <tr><td><code>/dropin-update</code></td><td>none</td><td>The documents themselves are out of date</td><td>Refreshed document files (re-applying is 00)</td></tr>
+
+    <tr><th class="grp" colspan="4" scope="colgroup">Feature docs, tests, releases &middot; 03 §7</th></tr>
+    <tr><td><code>/feature-docs</code></td><td><code>init</code> | <code>sync [base]</code></td><td>First write-up, or folding in what changed</td><td>All of <code>docs/features/</code></td></tr>
+    <tr><td><code>/feature-test</code></td><td><code>[F-003 | TC-F003-01]</code> &mdash; all if omitted</td><td>You want the spec&rsquo;s cases actually run</td><td>A dated report with screenshots</td></tr>
+    <tr><td><code>/feature-doc-audit</code></td><td><code>[threshold, default 5]</code></td><td>A cheap staleness check, schedulable</td><td>A table and a suggested sync order</td></tr>
+    <tr><td><code>/feature-doc-guard</code></td><td><code>install</code> | <code>uninstall</code> | <code>check</code></td><td>Commits keep landing without their docs</td><td>The hooks, or a blocked commit</td></tr>
+    <tr><td><code>/test-to-script</code></td><td><code>[F-003 | TC-F003-01]</code> &mdash; all unconverted</td><td>Hand-run cases should run themselves</td><td>Runnable test files</td></tr>
+    <tr><td><code>/release-notes</code></td><td><code>[from tag] [to tag]</code></td><td>A version is about to ship</td><td><code>docs/releases/&lt;tag&gt;.md</code></td></tr>
+
+    <tr><th class="grp" colspan="4" scope="colgroup">Code quality &middot; 03 §8</th></tr>
+    <tr><td><code>/refactor</code></td><td><code>[all | path | commitA..commitB | check [scope]] [nocheck]</code></td><td>Tidying code without changing behaviour</td><td>A report &mdash; the commit stays yours</td></tr>
+
+    <tr><th class="grp" colspan="4" scope="colgroup">Planning with another model &middot; 02 STEP 3 ⓔ</th></tr>
+    <tr><td><code>/plan-&lt;model&gt;</code></td><td>what to plan &middot; manual only</td><td>Design forks to settle before any code</td><td>A plan file under <code>docs/plans/</code></td></tr>
+
+    <tr><th class="grp" colspan="4" scope="colgroup">Front-end design &middot; 03 §2, §3, §9</th></tr>
+    <tr><td><code>/svg-design</code></td><td>none &mdash; describe the effect</td><td>Building or fixing an SVG filter effect</td><td>Filter code that survives real browsers</td></tr>
+    <tr><td><code>/frontend-design</code></td><td>none &mdash; describe the UI</td><td>A new interface needs a direction</td><td>Direction, decided before the markup</td></tr>
+    <tr><td><code>/kr-ui-guide</code></td><td>none &mdash; it loads itself</td><td>Korean-facing UI, icons or colour</td><td>A proposal with contrast maths and tokens</td></tr>
+  </tbody>
+</table>
+</div>
 
 <div class="toolbar" role="search">
   <label class="sr" for="q" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)">Filter skills</label>
