@@ -798,7 +798,7 @@ function drawProf(){
   if(!pSel){ box.innerHTML='<p class="empty">Pick a profile on the left.</p>'; return; }
   box.innerHTML = pSel==='std'
     ? '<ul><li>effort stays at its default; hard work goes to the stronger model</li><li>The right answer most of the time</li></ul>'
-    : '<ul><li>Sessions start at <b>/effort medium</b></li><li>Subagents assigned mostly to Sonnet, with a smaller roster</li><li>claude-hud pre-checked \u2014 you cannot economize on what you cannot see</li></ul>'
+    : '<ul><li>Subagents assigned mostly to Sonnet, with a smaller roster</li><li>claude-hud pre-checked \u2014 you cannot economize on what you cannot see</li></ul>'
       +'<p class="why">Never cut: difficulty triage, final review, verification gates. Saving there costs more in rework.</p>';
 }
 drawProf();
@@ -884,7 +884,7 @@ function drawFinal(){
     h = planHTML(docs, base.why);
   }
   if(notes.length) h+='<p class="why">🏢 '+notes.join(' · ')+'</p>';
-  if(F.prof==='save') h+='<p class="why">&#128176; Thrift profile: start at effort medium, Sonnet-centric \u2014 but the verification gates stay.</p>';
+  if(F.prof==='save') h+='<p class="why">&#128176; Thrift profile: Sonnet-centric assignment \u2014 but the verification gates stay.</p>';
   $('finalPlan').innerHTML=h;
 
   var modeLabel=MODES[F.mode].name + F.bundles.filter(function(k){return k!=='company';}).map(function(k){return '+'+BUNDLES[k].name;}).join('')

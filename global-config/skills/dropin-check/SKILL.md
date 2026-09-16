@@ -32,7 +32,7 @@ description: 드롭인 구성 최신성 점검(읽기 전용). 대상 프로젝�
 - 화이트리스트 정본은 정본 저장소의 `global-config/README.md` 표다. **그 파일도 배포되지 않으므로** 위 게이트를 통과한 경우에만 참조한다.
 - 대조 대상: `~/.claude`의 `CLAUDE.md`·`settings.json`·`skills/`·`commands/`·`output-styles/`를 정본 저장소 `global-config/`와 파일 단위로(없음/내용 다름).
 - `settings.json`은 **구성 성격 키(`permissions.deny`·`hooks`·`attribution`·`autoMemoryEnabled`)의 차이만** 보고한다 —
-  그 밖은 전부 머신 종속이라 달라도 정상(model·theme·outputStyle·enabledPlugins·statusLine·effortLevel·autoUpdatesChannel·
+  그 밖은 전부 머신 종속이라 달라도 정상(model·theme·outputStyle·enabledPlugins·statusLine·effortLevel·modelSettings·autoUpdatesChannel·
   마켓플레이스 소스 형식 등, DEC-20260721-bsjeong87-02). 괄호는 예시이므로 **제외 목록을 늘리지 말고 포함 기준으로 판정**한다.
 - **글로벌 `CLAUDE.md`의 `dropin-applied`로 시작하는 줄은 차이로 치지 않는다** — PC별 적용 기록이라 갈라져 있는 것이 정상이다(00 §A STEP 5 · DEC-20260812-bsjeong87-11). 이 예외가 없으면 미러와 정본의 **유일한 차이가 그 줄일 때도** "내용 다름"으로 보고돼, 사용자가 남의 PC 기록을 덮어쓰게 된다.
 - **줄바꿈을 정규화한 뒤 비교** — 저장소에 EOL 지시(`.gitattributes`의 `text`/`eol`)가 없으면 워킹트리 줄바꿈이 그 PC의 `core.autocrlf` 설정에 좌우돼, 내용이 같아도 파일 해시가 갈린다(대표적으로 Claude Code가 LF로 쓰는 `settings.json` ↔ CRLF로 체크아웃된 사본). 줄바꿈만 다르면 차이로 치지 않는다.

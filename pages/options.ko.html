@@ -265,7 +265,7 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
   <div class="tbl">
   <table>
     <tr><th style="width:130px">번들</th><th>얹히는 것</th><th style="width:200px">언제 자동으로 체크되나</th></tr>
-    <tr><td><b>디자인</b><br><span style="font-size:12.5px;color:var(--ink-soft)">웹 퍼블리싱</span></td><td>03의 <b>svg-design</b>(SVG 시각효과 규칙) · <b>frontend-design</b>(AI 티 안 나는 UI) · <b>브라우저 검증</b>(만든 화면을 Claude가 직접 열어 확인)</td><td>프론트엔드 스택이 감지되면 기본 체크</td></tr>
+    <tr><td><b>디자인</b><br><span style="font-size:12.5px;color:var(--ink-soft)">웹 퍼블리싱</span></td><td>03의 <b>svg-design</b>(SVG 시각효과 규칙) · <b>frontend-design</b>(AI 티 안 나는 UI) · <b>브라우저 검증</b>(만든 화면을 Claude가 직접 열어 확인) · <b>kr-ui-guide</b>(산출물 언어가 한국어일 때만)</td><td>프론트엔드 스택이 감지되면 기본 체크</td></tr>
     <tr><td><b>검증 강화</b></td><td>04 전부 — 훅 품질 게이트 + <code class="i">gh</code>/<code class="i">glab</code> CLI + CI 통합</td><td>테스트·CI 설정이 감지되면 기본 체크</td></tr>
     <tr><td><b>무인 자동화</b></td><td>06 클라우드 루틴 (+04 CI 병행 권장)</td><td>감지 불가 — <b>직접 요청할 때만</b></td></tr>
     <tr><td><b>회사</b></td><td>새로 설치되는 건 없음. <b>안전장치를 조이는 수정자</b>입니다 — CI는 조직 정책 확인 필수, MCP는 허용된 서버만, 루틴은 조직 승인 필수</td><td>“회사 저장소예요”라고 답하면 자동 적용</td></tr>
@@ -283,7 +283,7 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
     <div class="opt-head"><span class="name">절약</span><span class="badge b-keep">Pro 요금제 · 한도 관리</span></div>
     <p class="lead">사용량 한도를 신경 써야 할 때. 다만 <b>깎는 건 기본값과 낭비뿐</b>입니다.</p>
     <dl>
-      <dt>바뀌는 것</dt><dd>세션을 <code>/effort medium</code>으로 시작 · 서브에이전트를 Sonnet 중심으로 배정 · 로스터 축소 · claude-hud를 기본 체크(사용량이 보여야 아낄 수 있으니까)</dd>
+      <dt>바뀌는 것</dt><dd>서브에이전트를 Sonnet 중심으로 배정 · 로스터 축소 · claude-hud를 기본 체크(사용량이 보여야 아낄 수 있으니까)</dd>
       <dt>안 깎는 것</dt><dd>난이도 분류 · 최종 리뷰 · 검증 게이트. <b>여기서 아끼면 재작업이 더 비쌉니다</b></dd>
     </dl>
   </div>
@@ -490,7 +490,7 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
     <p class="lead"><b>계획을 세울 때만</b> 다른 모델로 돌리는 <code class="i">/plan-&lt;모델&gt;</code> 명령을 하나 만듭니다. 계획이 끝나면 <b>원래 모델로 저절로 돌아옵니다</b> — 되돌리는 조작이 필요 없습니다.</p>
     <dl>
       <dt>왜 직접 만드나</dt><dd>Claude Code에 내장된 조합은 <code>opusplan</code>(계획=Opus · 실행=Sonnet) 하나뿐입니다. 그 밖의 조합 — 예를 들어 <b>계획만 Fable로</b> — 은 만들어야 생깁니다</dd>
-      <dt>만들 파일</dt><dd><code>skills/plan-&lt;모델&gt;/SKILL.md</code> 한 개. 내 PC에만 둘지 팀과 공유할지는 ⓑ와 함께 물어봅니다</dd>
+      <dt>만들 파일</dt><dd><code>skills/plan-&lt;모델&gt;/SKILL.md</code>와 <code>docs/모델-운용표.md</code> 두 개(지울 때도 둘 다). 내 PC에만 둘지 팀과 공유할지는 ⓑ와 함께 물어봅니다</dd>
       <dt>체크할 때</dt><dd>계획 단계에서만 특정 모델을 쓰고 싶을 때. 대부분은 필요 없어 <b>기본 해제</b>입니다</dd>
     </dl>
   </div>

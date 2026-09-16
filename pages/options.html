@@ -267,7 +267,7 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
   <div class="tbl">
   <table>
     <tr><th style="width:130px">Bundle</th><th>What it adds</th><th style="width:200px">When it is pre-checked</th></tr>
-    <tr><td><b>Design</b><br><span style="font-size:12.5px;color:var(--ink-soft)">web publishing</span></td><td>From 03: <b>svg-design</b> (SVG visual-effect recipes) &middot; <b>frontend-design</b> (UI that doesn&rsquo;t look AI-made) &middot; <b>browser verification</b> (Claude opens the screens it built and checks them)</td><td>Pre-checked when a frontend stack is detected</td></tr>
+    <tr><td><b>Design</b><br><span style="font-size:12.5px;color:var(--ink-soft)">web publishing</span></td><td>From 03: <b>svg-design</b> (SVG visual-effect recipes) &middot; <b>frontend-design</b> (UI that doesn&rsquo;t look AI-made) &middot; <b>browser verification</b> (Claude opens the screens it built and checks them) &middot; <b>kr-ui-guide</b> (only when the output language is Korean)</td><td>Pre-checked when a frontend stack is detected</td></tr>
     <tr><td><b>Stronger verification</b></td><td>All of 04 &mdash; hook quality gates + <code class="i">gh</code>/<code class="i">glab</code> CLI + CI integration</td><td>Pre-checked when tests or CI config are detected</td></tr>
     <tr><td><b>Unattended automation</b></td><td>06 cloud routines (pairing with 04 CI is recommended)</td><td>Not detectable &mdash; <b>only when you ask for it</b></td></tr>
     <tr><td><b>Company</b></td><td>Installs nothing new. It is <b>a modifier that tightens the safeguards</b> &mdash; CI requires an org-policy check, MCP is limited to approved servers, routines require org approval</td><td>Applied automatically once you say it is a company repository</td></tr>
@@ -285,7 +285,7 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
     <div class="opt-head"><span class="name">Thrift</span><span class="badge b-keep">Pro plan &middot; managing an allowance</span></div>
     <p class="lead">For when the usage allowance matters. What it cuts is <b>only defaults and waste</b>.</p>
     <dl>
-      <dt>What changes</dt><dd>Sessions start at <code>/effort medium</code> &middot; subagents are assigned mostly to Sonnet &middot; a smaller roster &middot; claude-hud pre-checked (you cannot economize on what you cannot see)</dd>
+      <dt>What changes</dt><dd>Subagents are assigned mostly to Sonnet &middot; a smaller roster &middot; claude-hud pre-checked (you cannot economize on what you cannot see)</dd>
       <dt>What is never cut</dt><dd>Difficulty triage &middot; final review &middot; verification gates. <b>Saving here costs more in rework</b></dd>
     </dl>
   </div>
@@ -492,7 +492,7 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
     <p class="lead">Creates one <code class="i">/plan-&lt;model&gt;</code> command that runs a different model <b>only while planning</b>. When the plan is done it <b>returns to your normal model by itself</b> &mdash; nothing to undo.</p>
     <dl>
       <dt>Why build it yourself</dt><dd>The only combination Claude Code ships is <code>opusplan</code> (plan = Opus, execute = Sonnet). Any other pairing &mdash; <b>planning with Fable</b>, say &mdash; only exists if you make it</dd>
-      <dt>File created</dt><dd>One <code>skills/plan-&lt;model&gt;/SKILL.md</code>. Whether it stays on your machine or is shared with the team is asked together with &#9425;</dd>
+      <dt>File created</dt><dd><code>skills/plan-&lt;model&gt;/SKILL.md</code> <b>and</b> <code>docs/model-usage-table.md</code> (the usage table &mdash; removal takes both). Whether it stays on your machine or is shared with the team is asked together with &#9425;</dd>
       <dt>Check it when</dt><dd>You want a specific model just for the planning stage. Most projects do not, so it is <b>unchecked by default</b></dd>
     </dl>
   </div>

@@ -798,7 +798,7 @@ function drawProf(){
   if(!pSel){ box.innerHTML='<p class="empty">왼쪽에서 프로필을 골라 보세요.</p>'; return; }
   box.innerHTML = pSel==='std'
     ? '<ul><li>effort 기본값 유지, 어려운 작업엔 상위 모델</li><li>대부분의 경우 이걸 고르면 됩니다</li></ul>'
-    : '<ul><li>세션을 <b>/effort medium</b>으로 시작</li><li>서브에이전트를 Sonnet 중심으로 배정, 로스터 축소</li><li>claude-hud 기본 체크 — 사용량이 보여야 아낄 수 있으니까</li></ul>'
+    : '<ul><li>서브에이전트를 Sonnet 중심으로 배정, 로스터 축소</li><li>claude-hud 기본 체크 — 사용량이 보여야 아낄 수 있으니까</li></ul>'
       +'<p class="why">안 깎는 것: 난이도 분류 · 최종 리뷰 · 검증 게이트. 여기서 아끼면 재작업이 더 비쌉니다.</p>';
 }
 drawProf();
@@ -884,7 +884,7 @@ function drawFinal(){
     h = planHTML(docs, base.why);
   }
   if(notes.length) h+='<p class="why">🏢 '+notes.join(' · ')+'</p>';
-  if(F.prof==='save') h+='<p class="why">💰 절약 프로필: effort medium 시작 · Sonnet 중심 — 단 검증 게이트는 그대로.</p>';
+  if(F.prof==='save') h+='<p class="why">💰 절약 프로필: Sonnet 중심 배정 — 단 검증 게이트는 그대로.</p>';
   $('finalPlan').innerHTML=h;
 
   var modeLabel=MODES[F.mode].name + F.bundles.filter(function(k){return k!=='company';}).map(function(k){return '+'+BUNDLES[k].name;}).join('')
