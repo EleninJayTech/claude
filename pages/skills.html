@@ -526,7 +526,7 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
     <h2 style="margin-top:0">Front-end design</h2>
     <span class="src">installed by document 03 §2, §3 and §9 &middot; optional</span>
   </div>
-  <p class="gnote">Three skills that only matter if you build UI. None of them writes records or installs hooks &mdash; they shape how Claude designs and writes front-end code when you ask for it.</p>
+  <p class="gnote">Three skills that only matter if you build UI. None of them installs hooks or keeps records &mdash; they shape how Claude designs and writes front-end code when you ask for it. Picking either of the last two raises one extra question at install time: a <b>font-licence policy</b> &mdash; free-to-use fonts only (the default), be told the terms and decide each time, or leave it out. Unless you leave it out, a short policy section goes into the <code>CLAUDE.md</code> of the scope you installed into, and it applies whichever of the two you use.</p>
   <div class="cards">
 
     <article class="skill" data-g="design">
@@ -550,7 +550,7 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
         <dt>It does</dt><dd>Asks for a deliberate point of view on palette, typography and layout, grounded in the subject rather than in a component library's defaults.</dd>
         <dt>You get</dt><dd>Design direction before the markup, which is the only point where it is cheap to change.</dd>
       </dl>
-      <div class="warn soft"><b>Worth knowing.</b> This one is published by Anthropic and installed as a plugin (<code>/plugin install</code>) or with <code>npx skills add</code>, so it updates on its own schedule rather than with the Dandi documents. A skill-name alias only applies on the npx or manual-copy routes, not the plugin route.</div>
+      <div class="warn soft"><b>Worth knowing.</b> This one is published by Anthropic and installed as a plugin (<code>/plugin install</code>) or with <code>npx skills add</code>, so it updates on its own schedule rather than with the Dandi documents. A skill-name alias only applies on the npx or manual-copy routes, not the plugin route. It also does not check font licences &mdash; it changes typography freely and can land on a paid face, which is why installing it asks the font-licence question above.</div>
       <div class="tags"><span class="tag">global</span><span class="tag">front-end only</span></div>
     </article>
 
@@ -560,8 +560,8 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
       <p class="one">Holds a screen for Korean users to the rules Korean services converged on &mdash; and does the contrast maths instead of eyeballing it.</p>
       <dl>
         <dt>Use when</dt><dd>Designing a flow, choosing or drawing icons, or settling a palette, dark mode or design tokens for a Korean-audience product.</dd>
-        <dt>It does</dt><dd>Loads only the summary for the kind of work at hand, applies its hard rules (contrast, bright colours as surfaces only, state by shape as well as colour, 44pt/48dp targets, labelled icons, one accent action, no dark patterns, licensed fonts only, muted autoplay, a button beside every gesture), and cites the principle or checklist item behind each proposal.</dd>
-        <dt>You get</dt><dd>A design proposal with its reasoning, a self-check against the checklist, and every colour pair given with a calculated contrast ratio. Default design tokens come with it (neutral scale, type scale, spacing, radius, shadow, motion) &mdash; brand colours are left blank and asked for.</dd>
+        <dt>It does</dt><dd>Loads only the summary for the kind of work at hand, applies its hard rules (contrast, bright colours as surfaces only, state by shape as well as colour, 44pt/48dp targets, labelled icons, one accent action, no dark patterns, fonts only once their licence has been read, muted autoplay, a button beside every gesture), and cites the principle or checklist item behind each proposal.</dd>
+        <dt>You get</dt><dd>A design proposal with its reasoning, a self-check against the checklist, and every colour pair given with a calculated contrast ratio. Default design tokens come with it (neutral scale, type scale, spacing, radius, shadow, motion) &mdash; brand colours are left blank and asked for. If a job adds or swaps a font, the report names it with its licence tag, the source URL and the date it was checked.</dd>
       </dl>
       <div class="warn soft"><b>Worth knowing.</b> The case studies name real brands. The skill takes the principle, never the brand&rsquo;s colour or icon, and treats the reports&rsquo; conversion figures as unverified.</div>
       <div class="tags"><span class="tag">global</span><span class="tag">Korean audience</span></div>
@@ -601,10 +601,10 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
   <tbody>
     <tr><td><code>/resume</code> <code>/wrap</code> <code>/dropin-check</code> <code>/dropin-update</code></td><td>01 §D-4</td><td>global &mdash; <code>~/.claude/skills/</code></td><td>Delete the folder. Accumulated records under <code>docs/</code> stay by default (you are asked) &mdash; they are data.</td></tr>
     <tr><td><code>/svg-design</code></td><td>03 §2</td><td>global</td><td>Delete the folder.</td></tr>
-    <tr><td><code>/frontend-design</code></td><td>03 §3</td><td>global &mdash; plugin or <code>npx skills add -g</code></td><td>Delete the folder. If npx only left a link, delete what the link points to as well.</td></tr>
+    <tr><td><code>/frontend-design</code></td><td>03 §3</td><td>global &mdash; plugin or <code>npx skills add -g</code></td><td>Delete the folder. If npx only left a link, delete what the link points to as well. Once <code>kr-ui-guide</code> is gone too, delete the font-licence policy section from the <code>CLAUDE.md</code>.</td></tr>
     <tr><td>the six feature skills</td><td>03 §7</td><td>global &mdash; project scope if the team and CI must share them</td><td>Guard first, then the six folders. <code>docs/features/</code> and <code>tests/e2e/</code> stay.</td></tr>
     <tr><td><code>/refactor</code></td><td>03 §8</td><td>global</td><td>Delete the folder. No hooks to unwind, no commits to revert. Reports in <code>docs/refactor/</code> stay.</td></tr>
-    <tr><td><code>/kr-ui-guide</code></td><td>03 §9</td><td>global</td><td>Delete the folder. If a project <code>CLAUDE.md</code> got the optional override block, delete that too.</td></tr>
+    <tr><td><code>/kr-ui-guide</code></td><td>03 §9</td><td>global</td><td>Delete the folder. If a project <code>CLAUDE.md</code> got the optional override block, delete that too &mdash; and the font-licence policy section, once <code>frontend-design</code> is gone as well.</td></tr>
     <tr><td><code>/plan-&lt;model&gt;</code></td><td>02 STEP 3 ⓔ</td><td>asked at install &mdash; global or project</td><td>Delete the folder, the model usage table it created, and the lines about this command it added to <code>CLAUDE.md</code> and the handoff protocol.</td></tr>
   </tbody>
 </table>

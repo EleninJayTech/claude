@@ -542,6 +542,7 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
     <dl>
       <dt>How to install</dt><dd>As a bundle with <code>/plugin marketplace add anthropics/skills</code> &middot; just this one with <code>/plugin install frontend-design@claude-plugins-official</code> &middot; or individually with <code>npx skills add &hellip; --skill frontend-design</code> (add <code>-g</code> for global). The two plugin routes take no skill name alias (2-7)</dd>
       <dt>Difference from svg-design</dt><dd>This one covers <b>design direction and the UI as a whole</b>; svg-design covers <b>implementing SVG filter effects</b>. Installing both causes no conflict</dd>
+      <dt>Font licences</dt><dd>This skill <b>does not look at them</b> &mdash; it changes typography freely and can suggest a paid font. So ticking it brings up the <b>font licence policy</b> question below, and the answer is written down even if you did not install &sect;9</dd>
     </dl>
   </div>
 
@@ -601,7 +602,18 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
       <dt>Pick this when</dt><dd>You build screens for <b>Korean users</b>. Checked by default in the design bundle when the output language is Korean; otherwise pick it yourself</dd>
       <dt>How it relates to &sect;3</dt><dd><b>They split the work.</b> frontend-design sets the aesthetic direction; this skill sets the constraints and local conventions. When they disagree, the constraints win. <b>Either one alone is fine</b></dd>
       <dt>Project note (optional)</dt><dd>Asked alongside, <b>unchecked by default</b>. If you know which project the UI work is for, you can add a short override block to that project's <code>CLAUDE.md</code> &mdash; brand colour, dark-mode stance, platform. Leave values blank and the skill asks before it needs them</dd>
-      <dt>Removing it</dt><dd>Delete the folder. If you added the project note above, delete that <code>CLAUDE.md</code> block too &mdash; otherwise it's the only thing left behind</dd>
+      <dt>Removing it</dt><dd>Delete the folder. If you added the project note above, delete that <code>CLAUDE.md</code> block too &mdash; otherwise it's the only thing left behind. The font licence section below is <b>shared with &sect;3</b>, so it only goes once neither design skill is left</dd>
+    </dl>
+  </div>
+
+  <div class="opt">
+    <div class="opt-head"><span class="name">Font licence policy</span><span class="badge b-keep">asked once you tick &sect;3 or &sect;9</span></div>
+    <p class="lead">Tick either design skill and one more question follows: <b>what Claude may do with a font that is not free to use</b>. Your answer is written as a short section at the end of the <code>CLAUDE.md</code> for the scope you installed into, so <b>whichever UI skill is working, it reads the same rule from one place</b>.</p>
+    <dl>
+      <dt>Three answers</dt><dd><b>Free-use only</b> (the default) &mdash; a font that is not clearly free is not used; ask for one and you get the reason and a free alternative instead / <b>tell me, then I choose</b> &mdash; the conditions (purchase, attribution, where it may be used) are put in front of you first, and the font is used only after you say so / <b>do not add the section</b> &mdash; nothing is written, and you are told what that means: &sect;9 behaves as if free-use only, and &sect;3 does not check licences at all</dd>
+      <dt>How a font gets judged</dt><dd>By <b>reading the licence text itself on the day</b> (<code class="i">LICENSE</code>, <code class="i">OFL.txt</code>, the official distribution page) rather than from memory, and tagging it &mdash; free / attribution required / conditional / paid / unconfirmed. Anything it could not confirm counts as unconfirmed and is <b>not used under either policy</b></dd>
+      <dt>What you get back</dt><dd>Every font added or swapped is reported as one line &mdash; <b>name, licence, source URL, date checked</b>. A system font named only in a fallback stack is marked as not distributed</dd>
+      <dt>If the section already exists</dt><dd>You are asked whether to keep it or change it, and only the policy line is rewritten &mdash; the rest of the section stays as it is</dd>
     </dl>
   </div>
 

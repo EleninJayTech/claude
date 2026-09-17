@@ -540,6 +540,7 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
     <dl>
       <dt>설치 방법</dt><dd><code>/plugin marketplace add anthropics/skills</code> 로 묶음 설치 · <code>/plugin install frontend-design@claude-plugins-official</code> 로 이것 하나만 · 또는 <code>npx skills add … --skill frontend-design</code> 로 개별 설치(글로벌이면 <code>-g</code>). 플러그인 두 경로엔 스킬 이름 별칭이 붙지 않습니다(2-7)</dd>
       <dt>svg-design과 차이</dt><dd>이쪽은 <b>디자인 방향과 전체 UI</b>, svg-design은 <b>SVG 필터 효과 구현</b>. 둘 다 깔아도 충돌하지 않습니다</dd>
+      <dt>폰트 라이선스</dt><dd>이 스킬은 <b>라이선스를 보지 않습니다</b> — 타이포를 적극 바꾸는 스킬이라 유료 폰트를 제안할 수 있습니다. 그래서 이걸 체크하면 아래 <b>폰트 라이선스 정책</b> 질문이 따라오고, §9를 깔지 않아도 그 답은 적어 둡니다</dd>
     </dl>
   </div>
 
@@ -599,7 +600,18 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
       <dt>이럴 때 고르세요</dt><dd><b>한국 사용자 대상</b> 화면을 만들 때. 산출물 언어가 한국어이고 디자인 번들을 고르면 기본으로 체크되고, 그 밖엔 직접 고릅니다</dd>
       <dt>§3과의 관계</dt><dd><b>일을 나눕니다.</b> frontend-design이 미적 방향을, 이 스킬이 제약과 국내 관습을 맡습니다. 둘이 부딪히면 제약이 이깁니다 — <b>어느 쪽만 깔아도 됩니다</b></dd>
       <dt>프로젝트 메모(선택)</dt><dd><b>기본 해제</b>로 함께 물어봅니다. UI 작업을 할 프로젝트가 정해져 있으면 그 프로젝트 <code>CLAUDE.md</code>에 짧은 오버라이드 절을 추가할 수 있습니다 — 브랜드 색·다크모드 여부·타깃 플랫폼. 값을 비워 두면 스킬이 필요할 때 먼저 묻습니다</dd>
-      <dt>지울 때</dt><dd>폴더를 지웁니다. 위 프로젝트 메모를 추가했다면 그 <code>CLAUDE.md</code> 절도 함께 지웁니다 — 안 그러면 그것만 남습니다</dd>
+      <dt>지울 때</dt><dd>폴더를 지웁니다. 위 프로젝트 메모를 추가했다면 그 <code>CLAUDE.md</code> 절도 함께 지웁니다 — 안 그러면 그것만 남습니다. 아래 폰트 라이선스 절은 <b>§3과 함께 쓰는 것</b>이라, 디자인 스킬이 양쪽 다 없어질 때만 지웁니다</dd>
+    </dl>
+  </div>
+
+  <div class="opt">
+    <div class="opt-head"><span class="name">폰트 라이선스 정책</span><span class="badge b-keep">§3·§9 중 하나라도 고르면 물어봅니다</span></div>
+    <p class="lead">디자인 스킬을 체크하면 질문이 하나 더 따라옵니다 — <b>자유롭게 쓸 수 없는 폰트를 Claude가 어떻게 다룰지</b>입니다. 답은 스킬을 깐 스코프의 <code>CLAUDE.md</code> 끝에 짧은 절로 적히고, <b>어느 UI 스킬이 일하든 그 한 곳을 읽습니다</b>.</p>
+    <dl>
+      <dt>3가지 답</dt><dd><b>자유 사용만</b>(기본) — 자유 사용이 분명하지 않은 폰트는 쓰지 않고, 요청하면 이유와 무료 대체 폰트를 대신 내놓습니다 / <b>안내 후 선택</b> — 조건(구매·고지 의무·사용 범위)을 먼저 알려 주고, 고른 뒤에만 씁니다 / <b>넣지 않음</b> — 절을 만들지 않고, 그게 무슨 뜻인지 알려 줍니다(§9는 자유 사용만으로 동작하고, §3은 라이선스를 아예 보지 않습니다)</dd>
+      <dt>판정하는 방법</dt><dd>기억이 아니라 <b>그날 라이선스 원문</b>(<code class="i">LICENSE</code>·<code class="i">OFL.txt</code>·공식 배포 페이지)을 읽고 자유 사용 / 출처 표기 필요 / 조건부 / 상용 유료 / 검증 필요로 태그합니다. 확인하지 못한 폰트는 검증 필요이고 <b>어느 정책에서도 쓰지 않습니다</b></dd>
+      <dt>돌려받는 것</dt><dd>넣거나 바꾼 폰트마다 <b>폰트명 · 라이선스 · 원문 URL · 확인일</b>을 한 줄씩 보고합니다. 폴백 스택에 이름만 적은 OS 폰트는 배포하지 않는 것으로 적습니다</dd>
+      <dt>이미 절이 있으면</dt><dd>유지할지 바꿀지 물어보고, 바꿔도 정책 줄만 고칩니다 — 나머지는 그대로 둡니다</dd>
     </dl>
   </div>
 
