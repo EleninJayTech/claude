@@ -11,91 +11,106 @@
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://eleninjaytech.github.io/claude/pages/demo.html">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@700;900&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
 <link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" rel="stylesheet">
+<meta name="color-scheme" content="light dark">
 <style>
 :root{
-  --paper:#FCFCF8; --card:#FFFFFF; --ink:#20222E; --ink-soft:#5A5E70;
-  --marker:#FFD84D; --marker-soft:#FFF3C2;
-  --blue:#2B49C7; --blue-soft:#E8ECFB;
-  --line:#E5E4DB; --term:#1B1D27; --term-line:#2E3140;
-  --green:#7BC97E; --dim:#9EA3B5;
-  --serif:'Noto Serif KR','Nanum Myeongjo',serif;
-  --sans:'Pretendard Variable',Pretendard,'Malgun Gothic',sans-serif;
-  --mono:'IBM Plex Mono',Consolas,monospace;
+  color-scheme:light dark;
+  --paper:#F9FAFB; --card:#FFFFFF; --card-2:#F2F4F6;
+  --ink:#191F28; --ink-soft:#4E5968;
+  --line:#E5E8EB; --line-strong:#8B95A1;
+  --blue:#2B49C7; --blue-soft:#EDF0FC; --blue-line:#C9D3F4;
+  --marker:#FFD84D; --marker-soft:#FFF3C2; --marker-line:#EFDD9A; --on-marker:#191F28; --mark-bg:#FFD84D; --amber:#7A5B00;
+  --green:#1B7A4B; --green-soft:#E3F3EA; --red:#B3261E; --red-soft:#FBE9E7; --red-line:#F0C4BF;
+  --term:#191F28; --term-line:#333D4B; --term-fg:#E5E8EB; --term-dim:#9EA3B5; --term-green:#7BC97E; --dim:#9EA3B5;
+  --shadow-1:0 1px 3px rgba(0,0,0,.04),0 2px 6px rgba(0,0,0,.02);
+  --shadow-2:0 4px 16px rgba(0,0,0,.06);
+  --shadow-3:0 8px 24px rgba(0,0,0,.08);
+  --ease:cubic-bezier(.16,1,.3,1);
+  --sans:'Pretendard Variable',Pretendard,-apple-system,BlinkMacSystemFont,system-ui,Roboto,'Noto Sans KR','Apple SD Gothic Neo','Malgun Gothic',sans-serif;
+  --mono:'IBM Plex Mono',ui-monospace,Consolas,monospace;
 }
+@media (prefers-color-scheme:dark){:root{
+  --paper:#0F1317; --card:#191F28; --card-2:#232B36;
+  --ink:#FFFFFF; --ink-soft:#B0B8C1;
+  --line:#252C37; --line-strong:#6B7684;
+  --blue:#8FA2F5; --blue-soft:#1F2A4A; --blue-line:#34447A;
+  --marker:#F2C94C; --marker-soft:#3A3220; --marker-line:#5C4F2A; --mark-bg:rgba(255,216,77,.30); --amber:#F2C94C;
+  --green:#6FCF97; --green-soft:#15332A; --red:#F28B82; --red-soft:#3A1D1B; --red-line:#6B302B;
+  --term:#0A0D10; --term-line:#252C37;
+  --shadow-1:none; --shadow-2:none; --shadow-3:none;
+}}
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:var(--sans);background:var(--paper);color:var(--ink);line-height:1.85;font-size:16.5px;
-  word-break:keep-all;overflow-wrap:break-word;
-  background-image:linear-gradient(#F1F0E7 1px,transparent 1px),linear-gradient(90deg,#F1F0E7 1px,transparent 1px);
-  background-size:26px 26px}
+body{font-family:var(--sans);background:var(--paper);color:var(--ink);line-height:1.6;font-size:16px;letter-spacing:-.01em;
+  word-break:keep-all;overflow-wrap:break-word}
 p,li{text-wrap:pretty}
-::selection{background:var(--marker)}
+::selection{background:var(--mark-bg)}
 a{color:var(--blue)}
 :focus-visible{outline:3px solid var(--blue);outline-offset:2px;border-radius:4px}
 
 .wrap{max-width:900px;margin:0 auto;padding:48px 24px 80px}
-.eyebrow{font-family:var(--mono);font-size:13px;letter-spacing:.14em;color:var(--ink-soft);margin-bottom:14px}
+.eyebrow{font-family:var(--sans);font-size:13px;letter-spacing:0;color:var(--ink-soft);margin-bottom:14px}
 .eyebrow b{color:var(--blue);font-weight:600}
-h1{font-family:var(--serif);font-weight:900;font-size:clamp(26px,4.2vw,38px);line-height:1.5;letter-spacing:-.02em;text-wrap:balance}
-.mark{background:linear-gradient(transparent 58%, var(--marker) 58%, var(--marker) 92%, transparent 92%);padding:0 2px}
-p.sub{margin-top:14px;color:var(--ink-soft);max-width:38em}
-.backlink{font-family:var(--mono);font-size:13px}
+h1{font-family:var(--sans);font-weight:700;font-size:clamp(28px,4.2vw,40px);line-height:1.35;letter-spacing:-.025em;text-wrap:balance}
+.mark{background:linear-gradient(transparent 58%, var(--mark-bg) 58%, var(--mark-bg) 92%, transparent 92%);padding:0 2px}
+p.sub{margin-top:14px;color:var(--ink-soft);line-height:1.6;max-width:38em}
+.backlink{font-family:var(--sans);font-size:13px}
 
 /* ── 플레이어 ── */
-.player{margin-top:28px;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px;box-shadow:0 18px 44px -20px rgba(32,34,46,.22)}
-.chrome{background:var(--term);border-radius:10px 10px 0 0;padding:10px 14px;display:flex;align-items:center;gap:8px}
+.player{margin-top:28px;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px;box-shadow:var(--shadow-3)}
+.chrome{background:var(--term);border-radius:12px 12px 0 0;padding:10px 14px;display:flex;align-items:center;gap:8px}
 .chrome .dot{width:11px;height:11px;border-radius:50%}
-.chrome .title{margin-left:8px;font-family:var(--mono);font-size:12.5px;color:var(--dim)}
-.term{background:var(--term);border-radius:0 0 10px 10px;height:min(52dvh,430px);overflow-y:auto;padding:16px 18px 22px;font-family:var(--mono);font-size:13.5px;line-height:1.9;color:#E8E7DE;scroll-behavior:smooth}
+.chrome .title{margin-left:8px;font-family:var(--mono);font-size:12.5px;color:var(--term-dim)}
+.term{background:var(--term);border-radius:0 0 12px 12px;height:min(52dvh,430px);overflow-y:auto;padding:16px 18px 22px;font-family:var(--mono);font-size:13.5px;line-height:1.9;color:#E8E7DE;scroll-behavior:smooth}
 .term .ln{opacity:0;transform:translateY(3px);transition:opacity .25s,transform .25s;white-space:pre-wrap;word-break:break-word}
 .term .ln.show{opacity:1;transform:none}
 .term .cmd{color:#F2F1E9}
 .term .cmd .pr{color:var(--marker);font-weight:600}
-.term .cmd .typed{color:var(--marker-soft)}
+.term .cmd .typed{color:var(--marker)}
 .term .out{color:#CFD2DE}
 .term .out .who{color:#D97757;font-weight:600}
-.term .ok{color:var(--green)}
-.term .note{color:var(--dim);border-left:2px solid var(--term-line);padding-left:10px;margin:4px 0}
+.term .ok{color:var(--term-green)}
+.term .note{color:var(--term-dim);border-left:2px solid var(--term-line);padding-left:10px;margin:4px 0}
 .term .ask{background:#2A2C3A;border:1px dashed #4A4E63;border-radius:8px;padding:8px 12px;margin:8px 0;color:#F0E6BE}
 .term .hr{color:#5A5E70;letter-spacing:.2em}
 .term .chk{display:flex;gap:10px;align-items:baseline;color:#CFD2DE}
-.term .chk .box{font-weight:600;color:var(--dim)}
+.term .chk .box{font-weight:600;color:var(--term-dim)}
 .term .chk.on .box{color:var(--marker)}
 .term .chk.on{color:#F2F1E9}
-.caret{display:inline-block;width:8px;background:var(--marker-soft);animation:blink 1s steps(1) infinite;height:1.1em;vertical-align:text-bottom}
+.caret{display:inline-block;width:8px;background:var(--marker);animation:blink 1s steps(1) infinite;height:1.1em;vertical-align:text-bottom}
 @keyframes blink{50%{opacity:0}}
 @media (prefers-reduced-motion:reduce){.term .ln{transition:none}.caret{animation:none}}
 
 /* 자막 */
-.caption{margin:14px 2px 4px;min-height:3.2em;border-left:3px solid var(--marker);padding:2px 0 2px 12px;font-size:14.5px;color:var(--ink-soft)}
+.caption{margin:14px 2px 4px;min-height:3.2em;border-left:3px solid var(--marker);padding:2px 0 2px 12px;font-size:14px;line-height:1.55;color:var(--ink-soft)}
 .caption b{color:var(--ink)}
 
 /* 컨트롤 */
 .controls{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin-top:12px}
-button{font-family:var(--mono);font-size:13.5px;border:1.5px solid var(--ink);background:var(--card);color:var(--ink);border-radius:8px;padding:8px 14px;cursor:pointer;transition:transform .18s,background .18s,border-color .18s,color .18s}
+button{font-family:var(--sans);font-size:13.5px;min-height:44px;display:inline-flex;align-items:center;border:1.5px solid var(--ink);background:var(--card);color:var(--ink);border-radius:12px;padding:8px 14px;cursor:pointer;transition:transform 150ms var(--ease),background 150ms var(--ease),border-color 150ms var(--ease),color 150ms var(--ease)}
 button:hover{transform:translateY(-2px)}
 button:active{transform:translateY(0) scale(.97)}
 button.solid{background:var(--ink);color:var(--paper)}
-button[aria-pressed="true"]{background:var(--marker);border-color:var(--ink);color:var(--ink)}
+button[aria-pressed="true"]{background:var(--marker);border-color:var(--ink);color:var(--on-marker)}
 .bar{flex:1 1 160px;height:10px;background:var(--blue-soft);border-radius:6px;cursor:pointer;position:relative;min-width:120px}
-.bar .fill{position:absolute;inset:0 auto 0 0;width:0;background:var(--blue);border-radius:6px;transition:width .2s}
+.bar .fill{position:absolute;inset:0 auto 0 0;width:0;background:var(--blue);border-radius:6px;transition:width 200ms var(--ease)}
 .chapters{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
 .chapters button{font-size:12.5px;padding:6px 11px;border-width:1px;border-color:var(--line);color:var(--ink-soft)}
 .chapters button:hover{border-color:var(--ink);color:var(--ink)}
 .chapters button.cur{border-color:var(--ink);color:var(--ink);background:var(--marker-soft)}
-.hint{margin-top:10px;font-size:12.5px;color:var(--ink-soft);font-family:var(--mono)}
+.hint{margin-top:10px;font-size:12.5px;color:var(--ink-soft);font-family:var(--sans)}
 
 /* 아래 안내 */
-.next{margin-top:26px;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:26px 28px;box-shadow:0 12px 32px -20px rgba(32,34,46,.16)}
-.next h2{font-family:var(--serif);font-size:20px;margin-bottom:8px}
-.say{font-family:var(--mono);font-size:14px;background:var(--ink);color:#F2F1E9;border-radius:10px;padding:14px 16px;margin:12px 0;line-height:2;overflow-x:auto}
+.next{margin-top:26px;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:26px 28px;box-shadow:var(--shadow-2)}
+.next h2{font-family:var(--sans);font-weight:700;font-size:20px;margin-bottom:8px}
+.say{font-family:var(--mono);font-size:14px;background:var(--term);color:var(--term-fg);border-radius:12px;padding:14px 16px;margin:12px 0;line-height:2;overflow-x:auto}
 .say b{color:var(--marker)}
-footer{margin-top:36px;color:var(--ink-soft);font-size:13px;font-family:var(--mono);line-height:1.7}
+footer{margin-top:36px;color:var(--ink-soft);font-size:13px;font-family:var(--sans);line-height:1.6}
 </style>
 </head>
 <body>
-<div style="max-width:900px;margin:0 auto;padding:14px 20px 0;font-family:var(--mono);font-size:13px;text-align:right;opacity:.75"><a href="demo.html" onclick="try{localStorage.setItem('lang','en')}catch(e){}">English</a> &middot; <b>한국어</b></div>
+<div style="max-width:900px;margin:0 auto;padding:14px 20px 0;font-family:var(--sans);font-size:13px;text-align:right;opacity:.75"><a href="demo.html" onclick="try{localStorage.setItem('lang','en')}catch(e){}">English</a> &middot; <b>한국어</b></div>
 <div class="wrap">
 
 <header>
@@ -133,7 +148,7 @@ footer{margin-top:36px;color:var(--ink-soft);font-size:13px;font-family:var(--mo
   <p>이미 설치된 것이 있으면 그대로 둘지 먼저 물어보고, 말없이 덮어쓰지 않습니다. 문서 일곱 장이 각각 무엇을 하는지는 <a href="../index.html">사용법 페이지</a>에, 설치 중에 고르는 항목의 뜻은 <a href="options.html">설치 옵션 사전</a>에 있습니다. 처음부터 차근차근 배우려면 <a href="learn.html">설치 옵션 학습 코스</a>를 보세요.</p>
 </div>
 
-<footer>단디 · 설치 시연 페이지 · 2026-09-17 · 이 페이지의 시연은 00~06 문서의 실제 절차(감지 → 모드·번들 선택 → 설치 → 증거 검증 → 적용 기록)를 재현한 것입니다. 디자인은 frontend-design 스킬 원칙을 따릅니다.</footer>
+<footer>단디 · 설치 시연 페이지 · 2026-09-17 · 이 페이지의 시연은 00~06 문서의 실제 절차(감지 → 모드·번들 선택 → 설치 → 증거 검증 → 적용 기록)를 재현한 것입니다. 디자인은 kr-ui-guide 스킬(저장소 skills/kr-ui-guide) 기준을 따릅니다. · 글꼴: Pretendard, IBM Plex Mono — 둘 다 SIL 오픈 폰트 라이선스 1.1(상업 이용·웹 임베딩 무료)</footer>
 </div>
 
 <script>

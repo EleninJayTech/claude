@@ -11,54 +11,68 @@
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://eleninjaytech.github.io/claude/pages/options.html">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@700;900&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
 <link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" rel="stylesheet">
+<meta name="color-scheme" content="light dark">
 <style>
 :root{
-  --paper:#FCFCF8; --card:#FFFFFF; --ink:#20222E; --ink-soft:#5A5E70;
-  --marker:#FFD84D; --marker-soft:#FFF3C2;
-  --blue:#2B49C7; --blue-soft:#E8ECFB;
-  --green:#1B7A4B; --green-soft:#E3F3EA;
-  --red:#B3261E; --red-soft:#FBE9E7;
-  --line:#E5E4DB;
-  --serif:'Noto Serif KR','Nanum Myeongjo',serif;
-  --sans:'Pretendard Variable',Pretendard,'Malgun Gothic',sans-serif;
-  --mono:'IBM Plex Mono',Consolas,monospace;
+  color-scheme:light dark;
+  --paper:#F9FAFB; --card:#FFFFFF; --card-2:#F2F4F6;
+  --ink:#191F28; --ink-soft:#4E5968;
+  --line:#E5E8EB; --line-strong:#8B95A1;
+  --blue:#2B49C7; --blue-soft:#EDF0FC; --blue-line:#C9D3F4;
+  --marker:#FFD84D; --marker-soft:#FFF3C2; --marker-line:#EFDD9A; --on-marker:#191F28; --mark-bg:#FFD84D; --amber:#7A5B00;
+  --green:#1B7A4B; --green-soft:#E3F3EA; --red:#B3261E; --red-soft:#FBE9E7; --red-line:#F0C4BF;
+  --term:#191F28; --term-line:#333D4B; --term-fg:#E5E8EB; --term-dim:#9EA3B5; --dim:#9EA3B5;
+  --shadow-1:0 1px 3px rgba(0,0,0,.04),0 2px 6px rgba(0,0,0,.02);
+  --shadow-2:0 4px 16px rgba(0,0,0,.06);
+  --shadow-3:0 8px 24px rgba(0,0,0,.08);
+  --ease:cubic-bezier(.16,1,.3,1);
+  --sans:'Pretendard Variable',Pretendard,-apple-system,BlinkMacSystemFont,system-ui,Roboto,'Noto Sans KR','Apple SD Gothic Neo','Malgun Gothic',sans-serif;
+  --mono:'IBM Plex Mono',ui-monospace,Consolas,monospace;
 }
+@media (prefers-color-scheme:dark){:root{
+  --paper:#0F1317; --card:#191F28; --card-2:#232B36;
+  --ink:#FFFFFF; --ink-soft:#B0B8C1;
+  --line:#252C37; --line-strong:#6B7684;
+  --blue:#8FA2F5; --blue-soft:#1F2A4A; --blue-line:#34447A;
+  --marker:#F2C94C; --marker-soft:#3A3220; --marker-line:#5C4F2A; --mark-bg:rgba(255,216,77,.30); --amber:#F2C94C;
+  --green:#6FCF97; --green-soft:#15332A; --red:#F28B82; --red-soft:#3A1D1B; --red-line:#6B302B;
+  --term:#0A0D10; --term-line:#252C37;
+  --shadow-1:none; --shadow-2:none; --shadow-3:none;
+}}
 *{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
-body{font-family:var(--sans);background:var(--paper);color:var(--ink);line-height:1.85;font-size:16.5px;
-  word-break:normal;overflow-wrap:break-word;
-  background-image:linear-gradient(#F1F0E7 1px,transparent 1px),linear-gradient(90deg,#F1F0E7 1px,transparent 1px);
-  background-size:26px 26px}
+body{font-family:var(--sans);background:var(--paper);color:var(--ink);line-height:1.6;font-size:16px;letter-spacing:-.01em;
+  word-break:normal;overflow-wrap:break-word}
 p,li{text-wrap:pretty}
-::selection{background:var(--marker)}
+::selection{background:var(--mark-bg)}
 a{color:var(--blue)}
 :focus-visible{outline:3px solid var(--blue);outline-offset:2px;border-radius:4px}
 
 /* ---------- 히어로 ---------- */
 .hero{max-width:1040px;margin:0 auto;padding:60px 24px 22px}
-.eyebrow{font-family:var(--mono);font-size:13px;letter-spacing:.14em;color:var(--ink-soft);margin-bottom:16px}
+.eyebrow{font-family:var(--sans);font-size:13px;letter-spacing:0;color:var(--ink-soft);margin-bottom:16px}
 .eyebrow b{color:var(--blue);font-weight:600}
-h1{font-family:var(--serif);font-weight:900;font-size:clamp(29px,4.4vw,44px);line-height:1.5;letter-spacing:-.02em;text-wrap:balance}
-.mark{background:linear-gradient(transparent 58%, var(--marker) 58%, var(--marker) 92%, transparent 92%);padding:0 2px}
-.hero p.sub{margin-top:18px;color:var(--ink-soft);font-size:16.5px;max-width:42em}
+h1{font-family:var(--sans);font-weight:700;font-size:clamp(28px,4.2vw,40px);line-height:1.35;letter-spacing:-.025em;text-wrap:balance}
+.mark{background:linear-gradient(transparent 58%, var(--mark-bg) 58%, var(--mark-bg) 92%, transparent 92%);padding:0 2px}
+.hero p.sub{margin-top:18px;color:var(--ink-soft);font-size:16px;line-height:1.6;max-width:42em}
 
 /* ---------- 본문 공통 ---------- */
 main{max-width:1040px;margin:0 auto;padding:20px 24px 80px}
-section{margin:0 0 26px;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:32px 34px 28px;scroll-margin-top:16px}
+section{margin:0 0 26px;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:32px 34px 28px;scroll-margin-top:16px}
 @media (max-width:600px){section{padding:22px 17px}}
-h2{font-family:var(--serif);font-size:23px;font-weight:700;line-height:1.4}
-.goal{font-size:13.5px;color:var(--ink-soft);font-family:var(--mono);margin:6px 0 18px}
-h3{font-size:16.5px;font-weight:700;margin:26px 0 8px;padding-bottom:6px;border-bottom:2px solid var(--marker-soft)}
-p{margin:10px 0}
+h2{font-family:var(--sans);font-size:24px;font-weight:700;line-height:1.4;letter-spacing:-.02em}
+.goal{font-size:13px;color:var(--ink-soft);font-family:var(--sans);margin:6px 0 18px}
+h3{font-size:18px;font-weight:600;line-height:1.45;margin:26px 0 8px;padding-bottom:6px;border-bottom:2px solid var(--marker-soft)}
+p{margin:10px 0;line-height:1.6}
 ul{margin:10px 0 10px 22px}
 li{margin:6px 0}
-code.i{font-family:var(--mono);font-size:.88em;background:var(--blue-soft);color:var(--blue);padding:1px 6px;border-radius:5px;word-break:break-all}
+code.i{font-family:var(--mono);font-size:.88em;background:var(--blue-soft);color:var(--blue);padding:1px 6px;border-radius:6px;word-break:break-all}
 
 /* ---------- 목차 ---------- */
-nav.toc{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:22px 26px;margin:0 0 26px;scroll-margin-top:16px}
-nav.toc b{font-family:var(--mono);font-size:13px;letter-spacing:.1em;color:var(--ink-soft);display:block;margin-bottom:10px}
+nav.toc{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:22px 26px;margin:0 0 26px;scroll-margin-top:16px}
+nav.toc b{font-family:var(--sans);font-size:13px;letter-spacing:0;color:var(--ink-soft);display:block;margin-bottom:10px}
 nav.toc ol{margin:0 0 0 20px;font-size:15px;columns:2;column-gap:40px}
 @media (max-width:700px){nav.toc ol{columns:1}}
 nav.toc li{margin:5px 0;break-inside:avoid}
@@ -66,42 +80,42 @@ nav.toc a{text-decoration:none;border-bottom:1px solid var(--blue-soft)}
 nav.toc a:hover{border-bottom-color:var(--blue)}
 
 /* ---------- 선택 항목 카드 ---------- */
-.opt{border:1px solid var(--line);border-left:3px solid var(--marker);border-radius:11px;padding:18px 20px;margin:14px 0;background:#FEFEFC;transition:box-shadow .2s,transform .2s}
-.opt:hover{transform:translateY(-1px);box-shadow:0 12px 30px -18px rgba(32,34,46,.22)}
+.opt{border:1px solid var(--line);border-left:3px solid var(--marker);border-radius:12px;padding:18px 20px;margin:14px 0;background:var(--card);transition:box-shadow 150ms var(--ease),transform 150ms var(--ease)}
+.opt:hover{transform:translateY(-1px);box-shadow:var(--shadow-2)}
 .opt-head{display:flex;flex-wrap:wrap;align-items:baseline;gap:9px;margin-bottom:4px}
 .opt-head .name{font-weight:700;font-size:16px}
 .opt-head .id{font-family:var(--mono);font-size:13px;color:var(--blue);font-weight:600}
-.opt .lead{color:var(--ink-soft);font-size:15px;margin:6px 0 12px}
+.opt .lead{color:var(--ink-soft);font-size:15px;line-height:1.55;margin:6px 0 12px}
 .opt dl{display:grid;grid-template-columns:96px 1fr;gap:6px 14px;font-size:15px;margin-top:10px}
 @media (max-width:560px){.opt dl{grid-template-columns:1fr;gap:2px}.opt dt{margin-top:9px}}
-.opt dt{font-family:var(--mono);font-size:12.5px;color:var(--ink-soft);padding-top:4px}
+.opt dt{font-family:var(--sans);font-size:12.5px;color:var(--ink-soft);padding-top:4px}
 .opt dd{margin:0}
-.opt dd code{font-family:var(--mono);font-size:.87em;background:#F3F3EC;padding:1px 5px;border-radius:4px;word-break:break-all}
+.opt dd code{font-family:var(--mono);font-size:.87em;background:var(--card-2);padding:1px 5px;border-radius:4px;word-break:break-all}
 
-.badge{font-family:var(--mono);font-size:11.5px;font-weight:600;padding:2px 8px;border-radius:6px;white-space:nowrap;letter-spacing:.02em}
+.badge{font-family:var(--sans);font-size:11.5px;font-weight:600;padding:2px 8px;border-radius:6px;white-space:nowrap;letter-spacing:.02em}
 .b-on{background:var(--green-soft);color:var(--green)}
-.b-off{background:#F1F1EA;color:var(--ink-soft)}
-.b-keep{background:var(--marker-soft);color:#8A6D00}
+.b-off{background:var(--card-2);color:var(--ink-soft)}
+.b-keep{background:var(--marker-soft);color:var(--amber)}
 .b-gate{background:var(--red-soft);color:var(--red)}
 
-table{width:100%;border-collapse:collapse;margin:14px 0;font-size:14.5px}
+table{width:100%;border-collapse:collapse;margin:14px 0;font-size:14px}
 th,td{border:1px solid var(--line);padding:10px 12px;text-align:left;vertical-align:top}
-th{background:var(--marker-soft);font-family:var(--mono);font-size:12.5px}
+th{background:var(--marker-soft);font-family:var(--sans);font-size:13px}
 .tbl{overflow-x:auto}
-.note{border-radius:10px;padding:13px 16px;margin:16px 0 4px;font-size:14.5px;background:var(--marker-soft);border:1px solid #EFDD9A}
+.note{border-radius:12px;padding:13px 16px;margin:16px 0 4px;font-size:14px;line-height:1.55;background:var(--marker-soft);border:1px solid var(--marker-line)}
 .note b{display:block}
-.note.warn{background:var(--red-soft);border-color:#F0C4BF}
-.note.tip{background:var(--blue-soft);border-color:#C9D3F4}
-footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);font-size:13px;font-family:var(--mono);line-height:1.7}
+.note.warn{background:var(--red-soft);border-color:var(--red-line)}
+.note.tip{background:var(--blue-soft);border-color:var(--blue-line)}
+footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);font-size:13px;font-family:var(--sans);line-height:1.6}
 
 /* 긴 문서용 — 목차로 돌아가기 */
-.totop{position:fixed;right:22px;bottom:22px;z-index:10;font-family:var(--mono);font-size:12.5px;background:var(--ink);color:var(--paper);text-decoration:none;padding:9px 14px;border-radius:8px;box-shadow:0 10px 24px -10px rgba(32,34,46,.5);transition:transform .15s}
+.totop{position:fixed;right:22px;bottom:22px;z-index:10;font-family:var(--sans);font-size:13px;display:inline-flex;align-items:center;min-height:44px;background:var(--ink);color:var(--paper);text-decoration:none;padding:9px 14px;border-radius:12px;box-shadow:var(--shadow-3);transition:transform 150ms var(--ease)}
 .totop:hover{transform:translateY(-2px)}
 .totop:active{transform:translateY(0) scale(.96)}
 </style>
 </head>
 <body>
-<div style="max-width:1040px;margin:0 auto;padding:16px 24px 0;font-family:var(--mono);font-size:13px;text-align:right;color:var(--ink-soft)"><b>English</b> &middot; <a href="options.ko.html" onclick="try{localStorage.setItem('lang','ko')}catch(e){}">한국어</a></div>
+<div style="max-width:1040px;margin:0 auto;padding:16px 24px 0;font-family:var(--sans);font-size:13px;text-align:right;color:var(--ink-soft)"><b>English</b> &middot; <a href="options.ko.html" onclick="try{localStorage.setItem('lang','ko')}catch(e){}">한국어</a></div>
 
 <header class="hero">
   <div class="eyebrow"><b>Dandi</b> &middot; 00_통합-설치.md &middot; dictionary of install options</div>
@@ -885,7 +899,8 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
   Dandi &middot; Install options dictionary &middot; based on 00_통합-설치.md &middot; 2026-09-17<br>
   The source of truth for each item is its own document (01&ndash;06). This page exists so people can read and judge; it does not change the install procedure itself.<br>
   Repository: github.com/EleninJayTech/claude &middot;
-  <a href="../index.html">Guide</a> &middot; <a href="intro.html">Intro</a> &middot; <a href="demo.html">Walkthrough</a> &middot; <a href="learn.html">Course</a> &middot; <a href="skills.html">Skill catalog</a>
+  <a href="../index.html">Guide</a> &middot; <a href="intro.html">Intro</a> &middot; <a href="demo.html">Walkthrough</a> &middot; <a href="learn.html">Course</a> &middot; <a href="skills.html">Skill catalog</a><br>
+  Fonts: Pretendard, IBM Plex Mono &mdash; both SIL Open Font License 1.1 (free for commercial use and web embedding)
 </footer>
 
 <script>

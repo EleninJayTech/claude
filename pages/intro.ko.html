@@ -10,14 +10,15 @@
 <meta property="og:description" content="문서를 넣는다. 한 문장 말한다. 끝. — 18초 소개 영상.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://eleninjaytech.github.io/claude/pages/intro.html">
+<meta name="color-scheme" content="dark">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
 <link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" rel="stylesheet">
 <style>
 :root{
   --w:#F7F6F2; --b:#0C0C0E; --y:#FFD84D; --dim:#8B8E9C; --green:#7BC97E;
-  --sans:'Pretendard Variable',Pretendard,'Malgun Gothic',sans-serif;
-  --mono:'IBM Plex Mono',Consolas,monospace;
+  --sans:'Pretendard Variable',Pretendard,-apple-system,BlinkMacSystemFont,system-ui,Roboto,'Noto Sans KR','Apple SD Gothic Neo','Malgun Gothic',sans-serif;
+  --mono:'IBM Plex Mono',ui-monospace,Consolas,monospace;
 }
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:var(--sans);background:#08080A;color:var(--w);line-height:1.5;min-height:100dvh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px}
@@ -163,7 +164,7 @@ a{color:var(--y)}
 </style>
 </head>
 <body>
-<div style="max-width:1080px;margin:0 auto;padding:10px 18px 0;font-family:var(--mono);font-size:13px;text-align:right;opacity:.7"><a href="intro.html" onclick="try{localStorage.setItem('lang','en')}catch(e){}">English</a> &middot; <b>한국어</b></div>
+<div style="max-width:1080px;margin:0 auto;padding:10px 18px 0;font-family:var(--sans);font-size:13px;text-align:right;opacity:.7"><a href="intro.html" onclick="try{localStorage.setItem('lang','en')}catch(e){}">English</a> &middot; <b>한국어</b></div>
 
 <div class="frame">
   <div class="topbar">
@@ -185,7 +186,7 @@ a{color:var(--y)}
     <button id="btnPlay" aria-pressed="false">⏸</button>
     <div class="bar" id="bar" role="slider" aria-label="진행" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" tabindex="0"><div class="fill" id="fill"></div></div>
   </div>
-  <p class="hint2">화면 클릭·스페이스바: 재생/일시정지 · 막대 클릭: 이동 · 16:9 그대로 화면 녹화하면 유튜브용 영상</p>
+  <p class="hint2">화면 클릭·스페이스바: 재생/일시정지 · 막대 클릭: 이동 · 16:9 그대로 화면 녹화하면 유튜브용 영상 · 글꼴: Pretendard, IBM Plex Mono — 둘 다 SIL 오픈 폰트 라이선스 1.1(상업 이용·웹 임베딩 무료)</p>
 </div>
 
 <script>
