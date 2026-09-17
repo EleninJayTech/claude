@@ -288,7 +288,7 @@ footer{max-width:1120px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
   <ol class="steps" id="steps"></ol>
   <div class="coach"><span class="who">📌</span><div>
     <b>Most detailed questions appear only in &ldquo;custom&rdquo; mode</b>
-    In minimal, recommended and full, the per-document items are <b>settled automatically at that mode&rsquo;s defaults</b>. Items that are <b>off by default</b> are the exception &mdash; they are always asked, bundled into one round.
+    In minimal, recommended and full, the per-document items are <b>settled automatically at that mode&rsquo;s defaults</b>. There are two exceptions: items that are <b>off by default</b> are always asked, bundled into one round, and items <b>that mode has no default for</b> are never settled silently &mdash; they are put to you as they are (pick minimal mode with only the &ldquo;stronger verification&rdquo; bundle on top, for instance, and all three parts of 04 come up as questions).
     The safety questions (&ldquo;overwrite what is already here?&rdquo;, &ldquo;have you checked company policy?&rdquo;) are never skipped, in any mode.
   </div></div>
 </section>
@@ -424,7 +424,8 @@ footer{max-width:1120px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
       <p>Each agent file also carries its <b>reasoning effort</b> next to the model, so you do not pick it every time you call one.
       You are also asked whether the roster is <b>shared with the team</b> (committed to the project) or <b>just for you</b> (your machine).</p>
       <p>There is <b>one more optional item</b> (unchecked by default) &mdash; a <code class="i">/plan-&lt;model&gt;</code> command that runs a
-      different model <b>only while planning</b>. When the plan is done it returns to your normal model by itself.</p>
+      different model <b>only while planning</b>. When the plan is done it returns to your normal model by itself.
+      Where that command lives (<b>just for you</b> on your machine, or <b>shared with the team</b> in the project) is asked separately from the roster.</p>
       <div class="coach warn" style="margin-top:8px"><span class="who">⚠️</span><div>
         <b>Not installed in a repository with no code</b> A roster in a documentation-only place just adds files nobody uses. Claude detects that and tells you.
       </div></div>
@@ -442,7 +443,7 @@ footer{max-width:1120px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
         <li><b>Browser verification</b> &mdash; lets <b>Claude open the screens it built, check them and fix them</b>.</li>
         <li><b>Feature-doc skill set</b> (6 skills) &mdash; writes a <b>spec per feature</b> from the code and the real screen, then runs the tests written in it, blocks commits that skip the doc, and builds release notes. Installed as one set; not for documentation-only repositories. The <b>commit guard</b>, which blocks every teammate&rsquo;s commits, starts unchecked and is asked about separately.</li>
         <li><b>refactor</b> &mdash; cleans up code (merging duplicates, tidying structure, clearing dated syntax) and then <b>proves the behaviour did not change</b> &mdash; call sites, contracts, data formats, an actual test run. Shows you the candidates and only changes what you pick. Not for documentation-only repositories.</li>
-        <li><b>kr-ui-guide</b> &mdash; design rules from research on Korean services (UX patterns, icons, colour). Claude <b>calculates contrast</b> for the colours it proposes and checks screens against the checklists. For Korean-audience UI; it does not copy any brand's look.</li>
+        <li><b>kr-ui-guide</b> &mdash; design rules from research on Korean services (UX patterns, icons, colour, recent design trends) and on Korean game UI/UX. Claude <b>calculates contrast</b> for the colours it proposes and checks screens against the checklists. For Korean-audience <b>web, app and game</b> screens; it does not copy any brand's look.</li>
       </ul>
       <p>Choosing a skill brings two more questions &mdash; <b>scope</b> (your whole machine vs. this project only) and
       <b>invocation</b> (Claude decides vs. only when you type <code class="i">/command</code>).</p>
