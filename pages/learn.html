@@ -546,10 +546,30 @@ footer{max-width:1120px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
 
 <!-- ═══ CH10 수료 ═══ -->
 <section class="chapter" data-ch="10" aria-labelledby="t10" hidden>
-  <p class="eyebrow">Chapter 10 &middot; wrapping up</p>
+  <p class="eyebrow">Chapter 10 &middot; after the install</p>
+  <h2 id="t10">Keeping it current</h2>
+  <p class="lead">Installing once is not the end of it. The documents get revised, and so do the skills they install. Three commands cover three different questions &mdash; and confusing them is the usual reason people keep running a stale setup.</p>
+  <table>
+    <thead><tr><th>You want to&hellip;</th><th>Command</th><th>What changes</th></tr></thead>
+    <tbody>
+      <tr><td>Find out whether anything fell behind</td><td><code>/dropin-check</code></td><td>Nothing &mdash; it reads and reports</td></tr>
+      <tr><td>Refresh your copies of the documents</td><td><code>/dropin-update</code></td><td>The document files only</td></tr>
+      <tr><td>Bring the configuration itself up to date</td><td><code>/dropin-apply</code></td><td>Documents, installed skills, settings</td></tr>
+    </tbody>
+  </table>
+  <h3>The one thing people get wrong</h3>
+  <p><b><code>/dropin-update</code> on its own is not an update.</b> It refreshes the instruction manual, not the thing the manual builds. Your installed skills and settings stay exactly as they were until <code>/dropin-apply</code> runs.</p>
+  <h3>On a machine you have not set up yet</h3>
+  <p><code>/dropin-apply</code> is also the first-install command, so you never have to work out which case you are in. If the command does not exist there yet, say it in words instead: <i>&ldquo;read <code>00_&#54648;&#54633;-&#49444;&#52824;.md</code> from the repository and apply it to this machine&rdquo;</i> &mdash; and the command arrives with everything else.</p>
+  <h3>Why a name check is not enough</h3>
+  <p>A skill can be revised without gaining or losing a single file &mdash; only its wording changes. A check that compares file names calls that &ldquo;already current&rdquo;. The install steps compare file <b>contents</b> as well, which is why a wording-only revision still reaches your disk.</p>
+</section>
+
+<section class="chapter" data-ch="11" aria-labelledby="t11" hidden>
+  <p class="eyebrow">Chapter 11 &middot; wrapping up</p>
   <div class="cert">
     <div class="big" id="certEmoji">🎓</div>
-    <h2 id="t10">Course complete!</h2>
+    <h2 id="t11">Course complete!</h2>
     <p class="lead" id="certMsg"></p>
   </div>
   <h3>Three things to remember</h3>
@@ -576,7 +596,7 @@ footer{max-width:1120px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
 </div>
 
 <footer>
-  Dandi &middot; Install options course &middot; 2026-09-17<br>
+  Dandi &middot; Install options course &middot; 2026-09-18<br>
   The source of truth for each item is its own document (01&ndash;06). This page exists for people to learn from; it does not change the install procedure. Progress is stored only in this browser&rsquo;s localStorage.<br>
   저장소: github.com/EleninJayTech/claude ·
   <a href="../index.html">Guide</a> &middot; <a href="intro.html">Intro</a> &middot; <a href="demo.html">Walkthrough</a> &middot; <a href="options.html">Dictionary</a> &middot; <a href="skills.html">Skill catalog</a><br>
@@ -586,7 +606,7 @@ footer{max-width:1120px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
 <script>
 'use strict';
 /* ───────── 데이터 ───────── */
-var CHAPTERS = ['Getting started','Eight words','Install flow','Base mode','Bundles','Profile','01 base setup','02\u00b703\u00b704','05\u00b706','Practice','Complete'];
+var CHAPTERS = ['Getting started','Eight words','Install flow','Base mode','Bundles','Profile','01 base setup','02\u00b703\u00b704','05\u00b706','Practice','Staying current','Complete'];
 
 var TERMS = [
   ['Drop-in document','A manual you drop into a folder; say one sentence and Claude reads it and follows it. It is prose, not a program, so "installing" really means creating a handful of config files.'],
@@ -635,8 +655,8 @@ var DOC01 = [
     ['~/.claude/CLAUDE.md']],
   ['b','\u24d1 Global security','Blocks reading .env and certificates, shell detours included (unchecking not advised)', true,
     ['~/.claude/settings.json  <span class="c"># deny + hooks</span>']],
-  ['c','\u24d2 /resume \u00b7 /wrap \u00b7 audit skills','Session open/close commands plus setup audits \u2014 the practical core', true,
-    ['~/.claude/skills/resume/SKILL.md','~/.claude/skills/wrap/SKILL.md','~/.claude/skills/dropin-check/','~/.claude/skills/dropin-update/']],
+  ['c','\u24d2 /resume \u00b7 /wrap \u00b7 dropin- skills','Session open/close commands plus setup audit and re-apply \u2014 the practical core', true,
+    ['~/.claude/skills/resume/SKILL.md','~/.claude/skills/wrap/SKILL.md','~/.claude/skills/dropin-apply/','~/.claude/skills/dropin-check/','~/.claude/skills/dropin-update/']],
   ['d','\u24d3 Project record system','Three record files plus concurrent-edit protection', true,
     ['docs/PROJECT_PLAN.md  <span class="c"># roadmap</span>','docs/PROGRESS.md      <span class="c"># session log</span>','docs/DECISIONS.md     <span class="c"># decision log</span>','.gitattributes        <span class="c"># merge=union</span>','.gitignore            <span class="c"># excludes personal + isolated dirs</span>']],
   ['e','\u24d4 Project permissions','What may run without asking', true,
@@ -692,7 +712,7 @@ function goto(i){
     var all = state.done.length>=10;
     $('certEmoji').textContent = all ? '🏅' : '🎓';
     $('certMsg').textContent = all
-      ? 'All ten chapters done. When the installer asks, you now know what you are choosing.'
+      ? 'Every chapter done. When the installer asks, you now know what you are choosing.'
       : (10-state.done.length)+' chapters still unread. Use the contents on the left and open the ones without a \u2713.';
   }else{
     $('nextBtn').textContent='Mark done and continue \u2192';

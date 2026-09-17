@@ -324,6 +324,27 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
   </ul>
 </section>
 
+<!-- 4.5 -->
+<section>
+  <div class="h-row"><svg width="30" height="30"><use href="#check"/></svg><h2>Keeping it up to date</h2></div>
+  <p class="goal">Three commands, three different questions</p>
+  <p>The documents keep changing, and so do the skills they install. Which command you need depends on what you actually want moved.</p>
+  <div class="say">
+    <span class="dim"># Has anything fallen behind? (reads only, changes nothing)</span><br>
+    <b>/dropin-check</b><br>
+    <span class="dim"># Refresh my copies of the documents &mdash; the instructions themselves</span><br>
+    <b>/dropin-update</b><br>
+    <span class="dim"># Bring the configuration itself up to date &mdash; documents, skills, settings</span><br>
+    <b>/dropin-apply</b>  <span class="dim">&larr; this is the one that actually changes your setup</span>
+  </div>
+  <ul>
+    <li><b><code class="i">/dropin-update</code> alone is not an update.</b> It refreshes the instructions, not the thing the instructions build. Your installed skills and settings stay exactly as they were until you run <code class="i">/dropin-apply</code>.</li>
+    <li><b>On a machine that has never been set up</b>, <code class="i">/dropin-apply</code> is also the first-install command &mdash; you do not have to know which case you are in. If the command is not there yet, just say: <i>"read <code class="i">00_&#54648;&#54633;-&#49444;&#52824;.md</code> from the repository and apply it to this machine"</i>.</li>
+    <li><b>A skill can change without gaining a single file.</b> That is why the install steps compare file contents, not just file names &mdash; a revision that only reworded things still reaches your disk.</li>
+  </ul>
+  <p>Every one of these is explained in full in the <a href="pages/skills.html"><b>skill catalog</b></a>.</p>
+</section>
+
 <!-- 5 -->
 <section>
   <div class="h-row"><svg width="30" height="30"><use href="#check"/></svg><h2>Frequently asked</h2></div>
@@ -363,7 +384,7 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
 
 </main>
 
-<footer>Dandi &middot; How-to page &middot; 2026-09-17 &middot; Repository: <a href="https://github.com/EleninJayTech/claude">github.com/EleninJayTech/claude</a> &middot; <a href="https://github.com/EleninJayTech/claude/releases/latest">Latest release notes</a> &middot; The install documents 00&ndash;06 (markdown) are the source of truth &mdash; this page is the human-facing guide. The hero graphic uses the 03 svg-design recipe (Gooey, Squiggle). Design follows the kr-ui-guide skill (repository skills/kr-ui-guide). &middot; Fonts: Pretendard, IBM Plex Mono &mdash; both SIL Open Font License 1.1 (free for commercial use and web embedding)</footer>
+<footer>Dandi &middot; How-to page &middot; 2026-09-18 &middot; Repository: <a href="https://github.com/EleninJayTech/claude">github.com/EleninJayTech/claude</a> &middot; <a href="https://github.com/EleninJayTech/claude/releases/latest">Latest release notes</a> &middot; The install documents 00&ndash;06 (markdown) are the source of truth &mdash; this page is the human-facing guide. The hero graphic uses the 03 svg-design recipe (Gooey, Squiggle). Design follows the kr-ui-guide skill (repository skills/kr-ui-guide). &middot; Fonts: Pretendard, IBM Plex Mono &mdash; both SIL Open Font License 1.1 (free for commercial use and web embedding)</footer>
 
 <script>
 (function(){try{

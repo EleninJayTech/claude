@@ -546,10 +546,30 @@ footer{max-width:1120px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
 
 <!-- ═══ CH10 수료 ═══ -->
 <section class="chapter" data-ch="10" aria-labelledby="t10" hidden>
-  <p class="eyebrow">챕터 10 · 마무리</p>
+  <p class="eyebrow">챕터 10 · 설치한 다음</p>
+  <h2 id="t10">최신 상태로 유지하기</h2>
+  <p class="lead">한 번 깔면 끝이 아닙니다. 문서도 개정되고, 그 문서가 설치하는 스킬도 바뀝니다. 명령 셋이 서로 다른 세 질문을 맡는데, 이걸 헷갈리는 것이 낡은 구성을 계속 쓰게 되는 흔한 이유입니다.</p>
+  <table>
+    <thead><tr><th>하고 싶은 것</th><th>명령</th><th>바뀌는 것</th></tr></thead>
+    <tbody>
+      <tr><td>뒤처진 게 있는지 알고 싶다</td><td><code>/dropin-check</code></td><td>없음 — 읽고 보고만 합니다</td></tr>
+      <tr><td>문서 사본을 새것으로 바꾸고 싶다</td><td><code>/dropin-update</code></td><td>문서 파일만</td></tr>
+      <tr><td>구성 자체를 최신으로 올리고 싶다</td><td><code>/dropin-apply</code></td><td>문서·설치된 스킬·설정</td></tr>
+    </tbody>
+  </table>
+  <h3>사람들이 가장 많이 헷갈리는 것</h3>
+  <p><b><code>/dropin-update</code>만으로는 업데이트가 아닙니다.</b> 그건 설명서를 새것으로 바꾸는 일이지, 설명서가 만드는 물건을 바꾸는 일이 아닙니다. 설치된 스킬과 설정은 <code>/dropin-apply</code>를 돌리기 전까지 그대로입니다.</p>
+  <h3>아직 설치하지 않은 PC에서는</h3>
+  <p><code>/dropin-apply</code>는 첫 설치 명령이기도 해서, 내가 어느 경우인지 따질 필요가 없습니다. 그 PC에 명령이 아직 없으면 말로 하면 됩니다: <i>“저장소의 <code>00_통합-설치.md</code>를 받아서 이 PC에 적용해줘”</i> — 그러면 이 명령도 다른 것들과 같이 깔립니다.</p>
+  <h3>이름만 보는 점검으로는 왜 부족한가</h3>
+  <p>스킬은 파일이 하나도 늘거나 줄지 않은 채 문장만 바뀔 수 있습니다. 파일 이름을 대조하는 점검은 그걸 “이미 최신”이라고 말합니다. 설치 절차는 파일 <b>내용</b>까지 대조하므로, 문장만 손본 개정도 내 디스크까지 도달합니다.</p>
+</section>
+
+<section class="chapter" data-ch="11" aria-labelledby="t11" hidden>
+  <p class="eyebrow">챕터 11 · 마무리</p>
   <div class="cert">
     <div class="big" id="certEmoji">🎓</div>
-    <h2 id="t10">코스 끝!</h2>
+    <h2 id="t11">코스 끝!</h2>
     <p class="lead" id="certMsg"></p>
   </div>
   <h3>기억할 것 세 가지</h3>
@@ -576,7 +596,7 @@ footer{max-width:1120px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
 </div>
 
 <footer>
-  단디 · 설치 옵션 학습 코스 · 2026-09-17<br>
+  단디 · 설치 옵션 학습 코스 · 2026-09-18<br>
   각 항목의 정본은 해당 하위 문서(01~06)입니다. 이 페이지는 사람이 배우기 위한 안내이며, 설치 절차 자체를 바꾸지 않습니다. 진행도는 이 브라우저의 localStorage에만 저장됩니다.<br>
   저장소: github.com/EleninJayTech/claude ·
   <a href="../index.html">사용법</a> · <a href="intro.html">소개 영상</a> · <a href="demo.html">설치 시연</a> · <a href="options.html">옵션 사전</a> · <a href="skills.ko.html">스킬 카탈로그</a><br>
@@ -586,7 +606,7 @@ footer{max-width:1120px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
 <script>
 'use strict';
 /* ───────── 데이터 ───────── */
-var CHAPTERS = ['시작하기','낱말 8개','설치의 흐름','기반 모드','목적 번들','프로필','01 기본 셋업','02·03·04','05·06','종합 연습','수료'];
+var CHAPTERS = ['시작하기','낱말 8개','설치의 흐름','기반 모드','목적 번들','프로필','01 기본 셋업','02·03·04','05·06','종합 연습','최신 유지','수료'];
 
 var TERMS = [
   ['드롭인 문서','폴더에 던져넣고(drop in) 한 문장 말하면 Claude가 읽고 따라 하는 설명서. 프로그램이 아니라 글이라서, 설치라고 해도 결국 설정 파일 몇 개를 만드는 일입니다.'],
@@ -635,8 +655,8 @@ var DOC01 = [
     ['~/.claude/CLAUDE.md']],
   ['b','ⓑ 글로벌 보안','.env·인증서 읽기 차단 + 셸 우회도 차단 (해제 비권장)', true,
     ['~/.claude/settings.json  <span class="c"># deny + hooks</span>']],
-  ['c','ⓒ /resume · /wrap · 점검 스킬','세션 시작·마감 명령 + 구성 점검 명령 — 실질적 핵심', true,
-    ['~/.claude/skills/resume/SKILL.md','~/.claude/skills/wrap/SKILL.md','~/.claude/skills/dropin-check/','~/.claude/skills/dropin-update/']],
+  ['c','ⓒ /resume · /wrap · dropin- 계열','세션 시작·마감 명령 + 구성 점검·재적용 명령 — 실질적 핵심', true,
+    ['~/.claude/skills/resume/SKILL.md','~/.claude/skills/wrap/SKILL.md','~/.claude/skills/dropin-apply/','~/.claude/skills/dropin-check/','~/.claude/skills/dropin-update/']],
   ['d','ⓓ 프로젝트 기록 체계','기록 3종 + 동시 편집 충돌 방지', true,
     ['docs/PROJECT_PLAN.md  <span class="c"># 로드맵</span>','docs/PROGRESS.md      <span class="c"># 세션 로그</span>','docs/DECISIONS.md     <span class="c"># 결정 로그</span>','.gitattributes        <span class="c"># merge=union</span>','.gitignore            <span class="c"># 개인 설정·격리 폴더 제외</span>']],
   ['e','ⓔ 프로젝트 권한','무엇을 묻지 않고 실행해도 되는지', true,
@@ -692,7 +712,7 @@ function goto(i){
     var all = state.done.length>=10;
     $('certEmoji').textContent = all ? '🏅' : '🎓';
     $('certMsg').textContent = all
-      ? '챕터 10개를 전부 완료했습니다. 이제 설치 질문이 나와도 무엇을 고르는지 알고 답할 수 있습니다.'
+      ? '모든 챕터를 완료했습니다. 이제 설치 질문이 나와도 무엇을 고르는지 알고 답할 수 있습니다.'
       : '아직 안 본 챕터가 '+(10-state.done.length)+'개 있습니다. 왼쪽 목차에서 ✓ 없는 챕터를 눌러 마저 보세요.';
   }else{
     $('nextBtn').textContent='완료하고 다음으로 →';

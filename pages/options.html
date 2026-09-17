@@ -378,14 +378,15 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
   </div>
 
   <div class="opt">
-    <div class="opt-head"><span class="id">&#9426;</span><span class="name"><code>/resume</code> &middot; <code>/wrap</code> &middot; audit skills</span><span class="badge b-on">pre-checked</span></div>
-    <p class="lead">Two slash commands for opening and closing a session, plus two for auditing your setup. <b>This is the practical heart of the whole thing.</b></p>
+    <div class="opt-head"><span class="id">&#9426;</span><span class="name"><code>/resume</code> &middot; <code>/wrap</code> &middot; <code>dropin-</code> skills</span><span class="badge b-on">pre-checked</span></div>
+    <p class="lead">Two slash commands for opening and closing a session, plus the <code>dropin-</code> family for checking your setup and pulling it back up to date. <b>This is the practical heart of the whole thing.</b></p>
     <dl>
-      <dt>Files created</dt><dd><code>skills/resume/SKILL.md</code> &middot; <code>skills/wrap/SKILL.md</code> &middot; <code>skills/dropin-check/</code> &middot; <code>skills/dropin-update/</code></dd>
+      <dt>Files created</dt><dd><code>skills/resume/SKILL.md</code> &middot; <code>skills/wrap/SKILL.md</code> &middot; <code>skills/dropin-apply/</code> &middot; <code>skills/dropin-check/</code> &middot; <code>skills/dropin-update/</code></dd>
       <dt><code>/resume</code></dt><dd>Pulls from the remote first if there is one, finds <b>uncommitted changes</b> (work in progress), reads the last records, plan and recent decisions, and reports &ldquo;last time X, next is Y?&rdquo;. If the install is old (30+ days) it suggests an audit</dd>
       <dt><code>/wrap</code></dt><dd>Appends today&rsquo;s work to the record, files new decisions, updates the plan checkboxes, and <b>warns you if nothing is committed</b></dd>
       <dt><code>/dropin-check</code></dt><dd><b>Audits only</b> whether your setup matches the documents&rsquo; current version (changes nothing)</dd>
       <dt><code>/dropin-update</code></dt><dd>If the document copies in your project are stale, <b>asks first</b> and then replaces them with the current ones</dd>
+      <dt><code>/dropin-apply</code></dt><dd><b>Re-applies the configuration itself</b> &mdash; documents, installed skills and settings &mdash; by reading document 00 and running its protocol. Also the command for a first install. Note the division: <code>/dropin-update</code> refreshes the instructions, this one rebuilds what the instructions describe</dd>
       <dt>Variants</dt><dd>resume and wrap come in three shapes depending on your environment &mdash; the basic single-repository form, a split form for a team sharing one repository, and a unified form for several repositories under one folder</dd>
     </dl>
   </div>
@@ -896,7 +897,7 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
 <a class="totop" href="#toc">&uarr; Contents</a>
 
 <footer>
-  Dandi &middot; Install options dictionary &middot; based on 00_통합-설치.md &middot; 2026-09-17<br>
+  Dandi &middot; Install options dictionary &middot; based on 00_통합-설치.md &middot; 2026-09-18<br>
   The source of truth for each item is its own document (01&ndash;06). This page exists so people can read and judge; it does not change the install procedure itself.<br>
   Repository: github.com/EleninJayTech/claude &middot;
   <a href="../index.html">Guide</a> &middot; <a href="intro.html">Intro</a> &middot; <a href="demo.html">Walkthrough</a> &middot; <a href="learn.html">Course</a> &middot; <a href="skills.html">Skill catalog</a><br>

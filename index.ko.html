@@ -323,6 +323,27 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
   </ul>
 </section>
 
+<!-- 4.5 -->
+<section>
+  <div class="h-row"><svg width="30" height="30"><use href="#check"/></svg><h2>최신 상태로 유지하기</h2></div>
+  <p class="goal">명령 셋, 서로 다른 질문 셋</p>
+  <p>문서도 계속 바뀌고, 그 문서가 설치하는 스킬도 바뀝니다. 무엇을 옮기고 싶은지에 따라 부를 명령이 다릅니다.</p>
+  <div class="say">
+    <span class="dim"># 뒤처진 게 있나? (읽기만 하고 아무것도 바꾸지 않습니다)</span><br>
+    <b>/dropin-check</b><br>
+    <span class="dim"># 문서 사본을 새것으로 &mdash; 설명서 자체만</span><br>
+    <b>/dropin-update</b><br>
+    <span class="dim"># 구성 자체를 최신으로 &mdash; 문서·스킬·설정까지</span><br>
+    <b>/dropin-apply</b>  <span class="dim">&larr; 실제로 내 셋업을 바꾸는 건 이것입니다</span>
+  </div>
+  <ul>
+    <li><b><code class="i">/dropin-update</code>만으로는 업데이트가 아닙니다.</b> 그건 설명서를 새것으로 바꾸는 일이지, 설명서가 만드는 물건을 바꾸는 일이 아닙니다. 설치된 스킬과 설정은 <code class="i">/dropin-apply</code>를 부르기 전까지 그대로 남습니다.</li>
+    <li><b>한 번도 설치하지 않은 PC에서도</b> <code class="i">/dropin-apply</code>가 첫 설치 명령입니다 &mdash; 내가 어느 쪽인지 몰라도 됩니다. 명령이 아직 없으면 이렇게 말하면 됩니다: <i>"저장소의 <code class="i">00_통합-설치.md</code>를 받아서 이 PC에 적용해줘"</i>.</li>
+    <li><b>스킬은 파일이 하나도 늘지 않은 채로 바뀔 수 있습니다.</b> 그래서 설치 절차는 파일 이름만이 아니라 내용까지 대조합니다 &mdash; 문장만 손본 개정도 내 디스크까지 도달합니다.</li>
+  </ul>
+  <p>각 명령의 자세한 설명은 <a href="pages/skills.ko.html"><b>스킬 카탈로그</b></a>에 있습니다.</p>
+</section>
+
 <!-- 5 -->
 <section>
   <div class="h-row"><svg width="30" height="30"><use href="#check"/></svg><h2>자주 묻는 것</h2></div>
@@ -362,7 +383,7 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
 
 </main>
 
-<footer>단디 · 사용법 페이지 · 2026-09-17 · 저장소: <a href="https://github.com/EleninJayTech/claude">github.com/EleninJayTech/claude</a> · <a href="https://github.com/EleninJayTech/claude/releases/latest">최신 릴리스 노트</a> · 설치 문서 정본은 00~06 md — 이 페이지는 사람용 안내이며, 대표 이미지는 03 svg-design 레시피(Gooey·Squiggle)로 만들었습니다. 디자인은 kr-ui-guide 스킬(저장소 skills/kr-ui-guide) 기준을 따릅니다. · 글꼴: Pretendard, IBM Plex Mono — 둘 다 SIL 오픈 폰트 라이선스 1.1(상업 이용·웹 임베딩 무료)</footer>
+<footer>단디 · 사용법 페이지 · 2026-09-18 · 저장소: <a href="https://github.com/EleninJayTech/claude">github.com/EleninJayTech/claude</a> · <a href="https://github.com/EleninJayTech/claude/releases/latest">최신 릴리스 노트</a> · 설치 문서 정본은 00~06 md — 이 페이지는 사람용 안내이며, 대표 이미지는 03 svg-design 레시피(Gooey·Squiggle)로 만들었습니다. 디자인은 kr-ui-guide 스킬(저장소 skills/kr-ui-guide) 기준을 따릅니다. · 글꼴: Pretendard, IBM Plex Mono — 둘 다 SIL 오픈 폰트 라이선스 1.1(상업 이용·웹 임베딩 무료)</footer>
 
 </body>
 </html>

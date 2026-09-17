@@ -7,7 +7,7 @@
 <meta name="description" content="Every skill Dandi installs, explained for a first-week developer: what it does, when to call it, what it leaves behind, and where it bites.">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧰</text></svg>">
 <meta property="og:title" content="Skill Catalog — Claude Code Drop-in Documents">
-<meta property="og:description" content="Fifteen skills, one slash away. What each one does and when to reach for it.">
+<meta property="og:description" content="Every skill, one slash away. What each one does and when to reach for it.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://eleninjaytech.github.io/claude/pages/skills.html">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -182,13 +182,13 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
 
 <header>
   <p class="eyebrow"><b>Dandi</b> &middot; EleninJayTech / claude &middot; skill catalog</p>
-  <h1>Fifteen skills, <span class="mark">one slash away</span> &mdash;<br>here is what each one actually does.</h1>
-  <p class="sub">A skill is a folder of instructions Claude loads on demand. Dandi installs fifteen of them. This page is the field guide: what each does, when to reach for it, what it leaves on disk, and the places it bites.</p>
+  <h1>Every skill, <span class="mark">one slash away</span> &mdash;<br>here is what each one actually does.</h1>
+  <p class="sub">A skill is a folder of instructions Claude loads on demand. Dandi installs the ones on this page. This page is the field guide: what each does, when to reach for it, what it leaves on disk, and the places it bites.</p>
   <p class="backlink" style="margin-top:10px"><a href="../index.html">&larr; Back to the guide</a> &middot; <a href="intro.html">1-minute intro</a> &middot; <a href="demo.html">Install walkthrough</a> &middot; <a href="options.html">Options dictionary</a> &middot; <a href="learn.html">Course</a> &middot; <a href="https://github.com/EleninJayTech/claude">GitHub repository &#8599;</a></p>
 </header>
 
 <h2 style="margin-top:44px">First, what is a skill?</h2>
-<p class="lead">If you have never used one: a skill is not a plugin you launch and not a library you import. It is a folder with a <code>SKILL.md</code> inside, and Claude reads it only when it is needed &mdash; so having fifteen installed costs you nothing until you call one.</p>
+<p class="lead">If you have never used one: a skill is not a plugin you launch and not a library you import. It is a folder with a <code>SKILL.md</code> inside, and Claude reads it only when it is needed &mdash; so having them all installed costs you nothing until you call one.</p>
 <div class="basics">
   <div class="basic">
     <span class="n">01</span>
@@ -220,7 +220,8 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
     <tr><td><code>/resume</code></td><td>none</td><td>A session starts, or you just ran <code>/clear</code></td><td>A &ldquo;last time X, next Y?&rdquo; report</td></tr>
     <tr><td><code>/wrap</code></td><td>none</td><td>A session ends</td><td>One PROGRESS line, a new decision, plan ticks</td></tr>
     <tr><td><code>/dropin-check</code></td><td>none &middot; read-only</td><td>You suspect this machine has drifted</td><td>A difference report &mdash; nothing installed</td></tr>
-    <tr><td><code>/dropin-update</code></td><td>none</td><td>The documents themselves are out of date</td><td>Refreshed document files (re-applying is 00)</td></tr>
+    <tr><td><code>/dropin-update</code></td><td>none</td><td>The documents themselves are out of date</td><td>Refreshed document files &mdash; the configuration is untouched</td></tr>
+    <tr><td><code>/dropin-apply</code></td><td>none</td><td>You want the configuration itself brought up to date</td><td>Documents, installed skills and settings, all re-applied</td></tr>
 
     <tr><th class="grp" colspan="4" scope="colgroup">Feature docs, tests, releases &middot; 03 §7</th></tr>
     <tr><td><code>/feature-docs</code></td><td><code>init</code> | <code>sync [base]</code></td><td>First write-up, or folding in what changed</td><td>All of <code>docs/features/</code></td></tr>
@@ -247,13 +248,13 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
 <div class="toolbar" role="search">
   <label class="sr" for="q" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)">Filter skills</label>
   <input id="q" type="search" placeholder="Filter by name or task — e.g. test, commit, release" autocomplete="off">
-  <button class="chip" data-g="all" aria-pressed="true">All 15</button>
-  <button class="chip" data-g="session" aria-pressed="false">Session 4</button>
-  <button class="chip" data-g="docs" aria-pressed="false">Feature docs 6</button>
-  <button class="chip" data-g="code" aria-pressed="false">Code 1</button>
-  <button class="chip" data-g="plan" aria-pressed="false">Planning 1</button>
-  <button class="chip" data-g="design" aria-pressed="false">Design 3</button>
-  <span class="count" id="count">15 shown</span>
+  <button class="chip" data-g="all" aria-pressed="true">All</button>
+  <button class="chip" data-g="session" aria-pressed="false">Session</button>
+  <button class="chip" data-g="docs" aria-pressed="false">Feature docs</button>
+  <button class="chip" data-g="code" aria-pressed="false">Code</button>
+  <button class="chip" data-g="plan" aria-pressed="false">Planning</button>
+  <button class="chip" data-g="design" aria-pressed="false">Design</button>
+  <span class="count" id="count"></span>
 </div>
 
 <!-- ══════════ GROUP: session ══════════ -->
@@ -262,7 +263,7 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
     <h2 style="margin-top:0">Running a session</h2>
     <span class="src">installed by document 01 §D-4 &middot; global scope</span>
   </div>
-  <p class="gnote">These four are the heartbeat of the setup. Two of them open and close every session; the other two tell you whether your configuration has drifted behind the documents it came from.</p>
+  <p class="gnote">These are the heartbeat of the setup. Two open and close every session; the <code>dropin-</code> family answers a different question &mdash; has your configuration fallen behind the documents it came from, and how do you pull it forward again?</p>
   <div class="cards">
 
     <article class="skill" data-g="session">
@@ -310,9 +311,22 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
       <dl>
         <dt>Use when</dt><dd><code>/dropin-check</code> reported that your document copies are older than the published ones.</dd>
         <dt>It does</dt><dd>Works out how the documents got here &mdash; copied into the project, referenced from a local clone, or read straight from raw URLs &mdash; and updates each in the way that fits, after asking. If you point it at a folder outside the project, it first checks whether that folder is a git clone: a clone gets <code>git pull</code>, anything else is treated as a copy.</dd>
-        <dt>You get</dt><dd>Refreshed document files. Re-applying the configuration is a separate step, driven by document 00.</dd>
+        <dt>You get</dt><dd>Refreshed document files &mdash; and nothing else. Your installed skills and settings are untouched, because re-applying them is a separate step: <code>/dropin-apply</code>.</dd>
       </dl>
       <div class="warn soft"><b>Worth knowing.</b> It refuses to run inside the source repository itself &mdash; there, <code>git pull</code> is the update path.</div>
+      <div class="tags"><span class="tag">global</span><span class="tag">asks first</span></div>
+    </article>
+
+    <article class="skill" data-g="session">
+      <div class="cmd"><span class="sl">/</span>dropin-apply</div>
+      <div class="args">no arguments</div>
+      <p class="one">Re-applies the whole configuration &mdash; documents, installed skills and settings &mdash; in one command.</p>
+      <dl>
+        <dt>Use when</dt><dd>You want this machine or this project brought up to the current documents. It is also the command for a first install, so you do not have to know which case you are in.</dd>
+        <dt>It does</dt><dd>Finds document 00 (a copy beside you, a local clone, a folder you name, or the published raw file), reads it, and runs its protocol exactly &mdash; detect what is already here, ask what you want, install only that, verify, and write the install record. The skill holds no steps of its own, so it can never drift from the document.</dd>
+        <dt>You get</dt><dd>A configuration that matches the documents, and an updated <code>dropin-applied</code> line saying so. Where a skill was already installed, its files are compared by content &mdash; not just by name &mdash; so a version that only changed its wording is still replaced.</dd>
+      </dl>
+      <div class="warn soft"><b>Worth knowing.</b> This is the same thing as telling Claude &ldquo;learn this document and apply it&rdquo; &mdash; the sentence still works. The command exists because a door you cannot see is a door you do not open.</div>
       <div class="tags"><span class="tag">global</span><span class="tag">asks first</span></div>
     </article>
 
@@ -586,7 +600,7 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
 <p class="empty" id="empty">Nothing matches that filter. Try clearing the search box.</p>
 
 <h2>A day, in the order the skills come up</h2>
-<p class="lead">You will not use fifteen skills in a day. A realistic week looks closer to this.</p>
+<p class="lead">You will not use every skill in a day. A realistic week looks closer to this.</p>
 <div class="day">
   <div class="step"><div class="t">/resume</div><p>Opens the session. Pull, uncommitted work, the last few entries, what is due. Roughly thirty seconds before you have your bearings.</p></div>
   <div class="step"><div class="t">— you build the thing —</div><p>Ordinary work. No skill required.</p></div>
@@ -595,6 +609,23 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
   <div class="step"><div class="t">/feature-test F-003</div><p>Runs just the affected feature's cases on the real screen. Full runs are for release day.</p></div>
   <div class="step"><div class="t">/wrap</div><p>Writes today into the record and warns about anything uncommitted. Always before <code>/clear</code>.</p></div>
   <div class="step"><div class="t">/release-notes v1.0.0</div><p>Release day only. Reads the feature docs the rest of the week built up.</p></div>
+</div>
+
+<h2>Keeping all of this up to date</h2>
+<p class="lead">Documents change. Skills change. Three commands cover the three different questions, and mixing them up is the most common way people end up running a stale setup.</p>
+<table>
+  <thead><tr><th>You want to&hellip;</th><th>Command</th><th>What it touches</th><th>What it leaves alone</th></tr></thead>
+  <tbody>
+    <tr><td>Find out whether anything has fallen behind</td><td><code>/dropin-check</code></td><td>Nothing &mdash; it only reads and reports</td><td>Everything</td></tr>
+    <tr><td>Refresh your copies of the documents</td><td><code>/dropin-update</code></td><td>The document files (00&ndash;06)</td><td>Your installed skills and settings</td></tr>
+    <tr><td>Bring the configuration itself up to date</td><td><code>/dropin-apply</code></td><td>Documents, installed skills, settings &mdash; whatever you approve</td><td>Anything you decline; it asks before replacing</td></tr>
+  </tbody>
+</table>
+<p class="lead" style="margin-top:14px">The short version: <b><code>/dropin-update</code> alone is not an update.</b> It refreshes the instructions, not the thing the instructions build. If a skill gained a file or changed its wording, only <code>/dropin-apply</code> puts that on your disk.</p>
+<div class="traps">
+  <div class="trap"><b>On a machine that has never seen this setup.</b><p>Use <code>/dropin-apply</code> as well &mdash; it is the same command for a first install. If the skill is not there yet, tell Claude: <i>&ldquo;read <code>00_&#54648;&#54633;-&#49444;&#52824;.md</code> from the repository and apply it to this machine&rdquo;</i>, and the skill arrives with everything else.</p></div>
+  <div class="trap"><b>Same file name, older contents.</b><p>A skill can be revised without gaining or losing a single file. Checks that only compare file names call that &ldquo;already current&rdquo;. The install steps compare contents too, so a wording-only revision is still replaced.</p></div>
+  <div class="trap"><b><code>/dropin-check</code> cannot see everything.</b><p>On an ordinary install there is no private mirror to compare against, so it reports &ldquo;current as far as the documents go &mdash; skill contents unchecked&rdquo; rather than a flat &ldquo;current&rdquo;. Run <code>/dropin-apply</code> when you want that second half answered.</p></div>
 </div>
 
 <h2>Six things that surprise people</h2>
@@ -612,7 +643,7 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
 <table>
   <thead><tr><th>Skills</th><th>Document</th><th>Default scope</th><th>Removal</th></tr></thead>
   <tbody>
-    <tr><td><code>/resume</code> <code>/wrap</code> <code>/dropin-check</code> <code>/dropin-update</code></td><td>01 §D-4</td><td>global &mdash; <code>~/.claude/skills/</code></td><td>Delete the folder. Accumulated records under <code>docs/</code> stay by default (you are asked) &mdash; they are data.</td></tr>
+    <tr><td><code>/resume</code> <code>/wrap</code> <code>/dropin-apply</code> <code>/dropin-check</code> <code>/dropin-update</code></td><td>01 §D-4</td><td>global &mdash; <code>~/.claude/skills/</code></td><td>Delete the folder. Accumulated records under <code>docs/</code> stay by default (you are asked) &mdash; they are data.</td></tr>
     <tr><td><code>/svg-design</code></td><td>03 §2</td><td>global</td><td>Delete the folder.</td></tr>
     <tr><td><code>/frontend-design</code></td><td>03 §3</td><td>global &mdash; plugin or <code>npx skills add -g</code></td><td>Delete the folder. If npx only left a link, delete what the link points to as well. Once <code>kr-ui-guide</code> is gone too, delete the font-licence policy section from the <code>CLAUDE.md</code>.</td></tr>
     <tr><td>the six feature skills</td><td>03 §7</td><td>global &mdash; project scope if the team and CI must share them</td><td>Guard first, then the six folders. <code>docs/features/</code> and <code>tests/e2e/</code> stay.</td></tr>
@@ -624,7 +655,7 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
 </div>
 <p class="lead" style="margin-top:16px">Every one of these has a documented removal path, which is deliberate: an install you cannot reverse was never really a choice. The full procedures &mdash; detect, install, verify, remove &mdash; are in the documents themselves. For what each install question means, see the <a href="options.html">options dictionary</a>; to work through it step by step, take the <a href="learn.html">course</a>.</p>
 
-<footer>Dandi &middot; Skill catalog &middot; 2026-09-17 &middot; Fifteen skills installed by documents 01 §D-4, 02 STEP 3 ⓔ, 03 §2, §3, §7, §8 and §9. Commands are shown without an alias; apply yours if you chose one at install time. &middot; Fonts: Pretendard, IBM Plex Mono &mdash; both SIL Open Font License 1.1 (free for commercial use and web embedding)</footer>
+<footer>Dandi &middot; Skill catalog &middot; 2026-09-18 &middot; Skills installed by documents 01 §D-4, 02 STEP 3 ⓔ, 03 §2, §3, §7, §8 and §9. Commands are shown without an alias; apply yours if you chose one at install time. &middot; Fonts: Pretendard, IBM Plex Mono &mdash; both SIL Open Font License 1.1 (free for commercial use and web embedding)</footer>
 
 </div>
 <script>

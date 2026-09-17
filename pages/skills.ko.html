@@ -7,7 +7,7 @@
 <meta name="description" content="단디가 설치하는 스킬 전부를 입문자 눈높이로 정리했다. 무엇을 하고, 언제 부르고, 무엇을 남기고, 어디서 걸리는지.">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧰</text></svg>">
 <meta property="og:title" content="스킬 카탈로그 — Claude Code 드롭인 문서">
-<meta property="og:description" content="스킬 15종, 슬래시 하나 거리. 각각이 무엇을 하고 언제 손이 가는지.">
+<meta property="og:description" content="스킬 한 벌, 슬래시 하나 거리. 각각이 무엇을 하고 언제 손이 가는지.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://eleninjaytech.github.io/claude/pages/skills.ko.html">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -182,13 +182,13 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
 
 <header>
   <p class="eyebrow"><b>단디</b> &middot; EleninJayTech / claude &middot; 스킬 카탈로그</p>
-  <h1>스킬 15종, <span class="mark">슬래시 하나 거리</span> &mdash;<br>각각이 실제로 무엇을 하는지.</h1>
-  <p class="sub">스킬은 Claude가 필요할 때만 읽어 오는 지시 폴더다. 단디는 그중 15종을 설치한다. 이 페이지는 그 안내서다 &mdash; 무엇을 하고, 언제 부르고, 디스크에 무엇을 남기고, 어디서 걸리는지.</p>
+  <h1>스킬 한 벌, <span class="mark">슬래시 하나 거리</span> &mdash;<br>각각이 실제로 무엇을 하는지.</h1>
+  <p class="sub">스킬은 Claude가 필요할 때만 읽어 오는 지시 폴더다. 단디는 이 페이지에 있는 것들을 설치한다. 이 페이지는 그 안내서다 &mdash; 무엇을 하고, 언제 부르고, 디스크에 무엇을 남기고, 어디서 걸리는지.</p>
   <p class="backlink" style="margin-top:10px"><a href="../index.ko.html">&larr; 안내 페이지로</a> &middot; <a href="intro.ko.html">1분 소개</a> &middot; <a href="demo.ko.html">설치 시연</a> &middot; <a href="options.ko.html">옵션 사전</a> &middot; <a href="learn.ko.html">학습 코스</a> &middot; <a href="https://github.com/EleninJayTech/claude">GitHub 저장소 &#8599;</a></p>
 </header>
 
 <h2 style="margin-top:44px">스킬이 대체 뭔가</h2>
-<p class="lead">한 번도 안 써 봤다면 이렇게 생각하면 된다. 스킬은 실행하는 프로그램도 아니고 import 하는 라이브러리도 아니다. <code>SKILL.md</code> 하나가 든 폴더이고, Claude는 필요할 때만 그 파일을 읽는다. 그래서 15종을 깔아 둬도 부르기 전까지는 아무 비용이 없다.</p>
+<p class="lead">한 번도 안 써 봤다면 이렇게 생각하면 된다. 스킬은 실행하는 프로그램도 아니고 import 하는 라이브러리도 아니다. <code>SKILL.md</code> 하나가 든 폴더이고, Claude는 필요할 때만 그 파일을 읽는다. 그래서 전부 깔아 둬도 부르기 전까지는 아무 비용이 없다.</p>
 <div class="basics">
   <div class="basic">
     <span class="n">01</span>
@@ -220,7 +220,8 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
     <tr><td><code>/resume</code></td><td>없음</td><td>세션을 열 때, <code>/clear</code> 직후</td><td>&ldquo;지난번 X, 다음 Y?&rdquo; 보고</td></tr>
     <tr><td><code>/wrap</code></td><td>없음</td><td>세션을 닫을 때</td><td>PROGRESS 한 줄·새 결정·계획 체크</td></tr>
     <tr><td><code>/dropin-check</code></td><td>없음 &middot; 읽기 전용</td><td>이 PC 구성이 뒤처졌는지 의심될 때</td><td>차이 보고서 &mdash; 설치는 하지 않는다</td></tr>
-    <tr><td><code>/dropin-update</code></td><td>없음</td><td>문서 사본 자체가 낡았을 때</td><td>새 문서 파일(재적용은 00이 맡는다)</td></tr>
+    <tr><td><code>/dropin-update</code></td><td>없음</td><td>문서 사본 자체가 낡았을 때</td><td>새 문서 파일 &mdash; 구성은 그대로다</td></tr>
+    <tr><td><code>/dropin-apply</code></td><td>없음</td><td>구성 자체를 최신으로 맞추고 싶을 때</td><td>문서·설치된 스킬·설정을 한 번에 재적용</td></tr>
 
     <tr><th class="grp" colspan="4" scope="colgroup">기능 문서·테스트·릴리스 &middot; 03 §7</th></tr>
     <tr><td><code>/feature-docs</code></td><td><code>init</code> | <code>sync [기준]</code></td><td>처음 문서화할 때, 바뀐 것을 반영할 때</td><td><code>docs/features/</code> 전체</td></tr>
@@ -247,22 +248,22 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
 <div class="toolbar" role="search">
   <label for="q" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)">스킬 검색</label>
   <input id="q" type="search" placeholder="이름이나 할 일로 걸러 보기 — 테스트, 커밋, 릴리스…" autocomplete="off">
-  <button class="chip" data-g="all" aria-pressed="true">전체 15</button>
-  <button class="chip" data-g="session" aria-pressed="false">세션 4</button>
-  <button class="chip" data-g="docs" aria-pressed="false">기능 문서 6</button>
-  <button class="chip" data-g="code" aria-pressed="false">코드 1</button>
-  <button class="chip" data-g="plan" aria-pressed="false">계획 1</button>
-  <button class="chip" data-g="design" aria-pressed="false">디자인 3</button>
-  <span class="count" id="count">15종 표시 중</span>
+  <button class="chip" data-g="all" aria-pressed="true">전체</button>
+  <button class="chip" data-g="session" aria-pressed="false">세션</button>
+  <button class="chip" data-g="docs" aria-pressed="false">기능 문서</button>
+  <button class="chip" data-g="code" aria-pressed="false">코드</button>
+  <button class="chip" data-g="plan" aria-pressed="false">계획</button>
+  <button class="chip" data-g="design" aria-pressed="false">디자인</button>
+  <span class="count" id="count"></span>
 </div>
 
 <!-- ══════════ 세션 ══════════ -->
 <section class="group" data-g="session">
   <div class="ghead">
-    <h2 style="margin-top:0">세션을 여닫는 넷</h2>
+    <h2 style="margin-top:0">세션을 여닫는 스킬</h2>
     <span class="src">01 §D-4가 설치 &middot; 글로벌 스코프</span>
   </div>
-  <p class="gnote">이 넷이 셋업의 맥박이다. 둘은 매 세션을 열고 닫고, 나머지 둘은 내 구성이 원본 문서에서 얼마나 밀렸는지 알려 준다.</p>
+  <p class="gnote">이것들이 셋업의 맥박이다. 둘은 매 세션을 열고 닫고, <code>dropin-</code> 계열은 다른 질문에 답한다 &mdash; 내 구성이 원본 문서에서 얼마나 밀렸는지, 그리고 그걸 어떻게 다시 따라잡는지.</p>
   <div class="cards">
 
     <article class="skill" data-g="session">
@@ -310,9 +311,22 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
       <dl>
         <dt>언제</dt><dd><code>/dropin-check</code>가 문서 사본이 배포본보다 낡았다고 보고했을 때.</dd>
         <dt>하는 일</dt><dd>문서가 여기 온 경로부터 가린다 &mdash; 프로젝트에 복사됐는지, 로컬 클론을 참조하는지, raw로 직접 받는지. 프로젝트 밖 폴더를 알려 주면 그게 git 클론인지부터 본다 &mdash; 클론이면 <code>git pull</code>로, 아니면 사본으로 다룬다. 그에 맞는 방식으로, 승인을 받고 갱신한다.</dd>
-        <dt>결과</dt><dd>새 문서 파일. 구성 재적용은 별도 단계이고 00 문서가 맡는다.</dd>
+        <dt>결과</dt><dd>새 문서 파일 &mdash; 그리고 그것뿐이다. 설치된 스킬과 설정은 그대로 남는다. 그걸 다시 맞추는 건 별도 단계인 <code>/dropin-apply</code>다.</dd>
       </dl>
       <div class="warn soft"><b>알아 둘 것.</b> 문서 원본 저장소 안에서는 실행을 거부한다 &mdash; 거기서는 <code>git pull</code>이 갱신 경로다.</div>
+      <div class="tags"><span class="tag">글로벌</span><span class="tag">먼저 묻는다</span></div>
+    </article>
+
+    <article class="skill" data-g="session">
+      <div class="cmd"><span class="sl">/</span>dropin-apply</div>
+      <div class="args">인수 없음</div>
+      <p class="one">구성 전체를 한 명령으로 다시 맞춘다 &mdash; 문서·설치된 스킬·설정까지.</p>
+      <dl>
+        <dt>언제</dt><dd>이 PC나 이 프로젝트를 현재 문서 기준으로 올리고 싶을 때. 처음 까는 경우에도 같은 명령이라, 내가 어느 쪽인지 몰라도 된다.</dd>
+        <dt>하는 일</dt><dd>00 문서를 찾아서(옆 폴더의 사본·로컬 클론·내가 알려 준 폴더·배포된 raw 순) 읽고 그 절차를 그대로 돈다 &mdash; 이미 있는 것을 감지하고, 무엇을 할지 묻고, 고른 것만 설치하고, 검증하고, 적용 기록을 쓴다. 스킬 자신은 단계를 하나도 갖지 않아서 문서와 갈릴 수가 없다.</dd>
+        <dt>결과</dt><dd>문서와 일치하는 구성, 그리고 그 사실을 적은 <code>dropin-applied</code> 줄. 이미 깔린 스킬은 <b>이름이 아니라 내용으로</b> 대조하므로, 파일 수는 그대로고 문장만 바뀐 개정도 교체된다.</dd>
+      </dl>
+      <div class="warn soft"><b>알아 둘 것.</b> Claude에게 &ldquo;이 문서를 학습해서 적용해줘&rdquo;라고 말하는 것과 같은 일이다 &mdash; 그 문장도 그대로 동작한다. 명령이 따로 있는 이유는, 보이지 않는 문은 열리지 않기 때문이다.</div>
       <div class="tags"><span class="tag">글로벌</span><span class="tag">먼저 묻는다</span></div>
     </article>
 
@@ -586,7 +600,7 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
 <p class="empty" id="empty">걸리는 스킬이 없다. 검색어를 지워 보라.</p>
 
 <h2>하루를, 스킬이 나오는 순서대로</h2>
-<p class="lead">하루에 15종을 다 쓰지는 않는다. 실제 한 주는 이쪽에 가깝다.</p>
+<p class="lead">하루에 스킬을 다 쓰지는 않는다. 실제 한 주는 이쪽에 가깝다.</p>
 <div class="day">
   <div class="step"><div class="t">/resume</div><p>세션을 연다. pull, 미커밋 작업, 최근 기록, 예정일. 감을 잡는 데 30초쯤.</p></div>
   <div class="step"><div class="t">— 여기서 실제로 만든다 —</div><p>평범한 작업이다. 스킬이 낄 자리가 아니다.</p></div>
@@ -595,6 +609,23 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
   <div class="step"><div class="t">/feature-test F-003</div><p>영향받은 기능의 케이스만 실제 화면에서. 전체 실행은 릴리스 날에 한다.</p></div>
   <div class="step"><div class="t">/wrap</div><p>오늘을 기록에 남기고 미커밋을 경고한다. <code>/clear</code> 앞에서는 반드시.</p></div>
   <div class="step"><div class="t">/release-notes v1.0.0</div><p>릴리스 날에만. 나머지 날들이 쌓아 둔 기능 문서를 읽는다.</p></div>
+</div>
+
+<h2>이 전부를 최신으로 유지하기</h2>
+<p class="lead">문서도 바뀌고 스킬도 바뀐다. 세 명령이 서로 다른 세 질문을 맡는데, 이걸 헷갈리는 것이 낡은 구성을 계속 쓰게 되는 가장 흔한 경로다.</p>
+<table>
+  <thead><tr><th>하고 싶은 것</th><th>명령</th><th>건드리는 것</th><th>그대로 두는 것</th></tr></thead>
+  <tbody>
+    <tr><td>뒤처진 게 있는지 알고 싶다</td><td><code>/dropin-check</code></td><td>없다 &mdash; 읽고 보고만 한다</td><td>전부</td></tr>
+    <tr><td>문서 사본을 새것으로 바꾸고 싶다</td><td><code>/dropin-update</code></td><td>문서 파일(00~06)</td><td>설치된 스킬과 설정</td></tr>
+    <tr><td>구성 자체를 최신으로 올리고 싶다</td><td><code>/dropin-apply</code></td><td>문서·설치된 스킬·설정 중 내가 승인한 것</td><td>거절한 것 &mdash; 덮기 전에 묻는다</td></tr>
+  </tbody>
+</table>
+<p class="lead" style="margin-top:14px">짧게 말하면 <b><code>/dropin-update</code>만으로는 업데이트가 아니다.</b> 그건 설명서를 새것으로 바꾸는 일이지, 설명서가 만드는 물건을 바꾸는 일이 아니다. 스킬에 파일이 늘었거나 문장이 바뀌었다면 그것을 내 디스크에 올리는 건 <code>/dropin-apply</code>뿐이다.</p>
+<div class="traps">
+  <div class="trap"><b>이 셋업을 한 번도 안 깐 PC라면.</b><p>거기서도 <code>/dropin-apply</code>다 &mdash; 처음 까는 경우에도 같은 명령이다. 스킬이 아직 없으면 Claude에게 이렇게 말하면 된다: <i>&ldquo;저장소의 <code>00_통합-설치.md</code>를 받아서 이 PC에 적용해줘&rdquo;</i>. 그러면 이 스킬도 다른 것들과 함께 깔린다.</p></div>
+  <div class="trap"><b>파일 이름은 그대로인데 내용만 낡은 경우.</b><p>스킬은 파일이 하나도 늘거나 줄지 않은 채로 개정될 수 있다. 이름만 대조하는 점검은 그걸 &ldquo;이미 최신&rdquo;이라고 말한다. 설치 절차는 내용까지 대조하므로, 문장만 바뀐 개정도 교체된다.</p></div>
+  <div class="trap"><b><code>/dropin-check</code>가 다 보지는 못한다.</b><p>일반 설치에는 대조할 사설 사본이 아예 없다. 그래서 그냥 &ldquo;최신&rdquo;이 아니라 &ldquo;문서 기준 최신 &mdash; 스킬 실물 내용은 미확인&rdquo;이라고 보고한다. 그 나머지 절반이 궁금하면 <code>/dropin-apply</code>를 돌리면 된다.</p></div>
 </div>
 
 <h2>사람들이 자주 걸리는 여섯</h2>
@@ -612,7 +643,7 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
 <table>
   <thead><tr><th>스킬</th><th>문서</th><th>기본 스코프</th><th>제거</th></tr></thead>
   <tbody>
-    <tr><td><code>/resume</code> <code>/wrap</code> <code>/dropin-check</code> <code>/dropin-update</code></td><td>01 §D-4</td><td>글로벌 &mdash; <code>~/.claude/skills/</code></td><td>폴더 삭제. 쌓인 <code>docs/</code> 기록은 묻되 기본으로 남긴다 &mdash; 그건 데이터다.</td></tr>
+    <tr><td><code>/resume</code> <code>/wrap</code> <code>/dropin-apply</code> <code>/dropin-check</code> <code>/dropin-update</code></td><td>01 §D-4</td><td>글로벌 &mdash; <code>~/.claude/skills/</code></td><td>폴더 삭제. 쌓인 <code>docs/</code> 기록은 묻되 기본으로 남긴다 &mdash; 그건 데이터다.</td></tr>
     <tr><td><code>/svg-design</code></td><td>03 §2</td><td>글로벌</td><td>폴더 삭제.</td></tr>
     <tr><td><code>/frontend-design</code></td><td>03 §3</td><td>글로벌 &mdash; 플러그인 또는 <code>npx skills add -g</code></td><td>폴더 삭제. npx가 링크만 걸어 뒀으면 링크가 가리키는 실체까지 지운다. <code>kr-ui-guide</code>까지 없으면 <code>CLAUDE.md</code>의 폰트 라이선스 정책 절도 지운다.</td></tr>
     <tr><td>기능 문서 6종</td><td>03 §7</td><td>글로벌 &mdash; 팀·CI가 공유해야 하면 프로젝트 스코프</td><td>가드부터 걷고 여섯 폴더. <code>docs/features/</code>와 <code>tests/e2e/</code>는 남긴다.</td></tr>
@@ -624,7 +655,7 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
 </div>
 <p class="lead" style="margin-top:16px">전부 제거 절차가 문서에 적혀 있는데, 이건 의도한 것이다. 되돌릴 수 없는 설치는 애초에 선택지를 준 게 아니기 때문이다. 감지·설치·검증·제거 4단 전체는 각 문서에 있다. 설치할 때 나오는 질문의 뜻은 <a href="options.ko.html">옵션 사전</a>에, 처음부터 차근히 밟아 보려면 <a href="learn.ko.html">학습 코스</a>에 있다.</p>
 
-<footer>단디(Dandi) &middot; 스킬 카탈로그 &middot; 2026-09-17 &middot; 01 §D-4 · 02 STEP 3 ⓔ · 03 §2 · §3 · §7 · §8 · §9가 설치하는 스킬 15종. 명령은 별칭 없이 적었으니, 설치할 때 별칭을 골랐다면 그것을 얹어 읽으면 된다. &middot; 글꼴: Pretendard, IBM Plex Mono — 둘 다 SIL 오픈 폰트 라이선스 1.1(상업 이용·웹 임베딩 무료)</footer>
+<footer>단디(Dandi) &middot; 스킬 카탈로그 &middot; 2026-09-18 &middot; 01 §D-4 · 02 STEP 3 ⓔ · 03 §2 · §3 · §7 · §8 · §9가 설치하는 스킬들. 명령은 별칭 없이 적었으니, 설치할 때 별칭을 골랐다면 그것을 얹어 읽으면 된다. &middot; 글꼴: Pretendard, IBM Plex Mono — 둘 다 SIL 오픈 폰트 라이선스 1.1(상업 이용·웹 임베딩 무료)</footer>
 
 </div>
 <script>

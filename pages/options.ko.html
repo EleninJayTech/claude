@@ -376,14 +376,15 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
   </div>
 
   <div class="opt">
-    <div class="opt-head"><span class="id">ⓒ</span><span class="name"><code>/resume</code> · <code>/wrap</code> · 점검 스킬</span><span class="badge b-on">기본 체크</span></div>
-    <p class="lead">세션을 시작할 때와 끝낼 때 쓰는 슬래시 명령 두 개 + 구성 점검 명령 두 개. <b>이 구성의 실질적인 핵심</b>입니다.</p>
+    <div class="opt-head"><span class="id">ⓒ</span><span class="name"><code>/resume</code> · <code>/wrap</code> · <code>dropin-</code> 계열</span><span class="badge b-on">기본 체크</span></div>
+    <p class="lead">세션을 시작할 때와 끝낼 때 쓰는 슬래시 명령 두 개 + 구성을 점검하고 다시 최신으로 끌어올리는 <code>dropin-</code> 계열. <b>이 구성의 실질적인 핵심</b>입니다.</p>
     <dl>
-      <dt>만들 파일</dt><dd><code>skills/resume/SKILL.md</code> · <code>skills/wrap/SKILL.md</code> · <code>skills/dropin-check/</code> · <code>skills/dropin-update/</code></dd>
+      <dt>만들 파일</dt><dd><code>skills/resume/SKILL.md</code> · <code>skills/wrap/SKILL.md</code> · <code>skills/dropin-apply/</code> · <code>skills/dropin-check/</code> · <code>skills/dropin-update/</code></dd>
       <dt><code>/resume</code></dt><dd>원격이 있으면 <b>먼저 pull로 최신화</b>하고, <b>커밋 안 된 변경</b>을 찾고(진행 중이던 작업), 지난 기록·계획·최근 결정을 읽어 “지난번엔 X, 다음은 Y?”라고 보고. 설치가 오래됐으면(30일+) 점검을 권해줍니다</dd>
       <dt><code>/wrap</code></dt><dd>오늘 한 일을 기록에 추가하고, 새 결정을 남기고, 계획의 체크박스를 갱신하고, <b>커밋 안 했으면 경고</b></dd>
       <dt><code>/dropin-check</code></dt><dd>내 구성이 문서의 최신 버전으로 적용돼 있는지 <b>점검만</b>(아무것도 바꾸지 않음)</dd>
       <dt><code>/dropin-update</code></dt><dd>프로젝트에 넣어둔 문서 사본이 낡았으면 <b>물어보고</b> 최신본으로 교체</dd>
+      <dt><code>/dropin-apply</code></dt><dd><b>구성 자체를 다시 적용</b> — 문서·설치된 스킬·설정까지. 00 문서를 읽어 그 절차를 그대로 돕니다. 처음 까는 경우에도 같은 명령입니다. 역할 구분에 주의: <code>/dropin-update</code>는 설명서를 새것으로 바꾸고, 이것은 설명서가 설명하는 물건을 다시 만듭니다</dd>
       <dt>종류</dt><dd>resume·wrap은 환경에 따라 셋 중 하나 — 단일 저장소용 기본형 / 팀이 한 저장소를 나눠 쓰는 분할형 / 여러 저장소를 한 폴더에서 다루는 통합형</dd>
     </dl>
   </div>
@@ -893,7 +894,7 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
 <a class="totop" href="#toc">↑ 목차</a>
 
 <footer>
-  단디 · 설치 옵션 사전 · 00_통합-설치.md 기준 · 2026-09-17<br>
+  단디 · 설치 옵션 사전 · 00_통합-설치.md 기준 · 2026-09-18<br>
   각 항목의 정본은 해당 하위 문서(01~06)입니다. 이 페이지는 사람이 읽고 판단하기 위한 안내이며, 설치 절차 자체를 바꾸지 않습니다.<br>
   저장소: github.com/EleninJayTech/claude ·
   <a href="../index.html">사용법</a> · <a href="intro.html">소개 영상</a> · <a href="demo.html">설치 시연</a> · <a href="learn.html">학습 코스</a> · <a href="skills.ko.html">스킬 카탈로그</a><br>
