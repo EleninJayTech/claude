@@ -148,7 +148,7 @@ footer{margin-top:36px;color:var(--ink-soft);font-size:13px;font-family:var(--sa
   <p>이미 설치된 것이 있으면 그대로 둘지 먼저 물어보고, 말없이 덮어쓰지 않습니다. 문서 일곱 장이 각각 무엇을 하는지는 <a href="../index.html">사용법 페이지</a>에, 설치 중에 고르는 항목의 뜻은 <a href="options.html">설치 옵션 사전</a>에 있습니다. 처음부터 차근차근 배우려면 <a href="learn.html">설치 옵션 학습 코스</a>를 보세요.</p>
 </div>
 
-<footer>단디 · 설치 시연 페이지 · 2026-09-17 · 이 페이지의 시연은 00~06 문서의 실제 절차(감지 → 모드·번들 선택 → 설치 → 증거 검증 → 적용 기록)를 재현한 것입니다. 디자인은 kr-ui-guide 스킬(저장소 skills/kr-ui-guide) 기준을 따릅니다. · 글꼴: Pretendard, IBM Plex Mono — 둘 다 SIL 오픈 폰트 라이선스 1.1(상업 이용·웹 임베딩 무료)</footer>
+<footer>단디 · 설치 시연 페이지 · 2026-09-19 · 이 페이지의 시연은 00~06 문서의 실제 절차(감지 → 모드·번들 선택 → 설치 → 증거 검증 → 적용 기록)를 재현한 것입니다. 디자인은 kr-ui-guide 스킬(저장소 skills/kr-ui-guide) 기준을 따릅니다. · 글꼴: Pretendard, IBM Plex Mono — 둘 다 SIL 오픈 폰트 라이선스 1.1(상업 이용·웹 임베딩 무료)</footer>
 </div>
 
 <script>
@@ -192,11 +192,11 @@ add("out","<span class='who'>Claude</span> 선택하신 3개 문서의 절차대
 add("ok","✓ CLAUDE.md — 프로젝트 사실 기록(스택·구조·규칙)");
 add("ok","✓ docs/ PROGRESS·DECISIONS·PROJECT_PLAN — 작업 일지 시스템");
 add("ok","✓ .claude/settings.json — 비밀번호·열쇠 파일 읽기 차단(deny)");
-add("ok","✓ /resume·/wrap 스킬 — 이어하기·마무리 명령");
+add("ok","✓ /resume·/wrap·/dropin-apply 등 스킬 — 이어하기·마무리·업데이트 명령");
 add("ok","✓ .claude/agents/ — AI 역할 분담표(어려운 일=비싼 모델, 단순 작업=싼 모델)");
 add("ok","✓ hooks 품질 게이트 — 파일을 고칠 때마다 검사기가 자동 실행");
 add("out","<span class='who'>Claude</span> 이제 검증합니다 — 말이 아니라 증거로 보고드립니다.",{cap:"<b>\"됐다\"로 끝나지 않습니다.</b> 실제로 검증을 실행한 출력(증거)을 보고받습니다."});
-add("ok","✓ \"/\" 입력 → /resume /wrap 자동완성 확인");
+add("ok","✓ \"/\" 입력 → /resume /wrap /dropin-apply 자동완성 확인");
 add("ok","✓ docs/ 작업 일지 3종·CLAUDE.md 기록 규칙 — 이 프로젝트 안에 실제로 생겼는지 경로로 확인",{cap:"<b>글로벌 명령만 보고 끝내지 않습니다.</b> 이 프로젝트 안에 산출물이 실제로 만들어졌는지까지 봐야 진짜 검증입니다."});
 add("ok","✓ 일부러 포맷을 어긋나게 저장 → 검사기가 즉시 잡아냄");
 add("out","<span class='who'>Claude</span> 마지막으로 적용 기록을 남깁니다:");
@@ -212,7 +212,7 @@ add("cmd","/wrap",{cap:"<b>하루의 끝.</b> 오늘 한 일과 결정이 자동
 add("ok","✓ 오늘 작업이 일지에 기록됨 · 저장 안 된 변경 경고 → 커밋 방법 안내");
 
 ch("⑤ 업데이트");
-add("cmd","00_통합-설치.md 를 다시 적용해줘",{cap:"<b>몇 달 뒤, 문서가 새 버전이 되었다면?</b> 처음부터 다시 깔지 않습니다."});
+add("cmd","/dropin-apply",{cap:"<b>몇 달 뒤, 문서가 새 버전이 되었다면?</b> 처음부터 다시 깔지 않습니다. 설치 때 함께 깔린 명령 한 번이면 되고, \"00_통합-설치.md 를 다시 적용해줘\"라고 말해도 같은 절차가 돕니다."});
 add("out","<span class='who'>Claude</span> 적용 기록을 발견했습니다 — 01은 v○.○로 설치되어 있고, 현재 문서는 그보다 새 버전입니다.");
 add("out","<span class='who'>Claude</span> 그 사이 바뀐 내용은 2건입니다. (변경 요약 표시)");
 add("ask","바뀐 것만 반영할까요? 이전에 선택하지 않았던 03·05를 추가하거나, 이미 깐 것 중 뺄 것이 있나요?",{cap:"기록된 버전과 비교해 <b>바뀐 것만</b> 물어봅니다. 안 깔았던 문서를 추가하거나 깔았던 것을 빼는 것도 이때 가능합니다 — 뺄 때는 설치가 만든 것만 지우고, 쌓인 작업 일지는 남깁니다."});

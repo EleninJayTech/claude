@@ -625,6 +625,7 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
 <div class="traps">
   <div class="trap"><b>이 셋업을 한 번도 안 깐 PC라면.</b><p>거기서도 <code>/dropin-apply</code>다 &mdash; 처음 까는 경우에도 같은 명령이다. 스킬이 아직 없으면 Claude에게 이렇게 말하면 된다: <i>&ldquo;저장소의 <code>00_통합-설치.md</code>를 받아서 이 PC에 적용해줘&rdquo;</i>. 그러면 이 스킬도 다른 것들과 함께 깔린다.</p></div>
   <div class="trap"><b>파일 이름은 그대로인데 내용만 낡은 경우.</b><p>스킬은 파일이 하나도 늘거나 줄지 않은 채로 개정될 수 있다. 이름만 대조하는 점검은 그걸 &ldquo;이미 최신&rdquo;이라고 말한다. 설치 절차는 내용까지 대조하므로, 문장만 바뀐 개정도 교체된다.</p></div>
+  <div class="trap"><b>이미 단디 플러그인으로 켜 두었다면.</b><p>기능 문서·refactor·kr-ui-guide 스킬을 <code>dandi</code> 플러그인 마켓으로 깔았다면, 같은 스킬이 <code>/dandi-refactor:refactor</code> 같은 플러그인 이름으로 이미 있다. 설치 절차가 이걸 알아채고 묻는다: 플러그인을 <b>유지</b>하고 복사 설치를 건너뛸지, 플러그인을 걷고 복사본으로 <b>교체</b>할지. 한 스킬이 두 벌 깔리면 둘이 서로 불려 가려고 다툰다. 나중에 플러그인 설치를 지울 때는 복사본 제거 절차가 아니라 그 플러그인 README의 <code>/plugin uninstall</code>을 따른다.</p></div>
   <div class="trap"><b><code>/dropin-check</code>가 다 보지는 못한다.</b><p>일반 설치에는 대조할 사설 사본이 아예 없다. 그래서 그냥 &ldquo;최신&rdquo;이 아니라 &ldquo;문서 기준 최신 &mdash; 스킬 실물 내용은 미확인&rdquo;이라고 보고한다. 그 나머지 절반이 궁금하면 <code>/dropin-apply</code>를 돌리면 된다.</p></div>
 </div>
 
@@ -655,7 +656,7 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
 </div>
 <p class="lead" style="margin-top:16px">전부 제거 절차가 문서에 적혀 있는데, 이건 의도한 것이다. 되돌릴 수 없는 설치는 애초에 선택지를 준 게 아니기 때문이다. 감지·설치·검증·제거 4단 전체는 각 문서에 있다. 설치할 때 나오는 질문의 뜻은 <a href="options.ko.html">옵션 사전</a>에, 처음부터 차근히 밟아 보려면 <a href="learn.ko.html">학습 코스</a>에 있다.</p>
 
-<footer>단디(Dandi) &middot; 스킬 카탈로그 &middot; 2026-09-18 &middot; 01 §D-4 · 02 STEP 3 ⓔ · 03 §2 · §3 · §7 · §8 · §9가 설치하는 스킬들. 명령은 별칭 없이 적었으니, 설치할 때 별칭을 골랐다면 그것을 얹어 읽으면 된다. &middot; 글꼴: Pretendard, IBM Plex Mono — 둘 다 SIL 오픈 폰트 라이선스 1.1(상업 이용·웹 임베딩 무료)</footer>
+<footer>단디(Dandi) &middot; 스킬 카탈로그 &middot; 2026-09-19 &middot; 01 §D-4 · 02 STEP 3 ⓔ · 03 §2 · §3 · §7 · §8 · §9가 설치하는 스킬들. 명령은 별칭 없이 적었으니, 설치할 때 별칭을 골랐다면 그것을 얹어 읽으면 된다. &middot; 글꼴: Pretendard, IBM Plex Mono — 둘 다 SIL 오픈 폰트 라이선스 1.1(상업 이용·웹 임베딩 무료)</footer>
 
 </div>
 <script>

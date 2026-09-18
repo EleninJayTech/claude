@@ -34,7 +34,7 @@
 - **You only need to copy `00`.** Claude fetches the rest from this repository on its own.
 - **The documents are written in Korean, and that is fine** — Claude reads and executes them the same way in any language. During install you are asked which language the *generated files* should use, so an English answer gives you an English `CLAUDE.md`, English work logs, and English commit messages.
 - **Pick "recommended"** and the installer inspects your project and checks the fitting combination for you. You can add purpose **bundles** (design, stronger verification, unattended automation and more) on top — "minimal + design", for example.
-- **If something is already installed**, you are asked whether to **keep / reconcile / replace** it first. Nothing is overwritten silently. Run 00 again later and it asks both what to **add** and what to **remove** — removing takes out only what the install created, and the work logs you have built up stay.
+- **If something is already installed**, you are asked whether to **keep / reconcile / replace** it first. Nothing is overwritten silently. Run 00 again later (or `/dropin-apply`, once 01 is installed) and it asks both what to **add** and what to **remove** — removing takes out only what the install created, and the work logs you have built up stay.
 - **Teams and multi-repository setups are supported.** Teammates who install from different places (a parent folder vs. an individual repository) do not collide, and a personal folder holding company repositories is checked **per repository**. Settings shared with the team (committed) and settings that stay yours are also asked about separately.
 - **On the Pro plan (lower usage allowance)**, choose the **thrift** operating profile during install — quality-critical moments (hard judgment calls, final review) stay untouched while everyday consumption drops.
 - Every question and checkbox the installer shows is documented item by item in the [**install options dictionary**](pages/options.html). To learn it from the ground up, take the [**install options course**](pages/learn.html) — you click through a simulator as you go.
@@ -50,7 +50,7 @@ The skills the installer copies (feature docs, refactor, kr-ui-guide) are also p
 ```
 
 - Plugin skills are called with the plugin name in front — `/dandi-feature-docs:feature-test`.
-- **Use one route per skill** — either the drop-in install or the plugin. Both at once shows every skill twice.
+- **Use one route per skill** — either the drop-in install or the plugin. Both at once shows every skill twice. If the installer finds the plugin already turned on, it asks whether to keep the plugin (skipping the copy) or replace it with the copy.
 - Third-party marketplaces don't auto-update by default; turn it on in `/plugin` → Marketplaces.
 - License: MIT.
 - Which channel each teammate used isn't tracked by these documents (drop-in installs are recorded, plugin installs aren't) — check locally with `claude plugin list`.
@@ -60,7 +60,7 @@ The skills the installer copies (feature docs, refactor, kr-ui-guide) are also p
 | Document | What it does |
 | --- | --- |
 | [`00_통합-설치.md`](00_통합-설치.md) | **The entry point.** Pick an install mode (minimal/recommended/full/custom) and bundles; it installs only the matching subset below |
-| [`01_Claude-Code-통합구성-범용마스터.md`](01_Claude-Code-통합구성-범용마스터.md) | **Memory and safety.** AI forgets everything when the chat closes, so this builds a work-log system that lets you **resume tomorrow where you stopped today**, and locks passwords and key files away from the AI. Ships the setup check (`/dropin-check`) and doc refresh (`/dropin-update`) commands too |
+| [`01_Claude-Code-통합구성-범용마스터.md`](01_Claude-Code-통합구성-범용마스터.md) | **Memory and safety.** AI forgets everything when the chat closes, so this builds a work-log system that lets you **resume tomorrow where you stopped today**, and locks passwords and key files away from the AI. Ships the setup check (`/dropin-check`), doc refresh (`/dropin-update`) and re-apply (`/dropin-apply`) commands too |
 | [`02_모델분담-범용-플레이북.md`](02_모델분담-범용-플레이북.md) | **Splitting the work across models.** Hard judgment goes to the smart (expensive) model, routine work to the fast (cheap) one — a small AI team that keeps quality and cuts the bill |
 | [`03_확장기능-설치-체크리스트.md`](03_확장기능-설치-체크리스트.md) | **Convenience add-ons.** Live usage meter (claude-hud) · animated graphics techniques (svg-design) · UI that doesn't look AI-generated (frontend-design) · external tool connections (MCP) · letting the AI open and check the screens it built (browser verification) · per-feature specs with tests, commit guard and release notes (feature-doc skill set) · behaviour-preserving code cleanup with side-effect verification (refactor) · UI/UX, icon and colour guidance for Korean-audience web, app and game screens, from research on Korean services (kr-ui-guide). Pick either design skill and you are also asked for a **font licence policy** — freely usable fonts only, the terms first and you decide, or leave it out — which is written into the setup |
 | [`04_검증-자동화.md`](04_검증-자동화.md) | **The automatic inspector.** Checkers run every time the AI edits code, and again before code is merged — you get **proof the checks passed** instead of the AI saying "done" |

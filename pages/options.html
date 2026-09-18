@@ -245,7 +245,7 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
     <div class="opt-head"><span class="name">Minimal</span><span class="badge b-off">01 only</span></div>
     <p class="lead">Only the record system and security. Even within the document, only the essentials.</p>
     <dl>
-      <dt>What appears</dt><dd>A global <code>settings.json</code> (security locks), the <code>/resume</code>, <code>/wrap</code> and audit skills (<code>/dropin-check</code>, <code>/dropin-update</code>), and three <code>docs/</code> files in the project</dd>
+      <dt>What appears</dt><dd>A global <code>settings.json</code> (security locks), the <code>/resume</code> and <code>/wrap</code> skills plus the <code>dropin-</code> skills (<code>/dropin-apply</code>, <code>/dropin-check</code>, <code>/dropin-update</code>), and three <code>docs/</code> files in the project</dd>
       <dt>Choose it when</dt><dd>The repository is documentation with no code, or you just want the basics first</dd>
     </dl>
   </div>
@@ -648,6 +648,10 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
       <td><b>Name alias</b></td>
       <td><b>None</b> (default) / <b>prefix</b> (<code class="i">dandi-svg-design</code>) / <b>suffix</b> (<code class="i">svg-design-dandi</code>) &mdash; the way out when a different skill already holds the name. Details in <b>2-7</b></td>
     </tr>
+    <tr>
+      <td><b>Already a plugin</b></td>
+      <td>Asked only for the feature-doc set, refactor and kr-ui-guide, and only when the same skills are already turned on as a <code class="i">dandi</code> plugin. <b>Keep</b> &mdash; the plugin stays and the copy is skipped / <b>replace</b> &mdash; the plugin is removed, then the copy is installed. Having both would put two identical skills in front of Claude. To remove a skill you got as a plugin, follow that plugin&rsquo;s own uninstall steps (<code class="i">/plugin uninstall dandi-refactor@dandi</code>, for example)</td>
+    </tr>
   </table>
   </div>
 </section>
@@ -858,6 +862,10 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
     and if something was <b>left pending</b> last time (&ldquo;awaiting gh authentication&rdquo;, say) it checks whether that is now resolved.
     If it is resolved but you still do not want it, that is recorded as &ldquo;not selected&rdquo; &mdash; so the same question stops coming back.
   </p>
+  <p>
+    Copied skills (the feature-doc set, refactor, kr-ui-guide) are compared with the published version <b>file by file, contents included</b> &mdash; a revision that only reworded things still counts.
+    If anything differs, the skill is shown as an <b>older install</b> and the install step replaces the whole folder.
+  </p>
 
   <h3>If I skip a checkbox, is it gone for good?</h3>
   <p>You can run it again any time and add it. The documents are independent, so order barely matters &mdash; though 02 flows naturally once 01&rsquo;s record system is in place.</p>
@@ -897,7 +905,7 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
 <a class="totop" href="#toc">&uarr; Contents</a>
 
 <footer>
-  Dandi &middot; Install options dictionary &middot; based on 00_통합-설치.md &middot; 2026-09-18<br>
+  Dandi &middot; Install options dictionary &middot; based on 00_통합-설치.md &middot; 2026-09-19<br>
   The source of truth for each item is its own document (01&ndash;06). This page exists so people can read and judge; it does not change the install procedure itself.<br>
   Repository: github.com/EleninJayTech/claude &middot;
   <a href="../index.html">Guide</a> &middot; <a href="intro.html">Intro</a> &middot; <a href="demo.html">Walkthrough</a> &middot; <a href="learn.html">Course</a> &middot; <a href="skills.html">Skill catalog</a><br>

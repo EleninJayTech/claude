@@ -148,7 +148,7 @@ footer{margin-top:36px;color:var(--ink-soft);font-size:13px;font-family:var(--sa
   <p>If something is already installed, you are asked whether to keep it first &mdash; nothing is overwritten silently. What each of the seven documents does is on the <a href="../index.html">guide page</a>; what each install choice means is in the <a href="options.html">options dictionary</a>. To learn it from the ground up, take the <a href="learn.html">options course</a>.</p>
 </div>
 
-<footer>Dandi &middot; Install walkthrough &middot; 2026-09-17 &middot; This replay reproduces the real procedure of documents 00&ndash;06 (detect &rarr; choose mode and bundles &rarr; install &rarr; verify with evidence &rarr; record). Design follows the kr-ui-guide skill (repository skills/kr-ui-guide). &middot; Fonts: Pretendard, IBM Plex Mono &mdash; both SIL Open Font License 1.1 (free for commercial use and web embedding)</footer>
+<footer>Dandi &middot; Install walkthrough &middot; 2026-09-19 &middot; This replay reproduces the real procedure of documents 00&ndash;06 (detect &rarr; choose mode and bundles &rarr; install &rarr; verify with evidence &rarr; record). Design follows the kr-ui-guide skill (repository skills/kr-ui-guide). &middot; Fonts: Pretendard, IBM Plex Mono &mdash; both SIL Open Font License 1.1 (free for commercial use and web embedding)</footer>
 </div>
 
 <script>
@@ -192,11 +192,11 @@ add("out","<span class='who'>Claude</span> Installing the three documents you ch
 add("ok","✓ CLAUDE.md — project facts recorded (stack, structure, rules)");
 add("ok","✓ docs/ PROGRESS·DECISIONS·PROJECT_PLAN — the work-log system");
 add("ok","✓ .claude/settings.json — reading password and key files blocked (deny)");
-add("ok","✓ /resume·/wrap skills — resume and wrap-up commands");
+add("ok","✓ /resume·/wrap·/dropin-apply and related skills — resume, wrap-up and update commands");
 add("ok","✓ .claude/agents/ — the model-split roster (hard work = expensive model, routine = cheap)");
 add("ok","✓ hooks quality gate — a checker runs automatically on every file edit");
 add("out","<span class='who'>Claude</span> Now I verify — and report with evidence, not assurances.",{cap:"<b>It does not end at \"done\".</b> You get the actual output of a verification that was really run."});
-add("ok","✓ Typed \"/\" → /resume and /wrap confirmed in autocomplete");
+add("ok","✓ Typed \"/\" → /resume, /wrap and /dropin-apply confirmed in autocomplete");
 add("ok","✓ docs/ three work-log files and the CLAUDE.md record rules — confirmed by path, inside this project",{cap:"<b>Checking the global commands is not enough.</b> Real verification means confirming the artifacts were created inside this project too."});
 add("ok","✓ Saved a deliberately malformed file → the checker caught it immediately");
 add("out","<span class='who'>Claude</span> Finally, leaving the install record:");
@@ -212,7 +212,7 @@ add("cmd","/wrap",{cap:"<b>The end of the day.</b> Today's work and decisions ar
 add("ok","✓ Today's work written to the log · warned about uncommitted changes → showed how to commit");
 
 ch("⑤ Updating");
-add("cmd","Apply 00_통합-설치.md again",{cap:"<b>Months later, when the documents have a new version?</b> You do not reinstall from scratch."});
+add("cmd","/dropin-apply",{cap:"<b>Months later, when the documents have a new version?</b> You do not reinstall from scratch. One command installed alongside the rest does it — or say \"Apply 00_통합-설치.md again\" and the same procedure runs."});
 add("out","<span class='who'>Claude</span> I found an install record — 01 is at v○.○, and the current document is newer.");
 add("out","<span class='who'>Claude</span> Two things changed since. (change summary shown)");
 add("ask","Apply only what changed? Add 03 and 05, which you skipped before, or take out something already installed?",{cap:"It compares against the recorded version and asks about <b>only what changed</b>. This is also when you add documents you skipped earlier or remove ones you installed — removal deletes only what the install created and keeps the work logs."});

@@ -625,6 +625,7 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
 <div class="traps">
   <div class="trap"><b>On a machine that has never seen this setup.</b><p>Use <code>/dropin-apply</code> as well &mdash; it is the same command for a first install. If the skill is not there yet, tell Claude: <i>&ldquo;read <code>00_&#54648;&#54633;-&#49444;&#52824;.md</code> from the repository and apply it to this machine&rdquo;</i>, and the skill arrives with everything else.</p></div>
   <div class="trap"><b>Same file name, older contents.</b><p>A skill can be revised without gaining or losing a single file. Checks that only compare file names call that &ldquo;already current&rdquo;. The install steps compare contents too, so a wording-only revision is still replaced.</p></div>
+  <div class="trap"><b>Already on as a Dandi plugin?</b><p>If you installed the feature-docs, refactor or kr-ui-guide skills through the <code>dandi</code> plugin marketplace, the same skills already exist under plugin names such as <code>/dandi-refactor:refactor</code>. Install spots this and asks: <b>keep</b> the plugin and skip the copy, or <b>replace</b> it &mdash; remove the plugin, then copy. Two installs of one skill would both compete to load. To remove a plugin install later, use <code>/plugin uninstall</code> from that plugin&rsquo;s README, not the copy-removal steps.</p></div>
   <div class="trap"><b><code>/dropin-check</code> cannot see everything.</b><p>On an ordinary install there is no private mirror to compare against, so it reports &ldquo;current as far as the documents go &mdash; skill contents unchecked&rdquo; rather than a flat &ldquo;current&rdquo;. Run <code>/dropin-apply</code> when you want that second half answered.</p></div>
 </div>
 
@@ -655,7 +656,7 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
 </div>
 <p class="lead" style="margin-top:16px">Every one of these has a documented removal path, which is deliberate: an install you cannot reverse was never really a choice. The full procedures &mdash; detect, install, verify, remove &mdash; are in the documents themselves. For what each install question means, see the <a href="options.html">options dictionary</a>; to work through it step by step, take the <a href="learn.html">course</a>.</p>
 
-<footer>Dandi &middot; Skill catalog &middot; 2026-09-18 &middot; Skills installed by documents 01 §D-4, 02 STEP 3 ⓔ, 03 §2, §3, §7, §8 and §9. Commands are shown without an alias; apply yours if you chose one at install time. &middot; Fonts: Pretendard, IBM Plex Mono &mdash; both SIL Open Font License 1.1 (free for commercial use and web embedding)</footer>
+<footer>Dandi &middot; Skill catalog &middot; 2026-09-19 &middot; Skills installed by documents 01 §D-4, 02 STEP 3 ⓔ, 03 §2, §3, §7, §8 and §9. Commands are shown without an alias; apply yours if you chose one at install time. &middot; Fonts: Pretendard, IBM Plex Mono &mdash; both SIL Open Font License 1.1 (free for commercial use and web embedding)</footer>
 
 </div>
 <script>
