@@ -39,6 +39,20 @@
 - 설치 중에 나오는 질문·체크 항목의 뜻은 [**설치 옵션 사전**](pages/options.html)에 항목별로 정리돼 있습니다. 처음부터 차근차근 배우고 싶다면 [**설치 옵션 학습 코스**](pages/learn.html) — 시뮬레이터를 직접 눌러 보면서 익힙니다.
 - 모르는 용어가 나오면 Claude에게 "쉽게 설명해줘"라고 하면 됩니다.
 
+## 스킬을 플러그인으로 받기
+
+설치 문서가 복사해 주는 스킬(기능 문서 세트·refactor·kr-ui-guide)은 Claude Code 플러그인 마켓 **`dandi`**로도 받을 수 있습니다.
+
+```text
+/plugin marketplace add EleninJayTech/claude
+/plugin install dandi-feature-docs@dandi      # 그 밖에 dandi-refactor@dandi, dandi-kr-ui-guide@dandi
+```
+
+- 플러그인 스킬은 앞에 플러그인 이름을 붙여 부릅니다 — `/dandi-feature-docs:feature-test`.
+- **스킬마다 한 경로만 쓰세요** — 설치 문서로 깔든 플러그인으로 깔든 하나만. 둘 다 있으면 같은 스킬이 두 번 보입니다.
+- 서드파티 마켓은 자동 업데이트가 기본으로 꺼져 있습니다. `/plugin` → Marketplaces에서 켜세요.
+- 라이선스: MIT.
+
 ## 문서 일곱 장이 하는 일
 
 | 문서 | 하는 일 |

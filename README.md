@@ -40,6 +40,20 @@
 - Every question and checkbox the installer shows is documented item by item in the [**install options dictionary**](pages/options.html). To learn it from the ground up, take the [**install options course**](pages/learn.html) — you click through a simulator as you go.
 - Hit a term you don't know? Just ask Claude to "explain it simply".
 
+## Skills as plugins
+
+The skills the installer copies (feature docs, refactor, kr-ui-guide) are also published as Claude Code plugins in the **`dandi`** marketplace:
+
+```text
+/plugin marketplace add EleninJayTech/claude
+/plugin install dandi-feature-docs@dandi      # also: dandi-refactor@dandi, dandi-kr-ui-guide@dandi
+```
+
+- Plugin skills are called with the plugin name in front — `/dandi-feature-docs:feature-test`.
+- **Use one route per skill** — either the drop-in install or the plugin. Both at once shows every skill twice.
+- Third-party marketplaces don't auto-update by default; turn it on in `/plugin` → Marketplaces.
+- License: MIT.
+
 ## What the seven documents do
 
 | Document | What it does |

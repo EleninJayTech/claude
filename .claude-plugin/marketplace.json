@@ -1,0 +1,28 @@
+{
+  "name": "dandi",
+  "owner": { "name": "EleninJayTech", "url": "https://github.com/EleninJayTech" },
+  "description": "Dandi skills for Claude Code: feature specs verified against code and the running app, behavior-preserving refactoring, and UI/UX guidelines for Korean users. Skill instructions are written in Korean.",
+  "plugins": [
+    {
+      "name": "dandi-feature-docs",
+      "source": "./plugins/dandi-feature-docs",
+      "description": "Document every feature as AI-reproducible specs in docs/features/, run them as regression tests on the real screen, audit staleness, guard commits, convert tests to Playwright/Maestro scripts, and build release notes.",
+      "license": "MIT",
+      "keywords": ["documentation", "testing", "regression", "playwright", "maestro", "release-notes"]
+    },
+    {
+      "name": "dandi-refactor",
+      "source": "./plugins/dandi-refactor",
+      "description": "Behavior-preserving refactoring and optimization with side-effect verification; check mode verifies without changing code.",
+      "license": "MIT",
+      "keywords": ["refactoring", "optimization", "side-effects"]
+    },
+    {
+      "name": "dandi-kr-ui-guide",
+      "source": "./plugins/dandi-kr-ui-guide",
+      "description": "UI/UX, icon, color, typography and design-token guidelines for web, app and game products aimed at Korean users, distilled from Korean service benchmarking research.",
+      "license": "MIT",
+      "keywords": ["ui", "ux", "design-tokens", "korean", "accessibility", "icons"]
+    }
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "name": "dandi-feature-docs",
+  "version": "1.0.0+ef4c228a",
+  "description": "Document every feature as AI-reproducible specs in docs/features/, run them as regression tests on the real screen, audit staleness, guard commits, convert tests to Playwright/Maestro scripts, and build release notes. Skill instructions are written in Korean.",
+  "author": { "name": "EleninJayTech", "url": "https://github.com/EleninJayTech" },
+  "homepage": "https://eleninjaytech.github.io/claude/pages/skills.html",
+  "repository": "https://github.com/EleninJayTech/claude",
+  "license": "MIT",
+  "keywords": ["documentation", "testing", "regression", "playwright", "maestro", "release-notes"]
+}
