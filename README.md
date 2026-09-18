@@ -53,6 +53,7 @@ The skills the installer copies (feature docs, refactor, kr-ui-guide) are also p
 - **Use one route per skill** — either the drop-in install or the plugin. Both at once shows every skill twice.
 - Third-party marketplaces don't auto-update by default; turn it on in `/plugin` → Marketplaces.
 - License: MIT.
+- Which channel each teammate used isn't tracked by these documents (drop-in installs are recorded, plugin installs aren't) — check locally with `claude plugin list`.
 
 ## What the seven documents do
 
