@@ -55,7 +55,7 @@ The skills the installer copies (feature docs, refactor, kr-ui-guide) are also p
 - License: MIT.
 - Which channel each teammate used isn't tracked by these documents (drop-in installs are recorded, plugin installs aren't) — check locally with `claude plugin list`.
 
-## What the seven documents do
+## What the documents do
 
 | Document | What it does |
 | --- | --- |
