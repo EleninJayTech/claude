@@ -228,8 +228,8 @@ footer{max-width:1120px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
 <div class="topbar">
   <div class="topbar-in">
     <a class="brand" href="../index.html">&larr; <b>Dandi</b> &middot; Drop-in documents &middot; options course</a>
-    <div class="pbar" role="progressbar" aria-label="Course progress" aria-valuemin="0" aria-valuemax="10" aria-valuenow="0"><i id="pfill"></i></div>
-    <span class="pnum" id="pnum">0 / 10 done</span>
+    <div class="pbar" role="progressbar" aria-label="Course progress" aria-valuemin="0" aria-valuemax="11" aria-valuenow="0"><i id="pfill"></i></div>
+    <span class="pnum" id="pnum">0 done</span>
   </div>
 </div>
 
@@ -263,12 +263,12 @@ footer{max-width:1120px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
   <div class="feedback ok" id="resumeBox"></div>
 </section>
 
-<!-- ═══ CH1 낱말 8개 ═══ -->
+<!-- ═══ CH1 낱말 카드 ═══ -->
 <section class="chapter" data-ch="1" aria-labelledby="t1" hidden>
-  <p class="eyebrow">Chapter 1 &middot; eight words</p>
+  <p class="eyebrow">Chapter 1 &middot; the words to know</p>
   <h2 id="t1">Start by flipping the cards</h2>
-  <p class="lead">Know these eight and every later choice reads clearly. Click a card to see its meaning.</p>
-  <p class="flipcount" id="flipcount">Cards seen: 0 / 8</p>
+  <p class="lead">Know these and every later choice reads clearly. Click a card to see its meaning.</p>
+  <p class="flipcount" id="flipcount">Cards seen: 0</p>
   <div class="cards" id="cards"></div>
   <div class="coach"><span class="who">💡</span><div>
     <b>Why &ldquo;saving tokens&rdquo; keeps coming up</b>
@@ -419,8 +419,8 @@ footer{max-width:1120px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
         <tr><td><b>parity-tester</b></td><td>Runs the tests and reports pass/diff only</td><td>haiku</td></tr>
       </table></div>
       <p>Agents are chosen <b>one at a time</b>, not as a block. Changing existing code &rarr; the five without spec-writer;
-      building something new &rarr; drop surveyor and triage and start <b>from spec-writer</b>. No reviewer is created &mdash;
-      the built-in <code class="i">/code-review</code> is already there.</p>
+      building something new &rarr; drop surveyor and triage and start <b>from spec-writer</b>. A <b>custom reviewer</b> is offered
+      as well, but it starts unchecked &mdash; the built-in <code class="i">/code-review</code> already covers correctness review.</p>
       <p>Each agent file also carries its <b>reasoning effort</b> next to the model, so you do not pick it every time you call one.
       You are also asked whether the roster is <b>shared with the team</b> (committed to the project) or <b>just for you</b> (your machine).</p>
       <p>There is <b>one more optional item</b> (unchecked by default) &mdash; a <code class="i">/plan-&lt;model&gt;</code> command that runs a
@@ -479,7 +479,7 @@ footer{max-width:1120px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
   <details class="acc">
     <summary><span class="id">05</span>Output styles &mdash; changing Claude&rsquo;s tone and role <span class="badge b-off">optional</span></summary>
     <div class="acc-b">
-      <p>Pick one of the five built-ins (Default, Proactive, Explanatory, Learning, Concise), or write the role and tone you want into a single markdown file.
+      <p>Pick one of the built-ins (Default, Proactive, Explanatory, Learning, Concise &mdash; the <code class="i">/config</code> menu shows whatever is there on the day), or write the role and tone you want into a single markdown file.
       While you are learning, <b>Explanatory</b> &mdash; which explains why it did things that way as it goes &mdash; is the useful one.</p>
       <p>When you write your own, you are asked separately <b>where the style file lives</b> (your whole machine / this project) and <b>where the switch-on setting goes</b> (just you, this project / your whole machine / the whole team) &mdash; a file placed machine-wide still stays off in other projects if the setting only lives in this one.</p>
       <div class="coach warn" style="margin:8px 0"><span class="who">🔴</span><div>
@@ -597,7 +597,7 @@ footer{max-width:1120px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
 </div>
 
 <footer>
-  Dandi &middot; Install options course &middot; 2026-09-19<br>
+  Dandi &middot; Install options course &middot; 2026-09-20<br>
   The source of truth for each item is its own document (01&ndash;06). This page exists for people to learn from; it does not change the install procedure. Progress is stored only in this browser&rsquo;s localStorage.<br>
   저장소: github.com/EleninJayTech/claude ·
   <a href="../index.html">Guide</a> &middot; <a href="intro.html">Intro</a> &middot; <a href="demo.html">Walkthrough</a> &middot; <a href="options.html">Dictionary</a> &middot; <a href="skills.html">Skill catalog</a><br>
@@ -607,7 +607,7 @@ footer{max-width:1120px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
 <script>
 'use strict';
 /* ───────── 데이터 ───────── */
-var CHAPTERS = ['Getting started','Eight words','Install flow','Base mode','Bundles','Profile','01 base setup','02\u00b703\u00b704','05\u00b706','Practice','Staying current','Complete'];
+var CHAPTERS = ['Getting started','Key words','Install flow','Base mode','Bundles','Profile','01 base setup','02\u00b703\u00b704','05\u00b706','Practice','Staying current','Complete'];
 
 var TERMS = [
   ['Drop-in document','A manual you drop into a folder; say one sentence and Claude reads it and follows it. It is prose, not a program, so "installing" really means creating a handful of config files.'],
@@ -683,6 +683,8 @@ if(!Array.isArray(state.done)) state.done=[];
 if(typeof state.last!=='number') state.last=0;
 function save(){ try{ localStorage.setItem(KEY,JSON.stringify(state)); }catch(e){} }
 
+var LAST=CHAPTERS.length-1;      /* 마지막 = 수료 챕터 */
+var COUNT=LAST;                  /* 진행도에 세는 챕터 수(0~LAST-1) */
 var cur=0;
 var $=function(id){ return document.getElementById(id); };
 var chapEls=Array.prototype.slice.call(document.querySelectorAll('.chapter'));
@@ -698,23 +700,24 @@ function renderNav(){
     b.addEventListener('click',function(){ goto(i); });
     li.appendChild(b); ul.appendChild(li);
   });
-  var n=Math.min(state.done.length,10);
-  $('pfill').style.width=(n/10*100)+'%';
-  $('pnum').textContent=n+' / 10 done';
+  var n=Math.min(state.done.length,COUNT);
+  $('pfill').style.width=(n/COUNT*100)+'%';
+  $('pnum').textContent=n+' / '+COUNT+' done';
+  document.querySelector('.pbar').setAttribute('aria-valuemax',COUNT);
   document.querySelector('.pbar').setAttribute('aria-valuenow',n);
 }
 
 function goto(i){
-  cur=Math.max(0,Math.min(10,i));
+  cur=Math.max(0,Math.min(LAST,i));
   chapEls.forEach(function(el){ el.hidden = +el.getAttribute('data-ch')!==cur; });
   $('prevBtn').disabled = cur===0;
-  if(cur===10){
+  if(cur===LAST){
     $('nextBtn').textContent='Back to start';
-    var all = state.done.length>=10;
+    var all = state.done.length>=COUNT;
     $('certEmoji').textContent = all ? '🏅' : '🎓';
     $('certMsg').textContent = all
       ? 'Every chapter done. When the installer asks, you now know what you are choosing.'
-      : (10-state.done.length)+' chapters still unread. Use the contents on the left and open the ones without a \u2713.';
+      : (COUNT-state.done.length)+' chapters still unread. Use the contents on the left and open the ones without a \u2713.';
   }else{
     $('nextBtn').textContent='Mark done and continue \u2192';
   }
@@ -724,7 +727,7 @@ function goto(i){
 
 $('prevBtn').addEventListener('click',function(){ goto(cur-1); });
 $('nextBtn').addEventListener('click',function(){
-  if(cur===10){ goto(0); return; }
+  if(cur===LAST){ goto(0); return; }
   if(state.done.indexOf(cur)<0) state.done.push(cur);
   save(); goto(cur+1);
 });
@@ -746,10 +749,11 @@ function renderCards(){
       flipped[i]=!flipped[i]; d.classList.toggle('flip');
       var n=Object.keys(flipped).filter(function(k){return flipped[k];}).length;
       var seen=Object.keys(flipped).length;
-      $('flipcount').textContent='Cards seen: '+seen+' / 8'+(seen>=8?' \u2014 all of them!':'');
+      $('flipcount').textContent='Cards seen: '+seen+' / '+TERMS.length+(seen>=TERMS.length?' \u2014 all of them!':'');
     });
     d.appendChild(b); box.appendChild(d);
   });
+  $('flipcount').textContent='Cards seen: 0 / '+TERMS.length;
 }
 renderCards();
 

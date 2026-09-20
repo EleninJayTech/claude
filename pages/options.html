@@ -855,7 +855,10 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
   <p>
     Yes &mdash; that is the intended use. When an install finishes, a line like this is left at the bottom of <code class="i">CLAUDE.md</code>:
   </p>
-  <p><code class="i">&lt;!-- dropin-applied: 2026-08-05 &middot; 모드=권장+디자인 &middot; 프로필=표준 &middot; 언어=en &middot; 01 v&#9675;.&#9675; &middot; 02 v&#9675;.&#9675; &middot; 미선택: 05, 06 &middot; 출처=사본 --&gt;</code></p>
+  <p><code class="i">&lt;!-- dropin-applied: 2026-08-05 &middot; 모드=권장+디자인 &middot; 언어=en &middot; 별칭=없음 &middot; 00 v&#9675;.&#9675; &middot; 01 v&#9675;.&#9675; &middot; 02 v&#9675;.&#9675; &middot; 미선택: 05, 06 &middot; 출처=사본 --&gt;</code></p>
+  <p style="font-size:14.5px;color:var(--ink-soft)">
+    The fields are the answers you gave &mdash; mode and bundles, output language, the skill name alias, the version of each document installed, what you did not pick, and where the documents were read from. The <b>operating profile</b> is not in this line: it is yours, not the team&rsquo;s, so it is recorded in the <code class="i">CLAUDE.md</code> on your own machine.
+  </p>
   <p>
     Run it again later and Claude reads that line first, then <b>summarizes what changed in the documents since</b>.
     Even at the same version it asks &ldquo;shall I audit the existing items? add what you skipped last time, or remove something already installed?&rdquo;,
@@ -905,7 +908,7 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
 <a class="totop" href="#toc">&uarr; Contents</a>
 
 <footer>
-  Dandi &middot; Install options dictionary &middot; based on 00_통합-설치.md &middot; 2026-09-19<br>
+  Dandi &middot; Install options dictionary &middot; based on 00_통합-설치.md &middot; 2026-09-20<br>
   The source of truth for each item is its own document (01&ndash;06). This page exists so people can read and judge; it does not change the install procedure itself.<br>
   Repository: github.com/EleninJayTech/claude &middot;
   <a href="../index.html">Guide</a> &middot; <a href="intro.html">Intro</a> &middot; <a href="demo.html">Walkthrough</a> &middot; <a href="learn.html">Course</a> &middot; <a href="skills.html">Skill catalog</a><br>

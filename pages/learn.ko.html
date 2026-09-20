@@ -228,8 +228,8 @@ footer{max-width:1120px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
 <div class="topbar">
   <div class="topbar-in">
     <a class="brand" href="../index.ko.html">← <b>단디</b> · 드롭인 구성 문서 · 학습 코스</a>
-    <div class="pbar" role="progressbar" aria-label="코스 진행도" aria-valuemin="0" aria-valuemax="10" aria-valuenow="0"><i id="pfill"></i></div>
-    <span class="pnum" id="pnum">0 / 10 완료</span>
+    <div class="pbar" role="progressbar" aria-label="코스 진행도" aria-valuemin="0" aria-valuemax="11" aria-valuenow="0"><i id="pfill"></i></div>
+    <span class="pnum" id="pnum">0 완료</span>
   </div>
 </div>
 
@@ -263,12 +263,12 @@ footer{max-width:1120px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
   <div class="feedback ok" id="resumeBox"></div>
 </section>
 
-<!-- ═══ CH1 낱말 8개 ═══ -->
+<!-- ═══ CH1 낱말 카드 ═══ -->
 <section class="chapter" data-ch="1" aria-labelledby="t1" hidden>
-  <p class="eyebrow">챕터 1 · 낱말 8개</p>
+  <p class="eyebrow">챕터 1 · 꼭 아는 낱말</p>
   <h2 id="t1">카드를 뒤집어 낱말부터</h2>
-  <p class="lead">이 여덟 개만 알면 뒤에 나오는 선택지가 전부 읽힙니다. 카드를 눌러 뜻을 확인하세요.</p>
-  <p class="flipcount" id="flipcount">확인한 카드: 0 / 8</p>
+  <p class="lead">이것만 알면 뒤에 나오는 선택지가 전부 읽힙니다. 카드를 눌러 뜻을 확인하세요.</p>
+  <p class="flipcount" id="flipcount">확인한 카드: 0</p>
   <div class="cards" id="cards"></div>
   <div class="coach"><span class="who">💡</span><div>
     <b>"토큰을 아낀다"는 말이 자주 나오는 이유</b>
@@ -419,8 +419,8 @@ footer{max-width:1120px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
         <tr><td><b>parity-tester</b></td><td>테스트를 돌려 통과/차이만 보고</td><td>haiku</td></tr>
       </table></div>
       <p>에이전트는 통째가 아니라 <b>하나씩</b> 고릅니다. 기존 코드를 고치는 일이면 spec-writer를 뺀 5종,
-      새로 만드는 일이면 surveyor·triage 없이 <b>spec-writer부터</b> 시작합니다. 리뷰어는 따로 안 만듭니다 —
-      내장 <code class="i">/code-review</code>가 이미 있기 때문입니다.</p>
+      새로 만드는 일이면 surveyor·triage 없이 <b>spec-writer부터</b> 시작합니다. <b>커스텀 리뷰어</b>도 고를 수 있지만
+      기본은 꺼져 있습니다 — 정확성 리뷰는 내장 <code class="i">/code-review</code>로 충분하기 때문입니다.</p>
       <p>에이전트 파일에는 모델과 함께 <b>추론 강도(effort)</b>도 미리 적혀 있어서, 부를 때마다 고를 필요가 없습니다.
       로스터를 <b>팀과 공유할지</b>(프로젝트에 커밋) <b>나만 쓸지</b>(내 PC)도 함께 물어봅니다.</p>
       <p>여기에 <b>선택 항목이 하나 더</b> 있습니다(기본 해제) — <b>계획을 세울 때만</b> 다른 모델로 돌리는
@@ -479,7 +479,7 @@ footer{max-width:1120px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
   <details class="acc">
     <summary><span class="id">05</span>출력 스타일 — Claude의 말투·역할 바꾸기 <span class="badge b-off">선택</span></summary>
     <div class="acc-b">
-      <p>내장 5종(Default·Proactive·Explanatory·Learning·Concise) 중 고르거나, 원하는 역할·톤을 마크다운 파일 하나로 직접 만듭니다.
+      <p>내장 스타일(Default·Proactive·Explanatory·Learning·Concise — 그날 <code class="i">/config</code> 메뉴에 뜬 것이 목록입니다) 중 고르거나, 원하는 역할·톤을 마크다운 파일 하나로 직접 만듭니다.
       배우는 중이라면 <b>Explanatory</b>(왜 그렇게 했는지 설명하며 진행)가 유용합니다.</p>
       <p>직접 만들 때는 <b>스타일 파일을 어디 둘지</b>(내 PC 전체 / 이 프로젝트)와 <b>켜는 설정을 어디 쓸지</b>(나만·이 프로젝트 / 내 PC 전체 / 팀 전원)를 따로 물어봅니다 — 파일을 PC 전체에 둬도, 켜는 설정이 이 프로젝트에만 있으면 다른 프로젝트에선 켜지지 않습니다.</p>
       <div class="coach warn" style="margin:8px 0"><span class="who">🔴</span><div>
@@ -597,7 +597,7 @@ footer{max-width:1120px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
 </div>
 
 <footer>
-  단디 · 설치 옵션 학습 코스 · 2026-09-19<br>
+  단디 · 설치 옵션 학습 코스 · 2026-09-20<br>
   각 항목의 정본은 해당 하위 문서(01~06)입니다. 이 페이지는 사람이 배우기 위한 안내이며, 설치 절차 자체를 바꾸지 않습니다. 진행도는 이 브라우저의 localStorage에만 저장됩니다.<br>
   저장소: github.com/EleninJayTech/claude ·
   <a href="../index.ko.html">사용법</a> · <a href="intro.ko.html">소개 영상</a> · <a href="demo.ko.html">설치 시연</a> · <a href="options.ko.html">옵션 사전</a> · <a href="skills.ko.html">스킬 카탈로그</a><br>
@@ -607,7 +607,7 @@ footer{max-width:1120px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
 <script>
 'use strict';
 /* ───────── 데이터 ───────── */
-var CHAPTERS = ['시작하기','낱말 8개','설치의 흐름','기반 모드','목적 번들','프로필','01 기본 셋업','02·03·04','05·06','종합 연습','최신 유지','수료'];
+var CHAPTERS = ['시작하기','낱말 카드','설치의 흐름','기반 모드','목적 번들','프로필','01 기본 셋업','02·03·04','05·06','종합 연습','최신 유지','수료'];
 
 var TERMS = [
   ['드롭인 문서','폴더에 던져넣고(drop in) 한 문장 말하면 Claude가 읽고 따라 하는 설명서. 프로그램이 아니라 글이라서, 설치라고 해도 결국 설정 파일 몇 개를 만드는 일입니다.'],
@@ -683,6 +683,8 @@ if(!Array.isArray(state.done)) state.done=[];
 if(typeof state.last!=='number') state.last=0;
 function save(){ try{ localStorage.setItem(KEY,JSON.stringify(state)); }catch(e){} }
 
+var LAST=CHAPTERS.length-1;      /* 마지막 = 수료 챕터 */
+var COUNT=LAST;                  /* 진행도에 세는 챕터 수(0~LAST-1) */
 var cur=0;
 var $=function(id){ return document.getElementById(id); };
 var chapEls=Array.prototype.slice.call(document.querySelectorAll('.chapter'));
@@ -698,23 +700,24 @@ function renderNav(){
     b.addEventListener('click',function(){ goto(i); });
     li.appendChild(b); ul.appendChild(li);
   });
-  var n=Math.min(state.done.length,10);
-  $('pfill').style.width=(n/10*100)+'%';
-  $('pnum').textContent=n+' / 10 완료';
+  var n=Math.min(state.done.length,COUNT);
+  $('pfill').style.width=(n/COUNT*100)+'%';
+  $('pnum').textContent=n+' / '+COUNT+' 완료';
+  document.querySelector('.pbar').setAttribute('aria-valuemax',COUNT);
   document.querySelector('.pbar').setAttribute('aria-valuenow',n);
 }
 
 function goto(i){
-  cur=Math.max(0,Math.min(10,i));
+  cur=Math.max(0,Math.min(LAST,i));
   chapEls.forEach(function(el){ el.hidden = +el.getAttribute('data-ch')!==cur; });
   $('prevBtn').disabled = cur===0;
-  if(cur===10){
+  if(cur===LAST){
     $('nextBtn').textContent='처음으로';
-    var all = state.done.length>=10;
+    var all = state.done.length>=COUNT;
     $('certEmoji').textContent = all ? '🏅' : '🎓';
     $('certMsg').textContent = all
       ? '모든 챕터를 완료했습니다. 이제 설치 질문이 나와도 무엇을 고르는지 알고 답할 수 있습니다.'
-      : '아직 안 본 챕터가 '+(10-state.done.length)+'개 있습니다. 왼쪽 목차에서 ✓ 없는 챕터를 눌러 마저 보세요.';
+      : '아직 안 본 챕터가 '+(COUNT-state.done.length)+'개 있습니다. 왼쪽 목차에서 ✓ 없는 챕터를 눌러 마저 보세요.';
   }else{
     $('nextBtn').textContent='완료하고 다음으로 →';
   }
@@ -724,7 +727,7 @@ function goto(i){
 
 $('prevBtn').addEventListener('click',function(){ goto(cur-1); });
 $('nextBtn').addEventListener('click',function(){
-  if(cur===10){ goto(0); return; }
+  if(cur===LAST){ goto(0); return; }
   if(state.done.indexOf(cur)<0) state.done.push(cur);
   save(); goto(cur+1);
 });
@@ -746,10 +749,11 @@ function renderCards(){
       flipped[i]=!flipped[i]; d.classList.toggle('flip');
       var n=Object.keys(flipped).filter(function(k){return flipped[k];}).length;
       var seen=Object.keys(flipped).length;
-      $('flipcount').textContent='확인한 카드: '+seen+' / 8'+(seen>=8?' — 전부 확인했습니다!':'');
+      $('flipcount').textContent='확인한 카드: '+seen+' / '+TERMS.length+(seen>=TERMS.length?' — 전부 확인했습니다!':'');
     });
     d.appendChild(b); box.appendChild(d);
   });
+  $('flipcount').textContent='확인한 카드: 0 / '+TERMS.length;
 }
 renderCards();
 
