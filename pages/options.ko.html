@@ -207,6 +207,7 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
   <p>
     Claude는 <b>질문하기 전에 먼저 조사합니다</b>. 이미 설치된 게 있는지, git 저장소인지, 어떤 언어를 쓰는지 등을 파일로 확인한 뒤,
     <b>코드로 알 수 없는 것만</b> 물어봅니다. 그래서 실제로 받는 질문은 생각보다 적습니다.
+    그리고 선택지마다 <b>고르면 무엇이 생기는지 · 안 고르면 어떻게 되는지</b>가 한 줄씩 붙어 나옵니다 — 뜻을 모르는 채로 고르지 않도록 하기 위해서입니다. 더 자세한 설명은 이 페이지가 갖고 있습니다.
   </p>
 
   <div class="tbl">
@@ -214,7 +215,7 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
     <tr><th style="width:64px">단계</th><th>하는 일</th><th style="width:190px">사용자가 고르는 것</th></tr>
     <tr><td><b>STEP 1</b></td><td>설치에 필요한 문서(01~06) 확보 — 같은 폴더에 없으면 GitHub에서 가져옴</td><td>없음</td></tr>
     <tr><td><b>STEP 2</b></td><td>환경 감지 — 이전에 적용한 기록(<code class="i">dropin-applied</code>), 기존 설정 파일, 프로젝트 유형 조사</td><td>없음</td></tr>
-    <tr><td><b>STEP 3</b></td><td><b>큰 선택</b> — 아래 §2의 질문들</td><td>기반 모드 · 목적 번들 · 운용 프로필 · 산출물 언어 · 스킬 이름 별칭</td></tr>
+    <tr><td><b>STEP 3</b></td><td><b>큰 선택</b> — 아래 §2의 질문들</td><td>(이미 구성된 PC면 맨 앞에 <b>빠른 경로</b>) · 기반 모드 · 목적 번들 · 운용 프로필 · 산출물 언어 · 스킬 이름 별칭</td></tr>
     <tr><td><b>STEP 4</b></td><td>고른 문서의 절차대로 설치. 문서 안 세부 항목(§3~§8)은 <b>‘사용자’ 모드면 전부</b> 물어보고, 그 밖의 모드면 <b>모드별 기본값이 정해진 문서만</b> 자동으로 정함 — 기본값이 없는 문서(02·05)와 기본으로 꺼진 항목은 물어봄</td><td>모드에 따라 다름</td></tr>
     <tr><td><b>STEP 5</b></td><td>검증하고 결과 보고 + <code class="i">CLAUDE.md</code> 맨 아래에 적용 기록 한 줄 남김</td><td>커밋 승인</td></tr>
   </table>
@@ -233,6 +234,51 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
 <section id="common">
   <h2>2. 맨 처음 공통 질문</h2>
   <p class="goal">여기만 답하면 설치가 굴러갑니다</p>
+
+  <h3>2-0. 빠른 경로 — 이미 구성된 PC에서만 (단일 선택)</h3>
+  <p>이 PC에 <b>이미 설치한 기록이 있을 때만</b> 맨 처음에 나옵니다. 처음 설치하는 PC에서는 보이지 않고 바로 2-2부터 시작합니다. <b>새 모드가 아니라</b> 아래 공통 질문(기반 모드·목적 번들·운용 프로필·산출물 언어·스킬 이름 별칭)에 <b>한 번에 답하는 지름길</b>입니다. 어느 것을 고르든 <b>가져올 값을 보여 주고 확인을 받습니다</b> — 말없이 이어받지 않습니다.</p>
+
+  <div class="opt">
+    <div class="opt-head"><span class="name">이 PC 기본값으로</span><span class="id">기본 추천</span><span class="badge b-on">확인만</span></div>
+    <p class="lead">이 PC에 이미 정해 둔 <b>프로필·산출물 언어·스킬 이름 별칭</b>을 그대로 쓰고, 기반 모드는 <b>권장</b>으로 갑니다.</p>
+    <dl>
+      <dt>생기는 것</dt><dd>이 PC의 적용 기록에 남은 값 + 기반 모드 ‘권장’ + 목적 번들은 Claude가 감지한 추천값. 값을 한 번 보여 주고 <b>확인만</b> 받습니다</dd>
+      <dt>이럴 때</dt><dd>같은 PC에서 두 번째·세 번째 프로젝트를 깔 때 — 매번 같은 답을 하고 있다면 이것</dd>
+      <dt>안 고르면</dt><dd>공통 질문을 하나씩 받습니다(아래 ‘하나씩 고르기’와 같습니다)</dd>
+    </dl>
+  </div>
+
+  <div class="opt">
+    <div class="opt-head"><span class="name">다른 프로젝트와 같게</span><span class="badge b-keep">이 PC의 다른 프로젝트</span></div>
+    <p class="lead">이 PC의 <b>다른 프로젝트</b>에 적어 둔 모드·번들·언어·별칭을 그대로 가져옵니다.</p>
+    <dl>
+      <dt>생기는 것</dt><dd>고른 프로젝트의 기반 모드 + 번들 · 산출물 언어 · 스킬 이름 별칭. <b>운용 프로필만은 이 PC의 값</b>을 씁니다 — 프로필은 PC마다 다르기 때문입니다</dd>
+      <dt>후보로 나오는 것</dt><dd>지금도 이 PC에 <b>실제로 있고</b> 설치 기록이 남은 프로젝트만 나옵니다. 옮기거나 지운 폴더·기록이 없는 폴더는 빠지고, 같은 저장소의 작업용 복사본(워크트리)은 하나로 묶습니다. 후보가 없으면 이 선택지는 아예 나오지 않습니다</dd>
+      <dt>남기지 않는 것</dt><dd>어느 프로젝트에서 가져왔는지는 <b>기록에 남기지 않습니다</b> — 이 프로젝트의 기록은 팀에 공유되기 때문입니다</dd>
+      <dt>안 고르면</dt><dd>이 프로젝트만의 값을 하나씩 정합니다</dd>
+    </dl>
+  </div>
+
+  <div class="opt">
+    <div class="opt-head"><span class="name">권장 모드로</span><span class="badge b-off">감지 기반</span></div>
+    <p class="lead">감지 결과대로 Claude가 조합한 <b>권장</b>을 쓰고, 나머지는 기본값으로 갑니다.</p>
+    <dl>
+      <dt>이럴 때</dt><dd>이 PC의 이전 값이나 다른 프로젝트와 상관없이, 이 폴더만 보고 정해 주길 원할 때</dd>
+    </dl>
+  </div>
+
+  <div class="opt">
+    <div class="opt-head"><span class="name">하나씩 고르기</span><span class="badge b-off">지름길 없음</span></div>
+    <p class="lead">지름길 없이 아래 질문을 <b>처음부터 전부</b> 받습니다.</p>
+    <dl>
+      <dt>이럴 때</dt><dd>지난번과 다르게 하고 싶거나, 각 질문의 뜻을 읽어 가며 고르고 싶을 때</dd>
+    </dl>
+  </div>
+
+  <div class="note">
+    <b>📌 빠른 경로가 줄여 주는 건 공통 질문뿐입니다</b>
+    이미 있는 걸 덮어쓸지 묻는 <b>안전 질문</b>, 회사 정책 확인, 어디에 둘지 고르는 <b>스코프 질문</b>, 기본으로 꺼진 항목을 켤지 묻는 질문은 <b>그대로 나옵니다</b>. ‘전체’ 모드로도 줄일 수 없는 것을 빠른 경로가 줄이면 안 되기 때문입니다. 잘못 가져왔다면 다음에 다시 돌릴 때 추가·제거를 물어보므로 되돌릴 수 있습니다.
+  </div>
 
   <h3>2-1. 적용 대상 — 이 PC인가, 이 프로젝트인가</h3>
   <p>모호할 때만 물어봅니다. <b>PC</b>를 고르면 <code class="i">~/.claude/</code>(내 계정 폴더)에, <b>프로젝트</b>를 고르면 지금 폴더의 <code class="i">.claude/</code>에 설정이 만들어집니다. 보통 처음 한 번은 PC 설정을 하고, 그다음부터는 프로젝트별로 합니다.</p>
@@ -325,6 +371,7 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
     <li><b>재구성</b> — 어긋난 부분만 맞춥니다. 기존 걸 살리면서 새 버전 내용을 반영하고 싶을 때.</li>
     <li><b>교체</b> — 기존 걸 지우고 새로 만듭니다. 예전에 대충 만들어둔 걸 정리할 때.</li>
   </ul>
+  <p><b>이 PC에 이미 있는 글로벌 항목</b>(모든 프로젝트가 함께 쓰는 설정)은 프로젝트를 새로 깔 때마다 같은 답을 하지 않도록 <b>한 문항으로 묶어</b> 물어봅니다 — 무엇이 이미 있는지 목록을 보여 주고 기본은 <b>유지</b>입니다. 그중 <b>재구성·교체</b>를 고른 것만 하나씩 나눠 묻습니다.</p>
   <p><b>팀 저장소에 처음 합류했다면</b>(다른 사람이 이미 적용해 커밋해 둔 저장소를 내 PC에서 처음 돌릴 때) 기본값은 <b>유지</b>로 제시됩니다 — 팀이 맞춰 둔 구성을 새로 온 사람의 선택으로 덮지 않기 위해서입니다.</p>
 
   <h3>2-7. 스킬 이름 별칭 — 없음 / 앞 / 뒤 / 고른 것만</h3>
@@ -841,6 +888,11 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
       <td>권장 / <b>회사</b> + 필요한 번들 / 표준</td>
       <td>‘회사’ 번들은 설치물이 아니라 <b>안전장치</b>입니다 — CI·MCP·루틴처럼 코드가 밖으로 나가는 항목에서 승인 확인을 강제합니다</td>
     </tr>
+    <tr>
+      <td><b>이미 다른 프로젝트에 깔아 봤고, 새 폴더에 또 깔 때</b></td>
+      <td>빠른 경로 → <b>이 PC 기본값으로</b> (또는 <b>다른 프로젝트와 같게</b>)</td>
+      <td>같은 PC에서 같은 답을 되풀이하지 않아도 됩니다. 단 안전 질문·스코프 질문·기본으로 꺼진 항목은 그대로 나옵니다</td>
+    </tr>
   </table>
   </div>
 </section>
@@ -905,7 +957,7 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
 <a class="totop" href="#toc">↑ 목차</a>
 
 <footer>
-  단디 · 설치 옵션 사전 · 00_통합-설치.md 기준 · 2026-09-20<br>
+  단디 · 설치 옵션 사전 · 00_통합-설치.md 기준 · 2026-09-22<br>
   각 항목의 정본은 해당 하위 문서(01~06)입니다. 이 페이지는 사람이 읽고 판단하기 위한 안내이며, 설치 절차 자체를 바꾸지 않습니다.<br>
   저장소: github.com/EleninJayTech/claude ·
   <a href="../index.ko.html">사용법</a> · <a href="intro.ko.html">소개 영상</a> · <a href="demo.ko.html">설치 시연</a> · <a href="learn.ko.html">학습 코스</a> · <a href="skills.ko.html">스킬 카탈로그</a><br>

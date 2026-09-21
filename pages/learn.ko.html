@@ -283,7 +283,7 @@ footer{max-width:1120px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
   <h2 id="t2">질문은 다섯 단계 중 <span class="mark">두 곳</span>에서만 나옵니다</h2>
   <p class="lead">
     Claude는 묻기 전에 먼저 조사합니다. 파일로 알 수 있는 것(이미 설치된 것, git 여부, 사용 언어)은 묻지 않고,
-    <b>코드로 알 수 없는 것만</b> 물어봅니다. 각 단계를 눌러 자세히 보세요.
+    <b>코드로 알 수 없는 것만</b> 물어봅니다. 그리고 선택지마다 <b>고르면 무엇이 생기는지 · 안 고르면 어떻게 되는지</b>가 한 줄씩 붙어 나옵니다. 각 단계를 눌러 자세히 보세요.
   </p>
   <ol class="steps" id="steps"></ol>
   <div class="coach"><span class="who">📌</span><div>
@@ -350,6 +350,19 @@ footer{max-width:1120px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
   <p class="eyebrow">챕터 5 · 나머지 공통 질문</p>
   <h2 id="t5">운용 프로필, 산출물 언어, 이름 별칭, 그리고 이미 있을 때</h2>
 
+  <h3>빠른 경로 — 이미 구성된 PC에서만</h3>
+  <p>이 PC에 <b>이미 설치한 기록이 있을 때만</b> 맨 처음에 나오는 질문입니다. 새 모드가 아니라, 공통 질문(기반 모드·번들·프로필·언어·별칭)에 <b>한 번에 답하는 지름길</b>입니다. 어느 것을 고르든 가져올 값을 보여 주고 <b>확인을 받습니다</b>.</p>
+  <ul>
+    <li><b>이 PC 기본값으로</b>(기본 추천) — 이 PC에 정해 둔 프로필·언어·별칭을 쓰고 모드는 권장으로 갑니다. 값을 보여 주고 <b>확인만</b> 받습니다. 같은 PC에서 두 번째 프로젝트부터 이것.</li>
+    <li><b>다른 프로젝트와 같게</b> — 이 PC의 다른 프로젝트에 적힌 모드·번들·언어·별칭을 가져옵니다. 프로필만은 이 PC의 값입니다. 지금도 <b>실제로 있고</b> 설치 기록이 남은 프로젝트만 후보로 나오며, 어느 프로젝트에서 가져왔는지는 기록에 남기지 않습니다(이 프로젝트 기록은 팀에 공유되니까요).</li>
+    <li><b>권장 모드로</b> — 이 폴더만 보고 Claude가 조합한 ‘권장’과 기본값으로 갑니다.</li>
+    <li><b>하나씩 고르기</b> — 지름길 없이 공통 질문을 처음부터 전부 받습니다.</li>
+  </ul>
+  <div class="coach"><span class="who">📌</span><div>
+    <b>빠른 경로가 줄여 주는 건 공통 질문뿐입니다</b>
+    안전 질문("이미 있는 걸 덮어쓸까요?"), 회사 정책 확인, 어디에 둘지 고르는 스코프 질문, 기본으로 꺼진 항목을 켤지 묻는 질문은 <b>그대로 나옵니다</b>. ‘전체’ 모드로도 줄일 수 없는 것을 지름길이 줄이면 안 되기 때문입니다.
+  </div></div>
+
   <h3>운용 프로필 — 표준 / 절약</h3>
   <div class="sim">
     <div class="q">
@@ -370,6 +383,7 @@ footer{max-width:1120px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
 
   <h3>이미 설치돼 있으면 — 유지 / 재구성 / 교체</h3>
   <p>기존 설정이 감지된 항목마다, 모드와 상관없이 <b>항상</b> 물어봅니다. 눌러서 차이를 보세요.</p>
+  <p>다만 <b>이 PC에 이미 있는 글로벌 항목</b>(모든 프로젝트가 함께 쓰는 설정)은 프로젝트를 새로 깔 때마다 같은 답을 하지 않도록 <b>한 문항으로 묶어</b> 물어봅니다 — 목록을 보여 주고 기본은 <b>유지</b>입니다. <b>재구성·교체</b>를 고른 것만 하나씩 나눠 묻습니다.</p>
   <div class="q">
     <div class="opts row" id="keepOpts" role="group" aria-label="기존 설정 처리 선택"></div>
     <div class="feedback ok" id="keepFb"></div>
@@ -597,7 +611,7 @@ footer{max-width:1120px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
 </div>
 
 <footer>
-  단디 · 설치 옵션 학습 코스 · 2026-09-20<br>
+  단디 · 설치 옵션 학습 코스 · 2026-09-22<br>
   각 항목의 정본은 해당 하위 문서(01~06)입니다. 이 페이지는 사람이 배우기 위한 안내이며, 설치 절차 자체를 바꾸지 않습니다. 진행도는 이 브라우저의 localStorage에만 저장됩니다.<br>
   저장소: github.com/EleninJayTech/claude ·
   <a href="../index.ko.html">사용법</a> · <a href="intro.ko.html">소개 영상</a> · <a href="demo.ko.html">설치 시연</a> · <a href="options.ko.html">옵션 사전</a> · <a href="skills.ko.html">스킬 카탈로그</a><br>

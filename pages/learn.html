@@ -283,7 +283,7 @@ footer{max-width:1120px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
   <h2 id="t2">Across five steps, questions come at only <span class="mark">two of them</span></h2>
   <p class="lead">
     Claude investigates before it asks. Anything the files can answer &mdash; what is already installed, whether this is git, which language the code is in &mdash;
-    is never asked; only <b>what the code cannot tell it</b>. Click each step for detail.
+    is never asked; only <b>what the code cannot tell it</b>. And every choice carries a one-line note on <b>what you get if you pick it &middot; what happens if you don&rsquo;t</b>. Click each step for detail.
   </p>
   <ol class="steps" id="steps"></ol>
   <div class="coach"><span class="who">📌</span><div>
@@ -350,6 +350,19 @@ footer{max-width:1120px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
   <p class="eyebrow">Chapter 5 &middot; the remaining common questions</p>
   <h2 id="t5">Operating profile, output language, name alias, and what is already there</h2>
 
+  <h3>Quick path &mdash; only on an already-set-up PC</h3>
+  <p>The question that comes <b>first, and only when this PC already has an install record</b>. It is not a new mode &mdash; it is <b>a shortcut for answering the common questions in one go</b> (base mode, bundles, profile, language, alias). Whichever you pick, the values it will carry over are shown and <b>you confirm them</b>.</p>
+  <ul>
+    <li><b>This PC&rsquo;s defaults</b> (default pick) &mdash; uses the profile, language and alias already settled on this PC and goes with mode Recommended. The values are shown and you <b>only confirm</b>. From the second project on the same PC, this one.</li>
+    <li><b>Same as another project</b> &mdash; carries over the mode, bundles, language and alias recorded in another project on this PC. Only the profile comes from this PC. Only projects that <b>actually exist</b> now and have an install record are offered, and which project the values came from is not written to the record (this project&rsquo;s record is shared with the team).</li>
+    <li><b>Recommended mode</b> &mdash; the Recommended mix Claude puts together by looking at this folder alone, plus defaults.</li>
+    <li><b>One by one</b> &mdash; no shortcut; you get the common questions from the start, all of them.</li>
+  </ul>
+  <div class="coach"><span class="who">📌</span><div>
+    <b>The quick path only shortens the common questions</b>
+    The safety questions (&ldquo;may I overwrite what is already there?&rdquo;), the company-policy check, the scope questions about where things should live, and the questions about items that are off by default <b>still appear</b>. Not even the &ldquo;everything&rdquo; mode can skip those, so a shortcut must not either.
+  </div></div>
+
   <h3>Operating profile &mdash; standard / thrift</h3>
   <div class="sim">
     <div class="q">
@@ -370,6 +383,7 @@ footer{max-width:1120px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
 
   <h3>If something is already installed &mdash; keep / reconcile / replace</h3>
   <p>Asked for every item where existing settings are detected &mdash; <b>always</b>, whatever the mode. Click to see the difference.</p>
+  <p>The exception in how it is asked: <b>global items already on this PC</b> (settings every project shares) are bundled into <b>one question</b> so you do not answer the same thing every time you set up a project &mdash; the list is shown and the default is <b>keep</b>. Only the ones you answer <b>reconcile</b> or <b>replace</b> for are split out and asked one by one.</p>
   <div class="q">
     <div class="opts row" id="keepOpts" role="group" aria-label="Existing-settings handling"></div>
     <div class="feedback ok" id="keepFb"></div>
@@ -597,7 +611,7 @@ footer{max-width:1120px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
 </div>
 
 <footer>
-  Dandi &middot; Install options course &middot; 2026-09-20<br>
+  Dandi &middot; Install options course &middot; 2026-09-22<br>
   The source of truth for each item is its own document (01&ndash;06). This page exists for people to learn from; it does not change the install procedure. Progress is stored only in this browser&rsquo;s localStorage.<br>
   저장소: github.com/EleninJayTech/claude ·
   <a href="../index.html">Guide</a> &middot; <a href="intro.html">Intro</a> &middot; <a href="demo.html">Walkthrough</a> &middot; <a href="options.html">Dictionary</a> &middot; <a href="skills.html">Skill catalog</a><br>

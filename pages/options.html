@@ -209,6 +209,7 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
     Claude <b>investigates before it asks</b>. It checks the files for what is already installed, whether this is a git
     repository, which language the code is in, and then asks only about <b>what the code cannot tell it</b>.
     The result is far fewer questions than you would expect.
+    And every choice carries a one-line note on <b>what you get if you pick it &middot; what happens if you don&rsquo;t</b>, so you are never choosing blind. The fuller explanations live on this page.
   </p>
 
   <div class="tbl">
@@ -216,7 +217,7 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
     <tr><th style="width:64px">Step</th><th>What happens</th><th style="width:190px">What you choose</th></tr>
     <tr><td><b>STEP 1</b></td><td>Obtain the documents needed (01&ndash;06) &mdash; fetched from GitHub if not in the folder</td><td>Nothing</td></tr>
     <tr><td><b>STEP 2</b></td><td>Detect the environment &mdash; prior install record (<code class="i">dropin-applied</code>), existing config files, project type</td><td>Nothing</td></tr>
-    <tr><td><b>STEP 3</b></td><td><b>The big choices</b> &mdash; the questions in &sect;2 below</td><td>Base mode &middot; bundles &middot; profile &middot; output language &middot; skill name alias</td></tr>
+    <tr><td><b>STEP 3</b></td><td><b>The big choices</b> &mdash; the questions in &sect;2 below</td><td>(on an already-set-up PC, a <b>quick path</b> first) &middot; base mode &middot; bundles &middot; profile &middot; output language &middot; skill name alias</td></tr>
     <tr><td><b>STEP 4</b></td><td>Install by each chosen document&rsquo;s own procedure. The per-document items (&sect;3&ndash;&sect;8) are <b>all asked in &ldquo;custom&rdquo; mode</b>; in the other modes they are settled automatically <b>only for documents that define per-mode defaults</b> &mdash; documents without them (02, 05) and items that are off by default are asked</td><td>Depends on the mode</td></tr>
     <tr><td><b>STEP 5</b></td><td>Verify, report, and leave one install-record line at the bottom of <code class="i">CLAUDE.md</code></td><td>Approving the commit</td></tr>
   </table>
@@ -235,6 +236,51 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
 <section id="common">
   <h2>2. The opening questions</h2>
   <p class="goal">Answer these and the install runs itself</p>
+
+  <h3>2-0. Quick path &mdash; only on an already-set-up PC (choose one)</h3>
+  <p>Shown first, and <b>only when this PC already has an install record</b>. On a first-time PC you will not see it and the questions start at 2-2. It is <b>not a new mode</b> &mdash; it is <b>a shortcut for answering the common questions below in one go</b> (base mode, bundles, profile, output language, skill name alias). Whichever you pick, the values it will carry over are shown and <b>you confirm them</b> &mdash; nothing is inherited silently.</p>
+
+  <div class="opt">
+    <div class="opt-head"><span class="name">This PC&rsquo;s defaults</span><span class="id">default</span><span class="badge b-on">confirm only</span></div>
+    <p class="lead">Reuses the <b>profile, output language and skill name alias</b> already settled on this PC, and goes with base mode <b>Recommended</b>.</p>
+    <dl>
+      <dt>What appears</dt><dd>The values left in this PC&rsquo;s install record + base mode &ldquo;Recommended&rdquo; + the bundles Claude detected as a good fit. The values are shown once and <b>you only confirm</b></dd>
+      <dt>Choose it when</dt><dd>Setting up a second or third project on the same PC &mdash; if you keep giving the same answers, this is the one</dd>
+      <dt>If you don&rsquo;t</dt><dd>You get the common questions one by one (the same as &ldquo;One by one&rdquo; below)</dd>
+    </dl>
+  </div>
+
+  <div class="opt">
+    <div class="opt-head"><span class="name">Same as another project</span><span class="badge b-keep">another project on this PC</span></div>
+    <p class="lead">Carries over the mode, bundles, language and alias recorded in <b>another project</b> on this PC.</p>
+    <dl>
+      <dt>What appears</dt><dd>The chosen project&rsquo;s base mode + bundles, output language and skill name alias. <b>Only the operating profile comes from this PC</b> &mdash; a profile belongs to the machine, not the project</dd>
+      <dt>What is offered</dt><dd>Only projects that <b>actually exist</b> on this PC now and have an install record. Folders you moved or deleted, and folders with no record, are left out; working copies (worktrees) of the same repository are folded into one. If there are none, this choice does not appear at all</dd>
+      <dt>What is not recorded</dt><dd>Which project the values came from is <b>not written to the record</b> &mdash; this project&rsquo;s record is shared with the team</dd>
+      <dt>If you don&rsquo;t</dt><dd>You settle this project&rsquo;s own values one by one</dd>
+    </dl>
+  </div>
+
+  <div class="opt">
+    <div class="opt-head"><span class="name">Recommended mode</span><span class="badge b-off">detection-based</span></div>
+    <p class="lead">Uses the <b>Recommended</b> mix Claude puts together from detection, and takes defaults for the rest.</p>
+    <dl>
+      <dt>Choose it when</dt><dd>You want this folder judged on its own, ignoring this PC&rsquo;s earlier values and other projects</dd>
+    </dl>
+  </div>
+
+  <div class="opt">
+    <div class="opt-head"><span class="name">One by one</span><span class="badge b-off">no shortcut</span></div>
+    <p class="lead">No shortcut &mdash; you get the questions below <b>from the start, all of them</b>.</p>
+    <dl>
+      <dt>Choose it when</dt><dd>You want something different from last time, or want to read what each question means as you go</dd>
+    </dl>
+  </div>
+
+  <div class="note">
+    <b>&#128204; The quick path only shortens the common questions</b>
+    The <b>safety questions</b> (may I overwrite what is already there? did you check the company policy?), the <b>scope questions</b> (where should this live?) and the questions about items that are off by default <b>still appear</b>. Not even the &ldquo;everything&rdquo; mode can skip those, so a shortcut must not either. If something was carried over wrongly, the next re-run asks about adding and removing, so it can be undone.
+  </div>
 
   <h3>2-1. Target &mdash; this PC, or this project</h3>
   <p>Asked only when it is ambiguous. Choose <b>PC</b> and settings land in <code class="i">~/.claude/</code> (your account folder); choose <b>project</b> and they land in this folder&rsquo;s <code class="i">.claude/</code>. Most people do the PC setup once, then go project by project.</p>
@@ -327,6 +373,7 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
     <li><b>Reconcile</b> &mdash; only the parts that drifted are aligned. For keeping what you have while taking in the newer version.</li>
     <li><b>Replace</b> &mdash; the old one is removed and rebuilt. For cleaning up something you threw together earlier.</li>
   </ul>
+  <p><b>Global items already on this PC</b> (settings every project shares) are asked as <b>one bundled question</b> so you do not answer the same thing every time you set up a new project &mdash; the list of what already exists is shown and the default is <b>keep</b>. Only the ones you answer <b>reconcile</b> or <b>replace</b> for are split out and asked one by one.</p>
   <p><b>If you are joining a team repository</b> (running it for the first time on your machine in a repository someone else already set up and committed), the default offered is <b>keep</b> &mdash; a newcomer&rsquo;s choices should not overwrite what the team has aligned on.</p>
 
   <h3>2-7. Skill name alias &mdash; none / prefix / suffix / only the ones you pick</h3>
@@ -843,6 +890,11 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
       <td>Recommended / <b>company</b> + whatever you need / standard</td>
       <td>The &ldquo;company&rdquo; bundle installs nothing; it is <b>a safeguard</b> &mdash; it forces an approval check wherever code leaves the building (CI, MCP, routines)</td>
     </tr>
+    <tr>
+      <td><b>Already set up another project, now adding a new folder</b></td>
+      <td>Quick path &rarr; <b>This PC&rsquo;s defaults</b> (or <b>Same as another project</b>)</td>
+      <td>You do not repeat the same answers on the same PC. The safety questions, scope questions and off-by-default items still appear</td>
+    </tr>
   </table>
   </div>
 </section>
@@ -908,7 +960,7 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
 <a class="totop" href="#toc">&uarr; Contents</a>
 
 <footer>
-  Dandi &middot; Install options dictionary &middot; based on 00_통합-설치.md &middot; 2026-09-20<br>
+  Dandi &middot; Install options dictionary &middot; based on 00_통합-설치.md &middot; 2026-09-22<br>
   The source of truth for each item is its own document (01&ndash;06). This page exists so people can read and judge; it does not change the install procedure itself.<br>
   Repository: github.com/EleninJayTech/claude &middot;
   <a href="../index.html">Guide</a> &middot; <a href="intro.html">Intro</a> &middot; <a href="demo.html">Walkthrough</a> &middot; <a href="learn.html">Course</a> &middot; <a href="skills.html">Skill catalog</a><br>
