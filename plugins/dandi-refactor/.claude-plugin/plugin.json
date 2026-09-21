@@ -1,6 +1,6 @@
 {
   "name": "dandi-refactor",
-  "version": "1.0.0+d7de245c",
+  "version": "1.0.0+09a938f0",
   "description": "Behavior-preserving refactoring and optimization with side-effect verification; check mode verifies without changing code. Skill instructions are written in Korean.",
   "author": { "name": "EleninJayTech", "url": "https://github.com/EleninJayTech" },
   "homepage": "https://eleninjaytech.github.io/claude/pages/skills.html",

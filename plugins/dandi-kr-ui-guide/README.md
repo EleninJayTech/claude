@@ -35,7 +35,7 @@ If your `CLAUDE.md` has no `## 폰트 라이선스 정책` (font license policy)
 
 ## Already installed via the Dandi drop-in docs?
 
-If `kr-ui-guide` also exists in `~/.claude/skills/` (copied by `03_확장기능-설치-체크리스트.md` §9), both copies show up and both are candidates for automatic invocation. Keep one.
+If `kr-ui-guide` also exists in `~/.claude/skills/` (or this project’s `.claude/skills/`) (copied by `03_확장기능-설치-체크리스트.md` §9), both copies show up and both are candidates for automatic invocation. Keep one.
 
 ## Language
 

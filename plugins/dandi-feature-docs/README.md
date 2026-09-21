@@ -42,7 +42,7 @@ Start with `feature-docs init`; the other five read the `docs/features/` layout 
 
 ## Already installed via the Dandi drop-in docs?
 
-If the same skills also exist in `~/.claude/skills/` (copied by `03_확장기능-설치-체크리스트.md` §7), both copies show up and both are candidates for automatic invocation. Keep one — remove the copies with §7's removal steps, or skip this plugin.
+If the same skills also exist in `~/.claude/skills/` (or this project’s `.claude/skills/`) (copied by `03_확장기능-설치-체크리스트.md` §7), both copies show up and both are candidates for automatic invocation. Keep one — remove the copies with §7's removal steps, or skip this plugin.
 
 ## Language
 

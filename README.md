@@ -90,3 +90,5 @@ The skills the installer copies (feature docs, refactor, kr-ui-guide) are also p
 If these documents helped you, a coffee is always appreciated 😊
 
 ---
+
+<!-- pages-sync-updated: 2026-09-22 -->
