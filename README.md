@@ -35,8 +35,9 @@
 - **The documents are written in Korean, and that is fine** — Claude reads and executes them the same way in any language. During install you are asked which language the *generated files* should use, so an English answer gives you an English `CLAUDE.md`, English work logs, and English commit messages.
 - **Pick "recommended"** and the installer inspects your project and checks the fitting combination for you. You can add purpose **bundles** (design, stronger verification, unattended automation and more) on top — "minimal + design", for example.
 - **If something is already installed**, you are asked whether to **keep / reconcile / replace** it first. Nothing is overwritten silently. Run 00 again later (or `/dropin-apply`, once 01 is installed) and it asks both what to **add** and what to **remove** — removing takes out only what the install created, and the work logs you have built up stay.
+- **On a PC you have already set up**, installing into a **new project** starts with a **quick path** — This PC's defaults / Same as another project / Recommended mode / One by one — that answers the common questions (mode, bundles, operating profile and so on) in one go. The values it carries over are shown for you to confirm, and safety questions (overwriting, company policy) still appear.
 - **Teams and multi-repository setups are supported.** Teammates who install from different places (a parent folder vs. an individual repository) do not collide, and a personal folder holding company repositories is checked **per repository**. Settings shared with the team (committed) and settings that stay yours are also asked about separately.
-- **On the Pro plan (lower usage allowance)**, choose the **thrift** operating profile during install — quality-critical moments (hard judgment calls, final review) stay untouched while everyday consumption drops.
+- **On the Pro plan (lower usage allowance)**, choose the **thrift** operating profile during install — quality-critical moments (hard judgment calls, final review) stay untouched while everyday consumption drops. There is **one thing you do yourself** after install: start everyday work with `/model sonnet` (the choice sticks), and open a **fresh session** on the higher model — for example `claude --model opus` — for quality-critical work such as reviews.
 - Every question and checkbox the installer shows is documented item by item in the [**install options dictionary**](pages/options.html). To learn it from the ground up, take the [**install options course**](pages/learn.html) — you click through a simulator as you go.
 - Hit a term you don't know? Just ask Claude to "explain it simply".
 
@@ -91,4 +92,4 @@ If these documents helped you, a coffee is always appreciated 😊
 
 ---
 
-<!-- pages-sync-updated: 2026-09-22 -->
+<!-- pages-sync-updated: 2026-09-23 -->

@@ -222,7 +222,8 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
     <li><b>"권장"</b>을 고르면 프로젝트를 조사한 결과에 맞는 조합이 자동으로 골라집니다. 목적 <b>번들</b>(디자인·검증 강화·무인 자동화 등)을 얹어 <b>"최소 + 디자인"</b>처럼 조합할 수도 있습니다.</li>
     <li>이미 설치된 것이 있으면 Claude가 <b>그대로 둘지 / 고칠지 / 새로 깔지</b>를 먼저 물어봅니다. 말없이 덮어쓰지 않습니다.</li>
     <li>나중에 마음이 바뀌면 00을 다시 적용하세요 — <b>더 깔 것</b>뿐 아니라 <b>뺄 것</b>도 물어봅니다. 빼면 설치가 만든 것만 지우고, 그동안 쌓인 작업 기록은 그대로 둡니다.</li>
-    <li>설치 중에 나오는 질문·체크 항목이 무슨 뜻인지 모르겠다면 <a href="pages/options.ko.html"><b>설치 옵션 사전</b></a>을 보세요 — 항목마다 "생기는 파일 / 체크할 때 / 뺄 때"를 풀어 뒀습니다.</li>
+    <li>이미 세팅해 둔 PC에서 <b>새 프로젝트</b>에 깔면 맨 앞에 <b>빠른 경로</b>가 나옵니다 — <b>이 PC 기본값으로 / 다른 프로젝트와 같게 / 권장 모드로 / 하나씩 고르기</b> 중 하나를 고르면 모드·번들·운용 프로필 같은 공통 질문을 한 번에 답한 것이 됩니다. 가져올 값은 먼저 보여 주고 확인을 받으며, 덮어쓰기·회사 정책 같은 안전 질문은 그대로 나옵니다.</li>
+    <li>설치 화면의 선택지에는 고르면 무엇이 생기는지와 안 고르면 어떻게 되는지(하나만 고르는 질문이면 언제 고르면 되는지)가 입문자 눈높이로 한 줄씩 붙어 나옵니다. 더 자세한 뜻이 궁금하면 <a href="pages/options.ko.html"><b>설치 옵션 사전</b></a>을 보세요 — 항목마다 "생기는 파일 / 체크할 때 / 뺄 때"를 풀어 뒀습니다.</li>
     <li>선택지를 처음부터 차근차근 익히고 싶다면 <a href="pages/learn.ko.html"><b>설치 옵션 학습 코스</b></a> — 챕터 순서대로, 시뮬레이터를 직접 눌러 보면서 배우는 인터랙티브 코스입니다.</li>
     <li>설치된 <b>스킬</b>이 각각 뭘 하는지 궁금하다면 <a href="pages/skills.ko.html"><b>스킬 카탈로그</b></a> — 전부를 무엇을 하고 언제 부르고 어디서 걸리는지로 정리했습니다.</li>
   </ul>
@@ -297,7 +298,7 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
     <tr><td>웹 화면 작업 위주</td><td>모드에 <b>디자인 번들</b> 얹기 — "최소 + 디자인"</td><td>디자인 항목이 미리 체크된 구성</td></tr>
     <tr><td>편의 기능만</td><td>"03_확장기능-설치-체크리스트.md 를 적용해줘"</td><td>필요한 것만 골라 설치</td></tr>
     <tr><td>자동 검사만</td><td>"04_검증-자동화.md 를 이 프로젝트에 적용해줘"</td><td>코드 수정마다 자동 검사 + 합치기 전 검사</td></tr>
-    <tr><td>Pro 요금제(사용량 적음)</td><td>설치 중 "운용 프로필" 질문에서 <b>절약</b> 선택</td><td>품질이 중요한 순간은 그대로, 평상시 소비만 절약</td></tr>
+    <tr><td>Pro 요금제(사용량 적음)</td><td>설치 중 "운용 프로필" 질문에서 <b>절약</b> 선택</td><td>품질이 중요한 순간은 그대로, 평상시 소비만 절약 — 평소 작업은 <code class="i">/model sonnet</code>으로 직접 시작(설정이 저장됨), 리뷰처럼 품질이 중요한 작업은 <code class="i">claude --model opus</code>처럼 상위 모델로 새 세션을 열어서</td></tr>
     <tr><td>AI 역할 분담만</td><td>"02_모델분담-범용-플레이북.md 를 이 프로젝트에 적용해줘"</td><td>비싼 AI·싼 AI 역할 분담 팀 구성</td></tr>
     <tr><td>답변 스타일 바꾸기</td><td>"05_출력스타일.md 를 적용해줘"</td><td>내장 스타일 전환 또는 나만의 스타일 만들기</td></tr>
     <tr><td>자동 실행 예약</td><td>"06_루틴-자동화.md 를 이 프로젝트에 적용해줘"</td><td>밤에도 알아서 도는 클라우드 예약 작업(Pro 이상)</td></tr>
@@ -385,7 +386,7 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
 
 </main>
 
-<footer>단디 · 사용법 페이지 · 2026-09-19 · 저장소: <a href="https://github.com/EleninJayTech/claude">github.com/EleninJayTech/claude</a> · <a href="https://github.com/EleninJayTech/claude/releases/latest">최신 릴리스 노트</a> · 설치 문서 정본은 00~06 md — 이 페이지는 사람용 안내이며, 대표 이미지는 03 svg-design 레시피(Gooey·Squiggle)로 만들었습니다. 디자인은 kr-ui-guide 스킬(저장소 skills/kr-ui-guide) 기준을 따릅니다. · 글꼴: Pretendard, IBM Plex Mono — 둘 다 SIL 오픈 폰트 라이선스 1.1(상업 이용·웹 임베딩 무료)</footer>
+<footer>단디 · 사용법 페이지 · 2026-09-23 · 저장소: <a href="https://github.com/EleninJayTech/claude">github.com/EleninJayTech/claude</a> · <a href="https://github.com/EleninJayTech/claude/releases/latest">최신 릴리스 노트</a> · 설치 문서 정본은 00~06 md — 이 페이지는 사람용 안내이며, 대표 이미지는 03 svg-design 레시피(Gooey·Squiggle)로 만들었습니다. 디자인은 kr-ui-guide 스킬(저장소 skills/kr-ui-guide) 기준을 따릅니다. · 글꼴: Pretendard, IBM Plex Mono — 둘 다 SIL 오픈 폰트 라이선스 1.1(상업 이용·웹 임베딩 무료)</footer>
 
 </body>
 </html>

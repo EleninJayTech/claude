@@ -238,13 +238,14 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
   <p class="goal">Answer these and the install runs itself</p>
 
   <h3>2-0. Quick path &mdash; only on an already-set-up PC (choose one)</h3>
-  <p>Shown first, and <b>only when this PC already has an install record</b>. On a first-time PC you will not see it and the questions start at 2-2. It is <b>not a new mode</b> &mdash; it is <b>a shortcut for answering the common questions below in one go</b> (base mode, bundles, profile, output language, skill name alias). Whichever you pick, the values it will carry over are shown and <b>you confirm them</b> &mdash; nothing is inherited silently.</p>
+  <p>Shown first, and <b>only when this PC already has an install record and this folder does not have one yet</b>. On a first-time PC you will not see it and the questions start at 2-2 &mdash; and on a re-run, or when joining a team repository that already has a record, it is skipped too, so the values the team settled are not overwritten by this PC&rsquo;s. It is <b>not a new mode</b> &mdash; it is <b>a shortcut for answering the common questions below in one go</b> (base mode, bundles, profile, output language, skill name alias). Whichever you pick, the values it will carry over are shown and <b>you confirm them</b> &mdash; nothing is inherited silently.</p>
 
   <div class="opt">
     <div class="opt-head"><span class="name">This PC&rsquo;s defaults</span><span class="id">default</span><span class="badge b-on">confirm only</span></div>
     <p class="lead">Reuses the <b>profile, output language and skill name alias</b> already settled on this PC, and goes with base mode <b>Recommended</b>.</p>
     <dl>
-      <dt>What appears</dt><dd>The values left in this PC&rsquo;s install record + base mode &ldquo;Recommended&rdquo; + the bundles Claude detected as a good fit. The values are shown once and <b>you only confirm</b></dd>
+      <dt>What appears</dt><dd>The values left in this PC&rsquo;s install record + base mode &ldquo;Recommended&rdquo; + the bundles Claude detected as a good fit. The values are shown once and <b>you only confirm</b>. A value this PC&rsquo;s record does not hold is asked as its own question instead</dd>
+      <dt>Is it really this PC?</dt><dd>The machine name in that record is shown alongside, and <b>you judge</b> whether it is this PC (a record restored from another PC&rsquo;s backup would carry someone else&rsquo;s values). Answer no and the quick path is dropped &mdash; you get the questions one by one</dd>
       <dt>Choose it when</dt><dd>Setting up a second or third project on the same PC &mdash; if you keep giving the same answers, this is the one</dd>
       <dt>If you don&rsquo;t</dt><dd>You get the common questions one by one (the same as &ldquo;One by one&rdquo; below)</dd>
     </dl>
@@ -255,7 +256,7 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
     <p class="lead">Carries over the mode, bundles, language and alias recorded in <b>another project</b> on this PC.</p>
     <dl>
       <dt>What appears</dt><dd>The chosen project&rsquo;s base mode + bundles, output language and skill name alias. <b>Only the operating profile comes from this PC</b> &mdash; a profile belongs to the machine, not the project</dd>
-      <dt>What is offered</dt><dd>Only projects that <b>actually exist</b> on this PC now and have an install record. Folders you moved or deleted, and folders with no record, are left out; working copies (worktrees) of the same repository are folded into one. If there are none, this choice does not appear at all</dd>
+      <dt>What is offered</dt><dd>Only projects that <b>actually exist</b> on this PC now and have an install record. Folders you moved or deleted, folders with no record, and projects installed in &ldquo;custom&rdquo; mode (they have no mode and bundles to copy) are left out; working copies (worktrees) of the same repository are folded into one. If there are none, this choice does not appear at all</dd>
       <dt>What is not recorded</dt><dd>Which project the values came from is <b>not written to the record</b> &mdash; this project&rsquo;s record is shared with the team</dd>
       <dt>If you don&rsquo;t</dt><dd>You settle this project&rsquo;s own values one by one</dd>
     </dl>
@@ -347,6 +348,7 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
     <p class="lead">For when the usage allowance matters. What it cuts is <b>only model assignment and waste</b>.</p>
     <dl>
       <dt>What changes</dt><dd>Hard work runs on Sonnet with the stronger model as an on-call advisor &middot; routine execution and tests lean on Haiku &middot; a smaller roster &middot; context-saving habits &middot; claude-hud pre-checked (you cannot economize on what you cannot see)</dd>
+      <dt>What you do yourself</dt><dd>The install does not switch this for you: <b>start everyday sessions on the lower model</b> (<code>/model sonnet</code>, say &mdash; it is saved, so later sessions start there too), and do the work that is never cut (below) in a <b>new session opened with <code>claude --model &lt;stronger model&gt;</code></b>. Raising it with <code>/model</code> instead is saved as well, and your everyday sessions drift back to the stronger model</dd>
       <dt>What stays the same</dt><dd><b>effort (reasoning depth) values</b> &mdash; identical on standard and thrift. The lever is which model does the work, not how hard it thinks</dd>
       <dt>What is never cut</dt><dd>Difficulty triage &middot; pinning down requirements &middot; final review &middot; verification gates. <b>Saving here costs more in rework</b></dd>
       <dt>If you chose before</dt><dd>When this machine&rsquo;s install record already holds a profile, it is shown as the default and you <b>just confirm</b> it (it is never inherited silently)</dd>
@@ -375,6 +377,7 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
   </ul>
   <p><b>Global items already on this PC</b> (settings every project shares) are asked as <b>one bundled question</b> so you do not answer the same thing every time you set up a new project &mdash; the list of what already exists is shown and the default is <b>keep</b>. Only the ones you answer <b>reconcile</b> or <b>replace</b> for are split out and asked one by one.</p>
   <p><b>If you are joining a team repository</b> (running it for the first time on your machine in a repository someone else already set up and committed), the default offered is <b>keep</b> &mdash; a newcomer&rsquo;s choices should not overwrite what the team has aligned on.</p>
+  <p><b>Global items the record says were installed but this PC does not have yet</b> (<code class="i">/resume</code> and <code class="i">/wrap</code>, for instance) are offered for install on any re-run, <b>whatever the version</b> &mdash; otherwise a newcomer&rsquo;s PC would be reported &ldquo;up to date&rdquo; without them. Anything you turn down is noted in your own PC&rsquo;s record, so it is not offered again.</p>
 
   <h3>2-7. Skill name alias &mdash; none / prefix / suffix / only the ones you pick</h3>
   <p><b>A safeguard for when names collide.</b> The skill names installed here (<code class="i">resume</code>, <code class="i">wrap</code>, <code class="i">svg-design</code>&hellip;) are common ones. If a <b>different skill of the same name</b> already exists on your machine, that one wins &mdash; the install succeeds but the wrong thing runs, or the one you were using gets buried.</p>
@@ -387,7 +390,7 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
       <dt>Where it cannot apply</dt><dd>Installing <code class="i">frontend-design</code> <b>as a plugin</b> lets the marketplace create the folder, so no alias attaches. Pick the <code class="i">npx</code> or manual-copy route if you want one</dd>
       <dt>What moves as a set</dt><dd>The <b>six feature-doc skills</b> call each other by name, so it is <b>all six or none</b> &mdash; never a subset</dd>
       <dt>Where it is stored</dt><dd>The install record keeps <code class="i">별칭=없음</code> or <code class="i">별칭=dandi-*</code> and reuses it next time (<code class="i">*</code> marks where the original name goes). Change it later and you are asked whether to <b>rename what exists or install a second copy under the new name</b></dd>
-      <dt>Joining a team repository</dt><dd>If the repository record&rsquo;s alias <b>differs from the names already installed on your machine</b>, you pick one of three &mdash; <b>rename</b> (match the record; this is machine-wide, so the name other projects used changes too) / <b>install another copy</b> (with a warning that the same skill will appear under two names) / <b>keep this machine as an exception</b> (your names stay, and that fact goes into the machine&rsquo;s own record)</dd>
+      <dt>When the record and your machine disagree</dt><dd>On any re-run &mdash; joining a team repository or re-applying your own &mdash; if the repository record&rsquo;s alias <b>differs from the names already installed on your machine</b>, you pick one of three &mdash; <b>rename</b> (match the record; this is machine-wide, so the name other projects used changes too) / <b>install another copy</b> (with a warning that the same skill will appear under two names) / <b>keep this machine as an exception</b> (your names stay, and that fact goes into the machine&rsquo;s own record)</dd>
     </dl>
   </div>
 </section>
@@ -445,6 +448,7 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
       <dt>Files created</dt><dd><code>docs/PROJECT_PLAN.md</code> (roadmap) &middot; <code>docs/PROGRESS.md</code> (session log) &middot; <code>docs/DECISIONS.md</code> (decision log) &middot; <code>.gitattributes</code> &middot; <code>.gitignore</code></dd>
       <dt>The core rule</dt><dd>Records are <b>appended at the top only</b>; past lines are never edited. When your thinking changes you add a new decision and mark the old one &ldquo;superseded&rdquo;</dd>
       <dt><code>.gitattributes</code></dt><dd><code>merge=union</code> &mdash; when two people append at once, <b>both entries survive with no git conflict</b></dd>
+      <dt>If the repo has <code>AGENTS.md</code></dt><dd>That is the instruction file other coding agents read. Once a <code>CLAUDE.md</code> exists, Claude Code stops reading <code>AGENTS.md</code> on its own &mdash; so a newly created <code>CLAUDE.md</code> starts with an <code>@AGENTS.md</code> line that keeps it loaded. Not asked, just reported; if a <code>CLAUDE.md</code> already exists you are only told</dd>
       <dt><code>.gitignore</code></dt><dd>Keeps personal settings (<code>.claude/settings.local.json</code>) and isolated work folders (<code>.claude/worktrees/</code>) out of commits &mdash; without it, the contents of an isolated checkout all show up as untracked</dd>
     </dl>
   </div>
@@ -468,8 +472,8 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
       <dt>Which model name</dt><dd>Not copied from the document&rsquo;s example &mdash; the <b>full ID of a model this machine can actually use</b> is read from the <code>/model</code> list first. Plans differ in which models they offer, and a name that does not match is saved but applies to no model at all</dd>
       <dt>When to raise it</dt><dd>Writing tests, refactoring or reviewing code on that model needs edge cases looked at, so raise it to <code>high</code> for that session only, with <code>s</code> (this session) on the <code>/effort</code> slider</dd>
       <dt>Why personal, not per project</dt><dd>Pinning <code>effortLevel</code> in the project settings <b>silently overrides whatever you chose with <code>/effort</code></b>, with no warning &mdash; and that file is committed, so it is forced on the whole team. Per-model values stay <b>on your machine only</b></dd>
-      <dt>Why the cache is money</dt><dd>Every turn resends the whole conversation, but when the front of it matches the previous turn it is <b>read from cache at roughly 10% of the price</b> (2.5% on Fable 5.1). Change one thing and everything after it is reprocessed &mdash; the second axis of thrift is not &ldquo;use less&rdquo; but <b>&ldquo;avoid being reprocessed&rdquo;</b></dd>
-      <dt>Avoid mid-task</dt><dd><code>/model</code> switches, <code>/effort</code> changes, turning on fast mode, <code>/compact</code> &mdash; all of these break the cache (an <code>/effort</code> change is the exception on Fable 5.1, v2.1.260+ &mdash; only with an API key or a direct subscription, not via Bedrock or Google Cloud). When you need them, <b>batch them at the start of a session</b></dd>
+      <dt>Why the cache is money</dt><dd>Every turn resends the whole conversation, but when the front of it matches the previous turn it is <b>read from cache at roughly 10% of the price</b> (less on some newer models). Change one thing and everything after it is reprocessed &mdash; the second axis of thrift is not &ldquo;use less&rdquo; but <b>&ldquo;avoid being reprocessed&rdquo;</b></dd>
+      <dt>Avoid mid-task</dt><dd><code>/model</code> switches, <code>/effort</code> changes, turning on fast mode, <code>/compact</code> &mdash; all of these break the cache (an <code>/effort</code> change is the exception on some newer models &mdash; only with an API key or a direct subscription, not via Bedrock or Google Cloud). When you need them, <b>batch them at the start of a session</b></dd>
       <dt>Free to do</dt><dd>Entering and leaving plan mode, calling skills and commands, <code>/rewind</code>, editing files, switching permission modes &mdash; the cache survives</dd>
       <dt><code>/clear</code> over <code>/compact</code></dt><dd><code>/clear</code> sends no request, so it <b>costs nothing</b>, while <code>/compact</code> is itself a large request that builds a summary. Do it <b>after <code>/wrap</code></b> though &mdash; <code>/clear</code> has no safety gate, so unrecorded decisions vanish with it</dd>
       <dt>Measuring</dt><dd>The <code>Prompt cache</code> line in <code>/usage</code>. Misses piling up every turn mean one of the breaking actions above is happening mid-task</dd>
@@ -743,7 +747,7 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
     <dl>
       <dt>GitHub</dt><dd>Creates <code>.github/workflows/claude.yml</code> &mdash; the official action <code>anthropics/claude-code-action@v1</code></dd>
       <dt>GitLab and others</dt><dd>GitLab uses the canonical template from the official CI/CD integration (beta); other hosts fall back to calling <code>claude -p "&hellip;"</code> directly in a CI step</dd>
-      <dt>Requires</dt><dd><code>ANTHROPIC_API_KEY</code> in the repository secrets (on GitHub, Pro, Max, Team and Enterprise subscribers can use <code>CLAUDE_CODE_OAUTH_TOKEN</code> instead &mdash; but it is tied to the issuer&rsquo;s own subscription, so use an API key for a secret shared across repositories); GitLab takes API keys only, plus an access token. <b>Claude cannot add these for you &mdash; you register them yourself</b></dd>
+      <dt>Requires</dt><dd>On GitHub, <b>the Claude GitHub App installed on the repository</b> first &mdash; needed even when the workflow file is written by hand. You install it yourself, which takes admin rights on the repository (a GitHub App of your own is the alternative). Then <code>ANTHROPIC_API_KEY</code> in the repository secrets (on GitHub, Pro, Max, Team and Enterprise subscribers can use <code>CLAUDE_CODE_OAUTH_TOKEN</code> instead &mdash; but it is tied to the issuer&rsquo;s own subscription, so use an API key for a secret shared across repositories); GitLab takes API keys only, plus an access token. <b>Claude cannot add these for you &mdash; you register them yourself</b></dd>
       <dt>At work &#128308;</dt><dd>CI <b>sends your code to the Anthropic API</b>. Check your organization&rsquo;s external-AI policy first. In the same round you are also asked <b>whether you have admin rights &middot; whether the secret-registration method is one your organization allows &middot; whether accepting the app&rsquo;s whole permission set is acceptable &middot; both runner time and token cost</b>. Without approval, CI alone is left out and &sect;1&ndash;&sect;2 install as normal</dd>
     </dl>
   </div>
@@ -774,7 +778,7 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
       </table>
     </div>
     <dl>
-      <dt>How to switch</dt><dd>Output style in the <code>/config</code> menu. <b>The old <code>/output-style</code> command has been removed</b></dd>
+      <dt>How to switch</dt><dd><code>/output-style &lt;name&gt;</code> (type it alone to see the list and the current style) or Output style in the <code>/config</code> menu &mdash; both save to <code>.claude/settings.local.json</code>. The command came back in Claude Code v2.1.269; on an older version, use <code>/config</code></dd>
       <dt>&#9888;&#65039; Gotcha</dt><dd><b>Switching takes effect from your next message</b> (Claude Code v2.1.251+). Editing a style <i>file</i> is different &mdash; files are read at startup, so restart to pick up the edit</dd>
     </dl>
   </div>
@@ -805,7 +809,7 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
   <div class="note warn">
     <b>&#128308; &sect;1 Preconditions &mdash; fail these and nothing is installed</b>
     &#9312; Is your plan <b>Pro or above</b>, with access to Claude Code on the web?<br>
-    &#9313; For a company repository &mdash; does your organization permit <b>cloud execution (code leaving the building)</b>? A routine <b>clones the entire repository to the cloud</b> and the prompt is stored there too<br>
+    &#9313; For a company repository &mdash; does your organization permit <b>cloud execution (code leaving the building)</b>? A routine <b>clones the entire repository to the cloud</b> and the prompt is stored there too. On Team and Enterprise, check that the organization&rsquo;s routines switch is on (Admin settings &rarr; Capabilities &rarr; Remote sessions)<br>
     &#9314; Is it a GitHub repository? (GitHub only, for now &mdash; if not, it stops here and records &ldquo;not applicable&rdquo;, so re-runs do not ask again)<br>
     &#9315; Is GitHub <b>connected</b> to your claude.ai account? If not, you build the whole prompt and schedule and <b>the final save is rejected</b> (observed in practice)<br>
     &#9316; <b>Is this work safe to run unattended?</b> A routine asks nothing while it runs, so hard-to-undo work &mdash; deploys, deletions, sending things out &mdash; is never handed to it<br>
@@ -834,14 +838,14 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
       </table>
     </div>
     <dl>
-      <dt>Decided alongside</dt><dd>Target repository &middot; the prompt &middot; the connectors it needs (<b>everything is included by default, so remove what you do not need</b> &mdash; least privilege)</dd>
+      <dt>Decided alongside</dt><dd>Target repository &middot; the prompt &middot; the connectors it needs (<b>everything is included by default, so remove what you do not need</b> &mdash; least privilege) &middot; the cloud environment&rsquo;s network trust level (default <b>Trusted</b>: only package registries and GitHub are reachable)</dd>
       <dt>On the thrift profile</dt><dd>You are advised to start <b>weekly</b>. Routine runs consume your plan allowance too</dd>
     </dl>
   </div>
 
   <div class="opt">
     <div class="opt-head"><span class="id">&sect;4</span><span class="name">Definition record: <code>docs/ROUTINES.md</code></span><span class="badge b-on">pre-checked when you create a routine</span></div>
-    <p class="lead">A routine&rsquo;s configuration <b>lives only in your claude.ai account, never in the repository</b>. Move accounts, or have a teammate recreate it, and there is nothing to reproduce it from. So each one gets written down in the repository.</p>
+    <p class="lead">A routine&rsquo;s configuration <b>lives only in your claude.ai account, never in the repository</b>. Move accounts, or have a teammate recreate it, and there is nothing to reproduce it from. So each one gets written down in the repository &mdash; including the connectors you kept and the network trust level, so a re-creation does not quietly fall back to the defaults.</p>
   </div>
 
   <div class="note tip">
@@ -915,7 +919,7 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
     Run it again later and Claude reads that line first, then <b>summarizes what changed in the documents since</b>.
     Even at the same version it asks &ldquo;shall I audit the existing items? add what you skipped last time, or remove something already installed?&rdquo;,
     and if something was <b>left pending</b> last time (&ldquo;awaiting gh authentication&rdquo;, say) it checks whether that is now resolved.
-    If it is resolved but you still do not want it, that is recorded as &ldquo;not selected&rdquo; &mdash; so the same question stops coming back.
+    Resolved or not, if you no longer want it (holding off, the organization has said no for good, you decided not to sign in), it is switched to &ldquo;not selected&rdquo; &mdash; so the same question stops coming back.
   </p>
   <p>
     Copied skills (the feature-doc set, refactor, kr-ui-guide) are compared with the published version <b>file by file, contents included</b> &mdash; a revision that only reworded things still counts.
@@ -960,7 +964,7 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
 <a class="totop" href="#toc">&uarr; Contents</a>
 
 <footer>
-  Dandi &middot; Install options dictionary &middot; based on 00_통합-설치.md &middot; 2026-09-22<br>
+  Dandi &middot; Install options dictionary &middot; based on 00_통합-설치.md &middot; 2026-09-23<br>
   The source of truth for each item is its own document (01&ndash;06). This page exists so people can read and judge; it does not change the install procedure itself.<br>
   Repository: github.com/EleninJayTech/claude &middot;
   <a href="../index.html">Guide</a> &middot; <a href="intro.html">Intro</a> &middot; <a href="demo.html">Walkthrough</a> &middot; <a href="learn.html">Course</a> &middot; <a href="skills.html">Skill catalog</a><br>

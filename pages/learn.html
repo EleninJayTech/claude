@@ -351,9 +351,9 @@ footer{max-width:1120px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
   <h2 id="t5">Operating profile, output language, name alias, and what is already there</h2>
 
   <h3>Quick path &mdash; only on an already-set-up PC</h3>
-  <p>The question that comes <b>first, and only when this PC already has an install record</b>. It is not a new mode &mdash; it is <b>a shortcut for answering the common questions in one go</b> (base mode, bundles, profile, language, alias). Whichever you pick, the values it will carry over are shown and <b>you confirm them</b>.</p>
+  <p>The question that comes <b>first, and only when this PC already has an install record but this project does not have one yet</b>. It shows the PC name from that record and asks you to <b>confirm it is this PC</b> first (answer no and the shortcut folds away and each question is asked). It does not appear when you cloned a repo a teammate already set up, or when re-applying &mdash; so the team&rsquo;s settled values are never overwritten by your PC&rsquo;s. It is not a new mode &mdash; it is <b>a shortcut for answering the common questions in one go</b> (base mode, bundles, profile, language, alias). Whichever you pick, the values it will carry over are shown and <b>you confirm them</b>.</p>
   <ul>
-    <li><b>This PC&rsquo;s defaults</b> (default pick) &mdash; uses the profile, language and alias already settled on this PC and goes with mode Recommended. The values are shown and you <b>only confirm</b>. From the second project on the same PC, this one.</li>
+    <li><b>This PC&rsquo;s defaults</b> (default pick) &mdash; uses the profile (and language and alias, if recorded) already settled on this PC and goes with mode Recommended. The values are shown and you <b>only confirm</b>. Anything this PC has no value for is asked as its own question. From the second project on the same PC, this one.</li>
     <li><b>Same as another project</b> &mdash; carries over the mode, bundles, language and alias recorded in another project on this PC. Only the profile comes from this PC. Only projects that <b>actually exist</b> now and have an install record are offered, and which project the values came from is not written to the record (this project&rsquo;s record is shared with the team).</li>
     <li><b>Recommended mode</b> &mdash; the Recommended mix Claude puts together by looking at this folder alone, plus defaults.</li>
     <li><b>One by one</b> &mdash; no shortcut; you get the common questions from the start, all of them.</li>
@@ -407,7 +407,7 @@ footer{max-width:1120px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
     There is a reason &#9429; writes to your <em>personal</em> settings and not the project's &mdash; pinning effort in a project config
     <b>silently overrides whatever you chose with <code class="i">/effort</code></b>, and that file is committed to the whole team.
     &#9429; also covers <b>cache habits</b> &mdash; switching <code class="i">/model</code> or <code class="i">/effort</code> mid-task
-    breaks the conversation cache, so everything after it is reprocessed at full price. Batch such changes at the start of a session.
+    breaks the conversation cache, so everything after it is reprocessed at full price (some recent models keep the cache when only <code class="i">/effort</code> changes &mdash; switching <code class="i">/model</code> always breaks it). Batch such changes at the start of a session.
   </div></div>
 </section>
 
@@ -611,7 +611,7 @@ footer{max-width:1120px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
 </div>
 
 <footer>
-  Dandi &middot; Install options course &middot; 2026-09-22<br>
+  Dandi &middot; Install options course &middot; 2026-09-23<br>
   The source of truth for each item is its own document (01&ndash;06). This page exists for people to learn from; it does not change the install procedure. Progress is stored only in this browser&rsquo;s localStorage.<br>
   저장소: github.com/EleninJayTech/claude ·
   <a href="../index.html">Guide</a> &middot; <a href="intro.html">Intro</a> &middot; <a href="demo.html">Walkthrough</a> &middot; <a href="options.html">Dictionary</a> &middot; <a href="skills.html">Skill catalog</a><br>
@@ -632,7 +632,7 @@ var TERMS = [
   ['Subagent','A helper Claude running in its own workspace, separate from the main conversation. Each agent can use a different model, so hard analysis goes to the expensive one and repetitive work to the cheap one.'],
   ['MCP','The standard for plugging outside tools into Claude. Connect GitHub, a browser or a doc search and Claude uses them directly. Think of it as a USB port.'],
   ['effort','How hard the model thinks (low to max). Raising it improves hard judgment but costs more tokens and more waiting. A separate axis from which model you pick.'],
-  ['Prompt cache','Every turn resends the whole conversation, but when the front of it matches the previous turn it is read from cache at roughly 10% of the price. Changing the model or effort mid-task breaks it, and everything after is reprocessed at full price. Check the hit rate in /usage.']
+  ['Prompt cache','Every turn resends the whole conversation, but when the front of it matches the previous turn it is read from cache at roughly 10% of the price. Changing the model or effort mid-task breaks it (effort changes are an exception on some recent models), and everything after is reprocessed at full price. Check the hit rate in /usage.']
 ];
 
 var STEPS = [
@@ -863,7 +863,8 @@ function drawProf(){
   box.innerHTML = pSel==='std'
     ? '<ul><li>effort stays at its default; hard work goes to the stronger model</li><li>The right answer most of the time</li></ul>'
     : '<ul><li>Subagents assigned mostly to Sonnet, with a smaller roster</li><li>claude-hud pre-checked \u2014 you cannot economize on what you cannot see</li></ul>'
-      +'<p class="why">Never cut: difficulty triage, final review, verification gates. Saving there costs more in rework.</p>';
+      +'<p class="why">Never cut: difficulty triage, requirements (spec), final review, verification gates. Saving there costs more in rework.</p>'
+      +'<p class="why">Yours to do: start everyday work with <code class="i">/model sonnet</code> (it is saved once set). Do the never-cut work &mdash; triage, spec, final review &mdash; in a new session opened with <code class="i">claude --model &lt;stronger model&gt;</code>; raising it with <code class="i">/model</code> saves that value, and your next everyday session runs on the stronger model too.</p>';
 }
 drawProf();
 

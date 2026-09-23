@@ -223,7 +223,8 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
     <li>Pick <b>&ldquo;recommended&rdquo;</b> and the installer inspects your project and checks the fitting combination for you. Add purpose <b>bundles</b> (design, stronger verification, unattended automation and more) for combinations like <b>&ldquo;minimal + design&rdquo;</b>.</li>
     <li>If something is already installed, Claude asks whether to <b>keep / reconcile / replace</b> it first. Nothing is overwritten silently.</li>
     <li>Changed your mind later? Run 00 again and it asks both what to <b>add</b> and what to <b>remove</b>. Removing takes out only what the install created &mdash; the work logs you have built up stay.</li>
-    <li>Not sure what a question or checkbox means? The <a href="pages/options.html"><b>options dictionary</b></a> spells out &ldquo;what gets created / when to check it / what you lose by skipping&rdquo; for every item.</li>
+    <li>On a PC you have already set up, installing into a <b>new project</b> starts with a <b>quick path</b> &mdash; pick <b>This PC&rsquo;s defaults / Same as another project / Recommended mode / One by one</b> and the common questions (mode, bundles, operating profile and so on) are answered in one go. The values it will carry over are shown for you to confirm, and safety questions such as overwriting or company policy still appear.</li>
+    <li>Each choice on the install screen comes with a plain one-line note: what you get if you pick it, and what happens if you don&rsquo;t (for pick-one questions, when to pick it). For more detail, the <a href="pages/options.html"><b>options dictionary</b></a> spells out &ldquo;what gets created / when to check it / what you lose by skipping&rdquo; for every item.</li>
     <li>Want to learn the choices from scratch? The <a href="pages/learn.html"><b>options course</b></a> takes you chapter by chapter through a simulator you click yourself.</li>
     <li>Wondering what the installed <b>skills</b> actually do? The <a href="pages/skills.html"><b>skill catalog</b></a> explains every one &mdash; what each does, when to call it, and where it bites.</li>
   </ul>
@@ -298,7 +299,7 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
     <tr><td>Mostly web UI work</td><td>Add the <b>design bundle</b> on top of a mode &mdash; "minimal + design"</td><td>A setup with the design items pre-checked</td></tr>
     <tr><td>Add-ons only</td><td>"Apply 03_확장기능-설치-체크리스트.md"</td><td>Pick what you need and install</td></tr>
     <tr><td>Automatic checks only</td><td>"Apply 04_검증-자동화.md to this project"</td><td>Checks on every edit, plus one before merging</td></tr>
-    <tr><td>Pro plan (low allowance)</td><td>Answer <b>thrift</b> at the "operating profile" question</td><td>Quality-critical moments untouched; everyday consumption drops</td></tr>
+    <tr><td>Pro plan (low allowance)</td><td>Answer <b>thrift</b> at the "operating profile" question</td><td>Quality-critical moments untouched; everyday consumption drops &mdash; you start everyday work on the lighter model yourself with <code class="i">/model sonnet</code> (it sticks), and open a fresh session on the higher model &mdash; for example <code class="i">claude --model opus</code> &mdash; for quality-critical work such as reviews</td></tr>
     <tr><td>Model split only</td><td>"Apply 02_모델분담-범용-플레이북.md to this project"</td><td>A team that splits work between expensive and cheap models</td></tr>
     <tr><td>Change answer style</td><td>"Apply 05_출력스타일.md"</td><td>Switch among the built-ins, or build your own</td></tr>
     <tr><td>Schedule runs</td><td>"Apply 06_루틴-자동화.md to this project"</td><td>Cloud jobs that run overnight on their own (Pro and above)</td></tr>
@@ -386,7 +387,7 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
 
 </main>
 
-<footer>Dandi &middot; How-to page &middot; 2026-09-19 &middot; Repository: <a href="https://github.com/EleninJayTech/claude">github.com/EleninJayTech/claude</a> &middot; <a href="https://github.com/EleninJayTech/claude/releases/latest">Latest release notes</a> &middot; The install documents 00&ndash;06 (markdown) are the source of truth &mdash; this page is the human-facing guide. The hero graphic uses the 03 svg-design recipe (Gooey, Squiggle). Design follows the kr-ui-guide skill (repository skills/kr-ui-guide). &middot; Fonts: Pretendard, IBM Plex Mono &mdash; both SIL Open Font License 1.1 (free for commercial use and web embedding)</footer>
+<footer>Dandi &middot; How-to page &middot; 2026-09-23 &middot; Repository: <a href="https://github.com/EleninJayTech/claude">github.com/EleninJayTech/claude</a> &middot; <a href="https://github.com/EleninJayTech/claude/releases/latest">Latest release notes</a> &middot; The install documents 00&ndash;06 (markdown) are the source of truth &mdash; this page is the human-facing guide. The hero graphic uses the 03 svg-design recipe (Gooey, Squiggle). Design follows the kr-ui-guide skill (repository skills/kr-ui-guide). &middot; Fonts: Pretendard, IBM Plex Mono &mdash; both SIL Open Font License 1.1 (free for commercial use and web embedding)</footer>
 
 <script>
 (function(){try{

@@ -298,7 +298,7 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
       <p class="one">이 PC의 구성이 그것을 만든 문서에서 얼마나 뒤처졌는지만 알려 준다.</p>
       <dl>
         <dt>언제</dt><dd><code>/resume</code>이 "적용 기록이 30일 넘었다"고 안내했을 때, 또는 그냥 어긋난 데가 있나 궁금할 때.</dd>
-        <dt>하는 일</dt><dd>프로젝트와 글로벌 <code>~/.claude/CLAUDE.md</code>에 남은 <code>dropin-applied</code> 기록을 문서 저장소의 현재 버전과 대조하고, 차이만 보고한다. 설치된 플러그인 버전도 기록과 맞춰 본다.</dd>
+        <dt>하는 일</dt><dd>프로젝트와 글로벌 <code>~/.claude/CLAUDE.md</code>에 남은 <code>dropin-applied</code> 기록을 문서 저장소의 현재 버전과 대조하고, 차이만 보고한다. 이 PC에서 실제로 도는 상태도 본다 &mdash; 설치된 플러그인 버전이 기록과 맞는지, 옛 <code>commands/</code> 파일이 같은 이름 스킬과 겹쳐 남아 있는지, 팀이 repo에 올린 스킬이 이 PC의 같은 이름 개인 스킬에 가려져 있는지. 가려진 쪽은 <b>내용이 다를 때만</b> 알리고 어느 쪽이 최신인지 함께 적는다 &mdash; 내용이 같으면 정상이라 조용하다. 이 점검은 어느 설치에서나 돈다.</dd>
         <dt>결과</dt><dd>차이 보고서. 설치도 수정도 하지 않는다. 오프라인이거나 <code>git fetch</code>가 실패해 문서 쪽을 못 봤으면 &ldquo;최신&rdquo;이라 하지 않고 &ldquo;문서 기준 미확인&rdquo;으로 보고한다.</dd>
       </dl>
       <div class="tags"><span class="tag">글로벌</span><span class="tag">쓰기 없음</span></div>
@@ -309,7 +309,7 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
       <div class="args">인수 없음</div>
       <p class="one">드롭인 문서 사본을 최신으로 바꾼다 &mdash; 문서만이다. 그 문서가 설명하는 구성은 건드리지 않는다.</p>
       <dl>
-        <dt>언제</dt><dd><code>/dropin-check</code>가 문서 사본이 배포본보다 낡았다고 보고했을 때.</dd>
+        <dt>언제</dt><dd><code>/dropin-check</code>가 문서 사본이 배포본보다 낡았다고 보고했을 때. 문서를 프로젝트에 복사해 둔 경우엔 <code>/dropin-apply</code>도 비교에 들어가기 전에 이것부터 권한다.</dd>
         <dt>하는 일</dt><dd>문서가 여기 온 경로부터 가린다 &mdash; 프로젝트에 복사됐는지, 로컬 클론을 참조하는지, raw로 직접 받는지. 프로젝트 밖 폴더를 알려 주면 그게 git 클론인지부터 본다 &mdash; 클론이면 <code>git pull</code>로, 아니면 사본으로 다룬다. 그에 맞는 방식으로, 승인을 받고 갱신한다.</dd>
         <dt>결과</dt><dd>새 문서 파일 &mdash; 그리고 그것뿐이다. 설치된 스킬과 설정은 그대로 남는다. 그걸 다시 맞추는 건 별도 단계인 <code>/dropin-apply</code>다.</dd>
       </dl>
@@ -323,8 +323,8 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
       <p class="one">구성 전체를 한 명령으로 다시 맞춘다 &mdash; 문서·설치된 스킬·설정까지.</p>
       <dl>
         <dt>언제</dt><dd>이 PC나 이 프로젝트를 현재 문서 기준으로 올리고 싶을 때. 처음 까는 경우에도 같은 명령이라, 내가 어느 쪽인지 몰라도 된다.</dd>
-        <dt>하는 일</dt><dd>00 문서를 찾아서(옆 폴더의 사본·로컬 클론·내가 알려 준 폴더·배포된 raw 순) 읽고 그 절차를 그대로 돈다 &mdash; 이미 있는 것을 감지하고, 무엇을 할지 묻고, 고른 것만 설치하고, 검증하고, 적용 기록을 쓴다. 스킬 자신은 단계를 하나도 갖지 않아서 문서와 갈릴 수가 없다.</dd>
-        <dt>결과</dt><dd>문서와 일치하는 구성, 그리고 그 사실을 적은 <code>dropin-applied</code> 줄. 이미 깔린 스킬은 <b>이름이 아니라 내용으로</b> 대조하므로, 파일 수는 그대로고 문장만 바뀐 개정도 교체된다.</dd>
+        <dt>하는 일</dt><dd>00 문서를 찾아서(옆 폴더의 사본·로컬 클론·내가 알려 준 폴더·배포된 raw 순 &mdash; raw는 요약하지 않고 파일 그대로 프로젝트 밖 임시 폴더에 받는다) 읽고 그 절차를 그대로 돈다 &mdash; 이미 있는 것을 감지하고, 무엇을 할지 묻고, 고른 것만 설치하고, 검증하고, 적용 기록을 쓴다. 스킬 자신은 단계를 하나도 갖지 않아서 문서와 갈릴 수가 없다.</dd>
+        <dt>결과</dt><dd>문서와 일치하는 구성, 그리고 그 사실을 적은 <code>dropin-applied</code> 줄. 기능 문서·refactor·kr-ui-guide처럼 이미 깔린 스킬은 <b>이름이 아니라 내용으로</b> 대조하므로, 파일 수는 그대로고 문장만 바뀐 개정도 교체된다. 세션 스킬(<code>/resume</code>·<code>/wrap</code>·<code>dropin-</code> 계열)은 있는지만 본다 &mdash; 새 본문으로 갈려면 이미 깔린 글로벌 항목을 묻는 질문에서 기본값 <code>유지</code> 대신 <code>재구성</code>을 고른다.</dd>
       </dl>
       <div class="warn soft"><b>알아 둘 것.</b> Claude에게 &ldquo;이 문서를 학습해서 적용해줘&rdquo;라고 말하는 것과 같은 일이다 &mdash; 그 문장도 그대로 동작한다. 명령이 따로 있는 이유는, 보이지 않는 문은 열리지 않기 때문이다.</div>
       <div class="tags"><span class="tag">글로벌</span><span class="tag">먼저 묻는다</span></div>
@@ -577,7 +577,7 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
         <dt>하는 일</dt><dd>색·타이포·레이아웃에 대해 뚜렷한 관점을 먼저 세우게 한다. 컴포넌트 라이브러리의 기본값이 아니라 그 화면이 다루는 소재에서 출발한다.</dd>
         <dt>결과</dt><dd>마크업을 짜기 전에 나오는 디자인 방향. 바꾸는 값이 싼 유일한 시점이다.</dd>
       </dl>
-      <div class="warn soft"><b>알아 둘 것.</b> 이 하나는 Anthropic이 배포하고, 플러그인(<code>/plugin install</code>)이나 <code>npx skills add</code>로 깔린다. 그래서 단디 문서와 무관하게 자기 주기로 갱신된다. 스킬 이름 별칭은 npx·수동 복사 경로에만 붙고 플러그인 경로에는 붙지 않는다. 폰트 라이선스도 보지 않는다 &mdash; 타이포를 적극 바꾸는 스킬이라 유료 폰트를 제안할 수 있고, 그래서 설치할 때 위 폰트 라이선스 정책을 묻는다.</div>
+      <div class="warn soft"><b>알아 둘 것.</b> 이 하나는 Anthropic이 배포하고, 플러그인(<code>/plugin install</code>)이나 <code>npx skills add</code>로 깔린다. 그래서 단디 문서와 무관하게 자기 주기로 갱신된다. 스킬 이름 별칭은 npx·수동 복사 경로에만 붙고 플러그인 경로에는 붙지 않는다. <code>npx skills add -g</code>는 실체를 <code>~/.agents/skills/</code>에 두고 <code>~/.claude/skills/</code>에 링크만 거는데, 그 링크가 안 생기는 경우가 있다 &mdash; 설치 후 <code>~/.claude/skills/frontend-design</code>이 보이는지 확인하고, 없으면 링크를 직접 건다. 폰트 라이선스도 보지 않는다 &mdash; 타이포를 적극 바꾸는 스킬이라 유료 폰트를 제안할 수 있고, 그래서 설치할 때 위 폰트 라이선스 정책을 묻는다.</div>
       <div class="tags"><span class="tag">글로벌</span><span class="tag">프론트엔드 전용</span></div>
     </article>
 
@@ -626,7 +626,7 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
   <div class="trap"><b>이 셋업을 한 번도 안 깐 PC라면.</b><p>거기서도 <code>/dropin-apply</code>다 &mdash; 처음 까는 경우에도 같은 명령이다. 스킬이 아직 없으면 Claude에게 이렇게 말하면 된다: <i>&ldquo;저장소의 <code>00_통합-설치.md</code>를 받아서 이 PC에 적용해줘&rdquo;</i>. 그러면 이 스킬도 다른 것들과 함께 깔린다.</p></div>
   <div class="trap"><b>파일 이름은 그대로인데 내용만 낡은 경우.</b><p>스킬은 파일이 하나도 늘거나 줄지 않은 채로 개정될 수 있다. 이름만 대조하는 점검은 그걸 &ldquo;이미 최신&rdquo;이라고 말한다. 설치 절차는 내용까지 대조하므로, 문장만 바뀐 개정도 교체된다.</p></div>
   <div class="trap"><b>이미 단디 플러그인으로 켜 두었다면.</b><p>기능 문서·refactor·kr-ui-guide 스킬을 <code>dandi</code> 플러그인 마켓으로 깔았다면, 같은 스킬이 <code>/dandi-refactor:refactor</code> 같은 플러그인 이름으로 이미 있다. 설치 절차가 이걸 알아채고 묻는다: 플러그인을 <b>유지</b>하고 복사 설치를 건너뛸지, 플러그인을 걷고 복사본으로 <b>교체</b>할지. 한 스킬이 두 벌 깔리면 둘이 서로 불려 가려고 다툰다. 나중에 플러그인 설치를 지울 때는 복사본 제거 절차가 아니라 그 플러그인 README의 <code>/plugin uninstall</code>을 따른다.</p></div>
-  <div class="trap"><b><code>/dropin-check</code>가 다 보지는 못한다.</b><p>일반 설치에는 대조할 사설 사본이 아예 없다. 그래서 그냥 &ldquo;최신&rdquo;이 아니라 &ldquo;문서 기준 최신 &mdash; 스킬 실물 내용은 미확인&rdquo;이라고 보고한다. 그 나머지 절반이 궁금하면 <code>/dropin-apply</code>를 돌리면 된다.</p></div>
+  <div class="trap"><b><code>/dropin-check</code>가 다 보지는 못한다.</b><p>일반 설치에는 대조할 사설 사본이 아예 없다. 그래서 그냥 &ldquo;최신&rdquo;이 아니라 &ldquo;문서 기준 최신 &mdash; 스킬 실물 내용은 미확인&rdquo;이라고 보고한다. 그 나머지 절반이 궁금하면 <code>/dropin-apply</code>를 돌리면 된다 &mdash; 세션 스킬까지 새 본문으로 받으려면 이미 깔린 글로벌 항목에서 <code>재구성</code>을 고른다. <code>유지</code>면 낡은 본문이 그대로 남는다.</p></div>
 </div>
 
 <h2>사람들이 자주 걸리는 여섯</h2>
@@ -656,7 +656,7 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
 </div>
 <p class="lead" style="margin-top:16px">전부 제거 절차가 문서에 적혀 있는데, 이건 의도한 것이다. 되돌릴 수 없는 설치는 애초에 선택지를 준 게 아니기 때문이다. 감지·설치·검증·제거 4단 전체는 각 문서에 있다. 설치할 때 나오는 질문의 뜻은 <a href="options.ko.html">옵션 사전</a>에, 처음부터 차근히 밟아 보려면 <a href="learn.ko.html">학습 코스</a>에 있다.</p>
 
-<footer>단디(Dandi) &middot; 스킬 카탈로그 &middot; 2026-09-19 &middot; 01 §D-4 · 02 STEP 3 ⓔ · 03 §2 · §3 · §7 · §8 · §9가 설치하는 스킬들. 명령은 별칭 없이 적었으니, 설치할 때 별칭을 골랐다면 그것을 얹어 읽으면 된다. &middot; 글꼴: Pretendard, IBM Plex Mono — 둘 다 SIL 오픈 폰트 라이선스 1.1(상업 이용·웹 임베딩 무료)</footer>
+<footer>단디(Dandi) &middot; 스킬 카탈로그 &middot; 2026-09-23 &middot; 01 §D-4 · 02 STEP 3 ⓔ · 03 §2 · §3 · §7 · §8 · §9가 설치하는 스킬들. 명령은 별칭 없이 적었으니, 설치할 때 별칭을 골랐다면 그것을 얹어 읽으면 된다. &middot; 글꼴: Pretendard, IBM Plex Mono — 둘 다 SIL 오픈 폰트 라이선스 1.1(상업 이용·웹 임베딩 무료)</footer>
 
 </div>
 <script>
