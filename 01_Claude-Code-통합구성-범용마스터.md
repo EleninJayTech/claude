@@ -1,6 +1,6 @@
 # Claude Code 통합 구성 — 범용 마스터 (드롭인 적용)
 
-> **문서 버전: v1.88** · 최종 갱신: **2026-09-23** · **최근 재검증: 2026-09-23** · 기준: Claude Code v2.1.280 (Opus 5.5 · Sonnet 5 · Fable 5.1)
+> **문서 버전: v1.89** · 최종 갱신: **2026-09-23** · **최근 재검증: 2026-09-23** · 기준: Claude Code v2.1.280 (Opus 5.5 · Sonnet 5 · Fable 5.1)
 >
 > | 버전 | 날짜 | 변경 내용 |
 > | --- | --- | --- |
@@ -24,6 +24,7 @@
 > | v1.86 | 2026-09-18 | **§F-5 결함 정정** — `.claude/worktrees/` 줄의 **줄 끝 주석을 별도 줄로**. `.gitignore`는 줄 머리 `#`만 주석이라 원문 그대로 복사하면 `#` 이하까지 패턴이 돼 **아무것도 무시하지 않았다**(임시 repo 재현: 원문=`?? .claude/worktrees/…` 노출, 분리=무시). worktree 사본이 `git add -A`에 통째로 실릴 수 있던 자리. 이미 원문을 복사한 repo는 `git check-ignore -v .claude/worktrees/x`로 확인하고 같은 방식으로 분리한다(2026-09-18 드롭인 일괄 재적용 중 발견 — 설치된 7 repo는 설치 때 분리해 두어 정상) |
 > | v1.87 | 2026-09-19 | **§F-1 길이 관리에 `PROJECT_PLAN` 미해결 아카이브 임계 추가**(R45 — 종결 40건 초과 시 가장 오래된 종결일부터 20건 이하로, **열린 항목은 제외**). 크기가 아니라 건수 축인 이유는 절이 여럿이라 파일 크기가 어느 절 탓인지 못 가리켜서고, R07과 달리 즉시 푸시 조항이 없는 이유는 `merge=union`이 아니어서다. **목표(R43)**: 7 — 세션 연속성(/resume이 매 세션 읽는 파일에서 인계 항목이 종결 이력에 묻히지 않는다) · 1 — 품질을 전제한 절약(매 세션 고정 비용) |
 > | v1.88 | 2026-09-23 | 전면 재검증(v2.1.280 — Opus 5.5 출시) — §D-6 기본 effort 예외에 **Opus 5.5=`medium`**·지원 모델 목록 갱신 · **hold 서술 교체**(v2.1.280에서 폐지 — 새 모델은 이전 저장값을 물려받지 않고 자기 기본값으로 시작) · User 스코프 최상위 `effortLevel`은 Opus 5.5 이후 모델에 미적용 · "상위 모델은 적지 않는다"의 **근거 교체**(결론 유지 — 기본값이 `high`라서가 아니라 공급자 보정 출발점이고 전체 ID 키는 세대마다 효력을 잃어서) + 새 모델 첫 세션 `/effort` 확인 한 줄 · §D-7 캐시 읽기 단가·effort 캐시 예외에 Opus 5.5 · §L 🟡 1건 종결(세션 중 만든 `~/.claude/CLAUDE.md`는 다음 세션부터). **목표(R43)**: 1 — 품질을 전제한 절약(상위 모델 강도를 틀린 전제로 박지 않게 한다) · 5 — 당일 공식 조회 |
+> | v1.89 | 2026-09-23 | `/reverify` 승인 2건 — §E 공통에 **`AGENTS.md` 보존**(v2.1.277+는 `CLAUDE.md`가 생기면 `AGENTS.md`를 읽지 않으므로, 그것을 읽던 repo에 `CLAUDE.md`를 만들 땐 첫 줄에 `@AGENTS.md` import — 이미 `CLAUDE.md`가 있으면 알리기만) · STEP 1 감지에 `AGENTS.md` · §J-1에 **분류기 비용** 한 줄(v2.1.278+ 서버측 무료 검사 · 게이트웨이 경유 시 과금 폴백 · `/status` 확인) · §L 항목 1. **목표(R43)**: 4 — 기존 구성을 말없이 덮지 않는다(드롭인이 만든 `CLAUDE.md`가 그 repo의 지시 파일을 조용히 끊던 경로) · 2 — 감지한 뒤 생성(다른 코딩 에이전트와 함께 쓰는 repo) · 1 — 분류기 비용 가시화 |
 > ※ 갱신 시: 이 표에 한 줄 추가 + 하단 "문서 정보" 날짜 수정 + §L 재검증 체크리스트 수행.
 
 > **사용법**: 이 파일을 아무 프로젝트 루트(또는 `docs/`)에 넣고 Claude에게
@@ -49,7 +50,7 @@
 - 현재 루트 아래 **독립 git repo가 몇 개**인가(각 폴더의 `.git` 유무)?
 - 상위 폴더가 git인가? 하위 repo들이 한 폴더 아래 모여 있나, 흩어져 있나?
 - 빌드/스택 감지(`package.json`·`pom.xml`·`build.gradle`·`composer.json`·`go.mod`·`Cargo.toml`…).
-- 기존 `CLAUDE.md`·`docs/`·`.claude/` 유무, git 브랜치·미커밋.
+- 기존 `CLAUDE.md`·`AGENTS.md`·`docs/`·`.claude/` 유무, git 브랜치·미커밋.
 - **다인 여부**: `git shortlog -sne --since="6 months"`의 기여자 수 → 2명 이상이면 다인으로 본다 — 다만 기여자 수는 **ⓐ 여부만** 정하므로 **ⓑ/ⓒ 경계는 반드시 묻는다**(커밋 로그엔 갈래가 겹치는지가 없다).
 
 **STEP 2 — 부족분 질문(모르는 것만, §I).** 특히: (a) 환경 유형 확정, (b) **동시성 3분기**(ⓐ 혼자 / ⓑ 여러 명·**서로 다른 갈래** / ⓒ 여러 명·같은 갈래 — **다른 질문의 답으로 추정하지 않는다**: 게이트의 '개인 프로젝트'는 참여 인원이 아니고, 추정해 확정한 뒤 끝에 알리는 것은 확인이 아니라 사후 고지다), (c) 커밋 양식, (d) 자주 함께 고치는 repo(→ `additionalDirectories`). 이미 코드로 안 것은 "이렇게 이해했다"로 확인만.
@@ -241,6 +242,7 @@ New-Item -ItemType Directory -Path .claude/skills/dropin-update -Force
 ## E. 프로젝트 셋업 (환경별)
 
 > 공통: 각 repo `CLAUDE.md`(프로젝트 사실 = **본체**) + `docs/` + §F-1 규칙블록 + §F-3 프로젝트 settings + §F-5 `.gitignore`.
+> **`AGENTS.md`가 있는 repo**(다른 코딩 에이전트용 지시 파일 — v2.1.277+는 작업 디렉터리~상위에 `CLAUDE.md`·`CLAUDE.local.md`가 **없을 때만** 이것을 읽는다): **감지** — `AGENTS.md`와 `CLAUDE.md`·`CLAUDE.local.md`의 유무, `CLAUDE.md`면 첫 줄 `@AGENTS.md` import 유무. **설치** — `CLAUDE.md`가 없어 Claude가 `AGENTS.md`를 읽고 있었다면 새 `CLAUDE.md`의 **첫 줄에 `@AGENTS.md`**를 두고 그 아래에 프로젝트 사실을 쓴다(만드는 순간 `AGENTS.md`가 조용히 로드에서 빠진다 — 지금 동작을 지키는 것이라 묻지 않고 보고에 한 줄 적는다. Bedrock·텔레메트리 off 세션은 `AGENTS.md`를 직접 못 읽어 import가 유일한 경로이기도 하다). symlink(`ln -s AGENTS.md CLAUDE.md`)는 쓰지 않는다 — Windows 클론에서 한 줄짜리 텍스트 파일이 된다. 이미 `CLAUDE.md`가 있고 import가 없으면 **넣지 않고 알리기만** 한다(그 repo는 이미 `AGENTS.md`를 안 읽고 있었다 — 바꾸는 건 사용자 결정, R27). **검증** — `CLAUDE.md` 첫 줄이 import인지 + 다음 세션 `/context`의 Memory files에 `CLAUDE.md`가 뜨는지. **제거** — import 줄만 지운다(`AGENTS.md`는 건드리지 않는다).
 > `CLAUDE.md` 사실은 스택·DB·아키텍처·제약. 행동 규칙(글로벌)과 중복 금지, 30~200줄. **없으면 `/init`으로 초안 생성 후 다듬기**(코드베이스 분석해 빌드·테스트 명령을 채워줌. `CLAUDE_CODE_NEW_INIT=1`이면 대화형 다단계 — CLAUDE.md+스킬+hooks까지 제안 후 승인받아 생성).
 
 ### E-1. 🅱️ 단일 repo (B)
@@ -568,6 +570,7 @@ CLAUDE.local.md
 - **규칙과의 관계**: 명시적 **ask 규칙은 auto mode에서도 프롬프트 강제**, deny는 그대로 차단(분류기가 deny를 뚫지 못함). `rm -rf /`·`~` 같은 파괴 명령은 분류기가 심사(v2.1.218+), 요청하지 않은 파괴적 git 명령·트랜스크립트 조작은 차단.
 - **회사 환경 주의** 🔴: **Team은 기본 제공**(옵트아웃)이지만 **Enterprise는 기본이 `default`(manual)**다(2026-09-16 재확인 — 이전 서술 "Team·Enterprise도 기본 제공"은 오류). 관리자가 managed settings `permissions.disableAutoMode: "disable"`로 조직 전체를 끌 수 있다 — **조직 정책이 항상 우선**이며 이 문서로 우회 구성하지 않는다. 프로바이더는 API·Claude Platform on AWS·Bedrock·Google Cloud·Foundry 모두 기본 제공(v2.1.207+), 단 모델 하한이 다르다 — API·Claude Platform on AWS는 Opus 4.6+·Sonnet 4.6+·Fable 모델, Bedrock 등 서드파티는 Sonnet 5·Opus 4.7+·Fable 모델(공식 문서는 "Fable 5" 같은 구체 버전을 명시하지 않는다).
 - **한계**: 프롬프트를 줄일 뿐 안전 보장이 아니다 — 방향을 신뢰하는 작업에만 쓰고, 민감 작업(배포·시크릿 인접·대량 삭제)은 manual/plan으로 내려서 검토한다. plan mode 중에도 분류기가 셸 명령을 심사한다(`useAutoModeDuringPlan` 기본 on, v2.1.218+).
+- **분류기 비용**(Enterprise·API 키·Claude Platform on AWS·Bedrock·Google Cloud·Foundry — Pro·Max·Team은 해당 없음): v2.1.278+는 분류 검사를 **서버가 세션 요청 안에서 무료로** 한다. 사내 LLM 게이트웨이·프록시가 요청을 변형하면 서버 검사가 닿지 않아 **예전처럼 과금되는 자체 분류 요청**으로 돌아가고, 세션에서 한 번 `this session isn't eligible` 알림이 뜬다(auto mode는 그대로 동작). 확인은 `/status`의 `Auto mode server` 행(`Enabled`/`Disabled`) — 게이트웨이 쪽 조치는 관리자 사안이다.
 
 ---
 
@@ -603,6 +606,7 @@ Claude Code는 매주 바뀐다. 6개월마다 30분:
 - `/effort` 단계 명칭·모델별 지원 범위·`ultracode` 동작, 에이전트·스킬 frontmatter 키 생존 — `effort:`·`arguments:`·`allowed-tools`·`disable-model-invocation`(정본 §F-2. `effort:`는 2026-07-20 확정).
 - **§D-7 캐시 축** — TTL 버킷(5분/1시간)·`promptCacheTtl`/`subagentPromptCacheTtl` 값 집합·`/usage`의 `Prompt cache` 줄·**effort가 캐시 키**라는 동작·캐시를 깨는/지키는 행동 목록(공식 prompt-caching·costs 문서).
 - §F-2 **A·B·C 전 템플릿**의 폴백(비-git·`docs/` 부재·단위 없음·단일 repo)·**조건부 안내 어휘**(조치 대기·`게이트 차단`·`소스없음`/`확보 실패` — 새 어휘가 늘 때마다 A·B·C 템플릿 전부도 함께 늘려야 한다)·**미러 대조 판정 기준**(구성 성격 4키·포함 기준 정본·`dropin-applied` 줄 제외·줄바꿈 정규화)이 배포된 글로벌 스킬 실물과 일치하는지 — 문서만 고치고 스킬을 빠뜨리면(또는 그 반대로) 같은 공백이 방향만 바꿔 재발한다. **점검 범위에서 A를 빼지 말 것**: 단일 repo 신규 설치자가 쓰는 것이 A다(도입 경위는 저장소 git 이력 — 버전 표에선 병합 행 안이다).
+- **`AGENTS.md` 로드 규칙**(§E 공통) — `CLAUDE.md`·`CLAUDE.local.md`가 있으면 읽지 않는 기본값 · `@AGENTS.md` import 권장 · Windows symlink 제약이 유지되는지(공식 memory `#agents-md`).
 - **§G 세션 분리 축** — `claude -c`(그 폴더의 가장 최근 대화)·`-n`/`/rename`(세션 이름)·`--resume <이름>`·`--worktree`(worktree 위치·분기·정리) 동작(공식 sessions·worktrees, 2026-09-13 확인). 같은 폴더 동시 세션에 대한 **공식 경고는 없다**(같은 날 확인) — 생기면 §G 줄의 근거를 그쪽으로 바꾼다.
 - **자기 점검(갱신 의식)** — 재검증·개정은 기억이 아니라 **당일 공식 문서** 조회로 한다(확인 못 한 항목엔 🟡을 단다). 고쳤으면 ① 버전 표에 한 줄(무엇을 왜) ② 헤더·푸터의 버전과 "최종 갱신"·"최근 재검증" 날짜 ③ 저장소 `CLAUDE.md` 구성물 표 ④ 이 체크리스트 ⑤ 기계 검사 통과를 빠짐없이 한다. 버전은 네 곳에 있고 **하나만 빠져도 4축이 어긋난다** — 골격 규칙의 정본은 `docs/DOC_CONTRACT.md`다.
 - ✅ 해소된 과거 항목(재확인 불필요): CLAUDE.local.md deprecation 우려 → **계속 지원**(2026-07-20 확인, `.gitignore` 추가 권장 유지).
@@ -612,5 +616,5 @@ Claude Code는 매주 바뀐다. 6개월마다 30분:
 ## 핵심 출처 🟢
 IDE 통합·`--add-dir`(ide-integrations·large-codebases) / permissions·deny 한계 / hooks / skills / memory·auto-memory — 모두 `code.claude.com/docs` 및 `docs.anthropic.com`.
 
-**문서 정보** — 통합 마스터(범용) **v1.88**. 변경 이력은 최상단 버전 표 참조(유래: 8개 소스 통합 초판 — 최상단 병합 행).
+**문서 정보** — 통합 마스터(범용) **v1.89**. 변경 이력은 최상단 버전 표 참조(유래: 8개 소스 통합 초판 — 최상단 병합 행).
 최종 갱신: 2026-09-23 · 최근 재검증: 2026-09-23 / 참조: Claude Code v2.1.280, Opus 5.5(v2.1.280+) · Sonnet 5(v2.1.197+) · Fable 5.1(v2.1.257+).
