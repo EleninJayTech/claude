@@ -1,6 +1,6 @@
 # Claude Code 통합 구성 — 범용 마스터 (드롭인 적용)
 
-> **문서 버전: v1.87** · 최종 갱신: **2026-09-19** · **최근 재검증: 2026-09-16** · 기준: Claude Code v2.1.273 (Opus 5 · Sonnet 5 · Fable 5.1)
+> **문서 버전: v1.88** · 최종 갱신: **2026-09-23** · **최근 재검증: 2026-09-23** · 기준: Claude Code v2.1.280 (Opus 5.5 · Sonnet 5 · Fable 5.1)
 >
 > | 버전 | 날짜 | 변경 내용 |
 > | --- | --- | --- |
@@ -23,6 +23,7 @@
 > | v1.85 | 2026-09-18 | **§D-4에 `/dropin-apply` 편입** — 구성 재적용의 슬래시 진입점(절차는 00이 정본, 스킬은 위임만). §D-1 코드블록·OS 각주·STEP 3 ⓒ·제거 절차·§검증 ①·§D-5 자동완성·§D-2 미러 예외에 반영하고 예외 목록의 개수 표기를 뺐다(R14). **목표(R43)**: 3 — 자족성의 절차 축(진입점이 자연어뿐이면 존재를 모르는 사람에게는 없는 것과 같다) · 8 — 입문자가 커맨드 하나로 최신화에 도달 |
 > | v1.86 | 2026-09-18 | **§F-5 결함 정정** — `.claude/worktrees/` 줄의 **줄 끝 주석을 별도 줄로**. `.gitignore`는 줄 머리 `#`만 주석이라 원문 그대로 복사하면 `#` 이하까지 패턴이 돼 **아무것도 무시하지 않았다**(임시 repo 재현: 원문=`?? .claude/worktrees/…` 노출, 분리=무시). worktree 사본이 `git add -A`에 통째로 실릴 수 있던 자리. 이미 원문을 복사한 repo는 `git check-ignore -v .claude/worktrees/x`로 확인하고 같은 방식으로 분리한다(2026-09-18 드롭인 일괄 재적용 중 발견 — 설치된 7 repo는 설치 때 분리해 두어 정상) |
 > | v1.87 | 2026-09-19 | **§F-1 길이 관리에 `PROJECT_PLAN` 미해결 아카이브 임계 추가**(R45 — 종결 40건 초과 시 가장 오래된 종결일부터 20건 이하로, **열린 항목은 제외**). 크기가 아니라 건수 축인 이유는 절이 여럿이라 파일 크기가 어느 절 탓인지 못 가리켜서고, R07과 달리 즉시 푸시 조항이 없는 이유는 `merge=union`이 아니어서다. **목표(R43)**: 7 — 세션 연속성(/resume이 매 세션 읽는 파일에서 인계 항목이 종결 이력에 묻히지 않는다) · 1 — 품질을 전제한 절약(매 세션 고정 비용) |
+> | v1.88 | 2026-09-23 | 전면 재검증(v2.1.280 — Opus 5.5 출시) — §D-6 기본 effort 예외에 **Opus 5.5=`medium`**·지원 모델 목록 갱신 · **hold 서술 교체**(v2.1.280에서 폐지 — 새 모델은 이전 저장값을 물려받지 않고 자기 기본값으로 시작) · User 스코프 최상위 `effortLevel`은 Opus 5.5 이후 모델에 미적용 · "상위 모델은 적지 않는다"의 **근거 교체**(결론 유지 — 기본값이 `high`라서가 아니라 공급자 보정 출발점이고 전체 ID 키는 세대마다 효력을 잃어서) + 새 모델 첫 세션 `/effort` 확인 한 줄 · §D-7 캐시 읽기 단가·effort 캐시 예외에 Opus 5.5 · §L 🟡 1건 종결(세션 중 만든 `~/.claude/CLAUDE.md`는 다음 세션부터). **목표(R43)**: 1 — 품질을 전제한 절약(상위 모델 강도를 틀린 전제로 박지 않게 한다) · 5 — 당일 공식 조회 |
 > ※ 갱신 시: 이 표에 한 줄 추가 + 하단 "문서 정보" 날짜 수정 + §L 재검증 체크리스트 수행.
 
 > **사용법**: 이 파일을 아무 프로젝트 루트(또는 `docs/`)에 넣고 Claude에게
@@ -183,10 +184,10 @@ New-Item -ItemType Directory -Path .claude/skills/dropin-update -Force
 ### D-5. 확인 — `claude` → `/` → `/resume`·`/wrap`·`/dropin-apply`·`/dropin-check`·`/dropin-update`(**별칭을 붙였으면 붙인 이름으로** — `/dandi-resume` 식. 원래 이름으로 찾으면 정상 설치를 실패로 오판한다) 자동완성 **+ 글로벌 `settings.json`의 `deny` 시크릿 차단 실측**(세션 스킬은 파일 복사만으로 뜨므로 자동완성만 보면 ⓑ가 통째로 빠져도 "성공"이 된다). **ⓐ를 적용했으면 `/context`의 Memory files 목록에 `~/.claude/CLAUDE.md`가 실제로 있는지도 본다** — 파일이 존재하는 것과 **세션에 로드되는 것**은 다르고, 로드되지 않으면 그 행동 규칙은 없는 것과 같다. 파일 실재만 확인하면 위치·제외 설정 때문에 안 읽히는 경우를 통째로 놓친다.
 
 ### D-6. 추론 강도(effort) 제어 — `/effort` 🟢
-세션의 **사고(reasoning) 깊이**를 조절하는 슬래시 명령. 고른 값은 **모델별로** settings.json `modelSettings`에 저장된다(v2.1.257+ — 모델마다 자기 저장값을 갖고, **`effortLevel`은 저장값 없는 모델의 기본값**으로 격하. `s`를 붙이면 세션 한정, `/effort auto`는 활성 모델의 저장값 제거).
-- **단계(낮음→높음)**: `low` → `medium` → `high` → `xhigh` → `max`. **기본값은 `high`**(Opus 4.7만 `xhigh`).
-- **모델별 지원**: Fable 5 · Opus 5 · Sonnet 5 · Opus 4.8 · Opus 4.7 = 전 단계(`xhigh` 포함). Opus 4.6 · Sonnet 4.6 = `xhigh` 없음(low/medium/high/max). 미지원 단계를 지정하면 **바로 아래 지원 단계로 자동 폴백**(예: Opus 4.6에서 xhigh→high).
-- **기본값 hold 차이**: Fable 5·Opus 4.8·4.7은 첫 실행 시 그 모델의 기본 effort를 강제 적용하고 명시적으로 바꿀 때까지 유지(hold)하지만, **Opus 5·Fable 5.1은 hold가 없어 이전에 설정한 값이 그대로 승계**된다.
+세션의 **사고(reasoning) 깊이**를 조절하는 슬래시 명령. 고른 값은 **모델별로** settings.json `modelSettings`에 저장된다(v2.1.257+ — 모델마다 자기 저장값을 갖고, **`effortLevel`은 저장값 없는 모델의 기본값**으로 격하 — 단 User 스코프의 최상위 `effortLevel`은 **Opus 5.5 이후 모델엔 적용되지 않는다**(v2.1.280+). `s`를 붙이면 세션 한정, `/effort auto`는 활성 모델의 저장값 제거).
+- **단계(낮음→높음)**: `low` → `medium` → `high` → `xhigh` → `max`. **기본값은 `high`**(예외: Opus 4.7=`xhigh` · **Opus 5.5=`medium`**). **단계 이름은 세대 간 같은 사고량이 아니다** — 공식 테스트에서 Opus 5.5 `medium`이 Opus 5 `high`와 같거나 앞선다.
+- **모델별 지원**: Fable 5.1 · Fable 5 · Opus 5.5 · Opus 5 · Sonnet 5 · Opus 4.8 · Opus 4.7 = 전 단계(`xhigh` 포함). Opus 4.6 · Sonnet 4.6 = `xhigh` 없음(low/medium/high/max). 미지원 단계를 지정하면 **바로 아래 지원 단계로 자동 폴백**(예: Opus 4.6에서 xhigh→high).
+- **새 모델은 자기 기본값으로 시작한다**: 저장값은 모델별이라 **새로 나온 모델은 이전 모델의 저장값을 물려받지 않는다**(v2.1.280+). 예전의 기본값 hold(Fable 5·Opus 4.8·4.7이 첫 실행 기본값을 저장값·프로젝트 값보다 우선하던 동작)는 v2.1.280에서 폐지됐다.
 - **`/effort xhigh`**: high보다 깊은 추론, **최대(max) 바로 아래**. (안내문: *"Deeper reasoning than high, just below maximum"*)
 - **`/effort` (인자 없이)**: 대화형 슬라이더. `/effort auto`는 모델 기본값으로 리셋. `/model` 화면에서도 좌우 화살표로 effort 조절 가능.
 - **저장 제한**: `effortLevel`에 저장되는 건 `low`~`xhigh`뿐. **`max`는 세션 한정**(단 `CLAUDE_CODE_EFFORT_LEVEL`로는 지속 지정 가능).
@@ -204,9 +205,9 @@ New-Item -ItemType Directory -Path .claude/skills/dropin-update -Force
   - 키는 **전체 모델 ID**다(`opus` 같은 별칭은 안 된다) — `/effort`에서 Enter로 확정할 때 CLI가 쓰는 키와 같아야 병합된다. 세대가 바뀌면 키도 갈아야 한다(`claude-fable-5` → `claude-fable-5-1`).
   - **하위 모델이 `medium`인 것은 절약 옵션이 아니라 기본값이다.** 02 §F-1 운용표가 그 모델로 보내는 일은 **정형 반복 변환·단순 수정**인데, 거기에 강도를 더 줘도 품질이 오르지 않는다 — 오히려 불필요한 추상화·예외 처리를 얹는 과잉 설계가 난다. **품질이 같으면 싼 쪽이 옳다**는 기준(§0 원칙)이 그대로 적용되는 자리다. 상위 모델의 어려운 작업은 `high` 그대로 두므로, 아끼는 구간과 아끼지 않는 구간이 모델 경계로 갈린다.
     - ⚠️ **그 모델로 테스트 작성·리팩터링·코드 리뷰를 돌릴 땐 세션에서 `high`로 올린다** — 엣지 케이스와 부작용을 봐야 하는 작업이라 여기선 강도가 품질로 이어진다(02 §F-1의 해당 행).
-    - **상위 모델은 적지 않는다** — 기본값이 이미 `high`라 같은 값을 다시 박으면 동작은 그대로인데 세대마다 갈아야 할 ID만 는다(같은 기준으로 스킬 frontmatter `effort:`도 기각했다 — [[DEC-20260916-bsjeong87-04]] ⓑ). 상위 모델을 조정하고 싶으면 그때 키를 더한다.
+    - **상위 모델은 적지 않는다** — 그 모델의 기본값이 공급자가 보정한 출발점이다(Opus 5.5는 `medium`이지만 위 단계 비교대로 이전 세대 `high` 이상이라, `high`를 박으면 품질 이득 없이 사고량만 는다). 박아 둔 전체 ID 키는 다음 세대에 효력을 잃고 갈아야 할 ID만 는다(같은 기준으로 스킬 frontmatter `effort:`도 기각했다 — [[DEC-20260916-bsjeong87-04]] ⓑ). 상위 모델을 조정하고 싶으면 그때 키를 더한다. **새 모델이 나오면 첫 세션에 `/effort`로 현재 값을 한 번 확인한다** — 이전 모델의 저장값은 넘어오지 않는다.
   - 이 키는 **머신 종속**이다(요금제·가용 모델이 PC마다 달라 값이 갈리는 게 정상) — `global-config/` 미러 대조의 "구성 성격 키"에 들어가지 않는다.
-  - **hold 주의**: Fable 5·Opus 4.8·4.7은 첫 실행 때 모델 기본 effort를 잡고 저장값을 무시한다 — `/effort <값>` Enter로 한 번 확정해야 묶음이 산다. Opus 5·Fable 5.1·Sonnet 5는 hold가 없다.
+  - **새 모델 주의**: 묶음에 없는 새 모델은 자기 기본값으로 시작하고, User 스코프 최상위 `effortLevel`도 Opus 5.5 이후 모델엔 적용되지 않는다 — 그 모델을 묶으려면 `/effort <값>` Enter로 한 번 확정한다(키가 그 모델 ID로 저장된다).
   - 감지: 이미 `modelSettings`가 있으면 **유지/재구성/교체**를 묻는다(R27). 검증: `/model <모델>` 뒤 `/effort` 슬라이더가 그 값을 가리킨다. 제거: 해당 키 삭제 또는 `/effort auto`.
   - 프로젝트 `.claude/settings.json`엔 넣지 않는다(아래 함정과 같은 이유 — 팀 전원에게 강제된다).
 - **절약 프로필** (Pro 요금제·한도 관리 사용자 — 00 STEP 3에서 선택): 절약은 품질 유지 전제의 2순위이므로 **모델 배정 하향 + 낭비 제거**로만 아낀다(effort는 프로필로 갈리지 않는다 — 아래).
@@ -227,8 +228,8 @@ New-Item -ItemType Directory -Path .claude/skills/dropin-update -Force
 > ✅ 확정(2026-07-20, code.claude.com/docs/en/model-config·/sub-agents·/skills 재검증): 단계 명칭 low~max + ultracode(설정), 서브에이전트·스킬 frontmatter 키는 **`effort:`**, `effortLevel` 저장은 low~xhigh만.
 
 ### D-7. 프롬프트 캐시 친화 운영 🟢
-매 턴 대화 전체가 다시 실려가되, 요청 앞부분이 직전과 **같으면 캐시에서 읽는다**(정가의 ~10% — Fable 5.1은 2.5%). 한 곳이라도 바뀌면 **그 뒤 전부**를 다시 처리한다 — 절약의 두 번째 축은 "덜 쓰기"가 아니라 **"재처리 안 당하기"** 다. 표준·절약 프로필 공통.
-- **캐시를 깨는 행동** — 작업 중엔 피하고, 필요하면 **세션 시작에 몰아서** 한다: `/model` 전환 · `/effort` 변경(effort도 캐시 키다 — 02 §F 운용 원칙의 "강도 상향은 새 세션" 항목. **예외: Fable 5.1은 v2.1.260+부터 `/effort` 변경이 캐시를 깨지 않는다**(API 키·구독 한정 — Bedrock·Google Cloud·Claude apps 게이트웨이·`CLAUDE_CODE_DISABLE_EXPERIMENTAL_BETAS`·HIPAA 구성은 여전히 깬다) — 다른 모델은 여전히 깬다, 2026-09-17 공식 확인) · fast mode 켜기 · MCP 서버 연결/해제(도구가 **비deferred**로 프리픽스에 실린 경우만) · **MCP 서버를 제공하는** 플러그인 활성/비활성(스킬·커맨드·훅·테마만 주는 플러그인은 무해) · **도구 이름 단독 deny 규칙** 추가·제거(`Bash` 형태. `Bash(rm *)` 같은 스코프 규칙은 무해) · `/compact` · 업그레이드 후 `claude --resume`(가장 비싼 한 턴이 된다).
+매 턴 대화 전체가 다시 실려가되, 요청 앞부분이 직전과 **같으면 캐시에서 읽는다**(정가의 ~10% — Opus 5.5는 5%, Fable 5.1은 2.5%). 한 곳이라도 바뀌면 **그 뒤 전부**를 다시 처리한다 — 절약의 두 번째 축은 "덜 쓰기"가 아니라 **"재처리 안 당하기"** 다. 표준·절약 프로필 공통.
+- **캐시를 깨는 행동** — 작업 중엔 피하고, 필요하면 **세션 시작에 몰아서** 한다: `/model` 전환 · `/effort` 변경(effort도 캐시 키다 — 02 §F 운용 원칙의 "강도 상향은 새 세션" 항목. **예외: Opus 5.5(v2.1.280+)·Fable 5.1(v2.1.260+)은 `/effort` 변경이 캐시를 깨지 않는다**(API 키·구독 한정 — Bedrock·Google Cloud·Claude apps 게이트웨이·`CLAUDE_CODE_DISABLE_EXPERIMENTAL_BETAS`·HIPAA 구성은 여전히 깬다) — 다른 모델은 여전히 깬다, 2026-09-23 공식 확인) · fast mode 켜기 · MCP 서버 연결/해제(도구가 **비deferred**로 프리픽스에 실린 경우만) · **MCP 서버를 제공하는** 플러그인 활성/비활성(스킬·커맨드·훅·테마만 주는 플러그인은 무해) · **도구 이름 단독 deny 규칙** 추가·제거(`Bash` 형태. `Bash(rm *)` 같은 스코프 규칙은 무해) · `/compact` · 업그레이드 후 `claude --resume`(가장 비싼 한 턴이 된다).
 - **캐시를 지키는 행동** — 마음껏: plan mode 진입·이탈 · 스킬·커맨드 호출(**예외: `model:`/`effort:` 오버라이드 스킬** — 호출 턴이 다른 모델로 가 컨텍스트 전체를 비캐시 1회, 02 §F) · `/recap` · `/rewind` · 권한 모드 전환 · advisor 켜고 끄기 · 파일 편집 · CLAUDE.md 편집(루트·사용자 수준은 세션 시작에 한 번 읽어 **세션 중엔 적용도 안 된다** — 다음 `/clear`·`/compact`·재시작에 로드. **단 중첩 `CLAUDE.md`·`paths:` rules는 매칭 파일을 처음 읽을 때 로드되므로 그 전의 편집은 적용된다**) · 출력 스타일 **전환**(**모든 환경에서** 새 스타일이 대화 메시지로 전달돼 캐시를 지키면서 **다음 메시지부터 즉시 적용**, v2.1.251+ — 2026-09-16 재확인 결과 환경별 구분은 없어졌다(이전 서술 "Bedrock·GCP·Foundry는 전체 재처리"는 회귀 정정). 그 전엔 `/clear` 뒤에만 적용됐다. **스타일 파일 내용 편집**은 시작 시에만 읽혀 재시작해야 반영 — 05).
 - **예외 `opusplan`**: plan 경계마다 모델이 바뀌어 **토글 1회 = 캐시 리셋**이다(02 §F).
 - **`/compact`보다 `/clear`**: `/clear`는 요청을 보내지 않아 **비용 0**(단 **`/wrap` 뒤에** — `/clear`엔 훅 게이트가 없어 기록 안 된 결정이 그대로 사라진다), `/compact`는 요약을 만드는 **그 자체로 큰 요청**이다(캐시가 식은 오래된 세션에서 가장 비싸다 — §D-3 `manual` 게이트를 걸었다면 `/wrap` 뒤에). 가 본 길을 통째로 버릴 땐 `/rewind`가 더 싸다 — 이미 캐시된 지점으로 되감기 때문이다.
@@ -592,10 +593,10 @@ CLAUDE.local.md
 ## L. 유지보수 (6개월마다 재검증) ⭐
 Claude Code는 매주 바뀐다. 6개월마다 30분:
 - `code.claude.com/docs/en/whats-new` 최신 항목 확인.
-- §D-6 `modelSettings` 예시의 **모델 ID 키**가 현행 라인업인지(전체 ID라 세대 교체마다 낡는다 — `claude-fable-5` → `claude-fable-5-1`이 실례) · **hold 모델 목록**이 그대로인지.
+- §D-6 `modelSettings` 예시의 **모델 ID 키**가 현행 라인업인지(전체 ID라 세대 교체마다 낡는다 — `claude-fable-5` → `claude-fable-5-1`이 실례) · 모델별 **기본 effort**(Opus 5.5=`medium` — 모델마다 다르고, 새 모델은 이전 저장값을 물려받지 않는다).
 - ✅(2026-09-16 종결) ⓐ `modelSettings`(모델별 저장값)가 `effortLevel`(저장값 없는 모델의 폴백)을 이긴다 — settings 레퍼런스 원문 재확인(이전 재검증 서술 그대로 확정 — 특정 버전 행을 인용하지 않는다. R20 병합되면 근거가 사라진다). ⓒ §J-1 auto 기본 시작 모드 도입 = macOS/Linux/WSL v2.1.228+·네이티브 Windows v2.1.233+, 2026-08-14(§J-1 본문에 반영).
-- 🟡(2026-09-16 재확인 — 부분 진전) ⓑ 스킬 `effort:` 오버라이드의 턴 경계: 공식 문구 *"frontmatter effort applies when that skill or subagent is active, overriding the session level but not the environment variable"*는 확보했으나 "다음 턴에 세션 값으로 복귀한다"는 명시적 문장은 여전히 없다(`model:`은 턴 한정으로 이미 확정).
-- 🟡 **세션 중 새로 만든 `~/.claude/CLAUDE.md`가 그 세션의 `/context` Memory files에 나타나는가**(세션 시작 때만 로드되는가) — §검증 ⓐ의 "새 세션에서 재확인" 대기 분기가 필요한지가 여기에 달렸다.
+- 🟡(2026-09-23 재확인 — 진전 없음) ⓑ 스킬 `effort:` 오버라이드의 턴 경계: 공식 문구 *"frontmatter effort applies when that skill or subagent is active, overriding the session level but not the environment variable"*는 확보했으나 "다음 턴에 세션 값으로 복귀한다"는 명시적 문장은 여전히 없다(`model:`은 턴 한정으로 이미 확정).
+- ✅(2026-09-23 종결) 세션 중 새로 만든 `~/.claude/CLAUDE.md`는 **그 세션에 로드되지 않는다** — 공식 memory가 CLAUDE.md를 *"at the start of every session"* 로드하고 확인은 *"in your next session"* 하라고 한다. §검증 ⓐ의 "새 세션에서 재확인" 대기 분기는 필요하다(유지).
 - 정기 확인(2026-09-16 전부 유효): deny의 서브프로세스 우회 한계, **샌드박스 네이티브 Windows 미지원**(macOS·Linux·WSL2만 — sandboxing), `sandbox.credentials` 스키마(`files[]`={path,mode}·`envVars[]`={name,mode}, mode=`deny`|`mask` + `extract`·`decode`·`maskClaims`·`maskDuplicates`·`onExtractNoMatch`·`injectHosts`·`awsPairs`·`sigv4`, v2.1.224+ 확장 8종 — §J 본문에도 반영), `attribution` 스키마, auto-memory 한도(MEMORY.md 200줄/25KB).
 - **dev container 격리 경로**(§J 격리 3단) — feature 이미지·이그레스 방화벽 스크립트 구성이 유지되는지, 네이티브 Windows 대안이라는 위치가 바뀌지 않았는지(내장 샌드박스가 Windows를 지원하기 시작하면 이 줄의 근거가 사라진다).
 - `/model` 최신 정책(별칭이 가리키는 실제 모델·`best`의 해석), `claude --version`.
@@ -611,5 +612,5 @@ Claude Code는 매주 바뀐다. 6개월마다 30분:
 ## 핵심 출처 🟢
 IDE 통합·`--add-dir`(ide-integrations·large-codebases) / permissions·deny 한계 / hooks / skills / memory·auto-memory — 모두 `code.claude.com/docs` 및 `docs.anthropic.com`.
 
-**문서 정보** — 통합 마스터(범용) **v1.87**. 변경 이력은 최상단 버전 표 참조(유래: 8개 소스 통합 초판 — 최상단 병합 행).
-최종 갱신: 2026-09-19 · 최근 재검증: 2026-09-16 / 참조: Claude Code v2.1.273, Opus 5(v2.1.219+) · Sonnet 5(v2.1.197+) · Fable 5.1(v2.1.257+).
+**문서 정보** — 통합 마스터(범용) **v1.88**. 변경 이력은 최상단 버전 표 참조(유래: 8개 소스 통합 초판 — 최상단 병합 행).
+최종 갱신: 2026-09-23 · 최근 재검증: 2026-09-23 / 참조: Claude Code v2.1.280, Opus 5.5(v2.1.280+) · Sonnet 5(v2.1.197+) · Fable 5.1(v2.1.257+).
