@@ -1,6 +1,6 @@
 # Claude Code 통합 구성 — 범용 마스터 (드롭인 적용)
 
-> **문서 버전: v1.92** · 최종 갱신: **2026-09-30** · **최근 재검증: 2026-09-30** · 기준: Claude Code v2.1.284 (Opus 5.5 · Sonnet 5.5 · Fable 5.1)
+> **문서 버전: v1.93** · 최종 갱신: **2026-09-30** · **최근 재검증: 2026-09-30** · 기준: Claude Code v2.1.284 (Opus 5.5 · Sonnet 5.5 · Fable 5.1)
 >
 > | 버전 | 날짜 | 변경 내용 |
 > | --- | --- | --- |
@@ -28,6 +28,7 @@
 > | v1.90 | 2026-09-23 | **/audit 17차(전수) 반영** — §D-6 hold 잔재 삭제·상위 모델 `high` 전제 정정·새 모델 서술 중복을 한 곳으로 · §E `AGENTS.md` 검증 대상을 `AGENTS.md`로, 제거는 "`CLAUDE.md`가 남는 동안 import 유지"로 좁힘 · §E-1 커밋에 `.gitattributes` · §F-1 언어 불변 키워드에 기록 어휘·PROJECT_PLAN 토큰, append 전용의 표시 예외 명시, 아카이브 즉시 푸시 · §F-2 별칭 치환을 회차 무관으로·hooks 문구 포함 · A·B·C wrap에 미해결 아카이브(종결 40건) 안내, B·C resume 700자 컷 · `dropin-*` 개수 표기 제거 · §L 🟡 2건(AGENTS.md 로드 조건·`/init`) |
 > | v1.91 | 2026-09-23 | **/audit 18차(회귀) 반영** — §F-1 길이 관리의 즉시 푸시 중복 문장 제거(PR 폴백만 기존 문장으로) · append 예외의 병합 처리를 union 실제 동작(충돌 없이 두 벌)에 맞춤 · §D-4 raw는 바이트 그대로 · §E-1 `git add`는 있는 것만 · 절약 품질 불변에 spec · 별칭 rename 후속에 3택·이번 대상 §F-1 블록 |
 > | v1.92 | 2026-09-30 | 전면 재검증(v2.1.284 — Sonnet 5.5 출시) — §D-6 기본 effort `medium`에 **Sonnet 5.5**·지원 목록 · 권장 묶음에 "Sonnet 5.5는 키 없이도 `medium`" · **`ultracode`는 이제 effort를 바꾸지 않는 독립 토글**(`--effort ultracode`만 `xhigh`) · §D-7 effort 캐시 예외에 Sonnet 5.5 · §D-3 `attribution: false`는 공유 파일에 쓰지 않는다(구버전이 그 파일을 통째로 건너뛴다) · §E `AGENTS.md` 🟡 2건 종결(상위 `CLAUDE.md`도 센다 → §E-4 라우터가 하위 `AGENTS.md`를 끊는다 · `/init`(새 흐름)·`/import`는 내용을 복사하므로 import와 중복), Bedrock·텔레메트리 off 괄호를 v2.1.281 미만으로 한정 · §J-1 **auto가 모든 플랜·프로바이더의 기본 시작 모드**(v2.1.283+ — Enterprise manual 전제 폐기). **목표(R43)**: 5 — 당일 공식 조회 · 4 — 기존 구성을 조용히 끊지 않는다(라우터·`AGENTS.md`) · 2 — 회사 환경 전제 정정(Enterprise 기본 모드) |
+> | v1.93 | 2026-09-30 | `/reverify` 승인 1건 — §K에 **`/doctor prompt-audit`** 행(구 모델용 지시·죽은 참조·상충 파일 감사, 보고·제안만, v2.1.283+, 번들 `/claude-api` 스킬 의존). 설치 항목이 아니라 문제 해결 표의 안내라 4단·회사 게이트 불요. **목표(R43)**: 1 — 품질을 전제한 절약(모델 세대 교체 뒤 남은 구 모델용 지시가 품질을 깎는 경로를 찾는다) |
 > ※ 갱신 시: 이 표에 한 줄 추가 + 하단 "문서 정보" 날짜 수정 + §L 재검증 체크리스트 수행.
 
 > **사용법**: 이 파일을 아무 프로젝트 루트(또는 `docs/`)에 넣고 Claude에게
@@ -594,6 +595,7 @@ CLAUDE.local.md
 | `.env`를 Claude가 읽으려 함 | deny + CLAUDE.md #8 / **근본은 시크릿 분리** |
 | Windows에서 Bash 없다고 에러 | Claude Code `v2.1.120+`로 업데이트(PowerShell만으로 동작) |
 | 셋업이 전반적으로 이상함 | **`/doctor`** — 구성 전체 진단+수정 제안(비대 CLAUDE.md 트림 제안 포함 v2.1.206+, `/checkup` 별칭) |
+| 새 모델로 바꾼 뒤 지시가 낡았는지 | **`/doctor prompt-audit [경로]`**(v2.1.283+) — `CLAUDE.md`·`AGENTS.md`·rules·skills·commands·subagents·output styles에서 **구 모델용 지시·없는 파일/명령 참조·서로 상충하는 파일**을 찾아 보고·편집 제안만 한다(적용하라고 할 때까지 파일은 그대로). 번들 `/claude-api` 스킬로 돌아 그 스킬을 `skillOverrides`·`disableBundledSkills`로 끄면 쓸 수 없다 |
 
 ---
 
@@ -612,6 +614,7 @@ Claude Code는 매주 바뀐다. 6개월마다 30분:
 - `/effort` 단계 명칭·모델별 지원 범위·`ultracode` 동작, 에이전트·스킬 frontmatter 키 생존 — `effort:`·`arguments:`·`allowed-tools`·`disable-model-invocation`(정본 §F-2. `effort:`는 2026-07-20 확정).
 - **§D-7 캐시 축** — TTL 버킷(5분/1시간)·`promptCacheTtl`/`subagentPromptCacheTtl` 값 집합·`/usage`의 `Prompt cache` 줄·**effort가 캐시 키**라는 동작·캐시를 깨는/지키는 행동 목록(공식 prompt-caching·costs 문서).
 - §F-2 **A·B·C 전 템플릿**의 폴백(비-git·`docs/` 부재·단위 없음·단일 repo)·**조건부 안내 어휘**(조치 대기·`게이트 차단`·`소스없음`/`확보 실패` — 새 어휘가 늘 때마다 A·B·C 템플릿 전부도 함께 늘려야 한다)·**미러 대조 판정 기준**(구성 성격 4키·포함 기준 정본·`dropin-applied` 줄 제외·줄바꿈 정규화)이 배포된 글로벌 스킬 실물과 일치하는지 — 문서만 고치고 스킬을 빠뜨리면(또는 그 반대로) 같은 공백이 방향만 바꿔 재발한다. **점검 범위에서 A를 빼지 말 것**: 단일 repo 신규 설치자가 쓰는 것이 A다(도입 경위는 저장소 git 이력 — 버전 표에선 병합 행 안이다).
+- **§K `/doctor prompt-audit`** — 하위 명령 이름·감사 대상 파일 종류·"보고·제안만" 동작·번들 `/claude-api` 의존이 유지되는지(공식 memory·commands).
 - **`AGENTS.md` 로드 규칙**(§E 공통) — `CLAUDE.md`·`CLAUDE.local.md`가 있으면 읽지 않는 기본값 · `@AGENTS.md` import 권장 · Windows symlink 제약이 유지되는지(공식 memory `#agents-md`).
 - **§G 세션 분리 축** — `claude -c`(그 폴더의 가장 최근 대화)·`-n`/`/rename`(세션 이름)·`--resume <이름>`·`--worktree`(worktree 위치·분기·정리) 동작(공식 sessions·worktrees, 2026-09-13 확인). 같은 폴더 동시 세션에 대한 **공식 경고는 없다**(같은 날 확인) — 생기면 §G 줄의 근거를 그쪽으로 바꾼다.
 - **자기 점검(갱신 의식)** — 재검증·개정은 기억이 아니라 **당일 공식 문서** 조회로 한다(확인 못 한 항목엔 🟡을 단다). 고쳤으면 ① 버전 표에 한 줄(무엇을 왜) ② 헤더·푸터의 버전과 "최종 갱신"·"최근 재검증" 날짜 ③ 저장소 `CLAUDE.md` 구성물 표 ④ 이 체크리스트 ⑤ 기계 검사 통과를 빠짐없이 한다. 버전은 네 곳에 있고 **하나만 빠져도 4축이 어긋난다** — 골격 규칙의 정본은 `docs/DOC_CONTRACT.md`다.
@@ -622,5 +625,5 @@ Claude Code는 매주 바뀐다. 6개월마다 30분:
 ## 핵심 출처 🟢
 IDE 통합·`--add-dir`(ide-integrations·large-codebases) / permissions·deny 한계 / hooks / skills / memory·auto-memory — 모두 `code.claude.com/docs` 및 `docs.anthropic.com`.
 
-**문서 정보** — 통합 마스터(범용) **v1.92**. 변경 이력은 최상단 버전 표 참조(유래: 8개 소스 통합 초판 — 최상단 병합 행).
+**문서 정보** — 통합 마스터(범용) **v1.93**. 변경 이력은 최상단 버전 표 참조(유래: 8개 소스 통합 초판 — 최상단 병합 행).
 최종 갱신: 2026-09-30 · 최근 재검증: 2026-09-30 / 참조: Claude Code v2.1.284, Opus 5.5(v2.1.280+) · Sonnet 5.5(v2.1.284+) · Fable 5.1(v2.1.257+).
