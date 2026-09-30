@@ -12,7 +12,7 @@
 
 | Page | URL |
 | --- | --- |
-| ▶️ **1-minute intro** — YouTube-style; screen-record it and you have a video | https://eleninjaytech.github.io/claude/pages/intro.html |
+| ▶️ **Intro video** — YouTube-style; screen-record it and you have a video | https://eleninjaytech.github.io/claude/pages/intro.html |
 | 🎬 **Install walkthrough** — an interactive terminal replay that plays like a film | https://eleninjaytech.github.io/claude/pages/demo.html |
 | 🧭 **Install options dictionary** — every choice the installer asks, explained for beginners | https://eleninjaytech.github.io/claude/pages/options.html |
 | 🎓 **Install options course** — an interactive course where you click through the choices yourself | https://eleninjaytech.github.io/claude/pages/learn.html |

@@ -12,7 +12,7 @@
 
 | 페이지 | URL |
 | --- | --- |
-| ▶️ **1분 소개 영상** — 유튜브 소개 스타일, 화면 녹화하면 그대로 영상 | https://eleninjaytech.github.io/claude/pages/intro.html |
+| ▶️ **소개 영상** — 유튜브 소개 스타일, 화면 녹화하면 그대로 영상 | https://eleninjaytech.github.io/claude/pages/intro.html |
 | 🎬 **설치 시연** — 영상처럼 재생되는 인터랙티브 터미널 시연 | https://eleninjaytech.github.io/claude/pages/demo.html |
 | 🧭 **설치 옵션 사전** — 설치 중 나오는 선택 항목 전부를 입문자 눈높이로 | https://eleninjaytech.github.io/claude/pages/options.html |
 | 🎓 **설치 옵션 학습 코스** — 선택지를 챕터별로 직접 눌러 보며 배우는 인터랙티브 코스 | https://eleninjaytech.github.io/claude/pages/learn.html |
