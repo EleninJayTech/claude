@@ -50,6 +50,7 @@
 - 【필수】**숫자 정렬**: 잔액, 결제 금액, 주가 등 수치가 열 단위로 정렬되는 인터페이스에는 `font-variant-numeric: tabular-nums;`를 선언한다.
 - 【기본값】**웹폰트 배포**: 현대 한글 표준 2,350자 서브셋과 주요 특수문자를 포함한 WOFF2 단일 포맷을 우선 서빙한다(풀셋 여부는 `open-questions.md`). 【필수】CSS 선언에 `font-display: swap;`을 명시한다.
 - 【필수】**폰트 스택**: `font-family: Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Noto Sans KR", "Apple SD Gothic Neo", sans-serif;` — ⟦확인⟧Pretendard·Noto Sans KR은 SIL OFL(`licenses.md`).
+- 【기본값】**한글 줄바꿈**: 한글 본문·제목에 `word-break: keep-all;`을 선언해 어절 중간에서 끊지 않는다(⟦보완⟧ 원문에 없는 항목 — ⟦확인⟧`keep-all`은 CJK 텍스트에 단어 중간 줄바꿈을 쓰지 않고 그 밖의 텍스트는 `normal`과 같다, MDN `word-break` 2026-10-03). 긴 URL·영문 연속 문자열이 박스를 넘치지 않게 `overflow-wrap: anywhere;`를 함께 둔다.
 ### 지양
 - 【기본값】한글 본문 행간 135% 이하 — 영문 기준(1.2~1.3배)을 한글 본문에 쓰지 않는다. 초성과 받침이 위아래 줄과 충돌한다.
 - 【기본값】고딕 계열 본문의 양수 자간(Letter Spacing > 0) — 제목 강조 목적을 제외하고 쓰지 않는다.
