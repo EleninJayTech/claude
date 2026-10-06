@@ -222,6 +222,7 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
     <tr><td><code>/dropin-check</code></td><td>none &middot; read-only</td><td>You suspect this machine has drifted</td><td>A difference report &mdash; nothing installed</td></tr>
     <tr><td><code>/dropin-update</code></td><td>none</td><td>The documents themselves are out of date</td><td>Refreshed document files &mdash; the configuration is untouched</td></tr>
     <tr><td><code>/dropin-apply</code></td><td>none</td><td>You want the configuration itself brought up to date</td><td>Documents, installed skills and settings, all re-applied</td></tr>
+    <tr><td><code>/dropin-sync</code></td><td>none</td><td>You want all three steps below, in order, without choosing</td><td>Documents refreshed, state checked, configuration re-applied &mdash; one report</td></tr>
 
     <tr><th class="grp" colspan="4" scope="colgroup">Feature docs, tests, releases &middot; 03 §7</th></tr>
     <tr><td><code>/feature-docs</code></td><td><code>init</code> | <code>sync [base]</code></td><td>First write-up, or folding in what changed</td><td>All of <code>docs/features/</code></td></tr>
@@ -327,6 +328,17 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
         <dt>You get</dt><dd>A configuration that matches the documents, and an updated <code>dropin-applied</code> line saying so. Where a feature-docs, refactor, kr-ui-guide or <code>dropin-</code> skill was already installed, its files are compared by content &mdash; not just by name &mdash; so a version that only changed its wording is still replaced; a <code>dropin-</code> skill that differs from the published copy comes up with <code>reconcile</code> as the default. <code>/resume</code> and <code>/wrap</code> are only checked for presence &mdash; to get their new text, answer <code>reconcile</code> instead of the default <code>keep</code> when it asks about global items that are already installed.</dd>
       </dl>
       <div class="warn soft"><b>Worth knowing.</b> This is the same thing as telling Claude &ldquo;learn this document and apply it&rdquo; &mdash; the sentence still works. The command exists because a door you cannot see is a door you do not open.</div>
+      <div class="tags"><span class="tag">global</span><span class="tag">asks first</span></div>
+    </article>
+    <article class="skill" data-g="session">
+      <div class="cmd"><span class="sl">/</span>dropin-sync</div>
+      <div class="args">no arguments</div>
+      <p class="one">Runs <code>/dropin-update</code>, <code>/dropin-check</code> and <code>/dropin-apply</code> in that order, in one command.</p>
+      <dl>
+        <dt>Use when</dt><dd>You just want everything brought up to date and do not want to remember the order.</dd>
+        <dt>It does</dt><dd>Reads each of those skills when its turn comes and follows it exactly. It holds no procedure of its own, so changing one of them changes this too. A step that cannot apply &mdash; for example the document refresh inside the source repository &mdash; is marked as skipped and the next step still runs. The closing &ldquo;next, run &hellip;&rdquo; advice of each skill is left out, because the next step is already running.</dd>
+        <dt>You get</dt><dd>One report: what each step did and what is still open. Every question the individual skills ask is still asked, in the same place &mdash; nothing is approved for you.</dd>
+      </dl>
       <div class="tags"><span class="tag">global</span><span class="tag">asks first</span></div>
     </article>
 
@@ -612,13 +624,14 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
 </div>
 
 <h2>Keeping all of this up to date</h2>
-<p class="lead">Documents change. Skills change. Three commands cover the three different questions, and mixing them up is the most common way people end up running a stale setup.</p>
+<p class="lead">Documents change. Skills change. Each command answers a different question, and mixing them up is the most common way people end up running a stale setup.</p>
 <table>
   <thead><tr><th>You want to&hellip;</th><th>Command</th><th>What it touches</th><th>What it leaves alone</th></tr></thead>
   <tbody>
     <tr><td>Find out whether anything has fallen behind</td><td><code>/dropin-check</code></td><td>Nothing &mdash; it only reads and reports</td><td>Everything</td></tr>
     <tr><td>Refresh your copies of the documents</td><td><code>/dropin-update</code></td><td>The document files (00&ndash;06)</td><td>Your installed skills and settings</td></tr>
     <tr><td>Bring the configuration itself up to date</td><td><code>/dropin-apply</code></td><td>Documents, installed skills, settings &mdash; whatever you approve</td><td>Anything you decline; it asks before replacing</td></tr>
+    <tr><td>Do all three, in order</td><td><code>/dropin-sync</code></td><td>Whatever the three would change &mdash; you approve each part where it asks</td><td>Anything you decline</td></tr>
   </tbody>
 </table>
 <p class="lead" style="margin-top:14px">The short version: <b><code>/dropin-update</code> alone is not an update.</b> It refreshes the instructions, not the thing the instructions build. If a skill gained a file or changed its wording, only <code>/dropin-apply</code> puts that on your disk.</p>
@@ -644,7 +657,7 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
 <table>
   <thead><tr><th>Skills</th><th>Document</th><th>Default scope</th><th>Removal</th></tr></thead>
   <tbody>
-    <tr><td><code>/resume</code> <code>/wrap</code> <code>/dropin-apply</code> <code>/dropin-check</code> <code>/dropin-update</code></td><td>01 §D-4</td><td>global &mdash; <code>~/.claude/skills/</code></td><td>Delete the folder. Accumulated records under <code>docs/</code> stay by default (you are asked) &mdash; they are data.</td></tr>
+    <tr><td><code>/resume</code> <code>/wrap</code> <code>/dropin-apply</code> <code>/dropin-check</code> <code>/dropin-update</code> <code>/dropin-sync</code></td><td>01 §D-4</td><td>global &mdash; <code>~/.claude/skills/</code></td><td>Delete the folder. Accumulated records under <code>docs/</code> stay by default (you are asked) &mdash; they are data.</td></tr>
     <tr><td><code>/svg-design</code></td><td>03 §2</td><td>global</td><td>Delete the folder.</td></tr>
     <tr><td><code>/frontend-design</code></td><td>03 §3</td><td>global &mdash; plugin or <code>npx skills add -g</code></td><td>Delete the folder. If npx only left a link, delete what the link points to as well. Once <code>kr-ui-guide</code> is gone too, delete the font-licence policy section from the <code>CLAUDE.md</code>.</td></tr>
     <tr><td>the six feature skills</td><td>03 §7</td><td>global &mdash; project scope if the team and CI must share them &middot; or the <code>dandi</code> plugin</td><td>Plugin: <code>/plugin uninstall dandi-feature-docs@dandi</code>. Copy: guard first, then the six folders. <code>docs/features/</code> and <code>tests/e2e/</code> stay.</td></tr>
@@ -656,7 +669,7 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
 </div>
 <p class="lead" style="margin-top:16px">Every one of these has a documented removal path, which is deliberate: an install you cannot reverse was never really a choice. The full procedures &mdash; detect, install, verify, remove &mdash; are in the documents themselves. For what each install question means, see the <a href="options.html">options dictionary</a>; to work through it step by step, take the <a href="learn.html">course</a>.</p>
 
-<footer>Dandi &middot; Skill catalog &middot; 2026-09-30 &middot; Skills installed by documents 01 §D-4, 02 STEP 3 ⓔ, 03 §2, §3, §7, §8 and §9. Commands are shown without an alias; apply yours if you chose one at install time. &middot; Fonts: Pretendard, IBM Plex Mono &mdash; both SIL Open Font License 1.1 (free for commercial use and web embedding)</footer>
+<footer>Dandi &middot; Skill catalog &middot; 2026-10-06 &middot; Skills installed by documents 01 §D-4, 02 STEP 3 ⓔ, 03 §2, §3, §7, §8 and §9. Commands are shown without an alias; apply yours if you chose one at install time. &middot; Fonts: Pretendard, IBM Plex Mono &mdash; both SIL Open Font License 1.1 (free for commercial use and web embedding)</footer>
 
 </div>
 <script>

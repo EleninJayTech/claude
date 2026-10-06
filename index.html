@@ -246,7 +246,7 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
       <svg width="26" height="26"><use href="#check"/></svg>
       <span class="no">01</span>
       <span class="desc"><b>Foundation &mdash; memory and safety.</b>
-        <p>AI forgets everything when the chat closes. Document 01 builds a work-log system plus <code class="i">/resume</code> (pick up where you left off), <code class="i">/wrap</code> (close out the session), <code class="i">/dropin-check</code> (audit your setup), <code class="i">/dropin-update</code> (refresh the documents) and <code class="i">/dropin-apply</code> (re-apply the setup), so <b>yesterday&rsquo;s work is still there today</b> &mdash; and it locks passwords and key files so the AI can neither read them nor send them anywhere.</p>
+        <p>AI forgets everything when the chat closes. Document 01 builds a work-log system plus <code class="i">/resume</code> (pick up where you left off), <code class="i">/wrap</code> (close out the session), <code class="i">/dropin-check</code> (audit your setup), <code class="i">/dropin-update</code> (refresh the documents) <code class="i">/dropin-apply</code> (re-apply the setup) and <code class="i">/dropin-sync</code> (all three in order), so <b>yesterday&rsquo;s work is still there today</b> &mdash; and it locks passwords and key files so the AI can neither read them nor send them anywhere.</p>
         <a href="https://github.com/EleninJayTech/claude/blob/main/01_Claude-Code-통합구성-범용마스터.md">01_Claude-Code-통합구성-범용마스터.md ↗</a></span>
     </li>
     <li>
@@ -336,7 +336,9 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
     <span class="dim"># Refresh my copies of the documents &mdash; the instructions themselves</span><br>
     <b>/dropin-update</b><br>
     <span class="dim"># Bring the configuration itself up to date &mdash; documents, skills, settings</span><br>
-    <b>/dropin-apply</b>  <span class="dim">&larr; this is the one that actually changes your setup</span>
+    <b>/dropin-apply</b>  <span class="dim">&larr; this is the one that actually changes your setup</span><br>
+    <span class="dim"># Or all three in order, in one go</span><br>
+    <b>/dropin-sync</b>
   </div>
   <ul>
     <li><b><code class="i">/dropin-update</code> alone is not an update.</b> It refreshes the instructions, not the thing the instructions build. Your installed skills and settings stay exactly as they were until you run <code class="i">/dropin-apply</code>.</li>
@@ -387,7 +389,7 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
 
 </main>
 
-<footer>Dandi &middot; How-to page &middot; 2026-09-23 &middot; Repository: <a href="https://github.com/EleninJayTech/claude">github.com/EleninJayTech/claude</a> &middot; <a href="https://github.com/EleninJayTech/claude/releases/latest">Latest release notes</a> &middot; The install documents 00&ndash;06 (markdown) are the source of truth &mdash; this page is the human-facing guide. The hero graphic uses the 03 svg-design recipe (Gooey, Squiggle). Design follows the kr-ui-guide skill (repository skills/kr-ui-guide). &middot; Fonts: Pretendard, IBM Plex Mono &mdash; both SIL Open Font License 1.1 (free for commercial use and web embedding)</footer>
+<footer>Dandi &middot; How-to page &middot; 2026-10-06 &middot; Repository: <a href="https://github.com/EleninJayTech/claude">github.com/EleninJayTech/claude</a> &middot; <a href="https://github.com/EleninJayTech/claude/releases/latest">Latest release notes</a> &middot; The install documents 00&ndash;06 (markdown) are the source of truth &mdash; this page is the human-facing guide. The hero graphic uses the 03 svg-design recipe (Gooey, Squiggle). Design follows the kr-ui-guide skill (repository skills/kr-ui-guide). &middot; Fonts: Pretendard, IBM Plex Mono &mdash; both SIL Open Font License 1.1 (free for commercial use and web embedding)</footer>
 
 <script>
 (function(){try{

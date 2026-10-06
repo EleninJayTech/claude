@@ -570,6 +570,7 @@ footer{max-width:1120px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
       <tr><td>뒤처진 게 있는지 알고 싶다</td><td><code>/dropin-check</code></td><td>없음 — 읽고 보고만 합니다</td></tr>
       <tr><td>문서 사본을 새것으로 바꾸고 싶다</td><td><code>/dropin-update</code></td><td>문서 파일만</td></tr>
       <tr><td>구성 자체를 최신으로 올리고 싶다</td><td><code>/dropin-apply</code></td><td>문서·설치된 스킬·설정</td></tr>
+      <tr><td>셋을 순서대로 한 번에 하고 싶다</td><td><code>/dropin-sync</code></td><td>세 스킬이 바꿀 것 전부 — 질문은 각 스킬이 묻는 자리에서</td></tr>
     </tbody>
   </table>
   <h3>사람들이 가장 많이 헷갈리는 것</h3>
@@ -611,7 +612,7 @@ footer{max-width:1120px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
 </div>
 
 <footer>
-  단디 · 설치 옵션 학습 코스 · 2026-09-30<br>
+  단디 · 설치 옵션 학습 코스 · 2026-10-06<br>
   각 항목의 정본은 해당 하위 문서(01~06)입니다. 이 페이지는 사람이 배우기 위한 안내이며, 설치 절차 자체를 바꾸지 않습니다. 진행도는 이 브라우저의 localStorage에만 저장됩니다.<br>
   저장소: github.com/EleninJayTech/claude ·
   <a href="../index.ko.html">사용법</a> · <a href="intro.ko.html">소개 영상</a> · <a href="demo.ko.html">설치 시연</a> · <a href="options.ko.html">옵션 사전</a> · <a href="skills.ko.html">스킬 카탈로그</a><br>
@@ -671,7 +672,7 @@ var DOC01 = [
   ['b','ⓑ 글로벌 보안','.env·인증서 읽기 차단 + 셸 우회도 차단 (해제 비권장)', true,
     ['~/.claude/settings.json  <span class="c"># deny + hooks</span>']],
   ['c','ⓒ /resume · /wrap · dropin- 계열','세션 시작·마감 명령 + 구성 점검·재적용 명령 — 실질적 핵심', true,
-    ['~/.claude/skills/resume/SKILL.md','~/.claude/skills/wrap/SKILL.md','~/.claude/skills/dropin-apply/','~/.claude/skills/dropin-check/','~/.claude/skills/dropin-update/']],
+    ['~/.claude/skills/resume/SKILL.md','~/.claude/skills/wrap/SKILL.md','~/.claude/skills/dropin-apply/','~/.claude/skills/dropin-check/','~/.claude/skills/dropin-update/','~/.claude/skills/dropin-sync/']],
   ['d','ⓓ 프로젝트 기록 체계','기록 3종 + 동시 편집 충돌 방지', true,
     ['docs/PROJECT_PLAN.md  <span class="c"># 로드맵</span>','docs/PROGRESS.md      <span class="c"># 세션 로그</span>','docs/DECISIONS.md     <span class="c"># 결정 로그</span>','.gitattributes        <span class="c"># merge=union</span>','.gitignore            <span class="c"># 개인 설정·격리 폴더 제외</span>']],
   ['e','ⓔ 프로젝트 권한','무엇을 묻지 않고 실행해도 되는지', true,

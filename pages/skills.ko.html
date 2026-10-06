@@ -222,6 +222,7 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
     <tr><td><code>/dropin-check</code></td><td>없음 &middot; 읽기 전용</td><td>이 PC 구성이 뒤처졌는지 의심될 때</td><td>차이 보고서 &mdash; 설치는 하지 않는다</td></tr>
     <tr><td><code>/dropin-update</code></td><td>없음</td><td>문서 사본 자체가 낡았을 때</td><td>새 문서 파일 &mdash; 구성은 그대로다</td></tr>
     <tr><td><code>/dropin-apply</code></td><td>없음</td><td>구성 자체를 최신으로 맞추고 싶을 때</td><td>문서·설치된 스킬·설정을 한 번에 재적용</td></tr>
+    <tr><td><code>/dropin-sync</code></td><td>없음</td><td>아래 세 단계를 고르지 않고 순서대로 다 돌리고 싶을 때</td><td>문서 갱신·상태 점검·구성 재적용을 한 번에, 보고는 하나</td></tr>
 
     <tr><th class="grp" colspan="4" scope="colgroup">기능 문서·테스트·릴리스 &middot; 03 §7</th></tr>
     <tr><td><code>/feature-docs</code></td><td><code>init</code> | <code>sync [기준]</code></td><td>처음 문서화할 때, 바뀐 것을 반영할 때</td><td><code>docs/features/</code> 전체</td></tr>
@@ -327,6 +328,17 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
         <dt>결과</dt><dd>문서와 일치하는 구성, 그리고 그 사실을 적은 <code>dropin-applied</code> 줄. 기능 문서·refactor·kr-ui-guide와 <code>dropin-</code> 계열처럼 이미 깔린 스킬은 <b>이름이 아니라 내용으로</b> 대조하므로, 파일 수는 그대로고 문장만 바뀐 개정도 교체된다 &mdash; <code>dropin-</code> 계열은 배포본과 다르면 기본값이 <code>재구성</code>으로 나온다. <code>/resume</code>·<code>/wrap</code>은 있는지만 본다 &mdash; 새 본문으로 갈려면 이미 깔린 글로벌 항목을 묻는 질문에서 기본값 <code>유지</code> 대신 <code>재구성</code>을 고른다.</dd>
       </dl>
       <div class="warn soft"><b>알아 둘 것.</b> Claude에게 &ldquo;이 문서를 학습해서 적용해줘&rdquo;라고 말하는 것과 같은 일이다 &mdash; 그 문장도 그대로 동작한다. 명령이 따로 있는 이유는, 보이지 않는 문은 열리지 않기 때문이다.</div>
+      <div class="tags"><span class="tag">글로벌</span><span class="tag">먼저 묻는다</span></div>
+    </article>
+    <article class="skill" data-g="session">
+      <div class="cmd"><span class="sl">/</span>dropin-sync</div>
+      <div class="args">인수 없음</div>
+      <p class="one"><code>/dropin-update</code> → <code>/dropin-check</code> → <code>/dropin-apply</code>를 이 순서로 명령 하나에 돌린다.</p>
+      <dl>
+        <dt>언제</dt><dd>전부 최신으로 맞추고 싶은데 순서를 외우고 싶지 않을 때.</dd>
+        <dt>하는 일</dt><dd>각 스킬 차례가 오면 그 스킬을 읽고 그대로 따른다. 자기 절차는 없어서 셋 중 하나를 고치면 이 스킬도 따라온다. 적용할 수 없는 단계(예: 원본 저장소 안의 문서 갱신)는 건너뜀으로 표시하고 다음 단계를 계속한다. 각 스킬이 끝에 붙이던 &ldquo;다음엔 ○○을 하라&rdquo; 안내는 뺀다 &mdash; 다음 단계가 이미 돌고 있기 때문이다.</dd>
+        <dt>결과</dt><dd>단계별로 한 일과 남은 일을 담은 보고 하나. 개별 스킬이 묻던 질문은 같은 자리에서 그대로 묻는다 &mdash; 대신 승인해 주지 않는다.</dd>
+      </dl>
       <div class="tags"><span class="tag">글로벌</span><span class="tag">먼저 묻는다</span></div>
     </article>
 
@@ -612,13 +624,14 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
 </div>
 
 <h2>이 전부를 최신으로 유지하기</h2>
-<p class="lead">문서도 바뀌고 스킬도 바뀐다. 세 명령이 서로 다른 세 질문을 맡는데, 이걸 헷갈리는 것이 낡은 구성을 계속 쓰게 되는 가장 흔한 경로다.</p>
+<p class="lead">문서도 바뀌고 스킬도 바뀐다. 명령마다 맡은 질문이 다른데, 이걸 헷갈리는 것이 낡은 구성을 계속 쓰게 되는 가장 흔한 경로다.</p>
 <table>
   <thead><tr><th>하고 싶은 것</th><th>명령</th><th>건드리는 것</th><th>그대로 두는 것</th></tr></thead>
   <tbody>
     <tr><td>뒤처진 게 있는지 알고 싶다</td><td><code>/dropin-check</code></td><td>없다 &mdash; 읽고 보고만 한다</td><td>전부</td></tr>
     <tr><td>문서 사본을 새것으로 바꾸고 싶다</td><td><code>/dropin-update</code></td><td>문서 파일(00~06)</td><td>설치된 스킬과 설정</td></tr>
     <tr><td>구성 자체를 최신으로 올리고 싶다</td><td><code>/dropin-apply</code></td><td>문서·설치된 스킬·설정 중 내가 승인한 것</td><td>거절한 것 &mdash; 덮기 전에 묻는다</td></tr>
+    <tr><td>셋을 순서대로 한 번에 하고 싶다</td><td><code>/dropin-sync</code></td><td>세 스킬이 바꿀 것 전부 &mdash; 각 부분은 묻는 자리에서 내가 승인</td><td>거절한 것</td></tr>
   </tbody>
 </table>
 <p class="lead" style="margin-top:14px">짧게 말하면 <b><code>/dropin-update</code>만으로는 업데이트가 아니다.</b> 그건 설명서를 새것으로 바꾸는 일이지, 설명서가 만드는 물건을 바꾸는 일이 아니다. 스킬에 파일이 늘었거나 문장이 바뀌었다면 그것을 내 디스크에 올리는 건 <code>/dropin-apply</code>뿐이다.</p>
@@ -644,7 +657,7 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
 <table>
   <thead><tr><th>스킬</th><th>문서</th><th>기본 스코프</th><th>제거</th></tr></thead>
   <tbody>
-    <tr><td><code>/resume</code> <code>/wrap</code> <code>/dropin-apply</code> <code>/dropin-check</code> <code>/dropin-update</code></td><td>01 §D-4</td><td>글로벌 &mdash; <code>~/.claude/skills/</code></td><td>폴더 삭제. 쌓인 <code>docs/</code> 기록은 묻되 기본으로 남긴다 &mdash; 그건 데이터다.</td></tr>
+    <tr><td><code>/resume</code> <code>/wrap</code> <code>/dropin-apply</code> <code>/dropin-check</code> <code>/dropin-update</code> <code>/dropin-sync</code></td><td>01 §D-4</td><td>글로벌 &mdash; <code>~/.claude/skills/</code></td><td>폴더 삭제. 쌓인 <code>docs/</code> 기록은 묻되 기본으로 남긴다 &mdash; 그건 데이터다.</td></tr>
     <tr><td><code>/svg-design</code></td><td>03 §2</td><td>글로벌</td><td>폴더 삭제.</td></tr>
     <tr><td><code>/frontend-design</code></td><td>03 §3</td><td>글로벌 &mdash; 플러그인 또는 <code>npx skills add -g</code></td><td>폴더 삭제. npx가 링크만 걸어 뒀으면 링크가 가리키는 실체까지 지운다. <code>kr-ui-guide</code>까지 없으면 <code>CLAUDE.md</code>의 폰트 라이선스 정책 절도 지운다.</td></tr>
     <tr><td>기능 문서 6종</td><td>03 §7</td><td>글로벌 &mdash; 팀·CI가 공유해야 하면 프로젝트 스코프 &middot; 또는 <code>dandi</code> 플러그인</td><td>플러그인: <code>/plugin uninstall dandi-feature-docs@dandi</code>. 복사본: 가드부터 걷고 여섯 폴더. <code>docs/features/</code>와 <code>tests/e2e/</code>는 남긴다.</td></tr>
@@ -656,7 +669,7 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
 </div>
 <p class="lead" style="margin-top:16px">전부 제거 절차가 문서에 적혀 있는데, 이건 의도한 것이다. 되돌릴 수 없는 설치는 애초에 선택지를 준 게 아니기 때문이다. 감지·설치·검증·제거 4단 전체는 각 문서에 있다. 설치할 때 나오는 질문의 뜻은 <a href="options.ko.html">옵션 사전</a>에, 처음부터 차근히 밟아 보려면 <a href="learn.ko.html">학습 코스</a>에 있다.</p>
 
-<footer>단디(Dandi) &middot; 스킬 카탈로그 &middot; 2026-09-30 &middot; 01 §D-4 · 02 STEP 3 ⓔ · 03 §2 · §3 · §7 · §8 · §9가 설치하는 스킬들. 명령은 별칭 없이 적었으니, 설치할 때 별칭을 골랐다면 그것을 얹어 읽으면 된다. &middot; 글꼴: Pretendard, IBM Plex Mono — 둘 다 SIL 오픈 폰트 라이선스 1.1(상업 이용·웹 임베딩 무료)</footer>
+<footer>단디(Dandi) &middot; 스킬 카탈로그 &middot; 2026-10-06 &middot; 01 §D-4 · 02 STEP 3 ⓔ · 03 §2 · §3 · §7 · §8 · §9가 설치하는 스킬들. 명령은 별칭 없이 적었으니, 설치할 때 별칭을 골랐다면 그것을 얹어 읽으면 된다. &middot; 글꼴: Pretendard, IBM Plex Mono — 둘 다 SIL 오픈 폰트 라이선스 1.1(상업 이용·웹 임베딩 무료)</footer>
 
 </div>
 <script>

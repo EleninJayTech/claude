@@ -570,6 +570,7 @@ footer{max-width:1120px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
       <tr><td>Find out whether anything fell behind</td><td><code>/dropin-check</code></td><td>Nothing &mdash; it reads and reports</td></tr>
       <tr><td>Refresh your copies of the documents</td><td><code>/dropin-update</code></td><td>The document files only</td></tr>
       <tr><td>Bring the configuration itself up to date</td><td><code>/dropin-apply</code></td><td>Documents, installed skills, settings</td></tr>
+      <tr><td>Do all three in order</td><td><code>/dropin-sync</code></td><td>Whatever the three would change &mdash; each asks where it asks</td></tr>
     </tbody>
   </table>
   <h3>The one thing people get wrong</h3>
@@ -611,7 +612,7 @@ footer{max-width:1120px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
 </div>
 
 <footer>
-  Dandi &middot; Install options course &middot; 2026-09-30<br>
+  Dandi &middot; Install options course &middot; 2026-10-06<br>
   The source of truth for each item is its own document (01&ndash;06). This page exists for people to learn from; it does not change the install procedure. Progress is stored only in this browser&rsquo;s localStorage.<br>
   저장소: github.com/EleninJayTech/claude ·
   <a href="../index.html">Guide</a> &middot; <a href="intro.html">Intro</a> &middot; <a href="demo.html">Walkthrough</a> &middot; <a href="options.html">Dictionary</a> &middot; <a href="skills.html">Skill catalog</a><br>
@@ -671,7 +672,7 @@ var DOC01 = [
   ['b','\u24d1 Global security','Blocks reading .env and certificates, shell detours included (unchecking not advised)', true,
     ['~/.claude/settings.json  <span class="c"># deny + hooks</span>']],
   ['c','\u24d2 /resume \u00b7 /wrap \u00b7 dropin- skills','Session open/close commands plus setup audit and re-apply \u2014 the practical core', true,
-    ['~/.claude/skills/resume/SKILL.md','~/.claude/skills/wrap/SKILL.md','~/.claude/skills/dropin-apply/','~/.claude/skills/dropin-check/','~/.claude/skills/dropin-update/']],
+    ['~/.claude/skills/resume/SKILL.md','~/.claude/skills/wrap/SKILL.md','~/.claude/skills/dropin-apply/','~/.claude/skills/dropin-check/','~/.claude/skills/dropin-update/','~/.claude/skills/dropin-sync/']],
   ['d','\u24d3 Project record system','Three record files plus concurrent-edit protection', true,
     ['docs/PROJECT_PLAN.md  <span class="c"># roadmap</span>','docs/PROGRESS.md      <span class="c"># session log</span>','docs/DECISIONS.md     <span class="c"># decision log</span>','.gitattributes        <span class="c"># merge=union</span>','.gitignore            <span class="c"># excludes personal + isolated dirs</span>']],
   ['e','\u24d4 Project permissions','What may run without asking', true,
