@@ -313,8 +313,9 @@ footer{max-width:1120px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
     </div>
   </div>
   <div class="coach"><span class="who">🧭</span><div>
-    <b>잘 모르겠으면 '권장'</b>
-    권장 모드는 Claude가 조합을 정한 뒤 <b>왜 그렇게 골랐는지 한 줄로 보여주고</b> 확인을 받습니다.
+    <b>처음이면 '최소', 다시 돌릴 때는 기록대로</b>
+    적용 기록이 없는 새 PC·폴더는 <b>최소</b>가 기본 추천입니다 — 가볍게 시작하고, 작업이 더 필요로 하면 Claude가 한 줄로 추천해 고른 것만 깝니다.
+    기록이 있으면 <b>권장</b>이 기본이고 기록의 모드를 따릅니다. 권장 모드는 Claude가 조합을 정한 뒤 <b>왜 그렇게 골랐는지 한 줄로 보여주고</b> 확인을 받습니다.
     '전체'를 골라도 이미 있는 설정을 말없이 덮어쓰지는 않습니다.
   </div></div>
 </section>
@@ -353,7 +354,7 @@ footer{max-width:1120px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
   <h3>빠른 경로 — 이미 구성된 PC에서만</h3>
   <p>이 PC에 <b>이미 설치한 기록이 있고, 이번 프로젝트에는 아직 설치 기록이 없을 때만</b> 맨 처음에 나오는 질문입니다. 기록에 적힌 PC 이름을 보여 주고 <b>이 PC가 맞는지</b> 먼저 확인합니다(아니라고 답하면 이 질문은 접고 하나씩 묻습니다). 팀원이 이미 설치해 둔 저장소를 받았거나 다시 적용하는 중이라면 나오지 않습니다 — 팀이 맞춰 둔 값을 내 PC 값으로 덮지 않기 위해서입니다. 새 모드가 아니라, 공통 질문(기반 모드·번들·프로필·언어·별칭)에 <b>한 번에 답하는 지름길</b>입니다. 어느 것을 고르든 가져올 값을 보여 주고 <b>확인을 받습니다</b>.</p>
   <ul>
-    <li><b>이 PC 기본값으로</b>(기본 추천) — 이 PC에 정해 둔 프로필(있으면 언어·별칭도)을 쓰고 모드는 권장으로 갑니다. 값을 보여 주고 <b>확인만</b> 받습니다. 이 PC에 적힌 값이 없는 항목은 그 질문만 따로 물어봅니다. 같은 PC에서 두 번째 프로젝트부터 이것.</li>
+    <li><b>이 PC 기본값으로</b>(기본 추천) — 이 PC에 정해 둔 프로필(있으면 언어·별칭도)을 쓰고 모드는 최소(+작업 중 추천)로 갑니다. 값을 보여 주고 <b>확인만</b> 받습니다. 이 PC에 적힌 값이 없는 항목은 그 질문만 따로 물어봅니다. 같은 PC에서 두 번째 프로젝트부터 이것.</li>
     <li><b>다른 프로젝트와 같게</b> — 이 PC의 다른 프로젝트에 적힌 모드·번들·언어·별칭을 가져옵니다. 프로필만은 이 PC의 값입니다. 지금도 <b>실제로 있고</b> 설치 기록이 남은 프로젝트만 후보로 나오며, 어느 프로젝트에서 가져왔는지는 기록에 남기지 않습니다(이 프로젝트 기록은 팀에 공유되니까요).</li>
     <li><b>권장 모드로</b> — 이 폴더만 보고 Claude가 조합한 ‘권장’과 기본값으로 갑니다.</li>
     <li><b>하나씩 고르기</b> — 지름길 없이 공통 질문을 처음부터 전부 받습니다.</li>
@@ -395,7 +396,7 @@ footer{max-width:1120px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
   <p class="eyebrow">챕터 6 · 문서 속 항목 ①</p>
   <h2 id="t6">01 기본 셋업 — 체크를 끄면 파일이 사라집니다</h2>
   <p class="lead">
-    01 문서는 <b>"어제 뭐 했더라"를 없애는</b> 구성입니다. 여섯 항목(ⓐ~ⓕ)을 켜고 꺼 보세요 —
+    01 문서는 <b>"어제 뭐 했더라"를 없애는</b> 구성입니다. 항목(ⓐ~ⓖ)을 켜고 꺼 보세요(최소 모드는 ⓑⓒⓓⓖ, 권장·전체는 전부) —
     아래 미리보기에서 <b>실제로 만들어지는 파일</b>이 바뀝니다.
   </p>
   <div id="doc01Rows"></div>
@@ -590,7 +591,7 @@ footer{max-width:1120px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
   </div>
   <h3>기억할 것 세 가지</h3>
   <ul>
-    <li>잘 모르겠으면 <b>권장 모드</b> — Claude가 조합의 이유를 보여주고 확인받습니다.</li>
+    <li>처음이면 <b>최소 모드</b> — 가볍게 시작하고, 나머지는 작업 중 추천받아 고른 것만 더합니다(<code class="i">/dropin-apply 추천</code>으로 직접 불러도 됩니다).</li>
     <li>어떤 선택을 해도 <b>승인 없이 덮어쓰지 않고</b>, 시크릿은 읽지도 커밋하지도 않습니다.</li>
     <li>체크를 안 해도 <b>나중에 다시 돌려 추가</b>할 수 있고, 반대로 <b>이미 깐 것을 뺄</b> 수도 있습니다 — 설치 기록이 남아 있어서 이어서 갑니다. 뺄 때는 설치가 만든 것만 지우고, 그동안 쌓인 작업 기록은 기본으로 남깁니다.</li>
   </ul>
@@ -612,7 +613,7 @@ footer{max-width:1120px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
 </div>
 
 <footer>
-  단디 · 설치 옵션 학습 코스 · 2026-10-06<br>
+  단디 · 설치 옵션 학습 코스 · 2026-10-08<br>
   각 항목의 정본은 해당 하위 문서(01~06)입니다. 이 페이지는 사람이 배우기 위한 안내이며, 설치 절차 자체를 바꾸지 않습니다. 진행도는 이 브라우저의 localStorage에만 저장됩니다.<br>
   저장소: github.com/EleninJayTech/claude ·
   <a href="../index.ko.html">사용법</a> · <a href="intro.ko.html">소개 영상</a> · <a href="demo.ko.html">설치 시연</a> · <a href="options.ko.html">옵션 사전</a> · <a href="skills.ko.html">스킬 카탈로그</a><br>
@@ -645,8 +646,8 @@ var STEPS = [
 ];
 
 var MODES = {
-  minimal:{name:'최소', desc:'01만 — 기록 체계와 보안, 그것도 필수 항목만'},
-  rec:{name:'권장', desc:'감지된 상황에 따라 Claude가 자동 조합 (기본 추천)'},
+  minimal:{name:'최소', desc:'01만 — 기록 체계와 보안(필수 항목만) + 작업 중 추천 (기록 없는 대상의 기본 추천)'},
+  rec:{name:'권장', desc:'감지된 상황에 따라 Claude가 자동 조합 (재적용·기록 있는 대상의 기본)'},
   full:{name:'전체', desc:'01~06 전부 — 해당 없는 것은 빼고 알려줌'},
   custom:{name:'사용자', desc:'문서를 고르고, 그 안의 항목도 직접 고름'}
 };
@@ -678,11 +679,13 @@ var DOC01 = [
   ['e','ⓔ 프로젝트 권한','무엇을 묻지 않고 실행해도 되는지', true,
     ['.claude/settings.json  <span class="c"># allow / ask / deny</span>']],
   ['f','ⓕ effort 묶음 · 캐시 가이드','모델마다 추론 강도를 묶어 두기 + 캐시 깨지 않는 습관', true,
-    ['~/.claude/settings.json  <span class="c"># modelSettings (모델별 강도) — 하위 모델 기본값이 이미 medium이면 쓰지 않음</span>']]
+    ['~/.claude/settings.json  <span class="c"># modelSettings (모델별 강도) — 하위 모델 기본값이 이미 medium이면 쓰지 않음</span>']],
+  ['g','ⓖ 작업 중 추천','작업이 드롭인 항목이 필요한 상태에 새로 걸리면 한 줄 추천 → 수락하면 /dropin-apply 추천', true,
+    ['~/.claude/CLAUDE.md  <span class="c"># ## 10. 작업 중 추천 한 줄</span>']]
 ];
 
 var PRESETS = [
-  ['Claude Code를 처음 깐 새 PC', {mode:'rec',situ:'newpc',bundles:[],prof:'std'}],
+  ['Claude Code를 처음 깐 새 PC', {mode:'minimal',situ:null,bundles:[],prof:'std'}],
   ['혼자 하는 개발 프로젝트', {mode:'rec',situ:'dev',bundles:['verify'],prof:'std'}],
   ['웹 화면을 만드는 프로젝트', {mode:'rec',situ:'dev',bundles:['design','verify'],prof:'std'}],
   ['Pro 요금제라 한도가 걱정', {mode:'rec',situ:'dev',bundles:[],prof:'save'}],
@@ -801,7 +804,7 @@ function keysOf(o){ return Object.keys(o).map(function(k){ var v=o[k]; return {k
 
 /* ───────── 모드/번들 → 계획 계산 ───────── */
 function basePlan(mode, situ){
-  if(mode==='minimal') return {docs:{'01':'기록 체계·보안 (필수 항목만)'}, why:'가장 가볍게 시작합니다. 나머지는 나중에 언제든 추가할 수 있습니다.'};
+  if(mode==='minimal') return {docs:{'01':'기록 체계·보안 (필수 항목만) + 작업 중 추천 한 줄'}, why:'가장 가벼운 시작입니다 — 나머지는 작업 중 추천받아 고른 것만 추가합니다(/dropin-apply 추천).'};
   if(mode==='full') return {docs:{'01':'기록 체계·보안','02':'모델 분담 (코드 있을 때)','03':'확장 기능','04':'검증 자동화 (코드 있을 때)','05':'출력 스타일','06':'루틴 (게이트 통과 시)'}, why:'문서는 전부 깔되(기본 해제 항목은 따로 물어봅니다), 해당 없는 것(코드 없는 저장소의 02 등)은 빼고 알려줍니다.'};
   if(mode==='custom') return {docs:null, why:'문서를 고르고 → 그 안의 항목(챕터 6~8 내용)까지 전부 질문으로 나옵니다.'};
   if(mode==='rec'){

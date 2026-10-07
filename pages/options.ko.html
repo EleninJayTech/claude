@@ -138,7 +138,7 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
     <li><a href="#words">0. 먼저 알아둘 낱말 8개</a> — 스코프·settings.json·훅·서브에이전트 같은 말부터</li>
     <li><a href="#flow">1. 질문은 어떤 순서로 나오나</a></li>
     <li><a href="#common">2. 맨 처음 공통 질문</a> — 어떤 문서를 고르든 먼저 묻는 것들</li>
-    <li><a href="#doc01">3. 01 기본 셋업</a> — 기록 체계와 보안 (ⓐ~ⓕ)</li>
+    <li><a href="#doc01">3. 01 기본 셋업</a> — 기록 체계와 보안 (ⓐ~ⓖ)</li>
     <li><a href="#doc02">4. 02 모델 분담</a> — 서브에이전트 로스터</li>
     <li><a href="#doc03">5. 03 확장 기능</a> — HUD · 디자인 스킬 · MCP · 브라우저</li>
     <li><a href="#doc04">6. 04 검증 자동화</a> — 훅 게이트 · gh · CI</li>
@@ -240,9 +240,9 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
 
   <div class="opt">
     <div class="opt-head"><span class="name">이 PC 기본값으로</span><span class="id">기본 추천</span><span class="badge b-on">확인만</span></div>
-    <p class="lead">이 PC에 이미 정해 둔 <b>프로필·산출물 언어·스킬 이름 별칭</b>을 그대로 쓰고, 기반 모드는 <b>권장</b>으로 갑니다.</p>
+    <p class="lead">이 PC에 이미 정해 둔 <b>프로필·산출물 언어·스킬 이름 별칭</b>을 그대로 쓰고, 기반 모드는 <b>최소</b>(+작업 중 추천)로 갑니다.</p>
     <dl>
-      <dt>생기는 것</dt><dd>이 PC의 적용 기록에 남은 값 + 기반 모드 ‘권장’ + 목적 번들은 Claude가 감지한 추천값. 값을 한 번 보여 주고 <b>확인만</b> 받습니다. 이 PC 기록에 없는 값은 그 질문으로 따로 물어봅니다</dd>
+      <dt>생기는 것</dt><dd>이 PC의 적용 기록에 남은 값 + 기반 모드 ‘최소’ + 목적 번들은 Claude가 감지한 추천값. 값을 한 번 보여 주고 <b>확인만</b> 받습니다. 이 PC 기록에 없는 값은 그 질문으로 따로 물어봅니다</dd>
       <dt>정말 이 PC인가</dt><dd>그 기록의 PC 이름을 함께 보여 주고 이 PC가 맞는지 <b>직접 판단</b>하게 합니다(다른 PC 백업에서 복원된 기록이면 남의 값이 들어 있습니다). 아니라고 답하면 빠른 경로를 접고 하나씩 묻습니다</dd>
       <dt>이럴 때</dt><dd>같은 PC에서 두 번째·세 번째 프로젝트를 깔 때 — 매번 같은 답을 하고 있다면 이것</dd>
       <dt>안 고르면</dt><dd>공통 질문을 하나씩 받습니다(아래 ‘하나씩 고르기’와 같습니다)</dd>
@@ -287,20 +287,20 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
   <h3>2-2. 기반 모드 — 넷 중 하나 (단일 선택)</h3>
 
   <div class="opt">
-    <div class="opt-head"><span class="name">최소</span><span class="badge b-off">01만</span></div>
-    <p class="lead">기록 체계와 보안만 깝니다. 문서 안 세부 항목도 필수만.</p>
+    <div class="opt-head"><span class="name">최소</span><span class="id">기록 없는 대상의 기본 추천</span><span class="badge b-off">01만</span></div>
+    <p class="lead">기록 체계와 보안, 그리고 <b>나머지는 작업 중에 추천해 주는</b> 한 줄만 깝니다. 문서 안 세부 항목도 필수만. 새 PC나 아직 적용 기록이 없는 폴더의 기본 추천입니다.</p>
     <dl>
-      <dt>생기는 것</dt><dd>글로벌 <code>settings.json</code>(보안 잠금), <code>/resume</code>·<code>/wrap</code>·<code>dropin-</code> 계열 스킬(<code>/dropin-apply</code>·<code>/dropin-check</code>·<code>/dropin-update</code>·<code>/dropin-sync</code>), 프로젝트 <code>docs/</code> 3종</dd>
-      <dt>이럴 때</dt><dd>코드가 없는 문서 저장소, 혹은 “일단 기본만 써보고 싶다”</dd>
+      <dt>생기는 것</dt><dd>글로벌 <code>settings.json</code>(보안 잠금), <code>/resume</code>·<code>/wrap</code>·<code>dropin-</code> 계열 스킬(<code>/dropin-apply</code>·<code>/dropin-check</code>·<code>/dropin-update</code>·<code>/dropin-sync</code>), 프로젝트 <code>docs/</code> 3종, <code>~/.claude/CLAUDE.md</code>의 작업 중 추천 한 줄(01 ⓖ)</dd>
+      <dt>이럴 때</dt><dd>처음 깔 때, 코드가 없는 문서 저장소, 혹은 “일단 기본만 써보고 싶다” — 나중에 작업이 테스트·CI·프론트엔드 스택처럼 더 필요해지면 Claude가 한 줄로 추천하고, 수락한 것만 깝니다</dd>
     </dl>
   </div>
 
   <div class="opt">
-    <div class="opt-head"><span class="name">권장</span><span class="id">기본 추천</span><span class="badge b-on">상황별 자동 조합</span></div>
+    <div class="opt-head"><span class="name">권장</span><span class="id">재적용·기록 있는 대상의 기본</span><span class="badge b-on">상황별 자동 조합</span></div>
     <p class="lead">감지 결과에 따라 Claude가 알아서 조합하고, <b>왜 그렇게 골랐는지 한 줄로 보여줍니다</b>.</p>
     <dl>
       <dt>규칙</dt><dd>새 PC → 01(글로벌)+03(HUD) / 개발 프로젝트 → 01+02+04 / 문서·비개발 저장소 → 01만 / 이미 01이 깔린 곳 → 아직 없는 것 중 필요한 것만</dd>
-      <dt>이럴 때</dt><dd><b>대부분의 경우.</b> 잘 모르겠으면 이걸 고르면 됩니다</dd>
+      <dt>이럴 때</dt><dd>나중에 추천받기보다 이 폴더에 맞는 것을 지금 한 번에 깔고 싶을 때. 다시 돌릴 때는 기록의 모드를 따라 이쪽이 기본으로 나옵니다</dd>
     </dl>
   </div>
 
@@ -420,7 +420,7 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
 <!-- ═══════════ 3. 01 ═══════════ -->
 <section id="doc01">
   <h2>3. 01 기본 셋업 — 기록 체계와 보안</h2>
-  <p class="goal">ⓐ~ⓕ (복수 선택 · 권장·전체 모드는 전부 체크, 최소 모드는 ⓑⓒⓓ)</p>
+  <p class="goal">ⓐ~ⓖ (복수 선택 · 권장·전체 모드는 전부 체크, 최소 모드는 ⓑⓒⓓⓖ)</p>
 
   <p>
     이 문서가 하는 일은 <b>“어제 뭐 했더라”를 없애는 것</b>입니다. 작업 기록을 파일로 남기게 하고,
@@ -500,6 +500,18 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
       <dt>마음껏 해도 되는 것</dt><dd>계획 모드 드나들기 · 스킬·명령 호출 · <code>/rewind</code> · 파일 편집 · 권한 모드 전환 — 캐시가 유지됩니다</dd>
       <dt><code>/compact</code>보다 <code>/clear</code></dt><dd><code>/clear</code>는 요청을 보내지 않아 <b>비용 0</b>인 반면, <code>/compact</code>는 요약을 만드는 그 자체가 큰 요청입니다. 단 <b><code>/wrap</code> 뒤에</b> 하세요 — <code>/clear</code>엔 안전장치가 없어 기록 안 된 결정이 그대로 사라집니다</dd>
       <dt>측정</dt><dd><code>/usage</code>의 <code>Prompt cache</code> 줄. 미스가 매 턴 쌓이면 위 “깨는 행동” 하나가 작업 중에 일어나고 있다는 뜻입니다</dd>
+    </dl>
+  </div>
+
+  <div class="opt">
+    <div class="opt-head"><span class="id">ⓖ</span><span class="name">작업 중 추천</span><span class="badge b-on">기본 체크(최소 포함)</span></div>
+    <p class="lead"><b>가볍게 시작하고 나머지는 작업이 실제로 필요로 할 때</b> 더합니다 — 빠진 드롭인 항목을 내가 찾아다니는 대신 Claude가 한 줄로 추천합니다.</p>
+    <dl>
+      <dt>무엇이 적히나</dt><dd><code>~/.claude/CLAUDE.md</code>(내 PC)에 <code>## 10.</code> 한 줄(프로젝트 <code>CLAUDE.md</code>가 아닙니다)</dd>
+      <dt>언제 말하나</dt><dd>작업이 테스트·CI 도입, 프론트엔드 스택 추가, <code>docs/features/</code> 생성처럼 드롭인 항목이 필요한 상태에 새로 걸리면 <b>지금 작업을 먼저 마친 뒤</b> 한 줄로 추천합니다. 수락하면 <code>/dropin-apply 추천</code>으로 <b>고른 것만</b> 깝니다. <code>/resume</code>도 세션 시작에 같은 안내를 한 줄 합니다(파일 이름만 봅니다)</dd>
+      <dt>지키는 것</dt><dd>같은 세션 같은 항목은 1회 · 승인 없이 설치하지 않음 · 거절하면 다시 권하지 않음(기록에 <code>추천 거절</code>)</dd>
+      <dt>안 고르면</dt><dd>추천 안내가 없어, 나중에 필요한 항목은 직접 <code>/dropin-apply</code>로 찾아야 합니다</dd>
+      <dt>제거</dt><dd>그 한 줄만 지우면 됩니다(파일과 다른 절은 남습니다)</dd>
     </dl>
   </div>
 
@@ -889,8 +901,8 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
     <tr><th style="width:180px">상황</th><th style="width:150px">모드 · 번들 · 프로필</th><th>왜</th></tr>
     <tr>
       <td><b>Claude Code를 처음 깐 새 PC</b></td>
-      <td>권장 / 번들 없음 / 표준</td>
-      <td>글로벌 규칙·보안·<code class="i">/resume</code>·<code class="i">/wrap</code>과 상태 표시줄까지. 이것만으로 “어제 뭐 했더라”가 사라집니다</td>
+      <td>최소 / 번들 없음 / 표준</td>
+      <td>보안·<code class="i">/resume</code>·<code class="i">/wrap</code>과 작업 중 추천 한 줄 — 기록 없는 대상의 기본 추천입니다. 이것만으로 “어제 뭐 했더라”가 사라지고, 나머지는 작업이 필요로 할 때 추천받습니다(글로벌 규칙·상태 표시줄까지 지금 깔려면 권장)</td>
     </tr>
     <tr>
       <td><b>혼자 하는 개인 개발 프로젝트</b></td>
@@ -953,6 +965,9 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
   <p>언제든 다시 돌려서 추가할 수 있습니다. 문서들은 서로 독립적이라 순서에 크게 얽매이지 않습니다 — 다만 01의 기록 체계가 깔려 있으면 02가 자연스럽습니다.</p>
   <p>반대로 <b>이미 깐 것을 뺄 수도</b> 있습니다. 다시 돌릴 때 “제거”를 고르면 그 문서의 제거 절차대로 <b>설치가 만든 블록·키·파일만</b> 걷어냅니다 — 원래 내 설정에 있던 항목은 남기고, 그동안 쌓인 기록(<code class="i">docs/</code>의 진행·결정 기록, 기능 명세, 리팩터링 보고서)은 물어본 뒤 <b>기본으로 보존</b>합니다. 뺀 사실은 적용 기록에 남습니다.</p>
 
+  <h3>최소로 시작했는데 나중에 더 깔려면?</h3>
+  <p>두 가지입니다. 작업이 어떤 항목을 필요로 하면 지금 작업이 끝난 뒤 Claude가 한 줄로 추천하고(01 ⓖ), 수락하면 고른 것만 깝니다. 아니면 언제든 <code class="i">/dropin-apply 추천</code>을 직접 부르면 됩니다. 어느 쪽이든 안전 질문은 그대로 나오고, 거절한 항목은 다시 권하지 않습니다.</p>
+
   <h3>실수로 뭔가 덮어쓸까 걱정됩니다</h3>
   <p>
     설치 전체에 걸친 원칙이 <b>“승인 없이 덮어쓰지 않는다”</b>입니다. 기존 설정이 감지되면 항상 유지/재구성/교체를 묻고,
@@ -986,7 +1001,7 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
 <a class="totop" href="#toc">↑ 목차</a>
 
 <footer>
-  단디 · 설치 옵션 사전 · 00_통합-설치.md 기준 · 2026-10-06<br>
+  단디 · 설치 옵션 사전 · 00_통합-설치.md 기준 · 2026-10-08<br>
   각 항목의 정본은 해당 하위 문서(01~06)입니다. 이 페이지는 사람이 읽고 판단하기 위한 안내이며, 설치 절차 자체를 바꾸지 않습니다.<br>
   저장소: github.com/EleninJayTech/claude ·
   <a href="../index.ko.html">사용법</a> · <a href="intro.ko.html">소개 영상</a> · <a href="demo.ko.html">설치 시연</a> · <a href="learn.ko.html">학습 코스</a> · <a href="skills.ko.html">스킬 카탈로그</a><br>

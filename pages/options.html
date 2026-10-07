@@ -139,7 +139,7 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
     <li><a href="#words">0. Eight words to know first</a> &mdash; scope, settings.json, hooks, subagents</li>
     <li><a href="#flow">1. What order the questions come in</a></li>
     <li><a href="#common">2. The opening questions</a> &mdash; asked before any document, regardless of which ones you pick</li>
-    <li><a href="#doc01">3. 01 Base setup</a> &mdash; record system and security (&#9424;&ndash;&#9429;)</li>
+    <li><a href="#doc01">3. 01 Base setup</a> &mdash; record system and security (&#9424;&ndash;&#9430;)</li>
     <li><a href="#doc02">4. 02 Model split</a> &mdash; the subagent roster</li>
     <li><a href="#doc03">5. 03 Add-ons</a> &mdash; HUD &middot; design skills &middot; MCP &middot; browser</li>
     <li><a href="#doc04">6. 04 Verification</a> &mdash; hook gates &middot; gh &middot; CI</li>
@@ -242,9 +242,9 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
 
   <div class="opt">
     <div class="opt-head"><span class="name">This PC&rsquo;s defaults</span><span class="id">default</span><span class="badge b-on">confirm only</span></div>
-    <p class="lead">Reuses the <b>profile, output language and skill name alias</b> already settled on this PC, and goes with base mode <b>Recommended</b>.</p>
+    <p class="lead">Reuses the <b>profile, output language and skill name alias</b> already settled on this PC, and goes with base mode <b>Minimal</b> (plus in-work suggestions).</p>
     <dl>
-      <dt>What appears</dt><dd>The values left in this PC&rsquo;s install record + base mode &ldquo;Recommended&rdquo; + the bundles Claude detected as a good fit. The values are shown once and <b>you only confirm</b>. A value this PC&rsquo;s record does not hold is asked as its own question instead</dd>
+      <dt>What appears</dt><dd>The values left in this PC&rsquo;s install record + base mode &ldquo;Minimal&rdquo; + the bundles Claude detected as a good fit. The values are shown once and <b>you only confirm</b>. A value this PC&rsquo;s record does not hold is asked as its own question instead</dd>
       <dt>Is it really this PC?</dt><dd>The machine name in that record is shown alongside, and <b>you judge</b> whether it is this PC (a record restored from another PC&rsquo;s backup would carry someone else&rsquo;s values). Answer no and the quick path is dropped &mdash; you get the questions one by one</dd>
       <dt>Choose it when</dt><dd>Setting up a second or third project on the same PC &mdash; if you keep giving the same answers, this is the one</dd>
       <dt>If you don&rsquo;t</dt><dd>You get the common questions one by one (the same as &ldquo;One by one&rdquo; below)</dd>
@@ -289,20 +289,20 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
   <h3>2-2. Base mode &mdash; one of four (single choice)</h3>
 
   <div class="opt">
-    <div class="opt-head"><span class="name">Minimal</span><span class="badge b-off">01 only</span></div>
-    <p class="lead">Only the record system and security. Even within the document, only the essentials.</p>
+    <div class="opt-head"><span class="name">Minimal</span><span class="id">default with no install record</span><span class="badge b-off">01 only</span></div>
+    <p class="lead">Only the record system and security, plus one line that <b>suggests the rest while you work</b>. Even within the document, only the essentials. The default on a new PC or a folder with no install record yet.</p>
     <dl>
-      <dt>What appears</dt><dd>A global <code>settings.json</code> (security locks), the <code>/resume</code> and <code>/wrap</code> skills plus the <code>dropin-</code> skills (<code>/dropin-apply</code>, <code>/dropin-check</code>, <code>/dropin-update</code>, <code>/dropin-sync</code>), and three <code>docs/</code> files in the project</dd>
-      <dt>Choose it when</dt><dd>The repository is documentation with no code, or you just want the basics first</dd>
+      <dt>What appears</dt><dd>A global <code>settings.json</code> (security locks), the <code>/resume</code> and <code>/wrap</code> skills plus the <code>dropin-</code> skills (<code>/dropin-apply</code>, <code>/dropin-check</code>, <code>/dropin-update</code>, <code>/dropin-sync</code>), three <code>docs/</code> files in the project, and one in-work suggestion line in <code>~/.claude/CLAUDE.md</code> (01 &#9430;)</dd>
+      <dt>Choose it when</dt><dd>You are setting up for the first time, the repository is documentation with no code, or you just want the basics first &mdash; when your work later needs more (tests, CI, a frontend stack), Claude suggests it in one line and installs only what you accept</dd>
     </dl>
   </div>
 
   <div class="opt">
-    <div class="opt-head"><span class="name">Recommended</span><span class="id">default</span><span class="badge b-on">auto-combined per situation</span></div>
+    <div class="opt-head"><span class="name">Recommended</span><span class="id">default when re-applying / for existing records</span><span class="badge b-on">auto-combined per situation</span></div>
     <p class="lead">Claude combines things based on what it detected and <b>shows you in one line why it chose that</b>.</p>
     <dl>
       <dt>The rule</dt><dd>New PC &rarr; 01 (global) + 03 (HUD) / development project &rarr; 01+02+04 / documentation or non-code repository &rarr; 01 only / somewhere 01 already exists &rarr; only what is still missing and needed</dd>
-      <dt>Choose it when</dt><dd><b>Most of the time.</b> If you are unsure, this is the answer</dd>
+      <dt>Choose it when</dt><dd>You want everything that fits this folder installed now rather than suggested later. On a re-run it is offered following the mode in the record</dd>
     </dl>
   </div>
 
@@ -422,7 +422,7 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
 <!-- ═══════════ 3. 01 ═══════════ -->
 <section id="doc01">
   <h2>3. 01 Base setup &mdash; records and security</h2>
-  <p class="goal">Items &#9424;&ndash;&#9429; (multi-select &middot; all pre-checked in recommended and full, &#9425;&#9426;&#9427; in minimal)</p>
+  <p class="goal">Items &#9424;&ndash;&#9430; (multi-select &middot; all pre-checked in recommended and full, &#9425;&#9426;&#9427;&#9430; in minimal)</p>
 
   <p>
     What this document does is <b>abolish &ldquo;what was I doing yesterday?&rdquo;</b> It has your work recorded to files
@@ -502,6 +502,18 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
       <dt>Free to do</dt><dd>Entering and leaving plan mode, calling skills and commands, <code>/rewind</code>, editing files, switching permission modes &mdash; the cache survives</dd>
       <dt><code>/clear</code> over <code>/compact</code></dt><dd><code>/clear</code> sends no request, so it <b>costs nothing</b>, while <code>/compact</code> is itself a large request that builds a summary. Do it <b>after <code>/wrap</code></b> though &mdash; <code>/clear</code> has no safety gate, so unrecorded decisions vanish with it</dd>
       <dt>Measuring</dt><dd>The <code>Prompt cache</code> line in <code>/usage</code>. Misses piling up every turn mean one of the breaking actions above is happening mid-task</dd>
+    </dl>
+  </div>
+
+  <div class="opt">
+    <div class="opt-head"><span class="id">&#9430;</span><span class="name">In-work suggestions</span><span class="badge b-on">pre-checked (minimal included)</span></div>
+    <p class="lead">Lets you <b>start light and add the rest when your work actually needs it</b> &mdash; Claude suggests a missing drop-in item in one line instead of you hunting for it.</p>
+    <dl>
+      <dt>What gets written</dt><dd>One <code>## 10.</code> line in <code>~/.claude/CLAUDE.md</code>, your own machine (not the project&rsquo;s <code>CLAUDE.md</code>)</dd>
+      <dt>When it speaks</dt><dd>When your work newly runs into a state that needs a drop-in item &mdash; introducing tests or CI, adding a frontend stack, creating <code>docs/features/</code> &mdash; Claude <b>finishes the current task first</b>, then suggests it in one line. Accept and <code>/dropin-apply 추천</code> installs <b>only what you pick</b>. <code>/resume</code> gives the same one-line hint at session start (looking at file names only)</dd>
+      <dt>Rules it keeps</dt><dd>Once per item per session &middot; never installs without your approval &middot; decline and it is not suggested again (the record notes <code>추천 거절</code>)</dd>
+      <dt>If you skip it</dt><dd>No suggestions appear &mdash; the items you need later you find yourself with <code>/dropin-apply</code></dd>
+      <dt>Removing it</dt><dd>Delete that one line; the file and its other sections stay</dd>
     </dl>
   </div>
 
@@ -891,8 +903,8 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
     <tr><th style="width:180px">Situation</th><th style="width:150px">Mode &middot; bundles &middot; profile</th><th>Why</th></tr>
     <tr>
       <td><b>A new machine, Claude Code just installed</b></td>
-      <td>Recommended / no bundles / standard</td>
-      <td>Global rules, security, <code class="i">/resume</code>, <code class="i">/wrap</code> and the status line. That alone kills &ldquo;what was I doing yesterday?&rdquo;</td>
+      <td>Minimal / no bundles / standard</td>
+      <td>Security, <code class="i">/resume</code>, <code class="i">/wrap</code> and the in-work suggestion line &mdash; the default with no install record. That alone kills &ldquo;what was I doing yesterday?&rdquo;, and the rest is suggested when your work needs it (pick Recommended to get global rules and the status line now)</td>
     </tr>
     <tr>
       <td><b>A solo development project</b></td>
@@ -955,6 +967,9 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
   <p>You can run it again any time and add it. The documents are independent, so order barely matters &mdash; though 02 flows naturally once 01&rsquo;s record system is in place.</p>
   <p>It works the other way too &mdash; <b>you can take out something already installed</b>. Choose &ldquo;remove&rdquo; on a re-run and the document&rsquo;s own removal steps take out <b>only the blocks, keys and files the install created</b>. Entries that were in your settings before stay, and the records built up since (progress and decision logs in <code class="i">docs/</code>, feature specs, refactor reports) are asked about and <b>kept by default</b>. The removal is noted in the install record.</p>
 
+  <h3>I started with minimal &mdash; how do I add more later?</h3>
+  <p>Two ways. When your work needs an item, Claude suggests it in one line once the current task is done (01 &#9430;) &mdash; accept and only what you pick is installed. Or call <code class="i">/dropin-apply 추천</code> yourself at any time. Either way the safety questions still appear, and a declined item is not suggested again.</p>
+
   <h3>I am worried something will get overwritten</h3>
   <p>
     The principle running through the whole install is <b>&ldquo;never overwrite without approval&rdquo;</b>. Detected settings always
@@ -989,7 +1004,7 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
 <a class="totop" href="#toc">&uarr; Contents</a>
 
 <footer>
-  Dandi &middot; Install options dictionary &middot; based on 00_통합-설치.md &middot; 2026-10-06<br>
+  Dandi &middot; Install options dictionary &middot; based on 00_통합-설치.md &middot; 2026-10-08<br>
   The source of truth for each item is its own document (01&ndash;06). This page exists so people can read and judge; it does not change the install procedure itself.<br>
   Repository: github.com/EleninJayTech/claude &middot;
   <a href="../index.html">Guide</a> &middot; <a href="intro.html">Intro</a> &middot; <a href="demo.html">Walkthrough</a> &middot; <a href="learn.html">Course</a> &middot; <a href="skills.html">Skill catalog</a><br>
