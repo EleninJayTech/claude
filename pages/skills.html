@@ -198,7 +198,7 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
   <div class="basic">
     <span class="n">02</span>
     <b>Two ways to run</b>
-    <p>Type <code>/name</code> to call it yourself, or let Claude match the <em>description</em> to what you asked and load it on its own. Skills that touch your browser or your source code are set to manual-only on purpose.</p>
+    <p>Type <code>/name</code> to call it yourself, or let Claude match the <em>description</em> to what you asked and load it on its own. Some are manual-only on purpose &mdash; and for the ones that drive your browser or add test code to your source, install suggests it.</p>
   </div>
   <div class="basic">
     <span class="n">03</span>
@@ -221,8 +221,8 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
     <tr><td><code>/wrap</code></td><td>none</td><td>A session ends</td><td>One PROGRESS line, a new decision, plan ticks</td></tr>
     <tr><td><code>/dropin-check</code></td><td>none &middot; read-only</td><td>You suspect this machine has drifted</td><td>A difference report &mdash; nothing installed</td></tr>
     <tr><td><code>/dropin-update</code></td><td>none</td><td>The documents themselves are out of date</td><td>Refreshed document files &mdash; the configuration is untouched</td></tr>
-    <tr><td><code>/dropin-apply</code></td><td>none</td><td>You want the configuration itself brought up to date</td><td>Documents, installed skills and settings, all re-applied</td></tr>
-    <tr><td><code>/dropin-sync</code></td><td>none</td><td>You want all three steps below, in order, without choosing</td><td>Documents refreshed, state checked, configuration re-applied &mdash; one report</td></tr>
+    <tr><td><code>/dropin-apply</code></td><td><code>[추천]</code> &mdash; full run if omitted</td><td>You want the configuration itself brought up to date &mdash; or, with <code>추천</code>, to add what your work now needs</td><td>Documents, installed skills and settings, all re-applied &mdash; with <code>추천</code>, only the items you pick</td></tr>
+    <tr><td><code>/dropin-sync</code></td><td>none &middot; manual only</td><td>You want all three steps below, in order, without choosing</td><td>Documents refreshed, state checked, configuration re-applied &mdash; one report</td></tr>
 
     <tr><th class="grp" colspan="4" scope="colgroup">Feature docs, tests, releases &middot; 03 §7</th></tr>
     <tr><td><code>/feature-docs</code></td><td><code>init</code> | <code>sync [base]</code></td><td>First write-up, or folding in what changed</td><td>All of <code>docs/features/</code></td></tr>
@@ -273,8 +273,8 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
       <p class="one">Opens the session by reconstructing where you left off &mdash; from git and from your own records, not from memory.</p>
       <dl>
         <dt>Use when</dt><dd>At the very start of a session, and again after <code>/clear</code>.</dd>
-        <dt>It does</dt><dd>Pulls with <code>--ff-only</code> if the tree is clean, finds uncommitted work through <code>git status</code> &mdash; which may belong to another session running in the same folder, so it asks before treating it as yours, continuing it or committing it &mdash; then reads the top of <code>PROGRESS.md</code>, the last three decisions, and <code>PROJECT_PLAN.md</code>.</dd>
-        <dt>You get</dt><dd>A short "last time you did X, next is Y?" report, plus reminders when a scheduled check has come due.</dd>
+        <dt>It does</dt><dd>Pulls with <code>--ff-only</code> if the tree is clean, finds uncommitted work through <code>git status</code> &mdash; which may belong to another session running in the same folder, so it asks before treating it as yours, continuing it or committing it &mdash; then reads the top of <code>PROGRESS.md</code>, the last three decisions, and <code>PROJECT_PLAN.md</code>. If in-work suggestions are on (the default) and this folder has an install record, it also looks at the folder&rsquo;s file names &mdash; never their contents &mdash; for signs that your work now needs a Dandi item that is not installed and was not declined or ruled out.</dd>
+        <dt>You get</dt><dd>A short "last time you did X, next is Y?" report, plus reminders when a scheduled check has come due, and one line suggesting <code>/dropin-apply 추천</code> when there is something to add.</dd>
       </dl>
       <div class="warn soft"><b>Worth knowing.</b> It reads only the ~5 newest entries, capped at ~700 characters each. Anything the next session must pick up belongs at the <em>front</em> of an entry &mdash; text at the end falls outside the cap and is never read.</div>
       <div class="tags"><span class="tag">global</span><span class="tag">read-mostly</span></div>
@@ -320,26 +320,26 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
 
     <article class="skill" data-g="session">
       <div class="cmd"><span class="sl">/</span>dropin-apply</div>
-      <div class="args">no arguments</div>
+      <div class="args">[추천] — the in-work suggestion path; full run if omitted</div>
       <p class="one">Re-applies the whole configuration &mdash; documents, installed skills and settings &mdash; in one command.</p>
       <dl>
-        <dt>Use when</dt><dd>You want this machine or this project brought up to the current documents. It is also the command for a first install, so you do not have to know which case you are in.</dd>
-        <dt>It does</dt><dd>Finds document 00 (a copy beside you, a local clone, a folder you name, or the published raw file &mdash; raw is fetched byte for byte, never summarised, into a temporary folder outside the project), reads it, and runs its protocol exactly &mdash; detect what is already here, ask what you want, install only that, verify, and write the install record. The skill holds no steps of its own, so it can never drift from the document.</dd>
-        <dt>You get</dt><dd>A configuration that matches the documents, and an updated <code>dropin-applied</code> line saying so. Where a feature-docs, refactor, kr-ui-guide or <code>dropin-</code> skill was already installed, its files are compared by content &mdash; not just by name &mdash; so a version that only changed its wording is still replaced; a <code>dropin-</code> skill that differs from the published copy comes up with <code>reconcile</code> as the default. <code>/resume</code> and <code>/wrap</code> are only checked for presence &mdash; to get their new text, answer <code>reconcile</code> instead of the default <code>keep</code> when it asks about global items that are already installed.</dd>
+        <dt>Use when</dt><dd>You want this machine or this project brought up to the current documents. It is also the command for a first install, so you do not have to know which case you are in. Add <code>추천</code> when Claude or <code>/resume</code> has suggested an item your work now needs.</dd>
+        <dt>It does</dt><dd>Finds document 00 (a copy beside you, a local clone, a folder you name, or the published raw file &mdash; raw is fetched byte for byte, never summarised, into a temporary folder outside the project), reads it, and runs its protocol exactly &mdash; detect what is already here, ask what you want, install only that, verify, and write the install record. The skill holds no steps of its own, so it can never drift from the document. As <code>/dropin-apply 추천</code> it takes the in-work suggestion path instead: it offers only the items your work has newly started to need and you have not installed, each with the sign it spotted, reuses your recorded answers to the opening questions, and installs only what you pick &mdash; the safety questions are still asked. In a folder with no install record it runs the normal install instead, where Minimal is the suggested start.</dd>
+        <dt>You get</dt><dd>A configuration that matches the documents, and an updated <code>dropin-applied</code> line saying so. Where a feature-docs, refactor, kr-ui-guide or <code>dropin-</code> skill was already installed, its files are compared by content &mdash; not just by name &mdash; so a version that only changed its wording is still replaced; a <code>dropin-</code> skill that differs from the published copy comes up with <code>reconcile</code> as the default. <code>/resume</code> and <code>/wrap</code> are only checked for presence &mdash; to get their new text, answer <code>reconcile</code> instead of the default <code>keep</code> when it asks about global items that are already installed. A suggestion you decline is noted in the record and not offered again; to take it later, add it on a plain <code>/dropin-apply</code> re-run.</dd>
       </dl>
       <div class="warn soft"><b>Worth knowing.</b> This is the same thing as telling Claude &ldquo;learn this document and apply it&rdquo; &mdash; the sentence still works. The command exists because a door you cannot see is a door you do not open.</div>
       <div class="tags"><span class="tag">global</span><span class="tag">asks first</span></div>
     </article>
     <article class="skill" data-g="session">
       <div class="cmd"><span class="sl">/</span>dropin-sync</div>
-      <div class="args">no arguments</div>
+      <div class="args">no arguments &middot; manual call only</div>
       <p class="one">Runs <code>/dropin-update</code>, <code>/dropin-check</code> and <code>/dropin-apply</code> in that order, in one command.</p>
       <dl>
         <dt>Use when</dt><dd>You just want everything brought up to date and do not want to remember the order.</dd>
         <dt>It does</dt><dd>Reads each of those skills when its turn comes and follows it exactly. It holds no procedure of its own, so changing one of them changes this too. A step that cannot apply &mdash; for example the document refresh inside the source repository &mdash; is marked as skipped and the next step still runs. The closing &ldquo;next, run &hellip;&rdquo; advice of each skill is left out, because the next step is already running.</dd>
-        <dt>You get</dt><dd>One report: what each step did and what is still open. Every question the individual skills ask is still asked, in the same place &mdash; nothing is approved for you.</dd>
+        <dt>You get</dt><dd>One report: what each step did and what is still open. Every question the individual skills ask is still asked, in the same place &mdash; nothing is approved for you. The one exception is the apply step&rsquo;s suggestion to refresh the documents first &mdash; step one has just done that, so it is not raised again.</dd>
       </dl>
-      <div class="tags"><span class="tag">global</span><span class="tag">asks first</span></div>
+      <div class="tags"><span class="tag hand">manual only</span><span class="tag">global</span><span class="tag">asks first</span></div>
     </article>
 
   </div>
@@ -450,8 +450,8 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
         <dt>It does</dt><dd>Follows each case exactly as written, prefers a converted script when one is registered, and files every failure as (A) code bug, (B) stale doc, (C) environment, or (D) not enough evidence.</dd>
         <dt>You get</dt><dd>A dated report under <code>docs/features/test_reports/</code> with screenshots, and a summary in the chat that separates newly failing from newly passing.</dd>
       </dl>
-      <div class="warn soft"><b>Worth knowing.</b> It fixes nothing &mdash; not the docs, not the code. Even a confirmed stale doc is repaired afterwards by <code>/feature-docs sync</code>, with your approval. It is set to manual-only, because it operates your browser.</div>
-      <div class="tags hand"><span class="tag hand">manual only</span><span class="tag need">needs init</span><span class="tag">drives the UI</span></div>
+      <div class="warn soft"><b>Worth knowing.</b> It fixes nothing &mdash; not the docs, not the code. Even a confirmed stale doc is repaired afterwards by <code>/feature-docs sync</code>, with your approval. Because it operates your browser, install suggests making it manual-only &mdash; take that and you call it as <code>/feature-test</code> yourself.</div>
+      <div class="tags hand"><span class="tag hand">manual-only suggested</span><span class="tag need">needs init</span><span class="tag">drives the UI</span></div>
     </article>
 
     <article class="skill" data-g="docs">
@@ -489,8 +489,8 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
         <dt>It does</dt><dd>Converts cases to Playwright (web) or Maestro (Android, iOS), proposes <code>data-testid</code> attributes where the selectors are fragile, and registers the mapping in <code>04_script_map.md</code>.</dd>
         <dt>You get</dt><dd>Runnable test files, plus <code>/feature-test</code> automatically preferring the script for every case it registered.</dd>
       </dl>
-      <div class="warn soft"><b>Worth knowing.</b> Manual-only by default, because stabilising selectors means editing your source.</div>
-      <div class="tags"><span class="tag hand">manual only</span><span class="tag need">needs init</span><span class="tag">edits source</span></div>
+      <div class="warn soft"><b>Worth knowing.</b> Install suggests making it manual-only, because stabilising selectors means editing your source.</div>
+      <div class="tags"><span class="tag hand">manual-only suggested</span><span class="tag need">needs init</span><span class="tag">edits source</span></div>
     </article>
 
     <article class="skill" data-g="docs">
@@ -614,8 +614,8 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
 <h2>A day, in the order the skills come up</h2>
 <p class="lead">You will not use every skill in a day. A realistic week looks closer to this.</p>
 <div class="day">
-  <div class="step"><div class="t">/resume</div><p>Opens the session. Pull, uncommitted work, the last few entries, what is due. Roughly thirty seconds before you have your bearings.</p></div>
-  <div class="step"><div class="t">— you build the thing —</div><p>Ordinary work. No skill required.</p></div>
+  <div class="step"><div class="t">/resume</div><p>Opens the session. Pull, uncommitted work, the last few entries, what is due, anything your work now calls for. Roughly thirty seconds before you have your bearings.</p></div>
+  <div class="step"><div class="t">— you build the thing —</div><p>Ordinary work. No skill required. If it starts needing a Dandi item you skipped &mdash; your first tests, a frontend stack &mdash; Claude says so in one line once the task is done; accept and <code>/dropin-apply 추천</code> installs only what you pick.</p></div>
   <div class="step"><div class="t">/refactor</div><p>Once the feature works, tidy it as a separate change. The approval gate means you see the candidate list before anything moves.</p></div>
   <div class="step"><div class="t">/feature-docs sync</div><p>Folds what you changed into the spec. If <code>/feature-doc-guard</code> is installed, the commit will not go through until you do.</p></div>
   <div class="step"><div class="t">/feature-test F-003</div><p>Runs just the affected feature's cases on the real screen. Full runs are for release day.</p></div>
@@ -632,6 +632,7 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
     <tr><td>Refresh your copies of the documents</td><td><code>/dropin-update</code></td><td>The document files (00&ndash;06)</td><td>Your installed skills and settings</td></tr>
     <tr><td>Bring the configuration itself up to date</td><td><code>/dropin-apply</code></td><td>Documents, installed skills, settings &mdash; whatever you approve</td><td>Anything you decline; it asks before replacing</td></tr>
     <tr><td>Do all three, in order</td><td><code>/dropin-sync</code></td><td>Whatever the three would change &mdash; you approve each part where it asks</td><td>Anything you decline</td></tr>
+    <tr><td>Add what your work has started to need</td><td><code>/dropin-apply 추천</code></td><td>Only the suggested items you pick</td><td>Everything else &mdash; your recorded answers to the opening questions stand</td></tr>
   </tbody>
 </table>
 <p class="lead" style="margin-top:14px">The short version: <b><code>/dropin-update</code> alone is not an update.</b> It refreshes the instructions, not the thing the instructions build. If a skill gained a file or changed its wording, only <code>/dropin-apply</code> puts that on your disk.</p>
@@ -669,7 +670,7 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
 </div>
 <p class="lead" style="margin-top:16px">Every one of these has a documented removal path, which is deliberate: an install you cannot reverse was never really a choice. The full procedures &mdash; detect, install, verify, remove &mdash; are in the documents themselves. For what each install question means, see the <a href="options.html">options dictionary</a>; to work through it step by step, take the <a href="learn.html">course</a>.</p>
 
-<footer>Dandi &middot; Skill catalog &middot; 2026-10-06 &middot; Skills installed by documents 01 §D-4, 02 STEP 3 ⓔ, 03 §2, §3, §7, §8 and §9. Commands are shown without an alias; apply yours if you chose one at install time. &middot; Fonts: Pretendard, IBM Plex Mono &mdash; both SIL Open Font License 1.1 (free for commercial use and web embedding)</footer>
+<footer>Dandi &middot; Skill catalog &middot; 2026-10-08 &middot; Skills installed by documents 01 §D-4, 02 STEP 3 ⓔ, 03 §2, §3, §7, §8 and §9. Commands are shown without an alias; apply yours if you chose one at install time. &middot; Fonts: Pretendard, IBM Plex Mono &mdash; both SIL Open Font License 1.1 (free for commercial use and web embedding)</footer>
 
 </div>
 <script>

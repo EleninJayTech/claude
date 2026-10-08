@@ -173,7 +173,7 @@ th{background:var(--marker-soft);font-family:var(--sans);font-size:13px}
 .plan .empty{color:var(--ink-soft);font-size:14px}
 .stamp{font-family:var(--mono);font-size:12px;background:var(--term);color:var(--term-fg);border-radius:8px;padding:10px 12px;margin-top:12px;line-height:1.6;overflow-x:auto;white-space:pre}
 
-/* ---------- 토글 목록(ⓐ~ⓕ) ---------- */
+/* ---------- 토글 목록(ⓐ~ⓖ) ---------- */
 .tglrow{display:flex;align-items:flex-start;gap:11px;border:1px solid var(--line);border-radius:12px;padding:11px 14px;margin:8px 0;background:var(--card)}
 .tglrow input{width:19px;height:19px;margin-top:5px;accent-color:var(--blue);flex:none;cursor:pointer}
 .tglrow label{cursor:pointer;flex:1}
@@ -315,7 +315,7 @@ footer{max-width:1120px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
   <div class="coach"><span class="who">🧭</span><div>
     <b>처음이면 '최소', 다시 돌릴 때는 기록대로</b>
     적용 기록이 없는 새 PC·폴더는 <b>최소</b>가 기본 추천입니다 — 가볍게 시작하고, 작업이 더 필요로 하면 Claude가 한 줄로 추천해 고른 것만 깝니다.
-    기록이 있으면 <b>권장</b>이 기본이고 기록의 모드를 따릅니다. 권장 모드는 Claude가 조합을 정한 뒤 <b>왜 그렇게 골랐는지 한 줄로 보여주고</b> 확인을 받습니다.
+    기록이 있으면 <b>기록에 적힌 모드</b>를 그대로 따릅니다 — 새 기본값으로 바꾸지 않습니다. 권장 모드는 Claude가 조합을 정한 뒤 <b>왜 그렇게 골랐는지 한 줄로 보여주고</b> 확인을 받습니다.
     '전체'를 골라도 이미 있는 설정을 말없이 덮어쓰지는 않습니다.
   </div></div>
 </section>
@@ -564,7 +564,7 @@ footer{max-width:1120px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
 <section class="chapter" data-ch="10" aria-labelledby="t10" hidden>
   <p class="eyebrow">챕터 10 · 설치한 다음</p>
   <h2 id="t10">최신 상태로 유지하기</h2>
-  <p class="lead">한 번 깔면 끝이 아닙니다. 문서도 개정되고, 그 문서가 설치하는 스킬도 바뀝니다. 명령 셋이 서로 다른 세 질문을 맡는데, 이걸 헷갈리는 것이 낡은 구성을 계속 쓰게 되는 흔한 이유입니다.</p>
+  <p class="lead">한 번 깔면 끝이 아닙니다. 문서도 개정되고, 그 문서가 설치하는 스킬도 바뀝니다. 아래 명령은 저마다 다른 질문을 맡는데, 이걸 헷갈리는 것이 낡은 구성을 계속 쓰게 되는 흔한 이유입니다.</p>
   <table>
     <thead><tr><th>하고 싶은 것</th><th>명령</th><th>바뀌는 것</th></tr></thead>
     <tbody>
@@ -647,7 +647,7 @@ var STEPS = [
 
 var MODES = {
   minimal:{name:'최소', desc:'01만 — 기록 체계와 보안(필수 항목만) + 작업 중 추천 (기록 없는 대상의 기본 추천)'},
-  rec:{name:'권장', desc:'감지된 상황에 따라 Claude가 자동 조합 (재적용·기록 있는 대상의 기본)'},
+  rec:{name:'권장', desc:'감지된 상황에 따라 Claude가 자동 조합'},
   full:{name:'전체', desc:'01~06 전부 — 해당 없는 것은 빼고 알려줌'},
   custom:{name:'사용자', desc:'문서를 고르고, 그 안의 항목도 직접 고름'}
 };
@@ -680,7 +680,7 @@ var DOC01 = [
     ['.claude/settings.json  <span class="c"># allow / ask / deny</span>']],
   ['f','ⓕ effort 묶음 · 캐시 가이드','모델마다 추론 강도를 묶어 두기 + 캐시 깨지 않는 습관', true,
     ['~/.claude/settings.json  <span class="c"># modelSettings (모델별 강도) — 하위 모델 기본값이 이미 medium이면 쓰지 않음</span>']],
-  ['g','ⓖ 작업 중 추천','작업이 드롭인 항목이 필요한 상태에 새로 걸리면 한 줄 추천 → 수락하면 /dropin-apply 추천', true,
+  ['g','ⓖ 작업 중 추천','적용 기록이 있는 폴더에서 작업이 드롭인 항목이 필요한 상태에 새로 걸리면 한 줄 추천 → 수락하면 /dropin-apply 추천', true,
     ['~/.claude/CLAUDE.md  <span class="c"># ## 10. 작업 중 추천 한 줄</span>']]
 ];
 

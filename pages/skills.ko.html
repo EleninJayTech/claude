@@ -198,7 +198,7 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
   <div class="basic">
     <span class="n">02</span>
     <b>부르는 방법은 두 가지</b>
-    <p><code>/이름</code>을 직접 치거나, Claude가 <em>설명</em>과 내 요청을 맞춰 보고 알아서 불러온다. 브라우저를 조작하거나 소스를 고치는 스킬은 일부러 수동 호출 전용으로 둔다.</p>
+    <p><code>/이름</code>을 직접 치거나, Claude가 <em>설명</em>과 내 요청을 맞춰 보고 알아서 불러온다. 일부러 수동 호출 전용으로 두는 스킬도 있다 &mdash; 브라우저를 조작하거나 소스에 테스트 코드를 넣는 스킬은 설치할 때 그렇게 권한다.</p>
   </div>
   <div class="basic">
     <span class="n">03</span>
@@ -221,8 +221,8 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
     <tr><td><code>/wrap</code></td><td>없음</td><td>세션을 닫을 때</td><td>PROGRESS 한 줄·새 결정·계획 체크</td></tr>
     <tr><td><code>/dropin-check</code></td><td>없음 &middot; 읽기 전용</td><td>이 PC 구성이 뒤처졌는지 의심될 때</td><td>차이 보고서 &mdash; 설치는 하지 않는다</td></tr>
     <tr><td><code>/dropin-update</code></td><td>없음</td><td>문서 사본 자체가 낡았을 때</td><td>새 문서 파일 &mdash; 구성은 그대로다</td></tr>
-    <tr><td><code>/dropin-apply</code></td><td>없음</td><td>구성 자체를 최신으로 맞추고 싶을 때</td><td>문서·설치된 스킬·설정을 한 번에 재적용</td></tr>
-    <tr><td><code>/dropin-sync</code></td><td>없음</td><td>아래 세 단계를 고르지 않고 순서대로 다 돌리고 싶을 때</td><td>문서 갱신·상태 점검·구성 재적용을 한 번에, 보고는 하나</td></tr>
+    <tr><td><code>/dropin-apply</code></td><td><code>[추천]</code> &mdash; 없으면 전체 절차</td><td>구성 자체를 최신으로 맞추고 싶을 때 &mdash; <code>추천</code>이면 작업이 새로 필요로 하는 것을 더할 때</td><td>문서·설치된 스킬·설정을 한 번에 재적용 &mdash; <code>추천</code>이면 고른 항목만</td></tr>
+    <tr><td><code>/dropin-sync</code></td><td>없음 &middot; 수동 전용</td><td>아래 세 단계를 고르지 않고 순서대로 다 돌리고 싶을 때</td><td>문서 갱신·상태 점검·구성 재적용을 한 번에, 보고는 하나</td></tr>
 
     <tr><th class="grp" colspan="4" scope="colgroup">기능 문서·테스트·릴리스 &middot; 03 §7</th></tr>
     <tr><td><code>/feature-docs</code></td><td><code>init</code> | <code>sync [기준]</code></td><td>처음 문서화할 때, 바뀐 것을 반영할 때</td><td><code>docs/features/</code> 전체</td></tr>
@@ -273,8 +273,8 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
       <p class="one">어디까지 했는지를 기억이 아니라 git과 기록으로 되짚어 세션을 연다.</p>
       <dl>
         <dt>언제</dt><dd>세션을 시작할 때마다, 그리고 <code>/clear</code> 직후에 다시.</dd>
-        <dt>하는 일</dt><dd>워킹트리가 깨끗하면 <code>--ff-only</code>로 당기고, <code>git status</code>로 미커밋 작업부터 찾는다. 그 미커밋은 같은 폴더에서 도는 다른 세션의 것일 수도 있어서, 내 작업으로 단정해 잇거나 커밋하지 않고 먼저 확인한다. 그다음 <code>PROGRESS.md</code> 최상단과 최근 결정 3건, <code>PROJECT_PLAN.md</code>를 읽는다.</dd>
-        <dt>결과</dt><dd>"지난번엔 X를 했고 다음은 Y인가요?" 형태의 짧은 보고. 점검 예정일이 지났으면 그 안내도 함께.</dd>
+        <dt>하는 일</dt><dd>워킹트리가 깨끗하면 <code>--ff-only</code>로 당기고, <code>git status</code>로 미커밋 작업부터 찾는다. 그 미커밋은 같은 폴더에서 도는 다른 세션의 것일 수도 있어서, 내 작업으로 단정해 잇거나 커밋하지 않고 먼저 확인한다. 그다음 <code>PROGRESS.md</code> 최상단과 최근 결정 3건, <code>PROJECT_PLAN.md</code>를 읽는다. 작업 중 추천이 켜져 있고(기본값) 이 폴더에 적용 기록이 있으면, 폴더의 파일 <b>이름만</b> 훑어(내용은 읽지 않는다) 작업이 새로 필요로 하는 단디 항목 중 아직 안 깔았고 거절하거나 해당 없음으로 빠지지 않은 것이 있는지도 본다.</dd>
+        <dt>결과</dt><dd>"지난번엔 X를 했고 다음은 Y인가요?" 형태의 짧은 보고. 점검 예정일이 지났으면 그 안내도 함께, 더할 항목이 있으면 <code>/dropin-apply 추천</code>을 권하는 한 줄도.</dd>
       </dl>
       <div class="warn soft"><b>알아 둘 것.</b> 최근 5항목만, 항목당 앞 700자까지만 읽는다. 다음 세션이 이어받아야 할 내용은 항목 <em>앞쪽</em>에 적어야 한다 &mdash; 끝에 붙이면 컷 밖이라 영영 읽히지 않는다.</div>
       <div class="tags"><span class="tag">글로벌</span><span class="tag">거의 읽기만</span></div>
@@ -320,26 +320,26 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
 
     <article class="skill" data-g="session">
       <div class="cmd"><span class="sl">/</span>dropin-apply</div>
-      <div class="args">인수 없음</div>
+      <div class="args">[추천] — 작업 중 추천 경로, 없으면 전체 절차</div>
       <p class="one">구성 전체를 한 명령으로 다시 맞춘다 &mdash; 문서·설치된 스킬·설정까지.</p>
       <dl>
-        <dt>언제</dt><dd>이 PC나 이 프로젝트를 현재 문서 기준으로 올리고 싶을 때. 처음 까는 경우에도 같은 명령이라, 내가 어느 쪽인지 몰라도 된다.</dd>
-        <dt>하는 일</dt><dd>00 문서를 찾아서(옆 폴더의 사본·로컬 클론·내가 알려 준 폴더·배포된 raw 순 &mdash; raw는 요약하지 않고 파일 그대로 프로젝트 밖 임시 폴더에 받는다) 읽고 그 절차를 그대로 돈다 &mdash; 이미 있는 것을 감지하고, 무엇을 할지 묻고, 고른 것만 설치하고, 검증하고, 적용 기록을 쓴다. 스킬 자신은 단계를 하나도 갖지 않아서 문서와 갈릴 수가 없다.</dd>
-        <dt>결과</dt><dd>문서와 일치하는 구성, 그리고 그 사실을 적은 <code>dropin-applied</code> 줄. 기능 문서·refactor·kr-ui-guide와 <code>dropin-</code> 계열처럼 이미 깔린 스킬은 <b>이름이 아니라 내용으로</b> 대조하므로, 파일 수는 그대로고 문장만 바뀐 개정도 교체된다 &mdash; <code>dropin-</code> 계열은 배포본과 다르면 기본값이 <code>재구성</code>으로 나온다. <code>/resume</code>·<code>/wrap</code>은 있는지만 본다 &mdash; 새 본문으로 갈려면 이미 깔린 글로벌 항목을 묻는 질문에서 기본값 <code>유지</code> 대신 <code>재구성</code>을 고른다.</dd>
+        <dt>언제</dt><dd>이 PC나 이 프로젝트를 현재 문서 기준으로 올리고 싶을 때. 처음 까는 경우에도 같은 명령이라, 내가 어느 쪽인지 몰라도 된다. Claude나 <code>/resume</code>이 작업에 새로 필요한 항목을 추천했으면 <code>추천</code>을 붙여 부른다.</dd>
+        <dt>하는 일</dt><dd>00 문서를 찾아서(옆 폴더의 사본·로컬 클론·내가 알려 준 폴더·배포된 raw 순 &mdash; raw는 요약하지 않고 파일 그대로 프로젝트 밖 임시 폴더에 받는다) 읽고 그 절차를 그대로 돈다 &mdash; 이미 있는 것을 감지하고, 무엇을 할지 묻고, 고른 것만 설치하고, 검증하고, 적용 기록을 쓴다. 스킬 자신은 단계를 하나도 갖지 않아서 문서와 갈릴 수가 없다. <code>/dropin-apply 추천</code>으로 부르면 작업 중 추천 경로를 탄다 &mdash; 작업이 새로 필요로 하게 됐는데 아직 안 깐 항목만, 무엇을 보고 걸렸는지 한 줄씩 붙여 내놓고, 처음 공통 질문은 기록된 답으로 갈음하며, 고른 것만 깐다. 안전 질문은 그대로 묻는다. 적용 기록이 없는 폴더에서는 이 경로 대신 일반 설치를 돌고, 거기서는 최소가 기본 추천이다.</dd>
+        <dt>결과</dt><dd>문서와 일치하는 구성, 그리고 그 사실을 적은 <code>dropin-applied</code> 줄. 기능 문서·refactor·kr-ui-guide와 <code>dropin-</code> 계열처럼 이미 깔린 스킬은 <b>이름이 아니라 내용으로</b> 대조하므로, 파일 수는 그대로고 문장만 바뀐 개정도 교체된다 &mdash; <code>dropin-</code> 계열은 배포본과 다르면 기본값이 <code>재구성</code>으로 나온다. <code>/resume</code>·<code>/wrap</code>은 있는지만 본다 &mdash; 새 본문으로 갈려면 이미 깔린 글로벌 항목을 묻는 질문에서 기본값 <code>유지</code> 대신 <code>재구성</code>을 고른다. 거절한 추천은 기록에 남아 다시 권하지 않는다 &mdash; 나중에 깔고 싶으면 인수 없이 <code>/dropin-apply</code>를 다시 돌려 추가한다.</dd>
       </dl>
       <div class="warn soft"><b>알아 둘 것.</b> Claude에게 &ldquo;이 문서를 학습해서 적용해줘&rdquo;라고 말하는 것과 같은 일이다 &mdash; 그 문장도 그대로 동작한다. 명령이 따로 있는 이유는, 보이지 않는 문은 열리지 않기 때문이다.</div>
       <div class="tags"><span class="tag">글로벌</span><span class="tag">먼저 묻는다</span></div>
     </article>
     <article class="skill" data-g="session">
       <div class="cmd"><span class="sl">/</span>dropin-sync</div>
-      <div class="args">인수 없음</div>
+      <div class="args">인수 없음 &middot; 수동 호출 전용</div>
       <p class="one"><code>/dropin-update</code> → <code>/dropin-check</code> → <code>/dropin-apply</code>를 이 순서로 명령 하나에 돌린다.</p>
       <dl>
         <dt>언제</dt><dd>전부 최신으로 맞추고 싶은데 순서를 외우고 싶지 않을 때.</dd>
         <dt>하는 일</dt><dd>각 스킬 차례가 오면 그 스킬을 읽고 그대로 따른다. 자기 절차는 없어서 셋 중 하나를 고치면 이 스킬도 따라온다. 적용할 수 없는 단계(예: 원본 저장소 안의 문서 갱신)는 건너뜀으로 표시하고 다음 단계를 계속한다. 각 스킬이 끝에 붙이던 &ldquo;다음엔 ○○을 하라&rdquo; 안내는 뺀다 &mdash; 다음 단계가 이미 돌고 있기 때문이다.</dd>
-        <dt>결과</dt><dd>단계별로 한 일과 남은 일을 담은 보고 하나. 개별 스킬이 묻던 질문은 같은 자리에서 그대로 묻는다 &mdash; 대신 승인해 주지 않는다.</dd>
+        <dt>결과</dt><dd>단계별로 한 일과 남은 일을 담은 보고 하나. 개별 스킬이 묻던 질문은 같은 자리에서 그대로 묻는다 &mdash; 대신 승인해 주지 않는다. 예외는 하나다 &mdash; apply 단계의 &ldquo;문서부터 최신화하라&rdquo;는 권장은 첫 단계가 방금 했으므로 다시 꺼내지 않는다.</dd>
       </dl>
-      <div class="tags"><span class="tag">글로벌</span><span class="tag">먼저 묻는다</span></div>
+      <div class="tags"><span class="tag hand">수동 호출</span><span class="tag">글로벌</span><span class="tag">먼저 묻는다</span></div>
     </article>
 
   </div>
@@ -450,8 +450,8 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
         <dt>하는 일</dt><dd>케이스를 적힌 그대로 따라가고, 변환된 스크립트가 등록돼 있으면 그쪽을 먼저 쓴다. 실패는 (A) 코드 버그 · (B) 문서 노후 · (C) 환경 문제 · (D) 판정 불가 중 하나로 분류한다.</dd>
         <dt>결과</dt><dd><code>docs/features/test_reports/</code>에 날짜·커밋이 박힌 리포트와 스크린샷. 채팅에는 요약만 나오고, 새로 실패한 것과 새로 통과한 것을 구분해 준다.</dd>
       </dl>
-      <div class="warn soft"><b>알아 둘 것.</b> 아무것도 고치지 않는다 &mdash; 문서도 코드도. 문서 노후로 판정된 것조차 승인을 받아 <code>/feature-docs sync</code>가 따로 고친다. 브라우저를 직접 조작하므로 수동 호출 전용으로 둔다.</div>
-      <div class="tags"><span class="tag hand">수동 호출</span><span class="tag need">init 필요</span><span class="tag">화면을 조작</span></div>
+      <div class="warn soft"><b>알아 둘 것.</b> 아무것도 고치지 않는다 &mdash; 문서도 코드도. 문서 노후로 판정된 것조차 승인을 받아 <code>/feature-docs sync</code>가 따로 고친다. 브라우저를 직접 조작하므로 설치할 때 수동 호출 전용을 권한다 &mdash; 그렇게 두면 <code>/feature-test</code>로 직접 불러야 한다.</div>
+      <div class="tags"><span class="tag hand">수동 호출 권장</span><span class="tag need">init 필요</span><span class="tag">화면을 조작</span></div>
     </article>
 
     <article class="skill" data-g="docs">
@@ -489,8 +489,8 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
         <dt>하는 일</dt><dd>케이스를 Playwright(웹)나 Maestro(안드로이드·iOS)로 변환하고, 셀렉터가 약한 자리엔 <code>data-testid</code>를 제안한다. 변환 결과는 <code>04_script_map.md</code>에 등록한다.</dd>
         <dt>결과</dt><dd>돌아가는 테스트 파일, 그리고 등록된 케이스에 대해 <code>/feature-test</code>가 자동으로 스크립트를 먼저 쓰는 동작.</dd>
       </dl>
-      <div class="warn soft"><b>알아 둘 것.</b> 기본이 수동 호출 전용이다. 셀렉터를 안정화한다는 건 결국 소스를 고친다는 뜻이라서 그렇다.</div>
-      <div class="tags"><span class="tag hand">수동 호출</span><span class="tag need">init 필요</span><span class="tag">소스를 고침</span></div>
+      <div class="warn soft"><b>알아 둘 것.</b> 설치할 때 수동 호출 전용을 권한다. 셀렉터를 안정화한다는 건 결국 소스를 고친다는 뜻이라서 그렇다.</div>
+      <div class="tags"><span class="tag hand">수동 호출 권장</span><span class="tag need">init 필요</span><span class="tag">소스를 고침</span></div>
     </article>
 
     <article class="skill" data-g="docs">
@@ -614,8 +614,8 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
 <h2>하루를, 스킬이 나오는 순서대로</h2>
 <p class="lead">하루에 스킬을 다 쓰지는 않는다. 실제 한 주는 이쪽에 가깝다.</p>
 <div class="day">
-  <div class="step"><div class="t">/resume</div><p>세션을 연다. pull, 미커밋 작업, 최근 기록, 예정일. 감을 잡는 데 30초쯤.</p></div>
-  <div class="step"><div class="t">— 여기서 실제로 만든다 —</div><p>평범한 작업이다. 스킬이 낄 자리가 아니다.</p></div>
+  <div class="step"><div class="t">/resume</div><p>세션을 연다. pull, 미커밋 작업, 최근 기록, 예정일, 작업이 새로 필요로 하는 항목. 감을 잡는 데 30초쯤.</p></div>
+  <div class="step"><div class="t">— 여기서 실제로 만든다 —</div><p>평범한 작업이다. 스킬이 낄 자리가 아니다. 다만 작업이 처음으로 테스트를 들이거나 프론트엔드 스택을 붙이는 식으로 안 깐 단디 항목을 필요로 하게 되면, Claude가 하던 일을 마친 뒤 한 줄로 알려 준다. 수락하면 <code>/dropin-apply 추천</code>이 고른 것만 깐다.</p></div>
   <div class="step"><div class="t">/refactor</div><p>기능이 돌기 시작하면 정리는 별도 변경으로. 승인 게이트가 있어서 뭐가 움직이기 전에 후보 표를 먼저 본다.</p></div>
   <div class="step"><div class="t">/feature-docs sync</div><p>바꾼 것을 명세에 되먹인다. <code>/feature-doc-guard</code>를 깔았다면 이걸 해야 커밋이 통과한다.</p></div>
   <div class="step"><div class="t">/feature-test F-003</div><p>영향받은 기능의 케이스만 실제 화면에서. 전체 실행은 릴리스 날에 한다.</p></div>
@@ -632,6 +632,7 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
     <tr><td>문서 사본을 새것으로 바꾸고 싶다</td><td><code>/dropin-update</code></td><td>문서 파일(00~06)</td><td>설치된 스킬과 설정</td></tr>
     <tr><td>구성 자체를 최신으로 올리고 싶다</td><td><code>/dropin-apply</code></td><td>문서·설치된 스킬·설정 중 내가 승인한 것</td><td>거절한 것 &mdash; 덮기 전에 묻는다</td></tr>
     <tr><td>셋을 순서대로 한 번에 하고 싶다</td><td><code>/dropin-sync</code></td><td>세 스킬이 바꿀 것 전부 &mdash; 각 부분은 묻는 자리에서 내가 승인</td><td>거절한 것</td></tr>
+    <tr><td>작업이 새로 필요로 하는 것을 더하고 싶다</td><td><code>/dropin-apply 추천</code></td><td>추천된 항목 중 내가 고른 것만</td><td>나머지 전부 &mdash; 처음 공통 질문은 기록된 답을 그대로 쓴다</td></tr>
   </tbody>
 </table>
 <p class="lead" style="margin-top:14px">짧게 말하면 <b><code>/dropin-update</code>만으로는 업데이트가 아니다.</b> 그건 설명서를 새것으로 바꾸는 일이지, 설명서가 만드는 물건을 바꾸는 일이 아니다. 스킬에 파일이 늘었거나 문장이 바뀌었다면 그것을 내 디스크에 올리는 건 <code>/dropin-apply</code>뿐이다.</p>
@@ -669,7 +670,7 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
 </div>
 <p class="lead" style="margin-top:16px">전부 제거 절차가 문서에 적혀 있는데, 이건 의도한 것이다. 되돌릴 수 없는 설치는 애초에 선택지를 준 게 아니기 때문이다. 감지·설치·검증·제거 4단 전체는 각 문서에 있다. 설치할 때 나오는 질문의 뜻은 <a href="options.ko.html">옵션 사전</a>에, 처음부터 차근히 밟아 보려면 <a href="learn.ko.html">학습 코스</a>에 있다.</p>
 
-<footer>단디(Dandi) &middot; 스킬 카탈로그 &middot; 2026-10-06 &middot; 01 §D-4 · 02 STEP 3 ⓔ · 03 §2 · §3 · §7 · §8 · §9가 설치하는 스킬들. 명령은 별칭 없이 적었으니, 설치할 때 별칭을 골랐다면 그것을 얹어 읽으면 된다. &middot; 글꼴: Pretendard, IBM Plex Mono — 둘 다 SIL 오픈 폰트 라이선스 1.1(상업 이용·웹 임베딩 무료)</footer>
+<footer>단디(Dandi) &middot; 스킬 카탈로그 &middot; 2026-10-08 &middot; 01 §D-4 · 02 STEP 3 ⓔ · 03 §2 · §3 · §7 · §8 · §9가 설치하는 스킬들. 명령은 별칭 없이 적었으니, 설치할 때 별칭을 골랐다면 그것을 얹어 읽으면 된다. &middot; 글꼴: Pretendard, IBM Plex Mono — 둘 다 SIL 오픈 폰트 라이선스 1.1(상업 이용·웹 임베딩 무료)</footer>
 
 </div>
 <script>

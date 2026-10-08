@@ -238,7 +238,7 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
   <p class="goal">Answer these and the install runs itself</p>
 
   <h3>2-0. Quick path &mdash; only on an already-set-up PC (choose one)</h3>
-  <p>Shown first, and <b>only when this PC already has an install record and this folder does not have one yet</b>. On a first-time PC you will not see it and the questions start at 2-2 &mdash; and on a re-run, or when joining a team repository that already has a record, it is skipped too, so the values the team settled are not overwritten by this PC&rsquo;s. It is <b>not a new mode</b> &mdash; it is <b>a shortcut for answering the common questions below in one go</b> (base mode, bundles, profile, output language, skill name alias). Whichever you pick, the values it will carry over are shown and <b>you confirm them</b> &mdash; nothing is inherited silently.</p>
+  <p>Shown first, and <b>only when this PC already has an install record and this folder does not have one yet</b>. On a first-time PC you will not see it and the questions start at 2-2 &mdash; and on a re-run, or when joining a team repository that already has a record, it is skipped too, so the values the team settled are not overwritten by this PC&rsquo;s. It is <b>not a new mode</b> &mdash; it is <b>a shortcut for answering the common questions below in one go</b> (base mode, bundles, profile, output language, skill name alias). Whichever you pick, the values it will carry over are shown and <b>you confirm them</b> &mdash; nothing is inherited silently. Two findings are shown beside them: next to the skill name alias, <b>any same-named skills found</b> on this PC and in this folder; next to the output language, <b>the language this folder&rsquo;s existing <code class="i">docs/</code> records are already written in</b> (existing records keep their language &mdash; 2-5).</p>
 
   <div class="opt">
     <div class="opt-head"><span class="name">This PC&rsquo;s defaults</span><span class="id">default</span><span class="badge b-on">confirm only</span></div>
@@ -255,8 +255,9 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
     <div class="opt-head"><span class="name">Same as another project</span><span class="badge b-keep">another project on this PC</span></div>
     <p class="lead">Carries over the mode, bundles, language and alias recorded in <b>another project</b> on this PC.</p>
     <dl>
-      <dt>What appears</dt><dd>The chosen project&rsquo;s base mode + bundles, output language and skill name alias. <b>Only the operating profile comes from this PC</b> &mdash; a profile belongs to the machine, not the project</dd>
+      <dt>What appears</dt><dd>The chosen project&rsquo;s base mode + bundles, output language and skill name alias. <b>Only the operating profile comes from this PC</b> &mdash; a profile belongs to the machine, not the project. If that project gave the alias to <b>only some skills</b>, which skills is not copied &mdash; it is worked out again from the same-named skills found here</dd>
       <dt>What is offered</dt><dd>Only projects that <b>actually exist</b> on this PC now and have an install record. Folders you moved or deleted, folders with no record, and projects installed in &ldquo;custom&rdquo; mode (they have no mode and bundles to copy) are left out; working copies (worktrees) of the same repository are folded into one. If there are none, this choice does not appear at all</dd>
+      <dt>Not in the list?</dt><dd>The list is built from traces of past sessions, so it is only a hint. If the project you want is missing, <b>type its path yourself</b> (Other)</dd>
       <dt>What is not recorded</dt><dd>Which project the values came from is <b>not written to the record</b> &mdash; this project&rsquo;s record is shared with the team</dd>
       <dt>If you don&rsquo;t</dt><dd>You settle this project&rsquo;s own values one by one</dd>
     </dl>
@@ -287,6 +288,7 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
   <p>Asked only when it is ambiguous. Choose <b>PC</b> and settings land in <code class="i">~/.claude/</code> (your account folder); choose <b>project</b> and they land in this folder&rsquo;s <code class="i">.claude/</code>. Most people do the PC setup once, then go project by project.</p>
 
   <h3>2-2. Base mode &mdash; one of four (single choice)</h3>
+  <p>On a re-run, or when joining a team repository that already has a record, the default offered is <b>the mode written in that record</b> &mdash; the team&rsquo;s setup is not overwritten by a new default.</p>
 
   <div class="opt">
     <div class="opt-head"><span class="name">Minimal</span><span class="id">default with no install record</span><span class="badge b-off">01 only</span></div>
@@ -298,11 +300,11 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
   </div>
 
   <div class="opt">
-    <div class="opt-head"><span class="name">Recommended</span><span class="id">default when re-applying / for existing records</span><span class="badge b-on">auto-combined per situation</span></div>
+    <div class="opt-head"><span class="name">Recommended</span><span class="badge b-on">auto-combined per situation</span></div>
     <p class="lead">Claude combines things based on what it detected and <b>shows you in one line why it chose that</b>.</p>
     <dl>
       <dt>The rule</dt><dd>New PC &rarr; 01 (global) + 03 (HUD) / development project &rarr; 01+02+04 / documentation or non-code repository &rarr; 01 only / somewhere 01 already exists &rarr; only what is still missing and needed</dd>
-      <dt>Choose it when</dt><dd>You want everything that fits this folder installed now rather than suggested later. On a re-run it is offered following the mode in the record</dd>
+      <dt>Choose it when</dt><dd>You want everything that fits this folder installed now rather than suggested later</dd>
     </dl>
   </div>
 
@@ -490,10 +492,10 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
   </div>
 
   <div class="opt">
-    <div class="opt-head"><span class="id">&#9429;</span><span class="name">effort bundle &amp; cache guidance</span><span class="badge">writes <code>modelSettings</code> to your personal settings</span></div>
-    <p class="lead"><b>Reasoning depth is bundled per model up front</b>, so picking a model brings its depth with it and you stop deciding that per task. The habits that keep the conversation cache intact come as advice alongside it.</p>
+    <div class="opt-head"><span class="id">&#9429;</span><span class="name">effort bundle &amp; cache guidance</span><span class="badge">writes <code>modelSettings</code> only when needed</span></div>
+    <p class="lead">Each model <b>starts from its own default reasoning depth</b>. A per-model value is written <b>only for a model that should run at a different depth</b> &mdash; then picking that model brings its depth with it. The habits that keep the conversation cache intact come as advice alongside it.</p>
     <dl>
-      <dt>What gets written</dt><dd>One <code>modelSettings</code> block in <code>~/.claude/settings.json</code>, your own machine. Only the model that takes routine conversions and small edits is written there, at <code>medium</code>; the rest keep their defaults. If that model&rsquo;s default is <b>already <code>medium</code>, there is nothing to write</b> &mdash; no value is added and the install record notes &ldquo;no &#9429; key&rdquo;, so a later re-run does not treat it as missing and ask again. Lowered only where <b>more depth would not buy quality</b>, so thrift and quality point the same way. The value is the same on the thrift profile</dd>
+      <dt>What gets written</dt><dd>Only when there is a reason. A <code>modelSettings</code> entry goes into <code>~/.claude/settings.json</code>, your own machine, for the model that takes routine conversions and small edits &mdash; and only if its default is <b>higher than <code>medium</code></b>; it is then set to <code>medium</code>. If that model&rsquo;s default is <b>already <code>medium</code>, there is nothing to write</b> &mdash; no value is added and the install record notes &ldquo;no &#9429; key&rdquo;, so a later re-run does not treat it as missing and ask again. The stronger models are not written: their default is the starting point the model maker tuned, and a value written down would go stale when the next generation arrives. Lowered only where <b>more depth would not buy quality</b>, so thrift and quality point the same way. The value is the same on the thrift profile</dd>
       <dt>Which model name</dt><dd>Not copied from the document&rsquo;s example &mdash; the <b>full ID of a model this machine can actually use</b> is read from the <code>/model</code> list first. Plans differ in which models they offer, and a name that does not match is saved but applies to no model at all</dd>
       <dt>When to raise it</dt><dd>Writing tests, refactoring or reviewing code on that model needs edge cases looked at, so raise it to <code>high</code> for that session only, with <code>s</code> (this session) on the <code>/effort</code> slider</dd>
       <dt>Why personal, not per project</dt><dd>Pinning <code>effortLevel</code> in the project settings <b>silently overrides whatever you chose with <code>/effort</code></b>, with no warning &mdash; and that file is committed, so it is forced on the whole team. Per-model values stay <b>on your machine only</b></dd>
@@ -510,8 +512,10 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
     <p class="lead">Lets you <b>start light and add the rest when your work actually needs it</b> &mdash; Claude suggests a missing drop-in item in one line instead of you hunting for it.</p>
     <dl>
       <dt>What gets written</dt><dd>One <code>## 10.</code> line in <code>~/.claude/CLAUDE.md</code>, your own machine (not the project&rsquo;s <code>CLAUDE.md</code>)</dd>
+      <dt>Where it speaks</dt><dd>Only in a folder that <b>already has an install record</b>. A folder with none may be one where you do not use these documents, so nothing is suggested there &mdash; run <code>/dropin-apply</code> yourself when you want to install</dd>
       <dt>When it speaks</dt><dd>When your work newly runs into a state that needs a drop-in item &mdash; introducing tests or CI, adding a frontend stack, creating <code>docs/features/</code> &mdash; Claude <b>finishes the current task first</b>, then suggests it in one line. Accept and <code>/dropin-apply 추천</code> installs <b>only what you pick</b>. <code>/resume</code> gives the same one-line hint at session start (looking at file names only)</dd>
-      <dt>Rules it keeps</dt><dd>Once per item per session &middot; never installs without your approval &middot; decline and it is not suggested again (the record notes <code>추천 거절</code>)</dd>
+      <dt>Needs</dt><dd>&#9426; &mdash; accepting a suggestion runs <code>/dropin-apply</code>, which &#9426; installs</dd>
+      <dt>Rules it keeps</dt><dd>Once per item per session &middot; never installs without your approval &middot; decline and it is not suggested again (the record notes <code>추천 거절</code>) &middot; items recorded as not applicable are not suggested either</dd>
       <dt>If you skip it</dt><dd>No suggestions appear &mdash; the items you need later you find yourself with <code>/dropin-apply</code></dd>
       <dt>Removing it</dt><dd>Delete that one line; the file and its other sections stay</dd>
     </dl>
@@ -623,7 +627,7 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
     <dl>
       <dt>How to install</dt><dd>In a session: <code>/plugin marketplace add jarrodwatts/claude-hud</code> &rarr; <code>/plugin install claude-hud</code> &rarr; <code>/reload-plugins</code> &rarr; <code>/claude-hud:setup</code></dd>
       <dt>Requires</dt><dd>Node.js 18 or newer</dd>
-      <dt>Asked alongside</dt><dd><b>The display layout</b> &mdash; a preset (chosen in setup/configure) / the author&rsquo;s recommended layout (model, effort, context, usage with reset time and uncommitted changes on; noise items off) / leave the defaults. Then, separately, <b>whether to add <code>refreshInterval</code></b> &mdash; with it (5 seconds, say) the countdowns keep ticking between messages, but the timer runs even in idle windows, so redraws <b>multiply by the number of windows you keep open</b>. With many terminals open, leave it out (usage values still update without it)</dd>
+      <dt>Asked alongside</dt><dd><b>The display layout</b> &mdash; a preset (chosen in setup/configure) / the author&rsquo;s recommended layout (model, effort, running agents, context, usage with reset time and uncommitted changes on &mdash; the 7-day limit shown at all times, even while usage is low; noise items off) / leave the defaults. Then, separately, <b>whether to add <code>refreshInterval</code></b> &mdash; with it (5 seconds, say) the countdowns keep ticking between messages, but the timer runs even in idle windows, so redraws <b>multiply by the number of windows you keep open</b>. With many terminals open, leave it out (usage values still update without it)</dd>
       <dt>Pre-checked</dt><dd><b>On the thrift profile or a new PC.</b> Practically required on thrift &mdash; economizing on what you cannot see is guesswork</dd>
       <dt>Note</dt><dd>If you already run another status line, you are always asked before replacing it</dd>
     </dl>
@@ -844,14 +848,15 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
   </p>
 
   <div class="note warn">
-    <b>&#128308; &sect;1 Preconditions &mdash; fail these and nothing is installed</b>
+    <b>&#128308; &sect;1 Preconditions &mdash; fail one and what it guards is not installed</b>
     &#9312; Is your plan <b>Pro or above</b>, with access to Claude Code on the web?<br>
     &#9313; For a company repository &mdash; does your organization permit <b>cloud execution (code leaving the building)</b>? A routine <b>clones the entire repository to the cloud</b> and the prompt is stored there too. On Team and Enterprise, check that the organization&rsquo;s routines switch is on (the <b>Routines</b> toggle in the admin settings at <code class="i">claude.ai/admin-settings/claude-code</code>)<br>
     &#9314; Is it a GitHub repository? (GitHub only, for now &mdash; if not, it stops here and records &ldquo;not applicable&rdquo;, so re-runs do not ask again)<br>
     &#9315; Is GitHub <b>connected</b> to your claude.ai account? If not, you build the whole prompt and schedule and <b>the final save is rejected</b> (observed in practice)<br>
     &#9316; <b>Is this work safe to run unattended?</b> A routine asks nothing while it runs, so hard-to-undo work &mdash; deploys, deletions, sending things out &mdash; is never handed to it<br>
     &#9317; Is the <code class="i">/schedule</code> command actually visible? When requirements are not met it is hidden, even if everything above passed<br>
-    Eligibility, approval and the risk of the work cannot be checked from the code, so they are <b>always asked</b>.
+    Eligibility, approval and the risk of the work cannot be checked from the code, so they are <b>always asked</b>.<br>
+    A failed check stops <b>only what it guards</b>: no eligible plan or no company approval stops 06 here, but an unconnected GitHub account only blocks saving the routine (&sect;3) &mdash; the repository prerequisites (&sect;2) can still be set up.
   </div>
 
   <div class="opt">

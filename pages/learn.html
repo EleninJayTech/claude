@@ -173,7 +173,7 @@ th{background:var(--marker-soft);font-family:var(--sans);font-size:13px}
 .plan .empty{color:var(--ink-soft);font-size:14px}
 .stamp{font-family:var(--mono);font-size:12px;background:var(--term);color:var(--term-fg);border-radius:8px;padding:10px 12px;margin-top:12px;line-height:1.6;overflow-x:auto;white-space:pre}
 
-/* ---------- 토글 목록(ⓐ~ⓕ) ---------- */
+/* ---------- 토글 목록(ⓐ~ⓖ) ---------- */
 .tglrow{display:flex;align-items:flex-start;gap:11px;border:1px solid var(--line);border-radius:12px;padding:11px 14px;margin:8px 0;background:var(--card)}
 .tglrow input{width:19px;height:19px;margin-top:5px;accent-color:var(--blue);flex:none;cursor:pointer}
 .tglrow label{cursor:pointer;flex:1}
@@ -315,7 +315,7 @@ footer{max-width:1120px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
   <div class="coach"><span class="who">🧭</span><div>
     <b>First time? &ldquo;Minimal&rdquo;. Re-running? Follow the record</b>
     With no install record (a new PC or folder), <b>minimal</b> is the default pick &mdash; start light, and when your work needs more, Claude suggests it in one line and installs only what you pick.
-    With a record, <b>recommended</b> is the default and the recorded mode is followed. Recommended mode has Claude settle on a combination and then <b>show you in one line why it chose that</b> before confirming.
+    With a record, the <b>mode written in that record</b> is followed &mdash; it is not swapped for a new default. Recommended mode has Claude settle on a combination and then <b>show you in one line why it chose that</b> before confirming.
     Even &ldquo;full&rdquo; never overwrites existing settings silently.
   </div></div>
 </section>
@@ -564,7 +564,7 @@ footer{max-width:1120px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
 <section class="chapter" data-ch="10" aria-labelledby="t10" hidden>
   <p class="eyebrow">Chapter 10 &middot; after the install</p>
   <h2 id="t10">Keeping it current</h2>
-  <p class="lead">Installing once is not the end of it. The documents get revised, and so do the skills they install. Three commands cover three different questions &mdash; and confusing them is the usual reason people keep running a stale setup.</p>
+  <p class="lead">Installing once is not the end of it. The documents get revised, and so do the skills they install. Each command below answers a different question &mdash; and confusing them is the usual reason people keep running a stale setup.</p>
   <table>
     <thead><tr><th>You want to&hellip;</th><th>Command</th><th>What changes</th></tr></thead>
     <tbody>
@@ -647,7 +647,7 @@ var STEPS = [
 
 var MODES = {
   minimal:{name:'Minimal', desc:'01 only \u2014 records and security (essentials only) + in-work suggestions (the default with no install record)'},
-  rec:{name:'Recommended', desc:'Claude combines automatically from what it detected (the default when re-applying / for existing records)'},
+  rec:{name:'Recommended', desc:'Claude combines automatically from what it detected'},
   full:{name:'Full', desc:'All of 01\u201306 \u2014 anything that does not apply is dropped and reported'},
   custom:{name:'Custom', desc:'Pick the documents, and the items inside them too'}
 };
@@ -680,7 +680,7 @@ var DOC01 = [
     ['.claude/settings.json  <span class="c"># allow / ask / deny</span>']],
   ['f','\u24d5 effort bundle &amp; cache guidance','Reasoning depth bundled per model, plus habits that keep the cache', true,
     ['~/.claude/settings.json  <span class="c"># modelSettings (per-model effort) — not written if your cheaper model already defaults to medium</span>']],
-  ['g','ⓖ In-work suggestions','When your work newly needs a drop-in item, a one-line suggestion → accept and /dropin-apply 추천 runs', true,
+  ['g','ⓖ In-work suggestions','In a folder with an install record, when your work newly needs a drop-in item, a one-line suggestion → accept and /dropin-apply 추천 runs', true,
     ['~/.claude/CLAUDE.md  <span class="c"># ## 10. one in-work suggestion line</span>']]
 ];
 
