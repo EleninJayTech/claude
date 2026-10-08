@@ -1,6 +1,6 @@
 # Claude Code 통합 구성 — 범용 마스터 (드롭인 적용)
 
-> **문서 버전: v1.99** · 최종 갱신: **2026-10-08** · **최근 재검증: 2026-10-08** · 기준: Claude Code v2.1.293 (Opus 5.5 · Sonnet 5.5 · Haiku 5.5 · Fable 5.1)
+> **문서 버전: v1.100** · 최종 갱신: **2026-10-08** · **최근 재검증: 2026-10-08** · 기준: Claude Code v2.1.293 (Opus 5.5 · Sonnet 5.5 · Haiku 5.5 · Fable 5.1)
 >
 > | 버전 | 날짜 | 변경 내용 |
 > | --- | --- | --- |
@@ -35,6 +35,7 @@
 > | v1.97 | 2026-10-06 | §D-4에 **`/dropin-sync` 편입** — update→check→apply를 순서대로 읽어 수행하는 일괄 진입점(절차는 각 스킬이 정본, 이 스킬은 순서·인계·통합 보고만 갖고 각 스킬의 끝 권고는 쓰지 않는다). §D-1 폴더·§D-2 예외·선택 항목·제거·§검증·§D-5 열거에 반영. **목표(R43)**: 3 — 자족성의 절차 축(세 칸을 순서대로 외워 부르지 않아도 한 진입점에서 닫힌다) · 8 — 입문자가 순서를 몰라도 도달한다 |
 > | v1.98 | 2026-10-08 | **ⓖ 작업 중 추천 신설(점진 설치)** — §A STEP 3 항목 ⓖ 추가·최소 매핑 ⓑⓒⓓ→**ⓑⓒⓓⓖ**·권장·전체 ⓐ~ⓖ · §D-2 `## 10.` 한 줄(작업이 00 §C-2 감지 신호에 새로 걸리면 한 줄 추천 → `/dropin-apply 추천`) · §F-2 resume 템플릿 조건부 안내에 같은 구절 · 제거 절차에 ⓖ. **목표(R43)**: 8 — 최소로 가볍게 시작해도 필요한 때 길이 열린다 · 3 — 추천→설치가 배포된 스킬로 닫힌다 · 4 — 규칙 한 줄 제거로 끈다 |
 > | v1.99 | 2026-10-08 | 전면 재검증(v2.1.293 — Haiku 5.5 출시) — §D-6 기본 `medium`에 Haiku 5.5 · 최상위 `effortLevel`은 Project·Local·Managed·`--settings`에선 모든 모델에 적용 · `modelSettings` 키는 정식 이름(이전 세대 키의 새 세대 적용은 🟡) · §D-7 effort 캐시 예외에 Haiku 5.5, `effort:`만 다른 스킬의 캐시 영향은 🟡 · §D-3 `theme` 키 문서화 반영 · §J `mask`·`filesystem.disabled`에 `--settings` 스코프·확장 필드별 버전 · §J-1 모델 하한에 Haiku 5.5. **목표(R43)**: 5 — 당일 공식 조회 · 1 — 품질을 전제한 절약(캐시·effort 전제 갱신) |
+> | v1.100 | 2026-10-08 | §D-6 **원칙 한 줄** — 모델은 별칭(최신 자동 추적), effort는 모델 기본값에서 출발하고 저장값은 기본값과 다를 이유가 있을 때만 · `modelSettings` 예시 키를 자리표시자로(이전 세대 ID 제거) · §L 대응. **목표(R43)**: 1 — 품질을 전제한 절약(기본값과 같은 핀은 이득 없이 세대 교체 때 낡는다) · 6 — 사본 추적(문서에 박힌 ID 사본을 없앤다) |
 > ※ 갱신 시: 이 표에 한 줄 추가 + 하단 "문서 정보" 날짜 수정 + §L 재검증 체크리스트 수행.
 
 > **사용법**: 이 파일을 아무 프로젝트 루트(또는 `docs/`)에 넣고 Claude에게
@@ -208,11 +209,12 @@ New-Item -ItemType Directory -Path .claude/skills/dropin-sync -Force
 - **`ultracode`**: effort 단계가 아니라 Claude Code 설정 — 굵직한 작업마다 **동적 워크플로(멀티에이전트 오케스트레이션)** 를 얹는다. **v2.1.284+는 독립 토글**이다 — `/effort ultracode [on|off]`(슬라이더에선 Tab)로 켜고 끄며 **effort 단계는 바뀌지 않는다**(그 전엔 `xhigh`로 올리고 다른 단계를 고르면 꺼졌다). `--effort ultracode` 플래그만 `xhigh`까지 함께 건다. 토큰 소모 큼.
 - **`ultrathink`**: 프롬프트에 이 단어를 넣으면 **그 턴만** 깊은 추론 요청(세션 설정 불변). "think hard" 류는 키워드가 아님.
 - **스코프**: `effortLevel`은 **User·Project·Local** 지원, 우선순위 **Managed > CLI > Local > Project > User**. 최상위 `effortLevel`은 User에서만 Opus 5.5 이후 모델이 무시하고, Project·Local·Managed·`--settings`에선 **모든 모델에 적용**된다. 세션 1회 오버라이드는 `--effort` 플래그·`CLAUDE_CODE_EFFORT_LEVEL` 환경변수(환경변수가 최우선).
+- **원칙 — 모델은 별칭으로, effort는 그 모델의 기본값에서 출발한다**: 모델을 `opus`·`sonnet`·`haiku`·`fable` 별칭으로 고르면 새 세대가 나올 때 자동으로 최신을 가리킨다. 저장값(`modelSettings`·최상위 `effortLevel`)은 **기본값과 다를 이유가 있을 때만** 둔다 — 기본값과 같은 키는 하는 일 없이 정식 이름으로 버전에 묶여, 세대가 바뀌면 낡은 키로만 남는다. User 스코프의 최상위 `effortLevel`은 Fable 5.1 이하 모델엔 여전히 적용되므로 기본값을 쓰려면 두지 않는다. 서브에이전트·스킬 frontmatter `effort:`는 사정이 다르다(지정자가 없어 생략이 기본값을 뜻하지 않는다 — 02 §E).
 - **권장 — 모델별 저장값을 묶어 둔다**(`~/.claude/settings.json`, User 스코프). 그러면 `/model`로 모델만 고르면 강도가 따라와, 매 작업 `/effort`를 다시 판단하지 않는다(02 §F-1 운용표의 `(자동)` 열 — 적지 않은 모델은 그 모델의 기본값이 그대로 `(자동)`이다). **키는 아래 예시를 베끼지 않는다** — `/model` 목록에서 **이 PC가 실제로 쓸 수 있는 모델의 전체 ID**를 먼저 읽고 그 값으로 채운다(Pro 요금제·Foundry 등에서 키가 가용 모델과 안 맞으면 저장은 되지만 아무 모델에도 적용되지 않는다):
   ```json
   {
     "modelSettings": {
-      "claude-sonnet-5": { "effortLevel": "medium" }
+      "<하위 모델 전체 ID>": { "effortLevel": "medium" }
     }
   }
   ```
@@ -612,7 +614,7 @@ CLAUDE.local.md
 ## L. 유지보수 (6개월마다 재검증) ⭐
 Claude Code는 매주 바뀐다. 6개월마다 30분:
 - `code.claude.com/docs/en/whats-new` 최신 항목 확인.
-- §D-6 `modelSettings` 예시의 **모델 ID 키**가 현행 라인업인지(전체 ID라 세대 교체마다 낡는다 — `claude-fable-5` → `claude-fable-5-1`이 실례) · 모델별 **기본 effort**(Opus 5.5=`medium` — 모델마다 다르고, 새 모델은 이전 저장값을 물려받지 않는다).
+- §D-6 `modelSettings` 예시가 **자리표시자 키**를 유지하는지(실제 모델 ID를 박으면 세대 교체마다 낡는다 — `claude-fable-5` → `claude-fable-5-1`이 실례) · 모델별 **기본 effort**(Opus 5.5=`medium` — 모델마다 다르고, 새 모델은 이전 저장값을 물려받지 않는다).
 - ✅(2026-09-16 종결) ⓐ `modelSettings`(모델별 저장값)가 `effortLevel`(저장값 없는 모델의 폴백)을 이긴다 — settings 레퍼런스 원문 재확인(이전 재검증 서술 그대로 확정 — 특정 버전 행을 인용하지 않는다. R20 병합되면 근거가 사라진다). ⓒ §J-1 auto 기본 시작 모드 도입 = macOS/Linux/WSL v2.1.228+·네이티브 Windows v2.1.233+, 2026-08-14(이후 v2.1.283에 전 플랜 기본으로 넓어졌다 — 본문은 현행만 적는다).
 - ✅(2026-09-30 종결) §E `AGENTS.md` 로드 조건은 **작업 디렉터리와 그 상위**의 `CLAUDE.md`·`.claude/CLAUDE.md`·`CLAUDE.local.md`를 센다(`~/.claude/CLAUDE.md`·managed·`.claude/rules/`는 세지 않는다 — memory `#agents-md`). §E-4 감지에 라우터 고지를 넣었다.
 - ✅(2026-09-30 종결) `/init`은 import를 스스로 넣지 않는다. 기본 `/init`의 흡수 대상은 Cursor·Copilot 규칙뿐이고, `AGENTS.md`는 `CLAUDE_CODE_NEW_INIT=1`일 때 흡수, `/import`는 사본을 덧붙인다 — §E에 "복사본과 import 중 하나만"을 넣었다.
@@ -636,5 +638,5 @@ Claude Code는 매주 바뀐다. 6개월마다 30분:
 ## 핵심 출처 🟢
 IDE 통합·`--add-dir`(ide-integrations·large-codebases) / permissions·deny 한계 / hooks / skills / memory·auto-memory — 모두 `code.claude.com/docs` 및 `docs.anthropic.com`.
 
-**문서 정보** — 통합 마스터(범용) **v1.99**. 변경 이력은 최상단 버전 표 참조(유래: 8개 소스 통합 초판 — 최상단 병합 행).
+**문서 정보** — 통합 마스터(범용) **v1.100**. 변경 이력은 최상단 버전 표 참조(유래: 8개 소스 통합 초판 — 최상단 병합 행).
 최종 갱신: 2026-10-08 · 최근 재검증: 2026-10-08 / 참조: Claude Code v2.1.293, Opus 5.5(v2.1.280+) · Sonnet 5.5(v2.1.284+) · Haiku 5.5(v2.1.293+) · Fable 5.1(v2.1.257+).
