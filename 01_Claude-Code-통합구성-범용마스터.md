@@ -1,6 +1,6 @@
 # Claude Code 통합 구성 — 범용 마스터 (드롭인 적용)
 
-> **문서 버전: v1.102** · 최종 갱신: **2026-10-08** · **최근 재검증: 2026-10-08** · 기준: Claude Code v2.1.293 (Opus 5.5 · Sonnet 5.5 · Haiku 5.5 · Fable 5.1)
+> **문서 버전: v1.103** · 최종 갱신: **2026-10-13** · **최근 재검증: 2026-10-08** · 기준: Claude Code v2.1.293 (Opus 5.5 · Sonnet 5.5 · Haiku 5.5 · Fable 5.1)
 >
 > | 버전 | 날짜 | 변경 내용 |
 > | --- | --- | --- |
@@ -20,6 +20,7 @@
 > | v1.100 | 2026-10-08 | §D-6 **원칙 한 줄** — 모델은 별칭(최신 자동 추적), effort는 모델 기본값에서 출발하고 저장값은 기본값과 다를 이유가 있을 때만 · `modelSettings` 예시 키를 자리표시자로(이전 세대 ID 제거) · §L 대응. **목표(R43)**: 1 — 품질을 전제한 절약(기본값과 같은 핀은 이득 없이 세대 교체 때 낡는다) · 6 — 사본 추적(문서에 박힌 ID 사본을 없앤다) |
 > | v1.101 | 2026-10-08 | **/audit 20차(회귀) 반영** — 글로벌 전용 최소 매핑에 ⓖ 복원(ⓑⓒⓖ)·ⓖ는 ⓒ 전제·§검증 ①에 ⓖ(`## 10.` 실재) · `## 10.`과 §F-2 A·B·C resume 추천을 **기록 있는 대상에만**·제외에 `해당 없음` · §F-1 R48을 좁힘(원격이 있을 때 fetch·기본 브랜치=원격 HEAD·같은 작업의 브랜치만 그대로·세션 시작 확인 삭제·아카이브 즉시 푸시는 길이 관리 규칙) · §D-6 묶음을 "기본값과 다른 값을 둘 때만"으로·절약 프로필의 no-op 문장 좁힘·원칙 줄 세대명 삭제·frontmatter `effort:` 서술을 일반 스킬로 한정 · 별칭 규칙의 낡은 토큰 열거 삭제 · §L 🟡 Haiku 5.5 지원 단계 |
 > | v1.102 | 2026-10-08 | **최적화**: R20 적용 — v1.70~v1.87을 기존 병합 행에 흡수(축 요약·버전 행 15개, 규칙 불변) |
+> | v1.103 | 2026-10-13 | **mods 조사 반영** — §J-1 ask·deny 보증에 설치 mod 예외 한 줄, §K hooks 진단에 `disableAllHooks`·`--safe-mode`, §L 근거 갱신. **목표(R43)**: 5 — mod 설치 시 거짓이 되는 안전 보증을 당일 공식 문서(2026-10-13)로 바로잡는다 · 1 — 틀리면 하류 판단이 전부 틀어지는 자리라 아끼지 않는다 |
 > ※ 갱신 시: 이 표에 한 줄 추가 + 하단 "문서 정보" 날짜 수정 + §L 재검증 체크리스트 수행.
 
 > **사용법**: 이 파일을 아무 프로젝트 루트(또는 `docs/`)에 넣고 Claude에게
@@ -568,7 +569,7 @@ CLAUDE.local.md
 ### J-1. 권한 모드 운용 — auto mode 🟢
 "매번 승인(manual)"과 "전부 스킵(`--dangerously-skip-permissions`)" 사이의 중간지대. **별도 분류기 모델**(기본 Sonnet 5)이 각 액션을 실행 전 심사해 안전한 것은 통과시키고, 요청 범위를 벗어난 행동·미인식 인프라 대상·읽은 콘텐츠(프롬프트 인젝션)에서 유래한 행동을 차단한다.
 - **켜기**: **v2.1.283+는 모든 플랜·프로바이더에서 대화형 터미널·VS Code 세션의 기본 시작 모드가 auto다**(`permissions.defaultMode`가 있으면 그 값이 이긴다 — 그 전 버전은 Pro·Max·Team만 기본, 2026-09-30 확인). 설치·업그레이드 직후 첫 세션은 feature flag가 오기 전이라 다른 모드로 시작할 수 있다. 바꾸려면 `Shift+Tab` 순환(auto에서 첫 타는 `default`, 이후 `default`→`acceptEdits`→`plan`→`default`) 또는 `--permission-mode`. 기본 시작 모드 고정은 `defaultMode: "auto"` — 단 **user/managed 스코프만 유효**(프로젝트·로컬 settings에선 무시됨: repo가 스스로 권한을 올리는 걸 막는 설계, v2.1.142+).
-- **규칙과의 관계**: 명시적 **ask 규칙은 auto mode에서도 프롬프트 강제**, deny는 그대로 차단(분류기가 deny를 뚫지 못함). `rm -rf /`·`~` 같은 파괴 명령은 분류기가 심사(v2.1.218+), 요청하지 않은 파괴적 git 명령·트랜스크립트 조작은 차단.
+- **규칙과의 관계**: 명시적 **ask 규칙은 auto mode에서도 프롬프트 강제**, deny는 그대로 차단(분류기가 deny를 뚫지 못함). `rm -rf /`·`~` 같은 파괴 명령은 분류기가 심사(v2.1.218+), 요청하지 않은 파괴적 git 명령·트랜스크립트 조작은 차단. 단 **설치한 mod가 도구 호출을 승인하면 ask 규칙과 auto 분류기를 건너뛴다**(managed settings가 없고 Team/Enterprise 로그인도 아니면 deny까지 넘는다 — 03 부록 경고). mod가 없는 구성에서만 위 보증이 그대로다.
 - **회사 환경 주의** 🔴: v2.1.283+는 **Enterprise도 auto로 시작한다**. 조직이 manual로 시작하게 하려면 managed settings의 `permissions.defaultMode`(사용자가 auto로 바꿀 수는 있다), 선택 자체를 없애려면 아래 `disableAutoMode`다. 관리자가 managed settings `permissions.disableAutoMode: "disable"`로 조직 전체를 끌 수 있다 — **조직 정책이 항상 우선**이며 이 문서로 우회 구성하지 않는다. 프로바이더는 API·Claude Platform on AWS·Bedrock·Google Cloud·Foundry 모두 기본 제공(v2.1.207+), 단 모델 하한이 다르다 — API·Claude Platform on AWS는 Opus 4.6+·Sonnet 4.6+·Haiku 5.5·Fable 모델, Bedrock 등 서드파티는 Sonnet 5+·Opus 4.7+·Haiku 5.5(v2.1.293+)·Fable 모델(공식 문서는 "Fable 5" 같은 구체 버전을 명시하지 않는다).
 - **한계**: 프롬프트를 줄일 뿐 안전 보장이 아니다 — 방향을 신뢰하는 작업에만 쓰고, 민감 작업(배포·시크릿 인접·대량 삭제)은 manual/plan으로 내려서 검토한다. plan mode 중에도 분류기가 셸 명령을 심사한다(`useAutoModeDuringPlan` 기본 on, v2.1.218+).
 - **분류기 비용**(Enterprise·API 키·Claude Platform on AWS·Bedrock·Google Cloud·Foundry — Pro·Max·Team은 해당 없음): v2.1.278+는 분류 검사를 **서버가 세션 요청 안에서 무료로** 한다. 사내 LLM 게이트웨이·프록시가 요청을 변형하면 서버 검사가 닿지 않아 **예전처럼 과금되는 자체 분류 요청**으로 돌아가고, 세션에서 한 번 `this session isn't eligible` 알림이 뜬다(auto mode는 그대로 동작). 확인은 `/status`의 `Auto mode server` 행(`Enabled`/`Disabled`) — 게이트웨이 쪽 조치는 관리자 사안이다.
@@ -581,7 +582,7 @@ CLAUDE.local.md
 | `/resume`·`/wrap` 자동완성 안 뜸 | IDE 재시작 / 폴더·파일명 / `SKILL.md`의 `name:` |
 | `/` 자동완성에 같은 명령이 2개 | 구형 `commands/<이름>.md`와 `skills/<이름>/` 중복 등록 — **commands 쪽 삭제**(스킬이 정본, §F-2 주의) |
 | IntelliJ에서 Claude 안 열림 | 플러그인 설치 후 **완전 재시작** / `Ctrl+Esc` |
-| hooks 안 도는 듯 | 매처 철자(`auto`/`compact`) 정확히 |
+| hooks 안 도는 듯 | 매처 철자(`auto`/`compact`) 정확히 · `disableAllHooks: true`·`--safe-mode` 켜짐 여부(hook·커스텀 상태줄이 전부 멈춘다) |
 | `/resume`가 진행 중 작업 못 찾음 | 미커밋+다른 브랜치라서 — skill이 `git status` 먼저 보는지 / **`/wrap` 후 커밋** 습관화 |
 | 같은 PROGRESS Git 충돌 | `.gitattributes` merge=union 있는지 / append 전용인지 |
 | A-1인데 일부 repo 못 읽음 | **상위 폴더**에서 `claude` 실행했는지 |
@@ -606,7 +607,7 @@ Claude Code는 매주 바뀐다. 6개월마다 30분:
 - ✅(2026-09-23 종결) 세션 중 새로 만든 `~/.claude/CLAUDE.md`는 **그 세션에 로드되지 않는다** — 공식 memory가 CLAUDE.md를 *"at the start of every session"* 로드하고 확인은 *"in your next session"* 하라고 한다. §검증 ⓐ의 "새 세션에서 재확인" 대기 분기는 필요하다(유지).
 - 🟡(2026-10-08) `modelSettings` 이전 세대 키(`claude-opus-5`)가 새 세대(Opus 5.5)에 적용되는지 — 공식은 정식 이름 저장·매칭만 적고 접두 확장은 `availableModels`에만 명시한다(§D-6 묶음 키). · 스킬 frontmatter `effort:`만 다를 때의 캐시 영향 — prompt-caching은 스킬 `model:`만 다룬다(§D-7).
 - 🟡(2026-10-08) §D-6 "모델별 지원(전 단계)" 목록에 Haiku 5.5가 없다 — 같은 회차에 기본 `medium`·캐시 예외·§J-1 하한에는 넣었다. Haiku 5.5의 effort 지원 단계를 공식 문서로 확인한다.
-- 정기 확인(2026-10-08 유효 — 샌드박스 `mask`·`filesystem.disabled`의 `--settings` 스코프·확장 필드별 버전 정정, 테마는 `theme` 키 문서화): deny의 서브프로세스 우회 한계, **샌드박스 네이티브 Windows 미지원**(macOS·Linux·WSL2만 — sandboxing), `sandbox.credentials` 스키마(`files[]`={path,mode}·`envVars[]`={name,mode}, mode=`deny`|`mask` + 확장 필드(도입 버전 필드별 상이) — §J 본문에도 반영), `attribution` 스키마, auto-memory 한도(MEMORY.md 200줄/25KB).
+- 정기 확인(2026-10-08 유효 — 샌드박스 `mask`·`filesystem.disabled`의 `--settings` 스코프·확장 필드별 버전 정정, 테마는 `theme` 키 문서화): deny의 서브프로세스 우회 한계, **샌드박스 네이티브 Windows 미지원**(macOS·Linux·WSL2만 — sandboxing), `sandbox.credentials` 스키마(`files[]`={path,mode}·`envVars[]`={name,mode}, mode=`deny`|`mask` + 확장 필드(도입 버전 필드별 상이) — §J 본문에도 반영), `attribution` 스키마, auto-memory 한도(MEMORY.md 200줄/25KB), mod가 deny를 넘는 조건(managed settings 유무·Team/Enterprise 로그인 여부·`allowModsToOverrideDenyRules` 기본값) 변경 시 §J-1 재확인(출처 `code.claude.com/docs/en/permissions` §Extend permissions with hooks).
 - **dev container 격리 경로**(§J 격리 3단) — feature 이미지·이그레스 방화벽 스크립트 구성이 유지되는지, 네이티브 Windows 대안이라는 위치가 바뀌지 않았는지(내장 샌드박스가 Windows를 지원하기 시작하면 이 줄의 근거가 사라진다).
 - `/model` 최신 정책(별칭이 가리키는 실제 모델·`best`의 해석), `claude --version`.
 - `/effort` 단계 명칭·모델별 지원 범위·`ultracode` 동작, 에이전트·스킬 frontmatter 키 생존 — `effort:`·`arguments:`·`allowed-tools`·`disable-model-invocation`(정본 §F-2. `effort:`는 2026-07-20 확정).
@@ -623,5 +624,5 @@ Claude Code는 매주 바뀐다. 6개월마다 30분:
 ## 핵심 출처 🟢
 IDE 통합·`--add-dir`(ide-integrations·large-codebases) / permissions·deny 한계 / hooks / skills / memory·auto-memory — 모두 `code.claude.com/docs` 및 `docs.anthropic.com`.
 
-**문서 정보** — 통합 마스터(범용) **v1.102**. 변경 이력은 최상단 버전 표 참조(유래: 8개 소스 통합 초판 — 최상단 병합 행).
-최종 갱신: 2026-10-08 · 최근 재검증: 2026-10-08 / 참조: Claude Code v2.1.293, Opus 5.5(v2.1.280+) · Sonnet 5.5(v2.1.284+) · Haiku 5.5(v2.1.293+) · Fable 5.1(v2.1.257+).
+**문서 정보** — 통합 마스터(범용) **v1.103**. 변경 이력은 최상단 버전 표 참조(유래: 8개 소스 통합 초판 — 최상단 병합 행).
+최종 갱신: 2026-10-13 · 최근 재검증: 2026-10-08 / 참조: Claude Code v2.1.293, Opus 5.5(v2.1.280+) · Sonnet 5.5(v2.1.284+) · Haiku 5.5(v2.1.293+) · Fable 5.1(v2.1.257+).
