@@ -1,6 +1,6 @@
 # Claude Code 통합 구성 — 범용 마스터 (드롭인 적용)
 
-> **문서 버전: v1.104** · 최종 갱신: **2026-10-14** · **최근 재검증: 2026-10-08** · 기준: Claude Code v2.1.293 (Opus 5.5 · Sonnet 5.5 · Haiku 5.5 · Fable 5.1)
+> **문서 버전: v1.105** · 최종 갱신: **2026-10-18** · **최근 재검증: 2026-10-08** · 기준: Claude Code v2.1.293 (Opus 5.5 · Sonnet 5.5 · Haiku 5.5 · Fable 5.1)
 >
 > | 버전 | 날짜 | 변경 내용 |
 > | --- | --- | --- |
@@ -22,6 +22,7 @@
 > | v1.102 | 2026-10-08 | **최적화**: R20 적용 — v1.70~v1.87을 기존 병합 행에 흡수(축 요약·버전 행 15개, 규칙 불변) |
 > | v1.103 | 2026-10-13 | **mods 조사 반영** — §J-1 ask·deny 보증에 설치 mod 예외 한 줄, §K hooks 진단에 `disableAllHooks`·`--safe-mode`, §L 근거 갱신. **목표(R43)**: 5 — mod 설치 시 거짓이 되는 안전 보증을 당일 공식 문서(2026-10-13)로 바로잡는다 · 1 — 틀리면 하류 판단이 전부 틀어지는 자리라 아끼지 않는다 |
 > | v1.104 | 2026-10-14 | **§F-1 세션 규율에 "커밋은 이 세션이 편집한 파일만 스테이징" 한 줄** — `add -A`·`commit -a` 금지(R42의 임의 커밋 경로, 규칙 대장 R50). **목표(R43)**: 7 — 같은 폴더 다른 세션의 미커밋이 내 커밋에 실려 기록 추적성이 깨지는 경로를 규칙으로 막는다 · 6 — 사본은 대장에 올려 기계가 대조한다 |
+> | v1.105 | 2026-10-18 | **§K에 크레딧 잔액 오류 행** — Max·Team API 크레딧(2026-10 신설)만 있는 조직의 키가 환경에 남아 Claude Code가 `Credit balance too low`로 멈추는 경로와 복귀법 · §L 근거. 설치 항목 아님. **목표(R43)**: 5 — 새 요금 기능을 당일 공식 문서로 · 1 — 세션이 통째로 멈추는 자리 |
 > ※ 갱신 시: 이 표에 한 줄 추가 + 하단 "문서 정보" 날짜 수정 + §L 재검증 체크리스트 수행.
 
 > **사용법**: 이 파일을 아무 프로젝트 루트(또는 `docs/`)에 넣고 Claude에게
@@ -595,6 +596,7 @@ CLAUDE.local.md
 | Windows에서 Bash 없다고 에러 | Claude Code `v2.1.120+`로 업데이트(PowerShell만으로 동작) |
 | 셋업이 전반적으로 이상함 | **`/doctor`** — 구성 전체 진단+수정 제안(비대 CLAUDE.md 트림 제안 포함 v2.1.206+, `/checkup` 별칭) |
 | 새 모델로 바꾼 뒤 지시가 낡았는지 | **`/doctor prompt-audit [경로]`**(v2.1.283+) — `CLAUDE.md`·`AGENTS.md`·rules·skills·commands·subagents·output styles에서 **구 모델용 지시·없는 파일/명령 참조·서로 상충하는 파일**을 찾아 보고·편집 제안만 한다(적용하라고 할 때까지 파일은 그대로) |
+| Claude Code에서 `Credit balance too low · Add funds` | 환경의 `ANTHROPIC_API_KEY`(또는 `apiKeyHelper`)가 **Max·Team API 크레딧만 있는 Console 조직** 키라서 — 그 크레딧은 Claude Code를 덮지 않는다. `/status`로 쓰고 있는 인증을 확인하고, 셸 프로필·settings `env`에서 그 키를 빼 구독으로 돌아간다(`-p`는 키가 있으면 무조건 키를 쓴다). 크레딧을 쓰는 경로는 02 §F 팬아웃 주석 |
 
 ---
 
@@ -618,6 +620,7 @@ Claude Code는 매주 바뀐다. 6개월마다 30분:
 - **§K `/doctor prompt-audit`** — 하위 명령 이름·감사 대상 파일 종류·"보고·제안만" 동작이 유지되는지(공식 memory·commands).
 - **`AGENTS.md` 로드 규칙**(§E 공통) — `CLAUDE.md`·`CLAUDE.local.md`가 있으면 읽지 않는 기본값 · `@AGENTS.md` import 권장 · Windows symlink 제약이 유지되는지(공식 memory `#agents-md`).
 - **§G 세션 분리 축** — `claude -c`(그 폴더의 가장 최근 대화)·`-n`/`/rename`(세션 이름)·`--resume <이름>`·`--worktree`(worktree 위치·분기·정리) 동작(공식 sessions·worktrees, 2026-09-13 확인). 같은 폴더 동시 세션에 대한 **공식 경고는 없다**(같은 날 확인) — 생기면 §G 줄의 근거를 그쪽으로 바꾼다.
+- **§K 크레딧 잔액 오류 행** — Max·Team API 크레딧의 대상(Claude Code 제외)·`Credit balance too low` 문구·인증 우선순위(`-p`는 `ANTHROPIC_API_KEY`를 항상 쓰고 대화형은 1회 승인)가 유지되는지(platform `api-credits-for-subscribers`·code.claude.com `authentication`, 2026-10-18 확인).
 - **자기 점검(갱신 의식)** — 재검증·개정은 기억이 아니라 **당일 공식 문서** 조회로 한다(확인 못 한 항목엔 🟡을 단다). 고쳤으면 ① 버전 표에 한 줄(무엇을 왜) ② 헤더·푸터의 버전과 "최종 갱신"·"최근 재검증" 날짜 ③ 저장소 `CLAUDE.md` 구성물 표 ④ 이 체크리스트 ⑤ 기계 검사 통과를 빠짐없이 한다. 버전은 네 곳에 있고 **하나만 빠져도 4축이 어긋난다** — 골격 규칙의 정본은 `docs/DOC_CONTRACT.md`다.
 - ✅ 해소된 과거 항목(재확인 불필요): CLAUDE.local.md deprecation 우려 → **계속 지원**(2026-07-20 확인, `.gitignore` 추가 권장 유지).
 
@@ -626,5 +629,5 @@ Claude Code는 매주 바뀐다. 6개월마다 30분:
 ## 핵심 출처 🟢
 IDE 통합·`--add-dir`(ide-integrations·large-codebases) / permissions·deny 한계 / hooks / skills / memory·auto-memory — 모두 `code.claude.com/docs` 및 `docs.anthropic.com`.
 
-**문서 정보** — 통합 마스터(범용) **v1.104**. 변경 이력은 최상단 버전 표 참조(유래: 8개 소스 통합 초판 — 최상단 병합 행).
-최종 갱신: 2026-10-14 · 최근 재검증: 2026-10-08 / 참조: Claude Code v2.1.293, Opus 5.5(v2.1.280+) · Sonnet 5.5(v2.1.284+) · Haiku 5.5(v2.1.293+) · Fable 5.1(v2.1.257+).
+**문서 정보** — 통합 마스터(범용) **v1.105**. 변경 이력은 최상단 버전 표 참조(유래: 8개 소스 통합 초판 — 최상단 병합 행).
+최종 갱신: 2026-10-18 · 최근 재검증: 2026-10-08 / 참조: Claude Code v2.1.293, Opus 5.5(v2.1.280+) · Sonnet 5.5(v2.1.284+) · Haiku 5.5(v2.1.293+) · Fable 5.1(v2.1.257+).
