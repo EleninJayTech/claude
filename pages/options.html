@@ -682,7 +682,7 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
       <dt>Invocation</dt><dd><b>feature-test</b> (drives the screen) and <b>test-to-script</b> (adds test markers to source) are recommended as <b>manual only</b> &mdash; invoked automatically, they could drive the screen or edit source without you noticing. Set that way, you call <code>/feature-test</code> yourself</dd>
       <dt>Needs</dt><dd><b>Python 3</b> for two of them (audit and guard). Without it the other four still work, and the install is recorded as pending so it is not forgotten</dd>
       <dt>Choose it when</dt><dd>The project has real features and real screens. <b>Not for documentation-only repositories</b> &mdash; there is nothing to specify or run</dd>
-      <dt>Removing it</dt><dd>Uninstall <b>the guard first</b> (<code>/feature-doc-guard uninstall</code>), then delete the folders. The other order leaves a commit hook with nothing left to remove it, and commits keep getting blocked. Your <code class="i">docs/features/</code> is data &mdash; it is kept, not deleted</dd>
+      <dt>Removing it</dt><dd>Uninstall <b>the guard first</b> (<code>/feature-doc-guard uninstall</code>), then delete the folders. The other order leaves a commit hook with nothing left to remove it, and commits keep getting blocked. Your <code class="i">docs/features/</code> and the test scripts <code>/test-to-script</code> wrote (<code class="i">tests/e2e/</code> for web, <code class="i">tests/maestro/</code> for apps) are data &mdash; they are kept, not deleted</dd>
     </dl>
   </div>
 
