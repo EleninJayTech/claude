@@ -236,7 +236,7 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
     <tr><td><code>/refactor</code></td><td><code>[all | path | commitA..commitB | check [scope]] [nocheck]</code></td><td>Tidying code without changing behaviour</td><td>A report &mdash; the commit stays yours</td></tr>
 
     <tr><th class="grp" colspan="4" scope="colgroup">Planning with another model &middot; 02 STEP 3 ⓔ</th></tr>
-    <tr><td><code>/plan-&lt;model&gt;</code></td><td>what to plan &middot; manual only</td><td>Design forks to settle before any code</td><td>A plan file under <code>docs/plans/</code></td></tr>
+    <tr><td><code>/plan-&lt;model&gt;</code></td><td>what to plan &middot; manual-only suggested</td><td>Design forks to settle before any code</td><td>A plan file under <code>docs/plans/</code></td></tr>
 
     <tr><th class="grp" colspan="4" scope="colgroup">Front-end design &middot; 03 §2, §3, §9</th></tr>
     <tr><td><code>/svg-design</code></td><td>none &mdash; describe the effect</td><td>Building or fixing an SVG filter effect</td><td>Filter code that survives real browsers</td></tr>
@@ -503,7 +503,7 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
         <dt>You get</dt><dd><code>docs/releases/&lt;tag&gt;.md</code>, split into new, changed, fixed, removed, internal, and tests &mdash; with a separate list of commits no doc covers yet.</dd>
       </dl>
       <div class="warn soft"><b>Worth knowing.</b> It refuses to invent. When a commit message is unclear it reads the diff, and if that still does not settle it the line is marked for you to confirm.</div>
-      <div class="tags"><span class="tag need">needs init</span><span class="tag">writes docs</span></div>
+      <div class="tags"><span class="tag">writes docs</span></div>
     </article>
 
   </div>
@@ -545,7 +545,7 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
 
     <article class="skill" data-g="plan">
       <div class="cmd"><span class="sl">/</span>plan-&lt;model&gt;</div>
-      <div class="args">what to plan &middot; manual call only</div>
+      <div class="args">what to plan &middot; manual-only suggested</div>
       <p class="one">Plans a change with a stronger model than your session uses, writes it down, and stops before any code.</p>
       <dl>
         <dt>Use when</dt><dd>A change could go several ways and you want the judgement made before anyone starts typing. Not for a routine change with one obvious path.</dd>
@@ -565,7 +565,7 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
     <h2 style="margin-top:0">Front-end design</h2>
     <span class="src">installed by document 03 §2, §3 and §9 &middot; optional</span>
   </div>
-  <p class="gnote">Three skills that only matter if you build UI. None of them installs hooks or keeps records &mdash; they shape how Claude designs and writes front-end code when you ask for it. Picking either of the last two raises one extra question at install time: a <b>font-licence policy</b> &mdash; free-to-use fonts only (the default), be told the terms and decide each time, or leave it out. Unless you leave it out, a short policy section goes into the <code>CLAUDE.md</code> of the scope you installed into, and it applies whichever of the two you use.</p>
+  <p class="gnote">Skills that only matter if you build UI. None of them installs hooks or keeps records &mdash; they shape how Claude designs and writes front-end code when you ask for it. Picking either of the last two raises one extra question at install time: a <b>font-licence policy</b> &mdash; free-to-use fonts only (the default), be told the terms and decide each time, or leave it out. Unless you leave it out, a short policy section goes into the <code>CLAUDE.md</code> of the scope you installed into, and it applies whichever of the two you use.</p>
   <div class="cards">
 
     <article class="skill" data-g="design">
@@ -643,7 +643,7 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
   <div class="trap"><b><code>/dropin-check</code> cannot see everything.</b><p>On an ordinary install there is no private mirror to compare against, so it reports &ldquo;current as far as the documents go &mdash; skill contents unchecked&rdquo; rather than a flat &ldquo;current&rdquo;. Run <code>/dropin-apply</code> when you want that second half answered &mdash; and to bring <code>/resume</code> and <code>/wrap</code> up to date too, choose <code>reconcile</code> for the global items already installed. <code>keep</code> leaves the old text in place.</p></div>
 </div>
 
-<h2>Six things that surprise people</h2>
+<h2>Things that surprise people</h2>
 <div class="traps">
   <div class="trap"><b>The personal copy wins, silently.</b><p>Same skill name in <code>~/.claude/skills/</code> and in the project's <code>.claude/skills/</code>? The personal one runs and the project one never does &mdash; with no error to tell you. This is the most common reason a team's shared skill "does not work" on one machine.</p></div>
   <div class="trap"><b><code>allowed-tools</code> is a permission, not a fence.</b><p>It widens what may run without prompting. A skill listing only git commands can still edit your files. The key that actually restricts is <code>disallowed-tools</code>.</p></div>
@@ -661,7 +661,7 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
     <tr><td><code>/resume</code> <code>/wrap</code> <code>/dropin-apply</code> <code>/dropin-check</code> <code>/dropin-update</code> <code>/dropin-sync</code></td><td>01 §D-4</td><td>global &mdash; <code>~/.claude/skills/</code></td><td>Delete the folder. Accumulated records under <code>docs/</code> stay by default (you are asked) &mdash; they are data.</td></tr>
     <tr><td><code>/svg-design</code></td><td>03 §2</td><td>global</td><td>Delete the folder.</td></tr>
     <tr><td><code>/frontend-design</code></td><td>03 §3</td><td>global &mdash; plugin or <code>npx skills add -g</code></td><td>Delete the folder. If npx only left a link, delete what the link points to as well. Once <code>kr-ui-guide</code> is gone too, delete the font-licence policy section from the <code>CLAUDE.md</code>.</td></tr>
-    <tr><td>the six feature skills</td><td>03 §7</td><td>global &mdash; project scope if the team and CI must share them &middot; or the <code>dandi</code> plugin</td><td>Plugin: <code>/plugin uninstall dandi-feature-docs@dandi</code>. Copy: guard first, then the six folders. <code>docs/features/</code> and <code>tests/e2e/</code> stay.</td></tr>
+    <tr><td>the six feature skills</td><td>03 §7</td><td>global &mdash; project scope if the team and CI must share them &middot; or the <code>dandi</code> plugin</td><td>Plugin: <code>/plugin uninstall dandi-feature-docs@dandi</code>. Copy: guard first, then the six folders. <code>docs/features/</code>, <code>tests/e2e/</code> and <code>tests/maestro/</code> stay.</td></tr>
     <tr><td><code>/refactor</code></td><td>03 §8</td><td>global &middot; or the <code>dandi</code> plugin</td><td>Plugin: <code>/plugin uninstall dandi-refactor@dandi</code>. Copy: delete the folder. No hooks to unwind, no commits to revert. Reports in <code>docs/refactor/</code> stay.</td></tr>
     <tr><td><code>/kr-ui-guide</code></td><td>03 §9</td><td>global &middot; or the <code>dandi</code> plugin</td><td>Plugin: <code>/plugin uninstall dandi-kr-ui-guide@dandi</code>. Copy: delete the folder. If a project <code>CLAUDE.md</code> got the optional override block, delete that too &mdash; and the font-licence policy section, once <code>frontend-design</code> is gone as well.</td></tr>
     <tr><td><code>/plan-&lt;model&gt;</code></td><td>02 STEP 3 ⓔ</td><td>asked at install &mdash; global or project</td><td>Delete the folder, the model usage table it created, and the lines about this command it added to <code>CLAUDE.md</code> and the handoff protocol.</td></tr>
@@ -670,7 +670,7 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
 </div>
 <p class="lead" style="margin-top:16px">Every one of these has a documented removal path, which is deliberate: an install you cannot reverse was never really a choice. The full procedures &mdash; detect, install, verify, remove &mdash; are in the documents themselves. For what each install question means, see the <a href="options.html">options dictionary</a>; to work through it step by step, take the <a href="learn.html">course</a>.</p>
 
-<footer>Dandi &middot; Skill catalog &middot; 2026-10-08 &middot; Skills installed by documents 01 §D-4, 02 STEP 3 ⓔ, 03 §2, §3, §7, §8 and §9. Commands are shown without an alias; apply yours if you chose one at install time. &middot; Fonts: Pretendard, IBM Plex Mono &mdash; both SIL Open Font License 1.1 (free for commercial use and web embedding)</footer>
+<footer>Dandi &middot; Skill catalog &middot; 2026-10-19 &middot; Skills installed by documents 01 §D-4, 02 STEP 3 ⓔ, 03 §2, §3, §7, §8 and §9. Commands are shown without an alias; apply yours if you chose one at install time. &middot; Fonts: Pretendard, IBM Plex Mono &mdash; both SIL Open Font License 1.1 (free for commercial use and web embedding)</footer>
 
 </div>
 <script>

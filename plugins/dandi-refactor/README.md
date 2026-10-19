@@ -17,7 +17,7 @@ Third-party marketplaces don't auto-update by default — enable it in `/plugin`
 |---|---|---|
 | `/dandi-refactor:refactor` | Refactor the recent work (default), the whole repo, a path, or a commit range, then verify side effects. `check` verifies without changing code | `[all \| path \| commit..commit \| check [range]] [nocheck]` |
 
-Reports are saved to `docs/refactor/`. The skill never commits — you do.
+Reports are saved to `docs/refactor/` when you ask for one. The skill never commits — you do.
 
 ## Requirements
 

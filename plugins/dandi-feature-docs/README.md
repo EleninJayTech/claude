@@ -38,7 +38,7 @@ Start with `feature-docs init`; the other five read the `docs/features/` layout 
 /plugin uninstall dandi-feature-docs@dandi
 ```
 
-`docs/features/` and `tests/e2e/` are your data and stay.
+`docs/features/`, `tests/e2e/` and `tests/maestro/` are your data and stay.
 
 ## Already installed via the Dandi drop-in docs?
 

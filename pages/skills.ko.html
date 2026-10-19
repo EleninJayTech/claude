@@ -236,7 +236,7 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
     <tr><td><code>/refactor</code></td><td><code>[all | 경로 | 커밋A..커밋B | check [범위]] [nocheck]</code></td><td>동작은 그대로 두고 코드만 정리할 때</td><td>보고서 &mdash; 커밋은 직접 한다</td></tr>
 
     <tr><th class="grp" colspan="4" scope="colgroup">다른 모델로 계획 &middot; 02 STEP 3 ⓔ</th></tr>
-    <tr><td><code>/plan-&lt;모델&gt;</code></td><td>계획할 대상 &middot; 수동 전용</td><td>코드 전에 정할 설계 갈래가 여럿일 때</td><td><code>docs/plans/</code>의 계획 파일</td></tr>
+    <tr><td><code>/plan-&lt;모델&gt;</code></td><td>계획할 대상 &middot; 수동 호출 권장</td><td>코드 전에 정할 설계 갈래가 여럿일 때</td><td><code>docs/plans/</code>의 계획 파일</td></tr>
 
     <tr><th class="grp" colspan="4" scope="colgroup">프론트엔드 디자인 &middot; 03 §2 · §3 · §9</th></tr>
     <tr><td><code>/svg-design</code></td><td>없음 &mdash; 원하는 효과를 말한다</td><td>SVG 필터 효과를 만들거나 고칠 때</td><td>진짜 브라우저에서 살아남는 필터 코드</td></tr>
@@ -503,7 +503,7 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
         <dt>결과</dt><dd><code>docs/releases/&lt;태그&gt;.md</code> &mdash; 신규·변경·수정·제거·내부 변경·테스트로 나뉘고, 아직 어느 문서에도 안 잡힌 커밋은 따로 모아 준다.</dd>
       </dl>
       <div class="warn soft"><b>알아 둘 것.</b> 지어내지 않는다. 커밋 메시지가 애매하면 diff를 열어 보고, 그래도 모르면 확인이 필요하다고 표시해 남긴다.</div>
-      <div class="tags"><span class="tag need">init 필요</span><span class="tag">문서를 쓴다</span></div>
+      <div class="tags"><span class="tag">문서를 쓴다</span></div>
     </article>
 
   </div>
@@ -545,7 +545,7 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
 
     <article class="skill" data-g="plan">
       <div class="cmd"><span class="sl">/</span>plan-&lt;모델&gt;</div>
-      <div class="args">계획할 대상 &middot; 수동 호출 전용</div>
+      <div class="args">계획할 대상 &middot; 수동 호출 권장</div>
       <p class="one">세션보다 강한 모델로 변경 계획을 세워 파일로 남기고, 코드 한 줄 쓰기 전에 멈춘다.</p>
       <dl>
         <dt>언제</dt><dd>설계 갈래가 여럿이라 누가 타이핑을 시작하기 전에 판단이 필요할 때. 길이 하나뿐인 정형 작업에는 쓰지 않는다.</dd>
@@ -565,7 +565,7 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
     <h2 style="margin-top:0">프론트엔드 디자인</h2>
     <span class="src">03 §2·§3·§9가 설치 &middot; 선택 항목</span>
   </div>
-  <p class="gnote">UI를 만들 때만 의미가 있는 셋이다. 훅을 걸지도 기록을 쌓지도 않고, Claude가 화면을 설계하고 프론트엔드 코드를 쓰는 방식만 바꾼다. 뒤의 둘 중 하나라도 고르면 설치할 때 질문이 하나 더 붙는다 &mdash; <b>폰트 라이선스 정책</b>: 자유 사용만(기본) / 안내 후 선택 / 넣지 않음. 넣지 않음이 아니면 설치한 스코프의 <code>CLAUDE.md</code>에 짧은 정책 절이 들어가고, 둘 중 어느 쪽을 쓰든 같게 적용된다.</p>
+  <p class="gnote">UI를 만들 때만 의미가 있는 스킬들이다. 훅을 걸지도 기록을 쌓지도 않고, Claude가 화면을 설계하고 프론트엔드 코드를 쓰는 방식만 바꾼다. 뒤의 둘 중 하나라도 고르면 설치할 때 질문이 하나 더 붙는다 &mdash; <b>폰트 라이선스 정책</b>: 자유 사용만(기본) / 안내 후 선택 / 넣지 않음. 넣지 않음이 아니면 설치한 스코프의 <code>CLAUDE.md</code>에 짧은 정책 절이 들어가고, 둘 중 어느 쪽을 쓰든 같게 적용된다.</p>
   <div class="cards">
 
     <article class="skill" data-g="design">
@@ -643,7 +643,7 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
   <div class="trap"><b><code>/dropin-check</code>가 다 보지는 못한다.</b><p>일반 설치에는 대조할 사설 사본이 아예 없다. 그래서 그냥 &ldquo;최신&rdquo;이 아니라 &ldquo;문서 기준 최신 &mdash; 스킬 실물 내용은 미확인&rdquo;이라고 보고한다. 그 나머지 절반이 궁금하면 <code>/dropin-apply</code>를 돌리면 된다 &mdash; <code>/resume</code>·<code>/wrap</code>까지 새 본문으로 받으려면 이미 깔린 글로벌 항목에서 <code>재구성</code>을 고른다. <code>유지</code>면 낡은 본문이 그대로 남는다.</p></div>
 </div>
 
-<h2>사람들이 자주 걸리는 여섯</h2>
+<h2>사람들이 자주 걸리는 것들</h2>
 <div class="traps">
   <div class="trap"><b>개인 사본이, 조용히 이긴다.</b><p><code>~/.claude/skills/</code>와 프로젝트 <code>.claude/skills/</code>에 같은 이름이 있으면 개인 쪽이 돌고 프로젝트 쪽은 영영 안 돈다. 에러도 안 난다. 팀이 공유한 스킬이 어느 한 PC에서만 "안 되는" 이유는 대개 이거다.</p></div>
   <div class="trap"><b><code>allowed-tools</code>는 허가지 울타리가 아니다.</b><p>프롬프트 없이 돌 것을 넓히는 키다. git 명령만 적힌 스킬도 파일을 고칠 수 있다. 실제로 막는 키는 <code>disallowed-tools</code>다.</p></div>
@@ -661,7 +661,7 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
     <tr><td><code>/resume</code> <code>/wrap</code> <code>/dropin-apply</code> <code>/dropin-check</code> <code>/dropin-update</code> <code>/dropin-sync</code></td><td>01 §D-4</td><td>글로벌 &mdash; <code>~/.claude/skills/</code></td><td>폴더 삭제. 쌓인 <code>docs/</code> 기록은 묻되 기본으로 남긴다 &mdash; 그건 데이터다.</td></tr>
     <tr><td><code>/svg-design</code></td><td>03 §2</td><td>글로벌</td><td>폴더 삭제.</td></tr>
     <tr><td><code>/frontend-design</code></td><td>03 §3</td><td>글로벌 &mdash; 플러그인 또는 <code>npx skills add -g</code></td><td>폴더 삭제. npx가 링크만 걸어 뒀으면 링크가 가리키는 실체까지 지운다. <code>kr-ui-guide</code>까지 없으면 <code>CLAUDE.md</code>의 폰트 라이선스 정책 절도 지운다.</td></tr>
-    <tr><td>기능 문서 6종</td><td>03 §7</td><td>글로벌 &mdash; 팀·CI가 공유해야 하면 프로젝트 스코프 &middot; 또는 <code>dandi</code> 플러그인</td><td>플러그인: <code>/plugin uninstall dandi-feature-docs@dandi</code>. 복사본: 가드부터 걷고 여섯 폴더. <code>docs/features/</code>와 <code>tests/e2e/</code>는 남긴다.</td></tr>
+    <tr><td>기능 문서 6종</td><td>03 §7</td><td>글로벌 &mdash; 팀·CI가 공유해야 하면 프로젝트 스코프 &middot; 또는 <code>dandi</code> 플러그인</td><td>플러그인: <code>/plugin uninstall dandi-feature-docs@dandi</code>. 복사본: 가드부터 걷고 여섯 폴더. <code>docs/features/</code>·<code>tests/e2e/</code>·<code>tests/maestro/</code>는 남긴다.</td></tr>
     <tr><td><code>/refactor</code></td><td>03 §8</td><td>글로벌 &middot; 또는 <code>dandi</code> 플러그인</td><td>플러그인: <code>/plugin uninstall dandi-refactor@dandi</code>. 복사본: 폴더 삭제. 걷을 훅도, 되돌릴 커밋도 없다. <code>docs/refactor/</code> 보고서는 남긴다.</td></tr>
     <tr><td><code>/kr-ui-guide</code></td><td>03 §9</td><td>글로벌 &middot; 또는 <code>dandi</code> 플러그인</td><td>플러그인: <code>/plugin uninstall dandi-kr-ui-guide@dandi</code>. 복사본: 폴더 삭제. 프로젝트 CLAUDE.md에 선택적 오버라이드 절을 추가했으면 그것도 지우고, <code>frontend-design</code>까지 없으면 폰트 라이선스 정책 절도 지운다.</td></tr>
     <tr><td><code>/plan-&lt;모델&gt;</code></td><td>02 STEP 3 ⓔ</td><td>설치 때 묻는다 &mdash; 글로벌 또는 프로젝트</td><td>폴더 삭제. 함께 만든 모델 운용표와, <code>CLAUDE.md</code>·핸드오프 규약에 적어 둔 이 명령 안내 줄도 지운다.</td></tr>
@@ -670,7 +670,7 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
 </div>
 <p class="lead" style="margin-top:16px">전부 제거 절차가 문서에 적혀 있는데, 이건 의도한 것이다. 되돌릴 수 없는 설치는 애초에 선택지를 준 게 아니기 때문이다. 감지·설치·검증·제거 4단 전체는 각 문서에 있다. 설치할 때 나오는 질문의 뜻은 <a href="options.ko.html">옵션 사전</a>에, 처음부터 차근히 밟아 보려면 <a href="learn.ko.html">학습 코스</a>에 있다.</p>
 
-<footer>단디(Dandi) &middot; 스킬 카탈로그 &middot; 2026-10-08 &middot; 01 §D-4 · 02 STEP 3 ⓔ · 03 §2 · §3 · §7 · §8 · §9가 설치하는 스킬들. 명령은 별칭 없이 적었으니, 설치할 때 별칭을 골랐다면 그것을 얹어 읽으면 된다. &middot; 글꼴: Pretendard, IBM Plex Mono — 둘 다 SIL 오픈 폰트 라이선스 1.1(상업 이용·웹 임베딩 무료)</footer>
+<footer>단디(Dandi) &middot; 스킬 카탈로그 &middot; 2026-10-19 &middot; 01 §D-4 · 02 STEP 3 ⓔ · 03 §2 · §3 · §7 · §8 · §9가 설치하는 스킬들. 명령은 별칭 없이 적었으니, 설치할 때 별칭을 골랐다면 그것을 얹어 읽으면 된다. &middot; 글꼴: Pretendard, IBM Plex Mono — 둘 다 SIL 오픈 폰트 라이선스 1.1(상업 이용·웹 임베딩 무료)</footer>
 
 </div>
 <script>
