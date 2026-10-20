@@ -226,7 +226,7 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
 
     <tr><th class="grp" colspan="4" scope="colgroup">Feature docs, tests, releases &middot; 03 §7</th></tr>
     <tr><td><code>/feature-docs</code></td><td><code>init</code> | <code>sync [base]</code></td><td>First write-up, or folding in what changed</td><td>All of <code>docs/features/</code></td></tr>
-    <tr><td><code>/feature-test</code></td><td><code>[F-003 | TC-F003-01]</code> &mdash; all if omitted</td><td>You want the spec&rsquo;s cases actually run</td><td>A dated report with screenshots</td></tr>
+    <tr><td><code>/feature-test</code></td><td><code>[F-003 | TC-F003-01]</code> &mdash; all if omitted</td><td>You want the spec&rsquo;s cases actually run</td><td>A dated report &mdash; screenshots only for failures and visual checks</td></tr>
     <tr><td><code>/feature-doc-audit</code></td><td><code>[threshold, default 5]</code></td><td>A cheap staleness check</td><td>A table and a suggested sync order, in chat</td></tr>
     <tr><td><code>/feature-doc-guard</code></td><td><code>install</code> | <code>uninstall</code> | <code>check</code></td><td>Commits keep landing without their docs</td><td>The hooks, or a blocked commit</td></tr>
     <tr><td><code>/test-to-script</code></td><td><code>[F-003 | TC-F003-01]</code> &mdash; all unconverted</td><td>Hand-run cases should run themselves</td><td>Runnable test files</td></tr>
@@ -238,9 +238,10 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
     <tr><th class="grp" colspan="4" scope="colgroup">Planning with another model &middot; 02 STEP 3 ⓔ</th></tr>
     <tr><td><code>/plan-&lt;model&gt;</code></td><td>what to plan &middot; manual-only suggested</td><td>Design forks to settle before any code</td><td>A plan file under <code>docs/plans/</code></td></tr>
 
-    <tr><th class="grp" colspan="4" scope="colgroup">Front-end design &middot; 03 §2, §3, §9</th></tr>
+    <tr><th class="grp" colspan="4" scope="colgroup">Front-end design &middot; 03 §2, §3, §5, §9</th></tr>
     <tr><td><code>/svg-design</code></td><td>none &mdash; describe the effect</td><td>Building or fixing an SVG filter effect</td><td>Filter code that survives real browsers</td></tr>
     <tr><td><code>/frontend-design</code></td><td>none &mdash; describe the UI</td><td>A new interface needs a direction</td><td>Direction, decided before the markup</td></tr>
+    <tr><td><code>/browser-check</code></td><td>none &mdash; it loads itself</td><td>Claude checks or debugs a page it built</td><td>Verdicts from the values read &mdash; screenshots only where the look is judged</td></tr>
     <tr><td><code>/kr-ui-guide</code></td><td>none &mdash; it loads itself</td><td>Korean-facing UI, icons, colour &mdash; games included</td><td>A proposal with contrast maths and tokens</td></tr>
   </tbody>
 </table>
@@ -434,7 +435,7 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
       <p class="one">Writes down what the program actually does, checked twice: once in the code, once on the running screen.</p>
       <dl>
         <dt>Use when</dt><dd><code>init</code> for a project with no spec yet (it works incrementally, so a big codebase is fine); <code>sync</code> after you add or change a feature.</dd>
-        <dt>It does</dt><dd>Detects the stack, walks the features, drives the real UI through Chrome MCP or an emulator, and records every claim with the commit, branch and app version it was observed at.</dd>
+        <dt>It does</dt><dd>Detects the stack, walks the features, drives the real UI through a browser tool (Claude in Chrome, the Desktop app&rsquo;s browser or Playwright CLI) or an emulator, and records every claim with the commit, branch and app version it was observed at.</dd>
         <dt>You get</dt><dd><code>docs/features/</code> &mdash; an inventory, a screen-flow map, a data model, a test index, one file per feature, and screenshots.</dd>
       </dl>
       <div class="warn soft"><b>Worth knowing.</b> It never guesses. Code-only evidence is labelled as such, and destructive actions (delete, payment, send) are documented from the code and marked unverified rather than executed.</div>
@@ -447,8 +448,8 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
       <p class="one">Runs the test cases from the spec on the real screen and, when one fails, works out whose fault it is.</p>
       <dl>
         <dt>Use when</dt><dd>You want to know whether features still work &mdash; before a release, or after a risky change.</dd>
-        <dt>It does</dt><dd>Follows each case exactly as written, prefers a converted script when one is registered, and files every failure as (A) code bug, (B) stale doc, (C) environment, or (D) not enough evidence.</dd>
-        <dt>You get</dt><dd>A dated report under <code>docs/features/test_reports/</code> with screenshots, and a summary in the chat that separates newly failing from newly passing.</dd>
+        <dt>It does</dt><dd>Follows each case exactly as written, prefers a converted script when one is registered, reads each expected value from the page text first &mdash; a screenshot decides only the cases about how something looks &mdash; and files every failure as (A) code bug, (B) stale doc, (C) environment, or (D) not enough evidence.</dd>
+        <dt>You get</dt><dd>A dated report under <code>docs/features/test_reports/</code> &mdash; screenshots for failed cases and visual cases, the values read for passing ones &mdash; and a summary in the chat that separates newly failing from newly passing.</dd>
       </dl>
       <div class="warn soft"><b>Worth knowing.</b> It fixes nothing &mdash; not the docs, not the code. Even a confirmed stale doc is repaired afterwards by <code>/feature-docs sync</code>, with your approval. Because it operates your browser, install suggests making it manual-only &mdash; take that and you call it as <code>/feature-test</code> yourself.</div>
       <div class="tags hand"><span class="tag hand">manual-only suggested</span><span class="tag need">needs init</span><span class="tag">drives the UI</span></div>
@@ -485,7 +486,7 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
       <div class="args">[F-003 | TC-F003-01] — all unconverted if omitted</div>
       <p class="one">Turns the hand-run cases into scripts a machine can run at three in the morning.</p>
       <dl>
-        <dt>Use when</dt><dd>You want tests in CI or on a scheduler. Unattended runs need this &mdash; Chrome MCP wants a real browser and fails quietly without one.</dd>
+        <dt>Use when</dt><dd>You want tests in CI or on a scheduler. Unattended runs need this &mdash; hand-run cases need a browser tool in a live session, and without one every web case is set aside as an environment problem.</dd>
         <dt>It does</dt><dd>Converts cases to Playwright (web) or Maestro (Android, iOS), proposes <code>data-testid</code> attributes where the selectors are fragile, and registers the mapping in <code>04_script_map.md</code>.</dd>
         <dt>You get</dt><dd>Runnable test files, plus <code>/feature-test</code> automatically preferring the script for every case it registered.</dd>
       </dl>
@@ -563,9 +564,9 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
 <section class="group" data-g="design">
   <div class="ghead">
     <h2 style="margin-top:0">Front-end design</h2>
-    <span class="src">installed by document 03 §2, §3 and §9 &middot; optional</span>
+    <span class="src">installed by document 03 §2, §3, §5 and §9 &middot; optional</span>
   </div>
-  <p class="gnote">Skills that only matter if you build UI. None of them installs hooks or keeps records &mdash; they shape how Claude designs and writes front-end code when you ask for it. Picking either of the last two raises one extra question at install time: a <b>font-licence policy</b> &mdash; free-to-use fonts only (the default), be told the terms and decide each time, or leave it out. Unless you leave it out, a short policy section goes into the <code>CLAUDE.md</code> of the scope you installed into, and it applies whichever of the two you use.</p>
+  <p class="gnote">Skills that only matter if you build UI. None of them installs hooks or keeps records &mdash; they shape how Claude designs, writes and checks front-end code when you ask for it. Picking <code>frontend-design</code> or <code>kr-ui-guide</code> raises one extra question at install time: a <b>font-licence policy</b> &mdash; free-to-use fonts only (the default), be told the terms and decide each time, or leave it out. Unless you leave it out, a short policy section goes into the <code>CLAUDE.md</code> of the scope you installed into, and it applies whichever of the two you use.</p>
   <div class="cards">
 
     <article class="skill" data-g="design">
@@ -591,6 +592,19 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
       </dl>
       <div class="warn soft"><b>Worth knowing.</b> This one is published by Anthropic and installed as a plugin (<code>/plugin install</code>) or with <code>npx skills add</code>, so it updates on its own schedule rather than with the Dandi documents. A skill-name alias only applies on the npx or manual-copy routes, not the plugin route. <code>npx skills add -g</code> puts the files in <code>~/.agents/skills/</code> and only links them into <code>~/.claude/skills/</code>, and sometimes that link is not created &mdash; after installing, check that <code>~/.claude/skills/frontend-design</code> is there, and make the link yourself if it is not. It also does not check font licences &mdash; it changes typography freely and can land on a paid face, which is why installing it asks the font-licence question above.</div>
       <div class="tags"><span class="tag">global</span><span class="tag">front-end only</span></div>
+    </article>
+
+    <article class="skill" data-g="design">
+      <div class="cmd"><span class="sl">/</span>browser-check</div>
+      <div class="args">no arguments — it loads itself when Claude checks a page</div>
+      <p class="one">Decides how Claude looks at a page before it looks: read the text when the text is the question, take a screenshot when the look is.</p>
+      <dl>
+        <dt>Use when</dt><dd>Claude is checking a screen it just built, verifying a deployed page, or chasing a console or network error. It applies to whichever browser tool you have &mdash; Claude in Chrome, the Desktop app&rsquo;s built-in browser, or Playwright CLI.</dd>
+        <dt>It does</dt><dd>Settles what counts as a pass first, then picks the observation by the kind of question: a plain HTTP fetch when nothing needs rendering; the page text, element tree, console and network when the DOM is the question; a screenshot &mdash; required, never swapped for text &mdash; when layout, overlap, colour or spacing is the question. A check that keeps repeating becomes a script. When the text comes back empty or unclear it steps up one level instead of calling the thing missing.</dd>
+        <dt>You get</dt><dd>Verdicts backed by the values read or the command output, with screenshots only where the look itself was judged. With no browser tool at all it stops at the HTTP check and says the screen was not checked.</dd>
+      </dl>
+      <div class="warn soft"><b>Worth knowing.</b> It comes with the browser-checking item, which also sets up the browser itself &mdash; pick what fits: the Desktop browser needs no install but does not work over SSH; Claude in Chrome uses your logged-in session; Playwright CLI is headless, for WSL, SSH or CI. On a work repo that item asks the company-approval questions first. Install suggests letting this skill load itself &mdash; it only helps if it is there at the moment Claude checks. It does not start your app; that is the built-in <code>/run</code> and <code>/verify</code>.</div>
+      <div class="tags"><span class="tag">global or project</span><span class="tag">front-end only</span><span class="tag">no writes</span></div>
     </article>
 
     <article class="skill" data-g="design">
@@ -639,7 +653,7 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
 <div class="traps">
   <div class="trap"><b>On a machine that has never seen this setup.</b><p>Use <code>/dropin-apply</code> as well &mdash; it is the same command for a first install. If the skill is not there yet, tell Claude: <i>&ldquo;read <code>00_&#54648;&#54633;-&#49444;&#52824;.md</code> from the repository and apply it to this machine&rdquo;</i>, and the skill arrives with everything else.</p></div>
   <div class="trap"><b>Same file name, older contents.</b><p>A skill can be revised without gaining or losing a single file. Checks that only compare file names call that &ldquo;already current&rdquo;. The install steps compare contents too, so a wording-only revision is still replaced.</p></div>
-  <div class="trap"><b>Already on as a Dandi plugin?</b><p>If you installed the feature-docs, refactor or kr-ui-guide skills through the <code>dandi</code> plugin marketplace, the same skills already exist under plugin names such as <code>/dandi-refactor:refactor</code>. Install spots this and asks: <b>keep</b> the plugin and skip the copy, or <b>replace</b> it &mdash; remove the plugin, then copy. Two installs of one skill would both compete to load. To remove a plugin install later, use <code>/plugin uninstall</code> from that plugin&rsquo;s README, not the copy-removal steps.</p></div>
+  <div class="trap"><b>Already on as a Dandi plugin?</b><p>If you installed the feature-docs, refactor, kr-ui-guide or browser-check skills through the <code>dandi</code> plugin marketplace, the same skills already exist under plugin names such as <code>/dandi-refactor:refactor</code>. Install spots this and asks: <b>keep</b> the plugin and skip the copy, or <b>replace</b> it &mdash; remove the plugin, then copy. Two installs of one skill would both compete to load. To remove a plugin install later, use <code>/plugin uninstall</code> from that plugin&rsquo;s README, not the copy-removal steps.</p></div>
   <div class="trap"><b><code>/dropin-check</code> cannot see everything.</b><p>On an ordinary install there is no private mirror to compare against, so it reports &ldquo;current as far as the documents go &mdash; skill contents unchecked&rdquo; rather than a flat &ldquo;current&rdquo;. Run <code>/dropin-apply</code> when you want that second half answered &mdash; and to bring <code>/resume</code> and <code>/wrap</code> up to date too, choose <code>reconcile</code> for the global items already installed. <code>keep</code> leaves the old text in place.</p></div>
 </div>
 
@@ -663,6 +677,7 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
     <tr><td><code>/frontend-design</code></td><td>03 §3</td><td>global &mdash; plugin or <code>npx skills add -g</code></td><td>Delete the folder. If npx only left a link, delete what the link points to as well. Once <code>kr-ui-guide</code> is gone too, delete the font-licence policy section from the <code>CLAUDE.md</code>.</td></tr>
     <tr><td>the six feature skills</td><td>03 §7</td><td>global &mdash; project scope if the team and CI must share them &middot; or the <code>dandi</code> plugin</td><td>Plugin: <code>/plugin uninstall dandi-feature-docs@dandi</code>. Copy: guard first, then the six folders. <code>docs/features/</code>, <code>tests/e2e/</code> and <code>tests/maestro/</code> stay.</td></tr>
     <tr><td><code>/refactor</code></td><td>03 §8</td><td>global &middot; or the <code>dandi</code> plugin</td><td>Plugin: <code>/plugin uninstall dandi-refactor@dandi</code>. Copy: delete the folder. No hooks to unwind, no commits to revert. Reports in <code>docs/refactor/</code> stay.</td></tr>
+    <tr><td><code>/browser-check</code></td><td>03 §5</td><td>asked at install &mdash; global or project &middot; or the <code>dandi</code> plugin</td><td>Plugin: <code>/plugin uninstall dandi-browser-check@dandi</code>. Copy: delete the folder &mdash; in project scope, commit the deletion. The browser goes separately: switch Chrome off in <code>/chrome</code> (or remove the extension), or <code>npm uninstall -g @playwright/cli</code>.</td></tr>
     <tr><td><code>/kr-ui-guide</code></td><td>03 §9</td><td>global &middot; or the <code>dandi</code> plugin</td><td>Plugin: <code>/plugin uninstall dandi-kr-ui-guide@dandi</code>. Copy: delete the folder. If a project <code>CLAUDE.md</code> got the optional override block, delete that too &mdash; and the font-licence policy section, once <code>frontend-design</code> is gone as well.</td></tr>
     <tr><td><code>/plan-&lt;model&gt;</code></td><td>02 STEP 3 ⓔ</td><td>asked at install &mdash; global or project</td><td>Delete the folder, the model usage table it created, and the lines about this command it added to <code>CLAUDE.md</code> and the handoff protocol.</td></tr>
   </tbody>
@@ -670,7 +685,7 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
 </div>
 <p class="lead" style="margin-top:16px">Every one of these has a documented removal path, which is deliberate: an install you cannot reverse was never really a choice. The full procedures &mdash; detect, install, verify, remove &mdash; are in the documents themselves. For what each install question means, see the <a href="options.html">options dictionary</a>; to work through it step by step, take the <a href="learn.html">course</a>.</p>
 
-<footer>Dandi &middot; Skill catalog &middot; 2026-10-19 &middot; Skills installed by documents 01 §D-4, 02 STEP 3 ⓔ, 03 §2, §3, §7, §8 and §9. Commands are shown without an alias; apply yours if you chose one at install time. &middot; Fonts: Pretendard, IBM Plex Mono &mdash; both SIL Open Font License 1.1 (free for commercial use and web embedding)</footer>
+<footer>Dandi &middot; Skill catalog &middot; 2026-10-20 &middot; Skills installed by documents 01 §D-4, 02 STEP 3 ⓔ, 03 §2, §3, §5, §7, §8 and §9. Commands are shown without an alias; apply yours if you chose one at install time. &middot; Fonts: Pretendard, IBM Plex Mono &mdash; both SIL Open Font License 1.1 (free for commercial use and web embedding)</footer>
 
 </div>
 <script>

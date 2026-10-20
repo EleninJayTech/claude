@@ -1,6 +1,6 @@
 ---
 name: feature-test
-description: docs/features/ 의 기능 명세에 적힌 테스트 케이스를 실제 화면(웹은 Chrome MCP, 앱은 에뮬레이터)에서 순서대로 실행하고, 실패를 코드 버그·문서 노후·환경 문제로 판정해 버전이 기록된 리포트를 남긴다. 사용자가 자동 테스트, 회귀 테스트, 기능 테스트 실행, 문서 기반 테스트, 테스트 리포트, "기능이 아직 잘 되는지 확인" 을 언급하면 반드시 이 스킬을 쓴다. 인수로 기능 ID(F-003) 또는 케이스 ID(TC-F003-01)를 주면 그 범위만 실행한다. 문서 작성·갱신은 /feature-docs 가 맡는다.
+description: docs/features/ 의 기능 명세에 적힌 테스트 케이스를 실제 화면(웹은 브라우저 도구, 앱은 에뮬레이터)에서 순서대로 실행하고, 실패를 코드 버그·문서 노후·환경 문제로 판정해 버전이 기록된 리포트를 남긴다. 사용자가 자동 테스트, 회귀 테스트, 기능 테스트 실행, 문서 기반 테스트, 테스트 리포트, "기능이 아직 잘 되는지 확인" 을 언급하면 반드시 이 스킬을 쓴다. 인수로 기능 ID(F-003) 또는 케이스 ID(TC-F003-01)를 주면 그 범위만 실행한다. 문서 작성·갱신은 /feature-docs 가 맡는다.
 argument-hint: "[F-id 또는 TC-id] (없으면 전체)"
 allowed-tools: Bash(git status *) Bash(git log *) Bash(git diff *) Bash(git rev-parse *) Bash(git branch *) Bash(git describe *) Bash(git tag *) Bash(adb devices *) Bash(emulator -list-avds *) Bash(xcrun simctl list *) Bash(flutter devices *)
 ---
@@ -20,7 +20,8 @@ allowed-tools: Bash(git status *) Bash(git log *) Bash(git diff *) Bash(git rev-
    출력하고, verified_commit 이 그보다 오래된 기능 문서를 미리 표시한다. 실행은 계속한다.
 3. **대상 기동** — 웹은 URL 응답, 앱은 기기 목록으로 떠 있는지 본다. 안 떠 있으면
    PROJECT.md 의 실행 명령으로 띄우거나 사용자에게 요청한다.
-4. **도구** — Chrome MCP 가 세션에 없으면 웹 케이스는 "환경 문제(C)" 로 전부 제외하고
+4. **도구** — 웹 케이스는 브라우저 도구(Claude in Chrome·Desktop 내장 브라우저·Playwright CLI) 중
+   하나가 세션에서 쓸 수 있어야 한다. 하나도 없으면 웹 케이스는 "환경 문제(C)" 로 전부 제외하고
    알린다. 앱 케이스는 캡처·UI 덤프 수단(adb / xcrun simctl)을 확인한다.
 
 ## 범위
@@ -38,11 +39,14 @@ allowed-tools: Bash(git status *) Bash(git log *) Bash(git diff *) Bash(git rev-
   실행하고, 등록되지 않은 케이스만 직접 수행한다. 스크립트 실행 명령은 PROJECT.md 의
   "테스트 스크립트" 항목을 따른다. 스크립트 결과도 TC ID 기준으로 리포트에 합친다.
   (스크립트가 없으면 `/test-to-script` 로 만들 수 있음을 완료 보고에 한 줄 덧붙인다)
-- 웹은 Chrome MCP 로, 앱은 에뮬레이터에서 실제로 조작한다. 결과 화면을 보기만 하고
-  "통과" 라고 쓰지 않는다 — 기대값을 실제로 읽어 대조한다.
+- 웹은 브라우저 도구로, 앱은 에뮬레이터에서 실제로 조작한다. 결과 화면을 보기만 하고
+  "통과" 라고 쓰지 않는다 — 기대값을 실제로 읽어 대조한다. 읽기는 텍스트 채널(페이지 텍스트·
+  요소 트리·콘솔)을 먼저 쓰고, 기대값이 보이는 모습 자체(레이아웃·색·겹침)인 케이스만 스크린샷으로
+  판정한다. 텍스트 채널이 비거나 모호하면 스크린샷으로 올린다. `browser-check` 스킬이 있으면 그 규칙을 따른다.
 - `[실행 미검증]` 케이스(삭제·결제·발송·외부 API)는 실행하지 않고 "제외".
 - 실패해도 나머지를 계속한다. 의존 케이스가 실패하면 후속은 "차단됨".
-- 케이스마다 결과 화면을 `docs/features/test_reports/screenshots/YYYY-MM-DD_TC-id.png` 로 남긴다.
+- 스크린샷은 **실패한 케이스와 시각 판정 케이스**만 `docs/features/test_reports/screenshots/YYYY-MM-DD_TC-id.png` 로
+  남긴다. 통과한 비시각 케이스는 읽은 값을 리포트 근거로 남긴다.
 - 정리 단계는 반드시 수행한다. 테스트가 만든 데이터를 남기지 않는다.
 
 ## 실패 판정

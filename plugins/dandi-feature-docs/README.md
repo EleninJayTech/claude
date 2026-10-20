@@ -26,7 +26,7 @@ Start with `feature-docs init`; the other five read the `docs/features/` layout 
 
 ## Requirements
 
-- Chrome MCP (web) or an emulator/simulator (app) for screen verification
+- A browser tool for web screens (Claude in Chrome, the Claude Desktop browser, or Playwright CLI), or an emulator/simulator for apps
 - Python 3 for `feature-doc-audit` and `feature-doc-guard` (standard library only)
 - Playwright or Maestro for scripts made by `test-to-script`
 

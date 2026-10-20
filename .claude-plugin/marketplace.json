@@ -1,7 +1,7 @@
 {
   "name": "dandi",
   "owner": { "name": "EleninJayTech", "url": "https://github.com/EleninJayTech" },
-  "description": "Dandi skills for Claude Code: feature specs verified against code and the running app, behavior-preserving refactoring, and UI/UX guidelines for Korean users. Skill instructions are written in Korean.",
+  "description": "Dandi skills for Claude Code: feature specs verified against code and the running app, behavior-preserving refactoring, UI/UX guidelines for Korean users, and a browser verification method. Skill instructions are written in Korean.",
   "plugins": [
     {
       "name": "dandi-feature-docs",
@@ -23,6 +23,13 @@
       "description": "UI/UX, icon, color, typography and design-token guidelines for web, app and game products aimed at Korean users, distilled from Korean service benchmarking research.",
       "license": "MIT",
       "keywords": ["ui", "ux", "design-tokens", "korean", "accessibility", "icons"]
+    },
+    {
+      "name": "dandi-browser-check",
+      "source": "./plugins/dandi-browser-check",
+      "description": "Pick the right way to look at a page when verifying or debugging in a browser: HTTP fetch, page text, console and network, or a screenshot when the look itself is the question.",
+      "license": "MIT",
+      "keywords": ["browser", "verification", "debugging", "playwright", "chrome"]
     }
   ]
 }

@@ -44,11 +44,11 @@
 
 ## Skills as plugins
 
-The skills the installer copies (feature docs, refactor, kr-ui-guide) are also published as Claude Code plugins in the **`dandi`** marketplace:
+The skills the installer copies (feature docs, refactor, kr-ui-guide, browser-check) are also published as Claude Code plugins in the **`dandi`** marketplace:
 
 ```text
 /plugin marketplace add EleninJayTech/claude
-/plugin install dandi-feature-docs@dandi      # also: dandi-refactor@dandi, dandi-kr-ui-guide@dandi
+/plugin install dandi-feature-docs@dandi      # also: dandi-refactor@dandi, dandi-kr-ui-guide@dandi, dandi-browser-check@dandi
 ```
 
 - Plugin skills are called with the plugin name in front — `/dandi-feature-docs:feature-test`.
@@ -93,4 +93,4 @@ If these documents helped you, a coffee is always appreciated 😊
 
 ---
 
-<!-- pages-sync-updated: 2026-10-08 -->
+<!-- pages-sync-updated: 2026-10-20 -->

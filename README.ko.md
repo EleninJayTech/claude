@@ -43,11 +43,11 @@
 
 ## 스킬을 플러그인으로 받기
 
-설치 문서가 복사해 주는 스킬(기능 문서 세트·refactor·kr-ui-guide)은 Claude Code 플러그인 마켓 **`dandi`**로도 받을 수 있습니다.
+설치 문서가 복사해 주는 스킬(기능 문서 세트·refactor·kr-ui-guide·browser-check)은 Claude Code 플러그인 마켓 **`dandi`**로도 받을 수 있습니다.
 
 ```text
 /plugin marketplace add EleninJayTech/claude
-/plugin install dandi-feature-docs@dandi      # 그 밖에 dandi-refactor@dandi, dandi-kr-ui-guide@dandi
+/plugin install dandi-feature-docs@dandi      # 그 밖에 dandi-refactor@dandi, dandi-kr-ui-guide@dandi, dandi-browser-check@dandi
 ```
 
 - 플러그인 스킬은 앞에 플러그인 이름을 붙여 부릅니다 — `/dandi-feature-docs:feature-test`.
@@ -92,4 +92,4 @@
 
 ---
 
-<!-- pages-sync-updated: 2026-10-08 -->
+<!-- pages-sync-updated: 2026-10-20 -->

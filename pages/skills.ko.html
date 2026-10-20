@@ -226,7 +226,7 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
 
     <tr><th class="grp" colspan="4" scope="colgroup">기능 문서·테스트·릴리스 &middot; 03 §7</th></tr>
     <tr><td><code>/feature-docs</code></td><td><code>init</code> | <code>sync [기준]</code></td><td>처음 문서화할 때, 바뀐 것을 반영할 때</td><td><code>docs/features/</code> 전체</td></tr>
-    <tr><td><code>/feature-test</code></td><td><code>[F-003 | TC-F003-01]</code> &mdash; 없으면 전체</td><td>명세의 케이스를 실제로 돌려 볼 때</td><td>날짜 박힌 리포트와 스크린샷</td></tr>
+    <tr><td><code>/feature-test</code></td><td><code>[F-003 | TC-F003-01]</code> &mdash; 없으면 전체</td><td>명세의 케이스를 실제로 돌려 볼 때</td><td>날짜 박힌 리포트 &mdash; 스크린샷은 실패·시각 판정 케이스만</td></tr>
     <tr><td><code>/feature-doc-audit</code></td><td><code>[기준 커밋 수, 기본 5]</code></td><td>문서가 얼마나 낡았는지 싸게 잴 때</td><td>채팅에 표와 sync 우선순위</td></tr>
     <tr><td><code>/feature-doc-guard</code></td><td><code>install</code> | <code>uninstall</code> | <code>check</code></td><td>문서 없는 커밋이 계속 들어올 때</td><td>훅, 또는 멈춘 커밋</td></tr>
     <tr><td><code>/test-to-script</code></td><td><code>[F-003 | TC-F003-01]</code> &mdash; 없으면 미변환 전부</td><td>손으로 돌리던 케이스를 자동화할 때</td><td>실행 가능한 테스트 파일</td></tr>
@@ -238,9 +238,10 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
     <tr><th class="grp" colspan="4" scope="colgroup">다른 모델로 계획 &middot; 02 STEP 3 ⓔ</th></tr>
     <tr><td><code>/plan-&lt;모델&gt;</code></td><td>계획할 대상 &middot; 수동 호출 권장</td><td>코드 전에 정할 설계 갈래가 여럿일 때</td><td><code>docs/plans/</code>의 계획 파일</td></tr>
 
-    <tr><th class="grp" colspan="4" scope="colgroup">프론트엔드 디자인 &middot; 03 §2 · §3 · §9</th></tr>
+    <tr><th class="grp" colspan="4" scope="colgroup">프론트엔드 디자인 &middot; 03 §2 · §3 · §5 · §9</th></tr>
     <tr><td><code>/svg-design</code></td><td>없음 &mdash; 원하는 효과를 말한다</td><td>SVG 필터 효과를 만들거나 고칠 때</td><td>진짜 브라우저에서 살아남는 필터 코드</td></tr>
     <tr><td><code>/frontend-design</code></td><td>없음 &mdash; 만들 UI를 말한다</td><td>새 화면의 시각 방향을 잡을 때</td><td>마크업 전에 정해지는 디자인 방향</td></tr>
+    <tr><td><code>/browser-check</code></td><td>없음 &mdash; 스스로 불린다</td><td>Claude가 만든 화면을 확인하거나 디버깅할 때</td><td>읽은 값으로 낸 판정 &mdash; 스크린샷은 모습을 판정할 때만</td></tr>
     <tr><td><code>/kr-ui-guide</code></td><td>없음 &mdash; 스스로 불린다</td><td>한국 사용자 대상 UI·아이콘·색 작업 &mdash; 게임 화면도</td><td>대비 계산과 토큰이 붙은 설계안</td></tr>
   </tbody>
 </table>
@@ -434,7 +435,7 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
       <p class="one">프로그램이 실제로 뭘 하는지를 두 번 확인해 적는다 &mdash; 코드에서 한 번, 돌아가는 화면에서 한 번.</p>
       <dl>
         <dt>언제</dt><dd>명세가 아직 없는 프로젝트엔 <code>init</code>(증분으로 돌아서 코드가 커도 괜찮다), 기능을 추가·수정한 뒤엔 <code>sync</code>.</dd>
-        <dt>하는 일</dt><dd>스택을 스스로 탐지하고 기능을 훑은 뒤, Chrome MCP나 에뮬레이터로 실제 화면을 조작한다. 모든 서술에 그때의 커밋·브랜치·앱 버전을 함께 남긴다.</dd>
+        <dt>하는 일</dt><dd>스택을 스스로 탐지하고 기능을 훑은 뒤, 브라우저 도구(Claude in Chrome·Desktop 앱 내장 브라우저·Playwright CLI)나 에뮬레이터로 실제 화면을 조작한다. 모든 서술에 그때의 커밋·브랜치·앱 버전을 함께 남긴다.</dd>
         <dt>결과</dt><dd><code>docs/features/</code> &mdash; 기능 인벤토리, 화면 이동 지도, 데이터 모델, 테스트 인덱스, 기능당 파일 하나, 스크린샷.</dd>
       </dl>
       <div class="warn soft"><b>알아 둘 것.</b> 추측으로 채우지 않는다. 코드로만 확인한 것은 그렇게 표시하고, 삭제·결제·발송처럼 되돌릴 수 없는 동작은 실행하지 않고 코드로만 적은 뒤 미검증으로 남긴다.</div>
@@ -447,8 +448,8 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
       <p class="one">명세에 적힌 테스트 케이스를 실제 화면에서 돌리고, 실패하면 누구 탓인지를 가린다.</p>
       <dl>
         <dt>언제</dt><dd>기능이 아직 멀쩡한지 확인해야 할 때 &mdash; 릴리스 전이나 위험한 변경 뒤.</dd>
-        <dt>하는 일</dt><dd>케이스를 적힌 그대로 따라가고, 변환된 스크립트가 등록돼 있으면 그쪽을 먼저 쓴다. 실패는 (A) 코드 버그 · (B) 문서 노후 · (C) 환경 문제 · (D) 판정 불가 중 하나로 분류한다.</dd>
-        <dt>결과</dt><dd><code>docs/features/test_reports/</code>에 날짜·커밋이 박힌 리포트와 스크린샷. 채팅에는 요약만 나오고, 새로 실패한 것과 새로 통과한 것을 구분해 준다.</dd>
+        <dt>하는 일</dt><dd>케이스를 적힌 그대로 따라가고, 변환된 스크립트가 등록돼 있으면 그쪽을 먼저 쓴다. 기대값은 페이지 텍스트로 먼저 읽고, 보이는 모습 자체가 기대값인 케이스만 스크린샷으로 판정한다. 실패는 (A) 코드 버그 · (B) 문서 노후 · (C) 환경 문제 · (D) 판정 불가 중 하나로 분류한다.</dd>
+        <dt>결과</dt><dd><code>docs/features/test_reports/</code>에 날짜·커밋이 박힌 리포트 &mdash; 스크린샷은 실패한 케이스와 시각 판정 케이스만 남고, 통과한 나머지는 읽은 값이 근거로 남는다. 채팅에는 요약만 나오고, 새로 실패한 것과 새로 통과한 것을 구분해 준다.</dd>
       </dl>
       <div class="warn soft"><b>알아 둘 것.</b> 아무것도 고치지 않는다 &mdash; 문서도 코드도. 문서 노후로 판정된 것조차 승인을 받아 <code>/feature-docs sync</code>가 따로 고친다. 브라우저를 직접 조작하므로 설치할 때 수동 호출 전용을 권한다 &mdash; 그렇게 두면 <code>/feature-test</code>로 직접 불러야 한다.</div>
       <div class="tags"><span class="tag hand">수동 호출 권장</span><span class="tag need">init 필요</span><span class="tag">화면을 조작</span></div>
@@ -485,7 +486,7 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
       <div class="args">[F-003 | TC-F003-01] — 없으면 미변환 전부</div>
       <p class="one">손으로 돌리던 케이스를 새벽 세 시에도 도는 스크립트로 바꾼다.</p>
       <dl>
-        <dt>언제</dt><dd>테스트를 CI나 스케줄러에 올리고 싶을 때. 무인 실행에는 이 단계가 필수다 &mdash; Chrome MCP는 진짜 브라우저를 요구해서, 없으면 조용히 실패한다.</dd>
+        <dt>언제</dt><dd>테스트를 CI나 스케줄러에 올리고 싶을 때. 무인 실행에는 이 단계가 필수다 &mdash; 손으로 돌리는 케이스는 세션에 브라우저 도구가 있어야 하고, 없으면 웹 케이스가 전부 환경 문제로 빠진다.</dd>
         <dt>하는 일</dt><dd>케이스를 Playwright(웹)나 Maestro(안드로이드·iOS)로 변환하고, 셀렉터가 약한 자리엔 <code>data-testid</code>를 제안한다. 변환 결과는 <code>04_script_map.md</code>에 등록한다.</dd>
         <dt>결과</dt><dd>돌아가는 테스트 파일, 그리고 등록된 케이스에 대해 <code>/feature-test</code>가 자동으로 스크립트를 먼저 쓰는 동작.</dd>
       </dl>
@@ -563,9 +564,9 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
 <section class="group" data-g="design">
   <div class="ghead">
     <h2 style="margin-top:0">프론트엔드 디자인</h2>
-    <span class="src">03 §2·§3·§9가 설치 &middot; 선택 항목</span>
+    <span class="src">03 §2·§3·§5·§9가 설치 &middot; 선택 항목</span>
   </div>
-  <p class="gnote">UI를 만들 때만 의미가 있는 스킬들이다. 훅을 걸지도 기록을 쌓지도 않고, Claude가 화면을 설계하고 프론트엔드 코드를 쓰는 방식만 바꾼다. 뒤의 둘 중 하나라도 고르면 설치할 때 질문이 하나 더 붙는다 &mdash; <b>폰트 라이선스 정책</b>: 자유 사용만(기본) / 안내 후 선택 / 넣지 않음. 넣지 않음이 아니면 설치한 스코프의 <code>CLAUDE.md</code>에 짧은 정책 절이 들어가고, 둘 중 어느 쪽을 쓰든 같게 적용된다.</p>
+  <p class="gnote">UI를 만들 때만 의미가 있는 스킬들이다. 훅을 걸지도 기록을 쌓지도 않고, Claude가 화면을 설계하고 프론트엔드 코드를 쓰고 확인하는 방식만 바꾼다. <code>frontend-design</code>·<code>kr-ui-guide</code> 중 하나라도 고르면 설치할 때 질문이 하나 더 붙는다 &mdash; <b>폰트 라이선스 정책</b>: 자유 사용만(기본) / 안내 후 선택 / 넣지 않음. 넣지 않음이 아니면 설치한 스코프의 <code>CLAUDE.md</code>에 짧은 정책 절이 들어가고, 둘 중 어느 쪽을 쓰든 같게 적용된다.</p>
   <div class="cards">
 
     <article class="skill" data-g="design">
@@ -591,6 +592,19 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
       </dl>
       <div class="warn soft"><b>알아 둘 것.</b> 이 하나는 Anthropic이 배포하고, 플러그인(<code>/plugin install</code>)이나 <code>npx skills add</code>로 깔린다. 그래서 단디 문서와 무관하게 자기 주기로 갱신된다. 스킬 이름 별칭은 npx·수동 복사 경로에만 붙고 플러그인 경로에는 붙지 않는다. <code>npx skills add -g</code>는 실체를 <code>~/.agents/skills/</code>에 두고 <code>~/.claude/skills/</code>에 링크만 거는데, 그 링크가 안 생기는 경우가 있다 &mdash; 설치 후 <code>~/.claude/skills/frontend-design</code>이 보이는지 확인하고, 없으면 링크를 직접 건다. 폰트 라이선스도 보지 않는다 &mdash; 타이포를 적극 바꾸는 스킬이라 유료 폰트를 제안할 수 있고, 그래서 설치할 때 위 폰트 라이선스 정책을 묻는다.</div>
       <div class="tags"><span class="tag">글로벌</span><span class="tag">프론트엔드 전용</span></div>
+    </article>
+
+    <article class="skill" data-g="design">
+      <div class="cmd"><span class="sl">/</span>browser-check</div>
+      <div class="args">인수 없음 — Claude가 페이지를 확인할 때 스스로 불린다</div>
+      <p class="one">보기 전에 어떻게 볼지부터 정한다. 글자가 질문이면 텍스트를 읽고, 모습이 질문이면 스크린샷을 찍는다.</p>
+      <dl>
+        <dt>언제</dt><dd>Claude가 방금 만든 화면을 확인하거나, 배포된 페이지를 검증하거나, 콘솔·네트워크 오류를 쫓을 때. 어떤 브라우저 도구를 쓰든 적용된다 &mdash; Claude in Chrome, Desktop 앱 내장 브라우저, Playwright CLI.</dd>
+        <dt>하는 일</dt><dd>무엇이 보이면 통과인지부터 정하고, 관찰 수단을 질문의 종류로 고른다. 렌더링이 필요 없으면 HTTP 요청만, DOM이 질문이면 페이지 텍스트·요소 트리·콘솔·네트워크를 읽고, 레이아웃·겹침·색·간격이 질문이면 스크린샷을 찍는다 &mdash; 이때는 필수이고 텍스트로 대신하지 않는다. 같은 확인을 되풀이하면 스크립트로 굳힌다. 텍스트가 비거나 모호하면 &ldquo;없다&rdquo;고 판정하지 않고 한 단 올려 본다.</dd>
+        <dt>결과</dt><dd>읽은 값이나 명령 출력이 근거로 붙은 판정. 스크린샷은 모습을 판정한 자리에만 남는다. 브라우저 도구가 하나도 없으면 HTTP 확인까지만 하고 화면은 확인하지 못했다고 밝힌다.</dd>
+      </dl>
+      <div class="warn soft"><b>알아 둘 것.</b> 브라우저 검증 항목에 묶여 깔리고, 그 항목이 브라우저 쪽도 함께 준비한다 &mdash; 환경에 맞는 것을 고른다. Desktop 내장 브라우저는 설치가 필요 없지만 SSH 세션에서는 못 쓰고, Claude in Chrome은 내 로그인 상태를 그대로 쓰며, Playwright CLI는 화면 없이 도는 헤드리스라 WSL·SSH·CI용이다. 회사 repo면 그 항목이 조직 승인 질문부터 묻는다. 설치할 때 이 스킬은 자동 판단을 권한다 &mdash; Claude가 확인하는 그 순간에 불려야 쓸모가 있다. 앱을 띄우는 일은 하지 않는다. 그건 내장 <code>/run</code>·<code>/verify</code>의 몫이다.</div>
+      <div class="tags"><span class="tag">글로벌 또는 프로젝트</span><span class="tag">프론트엔드 전용</span><span class="tag">쓰기 없음</span></div>
     </article>
 
     <article class="skill" data-g="design">
@@ -639,7 +653,7 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
 <div class="traps">
   <div class="trap"><b>이 셋업을 한 번도 안 깐 PC라면.</b><p>거기서도 <code>/dropin-apply</code>다 &mdash; 처음 까는 경우에도 같은 명령이다. 스킬이 아직 없으면 Claude에게 이렇게 말하면 된다: <i>&ldquo;저장소의 <code>00_통합-설치.md</code>를 받아서 이 PC에 적용해줘&rdquo;</i>. 그러면 이 스킬도 다른 것들과 함께 깔린다.</p></div>
   <div class="trap"><b>파일 이름은 그대로인데 내용만 낡은 경우.</b><p>스킬은 파일이 하나도 늘거나 줄지 않은 채로 개정될 수 있다. 이름만 대조하는 점검은 그걸 &ldquo;이미 최신&rdquo;이라고 말한다. 설치 절차는 내용까지 대조하므로, 문장만 바뀐 개정도 교체된다.</p></div>
-  <div class="trap"><b>이미 단디 플러그인으로 켜 두었다면.</b><p>기능 문서·refactor·kr-ui-guide 스킬을 <code>dandi</code> 플러그인 마켓으로 깔았다면, 같은 스킬이 <code>/dandi-refactor:refactor</code> 같은 플러그인 이름으로 이미 있다. 설치 절차가 이걸 알아채고 묻는다: 플러그인을 <b>유지</b>하고 복사 설치를 건너뛸지, 플러그인을 걷고 복사본으로 <b>교체</b>할지. 한 스킬이 두 벌 깔리면 둘이 서로 불려 가려고 다툰다. 나중에 플러그인 설치를 지울 때는 복사본 제거 절차가 아니라 그 플러그인 README의 <code>/plugin uninstall</code>을 따른다.</p></div>
+  <div class="trap"><b>이미 단디 플러그인으로 켜 두었다면.</b><p>기능 문서·refactor·kr-ui-guide·browser-check 스킬을 <code>dandi</code> 플러그인 마켓으로 깔았다면, 같은 스킬이 <code>/dandi-refactor:refactor</code> 같은 플러그인 이름으로 이미 있다. 설치 절차가 이걸 알아채고 묻는다: 플러그인을 <b>유지</b>하고 복사 설치를 건너뛸지, 플러그인을 걷고 복사본으로 <b>교체</b>할지. 한 스킬이 두 벌 깔리면 둘이 서로 불려 가려고 다툰다. 나중에 플러그인 설치를 지울 때는 복사본 제거 절차가 아니라 그 플러그인 README의 <code>/plugin uninstall</code>을 따른다.</p></div>
   <div class="trap"><b><code>/dropin-check</code>가 다 보지는 못한다.</b><p>일반 설치에는 대조할 사설 사본이 아예 없다. 그래서 그냥 &ldquo;최신&rdquo;이 아니라 &ldquo;문서 기준 최신 &mdash; 스킬 실물 내용은 미확인&rdquo;이라고 보고한다. 그 나머지 절반이 궁금하면 <code>/dropin-apply</code>를 돌리면 된다 &mdash; <code>/resume</code>·<code>/wrap</code>까지 새 본문으로 받으려면 이미 깔린 글로벌 항목에서 <code>재구성</code>을 고른다. <code>유지</code>면 낡은 본문이 그대로 남는다.</p></div>
 </div>
 
@@ -663,6 +677,7 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
     <tr><td><code>/frontend-design</code></td><td>03 §3</td><td>글로벌 &mdash; 플러그인 또는 <code>npx skills add -g</code></td><td>폴더 삭제. npx가 링크만 걸어 뒀으면 링크가 가리키는 실체까지 지운다. <code>kr-ui-guide</code>까지 없으면 <code>CLAUDE.md</code>의 폰트 라이선스 정책 절도 지운다.</td></tr>
     <tr><td>기능 문서 6종</td><td>03 §7</td><td>글로벌 &mdash; 팀·CI가 공유해야 하면 프로젝트 스코프 &middot; 또는 <code>dandi</code> 플러그인</td><td>플러그인: <code>/plugin uninstall dandi-feature-docs@dandi</code>. 복사본: 가드부터 걷고 여섯 폴더. <code>docs/features/</code>·<code>tests/e2e/</code>·<code>tests/maestro/</code>는 남긴다.</td></tr>
     <tr><td><code>/refactor</code></td><td>03 §8</td><td>글로벌 &middot; 또는 <code>dandi</code> 플러그인</td><td>플러그인: <code>/plugin uninstall dandi-refactor@dandi</code>. 복사본: 폴더 삭제. 걷을 훅도, 되돌릴 커밋도 없다. <code>docs/refactor/</code> 보고서는 남긴다.</td></tr>
+    <tr><td><code>/browser-check</code></td><td>03 §5</td><td>설치할 때 묻는다 &mdash; 글로벌 또는 프로젝트 &middot; 또는 <code>dandi</code> 플러그인</td><td>플러그인: <code>/plugin uninstall dandi-browser-check@dandi</code>. 복사본: 폴더 삭제 &mdash; 프로젝트 스코프면 삭제를 커밋한다. 브라우저 쪽은 따로 걷는다: Chrome은 <code>/chrome</code>에서 끄거나 확장을 지우고, Playwright CLI는 <code>npm uninstall -g @playwright/cli</code>.</td></tr>
     <tr><td><code>/kr-ui-guide</code></td><td>03 §9</td><td>글로벌 &middot; 또는 <code>dandi</code> 플러그인</td><td>플러그인: <code>/plugin uninstall dandi-kr-ui-guide@dandi</code>. 복사본: 폴더 삭제. 프로젝트 CLAUDE.md에 선택적 오버라이드 절을 추가했으면 그것도 지우고, <code>frontend-design</code>까지 없으면 폰트 라이선스 정책 절도 지운다.</td></tr>
     <tr><td><code>/plan-&lt;모델&gt;</code></td><td>02 STEP 3 ⓔ</td><td>설치 때 묻는다 &mdash; 글로벌 또는 프로젝트</td><td>폴더 삭제. 함께 만든 모델 운용표와, <code>CLAUDE.md</code>·핸드오프 규약에 적어 둔 이 명령 안내 줄도 지운다.</td></tr>
   </tbody>
@@ -670,7 +685,7 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
 </div>
 <p class="lead" style="margin-top:16px">전부 제거 절차가 문서에 적혀 있는데, 이건 의도한 것이다. 되돌릴 수 없는 설치는 애초에 선택지를 준 게 아니기 때문이다. 감지·설치·검증·제거 4단 전체는 각 문서에 있다. 설치할 때 나오는 질문의 뜻은 <a href="options.ko.html">옵션 사전</a>에, 처음부터 차근히 밟아 보려면 <a href="learn.ko.html">학습 코스</a>에 있다.</p>
 
-<footer>단디(Dandi) &middot; 스킬 카탈로그 &middot; 2026-10-19 &middot; 01 §D-4 · 02 STEP 3 ⓔ · 03 §2 · §3 · §7 · §8 · §9가 설치하는 스킬들. 명령은 별칭 없이 적었으니, 설치할 때 별칭을 골랐다면 그것을 얹어 읽으면 된다. &middot; 글꼴: Pretendard, IBM Plex Mono — 둘 다 SIL 오픈 폰트 라이선스 1.1(상업 이용·웹 임베딩 무료)</footer>
+<footer>단디(Dandi) &middot; 스킬 카탈로그 &middot; 2026-10-20 &middot; 01 §D-4 · 02 STEP 3 ⓔ · 03 §2 · §3 · §5 · §7 · §8 · §9가 설치하는 스킬들. 명령은 별칭 없이 적었으니, 설치할 때 별칭을 골랐다면 그것을 얹어 읽으면 된다. &middot; 글꼴: Pretendard, IBM Plex Mono — 둘 다 SIL 오픈 폰트 라이선스 1.1(상업 이용·웹 임베딩 무료)</footer>
 
 </div>
 <script>

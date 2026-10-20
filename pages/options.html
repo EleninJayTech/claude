@@ -667,8 +667,12 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
     <div class="opt-head"><span class="id">&sect;5</span><span class="name">Browser verification</span><span class="badge b-off">design bundle</span></div>
     <p class="lead">Lets <b>Claude open the screens it built and fix them</b>. It completes the loop: build &rarr; check itself &rarr; fix.</p>
     <dl>
-      <dt>Three routes</dt><dd>On the desktop app, the <b>built-in browser</b> (nothing to install) / with Chrome from the CLI or an IDE, the <b>Claude in Chrome extension</b> (only on plans contracted directly with Anthropic &mdash; Pro, Max, Team, Enterprise; not via Bedrock, Google Cloud or Foundry) &mdash; installing the extension alone does not connect it; you must activate with <code>claude --chrome</code> or <code>/chrome</code> and authenticate with <code>/login</code> (no WSL support) / anything else is reference only</dd>
+      <dt>Browser routes</dt><dd>Pick the one that fits your setup. On the desktop app, the <b>built-in browser</b> (nothing to install &mdash; in a local session it opens the <code>localhost</code> dev server Claude started, and checking after each change is on by default. <b>It does not work over SSH</b>, and it uses a profile separate from your own browser, so it does not suit work that needs your personal logins) / with Chrome from the CLI or an IDE, the <b>Claude in Chrome extension</b> (uses your logged-in state as is; only on plans contracted directly with Anthropic &mdash; Pro, Max, Team, Enterprise; not via Bedrock, Google Cloud or Foundry) &mdash; installing the extension alone does not connect it; you must activate with <code>claude --chrome</code> or <code>/chrome</code> and authenticate with <code>/login</code> (no WSL support) / where no on-screen browser can be attached (WSL, SSH, CI), <b>Playwright CLI</b> (a browser that runs without a screen &middot; Node.js 18 or later &mdash; it saves page contents to a file instead of loading them into the conversation, and can sit alongside the other routes) / anything else is reference only</dd>
+      <dt>If Chrome is on by default</dt><dd>The browser tools and their instructions load into context <b>every session</b>. If you don&rsquo;t use the browser daily, leave it off and connect with <code>claude --chrome</code> when you need it</dd>
+      <dt>Checking rules installed alongside</dt><dd>Whichever route you pick, the <b><code>browser-check</code> skill</b> is installed with it. It makes Claude <b>choose how to look based on the question</b> when it checks a screen &mdash; an HTTP response when nothing needs rendering, text for words, elements, console and network, <b>a screenshot only when the visual appearance itself is the question</b>, and a script for checks that repeat. If the text result is empty or unclear, it steps up one level. One 1920&times;1080 screenshot costs about 2.7k tokens, so taking them only when needed serves quality and savings at once. It does not cover how to launch your app</dd>
+      <dt>Asked alongside</dt><dd>Like the other skills, it asks for <b>scope</b> (global / project) and <b>invocation</b>. <b>Automatic</b> invocation is recommended &mdash; it is only useful if it loads itself the moment Claude checks; set to manual, you have to call <code>/browser-check</code> every time. The skill name alias (2-7) applies too</dd>
       <dt>At work &#128308;</dt><dd>Connecting a browser also reaches <b>your logged-in sessions</b>. Keep the extension&rsquo;s site permissions narrowed to <code>localhost</code> and staging</dd>
+      <dt>Removing it</dt><dd>For Chrome, turning it off in <code>/chrome</code> only disconnects it; to remove it fully, uninstall the extension or revoke its site permissions &middot; Playwright CLI: <code>npm uninstall -g @playwright/cli</code> &middot; the skill: delete the <code class="i">browser-check/</code> folder in the scope you installed it to</dd>
     </dl>
   </div>
 
@@ -734,7 +738,7 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
     </tr>
     <tr>
       <td><b>Invocation</b></td>
-      <td><b>Automatic</b> &mdash; Claude loads it when it detects relevant work (default) / <b>manual only</b> &mdash; it runs only when you type <code class="i">/svg-design</code> (adds one <code class="i">disable-model-invocation: true</code> line to the file)</td>
+      <td><b>Automatic</b> &mdash; Claude loads it when it detects relevant work (default) / <b>manual only</b> &mdash; it runs only when you type <code class="i">/svg-design</code> (adds one <code class="i">disable-model-invocation: true</code> line to the file). For the browser checking rules (<code class="i">browser-check</code>), <b>automatic is recommended</b> &mdash; they only help if they load themselves when Claude checks</td>
     </tr>
     <tr>
       <td><b>Name alias</b></td>
@@ -742,7 +746,7 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
     </tr>
     <tr>
       <td><b>Already a plugin</b></td>
-      <td>Asked only for the feature-doc set, refactor and kr-ui-guide, and only when the same skills are already turned on as a <code class="i">dandi</code> plugin. <b>Keep</b> &mdash; the plugin stays and the copy is skipped / <b>replace</b> &mdash; the plugin is removed, then the copy is installed. Having both would put two identical skills in front of Claude. To remove a skill you got as a plugin, follow that plugin&rsquo;s own uninstall steps (<code class="i">/plugin uninstall dandi-refactor@dandi</code>, for example)</td>
+      <td>Asked only for the feature-doc set, refactor, kr-ui-guide and browser-check, and only when the same skills are already turned on as a <code class="i">dandi</code> plugin. <b>Keep</b> &mdash; the plugin stays and the copy is skipped / <b>replace</b> &mdash; the plugin is removed, then the copy is installed. Having both would put two identical skills in front of Claude. To remove a skill you got as a plugin, follow that plugin&rsquo;s own uninstall steps (<code class="i">/plugin uninstall dandi-refactor@dandi</code>, for example)</td>
     </tr>
   </table>
   </div>
@@ -1009,7 +1013,7 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
 <a class="totop" href="#toc">&uarr; Contents</a>
 
 <footer>
-  Dandi &middot; Install options dictionary &middot; based on 00_통합-설치.md &middot; 2026-10-19<br>
+  Dandi &middot; Install options dictionary &middot; based on 00_통합-설치.md &middot; 2026-10-20<br>
   The source of truth for each item is its own document (01&ndash;06). This page exists so people can read and judge; it does not change the install procedure itself.<br>
   Repository: github.com/EleninJayTech/claude &middot;
   <a href="../index.html">Guide</a> &middot; <a href="intro.html">Intro</a> &middot; <a href="demo.html">Walkthrough</a> &middot; <a href="learn.html">Course</a> &middot; <a href="skills.html">Skill catalog</a><br>

@@ -260,7 +260,7 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
       <svg width="26" height="26"><use href="#check"/></svg>
       <span class="no">03</span>
       <span class="desc"><b>편의 기능 셋.</b>
-        <p><b>claude-hud</b>(AI 사용 한도를 얼마나 썼는지 화면에 실시간 표시) · <b>svg-design</b>(이 페이지 위쪽 노란 애니메이션을 그린 그래픽 기술) · <b>frontend-design</b>("AI가 만든 티" 안 나는 세련된 화면을 만드는 Anthropic 공식 디자인 지침 — 이 페이지도 이걸로 만들었습니다) · <b>MCP</b>(외부 도구 연결) · <b>브라우저 검증</b>(만든 화면을 AI가 직접 열어 확인) · <b>기능 문서 스킬 세트</b>(기능마다 명세를 써 두고 그 위에 테스트·커밋 가드·릴리스 노트를 얹음) · <b>refactor</b>(코드를 정리하고 동작이 그대로인지 증명) · <b>kr-ui-guide</b>(한국 사용자 대상 웹·앱·게임 화면의 UI/UX·아이콘·색을 국내 서비스 리서치 기준으로 설계·점검). <b>frontend-design</b>이나 <b>kr-ui-guide</b>를 고르면 <b>폰트 라이선스 정책</b>도 함께 물어봅니다 — 자유 사용 폰트만 쓸지, 조건을 먼저 안내받고 그때그때 고를지(넣지 않는 것도 선택) — 고른 값은 구성에 기록돼 폰트를 넣거나 바꿀 때마다 적용됩니다.</p>
+        <p><b>claude-hud</b>(AI 사용 한도를 얼마나 썼는지 화면에 실시간 표시) · <b>svg-design</b>(이 페이지 위쪽 노란 애니메이션을 그린 그래픽 기술) · <b>frontend-design</b>("AI가 만든 티" 안 나는 세련된 화면을 만드는 Anthropic 공식 디자인 지침 — 이 페이지도 이걸로 만들었습니다) · <b>MCP</b>(외부 도구 연결) · <b>브라우저 검증</b>(만든 화면을 AI가 직접 열어 확인 — 먼저 페이지를 글자로 읽고, 보이는 모습 자체가 문제일 때만 스크린샷) · <b>기능 문서 스킬 세트</b>(기능마다 명세를 써 두고 그 위에 테스트·커밋 가드·릴리스 노트를 얹음) · <b>refactor</b>(코드를 정리하고 동작이 그대로인지 증명) · <b>kr-ui-guide</b>(한국 사용자 대상 웹·앱·게임 화면의 UI/UX·아이콘·색을 국내 서비스 리서치 기준으로 설계·점검). <b>frontend-design</b>이나 <b>kr-ui-guide</b>를 고르면 <b>폰트 라이선스 정책</b>도 함께 물어봅니다 — 자유 사용 폰트만 쓸지, 조건을 먼저 안내받고 그때그때 고를지(넣지 않는 것도 선택) — 고른 값은 구성에 기록돼 폰트를 넣거나 바꿀 때마다 적용됩니다.</p>
         <a href="https://github.com/EleninJayTech/claude/blob/main/03_확장기능-설치-체크리스트.md">03_확장기능-설치-체크리스트.md ↗</a></span>
     </li>
     <li>
@@ -362,7 +362,7 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
   <h3>내용을 믿어도 되나요?</h3>
   <p>문서의 모든 기술 내용은 Anthropic 공식 설명서를 그날 직접 확인한 날짜와 함께 기록되고, 6개월마다 다시 점검합니다.</p>
   <h3>설치 문서 없이 스킬만 받을 수 있나요?</h3>
-  <p>기능 문서 세트·<code class="i">refactor</code>·<code class="i">kr-ui-guide</code>는 됩니다. Claude Code 플러그인 마켓 <b><code class="i">dandi</code></b>로도 배포합니다 — <code class="i">/plugin marketplace add EleninJayTech/claude</code> 다음 <code class="i">/plugin install dandi-refactor@dandi</code>(또는 <code class="i">dandi-feature-docs</code>·<code class="i">dandi-kr-ui-guide</code>). 스킬마다 한 경로만 쓰세요 — 둘 다 깔면 같은 스킬이 두 번 보입니다. 설치 문서가 이 플러그인이 이미 켜져 있는 걸 찾으면 <b>플러그인 유지</b>(복사 설치는 건너뜀)와 <b>교체</b>(플러그인을 지우고 복사 설치) 중 하나를 묻습니다. 자세한 건 <a href="https://github.com/EleninJayTech/claude/blob/main/README.ko.md">README</a>에.</p>
+  <p>기능 문서 세트·<code class="i">refactor</code>·<code class="i">kr-ui-guide</code>·<code class="i">browser-check</code>는 됩니다. Claude Code 플러그인 마켓 <b><code class="i">dandi</code></b>로도 배포합니다 — <code class="i">/plugin marketplace add EleninJayTech/claude</code> 다음 <code class="i">/plugin install dandi-refactor@dandi</code>(또는 <code class="i">dandi-feature-docs</code>·<code class="i">dandi-kr-ui-guide</code>·<code class="i">dandi-browser-check</code>). 스킬마다 한 경로만 쓰세요 — 둘 다 깔면 같은 스킬이 두 번 보입니다. 설치 문서가 이 플러그인이 이미 켜져 있는 걸 찾으면 <b>플러그인 유지</b>(복사 설치는 건너뜀)와 <b>교체</b>(플러그인을 지우고 복사 설치) 중 하나를 묻습니다. 자세한 건 <a href="https://github.com/EleninJayTech/claude/blob/main/README.ko.md">README</a>에.</p>
   <h3>비밀번호 같은 건 안전한가요?</h3>
   <p>01을 설치하면 비밀번호·인증서·열쇠 파일을 AI가 읽지도, 인터넷에 올리지도 못하게 잠급니다. 그래도 근본 원칙은 "진짜 비밀은 작업 폴더에 두지 않기"입니다.</p>
   <div class="note"><b>이 저장소의 기본 원칙</b>1순위는 최적의 결과물입니다. 토큰 절약은 품질을 해치지 않는 범위의 2순위입니다.</div>
@@ -390,7 +390,7 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
 
 </main>
 
-<footer>단디 · 사용법 페이지 · 2026-10-08 · 저장소: <a href="https://github.com/EleninJayTech/claude">github.com/EleninJayTech/claude</a> · <a href="https://github.com/EleninJayTech/claude/releases/latest">최신 릴리스 노트</a> · 설치 문서 정본은 00~06 md — 이 페이지는 사람용 안내이며, 대표 이미지는 03 svg-design 레시피(Gooey·Squiggle)로 만들었습니다. 디자인은 kr-ui-guide 스킬(저장소 skills/kr-ui-guide) 기준을 따릅니다. · 글꼴: Pretendard, IBM Plex Mono — 둘 다 SIL 오픈 폰트 라이선스 1.1(상업 이용·웹 임베딩 무료)</footer>
+<footer>단디 · 사용법 페이지 · 2026-10-20 · 저장소: <a href="https://github.com/EleninJayTech/claude">github.com/EleninJayTech/claude</a> · <a href="https://github.com/EleninJayTech/claude/releases/latest">최신 릴리스 노트</a> · 설치 문서 정본은 00~06 md — 이 페이지는 사람용 안내이며, 대표 이미지는 03 svg-design 레시피(Gooey·Squiggle)로 만들었습니다. 디자인은 kr-ui-guide 스킬(저장소 skills/kr-ui-guide) 기준을 따릅니다. · 글꼴: Pretendard, IBM Plex Mono — 둘 다 SIL 오픈 폰트 라이선스 1.1(상업 이용·웹 임베딩 무료)</footer>
 
 </body>
 </html>
