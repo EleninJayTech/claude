@@ -1,7 +1,7 @@
 {
   "name": "dandi",
   "owner": { "name": "EleninJayTech", "url": "https://github.com/EleninJayTech" },
-  "description": "Dandi skills for Claude Code: feature specs verified against code and the running app, behavior-preserving refactoring, UI/UX guidelines for Korean users, and a browser verification method. Skill instructions are written in Korean.",
+  "description": "Dandi skills for Claude Code: feature specs verified against code and the running app, behavior-preserving refactoring, UI/UX guidelines for Korean users, a browser verification method, and a Windows PC check-and-clean routine. Skill instructions are written in Korean.",
   "plugins": [
     {
       "name": "dandi-feature-docs",
@@ -30,6 +30,13 @@
       "description": "Pick the right way to look at a page when verifying or debugging in a browser: HTTP fetch, page text, console and network, or a screenshot when the look itself is the question.",
       "license": "MIT",
       "keywords": ["browser", "verification", "debugging", "playwright", "chrome"]
+    },
+    {
+      "name": "dandi-pc-clean",
+      "source": "./plugins/dandi-pc-clean",
+      "description": "Check why a Windows PC got slow (orphaned node.exe, stale claude.exe sessions, old TEMP files, recycle bin, Outlook logging) read-only, then clean only the items you approve.",
+      "license": "MIT",
+      "keywords": ["windows", "cleanup", "processes", "maintenance", "powershell"]
     }
   ]
 }
