@@ -728,13 +728,27 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
     </dl>
   </div>
 
+  <div class="opt">
+    <div class="opt-head"><span class="id">&sect;10</span><span class="name">pc-clean</span><span class="badge b-off">off by default &middot; Windows only</span></div>
+    <p class="lead">One skill for when your PC has slowed down: it <b>only reads</b> the likely causes and shows them in one table, then cleans up <b>only the items you approve</b>.</p>
+    <dl>
+      <dt>What it looks at</dt><dd>Free space on C: and free memory &middot; how many days since the last restart &middot; leftover <code>node.exe</code> processes whose parent is gone (MCP and plugin servers often leave these) &middot; <code>claude.exe</code> sessions started before today &middot; the processes using the most memory &middot; old files in TEMP &middot; the Recycle Bin &middot; the Outlook logging folder</dd>
+      <dt>Cleans only what you approve</dt><dd>The check changes nothing. Cleanup asks item by item and does only what you pick &mdash; deleted files and stopped processes cannot be brought back</dd>
+      <dt>What it needs</dt><dd><b>Windows + PowerShell 7</b> (<code>pwsh</code>). On any other OS it is left out of the list and recorded as &ldquo;not applicable&rdquo;, so you are not asked again. Without <code>pwsh</code> it still installs, but the skill stops at its first step &mdash; you are told to run <code>winget install Microsoft.PowerShell</code> yourself, and it is recorded as &ldquo;pending&rdquo;</dd>
+      <dt>Why it is off by default</dt><dd>It is a tool for <b>the PC, not the project</b>, so nothing in a project is a reason to switch it on. Tick it yourself if you want it. For the same reason its scope <b>defaults to global</b>; choosing project commits Windows-only scripts into the team repository</dd>
+      <dt>Invocation</dt><dd><b>Automatic by default</b> &mdash; the check only reads, and the skill itself asks for approval before any cleanup. Because it can stop processes and delete files, set it to <b>manual only</b> if that still feels like too much</dd>
+      <dt>Watch out</dt><dd>If a command with the same name (<code class="i">.claude/commands/pc-clean.md</code>) already exists, this skill hides it. You are asked whether to keep or replace it; to keep the old command, give the skill an alias (2-7)</dd>
+      <dt>Removing it</dt><dd>Delete the one folder and you are done (it creates no hooks, settings or scheduled tasks)</dd>
+    </dl>
+  </div>
+
   <h3>Follow-up questions for any skill</h3>
   <div class="tbl">
   <table>
     <tr><th style="width:120px">Question</th><th>Choices</th></tr>
     <tr>
       <td><b>Scope</b></td>
-      <td><b>Global</b> (<code class="i">~/.claude/skills/</code>) &mdash; available in every project on your machine / <b>project</b> (<code class="i">.claude/skills/</code>) &mdash; this repository only; commit it and the team shares it. The feature-doc set, refactor and kr-ui-guide are used regardless of repository, so <b>global is their default</b>. This question is never skipped in any mode &mdash; if your machine already has a global skill of the same name, a project install is shadowed by it and never runs</td>
+      <td><b>Global</b> (<code class="i">~/.claude/skills/</code>) &mdash; available in every project on your machine / <b>project</b> (<code class="i">.claude/skills/</code>) &mdash; this repository only; commit it and the team shares it. The feature-doc set, refactor and kr-ui-guide are used regardless of repository, and pc-clean is a tool for the PC, so <b>global is their default</b>. This question is never skipped in any mode &mdash; if your machine already has a global skill of the same name, a project install is shadowed by it and never runs</td>
     </tr>
     <tr>
       <td><b>Invocation</b></td>
@@ -746,7 +760,7 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
     </tr>
     <tr>
       <td><b>Already a plugin</b></td>
-      <td>Asked only for the feature-doc set, refactor, kr-ui-guide and browser-check, and only when the same skills are already turned on as a <code class="i">dandi</code> plugin. <b>Keep</b> &mdash; the plugin stays and the copy is skipped / <b>replace</b> &mdash; the plugin is removed, then the copy is installed. Having both would put two identical skills in front of Claude. To remove a skill you got as a plugin, follow that plugin&rsquo;s own uninstall steps (<code class="i">/plugin uninstall dandi-refactor@dandi</code>, for example)</td>
+      <td>Asked only for the feature-doc set, refactor, kr-ui-guide, browser-check and pc-clean, and only when the same skills are already turned on as a <code class="i">dandi</code> plugin. <b>Keep</b> &mdash; the plugin stays and the copy is skipped / <b>replace</b> &mdash; the plugin is removed, then the copy is installed. Having both would put two identical skills in front of Claude. To remove a skill you got as a plugin, follow that plugin&rsquo;s own uninstall steps (<code class="i">/plugin uninstall dandi-refactor@dandi</code>, for example)</td>
     </tr>
   </table>
   </div>
@@ -968,7 +982,7 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
     Resolved or not, if you no longer want it (holding off, the organization has said no for good, you decided not to sign in), it is switched to &ldquo;not selected&rdquo; &mdash; so the same question stops coming back.
   </p>
   <p>
-    Copied skills (the feature-doc set, refactor, kr-ui-guide) are compared with the published version <b>file by file, contents included</b> &mdash; a revision that only reworded things still counts.
+    Copied skills (the feature-doc set, refactor, kr-ui-guide, browser-check, pc-clean) are compared with the published version <b>file by file, contents included</b> &mdash; a revision that only reworded things still counts.
     If anything differs, the skill is shown as an <b>older install</b> and the install step replaces the whole folder.
   </p>
 
@@ -1013,7 +1027,7 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
 <a class="totop" href="#toc">&uarr; Contents</a>
 
 <footer>
-  Dandi &middot; Install options dictionary &middot; based on 00_통합-설치.md &middot; 2026-10-20<br>
+  Dandi &middot; Install options dictionary &middot; based on 00_통합-설치.md &middot; 2026-10-22<br>
   The source of truth for each item is its own document (01&ndash;06). This page exists so people can read and judge; it does not change the install procedure itself.<br>
   Repository: github.com/EleninJayTech/claude &middot;
   <a href="../index.html">Guide</a> &middot; <a href="intro.html">Intro</a> &middot; <a href="demo.html">Walkthrough</a> &middot; <a href="learn.html">Course</a> &middot; <a href="skills.html">Skill catalog</a><br>

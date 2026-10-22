@@ -448,7 +448,7 @@ footer{max-width:1120px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
   </details>
 
   <details class="acc">
-    <summary><span class="id">03</span>확장 기능 — 상태 표시줄·디자인 스킬·MCP·브라우저·기능 문서·코드 리팩터링·한국 UI 기준 <span class="badge b-off">전부 선택</span></summary>
+    <summary><span class="id">03</span>확장 기능 — 상태 표시줄·디자인 스킬·MCP·브라우저·기능 문서·코드 리팩터링·한국 UI 기준·PC 점검 <span class="badge b-off">전부 선택</span></summary>
     <div class="acc-b">
       <ul>
         <li><b>claude-hud</b> — 입력창 아래 <b>상태 표시줄</b>. 컨텍스트·요금제 사용량이 보입니다. 절약 프로필이면 사실상 필수.</li>
@@ -459,10 +459,11 @@ footer{max-width:1120px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
         <li><b>기능 문서 스킬 세트</b>(6종) — 코드와 실제 화면을 보고 <b>기능마다 명세</b>를 써 두고, 거기 적힌 테스트를 돌리고, 문서를 안 고친 커밋을 막고, 릴리스 노트까지 만듭니다. 6종을 한 세트로 깔며, 문서만 있는 저장소는 대상이 아닙니다. 팀원 전원의 커밋을 막는 <b>커밋 가드</b>는 기본으로 꺼 둔 채 따로 물어봅니다.</li>
         <li><b>refactor</b> — 코드를 정리하고(중복 통합·구조 정리·낡은 문법 제거) <b>동작이 그대로인지까지 증명</b>합니다 — 호출처·계약·데이터 형식·실제 실행. 후보를 표로 보여주고 고른 것만 고칩니다. 문서만 있는 저장소는 대상이 아닙니다.</li>
         <li><b>kr-ui-guide</b> — 국내 서비스 리서치(UX 패턴·아이콘·색·최신 디자인 트렌드)와 한국 게임 UI/UX 리서치에서 추린 설계 기준. 제안하는 색의 <b>명도 대비를 계산</b>하고 화면을 체크리스트로 점검합니다. 한국 사용자 대상 <b>웹·앱·게임</b> 화면용이며, 특정 브랜드의 모양을 베끼지 않습니다.</li>
+        <li><b>pc-clean</b> — PC가 느려졌을 때 원인 후보(디스크·메모리 여유, 주인 잃은 <code class="i">node.exe</code>, 오늘 이전부터 켜져 있던 Claude 세션, 임시 파일 등)를 <b>읽기만 해서</b> 표 한 장으로 보여주고, <b>내가 승인한 항목만</b> 정리합니다. <b>Windows + PowerShell 7 전용</b>이라 다른 OS에서는 목록에 나오지 않고, 프로젝트와 무관한 PC 도구라 기본은 꺼져 있습니다. 스코프는 내 PC 전체가 기본입니다.</li>
       </ul>
       <p>스킬을 고르면 두 가지를 더 물어봅니다 — <b>스코프</b>(내 PC 전체 vs 이 프로젝트만)와
       <b>호출 방식</b>(Claude가 알아서 vs 내가 <code class="i">/명령</code>을 칠 때만).
-      기능 문서 세트·refactor·kr-ui-guide·browser-check가 이미 <code class="i">dandi</code> 플러그인으로 켜져 있으면 <b>플러그인 유지</b>(복사 안 함)와 <b>복사본으로 교체</b> 중 하나도 묻습니다 — 둘 다 두지는 않습니다.</p>
+      기능 문서 세트·refactor·kr-ui-guide·browser-check·pc-clean이 이미 <code class="i">dandi</code> 플러그인으로 켜져 있으면 <b>플러그인 유지</b>(복사 안 함)와 <b>복사본으로 교체</b> 중 하나도 묻습니다 — 둘 다 두지는 않습니다.</p>
       <p><b>frontend-design</b>이나 <b>kr-ui-guide</b>를 고르면 질문이 하나 더 붙습니다 &mdash; <b>폰트 라이선스 정책</b>입니다. 설치한 스코프의 <code class="i">CLAUDE.md</code>에 적힙니다.
       <b>자유 사용만</b>(기본)은 자유롭게 쓸 수 없는 폰트를 거절하고 무료 대체 폰트를 제시하고, <b>안내 후 선택</b>은 조건(구매·고지 의무·사용 범위)을 먼저 알린 뒤 내 결정을 기다립니다. <b>넣지 않음</b>이면 정책을 적지 않습니다.
       정책 한 곳이 어느 디자인 스킬에나 적용됩니다 &mdash; frontend-design은 혼자서는 라이선스를 보지 않으면서 타이포를 가장 적극적으로 바꿉니다.</p>
@@ -613,7 +614,7 @@ footer{max-width:1120px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
 </div>
 
 <footer>
-  단디 · 설치 옵션 학습 코스 · 2026-10-20<br>
+  단디 · 설치 옵션 학습 코스 · 2026-10-22<br>
   각 항목의 정본은 해당 하위 문서(01~06)입니다. 이 페이지는 사람이 배우기 위한 안내이며, 설치 절차 자체를 바꾸지 않습니다. 진행도는 이 브라우저의 localStorage에만 저장됩니다.<br>
   저장소: github.com/EleninJayTech/claude ·
   <a href="../index.ko.html">사용법</a> · <a href="intro.ko.html">소개 영상</a> · <a href="demo.ko.html">설치 시연</a> · <a href="options.ko.html">옵션 사전</a> · <a href="skills.ko.html">스킬 카탈로그</a><br>

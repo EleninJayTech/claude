@@ -243,6 +243,9 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
     <tr><td><code>/frontend-design</code></td><td>none &mdash; describe the UI</td><td>A new interface needs a direction</td><td>Direction, decided before the markup</td></tr>
     <tr><td><code>/browser-check</code></td><td>none &mdash; it loads itself</td><td>Claude checks or debugs a page it built</td><td>Verdicts from the values read &mdash; screenshots only where the look is judged</td></tr>
     <tr><td><code>/kr-ui-guide</code></td><td>none &mdash; it loads itself</td><td>Korean-facing UI, icons, colour &mdash; games included</td><td>A proposal with contrast maths and tokens</td></tr>
+
+    <tr><th class="grp" colspan="4" scope="colgroup">PC upkeep &middot; 03 §10</th></tr>
+    <tr><td><code>/pc-clean</code></td><td><code>[점검만]</code> &mdash; check only; check, then offer cleanup, if omitted</td><td>This Windows PC has got slow</td><td>A check table &mdash; only the items you approve are cleaned</td></tr>
   </tbody>
 </table>
 </div>
@@ -256,6 +259,7 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
   <button class="chip" data-g="code" aria-pressed="false">Code</button>
   <button class="chip" data-g="plan" aria-pressed="false">Planning</button>
   <button class="chip" data-g="design" aria-pressed="false">Design</button>
+  <button class="chip" data-g="pc" aria-pressed="false">PC</button>
   <span class="count" id="count"></span>
 </div>
 
@@ -326,7 +330,7 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
       <dl>
         <dt>Use when</dt><dd>You want this machine or this project brought up to the current documents. It is also the command for a first install, so you do not have to know which case you are in. Add <code>추천</code> when Claude or <code>/resume</code> has suggested an item your work now needs.</dd>
         <dt>It does</dt><dd>Finds document 00 (a copy beside you, a local clone, a folder you name, or the published raw file &mdash; raw is fetched byte for byte, never summarised, into a temporary folder outside the project), reads it, and runs its protocol exactly &mdash; detect what is already here, ask what you want, install only that, verify, and write the install record. The skill holds no steps of its own, so it can never drift from the document. As <code>/dropin-apply 추천</code> it takes the in-work suggestion path instead: it offers only the items your work has newly started to need and you have not installed, each with the sign it spotted, reuses your recorded answers to the opening questions, and installs only what you pick &mdash; the safety questions are still asked. In a folder with no install record it runs the normal install instead, where Minimal is the suggested start.</dd>
-        <dt>You get</dt><dd>A configuration that matches the documents, and an updated <code>dropin-applied</code> line saying so. Where a feature-docs, refactor, kr-ui-guide or <code>dropin-</code> skill was already installed, its files are compared by content &mdash; not just by name &mdash; so a version that only changed its wording is still replaced; a <code>dropin-</code> skill that differs from the published copy comes up with <code>reconcile</code> as the default. <code>/resume</code> and <code>/wrap</code> are only checked for presence &mdash; to get their new text, answer <code>reconcile</code> instead of the default <code>keep</code> when it asks about global items that are already installed. A suggestion you decline is noted in the record and not offered again; to take it later, add it on a plain <code>/dropin-apply</code> re-run.</dd>
+        <dt>You get</dt><dd>A configuration that matches the documents, and an updated <code>dropin-applied</code> line saying so. Where a feature-docs, refactor, kr-ui-guide, browser-check, pc-clean or <code>dropin-</code> skill was already installed, its files are compared by content &mdash; not just by name &mdash; so a version that only changed its wording is still replaced; a <code>dropin-</code> skill that differs from the published copy comes up with <code>reconcile</code> as the default. <code>/resume</code> and <code>/wrap</code> are only checked for presence &mdash; to get their new text, answer <code>reconcile</code> instead of the default <code>keep</code> when it asks about global items that are already installed. A suggestion you decline is noted in the record and not offered again; to take it later, add it on a plain <code>/dropin-apply</code> re-run.</dd>
       </dl>
       <div class="warn soft"><b>Worth knowing.</b> This is the same thing as telling Claude &ldquo;learn this document and apply it&rdquo; &mdash; the sentence still works. The command exists because a door you cannot see is a door you do not open.</div>
       <div class="tags"><span class="tag">global</span><span class="tag">asks first</span></div>
@@ -623,6 +627,31 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
   </div>
 </section>
 
+<!-- ══════════ GROUP: pc ══════════ -->
+<section class="group" data-g="pc">
+  <div class="ghead">
+    <h2 style="margin-top:0">PC upkeep</h2>
+    <span class="src">installed by document 03 §10 &middot; off by default</span>
+  </div>
+  <p class="gnote">A skill for the machine itself rather than for any project. It is unrelated to the skills above and never touches your code.</p>
+  <div class="cards">
+
+    <article class="skill" data-g="pc">
+      <div class="cmd"><span class="sl">/</span>pc-clean</div>
+      <div class="args">[점검만] — check only; check, then offer cleanup, if omitted</div>
+      <p class="one">When this Windows PC has got slow, finds the likely causes without changing anything, then cleans only what you approve.</p>
+      <dl>
+        <dt>Use when</dt><dd>The PC feels slow, memory or disk space is running low, <code>node.exe</code> or <code>claude.exe</code> processes have piled up, or you want TEMP and the recycle bin emptied. It also works as a start-of-day or end-of-day routine.</dd>
+        <dt>It does</dt><dd>Runs a read-only check &mdash; free space on C:, free memory, uptime, orphaned <code>node.exe</code> processes (their parent is gone; leftover MCP and plugin servers are a common source), <code>claude.exe</code> sessions started before today, the top memory users, TEMP files older than seven days, the recycle bin and Outlook&rsquo;s logging folder. It then offers only the items over a threshold, in one question; for old <code>claude.exe</code> sessions it shows each process ID and start time and lets you pick which to end. With <code>점검만</code> it stops after the check.</dd>
+        <dt>You get</dt><dd>One table from the check, and after a cleanup, free space on C: and free memory before and after. If the PC has been up seven days or more, a one-line suggestion to restart. Nothing is cleaned unless you approve it.</dd>
+      </dl>
+      <div class="warn soft"><b>Worth knowing.</b> Windows with PowerShell 7 (<code>pwsh</code>) only &mdash; on any other system install leaves it off the list, and without <code>pwsh</code> the skill stops before running anything. It is off by default because it serves this PC, not a project, and install suggests global scope. By default it loads itself &mdash; the check only reads and every cleanup item asks first; choose manual-only if you want it to run only when you call it. It never ends your current Claude session and does not touch your documents, photos, source or downloads. Deleted files and ended processes cannot be brought back. If you already have your own command named <code>pc-clean</code>, this skill hides it &mdash; install asks whether to keep or replace, and an alias lets you keep both.</div>
+      <div class="tags"><span class="tag">global</span><span class="tag">off by default</span><span class="tag need">Windows + pwsh</span><span class="tag">approval gate</span></div>
+    </article>
+
+  </div>
+</section>
+
 <p class="empty" id="empty">Nothing matches that filter. Try clearing the search box.</p>
 
 <h2>A day, in the order the skills come up</h2>
@@ -653,7 +682,7 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
 <div class="traps">
   <div class="trap"><b>On a machine that has never seen this setup.</b><p>Use <code>/dropin-apply</code> as well &mdash; it is the same command for a first install. If the skill is not there yet, tell Claude: <i>&ldquo;read <code>00_&#54648;&#54633;-&#49444;&#52824;.md</code> from the repository and apply it to this machine&rdquo;</i>, and the skill arrives with everything else.</p></div>
   <div class="trap"><b>Same file name, older contents.</b><p>A skill can be revised without gaining or losing a single file. Checks that only compare file names call that &ldquo;already current&rdquo;. The install steps compare contents too, so a wording-only revision is still replaced.</p></div>
-  <div class="trap"><b>Already on as a Dandi plugin?</b><p>If you installed the feature-docs, refactor, kr-ui-guide or browser-check skills through the <code>dandi</code> plugin marketplace, the same skills already exist under plugin names such as <code>/dandi-refactor:refactor</code>. Install spots this and asks: <b>keep</b> the plugin and skip the copy, or <b>replace</b> it &mdash; remove the plugin, then copy. Two installs of one skill would both compete to load. To remove a plugin install later, use <code>/plugin uninstall</code> from that plugin&rsquo;s README, not the copy-removal steps.</p></div>
+  <div class="trap"><b>Already on as a Dandi plugin?</b><p>If you installed the feature-docs, refactor, kr-ui-guide, browser-check or pc-clean skills through the <code>dandi</code> plugin marketplace, the same skills already exist under plugin names such as <code>/dandi-refactor:refactor</code>. Install spots this and asks: <b>keep</b> the plugin and skip the copy, or <b>replace</b> it &mdash; remove the plugin, then copy. Two installs of one skill would both compete to load. To remove a plugin install later, use <code>/plugin uninstall</code> from that plugin&rsquo;s README, not the copy-removal steps.</p></div>
   <div class="trap"><b><code>/dropin-check</code> cannot see everything.</b><p>On an ordinary install there is no private mirror to compare against, so it reports &ldquo;current as far as the documents go &mdash; skill contents unchecked&rdquo; rather than a flat &ldquo;current&rdquo;. Run <code>/dropin-apply</code> when you want that second half answered &mdash; and to bring <code>/resume</code> and <code>/wrap</code> up to date too, choose <code>reconcile</code> for the global items already installed. <code>keep</code> leaves the old text in place.</p></div>
 </div>
 
@@ -679,13 +708,14 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
     <tr><td><code>/refactor</code></td><td>03 §8</td><td>global &middot; or the <code>dandi</code> plugin</td><td>Plugin: <code>/plugin uninstall dandi-refactor@dandi</code>. Copy: delete the folder. No hooks to unwind, no commits to revert. Reports in <code>docs/refactor/</code> stay.</td></tr>
     <tr><td><code>/browser-check</code></td><td>03 §5</td><td>asked at install &mdash; global or project &middot; or the <code>dandi</code> plugin</td><td>Plugin: <code>/plugin uninstall dandi-browser-check@dandi</code>. Copy: delete the folder &mdash; in project scope, commit the deletion. The browser goes separately: switch Chrome off in <code>/chrome</code> (or remove the extension), or <code>npm uninstall -g @playwright/cli</code>.</td></tr>
     <tr><td><code>/kr-ui-guide</code></td><td>03 §9</td><td>global &middot; or the <code>dandi</code> plugin</td><td>Plugin: <code>/plugin uninstall dandi-kr-ui-guide@dandi</code>. Copy: delete the folder. If a project <code>CLAUDE.md</code> got the optional override block, delete that too &mdash; and the font-licence policy section, once <code>frontend-design</code> is gone as well.</td></tr>
+    <tr><td><code>/pc-clean</code></td><td>03 §10</td><td>global &mdash; project scope commits Windows-only scripts to the repo &middot; or the <code>dandi</code> plugin</td><td>Plugin: <code>/plugin uninstall dandi-pc-clean@dandi</code>. Copy: delete the folder &mdash; in project scope, commit the deletion. No hooks, settings or scheduled tasks to unwind.</td></tr>
     <tr><td><code>/plan-&lt;model&gt;</code></td><td>02 STEP 3 ⓔ</td><td>asked at install &mdash; global or project</td><td>Delete the folder, the model usage table it created, and the lines about this command it added to <code>CLAUDE.md</code> and the handoff protocol.</td></tr>
   </tbody>
 </table>
 </div>
 <p class="lead" style="margin-top:16px">Every one of these has a documented removal path, which is deliberate: an install you cannot reverse was never really a choice. The full procedures &mdash; detect, install, verify, remove &mdash; are in the documents themselves. For what each install question means, see the <a href="options.html">options dictionary</a>; to work through it step by step, take the <a href="learn.html">course</a>.</p>
 
-<footer>Dandi &middot; Skill catalog &middot; 2026-10-20 &middot; Skills installed by documents 01 §D-4, 02 STEP 3 ⓔ, 03 §2, §3, §5, §7, §8 and §9. Commands are shown without an alias; apply yours if you chose one at install time. &middot; Fonts: Pretendard, IBM Plex Mono &mdash; both SIL Open Font License 1.1 (free for commercial use and web embedding)</footer>
+<footer>Dandi &middot; Skill catalog &middot; 2026-10-22 &middot; Skills installed by documents 01 §D-4, 02 STEP 3 ⓔ, 03 §2, §3, §5, §7, §8, §9 and §10. Commands are shown without an alias; apply yours if you chose one at install time. &middot; Fonts: Pretendard, IBM Plex Mono &mdash; both SIL Open Font License 1.1 (free for commercial use and web embedding)</footer>
 
 </div>
 <script>
