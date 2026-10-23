@@ -168,7 +168,7 @@ a{color:var(--y)}
 
 <div class="frame">
   <div class="topbar">
-    <span><b>단디</b> · EleninJayTech / claude · 소개 (18초) · 2026-10-08</span>
+    <span><b>단디</b> · EleninJayTech / claude · 소개 (18초) · 2026-10-24</span>
     <span><a href="../index.ko.html">사용법</a> · <a href="demo.ko.html">설치 시연</a> · <a href="options.ko.html">옵션 사전</a> · <a href="learn.ko.html">학습 코스</a> · <a href="skills.ko.html">스킬 카탈로그</a> · <a href="https://github.com/EleninJayTech/claude">GitHub</a></span>
   </div>
 
@@ -249,8 +249,8 @@ say:[
 done:[
  ["huge","4%","4%","-3","☑ ☑ ☑"],
  ["huge","6%","72%","2","☑"],
- ["sm","42%","62%","2","&lt;!-- dropin-applied: 2026-08-05\n · 모드=권장 · 언어=ko · 01 02 04 --&gt;"],
- ["md","46%","4%","-1","설치 3 · 건너뜀 3\n소요 2분"],
+ ["sm","42%","62%","2","&lt;!-- dropin-applied: 2026-08-05\n · 모드=권장 · 언어=ko · 01 02 03 04 --&gt;"],
+ ["md","46%","4%","-1","설치 4 · 건너뜀 2\n소요 2분"],
  ["huge","68%","8%","-2","☑ ☑"],
  ["sm","78%","56%","1","❯ git commit ✓  push ✓"],
  ["md","2%","40%","1","재적용은 버전 비교로"]],
@@ -313,7 +313,7 @@ const TOTAL=BEATS.reduce((a,b)=>a+b.d,0);
 const SEL=[
   [1,"01 기반",     "CLAUDE.md · docs/ 작업일지 · /resume /wrap", .15, .45,  .75],
   [1,"02 모델분담", ".claude/agents/ — opus 판단 · sonnet 실행",   .30, 1.15, 1.45],
-  [0,"03 확장기능", "claude-hud · MCP  (이번엔 건너뜀)",            .45, 1.85, 0],
+  [1,"03 확장기능", "정책 기록  (claude-hud · MCP는 건너뜀)",      .45, 1.85, 2.15],
   [1,"04 검증",     "hooks 품질 게이트 · gh CLI",                  .60, 2.45, 2.75]
 ];
 /* 설치 출력: [파일, 설명, 등장d] */
@@ -356,7 +356,7 @@ function render(b){
       r.style.setProperty("--sw",sw+"s");
       r.style.setProperty("--ck",(ck||0)+"s");
       p.appendChild(r); });
-    p.appendChild(el("p","okline iline","<span class='ck'>✓</span> 3개 선택 — 각 문서의 절차대로 진행")).style.setProperty("--d","3.3s");
+    p.appendChild(el("p","okline iline","<span class='ck'>✓</span> 선택 완료 — 각 문서의 절차대로 진행")).style.setProperty("--d","3.3s");
     host.appendChild(p);
   }
   else if(b.type==="install"){

@@ -197,6 +197,7 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
     <b>&#128161; Why &ldquo;saving tokens&rdquo; keeps coming up</b>
     Claude draws down your plan allowance in proportion to the characters (tokens) exchanged. So these documents share one principle: <b>first, the best possible result; second, savings that do not cost quality</b>.
     Verification, record-keeping and the stronger model on hard work are never cut in the name of thrift.
+    <b>Speed</b> is weighed only on top of the same quality, too &mdash; a faster way is used by default if it adds next to no tokens or cost, but if it <b>multiplies</b> them it is never switched on by default, only offered as a choice.
   </div>
 </section>
 
@@ -216,7 +217,7 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
   <table>
     <tr><th style="width:64px">Step</th><th>What happens</th><th style="width:190px">What you choose</th></tr>
     <tr><td><b>STEP 1</b></td><td>Obtain the documents needed (01&ndash;06) &mdash; fetched from GitHub if not in the folder</td><td>Nothing</td></tr>
-    <tr><td><b>STEP 2</b></td><td>Detect the environment &mdash; prior install record (<code class="i">dropin-applied</code>), existing config files, project type</td><td>Nothing</td></tr>
+    <tr><td><b>STEP 2</b></td><td>Detect the environment &mdash; prior install record (<code class="i">dropin-applied</code>), existing config files, any Claude setup the team has committed, project type</td><td>Nothing</td></tr>
     <tr><td><b>STEP 3</b></td><td><b>The big choices</b> &mdash; the questions in &sect;2 below</td><td>(on an already-set-up PC, a <b>quick path</b> first) &middot; base mode &middot; bundles &middot; profile &middot; output language &middot; skill name alias</td></tr>
     <tr><td><b>STEP 4</b></td><td>Install by each chosen document&rsquo;s own procedure. The per-document items (&sect;3&ndash;&sect;8) are <b>all asked in &ldquo;custom&rdquo; mode</b>; in the other modes they are settled automatically <b>only for documents that define per-mode defaults</b> &mdash; documents without them (02, 05) and items that are off by default are asked</td><td>Depends on the mode</td></tr>
     <tr><td><b>STEP 5</b></td><td>Verify, report, and leave one install-record line at the bottom of <code class="i">CLAUDE.md</code></td><td>Approving the commit</td></tr>
@@ -281,7 +282,7 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
 
   <div class="note">
     <b>&#128204; The quick path only shortens the common questions</b>
-    The <b>safety questions</b> (may I overwrite what is already there? did you check the company policy?), the <b>scope questions</b> (where should this live?) and the questions about items that are off by default <b>still appear</b>. Not even the &ldquo;everything&rdquo; mode can skip those, so a shortcut must not either. If something was carried over wrongly, the next re-run asks about adding and removing, so it can be undone.
+    The <b>safety questions</b> (may I overwrite what is already there? should the team&rsquo;s setup come first? &mdash; 2-6; did you check the company policy?), the <b>scope questions</b> (where should this live?) and the questions about items that are off by default <b>still appear</b>. Not even the &ldquo;everything&rdquo; mode can skip those, so a shortcut must not either. If something was carried over wrongly, the next re-run asks about adding and removing, so it can be undone.
   </div>
 
   <h3>2-1. Target &mdash; this PC, or this project</h3>
@@ -303,7 +304,7 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
     <div class="opt-head"><span class="name">Recommended</span><span class="badge b-on">auto-combined per situation</span></div>
     <p class="lead">Claude combines things based on what it detected and <b>shows you in one line why it chose that</b>.</p>
     <dl>
-      <dt>The rule</dt><dd>New PC &rarr; 01 (global) + 03 (HUD) / development project &rarr; 01+02+04 / documentation or non-code repository &rarr; 01 only / somewhere 01 already exists &rarr; only what is still missing and needed</dd>
+      <dt>The rule</dt><dd>New PC &rarr; 01 (global) + 03 (HUD) / development project &rarr; 01+02+04 plus policy notes from 03 (the rest of 03 is decided by bundles and detection) / documentation or non-code repository &rarr; 01 only / somewhere 01 already exists &rarr; only what is still missing and needed</dd>
       <dt>Choose it when</dt><dd>You want everything that fits this folder installed now rather than suggested later</dd>
     </dl>
   </div>
@@ -403,6 +404,32 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
   </ul>
   <p><b>Global items already on this PC</b> (settings every project shares) are asked as <b>one bundled question</b> so you do not answer the same thing every time you set up a new project &mdash; the list of what already exists is shown and the default is <b>keep</b>. Only the ones you answer <b>reconcile</b> or <b>replace</b> for are split out and asked one by one. The <code class="i">dropin-</code> skills are the exception: the installed copy is <b>compared by content</b> with the published one, and if they differ that skill&rsquo;s default is offered as <b>reconcile</b> (if the original could not be fetched, you are told &ldquo;content not checked&rdquo;).</p>
   <p><b>If you are joining a team repository</b> (running it for the first time on your machine in a repository someone else already set up and committed), the default offered is <b>keep</b> &mdash; a newcomer&rsquo;s choices should not overwrite what the team has aligned on.</p>
+
+  <p><b>If the team has already committed its own Claude setup</b> &mdash; before the per-item question above, <b>one question</b> (pick one) comes first. It appears only when Claude finds <b>committed</b> <code class="i">CLAUDE.md</code>, <code class="i">AGENTS.md</code> or <code class="i">.mcp.json</code>, or settings, skills, agents, commands, rules or hooks under <code class="i">.claude/</code>, and there is no record of this question being answered yet. Uncommitted files belong to whoever made them, so they do not count.</p>
+
+  <div class="opt">
+    <div class="opt-head"><span class="name">Team setup first</span><span class="id">recommended when detected</span><span class="badge b-on">team files untouched</span></div>
+    <p class="lead">Every overlapping item is treated as answered <b>keep</b>, and <b>files the team committed are never edited</b>.</p>
+    <dl>
+      <dt>What you get</dt><dd>Items that would need a team file changed are offered <b>in your own space</b> instead (<code class="i">CLAUDE.local.md</code>, <code class="i">.claude/settings.local.json</code>, or global). Anything that cannot be moved there is not installed and is recorded as &ldquo;not chosen &mdash; team setup first&rdquo;. Items that only add new files go ahead, with a note that committing them <b>needs the team&rsquo;s agreement</b></dd>
+      <dt>When</dt><dd>You want to layer your setup onto a repository whose team or company has already settled its Claude configuration &mdash; since no team file is touched, there is nothing to undo later</dd>
+    </dl>
+  </div>
+
+  <div class="opt">
+    <div class="opt-head"><span class="name">Decide item by item</span><span class="badge b-off">one at a time</span></div>
+    <p class="lead">For each overlapping item, the <b>keep / reconcile / replace</b> question above is asked separately.</p>
+    <dl>
+      <dt>When</dt><dd>You have the rights and the team&rsquo;s agreement to change the shared setup, and want some of it brought up to the newer version</dd>
+    </dl>
+  </div>
+
+  <div class="note">
+    <b>&#128204; Good to know about this question</b>
+    &#9312; Either way, the install-record line goes into this repository&rsquo;s <code class="i">CLAUDE.md</code>, and committing it is left to the team&rsquo;s agreement. Your answer is kept as <code class="i">기존구성=팀우선</code> (team first) or <code class="i">기존구성=항목별</code> (item by item) and shared by the team; on a re-run or when another teammate joins, that value is shown and you <b>only confirm</b> it.
+    &#9313; The quick path (2-0) and in-work suggestions cannot skip it &mdash; it is one of the safety questions.
+    &#9314; You are also asked whether <b>your company has deployed managed settings</b> &mdash; open <code class="i">/status</code> in a session and check whether the <code class="i">Setting sources</code> line lists a managed source. Nothing you choose can override those, so any item that would clash with them is not installed, and you are told why.
+  </div>
   <p><b>Global items the record says were installed but this PC does not have yet</b> (<code class="i">/resume</code> and <code class="i">/wrap</code>, for instance) are offered for install on any re-run, <b>whatever the version</b> &mdash; otherwise a newcomer&rsquo;s PC would be reported &ldquo;up to date&rdquo; without them. Anything you turn down is noted in your own PC&rsquo;s record, so it is not offered again.</p>
 
   <h3>2-7. Skill name alias &mdash; none / prefix / suffix / only the ones you pick</h3>
@@ -742,13 +769,43 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
     </dl>
   </div>
 
+  <div class="opt">
+    <div class="opt-head"><span class="id">&sect;11</span><span class="name">Policy notes</span><span class="badge b-on">ticked in development repos &middot; project only</span></div>
+    <p class="lead">When development turns up a <b>product policy</b> &mdash; a rule you cannot tell from the names alone, such as when a status may change, who may see or do what, or how amounts, quantities and deadlines are calculated &mdash; Claude writes it down the moment it finds it, and on related work checks that policy first <b>without being told</b>. These are <b>rule files for Claude to read</b>, not documents for people.</p>
+    <dl>
+      <dt>Files it creates</dt><dd>One always-loaded instruction file (<code class="i">.claude/rules/policy-recording.md</code>) and a folder where policies accumulate (<code class="i">.claude/rules/policies/</code>). A policy inferred from code is marked <b>[추정]</b> (inferred); one confirmed by a person or a planning document is marked <b>[확인]</b> (confirmed). When one is recorded, you get a one-line note at the end of the turn</dd>
+      <dt>Token cost</dt><dd>Each policy file is tied to <b>the code paths it governs</b>, so it loads only when that code is read or edited. Day to day, only the instruction file and its index are loaded</dd>
+      <dt>When an inferred policy matters</dt><dd>If the implementation depends on an inferred policy, Claude asks you in one line before going on, and marks it confirmed once you answer. If a request goes against a policy, Claude points to it &mdash; and then <b>follows your decision</b></dd>
+      <dt>Scope</dt><dd><b>Project only</b>, so you are not asked &mdash; a policy is a fact about that product, and as a global it would leak into other projects. Sharing with the team is the default, so you are prompted to commit it; in a team repository you are told the first commit needs the team&rsquo;s agreement</dd>
+      <dt>Ticked by default</dt><dd>In a <b>development repository</b> it comes pre-ticked (it is also part of the recommended mode&rsquo;s development-project set). In a repository with no code it is left out of the list and recorded as &ldquo;not applicable&rdquo;</dd>
+      <dt>If a similar document exists</dt><dd>If you already keep a document of policies, business rules or status transitions, you are asked keep / reconcile / replace. Pick keep and you are asked whether to point the policy store at that document instead &mdash; the existing document is never moved</dd>
+      <dt>Relation to &sect;7</dt><dd>Feature docs are per feature; policies cut across features. Policies are not copied into feature docs &mdash; only the policy ID is referenced</dd>
+      <dt>Removing it</dt><dd>Deleting the instruction file stops the recording and lookups. The accumulated policy folder is <b>your data</b>, so you are asked whether to keep it (if kept, each file still loads when its code is worked on)</dd>
+    </dl>
+  </div>
+
+  <div class="opt">
+    <div class="opt-head"><span class="id">&sect;12</span><span class="name">session-board</span><span class="badge b-off">off by default &middot; global only</span></div>
+    <p class="lead">Lets Claude sessions <b>open in the same folder at the same time</b> know about each other. When a session starts or you send a message, Claude is told <b>the other sessions&rsquo; titles, branches and edited files</b>, and if it is about to edit a file another session just changed, it gets <b>one warning</b>.</p>
+    <dl>
+      <dt>It does not block</dt><dd>Whether to carry on, open a separate workspace with <code>claude --worktree &lt;name&gt;</code>, or ask the other session is your call. It does not replace the habit of not running two sessions in one folder &mdash; it is the safety net that lets you <b>notice before committing</b> when that habit slips</dd>
+      <dt>Token cost</dt><dd>The hooks never call the model; they only write a small per-session file. <b>With no other session running, nothing is added to the conversation</b></dd>
+      <dt>How to install</dt><dd>Choose <b>plugin</b> (offered first &mdash; run <code>/plugin marketplace add EleninJayTech/claude</code> &rarr; <code>/plugin install dandi-session-board@dandi</code> yourself; the hooks switch on in one go and come off in one go) or <b>copy</b> (the skill folder is fetched and five hooks are appended to your machine&rsquo;s settings &mdash; existing hooks are kept). If both are present every notice runs twice, so you are asked to keep only one</dd>
+      <dt>Scope</dt><dd><b>Global only</b>, so you are not asked &mdash; sessions belong to the PC, and at project scope only that repository&rsquo;s sessions would show up</dd>
+      <dt>What it needs</dt><dd><b>Node.js 18 or later</b>. Without it the install still goes through but does nothing &mdash; you are told, and it is recorded as &ldquo;pending&rdquo;</dd>
+      <dt>Why it is off by default</dt><dd>It puts hooks on <b>every session on this PC</b>, so no mode switches it on for you. Tick it yourself if you often open several sessions in one folder</dd>
+      <dt>Watch out</dt><dd>If you already have hooks that deal with other sessions or simultaneous edits at session start or on file edits, you are asked whether to keep or replace them</dd>
+      <dt>Removing it</dt><dd>For the plugin, <code class="i">/plugin uninstall dandi-session-board@dandi</code> (the hooks go with it). For a copy, remove just these hooks from your settings, then delete the skill folder and <code class="i">~/.claude/session-board/</code> &mdash; it only holds session titles, branches and file paths, so nothing is lost</dd>
+    </dl>
+  </div>
+
   <h3>Follow-up questions for any skill</h3>
   <div class="tbl">
   <table>
     <tr><th style="width:120px">Question</th><th>Choices</th></tr>
     <tr>
       <td><b>Scope</b></td>
-      <td><b>Global</b> (<code class="i">~/.claude/skills/</code>) &mdash; available in every project on your machine / <b>project</b> (<code class="i">.claude/skills/</code>) &mdash; this repository only; commit it and the team shares it. The feature-doc set, refactor and kr-ui-guide are used regardless of repository, and pc-clean is a tool for the PC, so <b>global is their default</b>. This question is never skipped in any mode &mdash; if your machine already has a global skill of the same name, a project install is shadowed by it and never runs</td>
+      <td><b>Global</b> (<code class="i">~/.claude/skills/</code>) &mdash; available in every project on your machine / <b>project</b> (<code class="i">.claude/skills/</code>) &mdash; this repository only; commit it and the team shares it. The feature-doc set, refactor and kr-ui-guide are used regardless of repository, and pc-clean is a tool for the PC, so <b>global is their default</b>. Policy notes (&sect;11) are <b>fixed</b> to the project and session-board (&sect;12) to global, so instead of this question you are simply told. This question is never skipped in any mode &mdash; if your machine already has a global skill of the same name, a project install is shadowed by it and never runs</td>
     </tr>
     <tr>
       <td><b>Invocation</b></td>
@@ -932,7 +989,7 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
     <tr>
       <td><b>A solo development project</b></td>
       <td>Recommended / stronger verification / standard</td>
-      <td>Records, model split, and automatic checks on every edit. Even solo, the hook gate has the biggest payoff</td>
+      <td>Records, model split, automatic checks on every edit, and policy notes. Even solo, the hook gate has the biggest payoff</td>
     </tr>
     <tr>
       <td><b>A project that builds web screens</b></td>
@@ -973,7 +1030,7 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
   </p>
   <p><code class="i">&lt;!-- dropin-applied: 2026-08-05 &middot; 모드=권장+디자인 &middot; 언어=en &middot; 별칭=없음 &middot; 00 v&#9675;.&#9675; &middot; 01 v&#9675;.&#9675; &middot; 02 v&#9675;.&#9675; &middot; 미선택: 05, 06 &middot; 출처=사본 --&gt;</code></p>
   <p style="font-size:14.5px;color:var(--ink-soft)">
-    The fields are the answers you gave &mdash; mode and bundles, output language, the skill name alias, the version of each document installed, what you did not pick, and where the documents were read from. The <b>operating profile</b> is not in this line: it is yours, not the team&rsquo;s, so it is recorded in the <code class="i">CLAUDE.md</code> on your own machine.
+    The fields are the answers you gave &mdash; mode and bundles, output language, the skill name alias, the version of each document installed, what you did not pick, where the documents were read from, and &mdash; if you were asked the team-setup question (2-6) &mdash; your answer to it. The <b>operating profile</b> is not in this line: it is yours, not the team&rsquo;s, so it is recorded in the <code class="i">CLAUDE.md</code> on your own machine.
   </p>
   <p>
     Run it again later and Claude reads that line first, then <b>summarizes what changed in the documents since</b>.
@@ -982,7 +1039,7 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
     Resolved or not, if you no longer want it (holding off, the organization has said no for good, you decided not to sign in), it is switched to &ldquo;not selected&rdquo; &mdash; so the same question stops coming back.
   </p>
   <p>
-    Copied skills (the feature-doc set, refactor, kr-ui-guide, browser-check, pc-clean) are compared with the published version <b>file by file, contents included</b> &mdash; a revision that only reworded things still counts.
+    Copied skills (the feature-doc set, refactor, kr-ui-guide, browser-check, pc-clean, session-board) are compared with the published version <b>file by file, contents included</b> &mdash; a revision that only reworded things still counts.
     If anything differs, the skill is shown as an <b>older install</b> and the install step replaces the whole folder.
   </p>
 
@@ -1027,7 +1084,7 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
 <a class="totop" href="#toc">&uarr; Contents</a>
 
 <footer>
-  Dandi &middot; Install options dictionary &middot; based on 00_통합-설치.md &middot; 2026-10-22<br>
+  Dandi &middot; Install options dictionary &middot; based on 00_통합-설치.md &middot; 2026-10-24<br>
   The source of truth for each item is its own document (01&ndash;06). This page exists so people can read and judge; it does not change the install procedure itself.<br>
   Repository: github.com/EleninJayTech/claude &middot;
   <a href="../index.html">Guide</a> &middot; <a href="intro.html">Intro</a> &middot; <a href="demo.html">Walkthrough</a> &middot; <a href="learn.html">Course</a> &middot; <a href="skills.html">Skill catalog</a><br>

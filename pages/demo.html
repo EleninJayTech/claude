@@ -148,7 +148,7 @@ footer{margin-top:36px;color:var(--ink-soft);font-size:13px;font-family:var(--sa
   <p>If something is already installed, you are asked whether to keep it first &mdash; nothing is overwritten silently. What each of the seven documents does is on the <a href="../index.html">guide page</a>; what each install choice means is in the <a href="options.html">options dictionary</a>. To learn it from the ground up, take the <a href="learn.html">options course</a>.</p>
 </div>
 
-<footer>Dandi &middot; Install walkthrough &middot; 2026-10-08 &middot; This replay reproduces the real procedure of documents 00&ndash;06 (detect &rarr; choose mode and bundles &rarr; install &rarr; verify with evidence &rarr; record). Design follows the kr-ui-guide skill (repository skills/kr-ui-guide). &middot; Fonts: Pretendard, IBM Plex Mono &mdash; both SIL Open Font License 1.1 (free for commercial use and web embedding)</footer>
+<footer>Dandi &middot; Install walkthrough &middot; 2026-10-24 &middot; This replay reproduces the real procedure of documents 00&ndash;06 (detect &rarr; choose mode and bundles &rarr; install &rarr; verify with evidence &rarr; record). Design follows the kr-ui-guide skill (repository skills/kr-ui-guide). &middot; Fonts: Pretendard, IBM Plex Mono &mdash; both SIL Open Font License 1.1 (free for commercial use and web embedding)</footer>
 </div>
 
 <script>
@@ -170,38 +170,39 @@ add("out","<span class='who'>Claude</span> I have read the document. First, let 
 add("ok","✓ git repository confirmed — a new project");
 add("ok","✓ No install record (dropin-applied) → proceeding as a first install");
 add("ok","✓ Stack detected — package.json found (a Node.js project)");
-add("ok","✓ No existing Claude setup — nothing to overwrite",{cap:"It investigates before asking. If something is already installed, it asks whether to <b>keep / reconcile / replace</b> it."});
+add("ok","✓ No existing Claude setup — nothing to overwrite",{cap:"It investigates before asking. If something is already installed, it asks whether to <b>keep / reconcile / replace</b> it. If the team has committed a Claude setup, it also asks whether to put the <b>team setup first</b> (team files are left untouched) or decide item by item."});
 
 ch("② Choosing");
 add("note","First install on this PC → no \"quick path\" question; each question is asked in turn",{cap:"<b>On a PC that already has it in another project</b>, a <b>quick path</b> comes first — using this PC's defaults or the same combination as another project, it shrinks the common questions below into a single confirmation. The off-by-default question and the safety questions still appear."});
 add("out","<span class='who'>Claude</span> Choose an install mode — [minimal (default pick)] [recommended] [full] [custom]  (a one-line explanation on each choice · link to the options dictionary)",{cap:"<b>You do not have to pick item by item.</b> One mode settles the combination. Choose \"custom\" only when you want to decide everything yourself. Each choice carries a plain-language line on <b>what you get if you pick it</b>, and the options dictionary is linked for the full meaning."});
-add("ask","Mode? → [recommended]  (Node development project detected → 01+02+04 automatically)",{cap:"<b>Recommended = the combination that fits what was just detected.</b> A development project gets 01+02+04, a documentation folder gets 01 only — it varies per project. A first install suggests <b>minimal</b> by default (start light, add the rest when it is suggested during your work) — this walkthrough picks recommended to show more of the install."});
+add("ask","Mode? → [recommended]  (Node development project detected → 01+02+04 + 03 policy log automatically)",{cap:"<b>Recommended = the combination that fits what was just detected.</b> A development project gets 01+02+04 plus the policy log from 03, a documentation folder gets 01 only — it varies per project. A first install suggests <b>minimal</b> by default (start light, add the rest when it is suggested during your work) — this walkthrough picks recommended to show more of the install."});
 add("ask","Bundles to add? — design / stronger verification / feature documentation / unattended automation / answer style / company → (none this time)",{cap:"A purpose <b>bundle</b> gives you combinations like \"minimal + design\". If web UI work is detected, the design bundle arrives pre-checked. A question holds at most four choices, so on the real screen this one is split up."});
 add("ask","Output language? → [English]  (default follows the language you are chatting in)",{cap:"<b>Not the language of the documents — the language of what gets created.</b> Answer English and your CLAUDE.md body, work logs, commit messages and generated filenames all come out in English."});
 add("ask","Add an alias to skill names? → [none]  (no same-named skill found — if there were, it would suggest aliasing just that one)",{cap:"<b>A guard against name clashes.</b> If a skill with the same name (say, resume) already exists on your machine, you can install under a different name such as <b>dandi-resume</b>. With no clash, the default is to leave names alone."});
 add("chk","01 Foundation — work log + security locks",{on:true,cap:"<b>This is what recommended mode checked for you.</b> You just confirm — though you can still change it here."});
 add("chk","02 Model split — a team of expensive and cheap models",{on:true});
-add("chk","03 Add-ons — usage meter, design skills and so on",{on:false});
+add("chk","03 Add-ons — only the policy log this time (product rules written down and checked before related work)",{on:true});
 add("chk","04 Automatic checks — a checker runs on every edit",{on:true});
 add("chk","05 Changing tone and role",{on:false});
 add("chk","06 Scheduled runs (Pro and above)",{on:false});
-add("ask","Show the items that are off by default? — 02 ⓒ custom reviewer · ⓔ plan-only model command → (not this time)",{cap:"<b>Items that are off by default are always shown, bundled into one question, whatever the mode.</b> They are not switched on for you and not hidden from you — and whatever you leave off is recorded, so it can be offered again later."});
+add("ask","Show the items that are off by default? — 02 ⓒ custom reviewer · ⓔ plan-only model command · the rest of 03 (usage meter, MCP, refactor, session board and so on) → (not this time)",{cap:"<b>Items that are off by default are always shown, bundled into one question, whatever the mode.</b> They are not switched on for you and not hidden from you — and whatever you leave off is recorded, so it can be offered again later."});
 add("ask","Operating profile? → [standard]  (choose \"thrift\" if you are managing a Pro allowance)",{cap:"On a plan with a smaller allowance, choose the <b>thrift profile</b> — quality-critical moments stay untouched while everyday consumption drops."});
 
 ch("③ Install and evidence");
-add("out","<span class='who'>Claude</span> Installing the three documents you chose, each by its own procedure.",{cap:"<b>Installing.</b> Each document is the authority on its own procedure — 00 is only the door; 01, 02 and 04 do the actual work."});
+add("out","<span class='who'>Claude</span> Installing the documents you chose, each by its own procedure.",{cap:"<b>Installing.</b> Each document is the authority on its own procedure — 00 is only the door; 01, 02, 03 and 04 do the actual work."});
 add("ok","✓ CLAUDE.md — project facts recorded (stack, structure, rules)");
 add("ok","✓ docs/ PROGRESS·DECISIONS·PROJECT_PLAN — the work-log system");
 add("ok","✓ .claude/settings.json — reading password and key files blocked (deny)");
 add("ok","✓ /resume·/wrap·/dropin-apply and related skills — resume, wrap-up and update commands");
 add("ok","✓ .claude/agents/ — the model-split roster (hard work = expensive model, routine = cheap)");
+add("ok","✓ .claude/rules/policy-recording.md — the policy-log rule (write down product rules when found, check them before related work)");
 add("ok","✓ hooks quality gate — a checker runs automatically on every file edit");
 add("out","<span class='who'>Claude</span> Now I verify — and report with evidence, not assurances.",{cap:"<b>It does not end at \"done\".</b> You get the actual output of a verification that was really run."});
 add("ok","✓ Typed \"/\" → /resume, /wrap and /dropin-apply confirmed in autocomplete");
 add("ok","✓ docs/ three work-log files and the CLAUDE.md record rules — confirmed by path, inside this project",{cap:"<b>Checking the global commands is not enough.</b> Real verification means confirming the artifacts were created inside this project too."});
 add("ok","✓ Saved a deliberately malformed file → the checker caught it immediately");
 add("out","<span class='who'>Claude</span> Finally, leaving the install record:");
-add("note","&lt;!-- dropin-applied: 2026-09-11 · 모드=recommended · 언어=en · 별칭=없음 · 00 v○.○ · 01 v○.○ · 02 v○.○(ⓒ·ⓔ 미선택) · 04 v○.○ · 미선택: 03, 05, 06 · 출처=사본 --&gt;",{cap:"<b>A record of what was installed stays behind.</b> The version slots (v○.○) hold the real document versions at install time, and the keys stay fixed in any language so the tooling can find them."});
+add("note","&lt;!-- dropin-applied: 2026-09-11 · 모드=recommended · 언어=en · 별칭=없음 · 00 v○.○ · 01 v○.○ · 02 v○.○(ⓒ·ⓔ 미선택) · 03 v○.○(정책 기록만) · 04 v○.○ · 미선택: 05, 06 · 출처=사본 --&gt;",{cap:"<b>A record of what was installed stays behind.</b> The version slots (v○.○) hold the real document versions at install time, and the keys stay fixed in any language so the tooling can find them."});
 add("ok","✓ Install complete — commit it and your teammates and your next session pick up exactly here");
 
 ch("④ Daily routine");
@@ -216,7 +217,7 @@ ch("⑤ Updating");
 add("cmd","/dropin-apply",{cap:"<b>Months later, when the documents have a new version?</b> You do not reinstall from scratch. One command installed alongside the rest does it — or say \"Apply 00_통합-설치.md again\" and the same procedure runs."});
 add("out","<span class='who'>Claude</span> I found an install record — 01 is at v○.○, and the current document is newer.");
 add("out","<span class='who'>Claude</span> Two things changed since. (change summary shown)");
-add("ask","Apply only what changed? Add 03 and 05, which you skipped before, or take out something already installed?",{cap:"It compares against the recorded version and asks about <b>only what changed</b>. This is also when you add documents you skipped earlier or remove ones you installed — removal deletes only what the install created and keeps the work logs."});
+add("ask","Apply only what changed? Add 05 and 06, which you skipped before, or take out something already installed?",{cap:"It compares against the recorded version and asks about <b>only what changed</b>. This is also when you add documents you skipped earlier or remove ones you installed — removal deletes only what the install created and keeps the work logs."});
 
 ch("End");
 add("hr","── end of walkthrough ──",{cap:"<b>Ready?</b> The single sentence under \"To try it yourself\" is all it takes."});

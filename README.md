@@ -37,20 +37,21 @@
 - **Would you rather install everything that fits right away? Pick "recommended"** and the installer inspects your project and checks the fitting combination for you. You can add purpose **bundles** (design, stronger verification, unattended automation and more) on top — "minimal + design", for example.
 - **If something is already installed**, you are asked whether to **keep / reconcile / replace** it first. Nothing is overwritten silently. Run 00 again later (or `/dropin-apply`, once 01 is installed) and it asks both what to **add** and what to **remove** — removing takes out only what the install created, and the work logs you have built up stay.
 - **On a PC you have already set up**, installing into a **new project** starts with a **quick path** — This PC's defaults / Same as another project / Recommended mode / One by one — that answers the common questions (mode, bundles, operating profile and so on) in one go. The values it carries over are shown for you to confirm, and safety questions (overwriting, company policy) still appear.
-- **Teams and multi-repository setups are supported.** Teammates who install from different places (a parent folder vs. an individual repository) do not collide, and a personal folder holding company repositories is checked **per repository**. Settings shared with the team (committed) and settings that stay yours are also asked about separately.
+- **Teams and multi-repository setups are supported.** Teammates who install from different places (a parent folder vs. an individual repository) do not collide, and a personal folder holding company repositories is checked **per repository**. Settings shared with the team (committed) and settings that stay yours are also asked about separately. If the repository already holds a Claude setup your team has committed, you are asked **Team setup first / Decide item by item**; with Team setup first (recommended) the team's files are left untouched — an item that would have to edit a team file is offered in your personal settings instead, and an item that only adds new files is flagged as needing the team's agreement before you commit it. Items that conflict with company-deployed managed settings are not installed, and you are told why.
 - **On the Pro plan (lower usage allowance)**, choose the **thrift** operating profile during install — quality-critical moments (hard judgment calls, final review) stay untouched while everyday consumption drops. There is **one thing you do yourself** after install: start everyday work with `/model sonnet` (the choice sticks), and open a **fresh session** on the higher model — for example `claude --model opus` — for quality-critical work such as reviews.
 - Every question and checkbox the installer shows is documented item by item in the [**install options dictionary**](pages/options.html). To learn it from the ground up, take the [**install options course**](pages/learn.html) — you click through a simulator as you go.
 - Hit a term you don't know? Just ask Claude to "explain it simply".
 
 ## Skills as plugins
 
-The skills the installer copies (feature docs, refactor, kr-ui-guide, browser-check, pc-clean) are also published as Claude Code plugins in the **`dandi`** marketplace:
+The skills the installer copies (feature docs, refactor, kr-ui-guide, browser-check, pc-clean, session-board) are also published as Claude Code plugins in the **`dandi`** marketplace:
 
 ```text
 /plugin marketplace add EleninJayTech/claude
-/plugin install dandi-feature-docs@dandi      # also: dandi-refactor@dandi, dandi-kr-ui-guide@dandi, dandi-browser-check@dandi, dandi-pc-clean@dandi
+/plugin install dandi-feature-docs@dandi      # also: dandi-refactor@dandi, dandi-kr-ui-guide@dandi, dandi-browser-check@dandi, dandi-pc-clean@dandi, dandi-session-board@dandi
 ```
 
+- `dandi-session-board` turns on the hooks it needs with the one plugin, and they go away together when you uninstall it.
 - Plugin skills are called with the plugin name in front — `/dandi-feature-docs:feature-test`.
 - **Use one route per skill** — either the drop-in install or the plugin. Both at once shows every skill twice. If the installer finds the plugin already turned on, it asks whether to keep the plugin (skipping the copy) or replace it with the copy.
 - Third-party marketplaces don't auto-update by default; turn it on in `/plugin` → Marketplaces.
@@ -64,7 +65,7 @@ The skills the installer copies (feature docs, refactor, kr-ui-guide, browser-ch
 | [`00_통합-설치.md`](00_통합-설치.md) | **The entry point.** Pick an install mode (minimal/recommended/full/custom) and bundles; it installs only the matching subset below |
 | [`01_Claude-Code-통합구성-범용마스터.md`](01_Claude-Code-통합구성-범용마스터.md) | **Memory and safety.** AI forgets everything when the chat closes, so this builds a work-log system that lets you **resume tomorrow where you stopped today**, and locks passwords and key files away from the AI. Ships the setup check (`/dropin-check`), doc refresh (`/dropin-update`), re-apply (`/dropin-apply`) and all-in-order (`/dropin-sync`) commands too |
 | [`02_모델분담-범용-플레이북.md`](02_모델분담-범용-플레이북.md) | **Splitting the work across models.** Hard judgment goes to the smart (expensive) model, routine work to the fast (cheap) one — a small AI team that keeps quality and cuts the bill |
-| [`03_확장기능-설치-체크리스트.md`](03_확장기능-설치-체크리스트.md) | **Convenience add-ons.** Live usage meter (claude-hud) · animated graphics techniques (svg-design) · UI that doesn't look AI-generated (frontend-design) · external tool connections (MCP) · letting the AI open and check the screens it built (browser verification) · per-feature specs with tests, commit guard and release notes (feature-doc skill set) · behaviour-preserving code cleanup with side-effect verification (refactor) · UI/UX, icon and colour guidance for Korean-audience web, app and game screens, from research on Korean services (kr-ui-guide) · Windows only: a read-only check of why the PC got slow, then cleanup of only the items you approve (pc-clean). Pick either design skill and you are also asked for a **font licence policy** — freely usable fonts only, the terms first and you decide, or leave it out — which is written into the setup |
+| [`03_확장기능-설치-체크리스트.md`](03_확장기능-설치-체크리스트.md) | **Convenience add-ons.** Live usage meter (claude-hud) · animated graphics techniques (svg-design) · UI that doesn't look AI-generated (frontend-design) · external tool connections (MCP) · letting the AI open and check the screens it built (browser verification) · per-feature specs with tests, commit guard and release notes (feature-doc skill set) · behaviour-preserving code cleanup with side-effect verification (refactor) · UI/UX, icon and colour guidance for Korean-audience web, app and game screens, from research on Korean services (kr-ui-guide) · Windows only: a read-only check of why the PC got slow, then cleanup of only the items you approve (pc-clean) · product rules found during development (status changes, permissions, amount calculations and the like) recorded in the project for the AI and checked first whenever that code comes up — included by default in Recommended mode for development projects (policy records) · a board that tells each Claude session about other sessions in the same folder and the files they edited, Node.js 18 or later, off by default (session-board). Pick either design skill and you are also asked for a **font licence policy** — freely usable fonts only, the terms first and you decide, or leave it out — which is written into the setup |
 | [`04_검증-자동화.md`](04_검증-자동화.md) | **The automatic inspector.** Checkers run every time the AI edits code, and again before code is merged — you get **proof the checks passed** instead of the AI saying "done" |
 | [`05_출력스타일.md`](05_출력스타일.md) | **Changing tone and role.** Answers the way you want them — explanation-first, diagram-first, learning mode. Coding ability stays; only the style changes |
 | [`06_루틴-자동화.md`](06_루틴-자동화.md) | **Scheduled runs.** Work happens in the cloud at set times even while your machine is off (nightly code review, weekly doc checks) — Pro plan or above and a GitHub repository, and with approval at companies |
@@ -73,7 +74,7 @@ The skills the installer copies (feature docs, refactor, kr-ui-guide, browser-ch
 
 ## Principles behind Dandi
 
-- **Output quality comes first.** Saving on AI usage (tokens) is second — but where more depth would not buy better work, the cheaper option is simply the right one, not a compromise.
+- **Output quality comes first.** Saving on AI usage (tokens) is second — but where more depth would not buy better work, the cheaper option is simply the right one, not a compromise. A faster way to the same quality becomes the default only when it costs barely any more; if it multiplies the cost, it is offered as an option only.
 - **Checked, not remembered.** Every technical claim records the date it was verified against Anthropic's official documentation, and is re-checked every six months.
 - **Same behavior everywhere.** Nothing that only works in one project or on one machine goes in. The documents detect your environment first, then generate.
 - **Always a way back.** No install step ships without its removal step — a setup you cannot undo never gave you a choice. Existing configuration is never overwritten silently; you are asked to keep, rebuild, or replace.
@@ -93,4 +94,4 @@ If these documents helped you, a coffee is always appreciated 😊
 
 ---
 
-<!-- pages-sync-updated: 2026-10-22 -->
+<!-- pages-sync-updated: 2026-10-24 -->

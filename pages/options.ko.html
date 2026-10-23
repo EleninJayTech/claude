@@ -196,6 +196,7 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
     <b>💡 “토큰을 아낀다”는 말이 자주 나오는 이유</b>
     Claude는 주고받은 글자 수(토큰)만큼 요금제 사용량을 씁니다. 그래서 이 문서들은 <b>1순위 = 최적의 결과물, 2순위 = 품질을 해치지 않는 선에서의 절약</b>이라는 원칙을 공유합니다.
     절약하겠다고 검증·기록·어려운 작업의 상위 모델을 빼지는 않습니다.
+    <b>속도</b>도 같은 품질 위에서만 따집니다 — 더 빨리 끝내는 방법이라도 토큰·비용이 거의 늘지 않으면 기본으로 쓰고, <b>몇 배로 늘면</b> 기본으로 켜지 않고 선택지로만 둡니다.
   </div>
 </section>
 
@@ -214,7 +215,7 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
   <table>
     <tr><th style="width:64px">단계</th><th>하는 일</th><th style="width:190px">사용자가 고르는 것</th></tr>
     <tr><td><b>STEP 1</b></td><td>설치에 필요한 문서(01~06) 확보 — 같은 폴더에 없으면 GitHub에서 가져옴</td><td>없음</td></tr>
-    <tr><td><b>STEP 2</b></td><td>환경 감지 — 이전에 적용한 기록(<code class="i">dropin-applied</code>), 기존 설정 파일, 프로젝트 유형 조사</td><td>없음</td></tr>
+    <tr><td><b>STEP 2</b></td><td>환경 감지 — 이전에 적용한 기록(<code class="i">dropin-applied</code>), 기존 설정 파일, 팀이 커밋해 둔 Claude 구성, 프로젝트 유형 조사</td><td>없음</td></tr>
     <tr><td><b>STEP 3</b></td><td><b>큰 선택</b> — 아래 §2의 질문들</td><td>(이미 구성된 PC면 맨 앞에 <b>빠른 경로</b>) · 기반 모드 · 목적 번들 · 운용 프로필 · 산출물 언어 · 스킬 이름 별칭</td></tr>
     <tr><td><b>STEP 4</b></td><td>고른 문서의 절차대로 설치. 문서 안 세부 항목(§3~§8)은 <b>‘사용자’ 모드면 전부</b> 물어보고, 그 밖의 모드면 <b>모드별 기본값이 정해진 문서만</b> 자동으로 정함 — 기본값이 없는 문서(02·05)와 기본으로 꺼진 항목은 물어봄</td><td>모드에 따라 다름</td></tr>
     <tr><td><b>STEP 5</b></td><td>검증하고 결과 보고 + <code class="i">CLAUDE.md</code> 맨 아래에 적용 기록 한 줄 남김</td><td>커밋 승인</td></tr>
@@ -279,7 +280,7 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
 
   <div class="note">
     <b>📌 빠른 경로가 줄여 주는 건 공통 질문뿐입니다</b>
-    이미 있는 걸 덮어쓸지 묻는 <b>안전 질문</b>, 회사 정책 확인, 어디에 둘지 고르는 <b>스코프 질문</b>, 기본으로 꺼진 항목을 켤지 묻는 질문은 <b>그대로 나옵니다</b>. ‘전체’ 모드로도 줄일 수 없는 것을 빠른 경로가 줄이면 안 되기 때문입니다. 잘못 가져왔다면 다음에 다시 돌릴 때 추가·제거를 물어보므로 되돌릴 수 있습니다.
+    이미 있는 걸 덮어쓸지 묻는 <b>안전 질문</b>(팀 구성을 먼저 따를지 묻는 질문 포함 — 2-6), 회사 정책 확인, 어디에 둘지 고르는 <b>스코프 질문</b>, 기본으로 꺼진 항목을 켤지 묻는 질문은 <b>그대로 나옵니다</b>. ‘전체’ 모드로도 줄일 수 없는 것을 빠른 경로가 줄이면 안 되기 때문입니다. 잘못 가져왔다면 다음에 다시 돌릴 때 추가·제거를 물어보므로 되돌릴 수 있습니다.
   </div>
 
   <h3>2-1. 적용 대상 — 이 PC인가, 이 프로젝트인가</h3>
@@ -301,7 +302,7 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
     <div class="opt-head"><span class="name">권장</span><span class="badge b-on">상황별 자동 조합</span></div>
     <p class="lead">감지 결과에 따라 Claude가 알아서 조합하고, <b>왜 그렇게 골랐는지 한 줄로 보여줍니다</b>.</p>
     <dl>
-      <dt>규칙</dt><dd>새 PC → 01(글로벌)+03(HUD) / 개발 프로젝트 → 01+02+04 / 문서·비개발 저장소 → 01만 / 이미 01이 깔린 곳 → 아직 없는 것 중 필요한 것만</dd>
+      <dt>규칙</dt><dd>새 PC → 01(글로벌)+03(HUD) / 개발 프로젝트 → 01+02+04+03의 정책 기록(03의 다른 항목은 번들·감지가 따로 정함) / 문서·비개발 저장소 → 01만 / 이미 01이 깔린 곳 → 아직 없는 것 중 필요한 것만</dd>
       <dt>이럴 때</dt><dd>나중에 추천받기보다 이 폴더에 맞는 것을 지금 한 번에 깔고 싶을 때</dd>
     </dl>
   </div>
@@ -401,6 +402,32 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
   </ul>
   <p><b>이 PC에 이미 있는 글로벌 항목</b>(모든 프로젝트가 함께 쓰는 설정)은 프로젝트를 새로 깔 때마다 같은 답을 하지 않도록 <b>한 문항으로 묶어</b> 물어봅니다 — 무엇이 이미 있는지 목록을 보여 주고 기본은 <b>유지</b>입니다. 그중 <b>재구성·교체</b>를 고른 것만 하나씩 나눠 묻습니다. 단 <code class="i">dropin-</code> 계열 스킬은 설치본을 배포본과 <b>내용으로 대조</b>해, 다르면 그 스킬의 기본값을 <b>재구성</b>으로 제시합니다(원본을 받지 못했으면 “내용 미확인”으로 알립니다).</p>
   <p><b>팀 저장소에 처음 합류했다면</b>(다른 사람이 이미 적용해 커밋해 둔 저장소를 내 PC에서 처음 돌릴 때) 기본값은 <b>유지</b>로 제시됩니다 — 팀이 맞춰 둔 구성을 새로 온 사람의 선택으로 덮지 않기 위해서입니다.</p>
+
+  <p><b>팀이 이미 Claude 구성을 커밋해 둔 저장소라면</b> — 위 질문을 항목마다 받기 전에 <b>한 문항</b>(단일 선택)이 먼저 나옵니다. Claude가 저장소에 <b>커밋된</b> <code class="i">CLAUDE.md</code>·<code class="i">AGENTS.md</code>·<code class="i">.mcp.json</code>이나 <code class="i">.claude/</code> 아래 설정·스킬·에이전트·명령·규칙·훅을 찾았고, 아직 이 질문에 답한 기록이 없을 때만입니다. 커밋되지 않은 파일은 그 사람 것이라 판단 근거로 쓰지 않습니다.</p>
+
+  <div class="opt">
+    <div class="opt-head"><span class="name">팀 구성 우선</span><span class="id">감지되면 기본 추천</span><span class="badge b-on">팀 파일 그대로</span></div>
+    <p class="lead">겹치는 항목은 모두 <b>유지</b>로 답한 것으로 하고, <b>팀이 커밋한 파일은 고치지 않습니다</b>.</p>
+    <dl>
+      <dt>생기는 것</dt><dd>팀 파일을 고쳐야 하는 항목은 <b>내 것으로만</b> 옮겨 제시합니다(<code class="i">CLAUDE.local.md</code>·<code class="i">.claude/settings.local.json</code>·글로벌). 옮길 수 없는 항목은 깔지 않고 “팀 구성 우선으로 미선택”이라고 기록합니다. 새 파일만 더하는 항목은 진행하되, 커밋하기 전에 <b>팀 합의가 필요하다</b>고 알려 줍니다</dd>
+      <dt>이럴 때</dt><dd>팀이나 회사가 이미 Claude 구성을 맞춰 둔 저장소에 내 설정을 얹고 싶을 때 — 팀 파일을 건드리지 않으니 되돌릴 것도 생기지 않습니다</dd>
+    </dl>
+  </div>
+
+  <div class="opt">
+    <div class="opt-head"><span class="name">항목별로 정하기</span><span class="badge b-off">하나씩 판단</span></div>
+    <p class="lead">겹치는 항목마다 위의 <b>유지 / 재구성 / 교체</b>를 따로 묻습니다.</p>
+    <dl>
+      <dt>이럴 때</dt><dd>팀 구성을 직접 손볼 권한과 합의가 있고, 어떤 것은 새 버전으로 맞추고 싶을 때</dd>
+    </dl>
+  </div>
+
+  <div class="note">
+    <b>📌 이 문항에 대해 알아 둘 것</b>
+    ① 어느 쪽이든 적용 기록 한 줄은 이 저장소의 <code class="i">CLAUDE.md</code>에 적히고, 커밋은 팀 합의로 남깁니다. 답은 <code class="i">기존구성=팀우선</code> 또는 <code class="i">기존구성=항목별</code>로 남아 팀이 함께 쓰고, 다시 돌리거나 다른 팀원이 합류할 때는 그 값을 보여 주고 <b>확인만</b> 받습니다.
+    ② 빠른 경로(2-0)나 작업 중 추천으로 건너뛸 수 없습니다 — 안전 질문의 일부이기 때문입니다.
+    ③ <b>회사가 관리 설정을 배포했는지</b>도 함께 확인합니다 — 세션에서 <code class="i">/status</code>를 열어 <code class="i">Setting sources</code> 줄에 관리(managed) 출처가 있는지 봐 달라고 합니다. 그 설정은 어떤 선택으로도 덮을 수 없어서, 부딪히는 항목은 깔지 않고 알려 줍니다.
+  </div>
   <p><b>기록엔 설치됐다고 돼 있는데 이 PC에는 아직 없는 글로벌 항목</b>(예: <code class="i">/resume</code>·<code class="i">/wrap</code>)은 재적용할 때마다 <b>버전과 상관없이</b> 설치 대상으로 제시합니다 — 안 그러면 합류자 PC는 그것들 없이 “최신”으로 끝납니다. 거절한 항목은 내 PC 기록에 남겨 다시 제시하지 않습니다.</p>
 
   <h3>2-7. 스킬 이름 별칭 — 없음 / 앞 / 뒤 / 고른 것만</h3>
@@ -740,13 +767,43 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
     </dl>
   </div>
 
+  <div class="opt">
+    <div class="opt-head"><span class="id">§11</span><span class="name">정책 기록</span><span class="badge b-on">개발 저장소면 기본 체크 · 프로젝트 고정</span></div>
+    <p class="lead">개발하다 드러난 <b>솔루션 정책</b>(상태가 바뀌는 조건, 권한·노출 규칙, 금액·수량·기한 계산처럼 이름만 봐서는 알 수 없는 기획 규칙)을 Claude가 발견하는 즉시 적어 두고, 관련 작업을 받으면 <b>말하지 않아도</b> 그 정책부터 확인하게 합니다. 사람이 읽을 문서가 아니라 <b>Claude가 읽는 규칙 파일</b>입니다.</p>
+    <dl>
+      <dt>만들 파일</dt><dd>늘 읽히는 지시 파일 하나(<code class="i">.claude/rules/policy-recording.md</code>)와 정책을 쌓을 폴더(<code class="i">.claude/rules/policies/</code>). 정책은 코드에서 짐작한 것은 <b>[추정]</b>, 사람이나 기획 문서로 확인한 것은 <b>[확인]</b>으로 적고, 기록하면 턴 끝에 한 줄로 알려 줍니다</dd>
+      <dt>토큰은</dt><dd>정책 파일마다 <b>관련 코드 경로</b>를 걸어 두어, 그 코드를 읽거나 고칠 때만 불려 옵니다. 평소엔 지시 파일과 색인만 실립니다</dd>
+      <dt>[추정]이 갈림길이면</dt><dd>짐작한 정책에 따라 구현이 달라지면 진행 전에 한 줄로 확인을 받고, 확인되면 [확인]으로 고칩니다. 정책과 다른 요청을 받으면 근거를 알려 주고 <b>사용자 결정을 따릅니다</b></dd>
+      <dt>스코프</dt><dd><b>프로젝트 고정</b>이라 묻지 않습니다 — 정책은 그 솔루션의 사실이라 글로벌에 두면 다른 프로젝트에 섞입니다. 팀 공유가 기본이라 커밋을 안내하고, 팀 저장소면 첫 커밋에 팀 합의가 필요하다고 알려 줍니다</dd>
+      <dt>기본 체크</dt><dd><b>개발 저장소</b>면 체크된 채 나옵니다(권장 모드의 개발 프로젝트 조합에도 들어 있습니다). 코드가 없는 저장소면 목록에서 빠지고 “해당 없음”으로 기록됩니다</dd>
+      <dt>비슷한 문서가 있으면</dt><dd>정책·업무 규칙·상태 전이를 모은 문서가 이미 있으면 유지 / 재구성 / 교체를 묻습니다. 유지를 고르면 그 문서를 정책 저장소로 쓰도록 경로만 바꿔 줄지 묻습니다 — 기존 문서는 옮기지 않습니다</dd>
+      <dt>§7과의 관계</dt><dd>기능 문서는 기능 단위, 정책은 여러 기능에 걸칩니다. 기능 문서에 정책을 옮겨 적지 않고 정책 번호만 겁니다</dd>
+      <dt>지울 때</dt><dd>지시 파일만 지우면 기록·참조가 멈춥니다. 쌓인 정책 폴더는 <b>내 데이터</b>라 남길지 묻습니다(남기면 각 파일이 관련 코드를 다룰 때 계속 읽힙니다)</dd>
+    </dl>
+  </div>
+
+  <div class="opt">
+    <div class="opt-head"><span class="id">§12</span><span class="name">session-board</span><span class="badge b-off">기본 해제 · 글로벌 고정</span></div>
+    <p class="lead">같은 폴더에서 Claude 세션을 <b>둘 이상</b> 열었을 때 서로를 알려 주는 장치입니다. 세션을 시작하거나 메시지를 보낼 때 <b>다른 세션의 제목·브랜치·고친 파일</b>을 알려 주고, 다른 세션이 방금 고친 파일을 고치려 하면 <b>한 번 경고</b>합니다.</p>
+    <dl>
+      <dt>막지는 않습니다</dt><dd>그대로 계속할지, <code>claude --worktree &lt;이름&gt;</code>으로 작업 공간을 따로 열지, 그 세션에 물어볼지는 사용자가 정합니다. 같은 폴더에서 두 세션을 돌리지 않는 습관을 대신하는 게 아니라, 그 습관이 깨졌을 때 <b>커밋 전에 알아채게</b> 하는 안전망입니다</dd>
+      <dt>토큰은</dt><dd>훅이 모델을 부르지 않고 세션별 메모 파일만 씁니다. <b>다른 세션이 없으면 대화에 아무것도 더하지 않습니다</b></dd>
+      <dt>설치 방법</dt><dd><b>플러그인</b>(먼저 권함 — <code>/plugin marketplace add EleninJayTech/claude</code> → <code>/plugin install dandi-session-board@dandi</code>, 직접 실행. 훅까지 한 번에 켜지고 지울 때도 한 번) / <b>복사 설치</b>(스킬 폴더를 받고 내 PC 설정에 훅 다섯 개를 덧붙입니다 — 기존 훅은 지우지 않습니다) 중 고릅니다. 둘 다 있으면 모든 알림이 두 번 돌아서 하나만 남기라고 묻습니다</dd>
+      <dt>스코프</dt><dd><b>글로벌 고정</b>이라 묻지 않습니다 — 세션은 PC 단위라, 프로젝트에 두면 그 저장소의 세션만 보입니다</dd>
+      <dt>필요한 것</dt><dd><b>Node.js 18 이상</b>. 없어도 설치는 되지만 아무 일도 하지 않습니다 — 알려 주고 “대기”로 기록합니다</dd>
+      <dt>왜 기본 해제인가</dt><dd>이 PC의 <b>모든 세션</b>에 훅을 거는 항목이라 모드가 대신 켜지 않습니다. 한 폴더에서 세션을 자주 여러 개 연다면 직접 체크하세요</dd>
+      <dt>주의</dt><dd>세션 시작·파일 수정 때 다른 세션이나 동시 편집을 다루는 훅이 이미 있으면 유지할지 교체할지 묻습니다</dd>
+      <dt>지울 때</dt><dd>플러그인이면 <code class="i">/plugin uninstall dandi-session-board@dandi</code>(훅도 함께 사라집니다). 복사 설치면 설정에서 이 훅들만 지우고 스킬 폴더와 <code class="i">~/.claude/session-board/</code>를 지웁니다 — 세션 제목·브랜치·파일 경로만 담겨 있어 지워도 잃는 것이 없습니다</dd>
+    </dl>
+  </div>
+
   <h3>스킬을 고르면 따라오는 질문</h3>
   <div class="tbl">
   <table>
     <tr><th style="width:120px">질문</th><th>선택지</th></tr>
     <tr>
       <td><b>스코프</b></td>
-      <td><b>글로벌</b>(<code class="i">~/.claude/skills/</code>) — 내 PC 모든 프로젝트에서 쓸 수 있음 / <b>프로젝트</b>(<code class="i">.claude/skills/</code>) — 이 저장소에서만, 커밋하면 팀 공유. 기능 문서 세트·refactor·kr-ui-guide는 저장소를 가리지 않고 쓰이고 pc-clean은 PC 단위 도구라 <b>글로벌이 기본</b>입니다. 어떤 모드에서도 생략되지 않는 질문입니다 — 내 PC 글로벌에 같은 이름이 있으면 프로젝트에 깔아도 그쪽에 가려 실행되지 않습니다</td>
+      <td><b>글로벌</b>(<code class="i">~/.claude/skills/</code>) — 내 PC 모든 프로젝트에서 쓸 수 있음 / <b>프로젝트</b>(<code class="i">.claude/skills/</code>) — 이 저장소에서만, 커밋하면 팀 공유. 기능 문서 세트·refactor·kr-ui-guide는 저장소를 가리지 않고 쓰이고 pc-clean은 PC 단위 도구라 <b>글로벌이 기본</b>입니다. 정책 기록(§11)은 프로젝트, session-board(§12)는 글로벌로 <b>고정</b>이라 이 질문 없이 알려만 줍니다. 어떤 모드에서도 생략되지 않는 질문입니다 — 내 PC 글로벌에 같은 이름이 있으면 프로젝트에 깔아도 그쪽에 가려 실행되지 않습니다</td>
     </tr>
     <tr>
       <td><b>호출 방식</b></td>
@@ -930,7 +987,7 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
     <tr>
       <td><b>혼자 하는 개인 개발 프로젝트</b></td>
       <td>권장 / 검증 강화 / 표준</td>
-      <td>기록 체계 + 모델 분담 + 파일 고칠 때마다 도는 자동 검사. 혼자여도 훅 게이트의 효과가 가장 큽니다</td>
+      <td>기록 체계 + 모델 분담 + 파일 고칠 때마다 도는 자동 검사 + 정책 기록. 혼자여도 훅 게이트의 효과가 가장 큽니다</td>
     </tr>
     <tr>
       <td><b>웹 화면을 만드는 프로젝트</b></td>
@@ -971,7 +1028,7 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
   </p>
   <p><code class="i">&lt;!-- dropin-applied: 2026-08-05 · 모드=권장+디자인 · 언어=ko · 별칭=없음 · 00 v○.○ · 01 v○.○ · 02 v○.○ · 미선택: 05, 06 · 출처=사본 --&gt;</code></p>
   <p style="font-size:14.5px;color:var(--ink-soft)">
-    칸마다 내가 고른 답이 들어갑니다 — 모드와 번들, 산출물 언어, 스킬 이름 별칭, 설치한 문서별 버전, 고르지 않은 것, 문서를 어디서 읽었는지. <b>운용 프로필</b>은 이 줄에 없습니다. 팀이 아니라 내 것이라서 <b>내 PC의 <code class="i">CLAUDE.md</code></b>에 따로 적힙니다.
+    칸마다 내가 고른 답이 들어갑니다 — 모드와 번들, 산출물 언어, 스킬 이름 별칭, 설치한 문서별 버전, 고르지 않은 것, 문서를 어디서 읽었는지, 그리고 팀 구성 문항(2-6)을 받았다면 그 답. <b>운용 프로필</b>은 이 줄에 없습니다. 팀이 아니라 내 것이라서 <b>내 PC의 <code class="i">CLAUDE.md</code></b>에 따로 적힙니다.
   </p>
   <p>
     다음에 다시 돌리면 Claude가 이 줄을 먼저 읽고 <b>그 사이에 문서가 무엇이 바뀌었는지 요약해서 보여줍니다</b>.
@@ -980,7 +1037,7 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
     해소 여부와 상관없이 더는 원하지 않으면(일단 보류, 조직 불허 확정, 인증 안 하기로 함) “미선택”으로 바꿔 기록합니다 — 같은 질문이 계속 반복되지 않게요.
   </p>
   <p>
-    복사해 까는 스킬(기능 문서 세트·refactor·kr-ui-guide·browser-check·pc-clean)은 배포본과 <b>파일마다 내용까지</b> 대조합니다 — 문구만 바뀐 개정도 놓치지 않습니다.
+    복사해 까는 스킬(기능 문서 세트·refactor·kr-ui-guide·browser-check·pc-clean·session-board)은 배포본과 <b>파일마다 내용까지</b> 대조합니다 — 문구만 바뀐 개정도 놓치지 않습니다.
     하나라도 다르면 <b>구설치본</b>으로 보여주고, 설치 단계에서 폴더째 새것으로 바꿉니다.
   </p>
 
@@ -1024,7 +1081,7 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
 <a class="totop" href="#toc">↑ 목차</a>
 
 <footer>
-  단디 · 설치 옵션 사전 · 00_통합-설치.md 기준 · 2026-10-22<br>
+  단디 · 설치 옵션 사전 · 00_통합-설치.md 기준 · 2026-10-24<br>
   각 항목의 정본은 해당 하위 문서(01~06)입니다. 이 페이지는 사람이 읽고 판단하기 위한 안내이며, 설치 절차 자체를 바꾸지 않습니다.<br>
   저장소: github.com/EleninJayTech/claude ·
   <a href="../index.ko.html">사용법</a> · <a href="intro.ko.html">소개 영상</a> · <a href="demo.ko.html">설치 시연</a> · <a href="learn.ko.html">학습 코스</a> · <a href="skills.ko.html">스킬 카탈로그</a><br>

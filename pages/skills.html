@@ -246,6 +246,9 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
 
     <tr><th class="grp" colspan="4" scope="colgroup">PC upkeep &middot; 03 §10</th></tr>
     <tr><td><code>/pc-clean</code></td><td><code>[점검만]</code> &mdash; check only; check, then offer cleanup, if omitted</td><td>This Windows PC has got slow</td><td>A check table &mdash; only the items you approve are cleaned</td></tr>
+
+    <tr><th class="grp" colspan="4" scope="colgroup">Sessions side by side &middot; 03 §12</th></tr>
+    <tr><td><code>/session-board</code></td><td>none &mdash; the hooks report on their own</td><td>More than one session is open in the same folder</td><td>A list of the other sessions and their edited files &mdash; nothing is blocked</td></tr>
   </tbody>
 </table>
 </div>
@@ -260,6 +263,7 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
   <button class="chip" data-g="plan" aria-pressed="false">Planning</button>
   <button class="chip" data-g="design" aria-pressed="false">Design</button>
   <button class="chip" data-g="pc" aria-pressed="false">PC</button>
+  <button class="chip" data-g="board" aria-pressed="false">Parallel sessions</button>
   <span class="count" id="count"></span>
 </div>
 
@@ -330,7 +334,7 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
       <dl>
         <dt>Use when</dt><dd>You want this machine or this project brought up to the current documents. It is also the command for a first install, so you do not have to know which case you are in. Add <code>추천</code> when Claude or <code>/resume</code> has suggested an item your work now needs.</dd>
         <dt>It does</dt><dd>Finds document 00 (a copy beside you, a local clone, a folder you name, or the published raw file &mdash; raw is fetched byte for byte, never summarised, into a temporary folder outside the project), reads it, and runs its protocol exactly &mdash; detect what is already here, ask what you want, install only that, verify, and write the install record. The skill holds no steps of its own, so it can never drift from the document. As <code>/dropin-apply 추천</code> it takes the in-work suggestion path instead: it offers only the items your work has newly started to need and you have not installed, each with the sign it spotted, reuses your recorded answers to the opening questions, and installs only what you pick &mdash; the safety questions are still asked. In a folder with no install record it runs the normal install instead, where Minimal is the suggested start.</dd>
-        <dt>You get</dt><dd>A configuration that matches the documents, and an updated <code>dropin-applied</code> line saying so. Where a feature-docs, refactor, kr-ui-guide, browser-check, pc-clean or <code>dropin-</code> skill was already installed, its files are compared by content &mdash; not just by name &mdash; so a version that only changed its wording is still replaced; a <code>dropin-</code> skill that differs from the published copy comes up with <code>reconcile</code> as the default. <code>/resume</code> and <code>/wrap</code> are only checked for presence &mdash; to get their new text, answer <code>reconcile</code> instead of the default <code>keep</code> when it asks about global items that are already installed. A suggestion you decline is noted in the record and not offered again; to take it later, add it on a plain <code>/dropin-apply</code> re-run.</dd>
+        <dt>You get</dt><dd>A configuration that matches the documents, and an updated <code>dropin-applied</code> line saying so. Where a feature-docs, refactor, kr-ui-guide, browser-check, pc-clean, session-board or <code>dropin-</code> skill was already installed, its files are compared by content &mdash; not just by name &mdash; so a version that only changed its wording is still replaced; a <code>dropin-</code> skill that differs from the published copy comes up with <code>reconcile</code> as the default. <code>/resume</code> and <code>/wrap</code> are only checked for presence &mdash; to get their new text, answer <code>reconcile</code> instead of the default <code>keep</code> when it asks about global items that are already installed. A suggestion you decline is noted in the record and not offered again; to take it later, add it on a plain <code>/dropin-apply</code> re-run.</dd>
       </dl>
       <div class="warn soft"><b>Worth knowing.</b> This is the same thing as telling Claude &ldquo;learn this document and apply it&rdquo; &mdash; the sentence still works. The command exists because a door you cannot see is a door you do not open.</div>
       <div class="tags"><span class="tag">global</span><span class="tag">asks first</span></div>
@@ -652,6 +656,31 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
   </div>
 </section>
 
+<!-- ══════════ GROUP: board ══════════ -->
+<section class="group" data-g="board">
+  <div class="ghead">
+    <h2 style="margin-top:0">Sessions side by side</h2>
+    <span class="src">installed by document 03 §12 &middot; off by default</span>
+  </div>
+  <p class="gnote">A skill that comes with hooks, for when two Claude sessions end up in the same folder. It only reads and warns &mdash; it never edits your code and never stops an edit.</p>
+  <div class="cards">
+
+    <article class="skill" data-g="board">
+      <div class="cmd"><span class="sl">/</span>session-board</div>
+      <div class="args">no arguments — the hooks report on their own; call it to look at the board yourself</div>
+      <p class="one">When more than one session is open in the same folder, tells each of them about the others &mdash; before their uncommitted changes get mixed up.</p>
+      <dl>
+        <dt>Use when</dt><dd>Two sessions are running in one folder, on purpose or by accident, and you want to see what the other one is doing &mdash; or decide whether to move this work to <code>claude --worktree &lt;name&gt;</code>.</dd>
+        <dt>It does</dt><dd>Its hooks record each session&rsquo;s title, branch and edited files under <code>~/.claude/session-board/</code>. When another active session is in the same folder (the same git top level &mdash; a worktree counts as a different folder), Claude is told at session start and on your next prompt, and gets one warning before it edits a file another session just changed. Calling the skill lists the board and suggests a worktree when the files overlap.</dd>
+        <dt>You get</dt><dd>A line naming the other sessions, their branches and the files they edited. Nothing is blocked &mdash; you choose whether to carry on, move to a worktree or ask that session. With no other session open nothing is added to the conversation, and the hooks never call a model.</dd>
+      </dl>
+      <div class="warn soft"><b>Worth knowing.</b> Needs Node.js 18 or later &mdash; without it the hooks quietly do nothing. It is off by default because its hooks run in every session on this PC, and it is always global because sessions belong to the PC, so install does not ask for a scope &mdash; it offers the <code>dandi</code> plugin first, or a copy. The plugin brings the hooks with it and takes them away in one step; the copy adds hooks to <code>~/.claude/settings.json</code> beside the ones you already have. Keep one or the other &mdash; with both, every event runs twice. The board holds titles, the first 80 characters of the first prompt, branches and file paths, never file contents; sessions idle for three hours or ended are ignored, and records older than a day are deleted. It does not replace the habit of not running two sessions in one folder &mdash; it is what catches you when the habit slips.</div>
+      <div class="tags"><span class="tag">global</span><span class="tag">off by default</span><span class="tag need">Node 18+</span><span class="tag">installs hooks</span></div>
+    </article>
+
+  </div>
+</section>
+
 <p class="empty" id="empty">Nothing matches that filter. Try clearing the search box.</p>
 
 <h2>A day, in the order the skills come up</h2>
@@ -682,7 +711,7 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
 <div class="traps">
   <div class="trap"><b>On a machine that has never seen this setup.</b><p>Use <code>/dropin-apply</code> as well &mdash; it is the same command for a first install. If the skill is not there yet, tell Claude: <i>&ldquo;read <code>00_&#54648;&#54633;-&#49444;&#52824;.md</code> from the repository and apply it to this machine&rdquo;</i>, and the skill arrives with everything else.</p></div>
   <div class="trap"><b>Same file name, older contents.</b><p>A skill can be revised without gaining or losing a single file. Checks that only compare file names call that &ldquo;already current&rdquo;. The install steps compare contents too, so a wording-only revision is still replaced.</p></div>
-  <div class="trap"><b>Already on as a Dandi plugin?</b><p>If you installed the feature-docs, refactor, kr-ui-guide, browser-check or pc-clean skills through the <code>dandi</code> plugin marketplace, the same skills already exist under plugin names such as <code>/dandi-refactor:refactor</code>. Install spots this and asks: <b>keep</b> the plugin and skip the copy, or <b>replace</b> it &mdash; remove the plugin, then copy. Two installs of one skill would both compete to load. To remove a plugin install later, use <code>/plugin uninstall</code> from that plugin&rsquo;s README, not the copy-removal steps.</p></div>
+  <div class="trap"><b>Already on as a Dandi plugin?</b><p>If you installed the feature-docs, refactor, kr-ui-guide, browser-check, pc-clean or session-board skills through the <code>dandi</code> plugin marketplace, the same skills already exist under plugin names such as <code>/dandi-refactor:refactor</code>. Install spots this and asks: <b>keep</b> the plugin and skip the copy, or <b>replace</b> it &mdash; remove the plugin, then copy. Two installs of one skill would both compete to load. To remove a plugin install later, use <code>/plugin uninstall</code> from that plugin&rsquo;s README, not the copy-removal steps.</p></div>
   <div class="trap"><b><code>/dropin-check</code> cannot see everything.</b><p>On an ordinary install there is no private mirror to compare against, so it reports &ldquo;current as far as the documents go &mdash; skill contents unchecked&rdquo; rather than a flat &ldquo;current&rdquo;. Run <code>/dropin-apply</code> when you want that second half answered &mdash; and to bring <code>/resume</code> and <code>/wrap</code> up to date too, choose <code>reconcile</code> for the global items already installed. <code>keep</code> leaves the old text in place.</p></div>
 </div>
 
@@ -709,13 +738,14 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
     <tr><td><code>/browser-check</code></td><td>03 §5</td><td>asked at install &mdash; global or project &middot; or the <code>dandi</code> plugin</td><td>Plugin: <code>/plugin uninstall dandi-browser-check@dandi</code>. Copy: delete the folder &mdash; in project scope, commit the deletion. The browser goes separately: switch Chrome off in <code>/chrome</code> (or remove the extension), or <code>npm uninstall -g @playwright/cli</code>.</td></tr>
     <tr><td><code>/kr-ui-guide</code></td><td>03 §9</td><td>global &middot; or the <code>dandi</code> plugin</td><td>Plugin: <code>/plugin uninstall dandi-kr-ui-guide@dandi</code>. Copy: delete the folder. If a project <code>CLAUDE.md</code> got the optional override block, delete that too &mdash; and the font-licence policy section, once <code>frontend-design</code> is gone as well.</td></tr>
     <tr><td><code>/pc-clean</code></td><td>03 §10</td><td>global &mdash; project scope commits Windows-only scripts to the repo &middot; or the <code>dandi</code> plugin</td><td>Plugin: <code>/plugin uninstall dandi-pc-clean@dandi</code>. Copy: delete the folder &mdash; in project scope, commit the deletion. No hooks, settings or scheduled tasks to unwind.</td></tr>
+    <tr><td><code>/session-board</code></td><td>03 §12</td><td>global &mdash; fixed, not asked &middot; or the <code>dandi</code> plugin, offered first</td><td>Plugin: <code>/plugin uninstall dandi-session-board@dandi</code> &mdash; the hooks go with it. Copy: remove only the hook groups that run <code>board.mjs</code> from <code>~/.claude/settings.json</code>, then delete the folder. Deleting <code>~/.claude/session-board/</code> loses nothing &mdash; it holds session metadata only.</td></tr>
     <tr><td><code>/plan-&lt;model&gt;</code></td><td>02 STEP 3 ⓔ</td><td>asked at install &mdash; global or project</td><td>Delete the folder, the model usage table it created, and the lines about this command it added to <code>CLAUDE.md</code> and the handoff protocol.</td></tr>
   </tbody>
 </table>
 </div>
-<p class="lead" style="margin-top:16px">Every one of these has a documented removal path, which is deliberate: an install you cannot reverse was never really a choice. The full procedures &mdash; detect, install, verify, remove &mdash; are in the documents themselves. For what each install question means, see the <a href="options.html">options dictionary</a>; to work through it step by step, take the <a href="learn.html">course</a>.</p>
+<p class="lead" style="margin-top:16px">Every one of these has a documented removal path, which is deliberate: an install you cannot reverse was never really a choice. The full procedures &mdash; detect, install, verify, remove &mdash; are in the documents themselves. For what each install question means, see the <a href="options.html">options dictionary</a>; to work through it step by step, take the <a href="learn.html">course</a>. One install item is missing here on purpose: policy recording (03 §11) adds a rule file, <code>.claude/rules/policy-recording.md</code>, not a skill &mdash; there is no command to call, so it has no card.</p>
 
-<footer>Dandi &middot; Skill catalog &middot; 2026-10-22 &middot; Skills installed by documents 01 §D-4, 02 STEP 3 ⓔ, 03 §2, §3, §5, §7, §8, §9 and §10. Commands are shown without an alias; apply yours if you chose one at install time. &middot; Fonts: Pretendard, IBM Plex Mono &mdash; both SIL Open Font License 1.1 (free for commercial use and web embedding)</footer>
+<footer>Dandi &middot; Skill catalog &middot; 2026-10-24 &middot; Skills installed by documents 01 §D-4, 02 STEP 3 ⓔ, 03 §2, §3, §5, §7, §8, §9, §10 and §12. Commands are shown without an alias; apply yours if you chose one at install time. &middot; Fonts: Pretendard, IBM Plex Mono &mdash; both SIL Open Font License 1.1 (free for commercial use and web embedding)</footer>
 
 </div>
 <script>
