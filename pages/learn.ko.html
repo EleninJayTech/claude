@@ -457,7 +457,7 @@ footer{max-width:1120px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
   </details>
 
   <details class="acc">
-    <summary><span class="id">03</span>확장 기능 — 상태 표시줄·디자인 스킬·MCP·브라우저·기능 문서·코드 리팩터링·한국 UI 기준·PC 점검·정책 기록·세션 보드 <span class="badge b-off">전부 선택</span></summary>
+    <summary><span class="id">03</span>확장 기능 — 상태 표시줄·디자인 스킬·MCP·브라우저·기능 문서·코드 리팩터링·한국 UI 기준·PC 점검·정책 기록·세션 보드·기능 변경 기록 <span class="badge b-off">전부 선택</span></summary>
     <div class="acc-b">
       <ul>
         <li><b>claude-hud</b> — 입력창 아래 <b>상태 표시줄</b>. 컨텍스트·요금제 사용량이 보입니다. 절약 프로필이면 사실상 필수.</li>
@@ -471,9 +471,10 @@ footer{max-width:1120px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
         <li><b>pc-clean</b> — PC가 느려졌을 때 원인 후보(디스크·메모리 여유, 주인 잃은 <code class="i">node.exe</code>, 오늘 이전부터 켜져 있던 Claude 세션, 임시 파일 등)를 <b>읽기만 해서</b> 표 한 장으로 보여주고, <b>내가 승인한 항목만</b> 정리합니다. <b>Windows + PowerShell 7 전용</b>이라 다른 OS에서는 목록에 나오지 않고, 프로젝트와 무관한 PC 도구라 기본은 꺼져 있습니다. 스코프는 내 PC 전체가 기본입니다.</li>
         <li><b>정책 기록</b> — 개발하다 드러난 <b>기획 규칙</b>(상태가 바뀌는 조건, 권한·노출 조건, 금액·수량·기한 계산 등 이름만 봐서는 알 수 없는 것)을 Claude가 발견하는 즉시 <code class="i">.claude/rules/policies/</code>에 적어 두고, 관련 코드를 만지거나 관련 작업을 받으면 <b>말하지 않아도</b> 그 규칙부터 확인하게 합니다. 코드에서 짐작한 것과 확인받은 것을 구분해 적습니다. 사람이 읽는 문서가 아니라 Claude가 읽는 규칙 파일입니다. <b>어느 모드에서도 기본은 꺼져 있습니다</b> — 매 턴 기록 지시를 불러오고 커밋되는 파일에 쓰는 항목이라 모드가 대신 켜지 않습니다. 문서만 있는 저장소는 대상이 아닙니다. 규칙은 그 프로젝트의 사실이라 <b>이 프로젝트에만</b> 깔립니다.</li>
         <li><b>session-board</b>(세션 보드) — 같은 폴더에서 Claude 세션을 여러 개 띄웠을 때, <b>다른 세션의 제목(없으면 첫 프롬프트 앞부분)·브랜치·고친 파일</b>을 알려 주고 다른 세션이 방금 고친 파일을 고치려 하면 한 번 경고합니다(막지는 않습니다). 다른 세션이 없으면 대화에 아무것도 더하지 않습니다. <b>Node.js 18 이상</b>이 필요하고, 세션은 PC 단위라 <b>내 PC 전체</b>에 깔립니다. 모든 세션에 자동 동작을 거는 항목이라 기본은 꺼져 있습니다. <code class="i">dandi</code> 플러그인으로 깔지, 파일을 복사해 깔지 고릅니다.</li>
+        <li><b>기능 변경 기록</b> — 깔아 둔 뒤부터 사람이 쓰는 기능(화면·API·명령·설정)이 <b>추가·변경·삭제</b>되면 Claude가 그 턴 안에 <code class="i">.claude/rules/feature-log/&lt;영역&gt;.md</code>에 <b>한 줄</b>로 남깁니다 — 파일 경로와 날짜, 삭제면 그 사유까지. 관련 작업을 받으면 <b>말하지 않아도</b> 그 줄부터 확인해서, 나중 작업이 기존 기능의 정의를 놓치거나 지운 기능을 슬그머니 되살리지 않게 합니다. 명세가 아니라 찾기 위한 색인이라 자세한 내용은 코드와 git 이력에 둡니다. 기능이 그대로인 리팩터링·버그 수정은 적지 않고, 이미 있던 기능을 거슬러 적지도 않습니다 — 그건 기능 문서 스킬 세트의 일이며, 그 세트를 이미 쓰고 있으면 겹친다고 알려 줍니다. 정책 기록처럼 <b>어느 모드에서도 기본은 꺼져 있고</b>, 문서만 있는 저장소는 대상이 아니며, <b>이 프로젝트에만</b> 깔립니다.</li>
       </ul>
       <p>스킬을 고르면 두 가지를 더 물어봅니다 — <b>스코프</b>(내 PC 전체 vs 이 프로젝트만)와
-      <b>호출 방식</b>(Claude가 알아서 vs 내가 <code class="i">/명령</code>을 칠 때만). 정책 기록(이 프로젝트만)과 session-board(내 PC 전체)는 자리가 정해져 있어 스코프를 묻지 않고 알려만 줍니다.
+      <b>호출 방식</b>(Claude가 알아서 vs 내가 <code class="i">/명령</code>을 칠 때만). 정책 기록·기능 변경 기록(이 프로젝트만)과 session-board(내 PC 전체)는 자리가 정해져 있어 스코프를 묻지 않고 알려만 줍니다.
       기능 문서 세트·refactor·kr-ui-guide·browser-check·pc-clean이 이미 <code class="i">dandi</code> 플러그인으로 켜져 있으면 <b>플러그인 유지</b>(복사 안 함)와 <b>복사본으로 교체</b> 중 하나도 묻습니다 — 둘 다 두지는 않습니다.</p>
       <p><b>frontend-design</b>이나 <b>kr-ui-guide</b>를 고르면 질문이 하나 더 붙습니다 &mdash; <b>폰트 라이선스 정책</b>입니다. 설치한 스코프의 <code class="i">CLAUDE.md</code>에 적힙니다.
       <b>자유 사용만</b>(기본)은 자유롭게 쓸 수 없는 폰트를 거절하고 무료 대체 폰트를 제시하고, <b>안내 후 선택</b>은 조건(구매·고지 의무·사용 범위)을 먼저 알린 뒤 내 결정을 기다립니다. <b>넣지 않음</b>이면 정책을 적지 않습니다.
@@ -625,7 +626,7 @@ footer{max-width:1120px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
 </div>
 
 <footer>
-  단디 · 설치 옵션 학습 코스 · 2026-10-24<br>
+  단디 · 설치 옵션 학습 코스 · 2026-10-26<br>
   각 항목의 정본은 해당 하위 문서(01~06)입니다. 이 페이지는 사람이 배우기 위한 안내이며, 설치 절차 자체를 바꾸지 않습니다. 진행도는 이 브라우저의 localStorage에만 저장됩니다.<br>
   저장소: github.com/EleninJayTech/claude ·
   <a href="../index.ko.html">사용법</a> · <a href="intro.ko.html">소개 영상</a> · <a href="demo.ko.html">설치 시연</a> · <a href="options.ko.html">옵션 사전</a> · <a href="skills.ko.html">스킬 카탈로그</a><br>

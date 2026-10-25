@@ -801,13 +801,31 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
     </dl>
   </div>
 
+  <div class="opt">
+    <div class="opt-head"><span class="id">&sect;13</span><span class="name">Feature change log</span><span class="badge b-off">off by default &middot; project only</span></div>
+    <p class="lead">From the moment it is installed, whenever a feature people use (a screen, an API, a command, a setting) is <b>added, changed or removed</b>, Claude writes it down <b>in one line</b> in that same turn, and on related work checks that line first <b>without being told</b>. It is <b>an index for finding things</b>, not a spec for people &mdash; the details are found in the code and git history, using the file path and date on the line.</p>
+    <dl>
+      <dt>Files it creates</dt><dd>One always-loaded instruction file (<code class="i">.claude/rules/feature-log.md</code>) and a folder where lines accumulate by area (<code class="i">.claude/rules/feature-log/</code>). Each line carries an <b>[추가] (added) / [변경] (changed) / [삭제] (removed)</b> tag, the feature name, a one-line definition, a file path and a date; a removed feature keeps its line, with <b>the reason it was removed</b>. When one is recorded, you get a one-line note at the end of the turn</dd>
+      <dt>What it leaves out</dt><dd>Changes that leave the feature&rsquo;s definition as it was &mdash; refactoring, bug fixes, performance work. Nor does it go back and write up every feature that existed before the install</dd>
+      <dt>Token cost</dt><dd>Each area file is tied to <b>the code paths it covers</b>, so it loads only when that code is read or edited. Day to day, only the instruction file and its index are loaded</dd>
+      <dt>Bringing back a removed feature</dt><dd>If a request would end up restoring a feature marked removed, Claude tells you in one line why it was removed &mdash; and then <b>follows your decision</b></dd>
+      <dt>Scope</dt><dd><b>Project only</b>, so you are not asked &mdash; features are a fact about that product. You are prompted to commit it; in a team repository you are told the first commit needs the team&rsquo;s agreement. In a multi-repository workspace it goes into <b>each sub-repository</b></dd>
+      <dt>Why it is off by default</dt><dd>It loads a recording instruction on every turn and writes files to a committed path, so <b>no mode switches it on for you</b>. Tick it yourself in a development repository whose features change often. In a repository with no code it is left out of the list and recorded as &ldquo;not applicable&rdquo;</dd>
+      <dt>Difference from &sect;7</dt><dd>&sect;7 is a skill set that checks every existing feature against the code and the screen and turns it into a detailed spec (it needs <code>/feature-docs init</code> first and runs when you call it); this item is a standing instruction that only stacks up changes from the install on, one line each. If you want existing features documented too, use &sect;7. If &sect;7 specs already exist you are told &sect;7 holds the same feature definitions in more detail &mdash; pick it anyway and it is still installed</dd>
+      <dt>If a similar document exists</dt><dd>If you already keep a document listing features or their change history (a CHANGELOG does not count), you are asked keep / reconcile / replace. Pick keep and that document stays where it is; <b>it is linked from the index</b> in one line</dd>
+      <dt>With &sect;11</dt><dd>Policy notes stay the source for policies. Policies are not copied into feature lines &mdash; only the policy ID is added</dd>
+      <dt>On a re-run</dt><dd>If the instruction file differs from the new version, reconcile is offered as the default. The <b>index</b> built up so far is your data and is kept whatever you choose</dd>
+      <dt>Removing it</dt><dd>Deleting the instruction file stops the recording and lookups. The accumulated area folder is <b>your data</b>, so you are asked whether to keep it (if kept, each file still loads when its code is worked on)</dd>
+    </dl>
+  </div>
+
   <h3>Follow-up questions for any skill</h3>
   <div class="tbl">
   <table>
     <tr><th style="width:120px">Question</th><th>Choices</th></tr>
     <tr>
       <td><b>Scope</b></td>
-      <td><b>Global</b> (<code class="i">~/.claude/skills/</code>) &mdash; available in every project on your machine / <b>project</b> (<code class="i">.claude/skills/</code>) &mdash; this repository only; commit it and the team shares it. The feature-doc set, refactor and kr-ui-guide are used regardless of repository, and pc-clean is a tool for the PC, so <b>global is their default</b>. Policy notes (&sect;11) are <b>fixed</b> to the project and session-board (&sect;12) to global, so instead of this question you are simply told. This question is never skipped in any mode &mdash; if your machine already has a global skill of the same name, a project install is shadowed by it and never runs</td>
+      <td><b>Global</b> (<code class="i">~/.claude/skills/</code>) &mdash; available in every project on your machine / <b>project</b> (<code class="i">.claude/skills/</code>) &mdash; this repository only; commit it and the team shares it. The feature-doc set, refactor and kr-ui-guide are used regardless of repository, and pc-clean is a tool for the PC, so <b>global is their default</b>. Policy notes (&sect;11) and the feature change log (&sect;13) are <b>fixed</b> to the project and session-board (&sect;12) to global, so instead of this question you are simply told. This question is never skipped in any mode &mdash; if your machine already has a global skill of the same name, a project install is shadowed by it and never runs</td>
     </tr>
     <tr>
       <td><b>Invocation</b></td>
