@@ -217,7 +217,7 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
   </thead>
   <tbody>
     <tr><th class="grp" colspan="4" scope="colgroup">Running a session &middot; 01 §D-4</th></tr>
-    <tr><td><code>/resume</code></td><td>none</td><td>A session starts, or you just ran <code>/clear</code></td><td>A &ldquo;last time X, next Y?&rdquo; report</td></tr>
+    <tr><td><code>/resume</code></td><td>none &middot; a worktree number (<code>001</code>)</td><td>A session starts, or you just ran <code>/clear</code></td><td>A &ldquo;last time X, next Y?&rdquo; report</td></tr>
     <tr><td><code>/wrap</code></td><td>none</td><td>A session ends</td><td>One PROGRESS line, a new decision, plan ticks</td></tr>
     <tr><td><code>/dropin-check</code></td><td>none &middot; read-only</td><td>You suspect this machine has drifted</td><td>A difference report &mdash; nothing installed</td></tr>
     <tr><td><code>/dropin-update</code></td><td>none</td><td>The documents themselves are out of date</td><td>Refreshed document files &mdash; the configuration is untouched</td></tr>
@@ -278,11 +278,11 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
 
     <article class="skill" data-g="session">
       <div class="cmd"><span class="sl">/</span>resume</div>
-      <div class="args">no arguments</div>
+      <div class="args">no arguments &middot; or a worktree number (e.g. <code>001</code>)</div>
       <p class="one">Opens the session by reconstructing where you left off &mdash; from git and from your own records, not from memory.</p>
       <dl>
         <dt>Use when</dt><dd>At the very start of a session, and again after <code>/clear</code>.</dd>
-        <dt>It does</dt><dd>Pulls with <code>--ff-only</code> if the tree is clean, finds uncommitted work through <code>git status</code> &mdash; which may belong to another session running in the same folder, so it asks before treating it as yours, continuing it or committing it &mdash; then reads the top of <code>PROGRESS.md</code>, the last three decisions, and <code>PROJECT_PLAN.md</code>. If in-work suggestions are on (the default) and this folder has an install record, it also looks at the folder&rsquo;s file names &mdash; never their contents &mdash; for signs that your work now needs a Dandi item that is not installed and was not declined or ruled out.</dd>
+        <dt>It does</dt><dd>Called with a worktree number (<code>/resume 001</code>), it first moves into that numbered worktree (<code>.claude/worktrees/001-…</code>) and does everything below there &mdash; under Dandi&rsquo;s rule Claude gives every worktree it creates a three-digit number, and if the worktree was deleted but the numbered branch remains, it brings the worktree back. Pulls with <code>--ff-only</code> if the tree is clean, finds uncommitted work through <code>git status</code> &mdash; which may belong to another session running in the same folder, so it asks before treating it as yours, continuing it or committing it &mdash; then reads the top of <code>PROGRESS.md</code>, the last three decisions, and <code>PROJECT_PLAN.md</code>. If in-work suggestions are on (the default) and this folder has an install record, it also looks at the folder&rsquo;s file names &mdash; never their contents &mdash; for signs that your work now needs a Dandi item that is not installed and was not declined or ruled out.</dd>
         <dt>You get</dt><dd>A short "last time you did X, next is Y?" report, plus reminders when a scheduled check has come due, and one line suggesting <code>/dropin-apply 추천</code> when there is something to add.</dd>
       </dl>
       <div class="warn soft"><b>Worth knowing.</b> It reads only the ~5 newest entries, capped at ~700 characters each. Anything the next session must pick up belongs at the <em>front</em> of an entry &mdash; text at the end falls outside the cap and is never read.</div>
@@ -745,7 +745,7 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
 </div>
 <p class="lead" style="margin-top:16px">Every one of these has a documented removal path, which is deliberate: an install you cannot reverse was never really a choice. The full procedures &mdash; detect, install, verify, remove &mdash; are in the documents themselves. For what each install question means, see the <a href="options.html">options dictionary</a>; to work through it step by step, take the <a href="learn.html">course</a>. One install item is missing here on purpose: policy notes (03 §11) adds a rule file, <code>.claude/rules/policy-recording.md</code>, not a skill &mdash; there is no command to call, so it has no card.</p>
 
-<footer>Dandi &middot; Skill catalog &middot; 2026-10-24 &middot; Skills installed by documents 01 §D-4, 02 STEP 3 ⓔ, 03 §2, §3, §5, §7, §8, §9, §10 and §12. Commands are shown without an alias; apply yours if you chose one at install time. &middot; Fonts: Pretendard, IBM Plex Mono &mdash; both SIL Open Font License 1.1 (free for commercial use and web embedding)</footer>
+<footer>Dandi &middot; Skill catalog &middot; 2026-10-26 &middot; Skills installed by documents 01 §D-4, 02 STEP 3 ⓔ, 03 §2, §3, §5, §7, §8, §9, §10 and §12. Commands are shown without an alias; apply yours if you chose one at install time. &middot; Fonts: Pretendard, IBM Plex Mono &mdash; both SIL Open Font License 1.1 (free for commercial use and web embedding)</footer>
 
 </div>
 <script>

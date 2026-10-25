@@ -217,7 +217,7 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
   </thead>
   <tbody>
     <tr><th class="grp" colspan="4" scope="colgroup">세션 운영 &middot; 01 §D-4</th></tr>
-    <tr><td><code>/resume</code></td><td>없음</td><td>세션을 열 때, <code>/clear</code> 직후</td><td>&ldquo;지난번 X, 다음 Y?&rdquo; 보고</td></tr>
+    <tr><td><code>/resume</code></td><td>없음 · 워크트리 번호(<code>001</code>)</td><td>세션을 열 때, <code>/clear</code> 직후</td><td>&ldquo;지난번 X, 다음 Y?&rdquo; 보고</td></tr>
     <tr><td><code>/wrap</code></td><td>없음</td><td>세션을 닫을 때</td><td>PROGRESS 한 줄·새 결정·계획 체크</td></tr>
     <tr><td><code>/dropin-check</code></td><td>없음 &middot; 읽기 전용</td><td>이 PC 구성이 뒤처졌는지 의심될 때</td><td>차이 보고서 &mdash; 설치는 하지 않는다</td></tr>
     <tr><td><code>/dropin-update</code></td><td>없음</td><td>문서 사본 자체가 낡았을 때</td><td>새 문서 파일 &mdash; 구성은 그대로다</td></tr>
@@ -278,11 +278,11 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
 
     <article class="skill" data-g="session">
       <div class="cmd"><span class="sl">/</span>resume</div>
-      <div class="args">인수 없음</div>
+      <div class="args">인수 없음 · 또는 워크트리 번호(예: <code>001</code>)</div>
       <p class="one">어디까지 했는지를 기억이 아니라 git과 기록으로 되짚어 세션을 연다.</p>
       <dl>
         <dt>언제</dt><dd>세션을 시작할 때마다, 그리고 <code>/clear</code> 직후에 다시.</dd>
-        <dt>하는 일</dt><dd>워킹트리가 깨끗하면 <code>--ff-only</code>로 당기고, <code>git status</code>로 미커밋 작업부터 찾는다. 그 미커밋은 같은 폴더에서 도는 다른 세션의 것일 수도 있어서, 내 작업으로 단정해 잇거나 커밋하지 않고 먼저 확인한다. 그다음 <code>PROGRESS.md</code> 최상단과 최근 결정 3건, <code>PROJECT_PLAN.md</code>를 읽는다. 작업 중 추천이 켜져 있고(기본값) 이 폴더에 적용 기록이 있으면, 폴더의 파일 <b>이름만</b> 훑어(내용은 읽지 않는다) 작업이 새로 필요로 하는 단디 항목 중 아직 안 깔았고 거절하거나 해당 없음으로 빠지지 않은 것이 있는지도 본다.</dd>
+        <dt>하는 일</dt><dd>워크트리 번호를 붙여 부르면(<code>/resume 001</code>) 먼저 그 번호의 워크트리(<code>.claude/worktrees/001-…</code>)로 들어가 그 안에서 아래 일을 한다 &mdash; 단디 규칙에선 Claude가 워크트리를 만들 때 3자리 번호를 붙이고, 워크트리를 지웠어도 번호가 든 브랜치가 남아 있으면 되살린다. 워킹트리가 깨끗하면 <code>--ff-only</code>로 당기고, <code>git status</code>로 미커밋 작업부터 찾는다. 그 미커밋은 같은 폴더에서 도는 다른 세션의 것일 수도 있어서, 내 작업으로 단정해 잇거나 커밋하지 않고 먼저 확인한다. 그다음 <code>PROGRESS.md</code> 최상단과 최근 결정 3건, <code>PROJECT_PLAN.md</code>를 읽는다. 작업 중 추천이 켜져 있고(기본값) 이 폴더에 적용 기록이 있으면, 폴더의 파일 <b>이름만</b> 훑어(내용은 읽지 않는다) 작업이 새로 필요로 하는 단디 항목 중 아직 안 깔았고 거절하거나 해당 없음으로 빠지지 않은 것이 있는지도 본다.</dd>
         <dt>결과</dt><dd>"지난번엔 X를 했고 다음은 Y인가요?" 형태의 짧은 보고. 점검 예정일이 지났으면 그 안내도 함께, 더할 항목이 있으면 <code>/dropin-apply 추천</code>을 권하는 한 줄도.</dd>
       </dl>
       <div class="warn soft"><b>알아 둘 것.</b> 최근 5항목만, 항목당 앞 700자까지만 읽는다. 다음 세션이 이어받아야 할 내용은 항목 <em>앞쪽</em>에 적어야 한다 &mdash; 끝에 붙이면 컷 밖이라 영영 읽히지 않는다.</div>
@@ -745,7 +745,7 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
 </div>
 <p class="lead" style="margin-top:16px">전부 제거 절차가 문서에 적혀 있는데, 이건 의도한 것이다. 되돌릴 수 없는 설치는 애초에 선택지를 준 게 아니기 때문이다. 감지·설치·검증·제거 4단 전체는 각 문서에 있다. 설치할 때 나오는 질문의 뜻은 <a href="options.ko.html">옵션 사전</a>에, 처음부터 차근히 밟아 보려면 <a href="learn.ko.html">학습 코스</a>에 있다. 설치 항목 중 하나는 일부러 여기 없다: 정책 기록(03 §11)은 스킬이 아니라 규칙 파일(<code>.claude/rules/policy-recording.md</code>)을 더하는 항목이라, 부를 명령이 없어 카드도 없다.</p>
 
-<footer>단디(Dandi) &middot; 스킬 카탈로그 &middot; 2026-10-24 &middot; 01 §D-4 · 02 STEP 3 ⓔ · 03 §2 · §3 · §5 · §7 · §8 · §9 · §10 · §12가 설치하는 스킬들. 명령은 별칭 없이 적었으니, 설치할 때 별칭을 골랐다면 그것을 얹어 읽으면 된다. &middot; 글꼴: Pretendard, IBM Plex Mono — 둘 다 SIL 오픈 폰트 라이선스 1.1(상업 이용·웹 임베딩 무료)</footer>
+<footer>단디(Dandi) &middot; 스킬 카탈로그 &middot; 2026-10-26 &middot; 01 §D-4 · 02 STEP 3 ⓔ · 03 §2 · §3 · §5 · §7 · §8 · §9 · §10 · §12가 설치하는 스킬들. 명령은 별칭 없이 적었으니, 설치할 때 별칭을 골랐다면 그것을 얹어 읽으면 된다. &middot; 글꼴: Pretendard, IBM Plex Mono — 둘 다 SIL 오픈 폰트 라이선스 1.1(상업 이용·웹 임베딩 무료)</footer>
 
 </div>
 <script>

@@ -324,7 +324,7 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
   <ul>
     <li>Those records are what let you resume tomorrow. You have to <b>commit after recording</b> for them to be found the next day &mdash; Claude walks you through it.</li>
     <li>If the AI keeps spinning: run <code class="i">/clear</code> when you switch to unrelated work, and if the same problem survives two fix attempts, <code class="i">/clear</code> and ask again from scratch &mdash; that is usually faster.</li>
-    <li>Don&rsquo;t run two Claude sessions in <b>the same folder</b> at once &mdash; their unsaved changes get mixed together. Open the second task with <code class="i">claude --worktree &lt;name&gt;</code> instead. If it may still happen, install <b>session-board</b> from 03 &mdash; Claude will tell you when another session is in the same folder.</li>
+    <li>Don&rsquo;t run two Claude sessions in <b>the same folder</b> at once &mdash; their unsaved changes get mixed together. For the second task, ask Claude to &ldquo;make a worktree and work there&rdquo; &mdash; it creates a separate workspace with a number such as <code class="i">001</code>, and later <code class="i">/resume 001</code> reopens that work (to open one yourself, use <code class="i">claude --worktree &lt;name&gt;</code>). If it may still happen, install <b>session-board</b> from 03 &mdash; Claude will tell you when another session is in the same folder.</li>
   </ul>
 </section>
 
@@ -392,7 +392,7 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
 
 </main>
 
-<footer>Dandi &middot; How-to page &middot; 2026-10-24 &middot; Repository: <a href="https://github.com/EleninJayTech/claude">github.com/EleninJayTech/claude</a> &middot; <a href="https://github.com/EleninJayTech/claude/releases/latest">Latest release notes</a> &middot; The install documents 00&ndash;06 (markdown) are the source of truth &mdash; this page is the human-facing guide. The hero graphic uses the 03 svg-design recipe (Gooey, Squiggle). Design follows the kr-ui-guide skill (repository skills/kr-ui-guide). &middot; Fonts: Pretendard, IBM Plex Mono &mdash; both SIL Open Font License 1.1 (free for commercial use and web embedding)</footer>
+<footer>Dandi &middot; How-to page &middot; 2026-10-26 &middot; Repository: <a href="https://github.com/EleninJayTech/claude">github.com/EleninJayTech/claude</a> &middot; <a href="https://github.com/EleninJayTech/claude/releases/latest">Latest release notes</a> &middot; The install documents 00&ndash;06 (markdown) are the source of truth &mdash; this page is the human-facing guide. The hero graphic uses the 03 svg-design recipe (Gooey, Squiggle). Design follows the kr-ui-guide skill (repository skills/kr-ui-guide). &middot; Fonts: Pretendard, IBM Plex Mono &mdash; both SIL Open Font License 1.1 (free for commercial use and web embedding)</footer>
 
 <script>
 (function(){try{
