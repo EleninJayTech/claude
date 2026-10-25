@@ -1,6 +1,6 @@
 # Claude Code 통합 구성 — 범용 마스터 (드롭인 적용)
 
-> **문서 버전: v1.107** · 최종 갱신: **2026-10-24** · **최근 재검증: 2026-10-08** · 기준: Claude Code v2.1.293 (Opus 5.5 · Sonnet 5.5 · Haiku 5.5 · Fable 5.1)
+> **문서 버전: v1.108** · 최종 갱신: **2026-10-26** · **최근 재검증: 2026-10-08** · 기준: Claude Code v2.1.293 (Opus 5.5 · Sonnet 5.5 · Haiku 5.5 · Fable 5.1)
 >
 > | 버전 | 날짜 | 변경 내용 |
 > | --- | --- | --- |
@@ -25,6 +25,7 @@
 > | v1.105 | 2026-10-18 | **§K에 크레딧 잔액 오류 행** — Max·Team API 크레딧(2026-10 신설)만 있는 조직의 키가 환경에 남아 Claude Code가 `Credit balance too low`로 멈추는 경로와 복귀법 · §L 근거. 설치 항목 아님. **목표(R43)**: 5 — 새 요금 기능을 당일 공식 문서로 · 1 — 세션이 통째로 멈추는 자리 |
 > | v1.106 | 2026-10-24 | **§0 기본 원칙에 속도 기준·수단 재판정 추가** — 속도는 같은 품질 위에서만, 토큰·비용이 배 단위로 늘면 선택지로만(R52) · 수단이 계속 바뀌는 영역은 비교 자리에 `수단 비교 확인일:`을 달고 재검증 때 다시 고른다(R53). **목표(R43)**: 1 — 품질을 전제한 판단 기준 확장 · 5 — 수단 선택도 당일 조회로 갱신 |
 > | v1.107 | 2026-10-24 | **정합 보강** — 속도 기준 문구에 하한(거의 늘지 않을 때만 기본) · §D-6 하위 모델 `high` 안내에서 코드 리뷰를 뺐다(최종 리뷰는 상위 모델 불변)·상위 모델을 적지 않는 이유를 "세션 저장값이 쉬운 작업까지 사고량을 늘린다"로 좁혔다 · §F-2 별칭 rename에 settings `hooks`의 스킬 폴더 경로(03 §12) 포함 |
+> | v1.108 | 2026-10-26 | **워크트리 3자리 고유번호** — §F-1 세션 워크플로 규율에 번호 규칙 한 줄(이름 `NNN-<요약>` · 브랜치 `<타입>/NNN-<요약>` · 최대 번호 + 1, 지운 번호 재사용 금지 · Claude는 `git worktree add` 뒤 `EnterWorktree` `path`) · §F-2 A·B·C `/resume`에 `/resume NNN` 단계(그 워크트리로 전환, 없으면 브랜치에서 되살림, 없으면 평소대로) · §L §G 세션 분리 축에 `--worktree` 브랜치 이름·이름 재사용·`EnterWorktree` 승인 범위. **목표(R43)**: 7 — 끊긴 워크트리 작업을 번호 하나로 다시 찾아 잇는다 |
 > ※ 갱신 시: 이 표에 한 줄 추가 + 하단 "문서 정보" 날짜 수정 + §L 재검증 체크리스트 수행.
 
 > **사용법**: 이 파일을 아무 프로젝트 루트(또는 `docs/`)에 넣고 Claude에게
@@ -313,6 +314,7 @@ New-Item -ItemType Directory -Path .claude/skills/dropin-sync -Force
 
 ### 세션 워크플로 규율
 - **같은 폴더에서 두 세션을 동시에 돌리지 않는다** — 작업 트리·git 인덱스·기록 파일을 공유해 서로의 미커밋이 섞인다(`merge=union`은 git 병합 때만 동작해 여기선 무력). 두 번째 작업은 `claude --worktree <이름>`으로 열거나, 이어받을 대화는 `claude -n <이름>`·`/rename`으로 이름을 붙여 `claude --resume <이름>`으로 연다 — `claude -c`는 그 폴더의 가장 최근 대화 하나만 연다. 아래 /resume·/wrap의 "세션 밖 변경" 처리는 이 습관이 깨졌을 때의 안전망이다.
+- **워크트리는 3자리 고유번호를 붙인다** — 이름 `NNN-<요약>`(위치 `.claude/worktrees/NNN-<요약>`), 브랜치 `<타입>/NNN-<요약>`(아래 브랜치 규칙에 번호만 끼운다). 번호는 그 repo의 `git worktree list`·`git branch -a`에 나온 가장 큰 번호 + 1이고 **지운 번호도 다시 쓰지 않는다**(브랜치 이름에 번호가 남아 원격이 대장 구실을 한다). Claude가 만들 땐 `git fetch` 뒤 `git worktree add .claude/worktrees/NNN-<요약> -b <타입>/NNN-<요약> origin/<기본 브랜치>`(원격이 없으면 기본 브랜치)로 만들고 `EnterWorktree`(`path`)로 들어가 번호를 한 줄로 알린다 — `EnterWorktree`의 `name`·`claude --worktree`는 브랜치를 `worktree-<이름>`으로 따서 이 규칙과 갈린다(그렇게 연 것도 `/resume NNN`은 찾는다). 이어 갈 땐 **`/resume NNN`**. 이렇게 만든 워크트리는 세션 종료 때 자동 정리되지 않는다 — 병합 뒤 `git worktree remove`·브랜치 삭제는 사용자 결정. 서브에이전트 `isolation: worktree`(자동 이름·일회성)는 대상이 아니다.
 - **git repo면 작업은 브랜치에서 한다** — 새 기능·수정·리팩터링·문서 개편처럼 한 번에 끝나지 않거나 되돌릴 수 있어야 하는 작업은 기본 브랜치(원격 HEAD — 보통 main·master)에 직접 하지 않고, 작업 시작 때 작업 브랜치(`<타입>/<요약>` — 타입은 커밋 양식과 같은 feature·fix·docs·chore 등)를 따서 거기서 한다. **원격이 있으면 따기 전에 `git fetch`로 기본 브랜치의 원격 최신을 확인하고 뒤처졌으면 `git pull --ff-only`로 맞춘 뒤 분기한다**(미커밋이 있으면 건드리지 않고 보고한다). 따는 즉시 브랜치 이름을 한 줄로 알린다. 예외는 둘뿐이다: ⓐ 한두 줄 오타·주석 수준의 정말 간단한 작업 ⓑ 즉시 내보내야 하는 hotfix. 이미 같은 작업의 브랜치 위라면 그대로 쓴다. **작업이 이어지는 동안 커밋 전·병합을 안내하기 전에 `git fetch`로 기본 브랜치가 앞서갔는지 확인하고, 앞섰으면 몇 커밋인지·같은 파일을 건드렸는지를 보고한다.** 그 변경을 작업 브랜치로 가져오는 일(merge·rebase)은 사용자 결정이며, push 전 로컬 브랜치면 rebase를, push했거나 공유 중이면 merge를 제안한다. **병합·push·브랜치 삭제는 하지 않고 사용자 결정으로 남긴다**(기록 아카이브의 즉시 푸시는 길이 관리 규칙을 따른다). 브랜치를 땄다면 기록 양식의 `(브랜치)` 칸에 그 이름을 적는다.
 - **커밋은 이 세션이 편집한 파일만 스테이징한다** — 커밋 전에 `git status`로 이 세션이 편집한 파일을 가려 파일명으로 `git add`하고, `git add -A`·`git commit -a`는 쓰지 않는다. 같은 폴더의 다른 세션이 남긴 미커밋을 쓸어 담지 않기 위해서다(`/wrap` 밖의 임의 커밋 경로엔 게이트가 없어 사람의 습관이 유일한 방어다 — 실사례: 남의 교차 기록 한 줄이 내 커밋에 실렸다). git이 없는 폴더는 면제.
 - 작업 요청엔 **성공 기준·검증 명령**(테스트/빌드/재현 스크립트)을 함께 받는다. 구현 후 그 검증을 실행해 **증거(출력)로 보고** — "됐다"는 말로 끝내지 않는다.
@@ -359,7 +361,7 @@ New-Item -ItemType Directory -Path .claude/skills/dropin-sync -Force
 name: resume
 description: 세션 시작 시 원격 최신화(clean이면 git pull --ff-only)·git status로 미커밋 작업 먼저 확인 후 CLAUDE.md·docs/PROGRESS.md 최상단·PROJECT_PLAN.md를 읽고 지난 상태·다음 작업 보고.
 ---
-# /resume — remote 있고 워킹트리 clean이면 `git pull --ff-only` 먼저(아니면 `git fetch` 후 뒤처짐만 보고) → git status·브랜치로 미커밋(진행 중) 작업 발견(미커밋은 **세션 밖 변경**일 수 있다 — 같은 폴더의 다른 세션 몫일 수 있으니 그렇게 함께 보고하고, 내 작업으로 단정해 잇거나 커밋·되돌리기·stash하지 않고 먼저 확인) → CLAUDE.md(**프로젝트+글로벌 `~/.claude/CLAUDE.md`** — 글로벌만 적용한 PC에선 글로벌 줄이 유일한 기록), docs/PROGRESS.md(최상단 최근 ~5항목(상단 날짜가 역순이면 **날짜 기준**)만 — 길면 항목당 앞 ~700자. **다인 공유면 현재 브랜치·PWD가 가리키는 갈래를 우선** 읽고 남의 갈래는 한 줄 요약), docs/DECISIONS.md 최근 3건(최상단 Read limit), PROJECT_PLAN.md를 읽고 "지난 X, 다음 Y?" 보고(PROGRESS의 `[Pending]`·`[Blocked]`는 PROJECT_PLAN "미해결/관찰 중"**과 대조**해 거기 없으면 닫힌 것으로 본다 · 항목이 **다음 행동 없음**을 명시하면 Y를 재구성하지 말고 새 작업을 묻는다). + 조건부 안내: dropin-applied 30일 경과면 `/dropin-check`·`/dropin-update`, PROJECT_PLAN 예정일 경과 항목(**미완료 항목만** — `[x]`·취소선 종결 항목 제외), dropin-applied 괄호의 조치 대기 메모·`게이트 차단(사유)`·**`소스없음(사유)`/`확보 실패(사유)`**(예: gh 인증 대기 / 06 게이트 차단(조직 미승인) / 04 소스없음(네트워크 차단) — 해소됐다면 재적용으로 설치+기록 갱신) 안내. 글로벌 `## 10.`(작업 중 추천)이 있으면: 대상에 dropin-applied 기록이 있으면 루트 파일 **이름만** glob해(내용 읽지 않음) 00 §C-2 감지 신호에 걸리는 미적용·`추천 거절`·`해당 없음` 아닌 항목을 "`/dropin-apply 추천`" 한 줄(기록이 없으면 안내하지 않는다).
+# /resume — **인수가 3자리 숫자(`/resume NNN`)면 먼저 그 워크트리로 들어간다**(§F-1 `워크트리는 3자리 고유번호`) — `git worktree list`에서 경로가 `.claude/worktrees/NNN-`로 시작하는 것을 `EnterWorktree`(`path`)로 전환하고, 없으면 `git branch -a`에서 `/NNN-`·`worktree-NNN-`이 든 브랜치를 `git worktree add .claude/worktrees/NNN-<요약> <브랜치>`로 되살려 전환한다(원격만 있으면 로컬 추적 브랜치를 만든다). 맞는 것이 여럿이면 목록을 보이고 묻고, 없으면 그렇게 알리고 현재 폴더에서 평소대로 진행한다. 이후 아래 전부를 **그 워크트리 안에서** 하고 PROGRESS는 그 브랜치의 갈래부터 읽는다. → remote 있고 워킹트리 clean이면 `git pull --ff-only` 먼저(아니면 `git fetch` 후 뒤처짐만 보고) → git status·브랜치로 미커밋(진행 중) 작업 발견(미커밋은 **세션 밖 변경**일 수 있다 — 같은 폴더의 다른 세션 몫일 수 있으니 그렇게 함께 보고하고, 내 작업으로 단정해 잇거나 커밋·되돌리기·stash하지 않고 먼저 확인) → CLAUDE.md(**프로젝트+글로벌 `~/.claude/CLAUDE.md`** — 글로벌만 적용한 PC에선 글로벌 줄이 유일한 기록), docs/PROGRESS.md(최상단 최근 ~5항목(상단 날짜가 역순이면 **날짜 기준**)만 — 길면 항목당 앞 ~700자. **다인 공유면 현재 브랜치·PWD가 가리키는 갈래를 우선** 읽고 남의 갈래는 한 줄 요약), docs/DECISIONS.md 최근 3건(최상단 Read limit), PROJECT_PLAN.md를 읽고 "지난 X, 다음 Y?" 보고(PROGRESS의 `[Pending]`·`[Blocked]`는 PROJECT_PLAN "미해결/관찰 중"**과 대조**해 거기 없으면 닫힌 것으로 본다 · 항목이 **다음 행동 없음**을 명시하면 Y를 재구성하지 말고 새 작업을 묻는다). + 조건부 안내: dropin-applied 30일 경과면 `/dropin-check`·`/dropin-update`, PROJECT_PLAN 예정일 경과 항목(**미완료 항목만** — `[x]`·취소선 종결 항목 제외), dropin-applied 괄호의 조치 대기 메모·`게이트 차단(사유)`·**`소스없음(사유)`/`확보 실패(사유)`**(예: gh 인증 대기 / 06 게이트 차단(조직 미승인) / 04 소스없음(네트워크 차단) — 해소됐다면 재적용으로 설치+기록 갱신) 안내. 글로벌 `## 10.`(작업 중 추천)이 있으면: 대상에 dropin-applied 기록이 있으면 루트 파일 **이름만** glob해(내용 읽지 않음) 00 §C-2 감지 신호에 걸리는 미적용·`추천 거절`·`해당 없음` 아닌 항목을 "`/dropin-apply 추천`" 한 줄(기록이 없으면 안내하지 않는다).
 **폴백**: 비-git 폴더면 pull·status 단계를 건너뛰고 docs 체계만 읽는다. `docs/PROGRESS.md`가 없는데 `docs/<하위>/PROGRESS.md`가 있으면 **단위분할 repo**다 — A로는 대상 단위를 판별할 수 없으니 그 사실을 알리고 §F-2 B로 교체를 안내한다(조용히 빈손으로 끝내지 않는다).
 ```
 ```markdown
@@ -380,6 +382,7 @@ name: resume
 description: 단위분할 재개. git status로 미커밋 작업 먼저, 대상 단위(app/module/domain)를 PWD>브랜치>질문 순 판별해 docs/<단위>/PROGRESS.md를 읽는다.
 ---
 # /resume (솔루션-aware)
+-1) **인수가 3자리 숫자(`/resume NNN`)면 먼저 그 워크트리로 들어간다**(§F-1 `워크트리는 3자리 고유번호`) — `git worktree list`에서 경로가 `.claude/worktrees/NNN-`로 시작하는 것을 `EnterWorktree`(`path`)로 전환하고, 없으면 `git branch -a`에서 `/NNN-`·`worktree-NNN-`이 든 브랜치를 `git worktree add .claude/worktrees/NNN-<요약> <브랜치>`로 되살려 전환한다(원격만 있으면 로컬 추적 브랜치를 만든다). 맞는 것이 여럿이면 목록을 보이고 묻고, 없으면 그렇게 알리고 현재 폴더에서 평소대로 진행한다. 이후 아래 전부를 **그 워크트리 안에서** 하고 PROGRESS는 그 브랜치의 갈래부터 읽는다.
 0) remote 있고 clean이면 `git pull --ff-only` 먼저(아니면 fetch 후 뒤처짐 보고) → git status·현재 브랜치 확인 — 미커밋/비-main 브랜치면 그 단위 작업 우선(untracked일 수 있음). 미커밋은 **세션 밖 변경**일 수 있다(같은 폴더의 다른 세션) — 함께 보고하고 커밋·되돌리기·stash 전에 확인.
 1) 대상 단위 판별: PWD가 <단위> 안 → 그 단위 / 브랜치명(feature/<단위>) / 불명확하면 질문.
    **폴백**: `docs/<단위>/`가 없는 단일 repo면 단위 판별을 건너뛰고 `docs/`(flat) 기준으로 A와 동일하게 진행. 비-git 폴더면 0)도 건너뛴다.
@@ -409,6 +412,7 @@ name: resume
 description: 통합 워크스페이스 재개. 루트+하위 repo git status로 미커밋 먼저, 대상 repo+단위 판별해 <repo>/docs[/<단위>]/PROGRESS.md와 (있으면) 루트 docs/INDEX.md를 읽는다.
 ---
 # /resume (통합)
+-1) **인수가 3자리 숫자(`/resume NNN`)면 먼저 그 워크트리로 들어간다**(§F-1 `워크트리는 3자리 고유번호`) — 대상 repo(루트에서 부르면 하위 repo 전부)의 `git worktree list`에서 경로가 `.claude/worktrees/NNN-`로 시작하는 것을 `EnterWorktree`(`path`)로 전환하고, 없으면 `git branch -a`에서 `/NNN-`·`worktree-NNN-`이 든 브랜치를 `git worktree add .claude/worktrees/NNN-<요약> <브랜치>`로 되살려 전환한다(원격만 있으면 로컬 추적 브랜치를 만든다). 맞는 것이 여럿이면 목록을 보이고 묻고, 없으면 그렇게 알리고 현재 폴더에서 평소대로 진행한다. 이후 아래 전부를 **그 워크트리 안에서** 하고 PROGRESS는 그 브랜치의 갈래부터 읽는다.
 0) 루트+하위 repo 각각: remote 있고 clean이면 `git pull --ff-only` 먼저(아니면 fetch 후 뒤처짐 보고) → git status·브랜치로 미커밋(진행 중) 작업 발견(미커밋은 **세션 밖 변경**일 수 있다 — A와 동일하게 함께 보고하고 커밋·되돌리기·stash 전에 확인).
 1) 대상 repo(+단위) 판별: PWD > 브랜치 > 질문.
    **폴백**: 하위 repo가 없는 단일 repo면 0)·1)을 그 repo에만 수행하고 **INDEX만 생략**한다 — **단위 판별은 유지**한다(단일 repo인데 `docs/<단위>/`로 쪼갠 경우가 흔하다. A로 강등하면 그 기록을 못 찾는다). 비-git 폴더면 0)을 건너뛰고 docs 체계만 읽는다.
@@ -622,7 +626,7 @@ Claude Code는 매주 바뀐다. 6개월마다 30분:
 - §F-2 **A·B·C 전 템플릿**의 폴백(비-git·`docs/` 부재·단위 없음·단일 repo)·**조건부 안내 어휘**(조치 대기·`게이트 차단`·`소스없음`/`확보 실패` — 새 어휘가 늘 때마다 A·B·C 템플릿 전부도 함께 늘려야 한다)·**미러 대조 판정 기준**(구성 성격 4키·포함 기준 정본·`dropin-applied` 줄 제외·줄바꿈 정규화)이 배포된 글로벌 스킬 실물과 일치하는지 — 문서만 고치고 스킬을 빠뜨리면(또는 그 반대로) 같은 공백이 방향만 바꿔 재발한다. **점검 범위에서 A를 빼지 말 것**: 단일 repo 신규 설치자가 쓰는 것이 A다(도입 경위는 저장소 git 이력 — 버전 표에선 병합 행 안이다).
 - **§K `/doctor prompt-audit`** — 하위 명령 이름·감사 대상 파일 종류·"보고·제안만" 동작이 유지되는지(공식 memory·commands).
 - **`AGENTS.md` 로드 규칙**(§E 공통) — `CLAUDE.md`·`CLAUDE.local.md`가 있으면 읽지 않는 기본값 · `@AGENTS.md` import 권장 · Windows symlink 제약이 유지되는지(공식 memory `#agents-md`).
-- **§G 세션 분리 축** — `claude -c`(그 폴더의 가장 최근 대화)·`-n`/`/rename`(세션 이름)·`--resume <이름>`·`--worktree`(worktree 위치·분기·정리) 동작(공식 sessions·worktrees, 2026-09-13 확인). 같은 폴더 동시 세션에 대한 **공식 경고는 없다**(같은 날 확인) — 생기면 §G 줄의 근거를 그쪽으로 바꾼다.
+- **§G 세션 분리 축** — `claude -c`(그 폴더의 가장 최근 대화)·`-n`/`/rename`(세션 이름)·`--resume <이름>`·`--worktree`(worktree 위치·분기·정리) 동작 · `--worktree`의 브랜치 이름(`worktree-<이름>`)·이름 재사용·`EnterWorktree` `path`의 `.claude/worktrees/` 밖 승인(§F-1 고유번호 규칙의 전제)(공식 sessions·worktrees, 2026-09-13 확인 · 고유번호 전제는 2026-10-26 확인). 같은 폴더 동시 세션에 대한 **공식 경고는 없다**(같은 날 확인) — 생기면 §G 줄의 근거를 그쪽으로 바꾼다.
 - **§K 크레딧 잔액 오류 행** — Max·Team API 크레딧의 대상(Claude Code 제외)·`Credit balance too low` 문구·인증 우선순위(`-p`는 `ANTHROPIC_API_KEY`를 항상 쓰고 대화형은 1회 승인)가 유지되는지(platform `api-credits-for-subscribers`·code.claude.com `authentication`, 2026-10-18 확인).
 - **자기 점검(갱신 의식)** — 재검증·개정은 기억이 아니라 **당일 공식 문서** 조회로 한다(확인 못 한 항목엔 🟡을 단다). 고쳤으면 ① 버전 표에 한 줄(무엇을 왜) ② 헤더·푸터의 버전과 "최종 갱신"·"최근 재검증" 날짜 ③ 저장소 `CLAUDE.md` 구성물 표 ④ 이 체크리스트 ⑤ 기계 검사 통과를 빠짐없이 한다. 버전은 네 곳에 있고 **하나만 빠져도 4축이 어긋난다** — 골격 규칙의 정본은 `docs/DOC_CONTRACT.md`다.
 - ✅ 해소된 과거 항목(재확인 불필요): CLAUDE.local.md deprecation 우려 → **계속 지원**(2026-07-20 확인, `.gitignore` 추가 권장 유지).
@@ -632,5 +636,5 @@ Claude Code는 매주 바뀐다. 6개월마다 30분:
 ## 핵심 출처 🟢
 IDE 통합·`--add-dir`(ide-integrations·large-codebases) / permissions·deny 한계 / hooks / skills / memory·auto-memory — 모두 `code.claude.com/docs` 및 `docs.anthropic.com`.
 
-**문서 정보** — 통합 마스터(범용) **v1.107**. 변경 이력은 최상단 버전 표 참조(유래: 8개 소스 통합 초판 — 최상단 병합 행).
-최종 갱신: 2026-10-24 · 최근 재검증: 2026-10-08 / 참조: Claude Code v2.1.293, Opus 5.5(v2.1.280+) · Sonnet 5.5(v2.1.284+) · Haiku 5.5(v2.1.293+) · Fable 5.1(v2.1.257+).
+**문서 정보** — 통합 마스터(범용) **v1.108**. 변경 이력은 최상단 버전 표 참조(유래: 8개 소스 통합 초판 — 최상단 병합 행).
+최종 갱신: 2026-10-26 · 최근 재검증: 2026-10-08 / 참조: Claude Code v2.1.293, Opus 5.5(v2.1.280+) · Sonnet 5.5(v2.1.284+) · Haiku 5.5(v2.1.293+) · Fable 5.1(v2.1.257+).
