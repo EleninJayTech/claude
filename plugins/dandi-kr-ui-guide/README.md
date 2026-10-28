@@ -18,7 +18,7 @@ Third-party marketplaces don't auto-update by default — enable it in `/plugin`
 | `/dandi-kr-ui-guide:kr-ui-guide` | Loads the required rules (contrast, touch targets, labels, free-to-use fonts, …) plus the references for the task at hand, proposes a design, and self-checks the result | — |
 | `/dandi-kr-ui-guide:kr-ui-styles` | Applies the style pack named in the project's `## kr-ui-guide 오버라이드` block (`스타일 팩:`); reads nothing when no pack is set | — |
 
-Claude also invokes it automatically when you design screens, pick icons or colors, or write design tokens for Korean users. Set `스타일 팩: editorial` to get the editorial / monochrome direction instead of the default.
+Claude also invokes it automatically when you design screens, pick icons or colors, or write design tokens for Korean users. Set `스타일 팩: editorial` to get the editorial / monochrome direction instead of the default, or `스타일 팩: dark-neon` for the dark / high-contrast / neon direction.
 
 ## Requirements
 

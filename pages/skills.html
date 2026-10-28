@@ -243,7 +243,7 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
     <tr><td><code>/frontend-design</code></td><td>none &mdash; describe the UI</td><td>A new interface needs a direction</td><td>Direction, decided before the markup</td></tr>
     <tr><td><code>/browser-check</code></td><td>none &mdash; it loads itself</td><td>Claude checks or debugs a page it built</td><td>Verdicts from the values read &mdash; screenshots only where the look is judged</td></tr>
     <tr><td><code>/kr-ui-guide</code></td><td>none &mdash; it loads itself</td><td>Korean-facing UI, icons, colour &mdash; games included</td><td>A proposal with contrast maths and tokens</td></tr>
-    <tr><td><code>/kr-ui-styles</code></td><td>none &mdash; it loads itself when a style pack is set</td><td>A Korean-facing screen that should look editorial / monochrome instead of the default</td><td>A design in the pack&rsquo;s tokens, with contrast maths</td></tr>
+    <tr><td><code>/kr-ui-styles</code></td><td>none &mdash; it loads itself when a style pack is set</td><td>A Korean-facing screen that should look editorial / monochrome or dark / neon instead of the default</td><td>A design in the pack&rsquo;s tokens, with contrast maths</td></tr>
 
     <tr><th class="grp" colspan="4" scope="colgroup">PC upkeep &middot; 03 §10</th></tr>
     <tr><td><code>/pc-clean</code></td><td><code>[점검만]</code> &mdash; check only; check, then offer cleanup, if omitted</td><td>This Windows PC has got slow</td><td>A check table &mdash; only the items you approve are cleaned</td></tr>
@@ -632,10 +632,10 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
     <article class="skill" data-g="design">
       <div class="cmd"><span class="sl">/</span>kr-ui-styles</div>
       <div class="args">no arguments — it loads itself when the project names a style pack</div>
-      <p class="one">Swaps kr-ui-guide&rsquo;s default look (restrained, blue-grey, rounded) for another direction drawn from research &mdash; for now an editorial, monochrome pack &mdash; while kr-ui-guide&rsquo;s rules still apply.</p>
+      <p class="one">Swaps kr-ui-guide&rsquo;s default look (restrained, blue-grey, rounded) for another direction drawn from research &mdash; for now two packs, editorial / monochrome and dark / neon &mdash; while kr-ui-guide&rsquo;s rules still apply.</p>
       <dl>
-        <dt>Use when</dt><dd>A Korean-audience product should read like a magazine rather than a utility app: fashion and lifestyle shops, brand media, premium cosmetics. Set <code>스타일 팩: editorial</code> in the project&rsquo;s <code>## kr-ui-guide 오버라이드</code> block.</dd>
-        <dt>It does</dt><dd>Reads the pack the project names and its tokens (pure black and white, serif headlines from 20px up, sans-serif for anything 16px or smaller, 0px corners, no shadows, 56&ndash;80px between sections), applies them on top of kr-ui-guide, and checks the result against both checklists. With no pack set it reads nothing.</dd>
+        <dt>Use when</dt><dd>A Korean-audience product should read like a magazine rather than a utility app: fashion and lifestyle shops, brand media, premium cosmetics. Set <code>스타일 팩: editorial</code> in the project&rsquo;s <code>## kr-ui-guide 오버라이드</code> block. For streaming, esports stats, trading and OTT screens, set <code>스타일 팩: dark-neon</code>.</dd>
+        <dt>It does</dt><dd>Reads the pack the project names and its tokens (for editorial: pure black and white, serif headlines from 20px up, sans-serif for anything 16px or smaller, 0px corners, no shadows, 56&ndash;80px between sections), applies them on top of kr-ui-guide, and checks the result against both checklists. With no pack set it reads nothing.</dd>
         <dt>You get</dt><dd>A design in the pack&rsquo;s tokens with a calculated contrast ratio for every colour pair &mdash; the pack&rsquo;s orange sale accent, for example, is 3.43:1 on white, so it goes on as a badge with black text, not as small text.</dd>
       </dl>
       <div class="warn soft"><b>Worth knowing.</b> kr-ui-guide&rsquo;s hard rules always beat a pack. The pack&rsquo;s source report came from an AI research run, so its contrast figures were recalculated and every font licence was re-read at the source; fonts that need permission for commercial or web use are listed but not used by default.</div>

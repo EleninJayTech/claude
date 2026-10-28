@@ -243,7 +243,7 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
     <tr><td><code>/frontend-design</code></td><td>없음 &mdash; 만들 UI를 말한다</td><td>새 화면의 시각 방향을 잡을 때</td><td>마크업 전에 정해지는 디자인 방향</td></tr>
     <tr><td><code>/browser-check</code></td><td>없음 &mdash; 스스로 불린다</td><td>Claude가 만든 화면을 확인하거나 디버깅할 때</td><td>읽은 값으로 낸 판정 &mdash; 스크린샷은 모습을 판정할 때만</td></tr>
     <tr><td><code>/kr-ui-guide</code></td><td>없음 &mdash; 스스로 불린다</td><td>한국 사용자 대상 UI·아이콘·색 작업 &mdash; 게임 화면도</td><td>대비 계산과 토큰이 붙은 설계안</td></tr>
-    <tr><td><code>/kr-ui-styles</code></td><td>없음 &mdash; 스타일 팩이 지정되면 스스로 불린다</td><td>한국 사용자 대상 화면을 기본 대신 에디토리얼·모노크롬으로</td><td>팩 토큰으로 만든 설계와 대비 계산</td></tr>
+    <tr><td><code>/kr-ui-styles</code></td><td>없음 &mdash; 스타일 팩이 지정되면 스스로 불린다</td><td>한국 사용자 대상 화면을 기본 대신 에디토리얼·모노크롬이나 다크·네온으로</td><td>팩 토큰으로 만든 설계와 대비 계산</td></tr>
 
     <tr><th class="grp" colspan="4" scope="colgroup">PC 관리 &middot; 03 §10</th></tr>
     <tr><td><code>/pc-clean</code></td><td><code>[점검만]</code> &mdash; 점검만 · 없으면 점검 후 정리 제안</td><td>이 Windows PC가 느려졌을 때</td><td>점검 표 한 장 &mdash; 정리는 승인한 항목만</td></tr>
@@ -632,10 +632,10 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
     <article class="skill" data-g="design">
       <div class="cmd"><span class="sl">/</span>kr-ui-styles</div>
       <div class="args">인수 없음 — 프로젝트가 스타일 팩을 지정하면 스스로 불린다</div>
-      <p class="one">kr-ui-guide의 기본 모습(절제된·블루그레이·둥근)을 리서치에서 추린 다른 방향으로 바꾼다 &mdash; 지금은 에디토리얼·모노크롬 팩 하나 &mdash; kr-ui-guide의 규칙은 그대로 둔 채로.</p>
+      <p class="one">kr-ui-guide의 기본 모습(절제된·블루그레이·둥근)을 리서치에서 추린 다른 방향으로 바꾼다 &mdash; 지금은 에디토리얼·모노크롬과 다크·네온 팩 둘 &mdash; kr-ui-guide의 규칙은 그대로 둔 채로.</p>
       <dl>
-        <dt>언제</dt><dd>한국 사용자 대상 서비스가 기능 앱보다 잡지처럼 보여야 할 때: 패션·라이프스타일 편집숍, 브랜드 미디어, 프리미엄 코스메틱. 프로젝트 <code>## kr-ui-guide 오버라이드</code> 절에 <code>스타일 팩: editorial</code>을 적는다.</dd>
-        <dt>하는 일</dt><dd>프로젝트가 지정한 팩과 그 토큰(순수 흑백, 20px 이상 세리프 제목, 16px 이하는 전부 산세리프, 0px 모서리, 그림자 없음, 섹션 간격 56~80px)을 읽어 kr-ui-guide 위에 얹고, 결과를 두 체크리스트로 점검한다. 팩이 지정돼 있지 않으면 아무것도 읽지 않는다.</dd>
+        <dt>언제</dt><dd>한국 사용자 대상 서비스가 기능 앱보다 잡지처럼 보여야 할 때: 패션·라이프스타일 편집숍, 브랜드 미디어, 프리미엄 코스메틱. 프로젝트 <code>## kr-ui-guide 오버라이드</code> 절에 <code>스타일 팩: editorial</code>을 적는다. 스트리밍·e스포츠 전적·트레이딩·OTT 화면이면 <code>스타일 팩: dark-neon</code>을 적는다.</dd>
+        <dt>하는 일</dt><dd>프로젝트가 지정한 팩과 그 토큰(editorial이면 순수 흑백, 20px 이상 세리프 제목, 16px 이하는 전부 산세리프, 0px 모서리, 그림자 없음, 섹션 간격 56~80px)을 읽어 kr-ui-guide 위에 얹고, 결과를 두 체크리스트로 점검한다. 팩이 지정돼 있지 않으면 아무것도 읽지 않는다.</dd>
         <dt>결과</dt><dd>팩 토큰으로 만든 설계와 색 쌍마다 계산한 대비값 &mdash; 예를 들어 팩의 주황 할인 강조색은 흰 배경 위 3.43:1이라 작은 글자가 아니라 검은 글자를 얹은 배지로 쓴다.</dd>
       </dl>
       <div class="warn soft"><b>알아 둘 것.</b> kr-ui-guide의 필수 기준은 언제나 팩을 이긴다. 팩의 원문은 AI 리서치 산출물이라 대비값은 다시 계산했고 폰트 라이선스는 전부 원문에서 다시 읽었다. 상업·웹 사용에 허락이 필요한 폰트는 목록에만 있고 기본으로 쓰지 않는다.</div>

@@ -1,0 +1,102 @@
+{
+  "token_version": "dark-neon.2026-10-28.1",
+  "_source": "kr-ui-styles source/dark-neon-report.md 「설계 토큰 초안」·「레이아웃·컴포넌트」. kr-ui-guide tokens.json과 같은 키 구조로 옮기고 바꾸는 키만 둔다 — 여기 없는 키는 kr-ui-guide 값이 그대로다(라이트 테마 포함). 대비 수치는 2026-10-28 재계산.",
+  "_notes": {
+    "<프로젝트별 지정 필수>": "primary-500·primary-600(네온)·success-500·market-rise·market-fall은 원문 예시값이 특정 서비스의 브랜드 색이라 비웠다. 네온은 #0E0F10 글자와 4.5:1 이상·#141517 위 3:1 이상, 시세 색은 놓일 면 위 4.5:1 이상.",
+    "foundation.color.semantic.dark": "다크 기본 팩이라 dark만 둔다. 라이트 테마는 kr-ui-guide 라이트 값 + 흰 배경 4.5:1 이상으로 강등한 프라이머리.",
+    "foundation.color.semantic.dark.text-secondary": "본문 단락은 text-secondary(#C9CEDC, 11.61:1) — 순백은 헤드라인·핵심 수치만(할레이션).",
+    "foundation.color.semantic.dark.border-strong": "⟦보완⟧ 조작 요소의 기본 경계. #9DA5B6은 #141517 위 7.39:1, #202224 위 6.45:1. border-subtle·border-default(1.14·1.38:1)는 장식 경계만.",
+    "foundation.color.base.live-500": "#E02020은 #141517 위 글자로 3.83:1 — 글자색 불가, 배지 면 + 흰 글자(4.78:1).",
+    "foundation.color.base.gray-600": "#545A69는 비활성 전용(2.65:1) — 정보 텍스트 금지.",
+    "foundation.color.semantic.dark.market-*": "카드(#202224) 위에 놓이면 4.5:1 이상인지 따로 확인한다 — 원문 예시값은 바탕 위 4.92, 카드 위 4.30이었다.",
+    "foundation.shadow": "elevation-1~3은 none — 깊이는 서피스 명도 단계로. 그림자는 팝오버·스크롤된 내비게이션에만.",
+    "foundation.component.hit-area-min": "버튼 36px·리스트 36px는 시각 크기 — 모바일 터치 영역은 투명 패딩으로 44px 이상."
+  },
+  "foundation": {
+    "color": {
+      "base": {
+        "charcoal-950": "#0E0F10",
+        "charcoal-900": "#141517",
+        "charcoal-800": "#202224",
+        "charcoal-700": "#2E3033",
+        "gray-600": "#545A69",
+        "gray-400": "#9DA5B6",
+        "gray-200": "#C9CEDC",
+        "white": "#FFFFFF",
+        "primary-500": "<프로젝트별 지정 필수>",
+        "primary-600": "<프로젝트별 지정 필수>",
+        "primary-50": "{foundation.color.base.charcoal-800}",
+        "live-500": "#E02020",
+        "error-500": "#E02020",
+        "success-500": "<프로젝트별 지정 필수>",
+        "line-teal": "#027F80"
+      },
+      "semantic": {
+        "dark": {
+          "bg-canvas": "{foundation.color.base.charcoal-950}",
+          "bg-surface": "{foundation.color.base.charcoal-900}",
+          "bg-surface-elevated": "{foundation.color.base.charcoal-800}",
+          "bg-subtle": "{foundation.color.base.charcoal-700}",
+          "text-primary": "{foundation.color.base.white}",
+          "text-secondary": "{foundation.color.base.gray-200}",
+          "text-tertiary": "{foundation.color.base.gray-400}",
+          "text-disabled": "{foundation.color.base.gray-600}",
+          "text-inverse": "{foundation.color.base.charcoal-950}",
+          "text-brand": "{foundation.color.base.primary-500}",
+          "fill-brand-primary": "{foundation.color.base.primary-500}",
+          "fill-brand-secondary": "{foundation.color.base.charcoal-700}",
+          "fill-live": "{foundation.color.base.live-500}",
+          "border-subtle": "{foundation.color.base.charcoal-800}",
+          "border-default": "{foundation.color.base.charcoal-700}",
+          "border-strong": "{foundation.color.base.gray-400}",
+          "border-focus": "{foundation.color.base.primary-500}",
+          "status-error": "{foundation.color.base.error-500}",
+          "status-success": "{foundation.color.base.success-500}",
+          "market-rise": "<프로젝트별 지정 필수>",
+          "market-fall": "<프로젝트별 지정 필수>"
+        }
+      }
+    },
+    "typography": {
+      "font-family": {
+        "sans": "'Pretendard Variable', Pretendard, -apple-system, BlinkMacSystemFont, system-ui, sans-serif",
+        "mono": "'JetBrains Mono', ui-monospace, monospace"
+      },
+      "scale": {
+        "display-1": { "size": "40px", "line-height": "48px", "letter-spacing": "0px", "weight": "800" },
+        "title-1": { "size": "32px", "line-height": "40px", "letter-spacing": "0px", "weight": "700" },
+        "title-2": { "size": "24px", "line-height": "32px", "letter-spacing": "-0.3px", "weight": "700" },
+        "headline": { "size": "20px", "line-height": "28px", "letter-spacing": "-0.3px", "weight": "700" },
+        "body-1": { "size": "16px", "line-height": "24px", "letter-spacing": "-0.2px", "weight": "500" },
+        "body-2": { "size": "14px", "line-height": "20px", "letter-spacing": "-0.2px", "weight": "400" },
+        "body-small": { "size": "13px", "line-height": "19px", "letter-spacing": "-0.2px", "weight": "400" },
+        "caption": { "size": "12px", "line-height": "16px", "letter-spacing": "0px", "weight": "400", "family-numeric": "mono" }
+      }
+    },
+    "spacing": {
+      "space-2xs": "2px", "space-xs": "4px", "space-sm": "8px", "space-md": "16px", "space-lg": "24px", "space-xl": "32px",
+      "margin-min": "8px", "margin-max": "12px"
+    },
+    "radius": {
+      "radius-xs": "4px", "radius-sm": "8px", "radius-md": "8px", "radius-lg": "12px", "radius-xl": "12px", "radius-2xl": "12px", "radius-full": "9999px"
+    },
+    "shadow": {
+      "elevation-1": "none", "elevation-2": "none", "elevation-3": "none",
+      "elevation-modal": "0 4px 12px 4px rgba(0, 0, 0, 0.4)",
+      "nav-scrolled": "0 4px 12px rgba(0,0,0,0.5)",
+      "glow-focus": "0 0 8px <primary-500, 알파 0.4>"
+    },
+    "motion": {
+      "duration-fast": "150ms", "duration-normal": "300ms", "duration-slow": "500ms", "duration-pulse": "1200ms",
+      "easing-standard": "cubic-bezier(0.16, 1, 0.3, 1)", "easing-panel": "cubic-bezier(0.65, 0, 0.35, 1)", "easing-enter": "cubic-bezier(0, 0, 0.2, 1)", "easing-tick": "linear", "easing-pulse": "ease-in-out"
+    },
+    "component": {
+      "button-height": "36px", "button-padding-x": "14px", "input-height": "40px", "input-padding-x": "12px",
+      "input-focus-border": "1.5px", "list-item-height": "36px~44px", "card-padding": "12px~16px",
+      "nav-height": "56px~60px", "nav-background": "rgba(20,21,23,0.85)", "nav-blur": "12px",
+      "badge-height": "20px", "badge-padding-x": "6px", "border-width": "1px",
+      "thumbnail-radius": "8px", "image-overlay-gradient": "linear-gradient(180deg, rgba(20,21,23,0) 0%, #141517 100%)",
+      "icon-box": "24px", "icon-stroke": "1.75px~2.0px", "hit-area-min": "44px"
+    }
+  }
+}
