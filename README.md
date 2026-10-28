@@ -44,7 +44,7 @@
 
 ## Skills as plugins
 
-The skills the installer copies (feature docs, refactor, kr-ui-guide, browser-check, pc-clean, session-board) are also published as Claude Code plugins in the **`dandi`** marketplace:
+The skills the installer copies (feature docs, refactor, kr-ui-guide, kr-ui-styles, browser-check, pc-clean, session-board) are also published as Claude Code plugins in the **`dandi`** marketplace:
 
 ```text
 /plugin marketplace add EleninJayTech/claude

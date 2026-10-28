@@ -243,6 +243,7 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
     <tr><td><code>/frontend-design</code></td><td>없음 &mdash; 만들 UI를 말한다</td><td>새 화면의 시각 방향을 잡을 때</td><td>마크업 전에 정해지는 디자인 방향</td></tr>
     <tr><td><code>/browser-check</code></td><td>없음 &mdash; 스스로 불린다</td><td>Claude가 만든 화면을 확인하거나 디버깅할 때</td><td>읽은 값으로 낸 판정 &mdash; 스크린샷은 모습을 판정할 때만</td></tr>
     <tr><td><code>/kr-ui-guide</code></td><td>없음 &mdash; 스스로 불린다</td><td>한국 사용자 대상 UI·아이콘·색 작업 &mdash; 게임 화면도</td><td>대비 계산과 토큰이 붙은 설계안</td></tr>
+    <tr><td><code>/kr-ui-styles</code></td><td>없음 &mdash; 스타일 팩이 지정되면 스스로 불린다</td><td>한국 사용자 대상 화면을 기본 대신 에디토리얼·모노크롬으로</td><td>팩 토큰으로 만든 설계와 대비 계산</td></tr>
 
     <tr><th class="grp" colspan="4" scope="colgroup">PC 관리 &middot; 03 §10</th></tr>
     <tr><td><code>/pc-clean</code></td><td><code>[점검만]</code> &mdash; 점검만 · 없으면 점검 후 정리 제안</td><td>이 Windows PC가 느려졌을 때</td><td>점검 표 한 장 &mdash; 정리는 승인한 항목만</td></tr>
@@ -334,7 +335,7 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
       <dl>
         <dt>언제</dt><dd>이 PC나 이 프로젝트를 현재 문서 기준으로 올리고 싶을 때. 처음 까는 경우에도 같은 명령이라, 내가 어느 쪽인지 몰라도 된다. Claude나 <code>/resume</code>이 작업에 새로 필요한 항목을 추천했으면 <code>추천</code>을 붙여 부른다.</dd>
         <dt>하는 일</dt><dd>00 문서를 찾아서(옆 폴더의 사본·로컬 클론·내가 알려 준 폴더·배포된 raw 순 &mdash; raw는 요약하지 않고 파일 그대로 프로젝트 밖 임시 폴더에 받는다) 읽고 그 절차를 그대로 돈다 &mdash; 이미 있는 것을 감지하고, 무엇을 할지 묻고, 고른 것만 설치하고, 검증하고, 적용 기록을 쓴다. 스킬 자신은 단계를 하나도 갖지 않아서 문서와 갈릴 수가 없다. <code>/dropin-apply 추천</code>으로 부르면 작업 중 추천 경로를 탄다 &mdash; 작업이 새로 필요로 하게 됐는데 아직 안 깐 항목만, 무엇을 보고 걸렸는지 한 줄씩 붙여 내놓고, 처음 공통 질문은 기록된 답으로 갈음하며, 고른 것만 깐다. 안전 질문은 그대로 묻는다. 적용 기록이 없는 폴더에서는 이 경로 대신 일반 설치를 돌고, 거기서는 최소가 기본 추천이다.</dd>
-        <dt>결과</dt><dd>문서와 일치하는 구성, 그리고 그 사실을 적은 <code>dropin-applied</code> 줄. 기능 문서·refactor·kr-ui-guide·browser-check·pc-clean·session-board와 <code>dropin-</code> 계열처럼 이미 깔린 스킬은 <b>이름이 아니라 내용으로</b> 대조하므로, 파일 수는 그대로고 문장만 바뀐 개정도 교체된다 &mdash; <code>dropin-</code> 계열은 배포본과 다르면 기본값이 <code>재구성</code>으로 나온다. <code>/resume</code>·<code>/wrap</code>은 있는지만 본다 &mdash; 새 본문으로 갈려면 이미 깔린 글로벌 항목을 묻는 질문에서 기본값 <code>유지</code> 대신 <code>재구성</code>을 고른다. 거절한 추천은 기록에 남아 다시 권하지 않는다 &mdash; 나중에 깔고 싶으면 인수 없이 <code>/dropin-apply</code>를 다시 돌려 추가한다.</dd>
+        <dt>결과</dt><dd>문서와 일치하는 구성, 그리고 그 사실을 적은 <code>dropin-applied</code> 줄. 기능 문서·refactor·kr-ui-guide·kr-ui-styles·browser-check·pc-clean·session-board와 <code>dropin-</code> 계열처럼 이미 깔린 스킬은 <b>이름이 아니라 내용으로</b> 대조하므로, 파일 수는 그대로고 문장만 바뀐 개정도 교체된다 &mdash; <code>dropin-</code> 계열은 배포본과 다르면 기본값이 <code>재구성</code>으로 나온다. <code>/resume</code>·<code>/wrap</code>은 있는지만 본다 &mdash; 새 본문으로 갈려면 이미 깔린 글로벌 항목을 묻는 질문에서 기본값 <code>유지</code> 대신 <code>재구성</code>을 고른다. 거절한 추천은 기록에 남아 다시 권하지 않는다 &mdash; 나중에 깔고 싶으면 인수 없이 <code>/dropin-apply</code>를 다시 돌려 추가한다.</dd>
       </dl>
       <div class="warn soft"><b>알아 둘 것.</b> Claude에게 &ldquo;이 문서를 학습해서 적용해줘&rdquo;라고 말하는 것과 같은 일이다 &mdash; 그 문장도 그대로 동작한다. 명령이 따로 있는 이유는, 보이지 않는 문은 열리지 않기 때문이다.</div>
       <div class="tags"><span class="tag">글로벌</span><span class="tag">먼저 묻는다</span></div>
@@ -628,6 +629,19 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
       <div class="tags"><span class="tag">글로벌</span><span class="tag">한국 사용자 대상</span></div>
     </article>
 
+    <article class="skill" data-g="design">
+      <div class="cmd"><span class="sl">/</span>kr-ui-styles</div>
+      <div class="args">인수 없음 — 프로젝트가 스타일 팩을 지정하면 스스로 불린다</div>
+      <p class="one">kr-ui-guide의 기본 모습(절제된·블루그레이·둥근)을 리서치에서 추린 다른 방향으로 바꾼다 &mdash; 지금은 에디토리얼·모노크롬 팩 하나 &mdash; kr-ui-guide의 규칙은 그대로 둔 채로.</p>
+      <dl>
+        <dt>언제</dt><dd>한국 사용자 대상 서비스가 기능 앱보다 잡지처럼 보여야 할 때: 패션·라이프스타일 편집숍, 브랜드 미디어, 프리미엄 코스메틱. 프로젝트 <code>## kr-ui-guide 오버라이드</code> 절에 <code>스타일 팩: editorial</code>을 적는다.</dd>
+        <dt>하는 일</dt><dd>프로젝트가 지정한 팩과 그 토큰(순수 흑백, 20px 이상 세리프 제목, 16px 이하는 전부 산세리프, 0px 모서리, 그림자 없음, 섹션 간격 56~80px)을 읽어 kr-ui-guide 위에 얹고, 결과를 두 체크리스트로 점검한다. 팩이 지정돼 있지 않으면 아무것도 읽지 않는다.</dd>
+        <dt>결과</dt><dd>팩 토큰으로 만든 설계와 색 쌍마다 계산한 대비값 &mdash; 예를 들어 팩의 주황 할인 강조색은 흰 배경 위 3.43:1이라 작은 글자가 아니라 검은 글자를 얹은 배지로 쓴다.</dd>
+      </dl>
+      <div class="warn soft"><b>알아 둘 것.</b> kr-ui-guide의 필수 기준은 언제나 팩을 이긴다. 팩의 원문은 AI 리서치 산출물이라 대비값은 다시 계산했고 폰트 라이선스는 전부 원문에서 다시 읽었다. 상업·웹 사용에 허락이 필요한 폰트는 목록에만 있고 기본으로 쓰지 않는다.</div>
+      <div class="tags"><span class="tag">글로벌</span><span class="tag">한국 사용자 대상</span><span class="tag">기본 해제</span></div>
+    </article>
+
   </div>
 </section>
 
@@ -840,7 +854,7 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
 <div class="traps">
   <div class="trap"><b>이 셋업을 한 번도 안 깐 PC라면.</b><p>거기서도 <code>/dropin-apply</code>다 &mdash; 처음 까는 경우에도 같은 명령이다. 스킬이 아직 없으면 Claude에게 이렇게 말하면 된다: <i>&ldquo;저장소의 <code>00_통합-설치.md</code>를 받아서 이 PC에 적용해줘&rdquo;</i>. 그러면 이 스킬도 다른 것들과 함께 깔린다.</p></div>
   <div class="trap"><b>파일 이름은 그대로인데 내용만 낡은 경우.</b><p>스킬은 파일이 하나도 늘거나 줄지 않은 채로 개정될 수 있다. 이름만 대조하는 점검은 그걸 &ldquo;이미 최신&rdquo;이라고 말한다. 설치 절차는 내용까지 대조하므로, 문장만 바뀐 개정도 교체된다.</p></div>
-  <div class="trap"><b>이미 단디 플러그인으로 켜 두었다면.</b><p>기능 문서·refactor·kr-ui-guide·browser-check·pc-clean·session-board 스킬을 <code>dandi</code> 플러그인 마켓으로 깔았다면, 같은 스킬이 <code>/dandi-refactor:refactor</code> 같은 플러그인 이름으로 이미 있다. 설치 절차가 이걸 알아채고 묻는다: 플러그인을 <b>유지</b>하고 복사 설치를 건너뛸지, 플러그인을 걷고 복사본으로 <b>교체</b>할지. 한 스킬이 두 벌 깔리면 둘이 서로 불려 가려고 다툰다. 나중에 플러그인 설치를 지울 때는 복사본 제거 절차가 아니라 그 플러그인 README의 <code>/plugin uninstall</code>을 따른다.</p></div>
+  <div class="trap"><b>이미 단디 플러그인으로 켜 두었다면.</b><p>기능 문서·refactor·kr-ui-guide·kr-ui-styles·browser-check·pc-clean·session-board 스킬을 <code>dandi</code> 플러그인 마켓으로 깔았다면, 같은 스킬이 <code>/dandi-refactor:refactor</code> 같은 플러그인 이름으로 이미 있다. 설치 절차가 이걸 알아채고 묻는다: 플러그인을 <b>유지</b>하고 복사 설치를 건너뛸지, 플러그인을 걷고 복사본으로 <b>교체</b>할지. 한 스킬이 두 벌 깔리면 둘이 서로 불려 가려고 다툰다. 나중에 플러그인 설치를 지울 때는 복사본 제거 절차가 아니라 그 플러그인 README의 <code>/plugin uninstall</code>을 따른다.</p></div>
   <div class="trap"><b><code>/dropin-check</code>가 다 보지는 못한다.</b><p>일반 설치에는 대조할 사설 사본이 아예 없다. 그래서 그냥 &ldquo;최신&rdquo;이 아니라 &ldquo;문서 기준 최신 &mdash; 스킬 실물 내용은 미확인&rdquo;이라고 보고한다. 그 나머지 절반이 궁금하면 <code>/dropin-apply</code>를 돌리면 된다 &mdash; <code>/resume</code>·<code>/wrap</code>까지 새 본문으로 받으려면 이미 깔린 글로벌 항목에서 <code>재구성</code>을 고른다. <code>유지</code>면 낡은 본문이 그대로 남는다.</p></div>
 </div>
 
@@ -866,6 +880,7 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
     <tr><td><code>/refactor</code></td><td>03 §8</td><td>글로벌 &middot; 또는 <code>dandi</code> 플러그인</td><td>플러그인: <code>/plugin uninstall dandi-refactor@dandi</code>. 복사본: 폴더 삭제. 걷을 훅도, 되돌릴 커밋도 없다. <code>docs/refactor/</code> 보고서는 남긴다.</td></tr>
     <tr><td><code>/browser-check</code></td><td>03 §5</td><td>설치할 때 묻는다 &mdash; 글로벌 또는 프로젝트 &middot; 또는 <code>dandi</code> 플러그인</td><td>플러그인: <code>/plugin uninstall dandi-browser-check@dandi</code>. 복사본: 폴더 삭제 &mdash; 프로젝트 스코프면 삭제를 커밋한다. 브라우저 쪽은 따로 걷는다: Chrome은 <code>/chrome</code>에서 끄거나 확장을 지우고, Playwright CLI는 <code>npm uninstall -g @playwright/cli</code>.</td></tr>
     <tr><td><code>/kr-ui-guide</code></td><td>03 §9</td><td>글로벌 &middot; 또는 <code>dandi</code> 플러그인</td><td>플러그인: <code>/plugin uninstall dandi-kr-ui-guide@dandi</code>. 복사본: 폴더 삭제. 프로젝트 CLAUDE.md에 선택적 오버라이드 절을 추가했으면 그것도 지우고, <code>frontend-design</code>까지 없으면 폰트 라이선스 정책 절도 지운다.</td></tr>
+    <tr><td><code>/kr-ui-styles</code></td><td>03 §9 (설치 7)</td><td>kr-ui-guide와 같은 스코프 &middot; 또는 <code>dandi-kr-ui-guide</code> 플러그인 안</td><td>복사본: 폴더를 지우고 프로젝트 오버라이드 절의 <code>스타일 팩:</code> 줄을 지운다. 플러그인: <code>dandi-kr-ui-guide</code>에 함께 실려 있어 그 플러그인을 지우면 둘 다 지워진다.</td></tr>
     <tr><td><code>/pc-clean</code></td><td>03 §10</td><td>글로벌 &mdash; 프로젝트 스코프면 Windows 전용 스크립트가 repo에 커밋된다 &middot; 또는 <code>dandi</code> 플러그인</td><td>플러그인: <code>/plugin uninstall dandi-pc-clean@dandi</code>. 복사본: 폴더 삭제 &mdash; 프로젝트 스코프면 삭제를 커밋한다. 걷을 훅·설정·예약 작업은 없다.</td></tr>
     <tr><td><code>/session-board</code></td><td>03 §12</td><td>글로벌 &mdash; 고정이라 묻지 않는다 &middot; 또는 <code>dandi</code> 플러그인(먼저 권한다)</td><td>플러그인: <code>/plugin uninstall dandi-session-board@dandi</code> &mdash; 훅도 함께 사라진다. 복사본: <code>~/.claude/settings.json</code>의 훅 중 <code>board.mjs</code>를 부르는 묶음만 지우고 폴더를 삭제한다. <code>~/.claude/session-board/</code>는 세션 메타데이터뿐이라 지워도 잃는 것이 없다.</td></tr>
     <tr><td><code>/plan-&lt;모델&gt;</code></td><td>02 STEP 3 ⓔ</td><td>설치 때 묻는다 &mdash; 글로벌 또는 프로젝트</td><td>폴더 삭제. 함께 만든 모델 운용표와, <code>CLAUDE.md</code>·핸드오프 규약에 적어 둔 이 명령 안내 줄도 지운다.</td></tr>

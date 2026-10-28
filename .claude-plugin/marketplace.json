@@ -20,7 +20,7 @@
     {
       "name": "dandi-kr-ui-guide",
       "source": "./plugins/dandi-kr-ui-guide",
-      "description": "UI/UX, icon, color, typography and design-token guidelines for web, app and game products aimed at Korean users, distilled from Korean service benchmarking research.",
+      "description": "UI/UX, icon, color, typography and design-token guidelines for web, app and game products aimed at Korean users, distilled from Korean service benchmarking research. Includes optional style packs (editorial / monochrome) that change the visual direction without loosening the rules.",
       "license": "MIT",
       "keywords": ["ui", "ux", "design-tokens", "korean", "accessibility", "icons"]
     },
