@@ -1,0 +1,124 @@
+{
+  "token_version": "neo-brutal.2026-10-28.1",
+  "_source": "kr-ui-styles source/neo-brutal-report.md 「설계 토큰 초안: JSON 사양」·「레이아웃 및 컴포넌트 설계 명세」·「모션 및 인터랙션 시스템」. kr-ui-guide tokens.json과 같은 키 구조로 옮기고 바꾸는 키만 둔다 — 여기 없는 키는 kr-ui-guide 값이 그대로다. 대비 수치는 2026-10-28 재계산.",
+  "_notes": {
+    "<프로젝트별 지정 필수>": "primary-500(메인 CTA·하이라이트 배지·피처드 카드 면)·accent-2(보조 액션·태그·정보 블록)·accent-3(이벤트 배너·알림 레이블)은 원문 예시값의 출처가 디자인 시스템 프롬프트·미확인 URL이고 팩 정체가 특정 색이 아니라 비웠다. 조건: 그 면 위 #000000 글자 4.5:1 이상(원문 예 옐로 16.57·시안 14.91·라임 12.05·핑크 7.93), 흰 글자 금지(옐로 1.27·핑크 2.65·시안 1.41·라임 1.74), 전체 2~3종, 카테고리 분할.",
+    "foundation.color.base.focus-ring": "#3366FF는 접근성 기능값이라 채웠다 — 크림 4.61·흰 4.68·옐로 3.69·시안 3.32·검정 4.49(3:1 통과) / 핑크 1.77·라임 2.69(미달 — 그 면 위 요소는 focus-ring-on-accent로 #000000 링 + 흰 띠 3px). 글자(링크 호버)로는 흰 바탕 4.68·검정 바탕 4.49(대형만).",
+    "foundation.color.semantic.light.border-default": "강조 면은 크림 위 1.25~2.60:1, 흰 카드는 1.02:1로 경계가 없다 — 2~3px #000000 테두리가 유일한 경계(비텍스트 3:1). 강조 면 요소에서 두께를 줄이지 않는다.",
+    "foundation.color.semantic.dark": "【조건부】프로덕트 차원에서 다크 대응이 강제될 때만. 캔버스 반전, 외곽선 흰색 또는 강조색, 섀도는 강조색. #3366FF는 #121212 위 4.00:1 — 링만, 글자 불가. #000000/#121212 1.12:1이라 검정 테두리는 쓰지 않는다.",
+    "foundation.radius.radius-xs": "2px는 모바일 절충【조건부】 — 원문 「불확실」 첫째. 기본은 0px.",
+    "foundation.shadow.mobile-max": "768px 미만에서 모든 하드 섀도를 2px 2px 0으로 줄이고 인접 상하 마진 16px 이상.",
+    "foundation.component.hit-area-min": "하드 섀도 오프셋을 포함한 투명 가상 요소(::after)로 44px(권장 48px). 근거 SC 2.5.5(원문의 2.5.8은 24px 최소 기준).",
+    "foundation.component.hard-shadow-elements-per-view": "단일 뷰 3요소 원칙 — CTA 1 + 중요 카드 2.",
+    "foundation.motion.reduced": "prefers-reduced-motion: reduce에서 translate·steps 전부 끄고 색상 반전 또는 보더 두께 전환으로 대체."
+  },
+  "foundation": {
+    "color": {
+      "base": {
+        "black": "#000000",
+        "white": "#FFFFFF",
+        "cream-50": "#FFFDF8",
+        "dark-900": "#121212",
+        "focus-ring": "#3366FF",
+        "primary-500": "<프로젝트별 지정 필수>",
+        "primary-600": "{foundation.color.base.black}",
+        "primary-50": "{foundation.color.base.cream-50}",
+        "accent-2": "<프로젝트별 지정 필수>",
+        "accent-3": "<프로젝트별 지정 필수>"
+      },
+      "semantic": {
+        "light": {
+          "bg-canvas": "{foundation.color.base.cream-50}",
+          "bg-surface": "{foundation.color.base.white}",
+          "bg-surface-elevated": "{foundation.color.base.white}",
+          "bg-subtle": "{foundation.color.base.cream-50}",
+          "text-primary": "{foundation.color.base.black}",
+          "text-secondary": "{foundation.color.base.black}",
+          "text-tertiary": "{foundation.color.base.black}",
+          "text-inverse": "{foundation.color.base.white}",
+          "text-brand": "{foundation.color.base.black}",
+          "text-on-accent": "{foundation.color.base.black}",
+          "text-link-hover": "{foundation.color.base.focus-ring}",
+          "fill-brand-primary": "{foundation.color.base.primary-500}",
+          "fill-brand-secondary": "{foundation.color.base.white}",
+          "fill-accent-2": "{foundation.color.base.accent-2}",
+          "fill-accent-3": "{foundation.color.base.accent-3}",
+          "border-subtle": "{foundation.color.base.black}",
+          "border-default": "{foundation.color.base.black}",
+          "border-strong": "{foundation.color.base.black}",
+          "border-focus": "{foundation.color.base.focus-ring}",
+          "border-focus-on-accent": "{foundation.color.base.black}",
+          "shadow-hard": "{foundation.color.base.black}"
+        },
+        "dark": {
+          "_variant": "다크 변형【조건부】",
+          "bg-canvas": "{foundation.color.base.dark-900}",
+          "bg-surface": "{foundation.color.base.dark-900}",
+          "text-primary": "{foundation.color.base.white}",
+          "text-secondary": "{foundation.color.base.white}",
+          "text-inverse": "{foundation.color.base.black}",
+          "text-link-hover": "{foundation.color.base.primary-500}",
+          "border-default": "{foundation.color.base.white}",
+          "border-strong": "{foundation.color.base.primary-500}",
+          "border-focus": "{foundation.color.base.focus-ring}",
+          "shadow-hard": "{foundation.color.base.primary-500}"
+        }
+      }
+    },
+    "typography": {
+      "font-family": {
+        "display": "'Syne', 'Archivo Black', 'Do Hyeon', 'Pretendard Variable', Pretendard, sans-serif",
+        "retro": "'NeoDunggeunmo', 'Neo둥근모', monospace",
+        "sans": "'Pretendard Variable', Pretendard, -apple-system, BlinkMacSystemFont, system-ui, sans-serif",
+        "caption-alt": "'Space Grotesk', 'Pretendard Variable', Pretendard, sans-serif"
+      },
+      "display-to-body-ratio-min": "2.5",
+      "scale": {
+        "display-1": { "size": "56px", "line-height": "1.1", "letter-spacing": "-0.04em", "weight": "900", "family": "display" },
+        "title-1": { "size": "36px", "line-height": "1.2", "letter-spacing": "-0.03em", "weight": "800", "family": "display" },
+        "title-2": { "size": "24px", "line-height": "1.3", "letter-spacing": "-0.02em", "weight": "700", "family": "sans" },
+        "headline": { "size": "18px", "line-height": "1.6", "letter-spacing": "0", "weight": "500", "family": "sans" },
+        "body-1": { "size": "16px", "line-height": "1.65", "letter-spacing": "0", "weight": "400", "family": "sans" },
+        "body-2": { "size": "15px", "line-height": "1.65", "letter-spacing": "0", "weight": "400", "family": "sans" },
+        "caption": { "size": "12px", "line-height": "1.3", "letter-spacing": "0.02em", "weight": "700", "family": "sans" }
+      }
+    },
+    "spacing": {
+      "space-xs": "4px", "space-sm": "8px", "space-md": "16px", "space-lg": "24px", "space-xl": "32px", "space-2xl": "48px", "space-3xl": "64px",
+      "card-padding": "24px", "section-gap": "48px~64px", "mobile-adjacent-margin-min": "16px"
+    },
+    "radius": {
+      "radius-xs": "2px", "radius-sm": "0px", "radius-md": "0px", "radius-lg": "0px", "radius-xl": "0px", "radius-2xl": "0px", "radius-full": "0px"
+    },
+    "border": {
+      "width-thin": "1px", "width-default": "2px", "width-thick": "3px", "width-heavy": "4px",
+      "card": "3px", "cta": "3px", "button-secondary": "2px", "input": "2px", "nav-bottom": "3px",
+      "box-sizing": "border-box"
+    },
+    "shadow": {
+      "elevation-1": "2px 2px 0px {foundation.color.base.black}",
+      "elevation-2": "4px 4px 0px {foundation.color.base.black}",
+      "elevation-3": "8px 8px 0px {foundation.color.base.black}",
+      "card": "5px 5px 0px {foundation.color.base.black}",
+      "card-featured": "8px 8px 0px {foundation.color.base.black}",
+      "cta-rest": "4px 4px 0px {foundation.color.base.black}",
+      "cta-pressed": "0px 0px 0px {foundation.color.base.black}",
+      "button-secondary-rest": "3px 3px 0px {foundation.color.base.black}",
+      "input": "3px 3px 0px {foundation.color.base.black}",
+      "nav-bottom": "0px 4px 0px {foundation.color.base.black}",
+      "mobile-max": "2px 2px 0px {foundation.color.base.black}",
+      "focus-ring": "outline: 3px solid {foundation.color.base.focus-ring}; outline-offset: 3px",
+      "focus-ring-on-accent": "box-shadow: 0 0 0 3px {foundation.color.base.white}; outline: 3px solid {foundation.color.base.black}; outline-offset: 3px"
+    },
+    "motion": {
+      "duration-instant": "40ms", "duration-fast": "80ms", "duration-normal": "150ms",
+      "easing-snap": "cubic-bezier(0, 0, 0.2, 1)", "easing-pixel-steps": "steps(2, jump-none)",
+      "hover-translate": "-1px", "hover-shadow-grow": "1px", "press-translate": "same-as-shadow-offset", "press-shadow": "0"
+    },
+    "component": {
+      "input-height": "48px", "button-height-visual-min": "36px", "hit-area-min": "44px", "hit-area-recommended": "48px",
+      "cutout-stroke": "2px~3px", "icon-stroke": "2.5px~3px", "icon-cap": "square", "icon-join": "miter",
+      "hard-shadow-elements-per-view": "cta 1 + card 2", "mobile-breakpoint": "768px"
+    }
+  }
+}
