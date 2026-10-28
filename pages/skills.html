@@ -695,6 +695,135 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
   <div class="step"><div class="t">/release-notes v1.0.0</div><p>Release day only. Reads the feature docs the rest of the week built up.</p></div>
 </div>
 
+<h2>Checking one piece of work, and only that</h2>
+<p class="lead">If you have just added feature A to a product already in production, what needs checking is A and whatever A touched &mdash; not the whole product. No single skill does all of it. Four skills that know how to narrow their scope do it together: the code side scopes by git diff or branch, the behaviour side by feature ID (F-xxx). If A was built on its own branch, that branch name is all it takes to mean &ldquo;only A&rdquo;.</p>
+<div class="path">
+  <div class="p">
+    <div class="k">1</div>
+    <div>
+      <div class="c"><span class="sl">/</span>feature-docs sync</div>
+      <div class="w">Writes A down as a spec with test cases &mdash; the cases the next step runs come from here. If the product has no <code>docs/features/</code> yet, <code>/feature-docs init</code> comes first: the existing features need documenting once before you can tell whether A broke any of them.</div>
+    </div>
+  </div>
+  <div class="p">
+    <div class="k">2</div>
+    <div>
+      <div class="c"><span class="sl">/</span>feature-test F-&lt;A&gt;</div>
+      <div class="w">Runs only A's cases on the real screen, and sorts each failure into code bug, stale doc or environment problem. If A touched other features, pass their IDs too.</div>
+    </div>
+  </div>
+  <div class="p">
+    <div class="k">3</div>
+    <div>
+      <div class="c"><span class="sl">/</span>refactor check</div>
+      <div class="w">Changes nothing and only verifies side effects &mdash; caller contracts, baseline tests, a real run. With no range it checks the current diff; once A is committed, give its span as <code>commitA..commitB</code>.</div>
+    </div>
+  </div>
+  <div class="p">
+    <div class="k">4</div>
+    <div>
+      <div class="c"><span class="sl">/</span>code-review</div>
+      <div class="w">Built into Claude Code (Dandi does not install it). With no target it reviews the current diff; give a branch or PR number to review just that &mdash; e.g. <code>/code-review high feature/A</code>. For security, follow it with the built-in <code>/security-review</code>.</div>
+    </div>
+  </div>
+</div>
+<p class="pathnote">Steps 3 and 4 need nothing set up &mdash; git is enough, today. Steps 1 and 2 need the feature-docs set (03 §7) installed.</p>
+
+<h2>Release day, from stale docs to release notes</h2>
+<p class="lead">The day above gives release day a single line. Taken apart it is four skills, and the order matters: the notes are built from the feature docs and the latest test report, so both should be current before you write them.</p>
+<div class="path">
+  <div class="p">
+    <div class="k">1</div>
+    <div>
+      <div class="c"><span class="sl">/</span>feature-doc-audit</div>
+      <div class="w">No browser, no tests &mdash; just which docs fell behind the code and which feature to sync first.</div>
+    </div>
+  </div>
+  <div class="p">
+    <div class="k">2</div>
+    <div>
+      <div class="c"><span class="sl">/</span>feature-docs sync</div>
+      <div class="w">Folds those changes back into the specs. Skip it and every commit no doc covers turns up in the notes under a separate &ldquo;not in the docs&rdquo; list instead of under its feature.</div>
+    </div>
+  </div>
+  <div class="p">
+    <div class="k">3</div>
+    <div>
+      <div class="c"><span class="sl">/</span>feature-test</div>
+      <div class="w">With no argument, every case. It fixes nothing: a stale doc goes back to step 2 with your approval, and a code bug stays in the report for you to decide on.</div>
+    </div>
+  </div>
+  <div class="p">
+    <div class="k">4</div>
+    <div>
+      <div class="c"><span class="sl">/</span>release-notes &lt;last tag&gt;</div>
+      <div class="w">From that tag to <code>HEAD</code>, grouped by feature, with the last test report in that range summarised. Whatever the docs and the diff cannot settle is marked for you to confirm, not invented.</div>
+    </div>
+  </div>
+</div>
+<p class="pathnote">Steps 1&ndash;3 need the feature-docs set (03 §7) with <code>/feature-docs init</code> already run. <code>/release-notes</code> alone carries on without it &mdash; from <code>git log</code>, as a list of commits rather than features.</p>
+
+<h2>Building a new screen for Korean users</h2>
+<p class="lead">Three skills share this job, and each owns a different part: one sets the direction, one holds it to what Korean users expect, one checks the result on the real screen. Used in this order they do not fight &mdash; and where they disagree, the hard rules win.</p>
+<div class="path">
+  <div class="p">
+    <div class="k">1</div>
+    <div>
+      <div class="c"><span class="sl">/</span>frontend-design</div>
+      <div class="w">The direction first &mdash; palette, type and layout, decided before the markup. Anthropic publishes it; Dandi installs it (03 §3).</div>
+    </div>
+  </div>
+  <div class="p">
+    <div class="k">2</div>
+    <div>
+      <div class="c"><span class="sl">/</span>kr-ui-guide</div>
+      <div class="w">Then the constraints &mdash; contrast with the ratio worked out, touch targets, labelled icons, one accent action, fonts only once their licence is read. Where these hard rules clash with the direction, they win; its softer defaults give way. Brand colours are asked for, never guessed, and the finished screen is checked against its checklist.</div>
+    </div>
+  </div>
+  <div class="p">
+    <div class="k">3</div>
+    <div>
+      <div class="c"><span class="sl">/</span>browser-check</div>
+      <div class="w">Then the real screen. Whether it <em>looks</em> right &mdash; layout, overlap, colour, spacing &mdash; is answered by a screenshot, never by the page text, with a before-and-after pair as the default.</div>
+    </div>
+  </div>
+</div>
+<p class="pathnote">If the project already has a design system or tokens, its values beat kr-ui-guide&rsquo;s defaults; the hard rules still apply. Steps 2 and 3 usually load themselves &mdash; you rarely type them.</p>
+
+<h2>When another session is already in this folder</h2>
+<p class="lead">Two sessions in one folder share one working tree, so their uncommitted changes mix. You find out either from the session board, if you installed it, or when <code>/resume</code> turns up uncommitted work you do not recognise. The way out is the same either way.</p>
+<div class="path">
+  <div class="p">
+    <div class="k">1</div>
+    <div>
+      <div class="c"><span class="sl">/</span>session-board</div>
+      <div class="w">Lists the other sessions, their branches and the files they edited, and suggests a worktree when those files overlap with yours. Without it, <code>/resume</code> asking about unfamiliar uncommitted work is the same signal &mdash; tell it the work is not yours.</div>
+    </div>
+  </div>
+  <div class="p">
+    <div class="k">2</div>
+    <div>
+      <div class="c">&ldquo;move this work to a worktree&rdquo;</div>
+      <div class="w">Just say it. Claude creates a numbered worktree (<code>.claude/worktrees/001-&hellip;</code>, on a branch carrying the same number) and tells you the number. The sooner the better: it starts from the default branch, so changes already made in the shared folder do not come along.</div>
+    </div>
+  </div>
+  <div class="p">
+    <div class="k">3</div>
+    <div>
+      <div class="c"><span class="sl">/</span>resume 001</div>
+      <div class="w">Next time, the number takes you straight back into that worktree &mdash; even if the worktree was removed and only its branch is left.</div>
+    </div>
+  </div>
+  <div class="p">
+    <div class="k">4</div>
+    <div>
+      <div class="c"><span class="sl">/</span>wrap</div>
+      <div class="w">Reports only the files this session edited and lists the rest as outside this session, so the other session&rsquo;s half-done work does not slip into your commit.</div>
+    </div>
+  </div>
+</div>
+<p class="pathnote">Numbered worktrees are not removed when the session ends &mdash; removing one after you merge is your call. The board only warns; it never stops an edit.</p>
+
 <h2>Keeping all of this up to date</h2>
 <p class="lead">Documents change. Skills change. Each command answers a different question, and mixing them up is the most common way people end up running a stale setup.</p>
 <table>
@@ -745,7 +874,7 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
 </div>
 <p class="lead" style="margin-top:16px">Every one of these has a documented removal path, which is deliberate: an install you cannot reverse was never really a choice. The full procedures &mdash; detect, install, verify, remove &mdash; are in the documents themselves. For what each install question means, see the <a href="options.html">options dictionary</a>; to work through it step by step, take the <a href="learn.html">course</a>. Some install items are missing here on purpose: policy notes (03 §11) and the feature change log (03 §13) add rule files, <code>.claude/rules/policy-recording.md</code> and <code>.claude/rules/feature-log.md</code>, not skills &mdash; there is no command to call, so they have no card.</p>
 
-<footer>Dandi &middot; Skill catalog &middot; 2026-10-26 &middot; Skills installed by documents 01 §D-4, 02 STEP 3 ⓔ, 03 §2, §3, §5, §7, §8, §9, §10 and §12. Commands are shown without an alias; apply yours if you chose one at install time. &middot; Fonts: Pretendard, IBM Plex Mono &mdash; both SIL Open Font License 1.1 (free for commercial use and web embedding)</footer>
+<footer>Dandi &middot; Skill catalog &middot; 2026-10-28 &middot; Skills installed by documents 01 §D-4, 02 STEP 3 ⓔ, 03 §2, §3, §5, §7, §8, §9, §10 and §12. Commands are shown without an alias; apply yours if you chose one at install time. &middot; Fonts: Pretendard, IBM Plex Mono &mdash; both SIL Open Font License 1.1 (free for commercial use and web embedding)</footer>
 
 </div>
 <script>

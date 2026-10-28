@@ -479,9 +479,17 @@ footer{max-width:1120px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
       <p>Pick <b>frontend-design</b> or <b>kr-ui-guide</b> and one more question follows &mdash; a <b>font licence policy</b>, written into the <code class="i">CLAUDE.md</code> of the scope you installed into.
       <b>Free fonts only</b> (the default) turns down any font that is not free to use and offers a free alternative instead; <b>tell me the terms first</b> explains the conditions and waits for your call; <b>skip it</b> writes no policy at all.
       One policy covers whichever design skill you end up using &mdash; frontend-design on its own does not look at licences, and it is the one that changes typography most eagerly.</p>
+      <div class="coach tip" style="margin-top:8px"><span class="who">💡</span><div>
+        <b>Asked for approval every time a policy note or feature-log line is written?</b>
+        Both write under <code class="i">.claude/</code>, which Claude Code treats as a protected folder. In the default mode and the accept-edits mode each write asks for your approval; in a non-interactive <code class="i">-p</code> run outside auto mode or <code class="i">dontAsk</code> mode it is refused; an <code class="i">allow</code> rule does not lift that. Auto mode and <code class="i">bypassPermissions</code> let it through. The install tells you this when you pick either item.
+      </div></div>
       <div class="coach warn" style="margin-top:8px"><span class="who">🔴</span><div>
         <b>At work</b> MCP can send your conversation outside, and a connected browser can reach your logged-in sessions.
         Connect only servers your organization allows, and narrow the extension&rsquo;s site permissions to localhost.
+      </div></div>
+      <div class="coach tip" style="margin-top:8px"><span class="who">💡</span><div>
+        <b>Not sure whether this counts as a company repository?</b>
+        Say you don&rsquo;t know. For MCP servers and browser verification, &ldquo;don&rsquo;t know&rdquo; is treated as a company repository: that item is held back until it is approved, the rest still installs, and the install record notes why. Once approval comes, the next re-run asks about it again.
       </div></div>
     </div>
   </details>
@@ -593,6 +601,10 @@ footer{max-width:1120px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
   <p><code>/dropin-apply</code> is also the first-install command, so you never have to work out which case you are in. If the command does not exist there yet, say it in words instead: <i>&ldquo;read <code>00_&#54648;&#54633;-&#49444;&#52824;.md</code> from the repository and apply it to this machine&rdquo;</i> &mdash; and the command arrives with everything else.</p>
   <h3>Why a name check is not enough</h3>
   <p>A skill can be revised without gaining or losing a single file &mdash; only its wording changes. A check that compares file names calls that &ldquo;already current&rdquo;. The install steps compare file <b>contents</b> as well, which is why a wording-only revision still reaches your disk.</p>
+  <div class="coach tip"><span class="who">💡</span><div>
+    <b>Re-running stops and says the record is newer than your documents?</b>
+    That happens when another PC or a teammate already installed with newer documents than the copy on this machine. Carrying on would overwrite the setup with the older procedure, so Claude updates the documents first and then starts the re-apply again. If the documents cannot be fetched, only that document is skipped, and a note stays in this machine&rsquo;s record so the next run tries again.
+  </div></div>
 </section>
 
 <section class="chapter" data-ch="11" aria-labelledby="t11" hidden>
@@ -626,7 +638,7 @@ footer{max-width:1120px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
 </div>
 
 <footer>
-  Dandi &middot; Install options course &middot; 2026-10-26<br>
+  Dandi &middot; Install options course &middot; 2026-10-28<br>
   The source of truth for each item is its own document (01&ndash;06). This page exists for people to learn from; it does not change the install procedure. Progress is stored only in this browser&rsquo;s localStorage.<br>
   저장소: github.com/EleninJayTech/claude ·
   <a href="../index.html">Guide</a> &middot; <a href="intro.html">Intro</a> &middot; <a href="demo.html">Walkthrough</a> &middot; <a href="options.html">Dictionary</a> &middot; <a href="skills.html">Skill catalog</a><br>

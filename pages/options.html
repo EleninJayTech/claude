@@ -432,7 +432,7 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
   </div>
   <p><b>Global items the record says were installed but this PC does not have yet</b> (<code class="i">/resume</code> and <code class="i">/wrap</code>, for instance) are offered for install on any re-run, <b>whatever the version</b> (items that are off by default are shown unticked) &mdash; otherwise a newcomer&rsquo;s PC would be reported &ldquo;up to date&rdquo; without them. Anything you turn down is noted in your own PC&rsquo;s record, so it is not offered again.</p>
 
-  <h3>2-7. Skill name alias &mdash; none / prefix / suffix / only the ones you pick</h3>
+  <h3>2-7. Skill name alias &mdash; none / all / only the ones you pick · prefix or suffix</h3>
   <p><b>A safeguard for when names collide.</b> The skill names installed here (<code class="i">resume</code>, <code class="i">wrap</code>, <code class="i">svg-design</code>&hellip;) are common ones. If a <b>different skill of the same name</b> already exists on your machine, that one wins &mdash; the install succeeds but the wrong thing runs, or the one you were using gets buried.</p>
   <div class="opt">
     <div class="opt-head"><span class="name">Alias</span><span class="badge b-off">default = none</span></div>
@@ -777,6 +777,7 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
       <dt>Token cost</dt><dd>Each policy file is tied to <b>the code paths it governs</b>, so it loads only when that code is read or edited. Day to day, only the instruction file and its index are loaded</dd>
       <dt>When an inferred policy matters</dt><dd>If the implementation depends on an inferred policy, Claude asks you in one line before going on, and marks it confirmed once you answer. If a request goes against a policy, Claude points to it &mdash; and then <b>follows your decision</b></dd>
       <dt>Scope</dt><dd><b>Project only</b>, so you are not asked &mdash; a policy is a fact about that product, and as a global it would leak into other projects. Sharing with the team is the default, so you are prompted to commit it; in a team repository you are told the first commit needs the team&rsquo;s agreement. In a multi-repository workspace it goes into <b>each sub-repository</b>, not the parent folder</dd>
+      <dt>If it asks for approval on every note</dt><dd>The <code class="i">.claude/</code> folder is a path Claude Code protects, so in the default permission mode and in accept-edits mode <b>every write asks for approval</b>. Run through <code>claude -p</code> outside auto mode, or in the deny-without-asking mode (<code class="i">dontAsk</code>), the write is <b>refused</b>, and adding an allow rule (<code class="i">permissions.allow</code>) does not lift it. Only auto mode and the bypass mode (<code class="i">bypassPermissions</code>) write without asking. You are told this at install</dd>
       <dt>Why it is off by default</dt><dd>It loads a recording instruction on every turn and writes files to a committed path, so <b>no mode switches it on for you</b> (recommended and full mode show it unticked too). Tick it yourself in a development repository with plenty of product rules. In a repository with no code it is left out of the list and recorded as &ldquo;not applicable&rdquo;</dd>
       <dt>If a similar document exists</dt><dd>If you already keep a document of policies, business rules or status transitions, you are asked keep / reconcile / replace. Pick keep and that document stays where it is, unmoved; the instruction file is created and <b>the document is linked from its index</b> in one line</dd>
       <dt>On a re-run</dt><dd>If the instruction file differs from the new version, reconcile is offered as the default. The <b>index</b> built up so far (the list of policies) is your data and is kept whatever you choose</dd>
@@ -810,6 +811,7 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
       <dt>Token cost</dt><dd>Each area file is tied to <b>the code paths it covers</b>, so it loads only when that code is read or edited. Day to day, only the instruction file and its index are loaded</dd>
       <dt>Bringing back a removed feature</dt><dd>If a request would end up restoring a feature marked removed, Claude tells you in one line why it was removed &mdash; and then <b>follows your decision</b></dd>
       <dt>Scope</dt><dd><b>Project only</b>, so you are not asked &mdash; features are a fact about that product. You are prompted to commit it; in a team repository you are told the first commit needs the team&rsquo;s agreement. In a multi-repository workspace it goes into <b>each sub-repository</b></dd>
+      <dt>If it asks for approval on every note</dt><dd>Same as &sect;11 &mdash; it writes under the same <code class="i">.claude/rules/</code>, so in the default and accept-edits modes each write asks for approval, under <code>claude -p</code> outside auto mode and under <code class="i">dontAsk</code> it is refused, and an allow rule does not lift that (auto and <code class="i">bypassPermissions</code> modes go through). You are told this at install</dd>
       <dt>Why it is off by default</dt><dd>It loads a recording instruction on every turn and writes files to a committed path, so <b>no mode switches it on for you</b>. Tick it yourself in a development repository whose features change often. In a repository with no code it is left out of the list and recorded as &ldquo;not applicable&rdquo;</dd>
       <dt>Difference from &sect;7</dt><dd>&sect;7 is a skill set that checks every existing feature against the code and the screen and turns it into a detailed spec (it needs <code>/feature-docs init</code> first and runs when you call it); this item is a standing instruction that only stacks up changes from the install on, one line each. If you want existing features documented too, use &sect;7. If &sect;7 specs already exist you are told &sect;7 holds the same feature definitions in more detail &mdash; pick it anyway and it is still installed</dd>
       <dt>If a similar document exists</dt><dd>If you already keep a document listing features or their change history (a CHANGELOG does not count), you are asked keep / reconcile / replace. Pick keep and that document stays where it is; <b>it is linked from the index</b> in one line</dd>
@@ -1070,6 +1072,9 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
   <h3>I started with minimal &mdash; how do I add more later?</h3>
   <p>Two ways. When your work needs an item, Claude suggests it in one line once the current task is done (01 &#9430;) &mdash; accept and only what you pick is installed. Or call <code class="i">/dropin-apply 추천</code> yourself at any time. Either way the safety questions still appear, and a declined item is not suggested again.</p>
 
+  <h3>How do I install on a PC with no internet access?</h3>
+  <p>Move a folder holding the whole document repository (a git clone or a plain copy) onto that PC. Claude looks for the documents in this order &mdash; &#9312; a copy in this folder (or <code class="i">docs/</code>) &rarr; &#9313; a clone of the repository on this PC &mdash; and if neither turns up, <b>it asks for a folder path</b>. Point it at the folder you moved and it reads from there; where it read from is kept in the source field of the install record. If it cannot get the documents from anywhere, it does not ask about modes &mdash; it <b>gives you the repository address and how to fetch it, then stops</b>, rather than calling it &ldquo;done&rdquo; with nothing installed.</p>
+
   <h3>I am worried something will get overwritten</h3>
   <p>
     The principle running through the whole install is <b>&ldquo;never overwrite without approval&rdquo;</b>. Detected settings always
@@ -1104,7 +1109,7 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
 <a class="totop" href="#toc">&uarr; Contents</a>
 
 <footer>
-  Dandi &middot; Install options dictionary &middot; based on 00_통합-설치.md &middot; 2026-10-26<br>
+  Dandi &middot; Install options dictionary &middot; based on 00_통합-설치.md &middot; 2026-10-28<br>
   The source of truth for each item is its own document (01&ndash;06). This page exists so people can read and judge; it does not change the install procedure itself.<br>
   Repository: github.com/EleninJayTech/claude &middot;
   <a href="../index.html">Guide</a> &middot; <a href="intro.html">Intro</a> &middot; <a href="demo.html">Walkthrough</a> &middot; <a href="learn.html">Course</a> &middot; <a href="skills.html">Skill catalog</a><br>
