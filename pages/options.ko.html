@@ -607,7 +607,7 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
     <dl>
       <dt>고르는 요령</dt><dd>기존 코드를 <b>고치는 일</b>(전환·리팩터)이면 spec-writer를 뺀 나머지. <b>새로 만드는 일</b>이면 surveyor·triage를 빼고 <b>spec-writer</b>(명세 작성)부터 시작</dd>
       <dt>어디에 둘지</dt><dd><b>팀 공유</b> = 프로젝트 <code>.claude/agents/</code>(커밋 — 팀원 모두 사용) / <b>개인 실험</b> = <code>~/.claude/agents/</code>(내 PC 전용). 어떤 모드를 골라도 물어봅니다</dd>
-      <dt>병렬 제안</dt><dd>일이 크고 조각끼리 같은 파일을 안 건드리면 implementer를 <b>여러 개 동시에</b> 돌리는 구성(<code>isolation: worktree</code>)도 선택지로 나옵니다</dd>
+      <dt>병렬 제안</dt><dd>일이 크고 조각끼리 같은 파일을 안 건드리면 implementer를 <b>여러 개 동시에</b> 돌리는 구성(<code>isolation: worktree</code>)도 선택지로 나옵니다. 붙이는 방식은 둘 중 하나입니다 — implementer 파일에 <b>늘 붙여 두기</b> / <b>동시에 돌릴 때만 붙이기</b>(순서대로 하는 단계는 격리 작업 폴더를 매번 만들지 않아 가볍습니다. 이 방식은 파일에 흔적이 남지 않아 ⓓ 핸드오프 규약 문서에 그 규칙을 적어 둡니다)</dd>
     </dl>
   </div>
 
@@ -692,12 +692,16 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
     <div class="opt-head"><span class="id">§5</span><span class="name">브라우저 검증</span><span class="badge b-off">디자인 번들</span></div>
     <p class="lead">만든 화면을 <b>Claude가 직접 열어보고 고치게</b> 합니다. “만들고 → 스스로 확인하고 → 고친다” 루프가 완성됩니다.</p>
     <dl>
-      <dt>브라우저 경로</dt><dd>환경에 맞는 것을 고릅니다. Desktop 앱이면 <b>내장 브라우저</b>(설치 불필요 — 로컬 세션에서 Claude가 띄운 <code>localhost</code> 개발 서버를 바로 엽니다. 고친 뒤 자동으로 확인하는 기능이 기본으로 켜져 있습니다. <b>SSH 세션에서는 못 쓰고</b>, 내 브라우저와 분리된 프로필이라 개인 계정 로그인이 필요한 작업엔 맞지 않습니다) / CLI·IDE에서 Chrome을 쓰면 <b>Claude in Chrome 확장</b>(내 로그인 상태를 그대로 씁니다. Anthropic과 직접 계약한 Pro·Max·Team·Enterprise만 — Bedrock·Google Cloud·Foundry 경유는 불가) — 확장 설치만으론 연결되지 않고 <code>claude --chrome</code>이나 <code>/chrome</code>으로 활성화 + <code>/login</code> 인증이 필요하다(WSL 미지원) / 화면 있는 브라우저를 붙일 수 없는 환경(WSL·SSH·CI)이면 <b>Playwright CLI</b>(화면 없이 도는 브라우저 · Node.js 18 이상 — 페이지 내용을 파일로 남겨 대화에 싣지 않습니다. 다른 경로와 함께 둘 수 있습니다) / 그 외는 참고만</dd>
-      <dt>Chrome을 기본으로 켜 두면</dt><dd>브라우저 도구와 지시문이 <b>매 세션</b> 컨텍스트에 실립니다. 브라우저를 매일 쓰지 않으면 꺼 두고, 필요할 때 <code>claude --chrome</code>으로 연결하는 편이 낫습니다</dd>
-      <dt>함께 깔리는 확인 규칙</dt><dd>어느 경로를 고르든 <b><code>browser-check</code> 스킬</b>이 함께 깔립니다. Claude가 화면을 확인할 때 <b>무엇으로 볼지를 질문에 맞춰</b> 고르게 하는 규칙입니다 — 화면을 그릴 필요가 없으면 HTTP 응답으로, 글자·요소·콘솔·네트워크는 텍스트로 읽고, <b>보이는 모습 자체가 질문일 때만 스크린샷</b>, 되풀이되는 확인은 스크립트로. 텍스트로 읽은 결과가 비거나 애매하면 한 단계 올립니다. 스크린샷은 1920×1080 한 장이 약 2.7천 토큰이라, 꼭 필요할 때만 찍는 것이 품질과 절약 양쪽에 맞습니다. 앱을 띄우는 방법은 다루지 않습니다</dd>
+      <dt>브라우저 경로(여러 개 선택)</dt><dd>§5를 고르면 <b>무엇으로 화면을 열지</b> 따로 묻습니다. 여럿 함께 둘 수 있고, 이 PC에 이미 깔린 것은 선택지 옆에 표시됩니다. 그 밖의 수단은 참고만 하고 깔지 않습니다</dd>
+      <dt>Playwright CLI(기본 체크)</dt><dd><b>생기는 것</b> — 화면 없이 도는 브라우저(Node.js 18 이상). 페이지 내용을 파일로 남겨 대화에 싣지 않고, <b>내가 쓰는 브라우저를 차지하지 않아</b> 여러 세션이 동시에 확인할 수 있습니다. WSL·SSH·CI에서도 같은 방식으로 돌아서, <b>화면이 있는 PC에서도 이것이 기본</b>입니다. 로그인이 필요한 화면은 테스트 계정으로 한 번 로그인해 저장한 상태 파일로 엽니다(이 파일은 커밋되지 않게 <code>.gitignore</code>에 넣습니다). <b>안 고르면</b> — 아래 다른 경로로만 확인합니다</dd>
+      <dt>Claude in Chrome(보조)</dt><dd><b>생기는 것</b> — 내 Chrome에 공식 확장을 붙여 <b>내 로그인 상태 그대로</b> 확인합니다. SSO·2단계 인증처럼 <b>내 실제 로그인이 꼭 필요할 때만</b> 권합니다 — 내 Chrome 창에서 눈에 보이게 움직이므로 되풀이 확인용으로는 맞지 않습니다. Anthropic과 직접 계약한 Pro·Max·Team·Enterprise만 됩니다(Bedrock·Google Cloud·Foundry 경유는 불가). 확장 설치만으론 연결되지 않고 <code>claude --chrome</code>이나 <code>/chrome</code>으로 활성화 + <code>/login</code> 인증이 필요합니다(WSL 미지원). <b>안 고르면</b> — 내 로그인 세션이 있어야 보이는 페이지는 Claude가 직접 열지 못합니다</dd>
+      <dt>Chrome DevTools MCP(기본 해제)</dt><dd><b>생기는 것</b> — “왜 느리지·왜 깨지지”를 파고드는 <b>원인 디버깅 도구</b>(성능 기록·Lighthouse 점검·메모리·네트워크 상세). Chrome 전용이고, 내 PC 전체용(<code>--scope user</code>)으로만 등록합니다 — 팀 공유 파일(<code>.mcp.json</code>)엔 넣지 않습니다. 닫으면 지워지는 임시 프로필로 열고, 사용 통계 전송은 끈 채로 깝니다. <b>안 고르면</b> — 화면 확인은 그대로 되고, 깊은 성능·메모리 분석만 빠집니다</dd>
+      <dt>Desktop 내장 브라우저(설치 없음)</dt><dd>Desktop 앱에 이미 들어 있어 <b>안내만</b> 합니다 — 로컬 세션에서 Claude가 띄운 <code>localhost</code> 개발 서버를 바로 열고, 고친 뒤 자동으로 확인하는 기능이 기본으로 켜져 있습니다. <b>SSH 세션에서는 못 쓰고</b>, 내 브라우저와 분리된 프로필이라 개인 계정 로그인이 필요한 작업엔 맞지 않습니다. Playwright CLI를 쓰지 않을 때의 Desktop 대안입니다</dd>
+      <dt>Chrome을 기본으로 켜 두면</dt><dd>브라우저 도구와 지시문이 <b>매 세션</b> 컨텍스트에 실립니다. Claude in Chrome은 보조 경로라 확장의 <b>‘Enabled by default’는 끄도록</b> 안내하고, 필요할 때 <code>claude --chrome</code>으로 연결하게 합니다</dd>
+      <dt>함께 깔리는 확인 규칙</dt><dd>어느 경로를 고르든 <b><code>browser-check</code> 스킬</b>이 함께 깔립니다. Claude가 화면을 확인할 때 <b>무엇으로 볼지를 질문에 맞춰</b> 고르게 하는 규칙입니다 — 화면을 그릴 필요가 없으면 HTTP 응답으로, 글자·요소·콘솔·네트워크는 텍스트로 읽고, <b>보이는 모습 자체가 질문일 때만 스크린샷</b>, 되풀이되는 확인은 스크립트로. 텍스트로 읽은 결과가 비거나 애매하면 한 단계 올립니다. 스크린샷은 1920×1080 한 장이 약 2.7천 토큰이라, 꼭 필요할 때만 찍는 것이 품질과 절약 양쪽에 맞습니다. 로그인이 필요한 페이지는 저장해 둔 상태 파일을 먼저 쓰고, 원인을 파고드는 디버깅은 DevTools MCP로 넘깁니다. 앱을 띄우는 방법은 다루지 않습니다</dd>
       <dt>함께 묻는 것</dt><dd>이 스킬도 다른 스킬처럼 <b>스코프</b>(글로벌/프로젝트)와 <b>호출 방식</b>을 묻습니다. 호출 방식은 <b>자동 판단</b>을 권합니다 — 확인하는 순간 스스로 불려야 쓸모가 있고, 수동이면 매번 <code>/browser-check</code>를 직접 불러야 합니다. 스킬 이름 별칭(2-7)도 붙습니다</dd>
-      <dt>회사 주의 🔴</dt><dd>브라우저를 연결하면 <b>로그인된 세션</b>에도 접근할 수 있습니다. 확장의 사이트 권한을 <code>localhost</code>·스테이징으로 최소화하세요</dd>
-      <dt>지울 때</dt><dd>Chrome은 <code>/chrome</code>에서 끄면 연결만 끊기고, 완전히 걷어내려면 확장 제거나 사이트 권한 회수까지 합니다 · Playwright CLI는 <code>npm uninstall -g @playwright/cli</code> · 스킬은 깐 스코프의 <code class="i">browser-check/</code> 폴더를 지웁니다</dd>
+      <dt>회사 주의 🔴</dt><dd>브라우저를 연결하면 <b>로그인된 세션</b>에도 접근할 수 있습니다. 확장의 사이트 권한을 <code>localhost</code>·스테이징으로 최소화하세요. DevTools MCP는 <b>실행 중인 내 Chrome에 붙는 연결 방식을 쓰지 않습니다</b> — 그 프로필의 열린 창이 전부 보이기 때문입니다. 내 브라우저 프로필을 통째로 복사해 쓰는 구성도 쓰지 않습니다</dd>
+      <dt>지울 때</dt><dd>Chrome은 <code>/chrome</code>에서 끄면 연결만 끊기고, 완전히 걷어내려면 확장 제거나 사이트 권한 회수까지 합니다 · Playwright CLI는 <code>npm uninstall -g @playwright/cli</code> · DevTools MCP는 <code>claude mcp remove chrome-devtools --scope user</code> · 스킬은 깐 스코프의 <code class="i">browser-check/</code> 폴더를 지웁니다</dd>
     </dl>
   </div>
 
@@ -1107,7 +1111,7 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
 <a class="totop" href="#toc">↑ 목차</a>
 
 <footer>
-  단디 · 설치 옵션 사전 · 00_통합-설치.md 기준 · 2026-10-29<br>
+  단디 · 설치 옵션 사전 · 00_통합-설치.md 기준 · 2026-10-30<br>
   각 항목의 정본은 해당 하위 문서(01~06)입니다. 이 페이지는 사람이 읽고 판단하기 위한 안내이며, 설치 절차 자체를 바꾸지 않습니다.<br>
   저장소: github.com/EleninJayTech/claude ·
   <a href="../index.ko.html">사용법</a> · <a href="intro.ko.html">소개 영상</a> · <a href="demo.ko.html">설치 시연</a> · <a href="learn.ko.html">학습 코스</a> · <a href="skills.ko.html">스킬 카탈로그</a><br>

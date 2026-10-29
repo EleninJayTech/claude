@@ -1,6 +1,6 @@
 {
   "name": "dandi-browser-check",
-  "version": "1.0.0+66f19e8a",
+  "version": "1.0.0+cbbef0db",
   "description": "Pick the right way to look at a page when verifying or debugging in a browser: HTTP fetch, page text, console and network, or a screenshot when the look itself is the question. Skill instructions are written in Korean.",
   "author": { "name": "EleninJayTech", "url": "https://github.com/EleninJayTech" },
   "homepage": "https://eleninjaytech.github.io/claude/pages/skills.html",

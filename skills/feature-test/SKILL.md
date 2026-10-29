@@ -20,7 +20,7 @@ allowed-tools: Bash(git status *) Bash(git log *) Bash(git diff *) Bash(git rev-
    출력하고, verified_commit 이 그보다 오래된 기능 문서를 미리 표시한다. 실행은 계속한다.
 3. **대상 기동** — 웹은 URL 응답, 앱은 기기 목록으로 떠 있는지 본다. 안 떠 있으면
    PROJECT.md 의 실행 명령으로 띄우거나 사용자에게 요청한다.
-4. **도구** — 웹 케이스는 브라우저 도구(Claude in Chrome·Desktop 내장 브라우저·Playwright CLI) 중
+4. **도구** — 웹 케이스는 브라우저 도구(Playwright CLI·Desktop 내장 브라우저·Claude in Chrome) 중
    하나가 세션에서 쓸 수 있어야 한다. 하나도 없으면 웹 케이스는 "환경 문제(C)" 로 전부 제외하고
    알린다. 앱 케이스는 캡처·UI 덤프 수단(adb / xcrun simctl)을 확인한다.
 

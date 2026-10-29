@@ -1,6 +1,6 @@
 ---
 name: browser-check
-description: 브라우저로 화면·페이지를 확인하거나 디버깅할 때 관찰 수단을 고르는 규칙 — 만든 화면 확인, UI 검증, 배포된 페이지 확인, 콘솔·네트워크 오류 디버깅, 스크린샷을 찍으려 할 때 쓴다. Claude in Chrome·Desktop 내장 브라우저·Playwright CLI 어느 것을 쓰든 적용한다. 앱을 띄우는 방법은 다루지 않는다(내장 /run·/verify 레시피 몫).
+description: 브라우저로 화면·페이지를 확인하거나 디버깅할 때 관찰 수단을 고르는 규칙 — 만든 화면 확인, UI 검증, 배포된 페이지 확인, 콘솔·네트워크 오류 디버깅, 스크린샷을 찍으려 할 때 쓴다. Playwright CLI·Desktop 내장 브라우저·Claude in Chrome·Chrome DevTools MCP 어느 것을 쓰든 적용한다. 앱을 띄우는 방법은 다루지 않는다(내장 /run·/verify 레시피 몫).
 ---
 
 # browser-check
@@ -14,8 +14,9 @@ description: 브라우저로 화면·페이지를 확인하거나 디버깅할 �
 | 질문 | 수단 |
 |---|---|
 | 렌더링 없이 답이 나온다 — 서빙된 파일 내용·HTTP 상태·빌드 산출물·링크 존재 | `curl`(Windows는 `Invoke-WebRequest`) + 검색. 브라우저가 필요 없다 |
-| DOM·텍스트·폼 상태·요소 존재·콘솔 오류·네트워크 실패 | 브라우저의 **텍스트 채널** — Chrome·Desktop: 페이지 텍스트(`get_page_text`)·요소 트리(`read_page`·`find`)·콘솔/네트워크 읽기(패턴 필터) / Playwright CLI: `snapshot`(파일로 저장) 후 검색·`console`·`requests` |
+| DOM·텍스트·폼 상태·요소 존재·콘솔 오류·네트워크 실패 | 브라우저의 **텍스트 채널** — Playwright CLI: `snapshot`(파일로 저장) 후 검색·`console`·`requests` / Chrome·Desktop: 페이지 텍스트(`get_page_text`)·요소 트리(`read_page`·`find`)·콘솔/네트워크 읽기(패턴 필터) |
 | 보이는 모습 자체 — 레이아웃·겹침·잘림·색·간격·디자인 시안 대조·반응형 | **스크린샷이 필수다.** 텍스트로 대체하지 않는다. 범위는 대상 요소·뷰포트로 좁히고, 변경 전후 한 쌍을 기본으로 한다 |
+| 왜 느린가·왜 실패하는가 — 성능·로드 지연·메모리·Lighthouse 점수 | Chrome DevTools MCP(설치돼 있으면) — 성능 트레이스·Lighthouse·네트워크 상세. 없으면 텍스트 채널의 콘솔·네트워크까지 보고, 성능 원인은 확인하지 못했다고 밝힌다 |
 | 같은 확인을 되풀이한다(수정-확인 루프 3회째·회귀) | 스크립트로 굳힌다 — 프로젝트의 e2e 도구, 있으면 `/test-to-script`. 실행 비용은 출력뿐이고 판정이 결정적이다 |
 
 ## 2. 안정성 — 아끼느라 틀리지 않는다
@@ -25,13 +26,15 @@ description: 브라우저로 화면·페이지를 확인하거나 디버깅할 �
 - 디버깅은 콘솔·네트워크부터 — 찾을 패턴(error·4xx/5xx·특정 메시지)을 정해 걸러 읽는다. 전체 로그를 통째로 읽지 않는다.
 - 페이지 원문이 길면 대화에 통째로 싣지 말고 파일로 받아 검색한다. 정확한 문자열이 판정 근거면 그 줄은 그대로 인용한다.
 - JavaScript 대화상자(alert·confirm)를 띄우는 동작은 피한다 — 브라우저 도구가 멈춘다.
+- 로그인이 필요한 페이지는 **테스트 계정으로 한 번 로그인해 storage state 파일로 저장**(`playwright-cli state-save <파일>`)하고 이후 `state-load <파일>`로 재사용한다. 상태 파일은 쿠키를 담은 시크릿이라 `.gitignore`에 넣고 커밋하지 않는다. 실제 관리자 계정이 로그인된 메인 프로필을 넘기지 않는다.
 
 ## 3. 보고
 - 판정 근거는 **읽은 값이나 명령 출력**으로 남긴다. 시각 판정의 근거는 스크린샷이다.
 - 실패는 재현 단계와 증거(값 또는 스크린샷 1장)를 함께 남긴다.
 
 ## 4. 도구 — 설치된 것 중에서
-- Desktop 앱 로컬 세션: 내장 Browser — Claude가 띄운 localhost 개발 서버를 바로 연다(깨끗한 프로필).
-- 로그인된 내 세션이 필요하다: Claude in Chrome.
-- GUI 브라우저 연결이 없다(WSL·SSH·CI): Playwright CLI(헤드리스 — 명령은 `playwright-cli --help`).
-- 하나도 없으면 curl 단까지만 하고, 화면은 확인하지 못했다고 밝힌다.
+1. 기본: Playwright CLI(헤드리스 — 사용자 브라우저를 점유하지 않고 세션을 여럿 띄울 수 있다. 명령은 `playwright-cli --help`).
+2. Playwright CLI가 없고 Desktop 앱 로컬 세션이면 내장 Browser — Claude가 띄운 localhost 개발 서버를 바로 연다(깨끗한 프로필).
+3. 내 실제 로그인 세션이 꼭 필요하다(SSO·2FA라 storage state로 안 될 때): Claude in Chrome — 사이트 권한은 대상 도메인으로만.
+4. 원인 디버깅: Chrome DevTools MCP(전용 프로필 — 실행 중인 내 Chrome에 붙는 연결 모드 `--autoConnect`는 쓰지 않는다).
+5. 하나도 없으면 curl 단까지만 하고, 화면은 확인하지 못했다고 밝힌다.

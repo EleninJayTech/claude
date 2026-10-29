@@ -47,7 +47,7 @@ CLAUDE.md 규칙을 추가할 때는 `${CLAUDE_SKILL_DIR}/references/template.md
    `flutter devices` 로 기기를 확인하고, 없으면 켜 달라고 요청한다.
 6. **테스트 계정** — .env.example, README, seed/fixture SQL, 테스트 코드에서 찾는다.
    비밀번호는 PROJECT.md 에 저장하지 않고 위치만 적는다 (예: ".env 의 TEST_USER_PW").
-7. **도구** — 세션에 브라우저 도구(Claude in Chrome·Desktop 내장 브라우저·Playwright CLI)가 있는지 확인한다. 없으면 웹 화면 확인을
+7. **도구** — 세션에 브라우저 도구(Playwright CLI·Desktop 내장 브라우저·Claude in Chrome)가 있는지 확인한다. 없으면 웹 화면 확인을
    [화면 미확인] 으로 진행하고 사용자에게 알린다. 앱은 화면 캡처와 UI 트리 덤프 수단을
    확인한다 (adb exec-out screencap / uiautomator dump, xcrun simctl io screenshot 등).
 
