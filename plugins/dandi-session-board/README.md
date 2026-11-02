@@ -21,7 +21,7 @@ Third-party marketplaces don't auto-update by default — enable it in `/plugin`
 
 ## Requirements
 
-Node.js 18 or later on `PATH`. Without it the hooks do nothing (they never fail a session).
+Node.js 18 or later on `PATH`. Without it, do not install this plugin: the hooks fail with a `hook error` notice each time they run, and on Windows without Git Bash a failing hook can block edits. The `PreToolUse` hook is set to continue on failure, but keep Node installed before enabling it.
 
 ## What is stored
 
