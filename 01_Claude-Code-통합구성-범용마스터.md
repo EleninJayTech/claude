@@ -1,6 +1,6 @@
 # Claude Code 통합 구성 — 범용 마스터 (드롭인 적용)
 
-> **문서 버전: v1.109** · 최종 갱신: **2026-11-02** · **최근 재검증: 2026-11-02** · 기준: Claude Code v2.1.316 (Opus 5.5 · Sonnet 5.5 · Haiku 5.5 · Fable 5.1)
+> **문서 버전: v1.110** · 최종 갱신: **2026-11-02** · **최근 재검증: 2026-11-02** · 기준: Claude Code v2.1.316 (Opus 5.5 · Sonnet 5.5 · Haiku 5.5 · Fable 5.1)
 >
 > | 버전 | 날짜 | 변경 내용 |
 > | --- | --- | --- |
@@ -27,6 +27,7 @@
 > | v1.107 | 2026-10-24 | **정합 보강** — 속도 기준 문구에 하한(거의 늘지 않을 때만 기본) · §D-6 하위 모델 `high` 안내에서 코드 리뷰를 뺐다(최종 리뷰는 상위 모델 불변)·상위 모델을 적지 않는 이유를 "세션 저장값이 쉬운 작업까지 사고량을 늘린다"로 좁혔다 · §F-2 별칭 rename에 settings `hooks`의 스킬 폴더 경로(03 §12) 포함 |
 > | v1.108 | 2026-10-26 | **워크트리 3자리 고유번호** — §F-1 세션 워크플로 규율에 번호 규칙 한 줄(이름 `NNN-<요약>` · 브랜치 `<타입>/NNN-<요약>` · 최대 번호 + 1, 지운 번호 재사용 금지 · Claude는 `git worktree add` 뒤 `EnterWorktree` `path`) · §F-2 A·B·C `/resume`에 `/resume NNN` 단계(그 워크트리로 전환, 없으면 브랜치에서 되살림, 없으면 평소대로) · §L §G 세션 분리 축에 `--worktree` 브랜치 이름·이름 재사용·`EnterWorktree` 승인 범위. **목표(R43)**: 7 — 끊긴 워크트리 작업을 번호 하나로 다시 찾아 잇는다 |
 > | v1.109 | 2026-11-02 | 전면 재검증(v2.1.316) — `ultrathink`의 `xhigh` 승격 · Haiku 5.5 effort 전 단계 · 긴 자율 코딩은 하위 모델 `medium`의 품질 근거 밖 · critical path 삭제는 분류기 밖(승인 프롬프트·거부) · mod가 ask·`PreToolUse`·deny를 넘는 조건을 한 조건으로 · 권한 순환 끝이 `auto` · `Glob(...)` 경로 규칙 무효 · 크레딧에 Ultra. **목표(R43)**: 5 — 당일 공식 조회 · 1 — 품질 근거 정정 |
+> | v1.110 | 2026-11-02 | **`/reverify` 승인 반영 2건** — §D-7 idle compaction(자리 비우기 전 `/wrap`·끄는 키) · §J-1 첫 외부 읽기 프롬프트(영구 차단이 생기는 선택과 푸는 법). **목표(R43)**: 7 — 미기록 결정이 부재 중 요약으로 줄기 전에 남긴다 · 4 — 프롬프트 한 번으로 생긴 영구 차단을 되돌린다 |
 > ※ 갱신 시: 이 표에 한 줄 추가 + 하단 "문서 정보" 날짜 수정 + §L 재검증 체크리스트 수행.
 
 > **사용법**: 이 파일을 아무 프로젝트 루트(또는 `docs/`)에 넣고 Claude에게
@@ -241,6 +242,7 @@ New-Item -ItemType Directory -Path .claude/skills/dropin-sync -Force
 - **예외 `opusplan`**: plan 경계마다 모델이 바뀌어 **토글 1회 = 캐시 리셋**이다(02 §F).
 - **`/compact`보다 `/clear`**: `/clear`는 요청을 보내지 않아 **비용 0**(단 **`/wrap` 뒤에** — `/clear`엔 훅 게이트가 없어 기록 안 된 결정이 그대로 사라진다), `/compact`는 요약을 만드는 **그 자체로 큰 요청**이다(캐시가 식은 오래된 세션에서 가장 비싸다 — §D-3 `manual` 게이트를 걸었다면 `/wrap` 뒤에). 가 본 길을 통째로 버릴 땐 `/rewind`가 더 싸다 — 이미 캐시된 지점으로 되감기 때문이다.
 - **수명(TTL)은 버킷 2개**: 구독 플랜 한도 안에선 **메인 대화만 1시간**, 서브에이전트·워크플로·컴팩션은 **5분**. usage credits 소진 후·**API 키·클라우드는 전부 5분** — 이 경우 자리를 비웠다 돌아올 때 전체를 다시 읽는다. 늘리려면 `settings.json`에 `"promptCacheTtl": "1h"`(서브에이전트까지면 `"subagentPromptCacheTtl": "1h"`) — 값은 `5m`·`1h`만 유효.
+- **자리를 비우면 요약될 수 있다(idle compaction — 기본 켜짐)**: 1시간 TTL에서 컨텍스트 20만 토큰 이상인 대화를 약 1시간 비우면 다음 메시지가 전체 대신 요약을 보낸다(터미널 v2.1.299+, VS Code·Desktop v2.1.314+). 재처리는 피하지만 세부가 요약으로 줄어드므로 **남길 결정이 있으면 자리 비우기 전에 `/wrap`** 한다. 끄려면 `/config`의 Idle compaction 또는 `"idleCompaction": false`(`PreCompact` 게이트는 `auto`로 함께 발화한다 — 공식 hooks).
 - **범위는 머신+작업 디렉터리**다(시스템 프롬프트에 cwd가 박힌다) — **워크트리마다 캐시가 갈린다**. **측정**은 `/usage`(v2.1.251+ — `/cost`·상태줄 `prompt_cache`도 같은 값) → `Prompt cache (main)` 줄(캐시 비율·미스·웜 여부). 미스가 매 턴 쌓이면 위 "깨는 행동" 하나가 작업 중에 일어나고 있다는 뜻이다. 같은 화면이 스킬·서브에이전트·플러그인·MCP별 **사용량 귀속**도 보여준다 — 측정 없는 절약은 감이다(§D-6).
 
 ---
@@ -580,6 +582,7 @@ CLAUDE.local.md
 "매번 승인(manual)"과 "전부 스킵(`--dangerously-skip-permissions`)" 사이의 중간지대. **별도 분류기 모델**(기본 Sonnet 5)이 각 액션을 실행 전 심사해 안전한 것은 통과시키고, 요청 범위를 벗어난 행동·미인식 인프라 대상·읽은 콘텐츠(프롬프트 인젝션)에서 유래한 행동을 차단한다.
 - **켜기**: **v2.1.283+는 모든 플랜·프로바이더에서 대화형 터미널·VS Code 세션의 기본 시작 모드가 auto다**(`permissions.defaultMode`가 있으면 그 값이 이긴다 — 그 전 버전은 Pro·Max·Team만 기본, 2026-09-30 확인). 설치·업그레이드 직후 첫 세션은 feature flag가 오기 전이라 다른 모드로 시작할 수 있다. 바꾸려면 `Shift+Tab` 순환(auto에서 첫 타는 `default`, 이후 `default`→`acceptEdits`→`plan`, auto를 쓸 수 있으면 다시 `auto`) 또는 `--permission-mode`. 기본 시작 모드 고정은 `defaultMode: "auto"` — 단 **user/managed 스코프만 유효**(프로젝트·로컬 settings에선 무시되고 그때 사용자 `defaultMode`도 버려 내장 기본으로 시작한다: repo가 스스로 권한을 올리는 걸 막는 설계).
 - **규칙과의 관계**: 명시적 **ask 규칙은 auto mode에서도 프롬프트 강제**, deny는 그대로 차단(분류기가 deny를 뚫지 못함). `rm -rf /`·`~` 같은 critical path 삭제는 분류기가 심사하지 않고 **터미널에선 시간제한 승인 프롬프트, 그 밖에선 거부**다(allow 규칙으로 못 푼다 — 공식 permission-modes). 요청하지 않은 파괴적 git 명령·트랜스크립트 조작은 차단. 단 **설치한 mod가 도구 호출을 승인하면 auto 분류기를 건너뛰고**, managed settings가 없고 Team/Enterprise 로그인도 아니면 ask 규칙·`PreToolUse` 차단·deny까지 넘는다(03 부록 경고). mod가 없는 구성에서만 위 보증이 그대로다.
+- **첫 외부 읽기 프롬프트**: auto 세션에서 Read·Grep·Glob이 작업 디렉터리 밖을 처음 읽을 때 네 갈래를 묻는다(`-p`·백그라운드 제외). **"No, and block…"을 고르면 user settings에 `permissions.blockReadsOutsideWorkingDirectories: true`가 기록돼 이후 모든 세션·모드에서 파일 도구가 그 밖을 못 읽는다** — 다른 repo를 읽는 교차 기록이 갑자기 막히면 이 키를 본다. 풀려면 `/add-dir` 또는 키 삭제(공식 permission-modes).
 - **회사 환경 주의** 🔴: v2.1.283+는 **Enterprise도 auto로 시작한다**. 조직이 manual로 시작하게 하려면 managed settings의 `permissions.defaultMode`(사용자가 auto로 바꿀 수는 있다), 선택 자체를 없애려면 아래 `disableAutoMode`다. 관리자가 managed settings `permissions.disableAutoMode: "disable"`로 조직 전체를 끌 수 있다 — **조직 정책이 항상 우선**이며 이 문서로 우회 구성하지 않는다. 프로바이더는 API·Claude Platform on AWS·Bedrock·Google Cloud·Foundry 모두 기본 제공(v2.1.207+), 단 모델 하한이 다르다 — API·Claude Platform on AWS는 Opus 4.6+·Sonnet 4.6+·Haiku 5.5·Fable 모델, Bedrock 등 서드파티는 Sonnet 5+·Opus 4.7+·Haiku 5.5(v2.1.293+)·Fable 모델(공식 문서는 "Fable 5" 같은 구체 버전을 명시하지 않는다).
 - **한계**: 프롬프트를 줄일 뿐 안전 보장이 아니다 — 방향을 신뢰하는 작업에만 쓰고, 민감 작업(배포·시크릿 인접·대량 삭제)은 manual/plan으로 내려서 검토한다. plan mode 중에도 분류기가 셸 명령을 심사한다(`useAutoModeDuringPlan` 기본 on, v2.1.218+ — critical path 삭제는 예외).
 - **분류기 비용**(Enterprise·API 키·Claude Platform on AWS·Bedrock·Google Cloud·Foundry — Pro·Max·Ultra·Team은 해당 없음): v2.1.278+는 분류 검사를 **서버가 세션 요청 안에서 무료로** 한다. 사내 LLM 게이트웨이·프록시가 요청을 변형하면 서버 검사가 닿지 않아 **예전처럼 과금되는 자체 분류 요청**으로 돌아가고, 세션에서 한 번 `this session isn't eligible` 알림이 뜬다(auto mode는 그대로 동작). 확인은 `/status`의 `Auto mode server` 행(`Enabled`/`Disabled`) — 게이트웨이 쪽 조치는 관리자 사안이다.
@@ -623,7 +626,8 @@ Claude Code는 매주 바뀐다. 6개월마다 30분:
 - **dev container 격리 경로**(§J 격리 3단) — feature 이미지·이그레스 방화벽 스크립트 구성이 유지되는지, 네이티브 Windows 대안이라는 위치가 바뀌지 않았는지(내장 샌드박스가 Windows를 지원하기 시작하면 이 줄의 근거가 사라진다).
 - `/model` 최신 정책(별칭이 가리키는 실제 모델·`best`의 해석), `claude --version`.
 - `/effort` 단계 명칭·모델별 지원 범위·`ultracode` 동작, 에이전트·스킬 frontmatter 키 생존 — `effort:`·`arguments:`·`allowed-tools`·`disable-model-invocation`(정본 §F-2. `effort:`는 2026-07-20 확정).
-- **§D-7 캐시 축** — TTL 버킷(5분/1시간)·`promptCacheTtl`/`subagentPromptCacheTtl` 값 집합·`/usage`의 `Prompt cache` 줄·**effort가 캐시 키**라는 동작·캐시를 깨는/지키는 행동 목록(공식 prompt-caching·costs 문서). **§D-6 컨텍스트 습관의 위임·전처리 권고**(costs의 서브에이전트 위임·훅 전처리 절)가 유지되는지.
+- **§J-1 첫 외부 읽기 프롬프트** — 선택지·`blockReadsOutsideWorkingDirectories` 기록 위치·해제 방법이 유지되는지(공식 permission-modes, 2026-11-02 확인).
+- **§D-7 캐시 축** — TTL 버킷(5분/1시간)·**idle compaction**(기본값·조건·끄는 키)·`promptCacheTtl`/`subagentPromptCacheTtl` 값 집합·`/usage`의 `Prompt cache` 줄·**effort가 캐시 키**라는 동작·캐시를 깨는/지키는 행동 목록(공식 prompt-caching·costs 문서). **§D-6 컨텍스트 습관의 위임·전처리 권고**(costs의 서브에이전트 위임·훅 전처리 절)가 유지되는지.
 - §F-2 **A·B·C 전 템플릿**의 폴백(비-git·`docs/` 부재·단위 없음·단일 repo)·**조건부 안내 어휘**(조치 대기·`게이트 차단`·`소스없음`/`확보 실패` — 새 어휘가 늘 때마다 A·B·C 템플릿 전부도 함께 늘려야 한다)·**미러 대조 판정 기준**(구성 성격 4키·포함 기준 정본·`dropin-applied` 줄 제외·줄바꿈 정규화)이 배포된 글로벌 스킬 실물과 일치하는지 — 문서만 고치고 스킬을 빠뜨리면(또는 그 반대로) 같은 공백이 방향만 바꿔 재발한다. **점검 범위에서 A를 빼지 말 것**: 단일 repo 신규 설치자가 쓰는 것이 A다(도입 경위는 저장소 git 이력 — 버전 표에선 병합 행 안이다).
 - **§K `/doctor prompt-audit`** — 하위 명령 이름·감사 대상 파일 종류·"보고·제안만" 동작이 유지되는지(공식 memory·commands).
 - **`AGENTS.md` 로드 규칙**(§E 공통) — `CLAUDE.md`·`CLAUDE.local.md`가 있으면 읽지 않는 기본값 · `@AGENTS.md` import 권장 · Windows symlink 제약이 유지되는지(공식 memory `#agents-md`).
@@ -637,5 +641,5 @@ Claude Code는 매주 바뀐다. 6개월마다 30분:
 ## 핵심 출처 🟢
 IDE 통합·`--add-dir`(ide-integrations·large-codebases) / permissions·deny 한계 / hooks / skills / memory·auto-memory — 모두 `code.claude.com/docs` 및 `docs.anthropic.com`.
 
-**문서 정보** — 통합 마스터(범용) **v1.109**. 변경 이력은 최상단 버전 표 참조(유래: 8개 소스 통합 초판 — 최상단 병합 행).
+**문서 정보** — 통합 마스터(범용) **v1.110**. 변경 이력은 최상단 버전 표 참조(유래: 8개 소스 통합 초판 — 최상단 병합 행).
 최종 갱신: 2026-11-02 · 최근 재검증: 2026-11-02 / 참조: Claude Code v2.1.316, Opus 5.5(v2.1.280+) · Sonnet 5.5(v2.1.284+) · Haiku 5.5(v2.1.293+) · Fable 5.1(v2.1.257+).
