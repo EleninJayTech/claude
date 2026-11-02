@@ -222,7 +222,7 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
     <tr><td><code>/dropin-check</code></td><td>없음 &middot; 읽기 전용</td><td>이 PC 구성이 뒤처졌는지 의심될 때</td><td>차이 보고서 &mdash; 설치는 하지 않는다</td></tr>
     <tr><td><code>/dropin-update</code></td><td>없음</td><td>문서 사본 자체가 낡았을 때</td><td>새 문서 파일 &mdash; 구성은 그대로다</td></tr>
     <tr><td><code>/dropin-apply</code></td><td><code>[추천]</code> &mdash; 없으면 전체 절차</td><td>구성 자체를 최신으로 맞추고 싶을 때 &mdash; <code>추천</code>이면 작업이 새로 필요로 하는 것을 더할 때</td><td>문서·설치된 스킬·설정을 한 번에 재적용 &mdash; <code>추천</code>이면 고른 항목만</td></tr>
-    <tr><td><code>/dropin-sync</code></td><td>없음 &middot; 수동 전용</td><td>아래 세 단계를 고르지 않고 순서대로 다 돌리고 싶을 때</td><td>문서 갱신·상태 점검·구성 재적용을 한 번에, 보고는 하나</td></tr>
+    <tr><td><code>/dropin-sync</code></td><td>없음 &middot; 수동 전용</td><td>세 단계를 고르지 않고 순서대로 다 돌리고 싶을 때</td><td>문서 갱신·상태 점검·구성 재적용을 한 번에, 보고는 하나</td></tr>
 
     <tr><th class="grp" colspan="4" scope="colgroup">기능 문서·테스트·릴리스 &middot; 03 §7</th></tr>
     <tr><td><code>/feature-docs</code></td><td><code>init</code> | <code>sync [기준]</code></td><td>처음 문서화할 때, 바뀐 것을 반영할 때</td><td><code>docs/features/</code> 전체</td></tr>
@@ -230,7 +230,7 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
     <tr><td><code>/feature-doc-audit</code></td><td><code>[기준 커밋 수, 기본 5]</code></td><td>문서가 얼마나 낡았는지 싸게 잴 때</td><td>채팅에 표와 sync 우선순위</td></tr>
     <tr><td><code>/feature-doc-guard</code></td><td><code>install</code> | <code>uninstall</code> | <code>check</code></td><td>문서 없는 커밋이 계속 들어올 때</td><td>훅, 또는 멈춘 커밋</td></tr>
     <tr><td><code>/test-to-script</code></td><td><code>[F-003 | TC-F003-01]</code> &mdash; 없으면 미변환 전부</td><td>손으로 돌리던 케이스를 자동화할 때</td><td>실행 가능한 테스트 파일</td></tr>
-    <tr><td><code>/release-notes</code></td><td><code>[시작 태그] [끝 태그]</code></td><td>버전을 내보내기 직전</td><td><code>docs/releases/&lt;태그&gt;.md</code></td></tr>
+    <tr><td><code>/release-notes</code></td><td><code>[시작 태그] [끝 태그]</code></td><td>버전을 내보내기 직전</td><td><code>docs/releases/&lt;끝 태그 또는 날짜&gt;.md</code></td></tr>
 
     <tr><th class="grp" colspan="4" scope="colgroup">코드 품질 &middot; 03 §8</th></tr>
     <tr><td><code>/refactor</code></td><td><code>[all | 경로 | 커밋A..커밋B | check [범위]] [nocheck]</code></td><td>동작은 그대로 두고 코드만 정리할 때</td><td>보고서 &mdash; 커밋은 직접 한다</td></tr>
@@ -334,7 +334,7 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
       <p class="one">구성 전체를 한 명령으로 다시 맞춘다 &mdash; 문서·설치된 스킬·설정까지.</p>
       <dl>
         <dt>언제</dt><dd>이 PC나 이 프로젝트를 현재 문서 기준으로 올리고 싶을 때. 처음 까는 경우에도 같은 명령이라, 내가 어느 쪽인지 몰라도 된다. Claude나 <code>/resume</code>이 작업에 새로 필요한 항목을 추천했으면 <code>추천</code>을 붙여 부른다.</dd>
-        <dt>하는 일</dt><dd>00 문서를 찾아서(옆 폴더의 사본·로컬 클론·내가 알려 준 폴더·배포된 raw 순 &mdash; raw는 요약하지 않고 파일 그대로 프로젝트 밖 임시 폴더에 받는다) 읽고 그 절차를 그대로 돈다 &mdash; 이미 있는 것을 감지하고, 무엇을 할지 묻고, 고른 것만 설치하고, 검증하고, 적용 기록을 쓴다. 스킬 자신은 단계를 하나도 갖지 않아서 문서와 갈릴 수가 없다. <code>/dropin-apply 추천</code>으로 부르면 작업 중 추천 경로를 탄다 &mdash; 작업이 새로 필요로 하게 됐는데 아직 안 깐 항목만, 무엇을 보고 걸렸는지 한 줄씩 붙여 내놓고, 처음 공통 질문은 기록된 답으로 갈음하며, 고른 것만 깐다. 안전 질문은 그대로 묻는다. 적용 기록이 없는 폴더에서는 이 경로 대신 일반 설치를 돌고, 거기서는 최소가 기본 추천이다.</dd>
+        <dt>하는 일</dt><dd>00 문서를 찾아서(같은 폴더&middot;<code>docs/</code>의 사본·로컬 클론·내가 알려 준 폴더·배포된 raw 순 &mdash; raw는 요약하지 않고 파일 그대로 프로젝트 밖 임시 폴더에 받는다) 읽고 그 절차를 그대로 돈다 &mdash; 이미 있는 것을 감지하고, 무엇을 할지 묻고, 고른 것만 설치하고, 검증하고, 적용 기록을 쓴다. 스킬 자신은 단계를 하나도 갖지 않아서 문서와 갈릴 수가 없다. <code>/dropin-apply 추천</code>으로 부르면 작업 중 추천 경로를 탄다 &mdash; 작업이 새로 필요로 하게 됐는데 아직 안 깐 항목만, 무엇을 보고 걸렸는지 한 줄씩 붙여 내놓고, 처음 공통 질문은 기록된 답으로 갈음하며, 고른 것만 깐다. 안전 질문은 그대로 묻는다. 적용 기록이 없는 폴더에서는 이 경로 대신 일반 설치를 돌고, 거기서는 최소가 기본 추천이다.</dd>
         <dt>결과</dt><dd>문서와 일치하는 구성, 그리고 그 사실을 적은 <code>dropin-applied</code> 줄. 기능 문서·refactor·kr-ui-guide·kr-ui-styles·browser-check·pc-clean·session-board와 <code>dropin-</code> 계열처럼 이미 깔린 스킬은 <b>이름이 아니라 내용으로</b> 대조하므로, 파일 수는 그대로고 문장만 바뀐 개정도 교체된다 &mdash; <code>dropin-</code> 계열은 배포본과 다르면 기본값이 <code>재구성</code>으로 나온다. <code>/resume</code>·<code>/wrap</code>은 있는지만 본다 &mdash; 새 본문으로 갈려면 이미 깔린 글로벌 항목을 묻는 질문에서 기본값 <code>유지</code> 대신 <code>재구성</code>을 고른다. 승인한 개정이 걸린 항목은 처음부터 <code>재구성</code>이 기본으로 나온다. 거절한 추천은 기록에 남아 다시 권하지 않는다 &mdash; 나중에 깔고 싶으면 인수 없이 <code>/dropin-apply</code>를 다시 돌려 추가한다.</dd>
       </dl>
       <div class="warn soft"><b>알아 둘 것.</b> Claude에게 &ldquo;이 문서를 학습해서 적용해줘&rdquo;라고 말하는 것과 같은 일이다 &mdash; 그 문장도 그대로 동작한다. 명령이 따로 있는 이유는, 보이지 않는 문은 열리지 않기 때문이다.</div>
@@ -510,7 +510,7 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
       <dl>
         <dt>언제</dt><dd>릴리스를 자르면서 이번에 뭐가 바뀌었는지 알려야 할 때.</dd>
         <dt>하는 일</dt><dd>각 기능 문서의 변경 이력, 버전 이력, git log, 마지막 테스트 리포트를 모아 기능 단위로 묶는다. 한 기능에 걸린 커밋 여러 개는 한 줄이 된다.</dd>
-        <dt>결과</dt><dd><code>docs/releases/&lt;태그&gt;.md</code> &mdash; 신규·변경·수정·제거·내부 변경·테스트로 나뉘고, 아직 어느 문서에도 안 잡힌 커밋은 따로 모아 준다.</dd>
+        <dt>결과</dt><dd><code>docs/releases/&lt;끝 태그 또는 날짜&gt;.md</code> &mdash; 신규·변경·수정·제거·내부 변경·테스트로 나뉘고, 아직 어느 문서에도 안 잡힌 커밋은 따로 모아 준다.</dd>
       </dl>
       <div class="warn soft"><b>알아 둘 것.</b> 지어내지 않는다. 커밋 메시지가 애매하면 diff를 열어 보고, 그래도 모르면 확인이 필요하다고 표시해 남긴다.</div>
       <div class="tags"><span class="tag">문서를 쓴다</span></div>
@@ -534,9 +534,9 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
       <p class="one">동작을 바꾸지 않고 코드를 좋게 만들고, 동작이 안 바뀌었음을 증명까지 한다.</p>
       <dl>
         <dt>언제</dt><dd>중복이 쌓였을 때, 구조를 풀어야 할 때, 런타임 버전이 올랐을 때, 느릴 때. 기능 추가·버그 수정에는 쓰지 않는다 &mdash; 그 둘을 리팩터링과 한 변경에 섞지 않는 것이 이 스킬의 전제다.</dd>
-        <dt>하는 일</dt><dd>범위를 정하고(기본은 미커밋 작업), 후보 표를 보여 준 뒤 <strong>승인을 기다린다</strong>. 리팩터링한 다음엔 기준선 테스트·호출처 계약·특성화 테스트·정적 검사·실제 실행으로 검증한다.</dd>
+        <dt>하는 일</dt><dd>범위를 정하고(기본은 최근 개발분, 미커밋 작업부터), 후보 표를 보여 준 뒤 <strong>승인을 기다린다</strong>. 리팩터링한 다음엔 기준선 테스트·호출처 계약·특성화 테스트·정적 검사·실제 실행으로 검증한다.</dd>
         <dt>결과</dt><dd>채팅 보고서, 요청하면 <code>docs/refactor/</code>에 저장. 커밋은 하지 않는다 &mdash; 그건 사용자 몫이고, 변경 하나가 커밋 하나가 되도록 권한다.</dd>
-        <dt>언제 돌리나</dt><dd><strong>기능이 돌아가기 시작한 직후, 커밋하기 전에</strong> 별도 변경으로 돌린다. 아직 기능을 붙이는 중이면 아니다 &mdash; 리팩터링이 기능 커밋에 섞이면 리뷰도 되돌리기도 따로 할 수 없다. 돌려볼 방법이 없는 코드에도 쓰지 않는다. 이 스킬의 값어치는 대부분 검증 단계에 있는데, 테스트도 실행 경로도 없으면 무엇과 비교할지가 없다. 범위가 미덥지 않으면 <code>/refactor check</code>를 먼저 돌린다 &mdash; 한 줄도 건드리지 않고 검증만 한다.</dd>
+        <dt>언제 돌리나</dt><dd><strong>기능이 돌아가기 시작한 직후, 커밋하기 전에</strong> 별도 변경으로 돌린다. 아직 기능을 붙이는 중이면 아니다 &mdash; 리팩터링이 기능 커밋에 섞이면 리뷰도 되돌리기도 따로 할 수 없다. 돌려볼 방법이 없는 코드에도 쓰지 않는다. 이 스킬의 값어치는 대부분 검증 단계에 있는데, 테스트도 실행 경로도 없으면 무엇과 비교할지가 없다. 범위가 미덥지 않으면 <code>/refactor check</code>를 먼저 돌린다 &mdash; 기존 코드는 고치지 않고 검증만 한다(테스트가 없던 곳엔 특성화 테스트 파일을 더할 수 있다).</dd>
       </dl>
       <div class="warn"><b>frontmatter를 오해하지 말 것.</b> <code>allowed-tools</code>는 프롬프트 없이 돌 것을 <em>넓히는</em> 키이지 울타리가 아니다. git 명령만 적혀 있어도 이 스킬은 파일을 고칠 수 있다. 진짜 제한은 <code>disallowed-tools</code>다.</div>
       <div class="tags"><span class="tag">소스를 고침</span><span class="tag">승인 게이트</span><span class="tag"><code>check</code>는 검증만</span></div>
@@ -730,7 +730,7 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
     <div class="k">3</div>
     <div>
       <div class="c"><span class="sl">/</span>refactor check</div>
-      <div class="w">한 줄도 고치지 않고 사이드 이펙트만 검증한다 &mdash; 호출처 계약, 기준선 테스트, 실제 실행. 범위를 안 주면 현재 diff, 커밋을 마쳤다면 <code>커밋A..커밋B</code>로 A의 구간을 준다.</div>
+      <div class="w">소스는 고치지 않고 사이드 이펙트만 검증한다 &mdash; 호출처 계약, 기준선 테스트, 실제 실행. 테스트가 없던 곳엔 특성화 테스트 파일이 새로 생길 수 있다. 범위를 안 주면 현재 diff, 커밋을 마쳤다면 <code>커밋A..커밋B</code>로 A의 구간을 준다.</div>
     </div>
   </div>
   <div class="p">
@@ -741,7 +741,7 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
     </div>
   </div>
 </div>
-<p class="pathnote">3·4는 준비물이 없다 &mdash; git만 있으면 오늘 바로 돈다. 1·2는 기능 문서 세트(03 §7)를 깔아야 쓸 수 있다.</p>
+<p class="pathnote">4는 내장이라 준비물이 없다 &mdash; git만 있으면 오늘 바로 돈다. 3은 refactor(03 §8)를, 1·2는 기능 문서 세트(03 §7)를 깔아야 쓸 수 있다.</p>
 
 <h2>릴리스 날, 낡은 문서에서 릴리스 노트까지</h2>
 <p class="lead">위의 하루 흐름에서 릴리스 날은 한 줄뿐이다. 풀어 보면 스킬 넷이고 순서가 중요하다. 릴리스 노트는 기능 문서와 마지막 테스트 리포트로 만들어지니, 쓰기 전에 둘 다 최신이어야 한다.</p>

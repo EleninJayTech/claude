@@ -222,7 +222,7 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
     <tr><td><code>/dropin-check</code></td><td>none &middot; read-only</td><td>You suspect this machine has drifted</td><td>A difference report &mdash; nothing installed</td></tr>
     <tr><td><code>/dropin-update</code></td><td>none</td><td>The documents themselves are out of date</td><td>Refreshed document files &mdash; the configuration is untouched</td></tr>
     <tr><td><code>/dropin-apply</code></td><td><code>[추천]</code> &mdash; full run if omitted</td><td>You want the configuration itself brought up to date &mdash; or, with <code>추천</code>, to add what your work now needs</td><td>Documents, installed skills and settings, all re-applied &mdash; with <code>추천</code>, only the items you pick</td></tr>
-    <tr><td><code>/dropin-sync</code></td><td>none &middot; manual only</td><td>You want all three steps below, in order, without choosing</td><td>Documents refreshed, state checked, configuration re-applied &mdash; one report</td></tr>
+    <tr><td><code>/dropin-sync</code></td><td>none &middot; manual only</td><td>You want all three steps, in order, without choosing</td><td>Documents refreshed, state checked, configuration re-applied &mdash; one report</td></tr>
 
     <tr><th class="grp" colspan="4" scope="colgroup">Feature docs, tests, releases &middot; 03 §7</th></tr>
     <tr><td><code>/feature-docs</code></td><td><code>init</code> | <code>sync [base]</code></td><td>First write-up, or folding in what changed</td><td>All of <code>docs/features/</code></td></tr>
@@ -230,7 +230,7 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
     <tr><td><code>/feature-doc-audit</code></td><td><code>[threshold, default 5]</code></td><td>A cheap staleness check</td><td>A table and a suggested sync order, in chat</td></tr>
     <tr><td><code>/feature-doc-guard</code></td><td><code>install</code> | <code>uninstall</code> | <code>check</code></td><td>Commits keep landing without their docs</td><td>The hooks, or a blocked commit</td></tr>
     <tr><td><code>/test-to-script</code></td><td><code>[F-003 | TC-F003-01]</code> &mdash; all unconverted</td><td>Hand-run cases should run themselves</td><td>Runnable test files</td></tr>
-    <tr><td><code>/release-notes</code></td><td><code>[from tag] [to tag]</code></td><td>A version is about to ship</td><td><code>docs/releases/&lt;tag&gt;.md</code></td></tr>
+    <tr><td><code>/release-notes</code></td><td><code>[from tag] [to tag]</code></td><td>A version is about to ship</td><td><code>docs/releases/&lt;end tag or date&gt;.md</code></td></tr>
 
     <tr><th class="grp" colspan="4" scope="colgroup">Code quality &middot; 03 §8</th></tr>
     <tr><td><code>/refactor</code></td><td><code>[all | path | commitA..commitB | check [scope]] [nocheck]</code></td><td>Tidying code without changing behaviour</td><td>A report &mdash; the commit stays yours</td></tr>
@@ -334,7 +334,7 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
       <p class="one">Re-applies the whole configuration &mdash; documents, installed skills and settings &mdash; in one command.</p>
       <dl>
         <dt>Use when</dt><dd>You want this machine or this project brought up to the current documents. It is also the command for a first install, so you do not have to know which case you are in. Add <code>추천</code> when Claude or <code>/resume</code> has suggested an item your work now needs.</dd>
-        <dt>It does</dt><dd>Finds document 00 (a copy beside you, a local clone, a folder you name, or the published raw file &mdash; raw is fetched byte for byte, never summarised, into a temporary folder outside the project), reads it, and runs its protocol exactly &mdash; detect what is already here, ask what you want, install only that, verify, and write the install record. The skill holds no steps of its own, so it can never drift from the document. As <code>/dropin-apply 추천</code> it takes the in-work suggestion path instead: it offers only the items your work has newly started to need and you have not installed, each with the sign it spotted, reuses your recorded answers to the opening questions, and installs only what you pick &mdash; the safety questions are still asked. In a folder with no install record it runs the normal install instead, where Minimal is the suggested start.</dd>
+        <dt>It does</dt><dd>Finds document 00 (a copy in the same folder or <code>docs/</code>, a local clone, a folder you name, or the published raw file &mdash; raw is fetched byte for byte, never summarised, into a temporary folder outside the project), reads it, and runs its protocol exactly &mdash; detect what is already here, ask what you want, install only that, verify, and write the install record. The skill holds no steps of its own, so it can never drift from the document. As <code>/dropin-apply 추천</code> it takes the in-work suggestion path instead: it offers only the items your work has newly started to need and you have not installed, each with the sign it spotted, reuses your recorded answers to the opening questions, and installs only what you pick &mdash; the safety questions are still asked. In a folder with no install record it runs the normal install instead, where Minimal is the suggested start.</dd>
         <dt>You get</dt><dd>A configuration that matches the documents, and an updated <code>dropin-applied</code> line saying so. Where a feature-docs, refactor, kr-ui-guide, kr-ui-styles, browser-check, pc-clean, session-board or <code>dropin-</code> skill was already installed, its files are compared by content &mdash; not just by name &mdash; so a version that only changed its wording is still replaced; a <code>dropin-</code> skill that differs from the published copy comes up with <code>reconcile</code> as the default. <code>/resume</code> and <code>/wrap</code> are only checked for presence &mdash; to get their new text, answer <code>reconcile</code> instead of the default <code>keep</code> when it asks about global items that are already installed. Items touched by a revision you approved start with <code>reconcile</code> as the default. A suggestion you decline is noted in the record and not offered again; to take it later, add it on a plain <code>/dropin-apply</code> re-run.</dd>
       </dl>
       <div class="warn soft"><b>Worth knowing.</b> This is the same thing as telling Claude &ldquo;learn this document and apply it&rdquo; &mdash; the sentence still works. The command exists because a door you cannot see is a door you do not open.</div>
@@ -510,7 +510,7 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
       <dl>
         <dt>Use when</dt><dd>You are cutting a release and need to say what changed in it.</dd>
         <dt>It does</dt><dd>Collects the change history in each feature doc, the version history, the git log and the latest test report, then groups everything by feature &mdash; several commits on one feature become one line.</dd>
-        <dt>You get</dt><dd><code>docs/releases/&lt;tag&gt;.md</code>, split into new, changed, fixed, removed, internal, and tests &mdash; with a separate list of commits no doc covers yet.</dd>
+        <dt>You get</dt><dd><code>docs/releases/&lt;end tag or date&gt;.md</code>, split into new, changed, fixed, removed, internal, and tests &mdash; with a separate list of commits no doc covers yet.</dd>
       </dl>
       <div class="warn soft"><b>Worth knowing.</b> It refuses to invent. When a commit message is unclear it reads the diff, and if that still does not settle it the line is marked for you to confirm.</div>
       <div class="tags"><span class="tag">writes docs</span></div>
@@ -534,9 +534,9 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
       <p class="one">Improves the code without changing what it does &mdash; and then proves it did not change what it does.</p>
       <dl>
         <dt>Use when</dt><dd>Duplication has piled up, a structure needs untangling, a runtime version moved, or something is slow. Never for a new feature or a bug fix &mdash; keeping those out of the same change is the whole premise.</dd>
-        <dt>It does</dt><dd>Picks a scope (uncommitted work by default), shows you a table of candidates and <strong>waits for your approval</strong>, refactors, then verifies across baselines, call-site contracts, characterization tests, static checks and real runs.</dd>
+        <dt>It does</dt><dd>Picks a scope (recent work by default, starting with uncommitted changes), shows you a table of candidates and <strong>waits for your approval</strong>, refactors, then verifies across baselines, call-site contracts, characterization tests, static checks and real runs.</dd>
         <dt>You get</dt><dd>A report in the chat, saved to <code>docs/refactor/</code> on request. It never commits &mdash; you do, ideally one change per commit.</dd>
-        <dt>When to run</dt><dd><strong>Right after a feature works and before you commit it</strong>, as its own change. Not while you are still adding to it &mdash; a refactor mixed into a feature commit is one nobody can review or revert separately. Not on code you have no way to exercise either: the verification stage is most of this skill's value, and without a test or a runnable path it has nothing to compare against. On a scope you are unsure about, run <code>/refactor check</code> first &mdash; it verifies without touching a line.</dd>
+        <dt>When to run</dt><dd><strong>Right after a feature works and before you commit it</strong>, as its own change. Not while you are still adding to it &mdash; a refactor mixed into a feature commit is one nobody can review or revert separately. Not on code you have no way to exercise either: the verification stage is most of this skill's value, and without a test or a runnable path it has nothing to compare against. On a scope you are unsure about, run <code>/refactor check</code> first &mdash; it leaves existing code alone and only verifies (it may add characterization test files where none existed).</dd>
       </dl>
       <div class="warn"><b>Read the front matter correctly.</b> <code>allowed-tools</code> <em>widens</em> what runs without a prompt; it is not a sandbox. This skill can edit files despite the git-only list. The key that restricts is <code>disallowed-tools</code>.</div>
       <div class="tags"><span class="tag">edits source</span><span class="tag">approval gate</span><span class="tag"><code>check</code> = verify only</span></div>
@@ -730,7 +730,7 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
     <div class="k">3</div>
     <div>
       <div class="c"><span class="sl">/</span>refactor check</div>
-      <div class="w">Changes nothing and only verifies side effects &mdash; caller contracts, baseline tests, a real run. With no range it checks the current diff; once A is committed, give its span as <code>commitA..commitB</code>.</div>
+      <div class="w">Leaves the source alone and only verifies side effects &mdash; caller contracts, baseline tests, a real run. Where no tests existed it may add characterization test files. With no range it checks the current diff; once A is committed, give its span as <code>commitA..commitB</code>.</div>
     </div>
   </div>
   <div class="p">
@@ -741,7 +741,7 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
     </div>
   </div>
 </div>
-<p class="pathnote">Steps 3 and 4 need nothing set up &mdash; git is enough, today. Steps 1 and 2 need the feature-docs set (03 §7) installed.</p>
+<p class="pathnote">Step 4 is built in and needs only git, today. Step 3 needs refactor (03 §8) installed; steps 1 and 2 need the feature-docs set (03 §7).</p>
 
 <h2>Release day, from stale docs to release notes</h2>
 <p class="lead">The day above gives release day a single line. Taken apart it is four skills, and the order matters: the notes are built from the feature docs and the latest test report, so both should be current before you write them.</p>
