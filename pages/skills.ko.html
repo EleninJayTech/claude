@@ -243,7 +243,7 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
     <tr><td><code>/frontend-design</code></td><td>없음 &mdash; 만들 UI를 말한다</td><td>새 화면의 시각 방향을 잡을 때</td><td>마크업 전에 정해지는 디자인 방향</td></tr>
     <tr><td><code>/browser-check</code></td><td>없음 &mdash; 스스로 불린다</td><td>Claude가 만든 화면을 확인하거나 디버깅할 때</td><td>읽은 값으로 낸 판정 &mdash; 스크린샷은 모습을 판정할 때만</td></tr>
     <tr><td><code>/kr-ui-guide</code></td><td>없음 &mdash; 스스로 불린다</td><td>한국 사용자 대상 UI·아이콘·색 작업 &mdash; 게임 화면도</td><td>대비 계산과 토큰이 붙은 설계안</td></tr>
-    <tr><td><code>/kr-ui-styles</code></td><td>없음 &mdash; 스타일 팩이 지정되면 스스로 불린다</td><td>한국 사용자 대상 화면을 기본 대신 에디토리얼·모노크롬, 다크·네온, 키치·일러스트, 네오브루탈로</td><td>팩 토큰으로 만든 설계와 대비 계산</td></tr>
+    <tr><td><code>/kr-ui-styles</code></td><td>없음 &mdash; 스타일 팩이 지정되거나 다른 스타일을 물으면 스스로 불린다</td><td>한국 사용자 대상 화면을 기본 대신 에디토리얼·모노크롬, 다크·네온, 키치·일러스트, 네오브루탈로</td><td>팩 토큰으로 만든 설계와 대비 계산</td></tr>
 
     <tr><th class="grp" colspan="4" scope="colgroup">PC 관리 &middot; 03 §10</th></tr>
     <tr><td><code>/pc-clean</code></td><td><code>[점검만]</code> &mdash; 점검만 · 없으면 점검 후 정리 제안</td><td>이 Windows PC가 느려졌을 때</td><td>점검 표 한 장 &mdash; 정리는 승인한 항목만</td></tr>
@@ -283,7 +283,7 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
       <p class="one">어디까지 했는지를 기억이 아니라 git과 기록으로 되짚어 세션을 연다.</p>
       <dl>
         <dt>언제</dt><dd>세션을 시작할 때마다, 그리고 <code>/clear</code> 직후에 다시.</dd>
-        <dt>하는 일</dt><dd>워크트리 번호를 붙여 부르면(<code>/resume 001</code>) 먼저 그 번호의 워크트리(<code>.claude/worktrees/001-…</code>)로 들어가 그 안에서 아래 일을 한다 &mdash; 단디 규칙에선 Claude가 워크트리를 만들 때 3자리 번호를 붙이고, 워크트리를 지웠어도 번호가 든 브랜치가 남아 있으면 되살린다. 워킹트리가 깨끗하면 <code>--ff-only</code>로 당기고, <code>git status</code>로 미커밋 작업부터 찾는다. 그 미커밋은 같은 폴더에서 도는 다른 세션의 것일 수도 있어서, 내 작업으로 단정해 잇거나 커밋하지 않고 먼저 확인한다. 그다음 <code>PROGRESS.md</code> 최상단과 최근 결정 3건, <code>PROJECT_PLAN.md</code>를 읽는다. 작업 중 추천이 켜져 있고(기본값) 이 폴더에 적용 기록이 있으면, 폴더의 파일 <b>이름만</b> 훑어(내용은 읽지 않는다) 작업이 새로 필요로 하는 단디 항목 중 아직 안 깔았고 거절하거나 해당 없음으로 빠지지 않은 것이 있는지도 본다.</dd>
+        <dt>하는 일</dt><dd>워크트리 번호를 붙여 부르면(<code>/resume 001</code>) 먼저 그 번호의 워크트리(<code>.claude/worktrees/001-…</code>)로 들어가 그 안에서 아래 일을 한다 &mdash; 단디 규칙에선 Claude가 워크트리를 만들 때 3자리 번호를 붙이고, 워크트리를 지웠어도 번호가 든 브랜치가 남아 있으면 되살린다. 맞는 것이 여럿이면 목록을 보이고 묻고, 없거나 전환에 실패하면 이유를 알린 뒤 지금 폴더에서 평소대로 진행한다. 워킹트리가 깨끗하면 <code>--ff-only</code>로 당기고, <code>git status</code>로 미커밋 작업부터 찾는다. 그 미커밋은 같은 폴더에서 도는 다른 세션의 것일 수도 있어서, 내 작업으로 단정해 잇거나 커밋하지 않고 먼저 확인한다. 본체 밖에 워크트리가 있으면 번호와 브랜치도 함께 보고한다. 그다음 <code>PROGRESS.md</code> 최상단과 최근 결정 3건, <code>PROJECT_PLAN.md</code>를 읽는다. 작업 중 추천이 켜져 있고(기본값) 이 폴더에 적용 기록이 있으면, 폴더의 파일 <b>이름만</b> 훑어(내용은 읽지 않는다) 작업이 새로 필요로 하는 단디 항목 중 아직 안 깔았고 거절·해당 없음·팀 구성 우선으로 빠지지 않은 것이 있는지도 본다.</dd>
         <dt>결과</dt><dd>"지난번엔 X를 했고 다음은 Y인가요?" 형태의 짧은 보고. 점검 예정일이 지났으면 그 안내도 함께, 더할 항목이 있으면 <code>/dropin-apply 추천</code>을 권하는 한 줄도.</dd>
       </dl>
       <div class="warn soft"><b>알아 둘 것.</b> 최근 5항목만, 항목당 앞 700자까지만 읽는다. 다음 세션이 이어받아야 할 내용은 항목 <em>앞쪽</em>에 적어야 한다 &mdash; 끝에 붙이면 컷 밖이라 영영 읽히지 않는다.</div>
@@ -556,13 +556,13 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
     <article class="skill" data-g="plan">
       <div class="cmd"><span class="sl">/</span>plan-&lt;모델&gt;</div>
       <div class="args">계획할 대상 &middot; 수동 호출 권장</div>
-      <p class="one">세션보다 강한 모델로 변경 계획을 세워 파일로 남기고, 코드 한 줄 쓰기 전에 멈춘다.</p>
+      <p class="one">설치할 때 고른 모델로 변경 계획을 세워 파일로 남기고, 코드 한 줄 쓰기 전에 멈춘다.</p>
       <dl>
         <dt>언제</dt><dd>설계 갈래가 여럿이라 누가 타이핑을 시작하기 전에 판단이 필요할 때. 길이 하나뿐인 정형 작업에는 쓰지 않는다.</dd>
         <dt>하는 일</dt><dd>계획 모드로 들어가 필요한 것만 읽고, 더 싼 모델이 다시 탐색하지 않고 따라갈 수 있는 계획을 쓴다 &mdash; 확인된 사실, 작은 스텝, 스텝마다의 검증, 결정마다의 이유.</dd>
         <dt>결과</dt><dd><code>docs/plans/</code>에 복사된 계획 파일. 턴은 거기서 끝난다 &mdash; 구현은 새 프롬프트로, 평소 모델에서 시작한다.</dd>
       </dl>
-      <div class="warn soft"><b>알아 둘 것.</b> 그 한 턴은 다른 모델로 가고 캐시는 모델별이라, 그때까지의 대화 전체를 캐시 없이 한 번 다시 읽는다. 세션 초반이나 <code>/clear</code> 직후에 부른다.</div>
+      <div class="warn soft"><b>알아 둘 것.</b> 세션 모델과 다르면 그 한 턴은 고른 모델로 가고 캐시는 모델별이라, 그때까지의 대화 전체를 캐시 없이 한 번 다시 읽는다. 세션 초반이나 <code>/clear</code> 직후에 부른다.</div>
       <div class="tags"><span class="tag">글로벌 또는 프로젝트</span><span class="tag">기본 해제</span><span class="tag">코드 안 고침</span></div>
     </article>
 
@@ -612,7 +612,7 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
         <dt>하는 일</dt><dd>무엇이 보이면 통과인지부터 정하고, 관찰 수단을 질문의 종류로 고른다. 렌더링이 필요 없으면 HTTP 요청만, DOM이 질문이면 페이지 텍스트·요소 트리·콘솔·네트워크를 읽고, 레이아웃·겹침·색·간격이 질문이면 스크린샷을 찍는다 &mdash; 이때는 필수이고 텍스트로 대신하지 않는다. 같은 확인을 되풀이하면 스크립트로 굳힌다. 텍스트가 비거나 모호하면 &ldquo;없다&rdquo;고 판정하지 않고 한 단 올려 본다. 페이지가 <em>왜</em> 느리거나 실패하는지가 질문이면 &mdash; 로드 지연·메모리·Lighthouse 점수 &mdash; Chrome DevTools MCP가 있을 때 그걸 쓰고, 없으면 원인은 확인하지 못했다고 밝힌다. 로그인이 필요한 페이지는 테스트 계정으로 한 번 로그인해 그 상태를 파일로 저장해 두고 다시 쓴다. 그 파일은 쿠키를 담고 있어 <code>.gitignore</code>에 넣고 커밋하지 않는다.</dd>
         <dt>결과</dt><dd>읽은 값이나 명령 출력이 근거로 붙은 판정. 스크린샷은 모습을 판정한 자리에만 남는다. 브라우저 도구가 하나도 없으면 HTTP 확인까지만 하고 화면은 확인하지 못했다고 밝힌다.</dd>
       </dl>
-      <div class="warn soft"><b>알아 둘 것.</b> 브라우저 검증 항목에 묶여 깔리고, 그 항목이 브라우저 쪽도 함께 준비한다 &mdash; 준비할 경로를 체크해서 고른다. 기본 체크는 Playwright CLI다 &mdash; 화면 없이 도는 헤드리스라 내 브라우저를 차지하지 않고, 세션을 여럿 띄울 수 있으며, WSL·SSH·CI에서도 똑같이 돈다. Desktop 내장 브라우저는 설치가 필요 없지만 SSH 세션에서는 못 쓴다. Claude in Chrome은 내 실제 로그인 상태를 그대로 쓰므로 SSO·2단계 인증처럼 테스트 계정으로 못 넘는 로그인에만 쓴다. 설치할 때 이 확장의 <em>Enabled by default</em>를 끄도록 권해 필요할 때만 연결된다. Chrome DevTools MCP는 체크 해제로 나온다 &mdash; 페이지가 왜 느리거나 깨지는지 파고들 때 체크한다. 열려 있는 내 Chrome이 아니라 닫으면 지워지는 임시 프로필에서 돈다. 회사 repo면 그 항목이 조직 승인 질문부터 묻는다. 설치할 때 이 스킬은 자동 판단을 권한다 &mdash; Claude가 확인하는 그 순간에 불려야 쓸모가 있다. 앱을 띄우는 일은 하지 않는다. 그건 내장 <code>/run</code>·<code>/verify</code>의 몫이다.</div>
+      <div class="warn soft"><b>알아 둘 것.</b> 브라우저 검증 항목에 묶여 깔리고, 그 항목이 브라우저 쪽도 함께 준비한다 &mdash; 준비할 경로를 체크해서 고른다. 기본 체크는 Playwright CLI다 &mdash; 화면 없이 도는 헤드리스라 내 브라우저를 차지하지 않고, 세션을 여럿 띄울 수 있으며, WSL·SSH·CI에서도 똑같이 돈다. Node가 없으면 설치가 실패하므로 이때는 체크 해제로 나오고 나머지 경로를 대안으로 함께 보여 준다. Desktop 내장 브라우저는 설치가 필요 없지만 SSH 세션에서는 못 쓴다. Claude in Chrome은 체크 해제로 나온다 &mdash; 내 실제 로그인 상태를 그대로 쓰므로 SSO·2단계 인증처럼 테스트 계정으로 못 넘는 로그인에만 쓴다. 설치할 때 이 확장의 <em>Enabled by default</em>를 끄도록 권해 필요할 때만 연결된다. Chrome DevTools MCP는 체크 해제로 나온다 &mdash; 페이지가 왜 느리거나 깨지는지 파고들 때 체크한다. 열려 있는 내 Chrome이 아니라 닫으면 지워지는 임시 프로필에서 돈다. 회사 repo면 그 항목이 조직 승인 질문부터 묻는다. 설치할 때 이 스킬은 자동 판단을 권한다 &mdash; Claude가 확인하는 그 순간에 불려야 쓸모가 있다. 앱을 띄우는 일은 하지 않는다. 그건 내장 <code>/run</code>·<code>/verify</code>의 몫이다.</div>
       <div class="tags"><span class="tag">글로벌 또는 프로젝트</span><span class="tag">프론트엔드 전용</span><span class="tag">쓰기 없음</span></div>
     </article>
 
@@ -631,11 +631,11 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
 
     <article class="skill" data-g="design">
       <div class="cmd"><span class="sl">/</span>kr-ui-styles</div>
-      <div class="args">인수 없음 — 프로젝트가 스타일 팩을 지정하면 스스로 불린다</div>
+      <div class="args">인수 없음 — 프로젝트가 스타일 팩을 지정하거나 다른 스타일을 물으면 스스로 불린다</div>
       <p class="one">kr-ui-guide의 기본 모습(절제된·블루그레이·둥근)을 리서치에서 추린 다른 방향으로 바꾼다 &mdash; 지금은 에디토리얼·모노크롬, 다크·네온, 키치·일러스트, 네오브루탈 &mdash; kr-ui-guide의 규칙은 그대로 둔 채로.</p>
       <dl>
         <dt>언제</dt><dd>한국 사용자 대상 서비스가 기능 앱보다 잡지처럼 보여야 할 때: 패션·라이프스타일 편집숍, 브랜드 미디어, 프리미엄 코스메틱. 프로젝트 <code>## kr-ui-guide 오버라이드</code> 절에 <code>스타일 팩: editorial</code>을 적는다. 스트리밍·e스포츠 전적·트레이딩·OTT 화면이면 <code>스타일 팩: dark-neon</code>을 적는다. 게이미피케이션 커머스·청소년 버티컬·이벤트 배너·유쾌한 빈 화면/404면 <code>스타일 팩: kitsch</code>를 적는다. 한정판 드롭 커머스·크리에이터 마켓·개발자 도구·캠페인 랜딩에 두꺼운 검정 테두리와 하드 섀도를 원하면 <code>스타일 팩: neo-brutal</code>을 적는다.</dd>
-        <dt>하는 일</dt><dd>프로젝트가 지정한 팩과 그 토큰(editorial이면 순수 흑백, 20px 이상 세리프 제목, 16px 이하는 전부 산세리프, 0px 모서리, 그림자 없음, 섹션 간격 56~80px)을 읽어 kr-ui-guide 위에 얹고, 결과를 두 체크리스트로 점검한다. 팩이 지정돼 있으면 색·대비 하나만 묻는 질문에도 kr-ui-guide와 함께 불린다 &mdash; 팩이 바탕·면·강조색을 바꾸니 기본값으로 계산하면 틀리기 때문이다. 팩이 지정돼 있지 않으면 아무것도 읽지 않는다.</dd>
+        <dt>하는 일</dt><dd>프로젝트가 지정한 팩과 그 토큰(editorial이면 순수 흑백, 20px 이상 세리프 제목, 16px 이하는 전부 산세리프, 0px 모서리, 그림자 없음, 섹션 간격 56~80px)을 읽어 kr-ui-guide 위에 얹고, 결과를 두 체크리스트로 점검한다. 팩이 지정돼 있으면 색·대비 하나만 묻는 질문에도 kr-ui-guide와 함께 불린다 &mdash; 팩이 바탕·면·강조색을 바꾸니 기본값으로 계산하면 틀리기 때문이다. 팩이 지정돼 있지 않고 스타일을 묻지도 않았으면 아무것도 읽지 않는다. 다른 스타일을 물으면 팩 목록을 보여 주고, 고른 팩은 승인을 받아 프로젝트 절에 적는다.</dd>
         <dt>결과</dt><dd>팩 토큰으로 만든 설계와 색 쌍마다 계산한 대비값 &mdash; 예를 들어 팩의 주황 할인 강조색은 흰 배경 위 3.43:1이라 작은 글자가 아니라 검은 글자를 얹은 배지로 쓴다.</dd>
       </dl>
       <div class="warn soft"><b>알아 둘 것.</b> kr-ui-guide의 필수 기준은 언제나 팩을 이긴다. 팩의 원문은 AI 리서치 산출물이라 대비값은 다시 계산했고 폰트 라이선스는 전부 원문에서 다시 읽었다. 상업·웹 사용에 허락이 필요한 폰트는 목록에만 있고 기본으로 쓰지 않는다.</div>
@@ -688,7 +688,7 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
         <dt>하는 일</dt><dd>훅이 세션마다 제목(없으면 첫 프롬프트 앞 80자)·브랜치·고친 파일을 <code>~/.claude/session-board/</code>에 적는다. 같은 폴더(같은 git 최상위 &mdash; worktree는 다른 폴더로 친다)에 다른 활성 세션이 있으면 세션을 시작할 때와 다음 프롬프트 때 Claude에게 알리고, 다른 세션이 방금 고친 파일을 고치려 하면 한 번 경고한다. 스킬을 부르면 보드를 보여 주고, 파일이 겹치면 worktree로 옮기자고 제안한다.</dd>
         <dt>결과</dt><dd>다른 세션의 이름·브랜치·고친 파일을 적은 한 줄. 막는 것은 없다 &mdash; 계속할지, worktree로 옮길지, 그 세션에 물을지는 내가 정한다. 다른 세션이 없으면 대화에 아무것도 더하지 않고, 훅은 모델을 부르지 않는다.</dd>
       </dl>
-      <div class="warn soft"><b>알아 둘 것.</b> Node.js 18 이상이 필요하다 &mdash; 없으면 훅이 조용히 아무것도 하지 않는다. 훅이 이 PC의 모든 세션에 걸리기 때문에 기본 해제로 나오고, 세션은 PC 단위라 스코프는 글로벌로 고정이다 &mdash; 설치 절차는 스코프 대신 <code>dandi</code> 플러그인(먼저 권한다)과 복사본 중 무엇으로 깔지를 묻는다. 회사 PC면 플러그인이 내 권한으로 코드를 돌린다는 점도 함께 알린다 &mdash; 이 훅은 모든 편집에 돈다. 스킬 이름 별칭은 복사본에만 붙고 플러그인에는 붙지 않는다. 플러그인은 훅까지 함께 켜고 한 번에 걷힌다. 복사본은 <code>~/.claude/settings.json</code>에 기존 훅은 그대로 둔 채 훅을 덧붙인다. 둘 중 하나만 남긴다 &mdash; 둘 다 있으면 모든 이벤트가 두 번 돈다. 보드에는 제목·첫 프롬프트 앞 80자·브랜치·파일 경로만 있고 파일 내용은 없다. 3시간 동안 활동이 없거나 끝난 세션은 무시하고, 하루 지난 기록은 지운다. 보지 못하는 것도 있다: 여러 repo를 묶은 워크스페이스의 루트 세션과 하위 repo 세션은 git 최상위가 달라 서로 보지 못하고, 셸(Bash·PowerShell)로 고친 파일은 목록에 오르지 않으며, <code>claude -p</code>는 실행마다 별도 세션으로 오른다. &ldquo;한 폴더에서 세션 두 개를 돌리지 않는다&rdquo;는 습관을 대신하지는 않는다 &mdash; 그 습관이 깨졌을 때 알아채게 해 주는 장치다.</div>
+      <div class="warn soft"><b>알아 둘 것.</b> Node.js 18 이상이 필요하다 &mdash; 이 항목을 골랐는데 없으면 훅을 걸지 않고 플러그인도 켜지 않으며, 이미 걸려 있으면 걷어낼지 묻는다. Node 없이 훅이 돌면 조용히 넘어가지 않고 <code>hook error</code> 알림이 뜨기 때문이다. Node를 깐 뒤에는 새 터미널에서 재적용한다. 훅이 이 PC의 모든 세션에 걸리기 때문에 기본 해제로 나오고, 세션은 PC 단위라 스코프는 글로벌로 고정이다 &mdash; 설치 절차는 스코프 대신 <code>dandi</code> 플러그인(먼저 권한다)과 복사본 중 무엇으로 깔지를 묻는다. 회사 PC면 플러그인이 내 권한으로 코드를 돌린다는 점도 함께 알린다 &mdash; 이 훅은 모든 편집에 돈다. 스킬 이름 별칭은 복사본에만 붙고 플러그인에는 붙지 않는다. 플러그인은 훅까지 함께 켜고 한 번에 걷힌다. 이미 켜 둔 플러그인의 개정은 직접 <code>/plugin marketplace update dandi</code>로 받는다 &mdash; 적용 기록의 버전만 올라서는 돌고 있는 훅이 바뀌지 않는다. 복사본은 <code>~/.claude/settings.json</code>에 기존 훅은 그대로 둔 채 훅을 덧붙이고, 이미 걸려 있으면 한 벌 더 붙이지 않는다. 둘 중 하나만 남긴다 &mdash; 둘 다 있으면 모든 이벤트가 두 번 돈다. 보드에는 제목·첫 프롬프트 앞 80자·브랜치·파일 경로만 있고 파일 내용은 없다. 3시간 동안 활동이 없거나 끝난 세션은 무시하고, 하루 지난 기록은 지운다. 보지 못하는 것도 있다: 여러 repo를 묶은 워크스페이스의 루트 세션과 하위 repo 세션은 git 최상위가 달라 서로 보지 못하고, 셸(Bash·PowerShell)로 고친 파일은 목록에 오르지 않으며, <code>claude -p</code>는 실행마다 별도 세션으로 오른다. &ldquo;한 폴더에서 세션 두 개를 돌리지 않는다&rdquo;는 습관을 대신하지는 않는다 &mdash; 그 습관이 깨졌을 때 알아채게 해 주는 장치다.</div>
       <div class="tags"><span class="tag">글로벌</span><span class="tag">기본 해제</span><span class="tag need">Node 18+</span><span class="tag">훅 설치</span></div>
     </article>
 
@@ -878,7 +878,7 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
     <tr><td><code>/frontend-design</code></td><td>03 §3</td><td>글로벌 &mdash; 플러그인 또는 <code>npx skills add -g</code></td><td>폴더 삭제. npx가 링크만 걸어 뒀으면 링크가 가리키는 실체까지 지운다. <code>kr-ui-guide</code>까지 없으면 <code>CLAUDE.md</code>의 폰트 라이선스 정책 절도 지운다.</td></tr>
     <tr><td>기능 문서 6종</td><td>03 §7</td><td>글로벌 &mdash; 팀·CI가 공유해야 하면 프로젝트 스코프 &middot; 또는 <code>dandi</code> 플러그인</td><td>플러그인: <code>/plugin uninstall dandi-feature-docs@dandi</code>. 복사본: 가드부터 걷고 여섯 폴더. <code>docs/features/</code>·<code>tests/e2e/</code>·<code>tests/maestro/</code>는 남긴다.</td></tr>
     <tr><td><code>/refactor</code></td><td>03 §8</td><td>글로벌 &middot; 또는 <code>dandi</code> 플러그인</td><td>플러그인: <code>/plugin uninstall dandi-refactor@dandi</code>. 복사본: 폴더 삭제. 걷을 훅도, 되돌릴 커밋도 없다. <code>docs/refactor/</code> 보고서는 남긴다.</td></tr>
-    <tr><td><code>/browser-check</code></td><td>03 §5</td><td>설치할 때 묻는다 &mdash; 글로벌 또는 프로젝트 &middot; 또는 <code>dandi</code> 플러그인</td><td>플러그인: <code>/plugin uninstall dandi-browser-check@dandi</code>. 복사본: 폴더 삭제 &mdash; 프로젝트 스코프면 삭제를 커밋한다. 브라우저 쪽은 따로 걷는다: Chrome은 <code>/chrome</code>에서 끄거나 확장을 지우고, Playwright CLI는 <code>npm uninstall -g @playwright/cli</code>, Chrome DevTools MCP는 <code>claude mcp remove chrome-devtools --scope user</code>.</td></tr>
+    <tr><td><code>/browser-check</code></td><td>03 §5</td><td>설치할 때 묻는다 &mdash; 글로벌 또는 프로젝트 &middot; 또는 <code>dandi</code> 플러그인</td><td>플러그인: <code>/plugin uninstall dandi-browser-check@dandi</code>. 복사본: 폴더 삭제 &mdash; 프로젝트 스코프면 삭제를 커밋한다. 브라우저 쪽은 따로 걷는다: Chrome은 <code>/chrome</code>에서 끄거나 확장을 지우고, Playwright CLI는 <code>npm uninstall -g @playwright/cli</code>, Chrome DevTools MCP는 <code>claude mcp remove chrome-devtools --scope user</code>. 저장해 둔 로그인 상태 파일은 지울지 묻는다.</td></tr>
     <tr><td><code>/kr-ui-guide</code></td><td>03 §9</td><td>글로벌 &middot; 또는 <code>dandi</code> 플러그인</td><td>플러그인: <code>/plugin uninstall dandi-kr-ui-guide@dandi</code>. 복사본: 폴더 삭제. 프로젝트 CLAUDE.md에 선택적 오버라이드 절을 추가했으면 그것도 지우고, <code>frontend-design</code>까지 없으면 폰트 라이선스 정책 절도 지운다.</td></tr>
     <tr><td><code>/kr-ui-styles</code></td><td>03 §9 (설치 7)</td><td>kr-ui-guide와 같은 스코프 &middot; 또는 <code>dandi-kr-ui-guide</code> 플러그인 안</td><td>복사본: 폴더를 지우고 프로젝트 오버라이드 절의 <code>스타일 팩:</code> 줄을 지운다. 플러그인: <code>dandi-kr-ui-guide</code>에 함께 실려 있어 그 플러그인을 지우면 둘 다 지워진다.</td></tr>
     <tr><td><code>/pc-clean</code></td><td>03 §10</td><td>글로벌 &mdash; 프로젝트 스코프면 Windows 전용 스크립트가 repo에 커밋된다 &middot; 또는 <code>dandi</code> 플러그인</td><td>플러그인: <code>/plugin uninstall dandi-pc-clean@dandi</code>. 복사본: 폴더 삭제 &mdash; 프로젝트 스코프면 삭제를 커밋한다. 걷을 훅·설정·예약 작업은 없다.</td></tr>
@@ -889,7 +889,7 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
 </div>
 <p class="lead" style="margin-top:16px">전부 제거 절차가 문서에 적혀 있는데, 이건 의도한 것이다. 되돌릴 수 없는 설치는 애초에 선택지를 준 게 아니기 때문이다. 감지·설치·검증·제거 4단 전체는 각 문서에 있다. 설치할 때 나오는 질문의 뜻은 <a href="options.ko.html">옵션 사전</a>에, 처음부터 차근히 밟아 보려면 <a href="learn.ko.html">학습 코스</a>에 있다. 설치 항목 몇 개는 일부러 여기 없다: 정책 기록(03 §11)과 기능 변경 기록(03 §13)은 스킬이 아니라 규칙 파일(<code>.claude/rules/policy-recording.md</code>, <code>.claude/rules/feature-log.md</code>)을 더하는 항목이라, 부를 명령이 없어 카드도 없다.</p>
 
-<footer>단디(Dandi) &middot; 스킬 카탈로그 &middot; 2026-10-30 &middot; 01 §D-4 · 02 STEP 3 ⓔ · 03 §2 · §3 · §5 · §7 · §8 · §9 · §10 · §12가 설치하는 스킬들. 명령은 별칭 없이 적었으니, 설치할 때 별칭을 골랐다면 그것을 얹어 읽으면 된다. &middot; 글꼴: Pretendard, IBM Plex Mono — 둘 다 SIL 오픈 폰트 라이선스 1.1(상업 이용·웹 임베딩 무료)</footer>
+<footer>단디(Dandi) &middot; 스킬 카탈로그 &middot; 2026-11-02 &middot; 01 §D-4 · 02 STEP 3 ⓔ · 03 §2 · §3 · §5 · §7 · §8 · §9 · §10 · §12가 설치하는 스킬들. 명령은 별칭 없이 적었으니, 설치할 때 별칭을 골랐다면 그것을 얹어 읽으면 된다. &middot; 글꼴: Pretendard, IBM Plex Mono — 둘 다 SIL 오픈 폰트 라이선스 1.1(상업 이용·웹 임베딩 무료)</footer>
 
 </div>
 <script>
