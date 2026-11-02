@@ -329,6 +329,7 @@ footer{max-width:1120px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
     디자인 확장이 얹힙니다. 여러 개를 켜고 꺼 보세요.
   </p>
   <p>실제 설치 화면은 <b>한 질문에 선택지를 4개까지만</b> 보여 줍니다. 그래서 번들처럼 고를 게 많으면 질문이 몇 개로 나뉘어 나옵니다 — 칸이 모자란다고 한 칸에 묶거나 빼 버리지 않습니다.</p>
+  <p>실제 설치에서는 감지 결과에 맞는 번들이 <b>미리 체크돼</b> 나옵니다 — 프론트엔드 스택이면 디자인, 테스트·CI가 있으면 검증 강화, 기능 명세 폴더가 있으면 기능 문서화입니다. 회사 저장소라고 답하면 회사 번들은 자동으로 적용됩니다. 무인 자동화와 응답 스타일은 코드로 알 수 없어 직접 요청할 때만 고릅니다.</p>
   <div class="sim">
     <div class="q">
       <p class="qt"><b>Q.</b> 목적 번들을 골라 주세요 (0개 이상, 복수 선택)</p>
@@ -336,12 +337,12 @@ footer{max-width:1120px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
     </div>
     <div class="plan" aria-live="polite">
       <p class="pt">➕ 얹히는 것</p>
-      <div id="bundlePlan"><p class="empty">아무것도 안 골라도 됩니다 — 그게 기본값입니다.</p></div>
+      <div id="bundlePlan"><p class="empty">아무것도 안 골라도 됩니다.</p></div>
     </div>
   </div>
   <div class="coach warn"><span class="who">🏢</span><div>
     <b>'회사'는 설치물이 아니라 안전장치입니다</b>
-    회사 번들을 켜면 새로 깔리는 것은 없습니다. 대신 코드가 밖으로 나갈 수 있는 항목(CI·MCP·루틴)에서
+    회사 번들을 켜면 새로 깔리는 것은 없습니다. 대신 코드가 밖으로 나가거나 로그인된 세션에 닿을 수 있는 항목(CI·MCP·브라우저·루틴)에서
     <b>조직 승인 확인을 강제</b>합니다. 회사 저장소라면 반드시 켜세요.
   </div></div>
 </section>
@@ -365,6 +366,7 @@ footer{max-width:1120px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
   </div></div>
 
   <h3>운용 프로필 — 표준 / 절약</h3>
+  <p>이 PC의 글로벌 기록에 프로필이 이미 있으면 그 값을 보여 주고 <b>확인만</b> 받습니다.</p>
   <div class="sim">
     <div class="q">
       <p class="qt"><b>Q.</b> 운용 프로필을 골라 주세요</p>
@@ -377,14 +379,14 @@ footer{max-width:1120px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
   </div>
 
   <h3>산출물 언어 — 한국어 / English</h3>
-  <p>오해하기 쉬운 항목입니다 — <b>문서의 언어가 아니라</b> <b>설치가 만들어 내는 것</b>의 언어입니다. 드롭인 문서는 한국어 그대로 두고(Claude는 어느 언어로든 같게 실행합니다), 이 답이 대상 <code class="i">CLAUDE.md</code> 본문·<code class="i">docs/</code> 기록·커밋 메시지·산출물 파일명(<code class="i">docs/난이도-매트릭스.md</code> ↔ <code class="i">docs/difficulty-matrix.md</code>)의 언어를 정합니다. <code class="i">[갈래][Done]</code> 같은 형식 키워드는 어느 언어에서도 고정입니다 — <code class="i">/resume</code>·<code class="i">/wrap</code>이 그 문자열로 찾기 때문입니다.</p>
+  <p>오해하기 쉬운 항목입니다 — <b>문서의 언어가 아니라</b> <b>설치가 만들어 내는 것</b>의 언어입니다. 드롭인 문서는 한국어 그대로 두고(Claude는 어느 언어로든 같게 실행합니다), 이 답이 대상 <code class="i">CLAUDE.md</code> 본문·<code class="i">docs/</code> 기록·커밋 메시지·산출물 파일명(<code class="i">docs/난이도-매트릭스.md</code> ↔ <code class="i">docs/difficulty-matrix.md</code>)의 언어를 정합니다. <code class="i">[갈래][Done]</code> 같은 형식 키워드는 어느 언어에서도 고정입니다 — <code class="i">/resume</code>·<code class="i">/wrap</code>이 그 문자열로 찾기 때문입니다. 기본값은 지금 대화하는 언어이고, 이미 만들어진 산출물이 있으면 그 언어를 우선합니다.</p>
 
   <h3>스킬 이름 별칭 — 없음 / 전부 / 고른 것만</h3>
-  <p>설치되는 스킬 이름(<code class="i">resume</code>·<code class="i">wrap</code>·<code class="i">svg-design</code>)은 흔합니다. 내 PC에 <b>같은 이름의 다른 스킬</b>이 이미 있으면 그쪽이 이겨서, 설치는 됐는데 눌러 보면 엉뚱한 게 돌거나 쓰던 게 덮입니다. 이 질문이 그 회피 수단입니다 — 애칭 <b>단디</b>를 붙여 <code class="i">dandi-resume</code>(앞) 또는 <code class="i">resume-dandi</code>(뒤)로 만듭니다. 붙이기로 하면 붙일 글자(기본 <code class="i">dandi</code>)와 위치(앞/뒤)를 이어서 묻고, <b>고른 것만</b>이면 설치할 스킬 목록에서 직접 고릅니다. <b>기본은 없음</b>이고, 설치 전에 같은 이름이 있는지 찾아본 뒤 있으면 그 스킬만 체크한 '고른 것만'을 권합니다. <b>기능 문서 세트 6종은 서로를 이름으로 부르니 여섯 개가 함께 움직입니다</b>. 자세한 건 <a href="options.ko.html#common">옵션 사전 2-7</a>.</p>
+  <p>설치되는 스킬 이름(<code class="i">resume</code>·<code class="i">wrap</code>·<code class="i">svg-design</code>)은 흔합니다. 내 PC에 <b>같은 이름의 다른 스킬</b>이 이미 있으면 그쪽이 이겨서, 설치는 됐는데 눌러 보면 엉뚱한 게 돌거나 쓰던 게 덮입니다. 이 질문이 그 회피 수단입니다 — 애칭 <b>단디</b>를 붙여 <code class="i">dandi-resume</code>(앞) 또는 <code class="i">resume-dandi</code>(뒤)로 만듭니다. 붙이기로 하면 붙일 글자(기본 <code class="i">dandi</code>)와 위치(앞/뒤)를 이어서 묻고, <b>고른 것만</b>이면 설치할 스킬 목록에서 직접 고릅니다. <b>기본은 없음</b>이고, 설치 전에 같은 이름이 있는지 찾아본 뒤 있으면 그 스킬만 체크한 '고른 것만'을 권합니다. <b>기능 문서 세트 6종은 서로를 이름으로 부르니 여섯 개가 함께 움직입니다</b>. 다시 적용할 때는 기록된 별칭을 그대로 쓰고 다시 묻지 않습니다. 기록과 이 PC에 깔린 이름이 다르면 이 PC 것을 기록에 맞출지, 별칭을 붙여 하나 더 깔지(같은 스킬이 두 이름으로 뜹니다), 이 PC만 예외로 둘지 묻습니다. frontend-design과 session-board를 플러그인으로 깔면 별칭이 붙지 않으니, 붙이려면 다른 설치 경로를 고릅니다. 자세한 건 <a href="options.ko.html#common">옵션 사전 2-7</a>.</p>
 
   <h3>이미 설치돼 있으면 — 유지 / 재구성 / 교체</h3>
   <p>기존 설정이 감지된 항목마다, 모드와 상관없이 <b>항상</b> 물어봅니다. 눌러서 차이를 보세요.</p>
-  <p>다만 <b>이 PC에 이미 있는 글로벌 항목</b>(모든 프로젝트가 함께 쓰는 설정)은 프로젝트를 새로 깔 때마다 같은 답을 하지 않도록 <b>한 문항으로 묶어</b> 물어봅니다 — 목록을 보여 주고 기본은 <b>유지</b>입니다. <b>재구성·교체</b>를 고른 것만 하나씩 나눠 묻습니다.</p>
+  <p>다만 <b>이 PC에 이미 있는 글로벌 항목</b>(모든 프로젝트가 함께 쓰는 설정)은 프로젝트를 새로 깔 때마다 같은 답을 하지 않도록 <b>한 문항으로 묶어</b> 물어봅니다 — 목록을 보여 주고 기본은 <b>유지</b>입니다. <b>재구성·교체</b>를 고른 것만 하나씩 나눠 묻습니다. 다시 적용하면서 승인한 변경이 걸린 항목은 기본이 <b>재구성</b>입니다.</p>
   <div class="q">
     <div class="opts row" id="keepOpts" role="group" aria-label="기존 설정 처리 선택"></div>
     <div class="feedback ok" id="keepFb"></div>
@@ -408,6 +410,7 @@ footer{max-width:1120px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
     01 문서는 <b>"어제 뭐 했더라"를 없애는</b> 구성입니다. 항목(ⓐ~ⓖ)을 켜고 꺼 보세요(최소 모드는 ⓑⓒⓓⓖ, 권장·전체는 전부) —
     아래 미리보기에서 <b>실제로 만들어지는 파일</b>이 바뀝니다.
   </p>
+  <p>대상이 내 PC뿐이면(프로젝트 없이 깔 때) 프로젝트 항목 ⓓⓔ는 빠집니다. 항목을 고르기 전에, 코드로 알 수 없는 것 — 프로젝트 유형, 혼자 하는지·여럿이 다른 갈래를 맡는지·같은 갈래를 함께 고치는지, 커밋 메시지 양식, 자주 함께 고치는 저장소 — 도 물어봅니다.</p>
   <div id="doc01Rows"></div>
   <h3>만들어지는 파일 미리보기</h3>
   <div class="tree" id="doc01Tree" aria-live="polite"></div>
@@ -450,7 +453,7 @@ footer{max-width:1120px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
       <p>같은 목록에 <b>난이도 기준표</b>와, 어느 에이전트 다음에 어느 에이전트가 오고 무엇을 넘길지 정한 <b>핸드오프 규약 문서</b>도 있습니다. 규모가 크고 조각이 서로 독립적인 프로젝트면 <b>implementer 병렬 투입</b>도 제안합니다 — 각자 격리된 워크트리에서 돌고, 에이전트 파일에 상시로 적거나, 병렬로 부를 때만 지정합니다(이때는 그 규칙을 핸드오프 규약에 적습니다).</p>
       <p>여기에 <b>선택 항목이 하나 더</b> 있습니다(기본 해제) — <b>계획을 세울 때만</b> 다른 모델로 돌리는
       <code class="i">/plan-&lt;모델&gt;</code> 명령. 계획이 끝나면 원래 모델로 저절로 돌아옵니다.
-      이 명령을 <b>어디 둘지</b>(나만 쓰는 내 PC / 팀과 공유하는 프로젝트)는 로스터와 따로 물어봅니다.</p>
+      이 명령을 <b>어디 둘지</b>(나만 쓰는 내 PC / 팀과 공유하는 프로젝트)는 로스터와 따로 물어봅니다. 내가 부를 때만 돌게 할지도 함께 묻고, 어느 일을 어느 모델에 맡길지 정리한 <b>운용표</b>(<code class="i">docs/모델-운용표.md</code>)가 같이 만들어집니다.</p>
       <div class="coach warn" style="margin-top:8px"><span class="who">⚠️</span><div>
         <b>코드가 없는 저장소면 설치하지 않습니다</b> 문서만 있는 곳에 로스터를 깔면 쓰지 않는 파일만 늘어납니다. Claude가 감지하고 알려줍니다.
       </div></div>
@@ -464,14 +467,14 @@ footer{max-width:1120px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
         <li><b>claude-hud</b> — 입력창 아래 <b>상태 표시줄</b>. 컨텍스트·요금제 사용량이 보입니다. 절약 프로필이면 사실상 필수. <b>Node.js 18 이상</b>이 필요합니다. 고르면 표시 구성을 어떻게 할지(대화형으로 고르기 / 작성자 추천 구성 / 기본값 유지)와, 메시지 사이에도 카운트다운이 흐르게 하는 <b>타이머 갱신</b>을 넣을지도 함께 묻습니다 — 안 넣으면 이벤트가 있을 때만 다시 그립니다. 타이머는 열어 둔 창 수만큼 다시 그리는 비용이 들고, Windows Git Bash에서는 간격이 짧으면 오류가 날 수 있어 거기서는 빼거나 30초 이상으로 둡니다.</li>
         <li><b>svg-design</b> — SVG 시각효과(손그림·Gooey·유리·네온)를 제대로 구현하게 하는 규칙집. 웹 화면 프로젝트용.</li>
         <li><b>frontend-design</b> — Anthropic 공식 스킬. "AI가 만든 티가 나는 UI"를 피하게 합니다.</li>
-        <li><b>MCP 서버</b> — 외부 도구 연결(GitHub·문서 검색·브라우저 조작). 어떤 서버를 붙일지는 따로 물어봅니다.</li>
+        <li><b>MCP 서버</b> — 외부 도구 연결(GitHub·문서 검색·브라우저 조작). 기본은 꺼져 있습니다. 고르면 어떤 서버를 붙일지와 <b>어디에 등록할지</b>(팀 공유 <code class="i">.mcp.json</code> / 내 PC 전체 / 이 프로젝트에서 나만)를 따로 물어봅니다.</li>
         <li><b>브라우저 검증</b> — 만든 화면을 <b>Claude가 직접 열어 확인하고 고치게</b> 합니다. 고르면 쓸 브라우저 도구를 따로 묻습니다(여러 개 고를 수 있음). 기본은 창 없이 도는 <b>Playwright CLI</b>입니다(Node.js가 필요해서, Node가 없는 PC에서는 기본 해제로 나오고 다른 도구를 대안으로 보여 줍니다) — 화면이 있는 PC에서도 내 브라우저를 차지하지 않고, 여러 세션을 함께 돌릴 수 있고, WSL·SSH·CI에서도 똑같이 돕니다. 로그인이 필요한 화면은 테스트 계정의 로그인 상태를 저장한 파일로 엽니다. <b>Claude in Chrome</b> 확장은 기본 해제입니다. 내 실제 로그인(SSO·2단계 인증 등)이 꼭 필요할 때 쓰는 보조 수단이라, 고르더라도 매 세션 자동으로 켜지는 설정은 끄고 필요할 때만 연결하도록 안내합니다. <b>Chrome DevTools MCP</b>는 느려짐·메모리·네트워크 문제의 원인을 파고드는 디버깅용으로, 기본은 꺼져 있고 내 PC에만 등록됩니다. Desktop 앱을 쓰면 내장 브라우저도 설치 없이 쓸 수 있어 안내만 합니다. 어느 쪽이든 작은 규칙 스킬 <b>browser-check</b>가 함께 깔립니다 — 먼저 페이지를 글자로 읽고, 보이는 모습 자체가 문제일 때만 스크린샷을 찍게 합니다(스크린샷은 비쌉니다). Claude가 스스로 부르는 방식을 권장합니다.</li>
         <li><b>기능 문서 스킬 세트</b>(6종) — 코드와 실제 화면을 보고 <b>기능마다 명세</b>를 써 두고, 거기 적힌 테스트를 돌리고, 문서를 안 고친 커밋을 막고, 릴리스 노트까지 만듭니다. 6종을 한 세트로 깔며, 문서만 있는 저장소는 대상이 아닙니다. 팀원 전원의 커밋을 막는 <b>커밋 가드</b>는 기본으로 꺼 둔 채 따로 물어봅니다.</li>
-        <li><b>refactor</b> — 코드를 정리하고(중복 통합·구조 정리·낡은 문법 제거) <b>동작이 그대로인지까지 증명</b>합니다 — 호출처·계약·데이터 형식·실제 실행. 후보를 표로 보여주고 고른 것만 고칩니다. 문서만 있는 저장소는 대상이 아닙니다.</li>
+        <li><b>refactor</b> — 코드를 정리하고(중복 통합·구조 정리·낡은 문법 제거) <b>동작이 그대로인지까지 증명</b>합니다 — 호출처·계약·데이터 형식·실제 실행. 후보를 표로 보여주고 고른 것만 고칩니다. 코드를 고치는 스킬이라 어느 모드에서도 기본은 꺼져 있고, 문서만 있는 저장소는 대상이 아닙니다.</li>
         <li><b>kr-ui-guide</b> — 국내 서비스 리서치(UX 패턴·아이콘·색·최신 디자인 트렌드)와 한국 게임 UI/UX 리서치에서 추린 설계 기준. 제안하는 색의 <b>명도 대비를 계산</b>하고 화면을 체크리스트로 점검합니다. 한국 사용자 대상 <b>웹·앱·게임</b> 화면용이며, 특정 브랜드의 모양을 베끼지 않습니다. 고르면 선택 항목 두 개를 함께 묻습니다(둘 다 기본 해제). 하나는 UI 작업을 할 프로젝트의 <code class="i">CLAUDE.md</code>에 넣는 <b>프로젝트 오버라이드 절</b>(브랜드 컬러·상태 색·다크모드·도메인·타깃 플랫폼·스타일 팩)입니다 — 값을 비워 두면 Claude가 기준을 먼저 읽은 뒤 그 기준에서 고른 후보를 붙여 물어봅니다. 다른 하나는 두 번째 스킬 <b>kr-ui-styles</b>로, 프로젝트가 원할 때 기본 모습을 리서치에서 추린 다른 방향(지금은 에디토리얼·모노크롬, 다크·네온, 키치·일러스트, 네오브루탈)으로 바꿉니다. 이걸 고르면 그 프로젝트에 쓸 스타일 팩도 묻습니다.</li>
         <li><b>pc-clean</b> — PC가 느려졌을 때 원인 후보(디스크·메모리 여유, 주인 잃은 <code class="i">node.exe</code>, 오늘 이전부터 켜져 있던 Claude 세션, 임시 파일 등)를 <b>읽기만 해서</b> 표 한 장으로 보여주고, <b>내가 승인한 항목만</b> 정리합니다. <b>Windows + PowerShell 7 전용</b>이라 다른 OS에서는 목록에 나오지 않고, 프로젝트와 무관한 PC 도구라 기본은 꺼져 있습니다. 스코프는 내 PC 전체가 기본입니다.</li>
         <li><b>정책 기록</b> — 개발하다 드러난 <b>기획 규칙</b>(상태가 바뀌는 조건, 권한·노출 조건, 금액·수량·기한 계산 등 이름만 봐서는 알 수 없는 것)을 Claude가 발견하는 즉시 <code class="i">.claude/rules/policies/</code>에 적어 두고, 관련 코드를 만지거나 관련 작업을 받으면 <b>말하지 않아도</b> 그 규칙부터 확인하게 합니다. 코드에서 짐작한 것과 확인받은 것을 구분해 적습니다. 사람이 읽는 문서가 아니라 Claude가 읽는 규칙 파일입니다. <b>어느 모드에서도 기본은 꺼져 있습니다</b> — 매 턴 기록 지시를 불러오고 커밋되는 파일에 쓰는 항목이라 모드가 대신 켜지 않습니다. 문서만 있는 저장소는 대상이 아닙니다. 규칙은 그 프로젝트의 사실이라 <b>이 프로젝트에만</b> 깔립니다.</li>
-        <li><b>session-board</b>(세션 보드) — 같은 폴더에서 Claude 세션을 여러 개 띄웠을 때, <b>다른 세션의 제목(없으면 첫 프롬프트 앞부분)·브랜치·고친 파일</b>을 알려 주고 다른 세션이 방금 고친 파일을 고치려 하면 한 번 경고합니다(막지는 않습니다). 다른 세션이 없으면 대화에 아무것도 더하지 않습니다. <b>Node.js 18 이상</b>이 필요합니다 — Node가 없으면 훅을 걸지 않고, Node를 설치한 뒤 새 터미널에서 다시 적용할 때까지 대기로 기록해 둡니다. 세션은 PC 단위라 <b>내 PC 전체</b>에 깔립니다. 모든 세션에 자동 동작을 거는 항목이라 기본은 꺼져 있습니다. <code class="i">dandi</code> 플러그인으로 깔지, 파일을 복사해 깔지 고릅니다.</li>
+        <li><b>session-board</b>(세션 보드) — 같은 폴더에서 Claude 세션을 여러 개 띄웠을 때, <b>다른 세션의 제목(없으면 첫 프롬프트 앞부분)·브랜치·고친 파일</b>을 알려 주고 다른 세션이 방금 고친 파일을 고치려 하면 한 번 경고합니다(막지는 않습니다). 다른 세션이 없으면 대화에 아무것도 더하지 않습니다. <b>Node.js 18 이상</b>이 필요합니다 — Node가 없으면 훅을 걸지 않고(이미 걸려 있으면 걷어낼지 묻습니다), Node를 설치한 뒤 새 터미널에서 다시 적용할 때까지 대기로 기록해 둡니다. 세션은 PC 단위라 <b>내 PC 전체</b>에 깔립니다. 모든 세션에 자동 동작을 거는 항목이라 기본은 꺼져 있습니다. <code class="i">dandi</code> 플러그인으로 깔지, 파일을 복사해 깔지 고릅니다. 둘 다 걸려 있으면 동작이 두 번 돌아 하나만 남기라고 묻습니다.</li>
         <li><b>기능 변경 기록</b> — 깔아 둔 뒤부터 사람이 쓰는 기능(화면·API·명령·설정)이 <b>추가·변경·삭제</b>되면 Claude가 그 턴 안에 <code class="i">.claude/rules/feature-log/&lt;영역&gt;.md</code>에 <b>한 줄</b>로 남깁니다 — 파일 경로와 날짜, 삭제면 그 사유까지. 관련 작업을 받으면 <b>말하지 않아도</b> 그 줄부터 확인해서, 나중 작업이 기존 기능의 정의를 놓치거나 지운 기능을 슬그머니 되살리지 않게 합니다. 명세가 아니라 찾기 위한 색인이라 자세한 내용은 코드와 git 이력에 둡니다. 기능이 그대로인 리팩터링·버그 수정은 적지 않고, 이미 있던 기능을 거슬러 적지도 않습니다 — 그건 기능 문서 스킬 세트의 일이며, 그 세트를 이미 쓰고 있으면 겹친다고 알려 줍니다. 정책 기록처럼 <b>어느 모드에서도 기본은 꺼져 있고</b>, 문서만 있는 저장소는 대상이 아니며, <b>이 프로젝트에만</b> 깔립니다.</li>
       </ul>
       <p>스킬을 고르면 두 가지를 더 물어봅니다 — <b>스코프</b>(내 PC 전체 vs 이 프로젝트만)와
@@ -499,9 +502,9 @@ footer{max-width:1120px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
     <summary><span class="id">04</span>검증 자동화 — "됐다"는 말 대신 기계 검사 <span class="badge b-on">훅 게이트가 핵심</span></summary>
     <div class="acc-b">
       <ul>
-        <li><b>훅 품질 게이트</b> — Claude가 <b>파일을 고칠 때마다</b> 린터·문법 검사가 자동으로 돌고, 실패 출력이 Claude에게 돌아가 스스로 고칩니다. <b>절약 프로필이어도 빼지 않습니다</b> — 재작업이 줄어드는 게 가장 큰 절약이라서. 고르면 <b>적용 범위</b>(팀 공유 / 내 PC 전체 / 나만·이 프로젝트만)와 <b>강도</b>를 함께 물어봅니다. <b>막기</b>(기본)는 편집을 되돌리는 게 아니라 실패 내용을 Claude에게 돌려줘 통과할 때까지 고치게 하고, <b>경고만</b>은 나에게 알림만 띄울 뿐 Claude는 보지 못합니다.</li>
-        <li><b>호스트 CLI</b>(<code class="i">gh</code>/<code class="i">glab</code>) — Claude가 PR을 만들고 CI 실패 로그를 직접 읽게 합니다. 로그인은 <b>본인이 직접</b> 합니다.</li>
-        <li><b>CI 통합</b> — PR에 <code class="i">@claude</code>를 멘션하면 리뷰·수정 — GitHub에서는 설치 워크플로가 기본 브랜치에 머지된 뒤부터 동작합니다. GitLab 공식 통합은 수동·MR 파이프라인에서 돌고 멘션으로 돌리려면 리스너를 직접 구성해야 하며, 그 밖의 호스트는 CI 단계에서 Claude를 직접 부릅니다. <span class="badge b-gate">🔴 회사면 조직 승인 필요</span> — CI에서 코드가 Anthropic API로 전송됩니다.</li>
+        <li><b>훅 품질 게이트</b> — Claude가 <b>파일을 고칠 때마다</b> 린터·문법 검사가 자동으로 돌고, 실패 출력이 Claude에게 돌아가 스스로 고칩니다. <b>절약 프로필이어도 빼지 않습니다</b> — 재작업이 줄어드는 게 가장 큰 절약이라서. 고르면 <b>적용 범위</b>(팀 공유 / 내 PC 전체 / 나만·이 프로젝트만)와 <b>강도</b>를 함께 물어봅니다. <b>막기</b>(기본)는 편집을 되돌리는 게 아니라 실패 내용을 Claude에게 돌려줘 통과할 때까지 고치게 하고, <b>경고만</b>은 나에게 알림만 띄울 뿐 Claude는 보지 못합니다. 이미 걸어 둔 게이트가 실패를 Claude에게 돌려주지 못하는 옛 방식이면 그 사실을 보여 주고 <b>재구성</b>을 권합니다(자동으로 고치기만 하는 포맷터 훅이면 유지도 괜찮습니다).</li>
+        <li><b>호스트 CLI</b>(<code class="i">gh</code>/<code class="i">glab</code>) — Claude가 PR을 만들고 CI 실패 로그를 직접 읽게 합니다. 로그인은 <b>본인이 직접</b> 합니다. 원격 저장소가 아직 없으면 CLI와 CI는 빼고 훅만 진행하며, 원격이 생기면 다음 재적용 때 다시 묻습니다.</li>
+        <li><b>CI 통합</b> — PR에 <code class="i">@claude</code>를 멘션하면 리뷰·수정 — GitHub에서는 설치 워크플로가 기본 브랜치에 머지된 뒤부터 동작합니다. GitLab 공식 통합은 수동·MR 파이프라인에서 돌고 멘션으로 돌리려면 리스너를 직접 구성해야 하며, 그 밖의 호스트는 CI 단계에서 Claude를 직접 부릅니다. <span class="badge b-gate">🔴 회사면 조직 승인 필요</span> — CI에서 코드가 Anthropic API로 전송됩니다. 고르면 회사 저장소인지·정책을 확인했는지·승인받았는지와 함께 <b>관리자 권한 · 시크릿 등록 방식 · 앱 권한 범위 · 비용(러너 시간과 토큰)</b>도 같은 자리에서 묻습니다(감지한 호스트에 해당하는 것만). 승인이 없으면 CI만 빼고 나머지는 설치합니다.</li>
       </ul>
       <p>훅에 <b>느린 테스트는 넣지 않습니다</b> — 매번 몇 분씩 걸리면 세션이 답답해집니다. 그건 CI 몫입니다.</p>
     </div>
@@ -518,6 +521,7 @@ footer{max-width:1120px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
     <div class="acc-b">
       <p>내장 스타일(Default·Proactive·Explanatory·Learning·Concise — 그날 <code class="i">/config</code> 메뉴에 뜬 것이 목록입니다) 중 고르거나, 원하는 역할·톤을 마크다운 파일 하나로 직접 만듭니다.
       배우는 중이라면 <b>Explanatory</b>(왜 그렇게 했는지 설명하며 진행)가 유용합니다.</p>
+      <p>내장 전환과 직접 만들기는 <b>둘 다 꺼진 채</b> 나옵니다 — 말투는 취향이라 어떤 모드도 대신 고르지 않습니다. 둘 다 고르면 켜지는 스타일은 하나뿐이라 지금 무엇을 켤지도 함께 묻습니다.</p>
       <p>직접 만들 때는 <b>스타일 파일을 어디 둘지</b>(내 PC 전체 / 이 프로젝트)와 <b>켜는 설정을 어디 쓸지</b>(나만·이 프로젝트 / 내 PC 전체 / 팀 전원)를 따로 물어봅니다 — 파일을 PC 전체에 둬도, 켜는 설정이 이 프로젝트에만 있으면 다른 프로젝트에선 켜지지 않습니다.</p>
       <div class="coach warn" style="margin:8px 0"><span class="who">🔴</span><div>
         <b>커스텀 스타일의 함정 — <code class="i">keep-coding-instructions</code></b>
@@ -540,7 +544,7 @@ footer{max-width:1120px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
         <li>④ <b>무인으로 돌려도 되는 일인가</b> — 지켜보는 사람이 없습니다. 새 실행은 auto mode로 시작해 분류기가 진행 여부를 판단하고, 결과 artifact도 묻지 않고 게시될 수 있으니(공유 전까지는 본인만 봅니다), 배포·삭제·외부 발송처럼 되돌리기 어려운 일은 맡기지 않습니다</li>
         <li>⑤ <code class="i">/schedule</code> 명령이 실제로 보이는가 — 요건이 안 맞으면 대개 없는 명령처럼 숨습니다</li>
       </ul>
-      <p>게이트를 지나면 항목은 이렇습니다. <b>저장소 준비물</b>(커밋된 <code class="i">.mcp.json</code>처럼 클라우드 실행에 필요한 것), <b>루틴 생성</b>(기본 해제 — 만드는 순간 실행과 사용량 소모가 시작됩니다), <code class="i">docs/ROUTINES.md</code>에 남기는 <b>정의 기록</b>. 루틴 생성을 고르면 나머지 항목은 기본 체크됩니다.</p>
+      <p>게이트를 지나면 항목은 이렇습니다. <b>저장소 준비물</b>(커밋된 <code class="i">.mcp.json</code>처럼 클라우드 실행에 필요한 것), <b>루틴 생성</b>(기본 해제 — 만드는 순간 실행과 사용량 소모가 시작됩니다. 어떤 용도로, 어떤 트리거(스케줄·API·GitHub 이벤트)로 돌릴지 묻습니다), <code class="i">docs/ROUTINES.md</code>에 남기는 <b>정의 기록</b>. 루틴 생성을 고르면 나머지 항목은 기본 체크됩니다. 절약 프로필이면 실행 빈도를 주간부터 보수적으로 제안합니다.</p>
       <div class="coach tip" style="margin-top:8px"><span class="who">💡</span><div>
         <b>내 PC의 파일이 필요하면 루틴이 아닙니다</b> 루틴은 클라우드에서 돌아서 내 파일이 없습니다.
         "컴퓨터가 꺼져 있어도 돌아야 하는 것"에만 쓰세요.
@@ -603,7 +607,9 @@ footer{max-width:1120px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
   <h3>아직 설치하지 않은 PC에서는</h3>
   <p><code>/dropin-apply</code>는 첫 설치 명령이기도 해서, 내가 어느 경우인지 따질 필요가 없습니다. 그 PC에 명령이 아직 없으면 말로 하면 됩니다: <i>“저장소의 <code>00_통합-설치.md</code>를 받아서 이 PC에 적용해줘”</i> — 그러면 이 명령도 다른 것들과 같이 깔립니다.</p>
   <h3>다시 적용하면 무엇을 보여 주나</h3>
-  <p>다시 돌리면 기록된 버전 이후 바뀐 내용을 문서별로, 버전마다 한 행씩 보여 주고 <b>행 단위로 승인</b>합니다. 승인한 행만 설치됩니다(오래된 구간을 요약한 행은 한 행으로 칩니다). 보류한 행은 적용 기록에 남아, 사라지지 않고 다음에 다시 나옵니다.</p>
+  <p>다시 돌리면 기록된 버전 이후 바뀐 내용을 문서별로, 버전마다 한 행씩 보여 주고 <b>행 단위로 승인</b>합니다. 승인한 행만 설치됩니다(오래된 구간을 요약한 행은 한 행으로 칩니다). 보류한 행은 적용 기록에 남아, 사라지지 않고 다음에 다시 나옵니다. 기록이 오래돼 요약 행에 걸리면 그 문서를 전부 다시 적용할지도 묻습니다.</p>
+  <p>버전이 같아도 세 가지는 묻습니다. 어긋난 곳을 점검할지, 안 골랐던 것을 추가하거나 깐 것을 뺄지(안 고른 문서는 무엇인지 한 줄로 보여 줍니다), 지난번에 막혔거나 대기로 남은 것(인증 대기, 조직 승인, 문서를 못 받음)이 풀렸는지입니다. 풀렸으면 설치하고, 더는 원하지 않으면 미선택으로 바꿔 같은 질문이 반복되지 않게 합니다. <b>해당 없음</b>으로 적힌 것과 <b>작업 중 추천을 거절</b>한 것은 다시 권하지 않습니다 — 거절한 것은 재적용 때 직접 추가할 수 있습니다.</p>
+  <p>팀원이 이미 설치한 저장소를 이 PC에서 처음 돌리면 재적용이 아니라 <b>신규 합류</b>로 봅니다. 저장소의 구성을 그대로 따르는 것(유지)이 기본이고, 이 PC에 없는 글로벌 항목(<code>/resume</code>·<code>/wrap</code> 같은 명령)은 버전과 상관없이 설치 목록에 올립니다. 기본으로 꺼진 항목은 꺼진 채로 보여 줍니다.</p>
   <h3>이름만 보는 점검으로는 왜 부족한가</h3>
   <p>스킬은 파일이 하나도 늘거나 줄지 않은 채 문장만 바뀔 수 있습니다. 파일 이름을 대조하는 점검은 그걸 “이미 최신”이라고 말합니다. 설치 절차는 파일 <b>내용</b>까지 대조하므로, 문장만 손본 개정도 내 디스크까지 도달합니다.</p>
   <div class="coach tip"><span class="who">💡</span><div>
@@ -692,7 +698,7 @@ var BUNDLES = {
   verify:{name:'검증 강화', desc:'테스트·CI가 있을 때', docs:{'04':'훅 게이트 + gh/glab CLI + CI 통합'}},
   auto:{name:'무인 자동화', desc:'직접 요청할 때만', docs:{'06':'클라우드 루틴 — GitHub 저장소만 (+04 CI 병행 권장)'}},
   style:{name:'응답 스타일', desc:'직접 요청할 때만', docs:{'05':'출력 스타일'}},
-  featdoc:{name:'기능 문서화', desc:'화면이 있는 코드 프로젝트', docs:{'03':'기능 문서 스킬 세트 6종 — 기능별 명세·테스트·커밋 가드'}},
+  featdoc:{name:'기능 문서화', desc:'화면이 있는 코드 프로젝트', docs:{'03':'기능 문서 스킬 세트 6종 — 기능별 명세·테스트 (커밋 가드는 따로 물어봄)'}},
   company:{name:'회사', desc:'안전장치 수정자', docs:{}}
 };
 var DOCNAMES = {'01':'01 기본 셋업','02':'02 모델 분담','03':'03 확장 기능','04':'04 검증 자동화','05':'05 출력 스타일','06':'06 루틴'};
@@ -705,7 +711,7 @@ var DOC01 = [
   ['c','ⓒ /resume · /wrap · dropin- 계열','세션 시작·마감 명령 + 구성 점검·재적용 명령 — 실질적 핵심', true,
     ['~/.claude/skills/resume/SKILL.md','~/.claude/skills/wrap/SKILL.md','~/.claude/skills/dropin-apply/','~/.claude/skills/dropin-check/','~/.claude/skills/dropin-update/','~/.claude/skills/dropin-sync/']],
   ['d','ⓓ 프로젝트 기록 체계','기록 3종 + 동시 편집 충돌 방지', true,
-    ['docs/PROJECT_PLAN.md  <span class="c"># 로드맵</span>','docs/PROGRESS.md      <span class="c"># 세션 로그</span>','docs/DECISIONS.md     <span class="c"># 결정 로그</span>','.gitattributes        <span class="c"># merge=union</span>','.gitignore            <span class="c"># 개인 설정·격리 폴더 제외</span>']],
+    ['CLAUDE.md             <span class="c"># 프로젝트 사실 + 기록 규칙</span>','docs/PROJECT_PLAN.md  <span class="c"># 로드맵</span>','docs/PROGRESS.md      <span class="c"># 세션 로그</span>','docs/DECISIONS.md     <span class="c"># 결정 로그</span>','.gitattributes        <span class="c"># merge=union</span>','.gitignore            <span class="c"># 개인 설정·격리 폴더 제외</span>']],
   ['e','ⓔ 프로젝트 권한','무엇을 묻지 않고 실행해도 되는지', true,
     ['.claude/settings.json  <span class="c"># allow / ask / deny</span>']],
   ['f','ⓕ effort 묶음 · 캐시 가이드','모델마다 추론 강도를 묶어 두기 + 캐시 깨지 않는 습관', true,
@@ -875,11 +881,11 @@ function drawBundle(){
     var i=bSel.indexOf(k); if(i>=0) bSel.splice(i,1); else bSel.push(k); drawBundle();
   }, true);
   var box=$('bundlePlan');
-  if(!bSel.length){ box.innerHTML='<p class="empty">아무것도 안 골라도 됩니다 — 그게 기본값입니다.</p>'; return; }
+  if(!bSel.length){ box.innerHTML='<p class="empty">아무것도 안 골라도 됩니다.</p>'; return; }
   var h='<ul>';
   bSel.forEach(function(k){
     var b=BUNDLES[k];
-    if(k==='company'){ h+='<li><b>회사 수정자</b> — 새 설치물 없음. CI·MCP·루틴에서 조직 승인 확인을 강제</li>'; return; }
+    if(k==='company'){ h+='<li><b>회사 수정자</b> — 새 설치물 없음. CI·MCP·브라우저·루틴에서 조직 승인 확인을 강제</li>'; return; }
     Object.keys(b.docs).forEach(function(dk){ h+='<li><b>'+DOCNAMES[dk]+'</b> — '+b.docs[dk]+'</li>'; });
   });
   h+='</ul><p class="why">기반 모드가 이미 고른 문서와 겹치면 한 번만 설치됩니다(합집합).</p>';
@@ -969,7 +975,7 @@ function drawFinal(){
   var notes=[];
   F.bundles.forEach(function(k){
     var b=BUNDLES[k];
-    if(k==='company'){ notes.push('회사 수정자: CI·MCP·루틴에 조직 승인 게이트'); return; }
+    if(k==='company'){ notes.push('회사 수정자: CI·MCP·브라우저·루틴에 조직 승인 게이트'); return; }
     Object.keys(b.docs).forEach(function(dk){
       docs[dk] = docs[dk] ? docs[dk]+' + '+b.docs[dk] : b.docs[dk];
     });

@@ -309,7 +309,7 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
       <p class="one">이 PC의 구성이 그것을 만든 문서에서 얼마나 뒤처졌는지만 알려 준다.</p>
       <dl>
         <dt>언제</dt><dd><code>/resume</code>이 "적용 기록이 30일 넘었다"고 안내했을 때, 또는 그냥 어긋난 데가 있나 궁금할 때.</dd>
-        <dt>하는 일</dt><dd>프로젝트와 글로벌 <code>~/.claude/CLAUDE.md</code>에 남은 <code>dropin-applied</code> 기록을 문서 저장소의 현재 버전과 대조하고, 차이만 보고한다. 이 PC에서 실제로 도는 상태도 본다 &mdash; 설치된 플러그인 버전이 기록과 맞는지, 옛 <code>commands/</code> 파일이 같은 이름 스킬과 겹쳐 남아 있는지, 팀이 repo에 올린 단디 세션 스킬(<code>resume</code>·<code>wrap</code>·<code>dropin-</code> 계열)이 이 PC의 같은 이름 개인 스킬에 가려져 있는지. 가려진 쪽은 <b>내용이 다를 때만</b> 알리고 어느 쪽이 최신인지 함께 적는다 &mdash; 프로젝트 쪽이 새것이면 개인 사본을 맞추라고, 개인 쪽이 새것이면 프로젝트 사본을 갱신해 커밋하라고 권한다. 내용이 같으면 정상이라 조용하다. 단디가 설치하지 않은 같은 이름 스킬은 복사를 권하지 않고, 개인 사본을 비울지는 사용자에게 맡긴다. 이 점검은 어느 설치에서나 돈다.</dd>
+        <dt>하는 일</dt><dd>프로젝트와 글로벌 <code>~/.claude/CLAUDE.md</code>에 남은 <code>dropin-applied</code> 기록을 문서 저장소의 현재 버전과 대조하고, 차이만 보고한다. 이 PC에서 실제로 도는 상태도 본다 &mdash; 설치된 플러그인 버전이 기록과 맞는지, 옛 <code>commands/</code> 파일이 같은 이름 스킬과 겹쳐 남아 있는지, 세션 보드가 플러그인과 복사본으로 이중으로 걸려 있는지, 팀이 repo에 올린 단디 세션 스킬(<code>resume</code>·<code>wrap</code>·<code>dropin-</code> 계열)이 이 PC의 같은 이름 개인 스킬에 가려져 있는지. 가려진 쪽은 <b>내용이 다를 때만</b> 알리고 어느 쪽이 최신인지 함께 적는다 &mdash; 프로젝트 쪽이 새것이면 개인 사본을 맞추라고, 개인 쪽이 새것이면 프로젝트 사본을 갱신해 커밋하라고 권한다. 내용이 같으면 정상이라 조용하다. 단디가 설치하지 않은 같은 이름 스킬은 복사를 권하지 않고, 개인 사본을 비울지는 사용자에게 맡긴다. 이 점검은 어느 설치에서나 돈다.</dd>
         <dt>결과</dt><dd>차이 보고서. 설치도 수정도 하지 않는다. 오프라인이거나 <code>git fetch</code>가 실패해 문서 쪽을 못 봤으면 &ldquo;최신&rdquo;이라 하지 않고 &ldquo;문서 기준 미확인&rdquo;으로 보고한다.</dd>
       </dl>
       <div class="tags"><span class="tag">글로벌</span><span class="tag">쓰기 없음</span></div>
@@ -322,7 +322,7 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
       <dl>
         <dt>언제</dt><dd><code>/dropin-check</code>가 문서 사본이 배포본보다 낡았다고 보고했을 때. 문서를 프로젝트에 복사해 둔 경우엔 <code>/dropin-apply</code>도 비교에 들어가기 전에 이것부터 권한다.</dd>
         <dt>하는 일</dt><dd>문서가 여기 온 경로부터 가린다 &mdash; 프로젝트에 복사됐는지, 로컬 클론을 참조하는지, raw로 직접 받는지. 프로젝트 밖 폴더를 알려 주면 그게 git 클론인지부터 본다 &mdash; 클론이면 <code>git pull</code>로, 아니면 사본으로 다룬다. 그에 맞는 방식으로, 승인을 받고 갱신한다.</dd>
-        <dt>결과</dt><dd>새 문서 파일 &mdash; 그리고 그것뿐이다. 설치된 스킬과 설정은 그대로 남는다. 그걸 다시 맞추는 건 별도 단계인 <code>/dropin-apply</code>다.</dd>
+        <dt>결과</dt><dd>새 문서 파일 &mdash; 그리고 그것뿐이다. 설치된 스킬과 설정은 그대로 남는다. 그걸 다시 맞추는 건 별도 단계인 <code>/dropin-apply</code>다. raw로 직접 받는 설치에는 갱신할 파일이 없어 버전 비교 보고로 끝나고, 적용 기록이 있으면 최신 사본을 받아 둘지 묻는다.</dd>
       </dl>
       <div class="warn soft"><b>알아 둘 것.</b> 문서 원본 저장소 안에서는 실행을 거부한다 &mdash; 거기서는 <code>git pull</code>이 갱신 경로다.</div>
       <div class="tags"><span class="tag">글로벌</span><span class="tag">먼저 묻는다</span></div>
@@ -335,7 +335,7 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
       <dl>
         <dt>언제</dt><dd>이 PC나 이 프로젝트를 현재 문서 기준으로 올리고 싶을 때. 처음 까는 경우에도 같은 명령이라, 내가 어느 쪽인지 몰라도 된다. Claude나 <code>/resume</code>이 작업에 새로 필요한 항목을 추천했으면 <code>추천</code>을 붙여 부른다.</dd>
         <dt>하는 일</dt><dd>00 문서를 찾아서(옆 폴더의 사본·로컬 클론·내가 알려 준 폴더·배포된 raw 순 &mdash; raw는 요약하지 않고 파일 그대로 프로젝트 밖 임시 폴더에 받는다) 읽고 그 절차를 그대로 돈다 &mdash; 이미 있는 것을 감지하고, 무엇을 할지 묻고, 고른 것만 설치하고, 검증하고, 적용 기록을 쓴다. 스킬 자신은 단계를 하나도 갖지 않아서 문서와 갈릴 수가 없다. <code>/dropin-apply 추천</code>으로 부르면 작업 중 추천 경로를 탄다 &mdash; 작업이 새로 필요로 하게 됐는데 아직 안 깐 항목만, 무엇을 보고 걸렸는지 한 줄씩 붙여 내놓고, 처음 공통 질문은 기록된 답으로 갈음하며, 고른 것만 깐다. 안전 질문은 그대로 묻는다. 적용 기록이 없는 폴더에서는 이 경로 대신 일반 설치를 돌고, 거기서는 최소가 기본 추천이다.</dd>
-        <dt>결과</dt><dd>문서와 일치하는 구성, 그리고 그 사실을 적은 <code>dropin-applied</code> 줄. 기능 문서·refactor·kr-ui-guide·kr-ui-styles·browser-check·pc-clean·session-board와 <code>dropin-</code> 계열처럼 이미 깔린 스킬은 <b>이름이 아니라 내용으로</b> 대조하므로, 파일 수는 그대로고 문장만 바뀐 개정도 교체된다 &mdash; <code>dropin-</code> 계열은 배포본과 다르면 기본값이 <code>재구성</code>으로 나온다. <code>/resume</code>·<code>/wrap</code>은 있는지만 본다 &mdash; 새 본문으로 갈려면 이미 깔린 글로벌 항목을 묻는 질문에서 기본값 <code>유지</code> 대신 <code>재구성</code>을 고른다. 거절한 추천은 기록에 남아 다시 권하지 않는다 &mdash; 나중에 깔고 싶으면 인수 없이 <code>/dropin-apply</code>를 다시 돌려 추가한다.</dd>
+        <dt>결과</dt><dd>문서와 일치하는 구성, 그리고 그 사실을 적은 <code>dropin-applied</code> 줄. 기능 문서·refactor·kr-ui-guide·kr-ui-styles·browser-check·pc-clean·session-board와 <code>dropin-</code> 계열처럼 이미 깔린 스킬은 <b>이름이 아니라 내용으로</b> 대조하므로, 파일 수는 그대로고 문장만 바뀐 개정도 교체된다 &mdash; <code>dropin-</code> 계열은 배포본과 다르면 기본값이 <code>재구성</code>으로 나온다. <code>/resume</code>·<code>/wrap</code>은 있는지만 본다 &mdash; 새 본문으로 갈려면 이미 깔린 글로벌 항목을 묻는 질문에서 기본값 <code>유지</code> 대신 <code>재구성</code>을 고른다. 승인한 개정이 걸린 항목은 처음부터 <code>재구성</code>이 기본으로 나온다. 거절한 추천은 기록에 남아 다시 권하지 않는다 &mdash; 나중에 깔고 싶으면 인수 없이 <code>/dropin-apply</code>를 다시 돌려 추가한다.</dd>
       </dl>
       <div class="warn soft"><b>알아 둘 것.</b> Claude에게 &ldquo;이 문서를 학습해서 적용해줘&rdquo;라고 말하는 것과 같은 일이다 &mdash; 그 문장도 그대로 동작한다. 명령이 따로 있는 이유는, 보이지 않는 문은 열리지 않기 때문이다.</div>
       <div class="tags"><span class="tag">글로벌</span><span class="tag">먼저 묻는다</span></div>
@@ -482,7 +482,7 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
       <div class="args">install | uninstall | check</div>
       <p class="one">코드는 움직였는데 문서는 그대로인 커밋을 그 자리에서 세운다.</p>
       <dl>
-        <dt>언제</dt><dd>명세가 생긴 다음, 그것이 아무의 기억에도 의존하지 않고 유지되길 바랄 때.</dd>
+        <dt>언제</dt><dd>명세가 생긴 다음, 그것이 아무의 기억에도 의존하지 않고 유지되길 바랄 때. 설치할 때는 세트에 딸린 하위 선택으로 체크 해제로 나오고, <code>docs/features/00_inventory.md</code>가 있어야 동작하므로 <code>/feature-docs init</code> 뒤에만 권한다. 프로젝트 스코프로 커밋하면 팀원 전원의 커밋에 걸리므로 그 사실을 알리고 승인을 받는다.</dd>
         <dt>하는 일</dt><dd>가드를 두 겹 건다 &mdash; <code>.git/hooks/pre-commit</code> 훅과 Claude Code <code>PreToolUse</code> 훅. 스테이징된 소스 파일을 그 파일을 담당하는 기능으로 역추적해, 그 기능 문서가 함께 스테이징되지 않았으면 커밋을 막는다.</dd>
         <dt>결과</dt><dd>빠진 문서 목록과 함께 멈춘 커밋. 어느 기능에도 안 걸리는 파일은 경고만 하고 막지는 않는다. 급할 때 우회는 <code>FEATURE_DOC_GUARD=0</code>.</dd>
       </dl>
@@ -587,7 +587,7 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
         <dt>하는 일</dt><dd>틀리기 쉬운 규칙을 대신 들고 있는다 &mdash; hydration이 안 깨지게 <code>useId()</code>로 필터 id를 뽑고, WebKit이 잘라 먹지 않게 블러 둘레에 여백을 주고, 폰에서 프레임이 안 죽게 옥타브를 제한한다.</dd>
         <dt>결과</dt><dd>접근성이 있고 매 렌더마다 GPU 캐시를 날리지 않는 필터 코드.</dd>
       </dl>
-      <div class="tags"><span class="tag">글로벌</span><span class="tag">프론트엔드 전용</span></div>
+      <div class="tags"><span class="tag">글로벌 또는 프로젝트</span><span class="tag">프론트엔드 전용</span></div>
     </article>
 
     <article class="skill" data-g="design">
@@ -600,7 +600,7 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
         <dt>결과</dt><dd>마크업을 짜기 전에 나오는 디자인 방향. 바꾸는 값이 싼 유일한 시점이다.</dd>
       </dl>
       <div class="warn soft"><b>알아 둘 것.</b> 이 하나는 Anthropic이 배포하고, 플러그인(<code>/plugin install</code>)이나 <code>npx skills add</code>로 깔린다. 그래서 단디 문서와 무관하게 자기 주기로 갱신된다. 스킬 이름 별칭은 npx·수동 복사 경로에만 붙고 플러그인 경로에는 붙지 않는다. <code>npx skills add -g</code>는 실체를 <code>~/.agents/skills/</code>에 두고 <code>~/.claude/skills/</code>에 링크만 거는데, 그 링크가 안 생기는 경우가 있다 &mdash; 설치 후 <code>~/.claude/skills/frontend-design</code>이 보이는지 확인하고, 없으면 링크를 직접 건다. 폰트 라이선스도 보지 않는다 &mdash; 타이포를 적극 바꾸는 스킬이라 유료 폰트를 제안할 수 있고, 그래서 설치할 때 위 폰트 라이선스 정책을 묻는다.</div>
-      <div class="tags"><span class="tag">글로벌</span><span class="tag">프론트엔드 전용</span></div>
+      <div class="tags"><span class="tag">글로벌 또는 프로젝트</span><span class="tag">프론트엔드 전용</span></div>
     </article>
 
     <article class="skill" data-g="design">
@@ -874,10 +874,10 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
   <thead><tr><th>스킬</th><th>문서</th><th>기본 스코프</th><th>제거</th></tr></thead>
   <tbody>
     <tr><td><code>/resume</code> <code>/wrap</code> <code>/dropin-apply</code> <code>/dropin-check</code> <code>/dropin-update</code> <code>/dropin-sync</code></td><td>01 §D-4</td><td>글로벌 &mdash; <code>~/.claude/skills/</code></td><td>폴더 삭제. 쌓인 <code>docs/</code> 기록은 묻되 기본으로 남긴다 &mdash; 그건 데이터다.</td></tr>
-    <tr><td><code>/svg-design</code></td><td>03 §2</td><td>글로벌</td><td>폴더 삭제.</td></tr>
-    <tr><td><code>/frontend-design</code></td><td>03 §3</td><td>글로벌 &mdash; 플러그인 또는 <code>npx skills add -g</code></td><td>폴더 삭제. npx가 링크만 걸어 뒀으면 링크가 가리키는 실체까지 지운다. <code>kr-ui-guide</code>까지 없으면 <code>CLAUDE.md</code>의 폰트 라이선스 정책 절도 지운다.</td></tr>
+    <tr><td><code>/svg-design</code></td><td>03 §2</td><td>설치할 때 묻는다 &mdash; 글로벌 또는 프로젝트</td><td>폴더 삭제.</td></tr>
+    <tr><td><code>/frontend-design</code></td><td>03 §3</td><td>설치할 때 묻는다 &mdash; 글로벌(플러그인 또는 <code>npx skills add -g</code>) 또는 프로젝트(<code>npx skills add</code>)</td><td>폴더 삭제. npx가 링크만 걸어 뒀으면 링크가 가리키는 실체까지 지운다. <code>kr-ui-guide</code>까지 없으면 <code>CLAUDE.md</code>의 폰트 라이선스 정책 절도 지운다.</td></tr>
     <tr><td>기능 문서 6종</td><td>03 §7</td><td>글로벌 &mdash; 팀·CI가 공유해야 하면 프로젝트 스코프 &middot; 또는 <code>dandi</code> 플러그인</td><td>플러그인: <code>/plugin uninstall dandi-feature-docs@dandi</code>. 복사본: 가드부터 걷고 여섯 폴더. <code>docs/features/</code>·<code>tests/e2e/</code>·<code>tests/maestro/</code>는 남긴다.</td></tr>
-    <tr><td><code>/refactor</code></td><td>03 §8</td><td>글로벌 &middot; 또는 <code>dandi</code> 플러그인</td><td>플러그인: <code>/plugin uninstall dandi-refactor@dandi</code>. 복사본: 폴더 삭제. 걷을 훅도, 되돌릴 커밋도 없다. <code>docs/refactor/</code> 보고서는 남긴다.</td></tr>
+    <tr><td><code>/refactor</code></td><td>03 §8</td><td>글로벌 &middot; 또는 <code>dandi</code> 플러그인</td><td>플러그인: <code>/plugin uninstall dandi-refactor@dandi</code>. 복사본: 폴더 삭제. 걷을 훅도, 되돌릴 커밋도 없다. <code>docs/refactor/</code> 보고서와 검증 때 만든 특성화 테스트는 지울지 먼저 묻고, 기본은 남긴다.</td></tr>
     <tr><td><code>/browser-check</code></td><td>03 §5</td><td>설치할 때 묻는다 &mdash; 글로벌 또는 프로젝트 &middot; 또는 <code>dandi</code> 플러그인</td><td>플러그인: <code>/plugin uninstall dandi-browser-check@dandi</code>. 복사본: 폴더 삭제 &mdash; 프로젝트 스코프면 삭제를 커밋한다. 브라우저 쪽은 따로 걷는다: Chrome은 <code>/chrome</code>에서 끄거나 확장을 지우고, Playwright CLI는 <code>npm uninstall -g @playwright/cli</code>, Chrome DevTools MCP는 <code>claude mcp remove chrome-devtools --scope user</code>. 저장해 둔 로그인 상태 파일은 지울지 묻는다.</td></tr>
     <tr><td><code>/kr-ui-guide</code></td><td>03 §9</td><td>글로벌 &middot; 또는 <code>dandi</code> 플러그인</td><td>플러그인: <code>/plugin uninstall dandi-kr-ui-guide@dandi</code>. 복사본: 폴더 삭제. 프로젝트 CLAUDE.md에 선택적 오버라이드 절을 추가했으면 그것도 지우고, <code>frontend-design</code>까지 없으면 폰트 라이선스 정책 절도 지운다.</td></tr>
     <tr><td><code>/kr-ui-styles</code></td><td>03 §9 (설치 7)</td><td>kr-ui-guide와 같은 스코프 &middot; 또는 <code>dandi-kr-ui-guide</code> 플러그인 안</td><td>복사본: 폴더를 지우고 프로젝트 오버라이드 절의 <code>스타일 팩:</code> 줄을 지운다. 플러그인: <code>dandi-kr-ui-guide</code>에 함께 실려 있어 그 플러그인을 지우면 둘 다 지워진다.</td></tr>
