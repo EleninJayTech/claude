@@ -41,3 +41,13 @@ description: 브라우저로 화면·페이지를 확인하거나 디버깅할 �
 3. 세션에 Claude in Chrome 도구가 **이미 있을 때**(시작 때 `claude --chrome`이었거나 Enabled by default) 내 실제 로그인 세션이 필요한 화면에 쓴다 — 사이트 권한은 대상 도메인으로만. **도구가 없으면 확장을 지금 열어도 이 세션엔 생기지 않는다**(공식 — 설정은 다음 세션부터): 지금 필요하면 `claude --chrome`으로 재시작, 매 세션 쓰면 `/chrome` → Enabled by default(매 세션 컨텍스트 비용)를 사용자에게 안내한다. 있던 연결이 끊긴 것이면 `/chrome` → Reconnect extension. 로그인 화면 자체는 §2의 headed 프로필로도 되므로 여기서 막히지 않는다.
 4. 원인 디버깅: Chrome DevTools MCP(전용 프로필 — 실행 중인 내 Chrome에 붙는 연결 모드 `--autoConnect`는 쓰지 않는다). 구글 계정 로그인이 필요한 화면엔 쓰지 않는다(§2). 서버가 재시작되면 page id가 바뀌므로 `list_pages`로 다시 받는다(실측 2026-11-03).
 5. 하나도 없으면 curl 단까지만 하고, 화면은 확인하지 못했다고 밝힌다.
+
+## 5. 문제 해결 — Playwright가 브라우저를 띄우지 못할 때
+증상: `playwright-cli open`이 `Daemon process exited with code 1`·`TargetClosedError`로 즉시 실패하고 브라우저 stderr는 비어 있다(헤드리스·`--headed`·Chrome·Edge 모두).
+1. 보안 제품·네트워크를 의심하기 전에 **같은 브라우저를 직접 헤드리스로** 실행한다 — `chrome.exe --headless --dump-dom <URL>`(Edge는 `msedge.exe`). 직접 실행은 되고 Playwright만 실패하면 **실행 옵션 문제**다.
+2. Windows면 브라우저 정책 레지스트리를 **읽기만** 한다 — `HKLM\SOFTWARE\Policies\Google\Chrome`·`HKLM\SOFTWARE\Policies\Microsoft\Edge`(HKCU 같은 경로도). `ExtensionInstallForcelist`(확장 강제 설치)가 있으면 Playwright 기본 옵션 `--disable-extensions`와의 충돌을 먼저 의심한다(실측 2026-11-03 — 이 조합에서 브라우저가 종료 코드 1로 즉시 종료).
+3. 대처: `ignoreDefaultArgs`(공식 — 기본 인자 중 지정한 것만 뺀다)를 담은 설정 파일을 **저장소 밖**(`<사용자 홈>` 아래 등)에 두고 `playwright-cli open --config=<그 경로> <URL>`로 연다.
+   `{"browser": {"browserName": "chromium", "launchOptions": {"channel": "chrome", "headless": true, "ignoreDefaultArgs": ["--disable-extensions"]}}}`
+   playwright-core 직접 사용: `chromium.launch({ channel: 'chrome', ignoreDefaultArgs: ['--disable-extensions'] })`. 업무 저장소에 `.playwright/cli.config.json`(CLI가 실행 폴더에서 자동으로 읽는 기본 위치)을 커밋하지 않는다 — 다른 사람 PC의 동작까지 바뀐다.
+4. 원인이 다른 옵션일 수도 있다 — 일반 절차는 **최소 옵션으로 기동 확인**(playwright-core `ignoreDefaultArgs: true` + `--headless --remote-debugging-pipe --no-first-run --user-data-dir=<임시>`) → **기본 옵션을 하나씩 더해 실패를 일으키는 옵션을 특정**.
+- `--disable-extensions` 제외는 **증상이 있을 때만** 쓴다 — 정책이 없는 PC에서 기본으로 빼면 사용자 확장이 자동화 브라우저에 끼어든다. 정책을 바꾸거나 우회하라고 안내하지 않는다(회사 보안 정책).
