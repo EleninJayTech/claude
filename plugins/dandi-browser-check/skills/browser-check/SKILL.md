@@ -26,15 +26,18 @@ description: 브라우저로 화면·페이지를 확인하거나 디버깅할 �
 - 디버깅은 콘솔·네트워크부터 — 찾을 패턴(error·4xx/5xx·특정 메시지)을 정해 걸러 읽는다. 전체 로그를 통째로 읽지 않는다.
 - 페이지 원문이 길면 대화에 통째로 싣지 말고 파일로 받아 검색한다. 정확한 문자열이 판정 근거면 그 줄은 그대로 인용한다.
 - JavaScript 대화상자(alert·confirm)를 띄우는 동작은 피한다 — 브라우저 도구가 멈춘다.
-- 로그인이 필요한 페이지는 **테스트 계정으로 한 번 로그인해 storage state 파일로 저장**(`playwright-cli state-save <파일>`)하고 이후 `state-load <파일>`로 재사용한다. 상태 파일은 쿠키를 담은 시크릿이라 `.gitignore`에 넣고 커밋하지 않는다. 실제 관리자 계정이 로그인된 메인 프로필을 넘기지 않는다.
+- 로그인이 필요한 페이지는 순서대로 — ① **테스트 계정으로 한 번 로그인해 storage state 파일로 저장**(`playwright-cli state-save <파일>`)하고 이후 `state-load <파일>`로 재사용 ② 구글·SSO·2FA처럼 테스트 계정이 안 되면 **Playwright CLI를 headed + 실제 Chrome 채널 + 저장소 밖 영구 프로필로 띄워 사용자가 직접 로그인**한다: `playwright-cli -s=<이름> open --headed --browser=chrome --persistent --profile=<저장소 밖 경로> <URL>` — 로그인은 사용자 몫이고 Claude는 기다린다. **DevTools MCP 창에선 시도하지 않는다** — Google은 자동화로 제어되는 브라우저의 로그인을 막고(공식) DevTools MCP 창은 실측 거부(2026-11-03) ③ 세션에 Claude in Chrome 도구가 이미 있으면 그 로그인 상태를 쓴다(§4-3). 상태 파일·프로필 폴더는 쿠키를 담은 시크릿이라 저장소 밖에 두고 `.gitignore`에 넣어 커밋하지 않으며, 끝나면 `playwright-cli -s=<이름> delete-data`로 지울지 묻는다. 실제 관리자 계정이 로그인된 메인 프로필을 넘기지 않는다.
+- API·CLI 값과 화면 값이 다를 수 있는 대상(심사·게시·승인 상태 등)은 **화면을 정본**으로 본다 — API가 완료라 해도 화면이 검토 중이면 검토 중이다.
+- Playwright CLI는 작업 폴더에 `.playwright-cli/`(스냅샷·로그 — 페이지 내용이 들어 있다)를 만든다. 커밋하지 않는다(`.gitignore`) — 작업이 끝나면 `close`하고 남길지 묻는다.
 
 ## 3. 보고
 - 판정 근거는 **읽은 값이나 명령 출력**으로 남긴다. 시각 판정의 근거는 스크린샷이다.
 - 실패는 재현 단계와 증거(값 또는 스크린샷 1장)를 함께 남긴다.
 
 ## 4. 도구 — 설치된 것 중에서
+0. 먼저 **설치·연결된 수단을 확인**한다 — `playwright-cli --version`(PowerShell은 `Get-Command playwright-cli`), ToolSearch로 `mcp__claude-in-chrome__*`·`mcp__chrome-devtools__*` 존재, Desktop 세션이면 내장 Browser. 확인하지 않고 아래 순서를 건너뛰지 않는다.
 1. 기본: Playwright CLI(헤드리스 — 사용자 브라우저를 점유하지 않고 세션을 여럿 띄울 수 있다. 명령은 `playwright-cli --help`).
 2. Playwright CLI가 없고 Desktop 앱 로컬 세션이면 내장 Browser — Claude가 띄운 localhost 개발 서버를 바로 연다(깨끗한 프로필).
-3. 내 실제 로그인 세션이 꼭 필요하다(SSO·2FA라 storage state로 안 될 때): Claude in Chrome — 사이트 권한은 대상 도메인으로만.
-4. 원인 디버깅: Chrome DevTools MCP(전용 프로필 — 실행 중인 내 Chrome에 붙는 연결 모드 `--autoConnect`는 쓰지 않는다).
+3. 세션에 Claude in Chrome 도구가 **이미 있을 때**(시작 때 `claude --chrome`이었거나 Enabled by default) 내 실제 로그인 세션이 필요한 화면에 쓴다 — 사이트 권한은 대상 도메인으로만. **도구가 없으면 확장을 지금 열어도 이 세션엔 생기지 않는다**(공식 — 설정은 다음 세션부터): 지금 필요하면 `claude --chrome`으로 재시작, 매 세션 쓰면 `/chrome` → Enabled by default(매 세션 컨텍스트 비용)를 사용자에게 안내한다. 있던 연결이 끊긴 것이면 `/chrome` → Reconnect extension. 로그인 화면 자체는 §2의 headed 프로필로도 되므로 여기서 막히지 않는다.
+4. 원인 디버깅: Chrome DevTools MCP(전용 프로필 — 실행 중인 내 Chrome에 붙는 연결 모드 `--autoConnect`는 쓰지 않는다). 구글 계정 로그인이 필요한 화면엔 쓰지 않는다(§2). 서버가 재시작되면 page id가 바뀌므로 `list_pages`로 다시 받는다(실측 2026-11-03).
 5. 하나도 없으면 curl 단까지만 하고, 화면은 확인하지 못했다고 밝힌다.
