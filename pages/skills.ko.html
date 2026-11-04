@@ -283,7 +283,7 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
       <p class="one">어디까지 했는지를 기억이 아니라 git과 기록으로 되짚어 세션을 연다.</p>
       <dl>
         <dt>언제</dt><dd>세션을 시작할 때마다, 그리고 <code>/clear</code> 직후에 다시.</dd>
-        <dt>하는 일</dt><dd>워크트리 번호를 붙여 부르면(<code>/resume 001</code>) 먼저 그 번호의 워크트리(<code>.claude/worktrees/001-…</code>)로 들어가 그 안에서 아래 일을 한다 &mdash; 단디 규칙에선 Claude가 워크트리를 만들 때 3자리 번호를 붙이고, 워크트리를 지웠어도 번호가 든 브랜치가 남아 있으면 되살린다. 맞는 것이 여럿이면 목록을 보이고 묻고, 없거나 전환에 실패하면 이유를 알린 뒤 지금 폴더에서 평소대로 진행한다. 워킹트리가 깨끗하면 <code>--ff-only</code>로 당기고, <code>git status</code>로 미커밋 작업부터 찾는다. 그 미커밋은 같은 폴더에서 도는 다른 세션의 것일 수도 있어서, 내 작업으로 단정해 잇거나 커밋하지 않고 먼저 확인한다. 본체 밖에 워크트리가 있으면 번호와 브랜치도 함께 보고한다. 그다음 <code>PROGRESS.md</code> 최상단과 최근 결정 3건, <code>PROJECT_PLAN.md</code>를 읽는다. 작업 중 추천이 켜져 있고(기본값) 이 폴더에 적용 기록이 있으면, 폴더의 파일 <b>이름만</b> 훑어(내용은 읽지 않는다) 작업이 새로 필요로 하는 단디 항목 중 아직 안 깔았고 거절·해당 없음·팀 구성 우선으로 빠지지 않은 것이 있는지도 본다.</dd>
+        <dt>하는 일</dt><dd>워크트리 번호를 붙여 부르면(<code>/resume 001</code>) 먼저 그 번호의 워크트리(<code>.claude/worktrees/001-…</code>)로 들어가 그 안에서 아래 일을 한다 &mdash; 단디 규칙에선 Claude가 워크트리를 만들 때 3자리 번호를 붙이고, 워크트리를 지웠어도 번호가 든 브랜치가 남아 있으면 되살린다. 맞는 것이 여럿이면 목록을 보이고 묻고, 없거나 전환에 실패하면 이유를 알린 뒤 지금 폴더에서 평소대로 진행한다. 워킹트리가 깨끗하면 <code>--ff-only</code>로 당기고, <code>git status</code>로 미커밋 작업부터 찾는다. 그 미커밋은 같은 폴더에서 도는 다른 세션의 것일 수도 있어서, 내 작업으로 단정해 잇거나 커밋하지 않고 먼저 확인한다. 본체 밖에 워크트리가 있으면 번호와 브랜치도 함께 보고한다. 지금 브랜치를 진행 중인 다른 브랜치 위에서 땄다면 그 부모 브랜치가 몇 커밋 앞서갔는지 알리고, 부모가 기본 브랜치에 병합됐거나 지워졌으면 내 브랜치를 기본 브랜치 위로 옮기는 방법을 안내한다 &mdash; 옮길지는 내가 정한다. 그다음 <code>PROGRESS.md</code> 최상단과 최근 결정 3건, <code>PROJECT_PLAN.md</code>를 읽는다. 작업 중 추천이 켜져 있고(기본값) 이 폴더에 적용 기록이 있으면, 폴더의 파일 <b>이름만</b> 훑어(내용은 읽지 않는다) 작업이 새로 필요로 하는 단디 항목 중 아직 안 깔았고 거절·해당 없음·팀 구성 우선으로 빠지지 않은 것이 있는지도 본다.</dd>
         <dt>결과</dt><dd>"지난번엔 X를 했고 다음은 Y인가요?" 형태의 짧은 보고. 점검 예정일이 지났으면 그 안내도 함께, 더할 항목이 있으면 <code>/dropin-apply 추천</code>을 권하는 한 줄도.</dd>
       </dl>
       <div class="warn soft"><b>알아 둘 것.</b> 최근 5항목만, 항목당 앞 700자까지만 읽는다. 다음 세션이 이어받아야 할 내용은 항목 <em>앞쪽</em>에 적어야 한다 &mdash; 끝에 붙이면 컷 밖이라 영영 읽히지 않는다.</div>
@@ -818,7 +818,7 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
     <div class="k">2</div>
     <div>
       <div class="c">&ldquo;이 작업 워크트리로 옮겨 줘&rdquo;</div>
-      <div class="w">그냥 이렇게 말하면 된다. Claude가 번호 붙은 워크트리(<code>.claude/worktrees/001-&hellip;</code>, 같은 번호가 든 브랜치)를 만들고 번호를 알려 준다. 빠를수록 좋다 &mdash; 워크트리는 기본 브랜치에서 시작하므로, 함께 쓰던 폴더에서 이미 고친 내용은 따라오지 않는다.</div>
+      <div class="w">그냥 이렇게 말하면 된다. Claude가 번호 붙은 워크트리(<code>.claude/worktrees/001-&hellip;</code>, 같은 번호가 든 브랜치)를 만들고 번호를 알려 준다. 최근 2주 안에 커밋됐고 아직 병합되지 않은 브랜치가 있으면 먼저 독립 작업인지, 그 브랜치에 이어지는 파생 작업인지 한 번 묻는다. 빠를수록 좋다 &mdash; 워크트리는 기본 브랜치(파생 작업이라고 답했으면 그 브랜치)에서 시작하므로, 함께 쓰던 폴더에서 이미 고친 내용은 따라오지 않는다.</div>
     </div>
   </div>
   <div class="p">
@@ -889,7 +889,7 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
 </div>
 <p class="lead" style="margin-top:16px">전부 제거 절차가 문서에 적혀 있는데, 이건 의도한 것이다. 되돌릴 수 없는 설치는 애초에 선택지를 준 게 아니기 때문이다. 감지·설치·검증·제거 4단 전체는 각 문서에 있다. 설치할 때 나오는 질문의 뜻은 <a href="options.ko.html">옵션 사전</a>에, 처음부터 차근히 밟아 보려면 <a href="learn.ko.html">학습 코스</a>에 있다. 설치 항목 몇 개는 일부러 여기 없다: 정책 기록(03 §11)과 기능 변경 기록(03 §13)은 스킬이 아니라 규칙 파일(<code>.claude/rules/policy-recording.md</code>, <code>.claude/rules/feature-log.md</code>)을 더하는 항목이라, 부를 명령이 없어 카드도 없다.</p>
 
-<footer>단디(Dandi) &middot; 스킬 카탈로그 &middot; 2026-11-03 &middot; 01 §D-4 · 02 STEP 3 ⓔ · 03 §2 · §3 · §5 · §7 · §8 · §9 · §10 · §12가 설치하는 스킬들. 명령은 별칭 없이 적었으니, 설치할 때 별칭을 골랐다면 그것을 얹어 읽으면 된다. &middot; 글꼴: Pretendard, IBM Plex Mono — 둘 다 SIL 오픈 폰트 라이선스 1.1(상업 이용·웹 임베딩 무료)</footer>
+<footer>단디(Dandi) &middot; 스킬 카탈로그 &middot; 2026-11-04 &middot; 01 §D-4 · 02 STEP 3 ⓔ · 03 §2 · §3 · §5 · §7 · §8 · §9 · §10 · §12가 설치하는 스킬들. 명령은 별칭 없이 적었으니, 설치할 때 별칭을 골랐다면 그것을 얹어 읽으면 된다. &middot; 글꼴: Pretendard, IBM Plex Mono — 둘 다 SIL 오픈 폰트 라이선스 1.1(상업 이용·웹 임베딩 무료)</footer>
 
 </div>
 <script>
