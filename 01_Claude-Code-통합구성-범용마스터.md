@@ -1,6 +1,6 @@
 # Claude Code 통합 구성 — 범용 마스터 (드롭인 적용)
 
-> **문서 버전: v1.114** · 최종 갱신: **2026-11-04** · **최근 재검증: 2026-11-02** · 기준: Claude Code v2.1.316 (Opus 5.5 · Sonnet 5.5 · Haiku 5.5 · Fable 5.1)
+> **문서 버전: v1.115** · 최종 갱신: **2026-11-07** · **최근 재검증: 2026-11-02** · 기준: Claude Code v2.1.316 (Opus 5.5 · Sonnet 5.5 · Haiku 5.5 · Fable 5.1)
 >
 > | 버전 | 날짜 | 변경 내용 |
 > | --- | --- | --- |
@@ -21,6 +21,7 @@
 > | v1.112 | 2026-11-02 | **최적화**: 버전 표·본문 경위 압축(규칙 불변) |
 > | v1.113 | 2026-11-02 | **/audit 22차 판단 반영** — §F-3 git push allow가 의도임을 명시(강제 push는 sk, 기본 브랜치 보호는 원격 설정) · §D-6 절약 항목을 02 §F(advisor는 선택지)에 맞춤 · R20 적용 — v1.88~v1.98을 축 요약 행에 흡수(버전 행 15개, 규칙 불변) |
 > | v1.114 | 2026-11-04 | **§F-1 파생 작업 확인** — 작업 브랜치·워크트리를 만들기 전 진행 중 브랜치(최근 14일·미병합)가 있으면 독립/파생을 한 번 묻고, 파생이면 부모에서 분기·`branch.<이름>.parent` 기록·앞섬 확인을 부모 기준으로 · §F-2 A·B·C `/resume` 부모 브랜치 보고. **목표(R43)**: 7 — 부모 위에서 하던 작업을 세션이 바뀌어도 같은 기준으로 잇는다 · 1 — main에서 잘못 분기·병합되는 결과를 막는다 |
+> | v1.115 | 2026-11-07 | **§D 서두 Windows — Git for Windows 권장**(감지·권고만, 설치 항목 아님) — 없으면 셸 도구가 PowerShell 하나·Bash·Monitor 도구가 열린다는 근거 · `CLAUDE_CODE_GIT_BASH_PATH` · Git Bash 있는 PC의 `Bash` deny가 PowerShell 도구도 끈다 · §K 행 보강 · §L 근거. **목표(R43)**: 2 — Windows에서도 bash 전제 명령·훅이 같게 돈다 · 5 — 당일 공식 조회(setup·tools-reference) |
 > ※ 갱신 시: 이 표에 한 줄 추가 + 하단 "문서 정보" 날짜 수정 + §L 재검증 체크리스트 수행.
 
 > **사용법**: 이 파일을 아무 프로젝트 루트(또는 `docs/`)에 넣고 Claude에게
@@ -94,6 +95,7 @@
 ## D. 글로벌 셋업 (PC당 1회) — 전 환경 공통
 
 > 아래 명령 블록은 Windows(PowerShell) 기준이다 — macOS·Linux는 홈을 `~`로 읽고 D-1을 `mkdir -p ~/.claude/skills/{resume,wrap,dropin-apply,dropin-check,dropin-update,dropin-sync}`로 대체한다(만드는 내용물 D-2~D-4는 OS 무관. OS별 CLI 설치 분기는 04 §2와 같은 방식).
+> **Windows — Git for Windows 권장**(감지·권고만, 설치는 사용자): 네이티브 Windows에서 `git --version`이 실패하거나 Git Bash(`bash.exe`)가 없으면 Git for Windows(`git-scm.com/downloads/win`) 설치를 한 줄로 권한다(그 세션 1회). 있으면 **Bash·Monitor 도구**가 열려 bash 문법을 전제한 명령·훅이 그대로 돌고, 없으면 셸 도구는 PowerShell 하나다(공식 setup: 권장이되 선택). 깔아도 PowerShell 도구는 함께 남는다(claude.ai·Console 계정 기본 켜짐 · Bedrock·Agent Platform·Foundry는 `CLAUDE_CODE_USE_POWERSHELL_TOOL=1`) — 단 그 상태에서 `Bash` 도구 통째 deny는 PowerShell 도구까지 끈다. 깔았는데 Bash 도구가 안 뜨면 `settings.json` `env`에 `"CLAUDE_CODE_GIT_BASH_PATH": "C:\Program Files\Git\bin\bash.exe"`(실제 경로)를 넣고, **새 세션**에서 Bash 도구로 `echo $BASH_VERSION`이 나오는지로 확인한다. 이 문서는 설치하지 않으므로 제거 절차도 두지 않는다(앱 제거는 OS 몫 — 설치 항목이 아니다).
 
 ### D-1. 폴더
 ```powershell
@@ -598,7 +600,7 @@ CLAUDE.local.md
 | 여러 repo 한 번에 커밋 안 됨 | 정상 — 독립 git. repo별 따로 |
 | 커밋은 됐는데 push가 403·권한 없음 | **로컬 커밋 유지 + 권한자 경유**(PR·패치 전달) — 기록은 커밋에 남아 다음 /resume가 발견한다 |
 | `.env`를 Claude가 읽으려 함 | deny + CLAUDE.md #8 / **근본은 시크릿 분리** |
-| Windows에서 Bash 없다고 에러 | Claude Code `v2.1.120+`로 업데이트(PowerShell만으로 동작) |
+| Windows에서 Bash 없다고 에러 | Claude Code `v2.1.120+`로 업데이트(PowerShell만으로 동작) · Bash 도구를 쓰려면 Git for Windows(§D 서두) — 깔았는데 못 찾으면 `env`의 `CLAUDE_CODE_GIT_BASH_PATH` |
 | 셋업이 전반적으로 이상함 | **`/doctor`** — 구성 전체 진단+수정 제안(비대 CLAUDE.md 트림 제안 포함 v2.1.206+, `/checkup` 별칭) |
 | 새 모델로 바꾼 뒤 지시가 낡았는지 | **`/doctor prompt-audit [경로]`**(v2.1.283+) — `CLAUDE.md`·`AGENTS.md`·rules·skills·commands·subagents·output styles에서 **구 모델용 지시·없는 파일/명령 참조·서로 상충하는 파일**을 찾아 보고·편집 제안만 한다(적용하라고 할 때까지 파일은 그대로) |
 | Claude Code에서 `Credit balance too low · Add funds` | 환경의 `ANTHROPIC_API_KEY`(또는 `apiKeyHelper`)가 **Max·Ultra·Team API 크레딧만 있는 Console 조직** 키라서 — 그 크레딧은 Claude Code를 덮지 않는다. `/status`로 쓰고 있는 인증을 확인하고, 셸 프로필·settings `env`에서 그 키를 빼 구독으로 돌아간다(`-p`는 키가 있으면 무조건 키를 쓴다). 크레딧을 쓰는 경로는 02 §F 팬아웃 주석 |
@@ -619,6 +621,7 @@ Claude Code는 매주 바뀐다. 6개월마다 30분:
 - ✅(2026-11-02 종결) Haiku 5.5의 effort 지원은 전 단계다(model-config 표) — §D-6 목록에 넣었다.
 - 정기 확인(2026-10-08 유효 — 샌드박스 `mask`·`filesystem.disabled`의 `--settings` 스코프·확장 필드별 버전 정정, 테마는 `theme` 키 문서화): deny의 서브프로세스 우회 한계, **샌드박스 네이티브 Windows 미지원**(macOS·Linux·WSL2만 — sandboxing), `sandbox.credentials` 스키마(`files[]`={path,mode}·`envVars[]`={name,mode}, mode=`deny`|`mask` + 확장 필드(도입 버전 필드별 상이) — §J 본문에도 반영), `attribution` 스키마, auto-memory 한도(MEMORY.md 200줄/25KB), mod가 deny를 넘는 조건(managed settings 유무·Team/Enterprise 로그인 여부·`allowModsToOverrideDenyRules` 기본값) 변경 시 §J-1 재확인(출처 `code.claude.com/docs/en/permissions` §Extend permissions with hooks).
 - **dev container 격리 경로**(§J 격리 3단) — feature 이미지·이그레스 방화벽 스크립트 구성이 유지되는지, 네이티브 Windows 대안이라는 위치가 바뀌지 않았는지(내장 샌드박스가 Windows를 지원하기 시작하면 이 줄의 근거가 사라진다).
+- **§D 서두 Git for Windows 권장** — 공식 setup의 권장/선택 표기·없을 때 PowerShell 대체·Monitor 도구 요건·`CLAUDE_CODE_GIT_BASH_PATH`·PowerShell 도구 기본값(계정 종류별)·`Bash` deny가 PowerShell 도구를 끄는 조건이 유지되는지(setup `#install-on-native-windows`·tools-reference `#powershell-tool`, 2026-11-07 확인). 🟡 `claude doctor`가 Git Bash 인식을 보고하는지는 공식 미명시.
 - `/model` 최신 정책(별칭이 가리키는 실제 모델·`best`의 해석), `claude --version`.
 - `/effort` 단계 명칭·모델별 지원 범위·`ultracode` 동작, 에이전트·스킬 frontmatter 키 생존 — `effort:`·`arguments:`·`allowed-tools`·`disable-model-invocation`(정본 §F-2. `effort:`는 2026-07-20 확정).
 - **§J-1 첫 외부 읽기 프롬프트** — 선택지·`blockReadsOutsideWorkingDirectories` 기록 위치·해제 방법이 유지되는지(공식 permission-modes, 2026-11-02 확인).
@@ -637,5 +640,5 @@ Claude Code는 매주 바뀐다. 6개월마다 30분:
 ## 핵심 출처 🟢
 IDE 통합·`--add-dir`(ide-integrations·large-codebases) / permissions·deny 한계 / hooks / skills / memory·auto-memory — 모두 `code.claude.com/docs` 및 `docs.anthropic.com`.
 
-**문서 정보** — 통합 마스터(범용) **v1.114**. 변경 이력은 최상단 버전 표 참조(유래: 8개 소스 통합 초판 — 최상단 병합 행).
-최종 갱신: 2026-11-04 · 최근 재검증: 2026-11-02 / 참조: Claude Code v2.1.316, Opus 5.5(v2.1.280+) · Sonnet 5.5(v2.1.284+) · Haiku 5.5(v2.1.293+) · Fable 5.1(v2.1.257+).
+**문서 정보** — 통합 마스터(범용) **v1.115**. 변경 이력은 최상단 버전 표 참조(유래: 8개 소스 통합 초판 — 최상단 병합 행).
+최종 갱신: 2026-11-07 · 최근 재검증: 2026-11-02 / 참조: Claude Code v2.1.316, Opus 5.5(v2.1.280+) · Sonnet 5.5(v2.1.284+) · Haiku 5.5(v2.1.293+) · Fable 5.1(v2.1.257+).
