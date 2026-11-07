@@ -684,11 +684,11 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
       <div class="args">인수 없음 — 훅이 알아서 알리고, 보드를 직접 보고 싶을 때 부른다</div>
       <p class="one">같은 폴더에 세션이 둘 이상 떠 있으면 서로의 존재를 알린다 &mdash; 미커밋 변경이 뒤섞이기 전에.</p>
       <dl>
-        <dt>언제</dt><dd>일부러든 실수로든 한 폴더에서 세션 두 개가 돌고 있을 때, 다른 쪽이 무엇을 하는지 보거나 이 작업을 <code>claude --worktree &lt;이름&gt;</code>으로 옮길지 정하고 싶을 때.</dd>
+        <dt>언제</dt><dd>일부러든 실수로든 한 폴더에서 세션 두 개가 돌고 있을 때, 다른 쪽이 무엇을 하는지 보거나 이 작업을 <code>claude --worktree &lt;이름&gt;</code>으로 옮길지 정하고 싶을 때. 일부러 같은 폴더에 남기로 할 때 확인하는 도구이기도 하다 &mdash; 다른 세션이 고친 파일을 보여 주는데, 셸로 고친 파일은 보드에 오르지 않으니 <code>git status</code>도 함께 본다.</dd>
         <dt>하는 일</dt><dd>훅이 세션마다 제목(없으면 첫 프롬프트 앞 80자)·브랜치·고친 파일을 <code>~/.claude/session-board/</code>에 적는다. 같은 폴더(같은 git 최상위 &mdash; worktree는 다른 폴더로 친다)에 다른 활성 세션이 있으면 세션을 시작할 때와 다음 프롬프트 때 Claude에게 알리고, 다른 세션이 방금 고친 파일을 고치려 하면 한 번 경고한다. 스킬을 부르면 보드를 보여 주고, 파일이 겹치면 worktree로 옮기자고 제안한다.</dd>
         <dt>결과</dt><dd>다른 세션의 이름·브랜치·고친 파일을 적은 한 줄. 막는 것은 없다 &mdash; 계속할지, worktree로 옮길지, 그 세션에 물을지는 내가 정한다. 다른 세션이 없으면 대화에 아무것도 더하지 않고, 훅은 모델을 부르지 않는다.</dd>
       </dl>
-      <div class="warn soft"><b>알아 둘 것.</b> Node.js 18 이상이 필요하다 &mdash; 이 항목을 골랐는데 없으면 훅을 걸지 않고 플러그인도 켜지 않으며, 이미 걸려 있으면 걷어낼지 묻는다. Node 없이 훅이 돌면 조용히 넘어가지 않고 <code>hook error</code> 알림이 뜨기 때문이다. Node를 깐 뒤에는 새 터미널에서 재적용한다. 훅이 이 PC의 모든 세션에 걸리기 때문에 기본 해제로 나오고, 세션은 PC 단위라 스코프는 글로벌로 고정이다 &mdash; 설치 절차는 스코프 대신 <code>dandi</code> 플러그인(먼저 권한다)과 복사본 중 무엇으로 깔지를 묻는다. 회사 PC면 플러그인이 내 권한으로 코드를 돌린다는 점도 함께 알린다 &mdash; 이 훅은 모든 편집에 돈다. 스킬 이름 별칭은 복사본에만 붙고 플러그인에는 붙지 않는다. 플러그인은 훅까지 함께 켜고 한 번에 걷힌다. 이미 켜 둔 플러그인의 개정은 직접 <code>/plugin marketplace update dandi</code>로 받는다 &mdash; 적용 기록의 버전만 올라서는 돌고 있는 훅이 바뀌지 않는다. 복사본은 <code>~/.claude/settings.json</code>에 기존 훅은 그대로 둔 채 훅을 덧붙이고, 이미 걸려 있으면 한 벌 더 붙이지 않는다. 둘 중 하나만 남긴다 &mdash; 둘 다 있으면 모든 이벤트가 두 번 돈다. 보드에는 제목·첫 프롬프트 앞 80자·브랜치·파일 경로만 있고 파일 내용은 없다. 3시간 동안 활동이 없거나 끝난 세션은 무시하고, 하루 지난 기록은 지운다. 보지 못하는 것도 있다: 여러 repo를 묶은 워크스페이스의 루트 세션과 하위 repo 세션은 git 최상위가 달라 서로 보지 못하고, 셸(Bash·PowerShell)로 고친 파일은 목록에 오르지 않으며, <code>claude -p</code>는 실행마다 별도 세션으로 오른다. &ldquo;한 폴더에서 세션 두 개를 돌리지 않는다&rdquo;는 습관을 대신하지는 않는다 &mdash; 그 습관이 깨졌을 때 알아채게 해 주는 장치다.</div>
+      <div class="warn soft"><b>알아 둘 것.</b> Node.js 18 이상이 필요하다 &mdash; 이 항목을 골랐는데 없으면 훅을 걸지 않고 플러그인도 켜지 않으며, 이미 걸려 있으면 걷어낼지 묻는다. Node 없이 훅이 돌면 조용히 넘어가지 않고 <code>hook error</code> 알림이 뜨기 때문이다. Node를 깐 뒤에는 새 터미널에서 재적용한다. 훅이 이 PC의 모든 세션에 걸리기 때문에 기본 해제로 나오고, 세션은 PC 단위라 스코프는 글로벌로 고정이다 &mdash; 설치 절차는 스코프 대신 <code>dandi</code> 플러그인(먼저 권한다)과 복사본 중 무엇으로 깔지를 묻는다. 회사 PC면 플러그인이 내 권한으로 코드를 돌린다는 점도 함께 알린다 &mdash; 이 훅은 모든 편집에 돈다. 스킬 이름 별칭은 복사본에만 붙고 플러그인에는 붙지 않는다. 플러그인은 훅까지 함께 켜고 한 번에 걷힌다. 이미 켜 둔 플러그인의 개정은 직접 <code>/plugin marketplace update dandi</code>로 받는다 &mdash; 적용 기록의 버전만 올라서는 돌고 있는 훅이 바뀌지 않는다. 복사본은 <code>~/.claude/settings.json</code>에 기존 훅은 그대로 둔 채 훅을 덧붙이고, 이미 걸려 있으면 한 벌 더 붙이지 않는다. 둘 중 하나만 남긴다 &mdash; 둘 다 있으면 모든 이벤트가 두 번 돈다. 보드에는 제목·첫 프롬프트 앞 80자·브랜치·파일 경로만 있고 파일 내용은 없다. 3시간 동안 활동이 없거나 끝난 세션은 무시하고, 하루 지난 기록은 지운다. 보지 못하는 것도 있다: 여러 repo를 묶은 워크스페이스의 루트 세션과 하위 repo 세션은 git 최상위가 달라 서로 보지 못하고, 셸(Bash·PowerShell)로 고친 파일은 목록에 오르지 않으며, <code>claude -p</code>는 실행마다 별도 세션으로 오른다. &ldquo;두 번째 세션은 워크트리로 연다&rdquo;는 기본 규칙을 대신하지는 않는다 &mdash; 같은 폴더 예외를 고를 때 확인하는 도구이자, 그 예외 조건이 깨졌을 때 커밋 전에 알아채게 해 주는 장치다.</div>
       <div class="tags"><span class="tag">글로벌</span><span class="tag">기본 해제</span><span class="tag need">Node 18+</span><span class="tag">훅 설치</span></div>
     </article>
 
@@ -805,13 +805,13 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
 <p class="pathnote">프로젝트에 이미 디자인 시스템이나 토큰이 있으면 그 값이 kr-ui-guide의 기본값을 이긴다. 필수 기준은 그대로 적용된다. 2·3은 대개 알아서 불려 오니 직접 칠 일은 드물다.</p>
 
 <h2>같은 폴더에 다른 세션이 이미 있을 때</h2>
-<p class="lead">한 폴더의 두 세션은 작업 트리 하나를 함께 쓰니 서로의 미커밋 변경이 섞인다. 알게 되는 길은 둘이다 &mdash; 세션 보드를 깔았다면 보드가 알려 주고, 아니면 <code>/resume</code>이 모르는 미커밋 작업을 찾아낸다. 어느 쪽이든 빠져나오는 길은 같다.</p>
+<p class="lead">한 폴더의 두 세션은 작업 트리 하나를 함께 쓰니 서로의 미커밋 변경이 섞인다. 알게 되는 길은 둘이다 &mdash; 세션 보드를 깔았다면 보드가 알려 주고, 아니면 <code>/resume</code>이 모르는 미커밋 작업을 찾아낸다. 두 번째 세션은 워크트리로 여는 것이 기본이다. 같은 폴더에 남는 것은 예외이고, 아래 넷을 모두 지킬 때만 된다: 이미 같은 작업 브랜치 위이고(기본 브랜치 위면 예외가 아니다) 브랜치를 바꾸지 않는다 / 짧은 작업이고 다른 세션과 다른 파일만 고친다 / 공용 파일(lockfile·설정·<code>CLAUDE.md</code>)과 저장소 전체 명령(포맷터·<code>lint --fix</code>·패키지 설치·전체 테스트)은 건드리지 않고, 기록 파일은 <code>/wrap</code>으로만 한 세션씩 덧붙인다 / 커밋은 경로를 지정해서만 하고(<code>git commit -- &lt;내 파일&gt;</code>) <code>switch</code>·<code>pull</code>·<code>stash</code>·<code>reset</code>·<code>rebase</code>는 쓰지 않는다. 하나라도 어긋나게 되면 Claude가 그 자리에서 멈추고 워크트리로 옮길지 묻는다 &mdash; 미커밋을 옮길지는 내가 정한다. 어느 쪽이든 빠져나오는 길은 아래와 같다.</p>
 <div class="path">
   <div class="p">
     <div class="k">1</div>
     <div>
       <div class="c"><span class="sl">/</span>session-board</div>
-      <div class="w">다른 세션과 그 브랜치, 그 세션이 고친 파일을 보여 주고, 내 작업과 파일이 겹치면 워크트리로 옮기자고 제안한다. 보드가 없다면 <code>/resume</code>이 모르는 미커밋을 두고 묻는 것이 같은 신호다 &mdash; 내 작업이 아니라고 답한다.</div>
+      <div class="w">다른 세션과 그 브랜치, 그 세션이 고친 파일을 보여 주고, 내 작업과 파일이 겹치면 워크트리로 옮기자고 제안한다. 보드가 없다면 <code>/resume</code>이 모르는 미커밋을 두고 묻는 것이 같은 신호다 &mdash; 내 작업이 아니라고 답한다. 옮기지 않고 같은 폴더에 남으려면 보드 목록을 <code>git status</code>와 함께 확인한다(보드가 없으면 <code>git status</code>로).</div>
     </div>
   </div>
   <div class="p">
@@ -889,7 +889,7 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
 </div>
 <p class="lead" style="margin-top:16px">전부 제거 절차가 문서에 적혀 있는데, 이건 의도한 것이다. 되돌릴 수 없는 설치는 애초에 선택지를 준 게 아니기 때문이다. 감지·설치·검증·제거 4단 전체는 각 문서에 있다. 설치할 때 나오는 질문의 뜻은 <a href="options.ko.html">옵션 사전</a>에, 처음부터 차근히 밟아 보려면 <a href="learn.ko.html">학습 코스</a>에 있다. 설치 항목 몇 개는 일부러 여기 없다: 정책 기록(03 §11)과 기능 변경 기록(03 §13)은 스킬이 아니라 규칙 파일(<code>.claude/rules/policy-recording.md</code>, <code>.claude/rules/feature-log.md</code>)을 더하는 항목이라, 부를 명령이 없어 카드도 없다.</p>
 
-<footer>단디(Dandi) &middot; 스킬 카탈로그 &middot; 2026-11-04 &middot; 01 §D-4 · 02 STEP 3 ⓔ · 03 §2 · §3 · §5 · §7 · §8 · §9 · §10 · §12가 설치하는 스킬들. 명령은 별칭 없이 적었으니, 설치할 때 별칭을 골랐다면 그것을 얹어 읽으면 된다. &middot; 글꼴: Pretendard, IBM Plex Mono — 둘 다 SIL 오픈 폰트 라이선스 1.1(상업 이용·웹 임베딩 무료)</footer>
+<footer>단디(Dandi) &middot; 스킬 카탈로그 &middot; 2026-11-07 &middot; 01 §D-4 · 02 STEP 3 ⓔ · 03 §2 · §3 · §5 · §7 · §8 · §9 · §10 · §12가 설치하는 스킬들. 명령은 별칭 없이 적었으니, 설치할 때 별칭을 골랐다면 그것을 얹어 읽으면 된다. &middot; 글꼴: Pretendard, IBM Plex Mono — 둘 다 SIL 오픈 폰트 라이선스 1.1(상업 이용·웹 임베딩 무료)</footer>
 
 </div>
 <script>

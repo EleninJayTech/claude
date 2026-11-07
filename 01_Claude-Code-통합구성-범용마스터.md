@@ -1,6 +1,6 @@
 # Claude Code 통합 구성 — 범용 마스터 (드롭인 적용)
 
-> **문서 버전: v1.116** · 최종 갱신: **2026-11-07** · **최근 재검증: 2026-11-02** · 기준: Claude Code v2.1.316 (Opus 5.5 · Sonnet 5.5 · Haiku 5.5 · Fable 5.1)
+> **문서 버전: v1.117** · 최종 갱신: **2026-11-07** · **최근 재검증: 2026-11-02** · 기준: Claude Code v2.1.316 (Opus 5.5 · Sonnet 5.5 · Haiku 5.5 · Fable 5.1)
 >
 > | 버전 | 날짜 | 변경 내용 |
 > | --- | --- | --- |
@@ -23,6 +23,7 @@
 > | v1.114 | 2026-11-04 | **§F-1 파생 작업 확인** — 작업 브랜치·워크트리를 만들기 전 진행 중 브랜치(최근 14일·미병합)가 있으면 독립/파생을 한 번 묻고, 파생이면 부모에서 분기·`branch.<이름>.parent` 기록·앞섬 확인을 부모 기준으로 · §F-2 A·B·C `/resume` 부모 브랜치 보고. **목표(R43)**: 7 — 부모 위에서 하던 작업을 세션이 바뀌어도 같은 기준으로 잇는다 · 1 — main에서 잘못 분기·병합되는 결과를 막는다 |
 > | v1.115 | 2026-11-07 | **§D 서두 Windows — Git for Windows 권장**(감지·권고만, 설치 항목 아님) — 없으면 셸 도구가 PowerShell 하나·Bash·Monitor 도구가 열린다는 근거 · `CLAUDE_CODE_GIT_BASH_PATH` · Git Bash 있는 PC의 `Bash` deny가 PowerShell 도구도 끈다 · §K 행 보강 · §L 근거. **목표(R43)**: 2 — Windows에서도 bash 전제 명령·훅이 같게 돈다 · 5 — 당일 공식 조회(setup·tools-reference) |
 > | v1.116 | 2026-11-07 | **§D 서두 Windows — 멀티세션 터미널 구성 권고**(Windows Terminal 탭·분할 패널, 둘째 패널부터 `--worktree`, `terminal_bell`) + 단계별 안내 외부 링크(설치 항목 아님) · §L 근거. **목표(R43)**: 8 — 입문자가 여러 세션 운영 화면을 혼자 꾸린다 · 7 — 패널마다 워크트리라 동시 세션이 서로의 미커밋을 섞지 않는다 |
+> | v1.117 | 2026-11-07 | **§F-1 같은 폴더 동시 세션 — 기본은 워크트리 + 조건부 같은 폴더 예외**(같은 작업 브랜치 고정·다른 파일만·공용 파일과 전체 명령 금지·경로 지정 커밋, 어긋나면 그 시점에 이동 질문) · §G·§D 사본 · §L. **목표(R43)**: 1 — 위험 조건이 없는 짧은 작업에서 워크트리 준비 비용(의존성 설치·`.env` 복사)을 없앤다(같은 품질 위의 속도) · 7 — 예외 조건과 이탈 시 이동 질문으로 미커밋 혼입 방지는 유지한다 |
 > ※ 갱신 시: 이 표에 한 줄 추가 + 하단 "문서 정보" 날짜 수정 + §L 재검증 체크리스트 수행.
 
 > **사용법**: 이 파일을 아무 프로젝트 루트(또는 `docs/`)에 넣고 Claude에게
@@ -96,7 +97,7 @@
 ## D. 글로벌 셋업 (PC당 1회) — 전 환경 공통
 
 > 아래 명령 블록은 Windows(PowerShell) 기준이다 — macOS·Linux는 홈을 `~`로 읽고 D-1을 `mkdir -p ~/.claude/skills/{resume,wrap,dropin-apply,dropin-check,dropin-update,dropin-sync}`로 대체한다(만드는 내용물 D-2~D-4는 OS 무관. OS별 CLI 설치 분기는 04 §2와 같은 방식).
-> **Windows — Git for Windows 권장**(감지·권고만, 설치는 사용자): 네이티브 Windows에서 `git --version`이 실패하거나 Git Bash(`bash.exe`)가 없으면 Git for Windows(`git-scm.com/downloads/win`) 설치를 한 줄로 권한다(그 세션 1회). 있으면 **Bash·Monitor 도구**가 열려 bash 문법을 전제한 명령·훅이 그대로 돌고, 없으면 셸 도구는 PowerShell 하나다(공식 setup: 권장이되 선택). 깔아도 PowerShell 도구는 함께 남는다(claude.ai·Console 계정 기본 켜짐 · Bedrock·Agent Platform·Foundry는 `CLAUDE_CODE_USE_POWERSHELL_TOOL=1`) — 단 그 상태에서 `Bash` 도구 통째 deny는 PowerShell 도구까지 끈다. 깔았는데 Bash 도구가 안 뜨면 `settings.json` `env`에 `"CLAUDE_CODE_GIT_BASH_PATH": "C:\Program Files\Git\bin\bash.exe"`(실제 경로)를 넣고, **새 세션**에서 Bash 도구로 `echo $BASH_VERSION`이 나오는지로 확인한다. 이 문서는 설치하지 않으므로 제거 절차도 두지 않는다(앱 제거는 OS 몫 — 설치 항목이 아니다). **세션을 여럿 함께 돌리면** Windows Terminal의 탭=프로젝트·분할 패널=세션 구성도 함께 권한다 — 같은 탭의 둘째 패널부터는 `claude --worktree <이름>`으로 각자 워크트리에서 띄우고(같은 폴더 동시 세션 금지 — §F-1), 끝난·승인 대기 세션은 `preferredNotifChannel: "terminal_bell"`(데스크톱 알림 기본 목록에 없는 터미널에 공식 terminal-config가 안내하는 값)로 벨을 울려 찾는다. 단계별 안내(Windows Terminal 벨·분할 단축키·레이아웃 스크립트): `https://claude.ai/artifact/JT7ewXKhrnFZzeVhRJY31s` — 외부 참고 페이지라 이 문서가 설치하지 않는다.
+> **Windows — Git for Windows 권장**(감지·권고만, 설치는 사용자): 네이티브 Windows에서 `git --version`이 실패하거나 Git Bash(`bash.exe`)가 없으면 Git for Windows(`git-scm.com/downloads/win`) 설치를 한 줄로 권한다(그 세션 1회). 있으면 **Bash·Monitor 도구**가 열려 bash 문법을 전제한 명령·훅이 그대로 돌고, 없으면 셸 도구는 PowerShell 하나다(공식 setup: 권장이되 선택). 깔아도 PowerShell 도구는 함께 남는다(claude.ai·Console 계정 기본 켜짐 · Bedrock·Agent Platform·Foundry는 `CLAUDE_CODE_USE_POWERSHELL_TOOL=1`) — 단 그 상태에서 `Bash` 도구 통째 deny는 PowerShell 도구까지 끈다. 깔았는데 Bash 도구가 안 뜨면 `settings.json` `env`에 `"CLAUDE_CODE_GIT_BASH_PATH": "C:\Program Files\Git\bin\bash.exe"`(실제 경로)를 넣고, **새 세션**에서 Bash 도구로 `echo $BASH_VERSION`이 나오는지로 확인한다. 이 문서는 설치하지 않으므로 제거 절차도 두지 않는다(앱 제거는 OS 몫 — 설치 항목이 아니다). **세션을 여럿 함께 돌리면** Windows Terminal의 탭=프로젝트·분할 패널=세션 구성도 함께 권한다 — 같은 탭의 둘째 패널부터는 `claude --worktree <이름>`으로 각자 워크트리에서 띄우고(같은 폴더 동시 세션은 기본이 워크트리 — §F-1), 끝난·승인 대기 세션은 `preferredNotifChannel: "terminal_bell"`(데스크톱 알림 기본 목록에 없는 터미널에 공식 terminal-config가 안내하는 값)로 벨을 울려 찾는다. 단계별 안내(Windows Terminal 벨·분할 단축키·레이아웃 스크립트): `https://claude.ai/artifact/JT7ewXKhrnFZzeVhRJY31s` — 외부 참고 페이지라 이 문서가 설치하지 않는다.
 
 ### D-1. 폴더
 ```powershell
@@ -312,7 +313,7 @@ New-Item -ItemType Directory -Path .claude/skills/dropin-sync -Force
 - 다른 repo는 접근 가능(cwd 또는 additionalDirectories)하면 자동 교차기록, 불가하면 "○○에 기록 필요" 알림. **그 알림은 나에게만 뜬다** — 상대에게 도달하는 채널은 그 repo의 git뿐이니, 주 대상 기록에 영향받는 repo·대상을 명시하고 **그 변경의 PR·이슈 본문에도 한 줄** 남긴다(개별 repo에서 각자 여는 팀에선 이 경로가 기본값이다).
 
 ### 세션 워크플로 규율
-- **같은 폴더에서 두 세션을 동시에 돌리지 않는다** — 작업 트리·git 인덱스·기록 파일을 공유해 서로의 미커밋이 섞인다(`merge=union`은 git 병합 때만 동작해 여기선 무력). 두 번째 작업은 `claude --worktree <이름>`으로 열거나, 이어받을 대화는 `claude -n <이름>`·`/rename`으로 이름을 붙여 `claude --resume <이름>`으로 연다 — `claude -c`는 그 폴더의 가장 최근 대화 하나만 연다. 아래 /resume·/wrap의 "세션 밖 변경" 처리는 이 습관이 깨졌을 때의 안전망이다.
+- **같은 폴더의 동시 세션은 기본이 워크트리다** — 같은 폴더의 두 세션은 작업 트리·git 인덱스·HEAD·기록 파일을 공유해 서로의 미커밋이 섞인다(`merge=union`은 git 병합 때만 동작해 여기선 무력). 그래서 두 번째 작업은 `claude --worktree <이름>`(Claude가 만들면 아래 번호 규칙)으로 연다. **같은 폴더 예외는 아래 넷을 모두 만족할 때만이다**: ⓐ 이미 같은 작업 브랜치 위이고 브랜치를 바꾸지 않는다(기본 브랜치 위면 예외가 아니다) ⓑ 짧은 작업이고 다른 세션과 다른 파일만 고친다 — 다른 세션이 고친 파일은 session-board(03 §12)가 있으면 그것과 `git status`로, 없으면 `git status`로 확인한다(보드는 셸로 고친 파일을 못 본다) ⓒ 공용 파일(lockfile·설정·`CLAUDE.md`)과 저장소 전체 명령(포맷터·`lint --fix`·패키지 설치·전체 테스트)을 건드리지 않고, 기록 파일은 `/wrap`으로만 한 세션씩 append한다 ⓓ 커밋은 경로 지정(`git commit -- <내 파일>`)만 쓰고 `switch`·`pull`·`stash`·`reset`·`rebase`는 쓰지 않는다. 작업 중 하나라도 어긋나게 되면 그 시점에 멈추고 사용자에게 워크트리로 옮길지 묻는다(미커밋을 옮기는 일은 사용자 결정). 이어받을 대화는 `claude -n <이름>`·`/rename`으로 이름을 붙여 `claude --resume <이름>`으로 연다 — `claude -c`는 그 폴더의 가장 최근 대화 하나만 연다. 아래 /resume·/wrap의 "세션 밖 변경" 처리는 이 규칙이 깨졌을 때의 안전망이다.
 - **워크트리는 3자리 고유번호를 붙인다** — 이름 `NNN-<요약>`(위치 `.claude/worktrees/NNN-<요약>`), 브랜치 `<타입>/NNN-<요약>`. 번호는 `git worktree list`·`git branch -a`의 최대 번호 + 1이다(브랜치가 남은 번호는 다시 쓰지 않는다 — 브랜치까지 지운 번호는 보이지 않아 보장하지 않는다). Claude는 `git fetch` 뒤 `git worktree add .claude/worktrees/NNN-<요약> -b <타입>/NNN-<요약> origin/<기본 브랜치>`(원격이 없으면 기본 브랜치 — 파생 작업이면 기본 브랜치 대신 부모, 아래 `파생 작업 확인`)로 만들고 `EnterWorktree`(`path`)로 들어가 번호를 알린다(`name`·`claude --worktree`는 브랜치가 `worktree-<이름>`이 되지만 `/resume NNN`은 찾는다). 이어 갈 땐 **`/resume NNN`**. 세션 종료 때 자동 정리되지 않는다 — 병합 뒤 `git worktree remove`·브랜치 삭제는 사용자 결정. 서브에이전트 `isolation: worktree`는 대상이 아니다.
 - **git repo면 작업은 브랜치에서 한다** — 새 기능·수정·리팩터링·문서 개편처럼 한 번에 끝나지 않거나 되돌릴 수 있어야 하는 작업은 기본 브랜치(원격 HEAD — 보통 main·master)에 직접 하지 않고, 작업 시작 때 작업 브랜치(`<타입>/<요약>` — 타입은 커밋 양식과 같은 feature·fix·docs·chore 등)를 따서 거기서 한다. **원격이 있으면 따기 전에 `git fetch`로 기본 브랜치의 원격 최신을 확인하고 뒤처졌으면 `git pull --ff-only`로 맞춘 뒤 분기한다**(미커밋이 있으면 건드리지 않고 보고한다). 따는 즉시 브랜치 이름을 한 줄로 알린다. 예외는 둘뿐이다: ⓐ 한두 줄 오타·주석 수준의 정말 간단한 작업 ⓑ 즉시 내보내야 하는 hotfix. 이미 같은 작업의 브랜치 위라면 그대로 쓴다. **작업이 이어지는 동안 커밋 전·병합을 안내하기 전에 `git fetch`로 기본 브랜치(파생 작업이면 부모 브랜치)가 앞서갔는지 확인하고, 앞섰으면 몇 커밋인지·같은 파일을 건드렸는지를 보고한다.** 그 변경을 작업 브랜치로 가져오는 일(merge·rebase)은 사용자 결정이며, push 전 로컬 브랜치면 rebase를, push했거나 공유 중이면 merge를 제안한다. **병합·push·브랜치 삭제는 하지 않고 사용자 결정으로 남긴다**(기록 아카이브의 즉시 푸시는 길이 관리 규칙을 따른다). 브랜치를 땄다면 기록 양식의 `(브랜치)` 칸에 그 이름을 적는다.
 - **작업 브랜치·워크트리를 새로 만들기 전에 파생 작업 확인을 한다** — `git for-each-ref --no-merged=origin/<기본 브랜치> --sort=-committerdate --format='%(refname:short) %(committerdate:short)' refs/heads refs/remotes`(원격이 없으면 `<기본 브랜치>`)에서 최근 14일 안에 커밋된 브랜치를 고른다(기본 브랜치·원격 HEAD는 빼고, 로컬과 원격에 같은 이름이 있으면 하나로 센다 — 작업 트리의 브랜치도 여기 든다). 없으면 묻지 않고 기본 브랜치에서 딴다. 있으면 한 번 묻는다 — `독립 작업` / `<브랜치>의 파생 작업`(최근순 3개, 나머지는 직접 입력). 파생이면 그 브랜치(원격에 있으면 `origin/<부모>`)에서 따고 `git config branch.<새 브랜치>.parent <부모>`로 남기며, 기록의 `(브랜치)` 칸은 `<새 브랜치> ← <부모>`로 적는다. 이후 앞섬 확인은 부모 기준이다. `/resume`은 그 값(config가 없으면 PROGRESS의 `← <부모>`)으로 **부모 브랜치 보고**를 한다 — 부모가 몇 커밋 앞섰는지, 부모가 기본 브랜치에 병합됐거나 원격에서 지워졌으면 옮기기 안내(merge로 따라왔으면 기본 브랜치를 병합, rebase로 따라왔으면 `git rebase --onto origin/<기본 브랜치> <부모와의 merge-base> <새 브랜치>`, 끝나면 `git config --unset branch.<새 브랜치>.parent`). 가져오기·옮기기는 사용자 결정이다.
@@ -536,7 +537,7 @@ CLAUDE.local.md
 ```
 > ⚠️ **기록만 하고 커밋 안 하면 다음 세션이 못 찾는다**(미커밋은 git status로만 발견). 반드시 커밋.
 > 💡 같은 문제로 **교정 2회 실패 시** 계속 고치지 말고 `/clear` 후 배운 것을 반영한 새 프롬프트로 — 거의 항상 이쪽이 빠르다.
-> ⚠️ **같은 폴더에서 두 세션을 동시에 돌리지 않는다**(§F-1에 같은 줄이 있어 프로젝트 `CLAUDE.md`에도 복붙된다) — 작업 트리·git 인덱스·기록 파일을 공유해 서로의 미커밋이 섞인다(`merge=union`은 git 병합 때만 동작해 여기선 무력). 두 번째 작업은 `claude --worktree <이름>`(격리 한계는 02 §C)으로 열고, 이어받을 대화는 `claude -n <이름>`·`/rename`으로 이름을 붙여 `claude --resume <이름>`으로 연다 — `claude -c`는 그 폴더의 **가장 최근 대화 하나**만 연다.
+> ⚠️ **같은 폴더의 동시 세션은 기본이 워크트리다**(§F-1에 같은 줄이 있어 프로젝트 `CLAUDE.md`에도 복붙된다) — 작업 트리·git 인덱스·HEAD·기록 파일을 공유해 서로의 미커밋이 섞인다. 두 번째 작업은 `claude --worktree <이름>`(격리 한계는 02 §C)으로 열고, **같은 폴더 예외**(같은 작업 브랜치 고정·다른 파일만·공용 파일과 전체 명령 금지·경로 지정 커밋 — 넷 다)는 §F-1 조건을 모두 만족할 때만이며 어긋나면 그 시점에 이동을 묻는다. 이어받을 대화는 `claude -n <이름>`·`/rename`으로 이름을 붙여 `claude --resume <이름>`으로 연다 — `claude -c`는 그 폴더의 **가장 최근 대화 하나**만 연다.
 
 ---
 
@@ -631,6 +632,7 @@ Claude Code는 매주 바뀐다. 6개월마다 30분:
 - §F-2 **A·B·C 전 템플릿**의 폴백(비-git·`docs/` 부재·단위 없음·단일 repo)·**조건부 안내 어휘**(조치 대기·`게이트 차단`·`소스없음`/`확보 실패` — 새 어휘가 늘 때마다 A·B·C 템플릿 전부도 함께 늘려야 한다)·**미러 대조 판정 기준**(구성 성격 4키·포함 기준 정본·`dropin-applied` 줄 제외·줄바꿈 정규화)이 배포된 글로벌 스킬 실물과 일치하는지 — 문서만 고치고 스킬을 빠뜨리면(또는 그 반대로) 같은 공백이 방향만 바꿔 재발한다. **점검 범위에서 A를 빼지 말 것**: 단일 repo 신규 설치자가 쓰는 것이 A다(도입 경위는 저장소 git 이력 — 버전 표에선 병합 행 안이다).
 - **§K `/doctor prompt-audit`** — 하위 명령 이름·감사 대상 파일 종류·"보고·제안만" 동작이 유지되는지(공식 memory·commands).
 - **`AGENTS.md` 로드 규칙**(§E 공통) — `CLAUDE.md`·`CLAUDE.local.md`가 있으면 읽지 않는 기본값 · `@AGENTS.md` import 권장 · Windows symlink 제약이 유지되는지(공식 memory `#agents-md`).
+- **§F-1 같은 폴더 동시 세션의 예외 조건** — 조건 ⓑ의 판단 도구(03 §12 session-board)가 셸 편집을 못 보는 한계가 유지되는지, Claude Code가 같은 폴더 동시 세션·워크트리에 대한 공식 권고를 새로 냈는지(공식 worktrees·common-workflows — 생기면 조건을 그쪽에 맞춘다).
 - **§G 세션 분리 축** — `claude -c`(그 폴더의 가장 최근 대화)·`-n`/`/rename`(세션 이름)·`--resume <이름>`·`--worktree`(worktree 위치·분기·정리) 동작 · `--worktree`의 브랜치 이름(`worktree-<이름>`)·이름 재사용·`EnterWorktree` `path`의 `.claude/worktrees/` 밖 승인(§F-1 고유번호 규칙의 전제)(공식 sessions·worktrees, 2026-09-13 확인 · 고유번호 전제는 2026-10-26 확인). 같은 폴더 동시 세션에 대한 **공식 경고는 없다**(같은 날 확인) — 생기면 §G 줄의 근거를 그쪽으로 바꾼다.
 - **§K 크레딧 잔액 오류 행** — Max·Ultra·Team API 크레딧의 대상(Claude Code 제외)·`Credit balance too low` 문구·인증 우선순위(`-p`는 `ANTHROPIC_API_KEY`를 항상 쓰고 대화형은 1회 승인)가 유지되는지(platform `api-credits-for-subscribers`·code.claude.com `authentication`, 2026-10-18 확인).
 - 🟡 `~/.claude/`가 `blockReadsOutsideWorkingDirectories` 차단 대상인지(맞으면 글로벌 기록 읽기가 막혀 신규 합류로 오판한다) · `.claude/worktrees/` 안 세션이 상위 탐색으로 본체 `CLAUDE.md`를 함께 로드하는지.
@@ -642,5 +644,5 @@ Claude Code는 매주 바뀐다. 6개월마다 30분:
 ## 핵심 출처 🟢
 IDE 통합·`--add-dir`(ide-integrations·large-codebases) / permissions·deny 한계 / hooks / skills / memory·auto-memory — 모두 `code.claude.com/docs` 및 `docs.anthropic.com`.
 
-**문서 정보** — 통합 마스터(범용) **v1.116**. 변경 이력은 최상단 버전 표 참조(유래: 8개 소스 통합 초판 — 최상단 병합 행).
+**문서 정보** — 통합 마스터(범용) **v1.117**. 변경 이력은 최상단 버전 표 참조(유래: 8개 소스 통합 초판 — 최상단 병합 행).
 최종 갱신: 2026-11-07 · 최근 재검증: 2026-11-02 / 참조: Claude Code v2.1.316, Opus 5.5(v2.1.280+) · Sonnet 5.5(v2.1.284+) · Haiku 5.5(v2.1.293+) · Fable 5.1(v2.1.257+).
