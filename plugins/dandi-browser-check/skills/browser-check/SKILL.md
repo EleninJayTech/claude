@@ -1,6 +1,6 @@
 ---
 name: browser-check
-description: 브라우저로 화면·페이지를 확인하거나 디버깅할 때 관찰 수단을 고르는 규칙 — 만든 화면 확인, UI 검증, 배포된 페이지 확인, 콘솔·네트워크 오류 디버깅, 스크린샷을 찍으려 할 때 쓴다. Playwright CLI·Desktop 내장 브라우저·Claude in Chrome·Chrome DevTools MCP 어느 것을 쓰든 적용한다. 앱을 띄우는 방법은 다루지 않는다(내장 /run·/verify 레시피 몫).
+description: 브라우저로 화면·페이지를 확인하거나 디버깅할 때 관찰 수단을 고르는 규칙 — 만든 화면 확인, UI 검증, 배포된 페이지 확인, 콘솔·네트워크 오류 디버깅, 스크린샷을 찍으려 할 때 쓴다. Playwright CLI·Desktop 내장 브라우저·Claude in Chrome·Chrome DevTools MCP 어느 것을 쓰든 적용한다. 실행 중인 Flutter 앱(데스크톱·모바일) 화면을 Marionette로 확인할 때도 쓴다. 앱을 띄우는 방법은 다루지 않는다(내장 /run·/verify 레시피 몫).
 ---
 
 # browser-check
@@ -35,7 +35,7 @@ description: 브라우저로 화면·페이지를 확인하거나 디버깅할 �
 - 실패는 재현 단계와 증거(값 또는 스크린샷 1장)를 함께 남긴다.
 
 ## 4. 도구 — 설치된 것 중에서
-0. 먼저 **설치·연결된 수단을 확인**한다 — `playwright-cli --version`(PowerShell은 `Get-Command playwright-cli`), ToolSearch로 `mcp__claude-in-chrome__*`·`mcp__chrome-devtools__*` 존재, Desktop 세션이면 내장 Browser. 확인하지 않고 아래 순서를 건너뛰지 않는다.
+0. 먼저 **설치·연결된 수단을 확인**한다 — `playwright-cli --version`(PowerShell은 `Get-Command playwright-cli`), ToolSearch로 `mcp__claude-in-chrome__*`·`mcp__chrome-devtools__*` 존재, Desktop 세션이면 내장 Browser. 확인하지 않고 아래 순서를 건너뛰지 않는다. 대상이 브라우저가 아니라 Flutter 앱 창이면 §6으로 간다.
 1. 기본: Playwright CLI(헤드리스 — 사용자 브라우저를 점유하지 않고 세션을 여럿 띄울 수 있다. 명령은 `playwright-cli --help`).
 2. Playwright CLI가 없고 Desktop 앱 로컬 세션이면 내장 Browser — Claude가 띄운 localhost 개발 서버를 바로 연다(깨끗한 프로필).
 3. 세션에 Claude in Chrome 도구가 **이미 있을 때**(시작 때 `claude --chrome`이었거나 Enabled by default) 내 실제 로그인 세션이 필요한 화면에 쓴다 — 사이트 권한은 대상 도메인으로만. **도구가 없으면 확장을 지금 열어도 이 세션엔 생기지 않는다**(공식 — 설정은 다음 세션부터): 지금 필요하면 `claude --chrome`으로 재시작, 매 세션 쓰면 `/chrome` → Enabled by default(매 세션 컨텍스트 비용)를 사용자에게 안내한다. 있던 연결이 끊긴 것이면 `/chrome` → Reconnect extension. 로그인 화면 자체는 §2의 headed 프로필로도 되므로 여기서 막히지 않는다.
@@ -51,3 +51,10 @@ description: 브라우저로 화면·페이지를 확인하거나 디버깅할 �
    playwright-core 직접 사용: `chromium.launch({ channel: 'chrome', ignoreDefaultArgs: ['--disable-extensions'] })`. 업무 저장소에 `.playwright/cli.config.json`(CLI가 실행 폴더에서 자동으로 읽는 기본 위치)을 커밋하지 않는다 — 다른 사람 PC의 동작까지 바뀐다.
 4. 원인이 다른 옵션일 수도 있다 — 일반 절차는 **최소 옵션으로 기동 확인**(playwright-core `ignoreDefaultArgs: true` + `--headless --remote-debugging-pipe --no-first-run --user-data-dir=<임시>`) → **기본 옵션을 하나씩 더해 실패를 일으키는 옵션을 특정**.
 - `--disable-extensions` 제외는 **증상이 있을 때만** 쓴다 — 정책이 없는 PC에서 기본으로 빼면 사용자 확장이 자동화 브라우저에 끼어든다. 정책을 바꾸거나 우회하라고 안내하지 않는다(회사 보안 정책).
+
+## 6. 브라우저가 아닌 화면 — 실행 중인 Flutter 앱
+브라우저 도구로는 Flutter 데스크톱·모바일 앱 창이 보이지 않는다. Marionette가 연결돼 있으면(`mcp__marionette__*` 도구 또는 `marionette` CLI) 그것으로 보고, §0~§3은 그대로 적용한다 — 텍스트 채널은 `get_interactive_elements`·`get_logs`, 보이는 모습은 `take_screenshots`다.
+- 없으면 화면은 확인하지 못했다고 밝힌다(설치는 03 §14 — 작업 중에 임의로 깔지 않는다). OS 화면 캡처·좌표 클릭으로 대신하지 않는다 — 원격 데스크톱·DPI 배율에서 틀린 화면이 찍힌다(실측).
+- **연결**: 앱을 디버그로 띄우고(`flutter run -d <기기>` — 점검 전용 진입점 `tool/marionette_main.dart`가 있으면 `-t`로 지정, 백그라운드 실행) 로그의 `http://127.0.0.1:<port>/<코드>/`를 `ws://127.0.0.1:<port>/<코드>/ws`로 바꿔 연결한다. **실행할 때마다 URI가 바뀐다** — 전에 쓴 값을 다시 쓰지 않는다. 릴리스 빌드·설치본에는 붙지 않는다(공식). MCP를 방금 등록한 세션에는 도구가 없다 — 새 세션에서 쓰거나 CLI를 쓴다.
+- **찾기**는 키(`ValueKey<String>`)·Semantics identifier·보이는 문구 순으로 하고 좌표는 마지막이다. 요소 목록에 없다고 "없다"로 판정하지 말고 스크린샷으로 한 단 올린다(§2) — 커스텀 위젯은 앱에 `MarionetteConfiguration` 설정이 있어야 잡힌다(공식).
+- **실측 한계**(0.7.0, 2026-11-09): 화면이 바뀐 직후 캡처가 한 프레임 늦을 수 있다 — 조작 뒤 한 번 더 찍어 판정한다 · 숨긴 창(트레이 최소화)은 직전 화면이 찍힌다 · `press_key`는 영숫자·enter·tab·escape·방향키까지 확인됐고 기호 단축키(`,` `/`)는 보내지 못했다 — 사용자에게 눌러 달라고 요청한다 · OS 대화상자(파일 열기·저장, 공유, 생체 인증)는 앱 밖이라 조작하지 못한다 · 다크 모드·글자 배율(`set_device_config`)은 앱 루트를 `MarionetteDeviceConfig`로 감싸야 한다(공식).

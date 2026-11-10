@@ -22,7 +22,7 @@ allowed-tools: Bash(git status *) Bash(git log *) Bash(git diff *) Bash(git rev-
    PROJECT.md 의 실행 명령으로 띄우거나 사용자에게 요청한다.
 4. **도구** — 웹 케이스는 브라우저 도구(Playwright CLI·Desktop 내장 브라우저·Claude in Chrome) 중
    하나가 세션에서 쓸 수 있어야 한다. 하나도 없으면 웹 케이스는 "환경 문제(C)" 로 전부 제외하고
-   알린다. 앱 케이스는 캡처·UI 덤프 수단(adb / xcrun simctl)을 확인한다.
+   알린다. 앱 케이스는 캡처·UI 덤프 수단(adb / xcrun simctl, Flutter 디버그 실행이면 세션에 연결된 Marionette)을 확인한다.
 
 ## 범위
 

@@ -329,7 +329,7 @@ footer{max-width:1120px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
     whatever recommended selected. Toggle several on and off.
   </p>
   <p>The real install screen shows <b>at most four choices per question</b>, so when there is more to pick from &mdash; bundles, for instance &mdash; the question is split into several. Nothing gets squeezed into one box or dropped for lack of room.</p>
-  <p>In a real install, bundles that match what was detected come <b>already ticked</b> &mdash; design for a frontend stack, stronger verification when tests or CI exist, feature documentation when a feature-spec folder exists. Answer that this is a company repository and the company bundle applies automatically. Unattended automation and answer style cannot be detected, so you pick them only when you want them.</p>
+  <p>In a real install, bundles that match what was detected come <b>already ticked</b> &mdash; design for a frontend stack, stronger verification when tests or CI exist, feature documentation when a feature-spec folder exists. Answer that this is a company repository and the company bundle applies automatically. Unattended automation and answer style cannot be detected, so you pick them only when you want them. <b>App screen verification</b> appears only for a Flutter app project, and it is marked as recommended but <b>never ticked in advance</b> &mdash; it adds a dependency to the app&rsquo;s <code class="i">pubspec.yaml</code>, so the choice is left to you. If the project is not Flutter, the bundle does not appear.</p>
   <div class="sim">
     <div class="q">
       <p class="qt"><b>Q.</b> Choose purpose bundles (zero or more)</p>
@@ -461,7 +461,7 @@ footer{max-width:1120px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
   </details>
 
   <details class="acc">
-    <summary><span class="id">03</span>Add-ons &mdash; status line, design skills, MCP, browser, feature docs, refactor, Korean UI guide, PC check-up, policy notes, session board, feature change log <span class="badge b-off">all optional</span></summary>
+    <summary><span class="id">03</span>Add-ons &mdash; status line, design skills, MCP, browser, feature docs, refactor, Korean UI guide, PC check-up, policy notes, session board, feature change log, Flutter app screen verification <span class="badge b-off">all optional</span></summary>
     <div class="acc-b">
       <ul>
         <li><b>claude-hud</b> &mdash; a <b>status line</b> under the input box showing context and plan usage. Practically required on the thrift profile. Needs <b>Node.js 18 or later</b>. Pick it and you also choose how to set up what it shows (walk through it interactively, take the author&rsquo;s recommended layout, or leave the defaults), and whether to add a <b>timer refresh</b> so countdowns keep moving between messages &mdash; without it, the line redraws only on events. The timer costs a redraw per open window, and on Windows Git Bash short intervals can throw errors, so there leave it out or use 30 seconds or more.</li>
@@ -476,9 +476,10 @@ footer{max-width:1120px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
         <li><b>Policy notes</b> &mdash; the moment Claude spots a <b>product rule</b> while developing (when a status may change, who can see or do what, how amounts, quantities or deadlines are calculated &mdash; things a name alone does not tell you), it writes it into <code class="i">.claude/rules/policies/</code>, and whenever it touches that code or gets related work it checks those rules first, <b>without being told</b>. Guesses from the code and confirmed rules are marked apart. It is a rule file for Claude, not a document for people. <b>It starts unchecked in every mode</b> &mdash; its instruction loads on every turn and it writes into files that get committed, so no mode turns it on for you &mdash; and it is not for documentation-only repositories. The rules are facts about that project, so it installs <b>into this project only</b>.</li>
         <li><b>session-board</b> &mdash; when you run several Claude sessions in the same folder, it tells Claude the <b>other sessions&rsquo; titles (or, if untitled, the start of the first prompt), branches and edited files</b>, and warns once before editing a file another session just changed (it never blocks). With no other session running it adds nothing to the conversation. Needs <b>Node.js 18 or later</b> &mdash; if Node is missing, no hooks are attached (you are asked whether to remove any already there) and it is noted as waiting until you install Node and re-apply from a new terminal. Sessions are per machine, so it installs <b>machine-wide</b>. It hooks into every session, so it starts unchecked. You choose whether to install it as a <code class="i">dandi</code> plugin or as a copied file; if both are found, everything would run twice, so you are asked to keep one.</li>
         <li><b>Feature change log</b> &mdash; from the moment it is installed, whenever a feature people use (a screen, API, command or setting) is <b>added, changed or removed</b>, Claude writes <b>one line</b> into <code class="i">.claude/rules/feature-log/&lt;area&gt;.md</code> in the same turn &mdash; the file path and the date, plus the reason for a removal. When related work comes in, it checks those lines first, <b>without being told</b>, so a later change does not miss how a feature was defined or quietly bring back one that was removed. It is an index for finding things, not a spec: the details stay in the code and the git history. Refactors and bug fixes that leave a feature as it was are not logged, and nothing is written retroactively for existing features &mdash; that is the job of the feature-doc set, and if that set is already in use you are told the two overlap. Like policy notes, <b>it starts unchecked in every mode</b>, is not for documentation-only repositories, and installs <b>into this project only</b>.</li>
+        <li><b>Flutter app screen verification</b> &mdash; lets Claude check the screens of a <b>Flutter app</b> (desktop, mobile or web) rather than a browser page. It attaches to the app running in debug mode, reads the on-screen elements as text, taps and types to try things, and captures the screen the app drew (an open-source tool called Marionette). It does not attach to release builds and cannot operate screens outside the app (a file picker, for example). It appears <b>only in Flutter projects</b> and starts unchecked &mdash; it adds a dependency to the app&rsquo;s <code class="i">pubspec.yaml</code> and creates an entry-point file, so no mode turns it on for you. Pick it and three questions follow: <b>how to connect</b> (an MCP server by default / the command-line tool optionally) &middot; <b>app-side setup</b> (a separate check-only entry point that leaves your production code alone, by default / the official way, code in <code class="i">lib/main.dart</code> that switches on only in debug) &middot; <b>where to register the MCP server</b> (just me in this project by default / shared with the team). The MCP server is usable from the session after you register it. The browser-check rule skill comes with it.</li>
       </ul>
       <p>Choosing a skill brings two more questions &mdash; <b>scope</b> (your whole machine vs. this project only) and
-      <b>invocation</b> (Claude decides vs. only when you type <code class="i">/command</code>). Policy notes and the feature change log (this project only) and session-board (whole machine) have a fixed place, so their scope is announced, not asked.
+      <b>invocation</b> (Claude decides vs. only when you type <code class="i">/command</code>). Policy notes and the feature change log (this project only) and session-board (whole machine) have a fixed place, so their scope is announced, not asked. For Flutter app screen verification the MCP server is registered either just for you in this project or shared with the team (there is no whole-machine option).
       If the feature-doc set, refactor, kr-ui-guide, browser-check or pc-clean is already turned on as a <code class="i">dandi</code> plugin, it also asks whether to <b>keep the plugin</b> (no copy) or <b>replace it</b> with the copy &mdash; never both.</p>
       <p>Pick <b>frontend-design</b> or <b>kr-ui-guide</b> and one more question follows &mdash; a <b>font licence policy</b>, written into the <code class="i">CLAUDE.md</code> of the scope you installed into.
       <b>Free fonts only</b> (the default) turns down any font that is not free to use and offers a free alternative instead; <b>tell me the terms first</b> explains the conditions and waits for your call; <b>skip it</b> writes no policy at all.
@@ -488,12 +489,12 @@ footer{max-width:1120px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
         Both write under <code class="i">.claude/</code>, which Claude Code treats as a protected folder. In the default mode and the accept-edits mode each write asks for your approval; in a non-interactive <code class="i">-p</code> run outside auto mode or <code class="i">dontAsk</code> mode it is refused; an <code class="i">allow</code> rule does not lift that. Auto mode and <code class="i">bypassPermissions</code> let it through. The install tells you this when you pick either item.
       </div></div>
       <div class="coach warn" style="margin-top:8px"><span class="who">🔴</span><div>
-        <b>At work</b> MCP can send your conversation outside, and a connected browser can reach your logged-in sessions.
+        <b>At work</b> MCP can send your conversation outside, and a connected browser can reach your logged-in sessions. Flutter app screen verification adds an outside package to the app&rsquo;s dependencies and registers an MCP server.
         Connect only servers your organization allows, and narrow the extension&rsquo;s site permissions to localhost.
       </div></div>
       <div class="coach tip" style="margin-top:8px"><span class="who">💡</span><div>
         <b>Not sure whether this counts as a company repository?</b>
-        Say you don&rsquo;t know. For MCP servers and browser verification, &ldquo;don&rsquo;t know&rdquo; is treated as a company repository: that item is held back until it is approved, the rest still installs, and the install record notes why. Once approval comes, the next re-run asks about it again.
+        Say you don&rsquo;t know. For MCP servers, browser verification and Flutter app screen verification, &ldquo;don&rsquo;t know&rdquo; is treated as a company repository: that item is held back until it is approved, the rest still installs, and the install record notes why. Once approval comes, the next re-run asks about it again.
       </div></div>
     </div>
   </details>
@@ -649,7 +650,7 @@ footer{max-width:1120px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
 </div>
 
 <footer>
-  Dandi &middot; Install options course &middot; 2026-11-03<br>
+  Dandi &middot; Install options course &middot; 2026-11-10<br>
   The source of truth for each item is its own document (01&ndash;06). This page exists for people to learn from; it does not change the install procedure. Progress is stored only in this browser&rsquo;s localStorage.<br>
   저장소: github.com/EleninJayTech/claude ·
   <a href="../index.html">Guide</a> &middot; <a href="intro.html">Intro</a> &middot; <a href="demo.html">Walkthrough</a> &middot; <a href="options.html">Dictionary</a> &middot; <a href="skills.html">Skill catalog</a><br>
@@ -699,6 +700,7 @@ var BUNDLES = {
   auto:{name:'Unattended automation', desc:'only when you ask', docs:{'06':'cloud routines \u2014 GitHub repositories only (pairing with 04 CI advised)'}},
   style:{name:'Answer style', desc:'only when you ask', docs:{'05':'output styles'}},
   featdoc:{name:'Feature documentation', desc:'code projects with real screens', docs:{'03':'feature-doc skill set (6) — spec per feature, tests (commit guard asked separately)'}},
+  appcheck:{name:'App screen verification', desc:'Flutter app projects only', docs:{'03':'Flutter app screen verification \u2014 Claude reads, operates and captures the app running in debug mode (how to connect is asked separately)'}},
   company:{name:'Company', desc:'a safeguard modifier', docs:{}}
 };
 var DOCNAMES = {'01':'01 base setup','02':'02 model split','03':'03 add-ons','04':'04 verification','05':'05 output styles','06':'06 routines'};
@@ -993,7 +995,7 @@ function drawFinal(){
   $('finalPlan').innerHTML=h;
 
   /* 기록 줄의 모드·번들 값은 산출물 언어와 무관하게 00 문서의 표기 그대로 */
-  var RECNAMES={minimal:'최소',rec:'권장',full:'전체',custom:'사용자',design:'디자인',verify:'검증 강화',auto:'무인 자동화',style:'응답 스타일',featdoc:'기능 문서화'};
+  var RECNAMES={minimal:'최소',rec:'권장',full:'전체',custom:'사용자',design:'디자인',verify:'검증 강화',auto:'무인 자동화',style:'응답 스타일',featdoc:'기능 문서화',appcheck:'앱 화면 검증'};
   var modeLabel=RECNAMES[F.mode] + F.bundles.filter(function(k){return k!=='company';}).map(function(k){return '+'+RECNAMES[k];}).join('')
     + (F.bundles.indexOf('company')>=0?'+회사':'');
   var chosen = Object.keys(docs).sort();

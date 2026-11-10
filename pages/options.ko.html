@@ -227,7 +227,7 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
     최소·권장·전체 모드를 고르면 문서 안의 세부 항목은 <b>모드가 정한 기본값으로 자동 확정</b>됩니다 — 단 그 문서에 <b>모드별 기본값이 적혀 있을 때만</b>입니다. 기본값이 없는 문서(02 모델 분담·05 출력 스타일)는 자동으로 정하지 않고 물어봅니다.
     그리고 <b>기본으로 꺼져 있는 항목</b>은 어떤 모드에서도 <b>설치를 시작하기 전에 한 번에 묶어</b> 물어봅니다 — 켜 주지도 감추지도 않습니다. 고르지 않은 항목은 적용 기록에 남아, 다음에 다시 돌릴 때 추가할지 물어봅니다.
     즉 아래 §3~§8은 “직접 고르고 싶을 때 읽는 부분”이자, “자동으로 뭐가 켜지는지 알고 싶을 때 읽는 부분”입니다.
-    다만 <b>안전 질문</b>(이미 있는 걸 덮어쓸까요? 회사 정책은 확인했나요?)과 <b>어디에 둘지·무엇으로 할지 고르는 질문</b>(훅의 스코프·강도, 스타일 파일 위치와 켤 위치, 로스터·계획 명령의 배치, 스킬·MCP 스코프, 폰트 라이선스 정책, 브라우저 경로, session-board 설치 방식)은 어떤 모드에서도 생략되지 않습니다 — 잘못 고르면 팀 전원에게 커밋되거나 설치해도 안 켜지기 때문입니다.
+    다만 <b>안전 질문</b>(이미 있는 걸 덮어쓸까요? 회사 정책은 확인했나요?)과 <b>어디에 둘지·무엇으로 할지 고르는 질문</b>(훅의 스코프·강도, 스타일 파일 위치와 켤 위치, 로스터·계획 명령의 배치, 스킬·MCP 스코프, 폰트 라이선스 정책, 브라우저 경로, Flutter 앱 화면 검증의 연결 수단·앱 측 준비, session-board 설치 방식)은 어떤 모드에서도 생략되지 않습니다 — 잘못 고르면 팀 전원에게 커밋되거나 설치해도 안 켜지기 때문입니다.
   </div>
 </section>
 
@@ -341,6 +341,7 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
     <tr><td><b>회사</b></td><td>회사 보안 규칙을 한 번 더 확인하는 안전장치(설치물은 없음)</td><td>회사 저장소에 설치한다</td><td>개인 프로젝트 기준으로 진행합니다</td></tr>
     <tr><td><b>응답 스타일</b></td><td>Claude의 말투·답변 형식을 바꾸기</td><td>“더 짧게”, “설명을 곁들여서” 같은 취향이 있다</td><td>기본 말투를 그대로 씁니다</td></tr>
     <tr><td><b>기능 문서화</b></td><td>기능을 문서로 정리하고, 코드가 바뀌면 문서도 맞추게 하는 도우미</td><td>기능 명세 문서를 관리해야 한다</td><td>문서는 사람이 따로 관리합니다</td></tr>
+    <tr><td><b>앱 화면 검증</b></td><td>실행 중인 Flutter 앱을 Claude가 직접 읽고 눌러 보고 캡처하는 연결</td><td>Flutter 앱(데스크톱·모바일)을 만든다</td><td>앱 화면 확인은 사람이 직접 합니다</td></tr>
   </table>
   </div>
 
@@ -357,9 +358,10 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
     <tr><td><b>디자인</b><br><span style="font-size:12.5px;color:var(--ink-soft)">웹 퍼블리싱</span></td><td>03의 <b>svg-design</b>(SVG 시각효과 규칙) · <b>frontend-design</b>(AI 티 안 나는 UI) · <b>브라우저 검증</b>(만든 화면을 Claude가 직접 열어 확인) · <b>kr-ui-guide</b>(산출물 언어가 한국어일 때만)</td><td>프론트엔드 스택이 감지되면 기본 체크</td></tr>
     <tr><td><b>검증 강화</b></td><td>04 전부 — 훅 품질 게이트 + <code class="i">gh</code>/<code class="i">glab</code> CLI + CI 통합</td><td>테스트·CI 설정이 감지되면 기본 체크. 최소 모드에 얹으면 04의 세 항목을 하나씩 물어봅니다</td></tr>
     <tr><td><b>무인 자동화</b></td><td>06 클라우드 루틴 (+04 CI 병행 권장) — <b>GitHub 저장소만</b> 가능</td><td>감지 불가 — <b>직접 요청할 때만</b>. GitHub가 아닌 저장소면 추천하지 않음</td></tr>
-    <tr><td><b>회사</b></td><td>새로 설치되는 건 없음. <b>안전장치를 조이는 수정자</b>입니다 — CI는 조직 정책 확인 필수, MCP는 허용된 서버만, 브라우저 검증은 사이트 권한 최소화, 루틴은 조직 승인 필수</td><td>“회사 저장소예요”라고 답하면 자동 적용</td></tr>
+    <tr><td><b>회사</b></td><td>새로 설치되는 건 없음. <b>안전장치를 조이는 수정자</b>입니다 — CI는 조직 정책 확인 필수, MCP는 허용된 서버만(Flutter 앱 화면 검증의 MCP 등록 포함), 브라우저 검증은 사이트 권한 최소화, 루틴은 조직 승인 필수</td><td>“회사 저장소예요”라고 답하면 자동 적용</td></tr>
     <tr><td><b>응답 스타일</b></td><td>05 출력 스타일</td><td>감지 불가 — 직접 요청할 때만</td></tr>
     <tr><td><b>기능 문서화</b></td><td>03의 <b>기능 문서 스킬 세트</b> — 기능마다 명세를 쓰고, 거기 적힌 테스트를 돌리고, 문서를 안 고친 커밋을 막는 6종 (+04 훅 게이트 병행 권장)</td><td>기존 <code class="i">docs/features/</code>가 감지되면 기본 체크. <b>코드 없는 저장소는 제외</b></td></tr>
+    <tr><td><b>앱 화면 검증</b><br><span style="font-size:12.5px;color:var(--ink-soft)">Flutter</span></td><td>03의 <b>Flutter 앱 화면 검증</b>(디버그로 실행 중인 앱을 읽고 조작하고 캡처)</td><td>Flutter 프로젝트가 감지되면 <b>추천으로 표시만 하고 미리 체크하지 않음</b>(앱에 패키지를 더하는 항목이라 직접 고름). Flutter가 아니면 이 번들은 나오지 않음</td></tr>
   </table>
   </div>
 
@@ -828,6 +830,23 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
     </dl>
   </div>
 
+  <div class="opt">
+    <div class="opt-head"><span class="id">§14</span><span class="name">Flutter 앱 화면 검증</span><span class="badge b-off">기본 해제 · Flutter 프로젝트만</span></div>
+    <p class="lead"><b>디버그 모드로 실행 중인 Flutter 앱</b>(데스크톱·모바일·웹)에 Claude가 붙어서 화면의 요소를 읽고, 누르고·입력하고·스크롤하고, <b>앱이 직접 그린 화면</b>을 캡처합니다. §5가 브라우저 화면이라면 이 항목은 <b>브라우저가 아닌 Flutter 화면</b>입니다. 도구는 LeanCode의 Marionette(Apache-2.0)입니다.</p>
+    <dl>
+      <dt>대상</dt><dd><code class="i">pubspec.yaml</code>에 Flutter SDK 의존이 있는 프로젝트에서만 목록에 나옵니다. 아니면 목록에서 빠지고 “해당 없음”으로 기록됩니다. <code>flutter</code>·<code>dart</code> 명령이 이 PC에서 돌아야 합니다</dd>
+      <dt>왜 기본 해제인가</dt><dd>앱의 <code class="i">pubspec.yaml</code>에 패키지를 더하는 항목이라 직접 고릅니다. Flutter 프로젝트면 ‘앱 화면 검증’ 번들이 추천으로 표시되지만 <b>미리 체크되지는 않습니다</b></dd>
+      <dt>연결 수단(여러 개 선택)</dt><dd><b>MCP 서버(기본 체크)</b> — <b>생기는 것</b>: Claude가 대화 중에 앱을 읽고 조작하는 도구. <b>방금 등록한 세션에는 도구가 생기지 않아</b> 다음 세션부터 씁니다. <b>안 고르면</b>: 아래 CLI로만 조작합니다 / <b>CLI(기본 해제)</b> — <b>생기는 것</b>: 같은 조작을 터미널 명령(<code>marionette</code>)으로 하는 도구. MCP를 붙일 수 없는 환경이거나, 등록한 그 세션에서 바로 써야 할 때 씁니다. <b>안 고르면</b>: MCP로만 조작합니다</dd>
+      <dt>앱 측 준비(하나 선택)</dt><dd><b>별도 진입점(기본)</b> — 패키지를 개발용 의존성으로 넣고 점검 전용 진입 파일(<code class="i">tool/marionette_main.dart</code>)을 새로 만듭니다. <b>이럴 때</b>: 운영용 <code class="i">lib/main.dart</code>를 손대고 싶지 않을 때. 점검할 땐 <code>flutter run -d &lt;기기&gt; -t tool/marionette_main.dart</code>로 띄웁니다 / <b>공식 기본형</b> — <code class="i">lib/main.dart</code> 안에 디버그 모드일 때만 켜지는 코드를 넣습니다. <b>이럴 때</b>: 팀이 공식 안내 방식을 따르고 싶을 때. 이미 이 방식으로 넣어 두었으면 그대로 두고 빠진 것만 채웁니다</dd>
+      <dt>MCP 스코프(MCP를 고르면)</dt><dd><b>이 repo에서 나만(기본)</b> — <b>이럴 때</b>: 나 혼자 쓸 때. 커밋되는 파일이 없습니다 / <b>팀 공유</b> — <code class="i">.mcp.json</code>을 커밋하고 서버도 개발용 의존성으로 둡니다. <b>이럴 때</b>: 팀원이 따로 설치하지 않고 같은 버전을 쓰게 하고 싶을 때. 내 PC 모든 프로젝트용(user)은 선택지에 없습니다 — 앱에 패키지가 든 프로젝트에서만 쓸모가 있기 때문입니다</dd>
+      <dt>못 하는 것</dt><dd>릴리스 빌드에는 붙지 않습니다. 앱 밖 화면(OS 파일 대화상자·공유 창·생체 인증)은 조작하지 못합니다. 사람 손을 흉내 내는 탐색용 확인이라 회귀 테스트 도구를 대신하지 않습니다</dd>
+      <dt>함께 깔리는 확인 규칙</dt><dd>§5의 <code class="i">browser-check</code> 스킬이 함께 깔립니다(§5를 고르지 않았어도. 이미 있으면 그대로 씁니다) — Flutter 앱에 연결하는 순서와 알려진 한계도 이 스킬이 갖습니다. Marionette가 따로 내놓는 공식 스킬은 깔지 않고 안내만 합니다</dd>
+      <dt>커밋할 것</dt><dd>별도 진입점이면 <code class="i">pubspec.yaml</code>·<code class="i">pubspec.lock</code>·<code class="i">tool/marionette_main.dart</code>, 팀 공유면 <code class="i">.mcp.json</code>까지 커밋 대상입니다</dd>
+      <dt>회사 주의 🔴</dt><dd>서드파티 패키지를 앱 의존성에 더하고 MCP 서버를 등록하는 항목입니다. §4와 같은 승인 질문을 <b>어느 모드에서든</b> 묻고, 승인이 없으면 이 항목만 뺍니다. 서버는 이 PC 안에서 돕니다. 앱에 붙는 연결 주소를 가진 쪽은 앱을 조작할 수 있으므로 그 주소는 기록하거나 커밋하지 않습니다</dd>
+      <dt>지울 때</dt><dd><code>claude mcp remove marionette</code>(팀 공유면 <code class="i">.mcp.json</code>에서 항목을 지우고 커밋) · 전역 도구는 <code>dart pub global deactivate marionette_mcp</code>(CLI는 <code>marionette_cli</code>) · 앱은 <code>flutter pub remove marionette_flutter</code> 뒤 진입 파일을 지우거나 <code class="i">lib/main.dart</code>를 원래대로 되돌립니다 · <code class="i">browser-check</code>는 §5도 쓰지 않을 때만 지웁니다</dd>
+    </dl>
+  </div>
+
   <h3>스킬을 고르면 따라오는 질문</h3>
   <div class="tbl">
   <table>
@@ -1118,7 +1137,7 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
 <a class="totop" href="#toc">↑ 목차</a>
 
 <footer>
-  단디 · 설치 옵션 사전 · 00_통합-설치.md 기준 · 2026-11-07<br>
+  단디 · 설치 옵션 사전 · 00_통합-설치.md 기준 · 2026-11-10<br>
   각 항목의 정본은 해당 하위 문서(01~06)입니다. 이 페이지는 사람이 읽고 판단하기 위한 안내이며, 설치 절차 자체를 바꾸지 않습니다.<br>
   저장소: github.com/EleninJayTech/claude ·
   <a href="../index.ko.html">사용법</a> · <a href="intro.ko.html">소개 영상</a> · <a href="demo.ko.html">설치 시연</a> · <a href="learn.ko.html">학습 코스</a> · <a href="skills.ko.html">스킬 카탈로그</a><br>

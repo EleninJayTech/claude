@@ -229,7 +229,7 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
     Choose minimal, recommended or full and the per-document items are <b>settled automatically at that mode&rsquo;s defaults</b> &mdash; but only when the document <b>actually defines per-mode defaults</b>. Documents that do not (02 model split, 05 output style) are not settled for you; you are asked.
     Items that are <b>off by default</b> are always put in front of you, whatever the mode, <b>bundled into one round of questions before installing starts</b> &mdash; never switched on for you, never hidden. Whatever you leave unticked is noted in the install record, so the next run asks whether to add it.
     So &sect;3&ndash;&sect;8 below are what you read either when you want to choose yourself, or when you want to know what gets switched on for you.
-    The <b>safety questions</b> (overwrite what is already here? have you checked company policy?) and the <b>where-does-it-go and which-one questions</b> (hook scope and strictness, style file location and where to switch it on, where the roster and planning command live, skill and MCP scope, the font licence policy, the browser route, how session-board is installed) are never skipped, in any mode &mdash; get them wrong and something is committed to the whole team, or installed but never active.
+    The <b>safety questions</b> (overwrite what is already here? have you checked company policy?) and the <b>where-does-it-go and which-one questions</b> (hook scope and strictness, style file location and where to switch it on, where the roster and planning command live, skill and MCP scope, the font licence policy, the browser route, how Flutter app screen checks connect and how the app is prepared, how session-board is installed) are never skipped, in any mode &mdash; get them wrong and something is committed to the whole team, or installed but never active.
   </div>
 </section>
 
@@ -343,6 +343,7 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
     <tr><td><b>Company</b></td><td>A safety catch that double-checks company rules (installs nothing)</td><td>You are installing into a company repository</td><td>Things proceed as for a personal project</td></tr>
     <tr><td><b>Answer style</b></td><td>Changes Claude&rsquo;s tone and answer format</td><td>You have a preference like &ldquo;shorter&rdquo; or &ldquo;with explanations&rdquo;</td><td>Claude keeps its default tone</td></tr>
     <tr><td><b>Feature documentation</b></td><td>A helper that writes features up as documents and keeps them in step when the code changes</td><td>You need to maintain feature specs</td><td>People maintain the docs separately</td></tr>
+    <tr><td><b>App screen checks</b></td><td>A connection that lets Claude read, tap and capture a running Flutter app itself</td><td>You build a Flutter app (desktop or mobile)</td><td>People check the app screens themselves</td></tr>
   </table>
   </div>
 
@@ -359,9 +360,10 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
     <tr><td><b>Design</b><br><span style="font-size:12.5px;color:var(--ink-soft)">web publishing</span></td><td>From 03: <b>svg-design</b> (SVG visual-effect recipes) &middot; <b>frontend-design</b> (UI that doesn&rsquo;t look AI-made) &middot; <b>browser verification</b> (Claude opens the screens it built and checks them) &middot; <b>kr-ui-guide</b> (only when the output language is Korean)</td><td>Pre-checked when a frontend stack is detected</td></tr>
     <tr><td><b>Stronger verification</b></td><td>All of 04 &mdash; hook quality gates + <code class="i">gh</code>/<code class="i">glab</code> CLI + CI integration</td><td>Pre-checked when tests or CI config are detected. Added on top of minimal mode, each of 04&rsquo;s three items is asked one by one</td></tr>
     <tr><td><b>Unattended automation</b></td><td>06 cloud routines (pairing with 04 CI is recommended) &mdash; <b>GitHub repositories only</b></td><td>Not detectable &mdash; <b>only when you ask for it</b>. Not suggested for a repository hosted elsewhere</td></tr>
-    <tr><td><b>Company</b></td><td>Installs nothing new. It is <b>a modifier that tightens the safeguards</b> &mdash; CI requires an org-policy check, MCP is limited to approved servers, browser verification keeps site permissions minimal, routines require org approval</td><td>Applied automatically once you say it is a company repository</td></tr>
+    <tr><td><b>Company</b></td><td>Installs nothing new. It is <b>a modifier that tightens the safeguards</b> &mdash; CI requires an org-policy check, MCP is limited to approved servers (including the MCP registration in Flutter app screen checks), browser verification keeps site permissions minimal, routines require org approval</td><td>Applied automatically once you say it is a company repository</td></tr>
     <tr><td><b>Answer style</b></td><td>05 output styles</td><td>Not detectable &mdash; only when you ask for it</td></tr>
     <tr><td><b>Feature documentation</b></td><td>From 03: the <b>feature-doc skill set</b> &mdash; six skills that write a spec per feature, run the tests written in it, and block commits that change code without updating the doc (pairing with 04&rsquo;s hook gate is recommended)</td><td>Pre-checked when an existing <code class="i">docs/features/</code> is detected. <b>Skipped for non-code repositories</b></td></tr>
+    <tr><td><b>App screen checks</b><br><span style="font-size:12.5px;color:var(--ink-soft)">Flutter</span></td><td>From 03: <b>Flutter app screen checks</b> (read, drive and capture an app running in debug mode)</td><td>When a Flutter project is detected it is <b>shown as a suggestion but not pre-checked</b> (it adds a package to your app, so you pick it yourself). Not offered at all outside Flutter</td></tr>
   </table>
   </div>
 
@@ -830,6 +832,23 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
     </dl>
   </div>
 
+  <div class="opt">
+    <div class="opt-head"><span class="id">&sect;14</span><span class="name">Flutter app screen checks</span><span class="badge b-off">off by default &middot; Flutter projects only</span></div>
+    <p class="lead">Claude attaches to <b>a Flutter app running in debug mode</b> (desktop, mobile or web), reads the elements on screen, taps, types and scrolls, and captures <b>the screen the app itself drew</b>. Where &sect;5 covers browser screens, this item covers <b>Flutter screens outside a browser</b>. The tool is LeanCode&rsquo;s Marionette (Apache-2.0).</p>
+    <dl>
+      <dt>Where it applies</dt><dd>It appears in the list only for a project whose <code class="i">pubspec.yaml</code> depends on the Flutter SDK. Otherwise it is left out and recorded as &ldquo;not applicable&rdquo;. The <code>flutter</code> and <code>dart</code> commands need to run on this PC</dd>
+      <dt>Why it is off by default</dt><dd>It adds a package to your app&rsquo;s <code class="i">pubspec.yaml</code>, so you pick it yourself. In a Flutter project the &ldquo;App screen checks&rdquo; bundle is shown as a suggestion but <b>is not pre-checked</b></dd>
+      <dt>How Claude connects (pick any)</dt><dd><b>MCP server (pre-checked)</b> &mdash; <b>You get</b>: tools Claude uses mid-conversation to read and drive the app. <b>A session that has just registered it does not get the tools</b>, so you use it from the next session. <b>If you skip it</b>: the app is driven only through the CLI below / <b>CLI (not pre-checked)</b> &mdash; <b>You get</b>: the same actions as terminal commands (<code>marionette</code>). For setups where MCP cannot be attached, or when you need it in the very session that registered it. <b>If you skip it</b>: the app is driven only through MCP</dd>
+      <dt>Preparing the app (pick one)</dt><dd><b>Separate entry point (default)</b> &mdash; the package goes in as a dev dependency and a check-only entry file (<code class="i">tool/marionette_main.dart</code>) is created. <b>When</b>: you do not want to touch the production <code class="i">lib/main.dart</code>. For a check, launch with <code>flutter run -d &lt;device&gt; -t tool/marionette_main.dart</code> / <b>Official default</b> &mdash; code that switches on only in debug mode goes inside <code class="i">lib/main.dart</code>. <b>When</b>: your team wants to follow the official instructions. If it is already set up that way, it is left as is and only the missing pieces are filled in</dd>
+      <dt>MCP scope (if you pick MCP)</dt><dd><b>Only me, in this repo (default)</b> &mdash; <b>When</b>: you use it alone. Nothing is committed / <b>Shared with the team</b> &mdash; <code class="i">.mcp.json</code> is committed and the server is kept as a dev dependency too. <b>When</b>: you want teammates on the same version without installing anything themselves. &ldquo;Every project on this PC&rdquo; (user) is not offered &mdash; it is only useful in a project whose app includes the package</dd>
+      <dt>What it cannot do</dt><dd>It does not attach to release builds. It cannot drive screens outside the app (OS file dialogs, share sheets, biometric prompts). It mimics a person for exploratory checks and does not replace a regression-testing tool</dd>
+      <dt>Checking rules installed alongside</dt><dd>&sect;5&rsquo;s <code class="i">browser-check</code> skill is installed with it (even if you did not pick &sect;5; if it is already there, that copy is used) &mdash; it also holds the order for connecting to a Flutter app and the known limits. The official skills Marionette ships separately are not installed; you are only told about them</dd>
+      <dt>What to commit</dt><dd>With the separate entry point, <code class="i">pubspec.yaml</code>, <code class="i">pubspec.lock</code> and <code class="i">tool/marionette_main.dart</code>; when shared with the team, <code class="i">.mcp.json</code> as well</dd>
+      <dt>At work &#128308;</dt><dd>This item adds a third-party package to your app&rsquo;s dependencies and registers an MCP server. The same approval questions as &sect;4 are asked <b>in every mode</b>, and without approval only this item is left out. The server runs on this PC. Whoever holds the address used to attach to the app can drive it, so that address is never recorded or committed</dd>
+      <dt>Removing it</dt><dd><code>claude mcp remove marionette</code> (if shared, delete the entry from <code class="i">.mcp.json</code> and commit) &middot; global tools: <code>dart pub global deactivate marionette_mcp</code> (the CLI is <code>marionette_cli</code>) &middot; the app: <code>flutter pub remove marionette_flutter</code>, then delete the entry file or put <code class="i">lib/main.dart</code> back as it was &middot; <code class="i">browser-check</code> is removed only if &sect;5 is not used either</dd>
+    </dl>
+  </div>
+
   <h3>Follow-up questions for any skill</h3>
   <div class="tbl">
   <table>
@@ -1121,7 +1140,7 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
 <a class="totop" href="#toc">&uarr; Contents</a>
 
 <footer>
-  Dandi &middot; Install options dictionary &middot; based on 00_통합-설치.md &middot; 2026-11-07<br>
+  Dandi &middot; Install options dictionary &middot; based on 00_통합-설치.md &middot; 2026-11-10<br>
   The source of truth for each item is its own document (01&ndash;06). This page exists so people can read and judge; it does not change the install procedure itself.<br>
   Repository: github.com/EleninJayTech/claude &middot;
   <a href="../index.html">Guide</a> &middot; <a href="intro.html">Intro</a> &middot; <a href="demo.html">Walkthrough</a> &middot; <a href="learn.html">Course</a> &middot; <a href="skills.html">Skill catalog</a><br>
