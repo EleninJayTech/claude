@@ -656,9 +656,9 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
     <div class="opt-head"><span class="id">§1</span><span class="name">claude-hud</span><span class="badge b-keep">user 스코프</span></div>
     <p class="lead">입력창 아래에 <b>상태 표시줄</b>을 그려주는 플러그인. 지금 컨텍스트를 얼마나 썼는지, 요금제 한도를 얼마나 소모했는지가 보입니다.</p>
     <dl>
-      <dt>설치 방법</dt><dd>세션에서 <code>/plugin marketplace add jarrodwatts/claude-hud</code> → <code>/plugin install claude-hud</code> → <code>/reload-plugins</code> → <code>/claude-hud:setup</code></dd>
-      <dt>필요한 것</dt><dd>최근 버전의 Claude Code와 Node.js 18 이상(Windows에 없으면 <code>winget install OpenJS.NodeJS.LTS</code>)</dd>
-      <dt>함께 묻는 것</dt><dd><b>표시 구성</b> — 대화형 구성(<code>/claude-hud:configure</code>에서 항목을 직접 고름) / 작성자 추천 구성(모델·effort·돌고 있는 에이전트·컨텍스트·사용량과 리셋 시각·미커밋 표시만 켜고 소음 항목은 끔 — 7일 한도는 사용량이 낮을 때도 늘 표시) / 기본값 유지. 그리고 따로 <b><code>refreshInterval</code> 넣을지</b> — 넣으면(예: 5초) 메시지 사이에도 남은 시간 카운트다운이 흐르지만, 창이 놀아도 타이머가 돌아 <b>열어 둔 창 수만큼</b> 다시 그립니다. 터미널을 여러 개 띄워 두면 빼는 편이 낫습니다(빼도 사용량 값은 갱신됩니다). Windows Git Bash에서는 짧은 간격에서 오류가 날 수 있어, 거기선 빼거나 30초 이상으로 둡니다</dd>
+      <dt>설치 방법</dt><dd>세션에서 <code>/plugin marketplace add jarrodwatts/claude-hud</code> → <code>/plugin install claude-hud</code> → <code>/reload-plugins</code> → <code>/hud</code></dd>
+      <dt>필요한 것</dt><dd>최근 버전의 Claude Code와 Node.js 22.18 이상(Windows에 없으면 <code>winget install OpenJS.NodeJS.LTS</code>)</dd>
+      <dt>함께 묻는 것</dt><dd><b>표시 구성</b> — 대화형 구성(<code>/hud</code>에서 항목을 직접 고름) / 작성자 추천 구성(모델·effort·돌고 있는 에이전트·컨텍스트·사용량과 리셋 시각·미커밋 표시만 켜고 소음 항목은 끔 — 7일 한도는 사용량이 낮을 때도 늘 표시) / 기본값 유지. 그리고 따로 <b><code>refreshInterval</code> 넣을지</b> — 넣으면(예: 5초) 메시지 사이에도 남은 시간 카운트다운이 흐르지만, 창이 놀아도 타이머가 돌아 <b>열어 둔 창 수만큼</b> 다시 그립니다. 터미널을 여러 개 띄워 두면 빼는 편이 낫습니다(빼도 사용량 값은 갱신됩니다). Windows Git Bash에서는 짧은 간격에서 오류가 날 수 있어, 거기선 빼거나 30초 이상으로 둡니다</dd>
       <dt>기본 체크</dt><dd><b>절약 프로필이거나 새 PC일 때.</b> 절약 프로필이면 사실상 필수 — 얼마나 쓰는지 안 보이면 아끼는 건 감에 불과합니다</dd>
       <dt>주의</dt><dd>이미 다른 상태 표시줄을 쓰고 있으면 교체할지 반드시 물어봅니다</dd>
     </dl>
