@@ -250,6 +250,9 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
 
     <tr><th class="grp" colspan="4" scope="colgroup">동시 세션 &middot; 03 §12</th></tr>
     <tr><td><code>/session-board</code></td><td>없음 &mdash; 훅이 알아서 알린다</td><td>같은 폴더에 세션이 둘 이상 떠 있을 때</td><td>다른 세션과 그 세션이 고친 파일 목록 &mdash; 막는 것은 없다</td></tr>
+
+    <tr><th class="grp" colspan="4" scope="colgroup">배포·운영 &middot; 03 §15</th></tr>
+    <tr><td><code>/ops-kit</code></td><td><code>init</code> | <code>runbook</code> | <code>hub</code> | <code>dashboard</code> | <code>health</code> | <code>backup</code> | <code>limits</code> | <code>sync</code> | <code>check</code> &mdash; <code>check</code>는 읽기만</td><td>혼자 운영할 프로젝트를 배포하기 전, 또는 배포 설정이 바뀌었을 때</td><td>고른 산출물만 <code>docs/status/</code>에 &mdash; 상태 파일 하나와 함께</td></tr>
   </tbody>
 </table>
 </div>
@@ -265,6 +268,7 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
   <button class="chip" data-g="design" aria-pressed="false">디자인</button>
   <button class="chip" data-g="pc" aria-pressed="false">PC</button>
   <button class="chip" data-g="board" aria-pressed="false">동시 세션</button>
+  <button class="chip" data-g="ops" aria-pressed="false">운영</button>
   <span class="count" id="count"></span>
 </div>
 
@@ -335,7 +339,7 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
       <dl>
         <dt>언제</dt><dd>이 PC나 이 프로젝트를 현재 문서 기준으로 올리고 싶을 때. 처음 까는 경우에도 같은 명령이라, 내가 어느 쪽인지 몰라도 된다. Claude나 <code>/resume</code>이 작업에 새로 필요한 항목을 추천했으면 <code>추천</code>을 붙여 부른다.</dd>
         <dt>하는 일</dt><dd>00 문서를 찾아서(같은 폴더&middot;<code>docs/</code>의 사본·로컬 클론·내가 알려 준 폴더·배포된 raw 순 &mdash; raw는 요약하지 않고 파일 그대로 프로젝트 밖 임시 폴더에 받는다) 읽고 그 절차를 그대로 돈다 &mdash; 이미 있는 것을 감지하고, 무엇을 할지 묻고, 고른 것만 설치하고, 검증하고, 적용 기록을 쓴다. 스킬 자신은 단계를 하나도 갖지 않아서 문서와 갈릴 수가 없다. <code>/dropin-apply 추천</code>으로 부르면 작업 중 추천 경로를 탄다 &mdash; 작업이 새로 필요로 하게 됐는데 아직 안 깐 항목만, 무엇을 보고 걸렸는지 한 줄씩 붙여 내놓고, 처음 공통 질문은 기록된 답으로 갈음하며, 고른 것만 깐다. 안전 질문은 그대로 묻는다. 적용 기록이 없는 폴더에서는 이 경로 대신 일반 설치를 돌고, 거기서는 최소가 기본 추천이다.</dd>
-        <dt>결과</dt><dd>문서와 일치하는 구성, 그리고 그 사실을 적은 <code>dropin-applied</code> 줄. 기능 문서·refactor·kr-ui-guide·kr-ui-styles·browser-check·pc-clean·session-board와 <code>dropin-</code> 계열처럼 이미 깔린 스킬은 <b>이름이 아니라 내용으로</b> 대조하므로, 파일 수는 그대로고 문장만 바뀐 개정도 교체된다 &mdash; <code>dropin-</code> 계열은 배포본과 다르면 기본값이 <code>재구성</code>으로 나온다. <code>/resume</code>·<code>/wrap</code>은 있는지만 본다 &mdash; 새 본문으로 갈려면 이미 깔린 글로벌 항목을 묻는 질문에서 기본값 <code>유지</code> 대신 <code>재구성</code>을 고른다. 승인한 개정이 걸린 항목은 처음부터 <code>재구성</code>이 기본으로 나온다. 거절한 추천은 기록에 남아 다시 권하지 않는다 &mdash; 나중에 깔고 싶으면 인수 없이 <code>/dropin-apply</code>를 다시 돌려 추가한다.</dd>
+        <dt>결과</dt><dd>문서와 일치하는 구성, 그리고 그 사실을 적은 <code>dropin-applied</code> 줄. 기능 문서·refactor·kr-ui-guide·kr-ui-styles·browser-check·pc-clean·session-board·ops-kit과 <code>dropin-</code> 계열처럼 이미 깔린 스킬은 <b>이름이 아니라 내용으로</b> 대조하므로, 파일 수는 그대로고 문장만 바뀐 개정도 교체된다 &mdash; <code>dropin-</code> 계열은 배포본과 다르면 기본값이 <code>재구성</code>으로 나온다. <code>/resume</code>·<code>/wrap</code>은 있는지만 본다 &mdash; 새 본문으로 갈려면 이미 깔린 글로벌 항목을 묻는 질문에서 기본값 <code>유지</code> 대신 <code>재구성</code>을 고른다. 승인한 개정이 걸린 항목은 처음부터 <code>재구성</code>이 기본으로 나온다. 거절한 추천은 기록에 남아 다시 권하지 않는다 &mdash; 나중에 깔고 싶으면 인수 없이 <code>/dropin-apply</code>를 다시 돌려 추가한다.</dd>
       </dl>
       <div class="warn soft"><b>알아 둘 것.</b> Claude에게 &ldquo;이 문서를 학습해서 적용해줘&rdquo;라고 말하는 것과 같은 일이다 &mdash; 그 문장도 그대로 동작한다. 명령이 따로 있는 이유는, 보이지 않는 문은 열리지 않기 때문이다.</div>
       <div class="tags"><span class="tag">글로벌</span><span class="tag">먼저 묻는다</span></div>
@@ -695,6 +699,31 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
   </div>
 </section>
 
+<!-- ══════════ GROUP: ops ══════════ -->
+<section class="group" data-g="ops">
+  <div class="ghead">
+    <h2 style="margin-top:0">배포·운영</h2>
+    <span class="src">문서 03 §15가 설치 &middot; 기본 해제</span>
+  </div>
+  <p class="gnote">혼자 배포하고 운영하는 프로젝트를 위한 스킬이다. 프로젝트를 먼저 살펴보고 그 프로젝트에 필요한 것만 만든다 &mdash; 서버도 DB도 없는 작은 사이트에는 대시보드를 얹지 않는다.</p>
+  <div class="cards">
+
+    <article class="skill" data-g="ops">
+      <div class="cmd"><span class="sl">/</span>ops-kit</div>
+      <div class="args">[init | runbook | hub | dashboard | health | backup | limits | sync | check] — check는 읽기만 한다 · 없으면 처음엔 <code>init</code>, 그다음부터는 <code>check</code>를 제안</div>
+      <p class="one">혼자 배포하는 프로젝트를 살펴보고, 배포·운영에 정말 필요한 문서·화면·안전장치만 만든다 &mdash; 그리고 코드가 바뀌면 함께 고친다.</p>
+      <dl>
+        <dt>언제</dt><dd>처음 배포하기 전(<code>/ops-kit init</code>), 배포 설정이 바뀐 뒤(<code>/ops-kit sync</code>), 그리고 읽기만 하는 점검이 필요할 때(<code>/ops-kit check</code>) &mdash; 지난 예정일, 확인 안 된 수치, 오래된 확인일, 깨진 링크를 본다.</dd>
+        <dt>하는 일</dt><dd>배포 명령, 호스팅 설정, 시크릿의 <em>이름</em>(값은 보지 않는다 &mdash; <code>.env</code>·키 파일은 열지 않는다), DB, 외부 서비스, 이미 있는 운영 문서를 읽는다. 그다음 만들 수 있는 산출물 7종을 진단 표 하나로 보여 준다: 배포 런북(첫 배포·재배포·롤백), 운영 런북(외부 콘솔·행정·정기 점검), 관리 허브(앱별 관리 사이트·계정 이름·확인 위치를 한 페이지에), 앱이 직접 띄우는 <code>/admin</code> 대시보드(일일 사용자·신규·D1/D7 재방문·결제·국가), 헬스체크와 장애 알림, 백업과 복구 리허설, 무료 한도·비용 감시. 항목마다 필요·불필요·판단 보류를 판정하고 근거가 된 파일과 줄을 붙인다. 앞의 넷이 보통 추천이고 뒤의 셋은 선택이다. 내가 고르기 전에는 아무 파일도 만들지 않는다. 런북의 단계마다 붙여 넣으면 도는 명령, 성공하면 보이는 문구, 실패하면 할 일, 다음 세션이 이어받을 수 있게 Claude에게 보낼 보고 한 줄이 붙는다. 시크릿은 숨김 입력으로 받아 길이를 먼저 출력한 뒤 명령줄 도구로 넘긴다 &mdash; 클립보드로 붙여 넣지 않는다.</dd>
+        <dt>결과</dt><dd>고른 산출물만 <code>docs/status/</code>에 생기고, 상태 파일 <code>docs/status/ops-kit.md</code>에 판정·확인일·다음 점검 예정·필요 없다고 본 이유가 남는다 &mdash; 그 항목은 프로젝트에 새 신호가 생겨 이유가 뒤집히지 않는 한 다시 권하지 않는다. Claude가 아티팩트를 게시할 수 있는 환경이면 런북과 허브를 비공개로 게시하고 고칠 때 같은 링크로 다시 게시한다. 아니면 로컬 HTML 파일로 둔다.</dd>
+      </dl>
+      <div class="warn soft"><b>알아 둘 것.</b> 배포·시크릿 입력·알림 채널 연결은 하지 않는다 &mdash; 그건 내가 런북을 보고 한다. 유료 모니터링 서비스를 전제하지 않는다. 한도·수수료 같은 바깥 수치는 그날 확인해 확인일을 붙이고, 확인 못 한 값엔 <code>[재확인]</code>을 붙인다. 대시보드는 닫힌 채로 나간다 &mdash; 32자 이상의 토큰 시크릿을 넣기 전까지 503으로 답한다. 앱에 코드(대시보드·헬스체크)를 쓸 수 있는 스킬이라 기본 해제로 나온다. 배포 대상(<code>wrangler.toml</code>·<code>Dockerfile</code>·<code>vercel.json</code> 같은 파일, 배포 단계가 있는 CI 워크플로, <code>deploy</code> 스크립트)이 보이면 설치 화면에 추천을 붙이지만 미리 체크하지는 않고, 문서만 있는 저장소에는 아예 내지 않는다. 스코프는 글로벌을 권하고, 산출물은 스코프와 상관없이 늘 프로젝트 안에 생긴다. 호출 방식은 자동 판단이 기본이다 &mdash; 표에서 고르기 전에는 만들지 않는 규칙을 스스로 지킨다. 내가 부를 때만 돌게 하려면 수동 호출 전용을 고른다. 복사본과 <code>dandi</code> 플러그인을 둘 다 깔면 둘 다 뜨니 하나만 남긴다.</div>
+      <div class="tags"><span class="tag">글로벌</span><span class="tag">기본 해제</span><span class="tag">승인 게이트</span><span class="tag">앱 코드 작성</span></div>
+    </article>
+
+  </div>
+</section>
+
 <p class="empty" id="empty">걸리는 스킬이 없다. 검색어를 지워 보라.</p>
 
 <h2>하루를, 스킬이 나오는 순서대로</h2>
@@ -883,13 +912,14 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
     <tr><td><code>/kr-ui-styles</code></td><td>03 §9 (설치 7)</td><td>kr-ui-guide와 같은 스코프 &middot; 또는 <code>dandi-kr-ui-guide</code> 플러그인 안</td><td>복사본: 폴더를 지우고 프로젝트 오버라이드 절의 <code>스타일 팩:</code> 줄을 지운다. 플러그인: <code>dandi-kr-ui-guide</code>에 함께 실려 있어 그 플러그인을 지우면 둘 다 지워진다.</td></tr>
     <tr><td><code>/pc-clean</code></td><td>03 §10</td><td>글로벌 &mdash; 프로젝트 스코프면 Windows 전용 스크립트가 repo에 커밋된다 &middot; 또는 <code>dandi</code> 플러그인</td><td>플러그인: <code>/plugin uninstall dandi-pc-clean@dandi</code>. 복사본: 폴더 삭제 &mdash; 프로젝트 스코프면 삭제를 커밋한다. 걷을 훅·설정·예약 작업은 없다.</td></tr>
     <tr><td><code>/session-board</code></td><td>03 §12</td><td>글로벌 &mdash; 고정이라 묻지 않는다 &middot; 또는 <code>dandi</code> 플러그인(먼저 권한다)</td><td>플러그인: <code>/plugin uninstall dandi-session-board@dandi</code> &mdash; 훅도 함께 사라진다. 복사본: <code>~/.claude/settings.json</code>의 훅 중 <code>board.mjs</code>를 부르는 묶음만 지우고 폴더를 삭제한다. <code>~/.claude/session-board/</code>는 세션 메타데이터뿐이라 지워도 잃는 것이 없다.</td></tr>
+    <tr><td><code>/ops-kit</code></td><td>03 §15</td><td>글로벌 &mdash; 프로젝트 스코프면 repo마다 한 벌씩 커밋된다 &middot; 또는 <code>dandi</code> 플러그인</td><td>플러그인: <code>/plugin uninstall dandi-ops-kit@dandi</code>. 복사본: 폴더 삭제 &mdash; 프로젝트 스코프면 삭제를 커밋한다. 걷을 훅·설정·예약 작업은 없다. 만든 것 &mdash; <code>docs/status/</code>와 승인한 <code>/admin</code>·<code>/health</code>·점검 워크플로 코드 &mdash; 은 남는다. 그 프로젝트의 코드·데이터라서, 없애려면 그 프로젝트의 git으로 되돌린다. 게시한 페이지는 claude.ai에서 직접 지운다.</td></tr>
     <tr><td><code>/plan-&lt;모델&gt;</code></td><td>02 STEP 3 ⓔ</td><td>설치 때 묻는다 &mdash; 글로벌 또는 프로젝트</td><td>폴더 삭제. 함께 만든 모델 운용표와, <code>CLAUDE.md</code>·핸드오프 규약에 적어 둔 이 명령 안내 줄도 지운다.</td></tr>
   </tbody>
 </table>
 </div>
 <p class="lead" style="margin-top:16px">전부 제거 절차가 문서에 적혀 있는데, 이건 의도한 것이다. 되돌릴 수 없는 설치는 애초에 선택지를 준 게 아니기 때문이다. 감지·설치·검증·제거 4단 전체는 각 문서에 있다. 설치할 때 나오는 질문의 뜻은 <a href="options.ko.html">옵션 사전</a>에, 처음부터 차근히 밟아 보려면 <a href="learn.ko.html">학습 코스</a>에 있다. 설치 항목 몇 개는 일부러 여기 없다: 정책 기록(03 §11)과 기능 변경 기록(03 §13)은 스킬이 아니라 규칙 파일(<code>.claude/rules/policy-recording.md</code>, <code>.claude/rules/feature-log.md</code>)을 더하는 항목이라, 부를 명령이 없어 카드도 없다.</p>
 
-<footer>단디(Dandi) &middot; 스킬 카탈로그 &middot; 2026-11-10 &middot; 01 §D-4 · 02 STEP 3 ⓔ · 03 §2 · §3 · §5 · §7 · §8 · §9 · §10 · §12 · §14가 설치하는 스킬들. 명령은 별칭 없이 적었으니, 설치할 때 별칭을 골랐다면 그것을 얹어 읽으면 된다. &middot; 글꼴: Pretendard, IBM Plex Mono — 둘 다 SIL 오픈 폰트 라이선스 1.1(상업 이용·웹 임베딩 무료)</footer>
+<footer>단디(Dandi) &middot; 스킬 카탈로그 &middot; 2026-11-11 &middot; 01 §D-4 · 02 STEP 3 ⓔ · 03 §2 · §3 · §5 · §7 · §8 · §9 · §10 · §12 · §14 · §15가 설치하는 스킬들. 명령은 별칭 없이 적었으니, 설치할 때 별칭을 골랐다면 그것을 얹어 읽으면 된다. &middot; 글꼴: Pretendard, IBM Plex Mono — 둘 다 SIL 오픈 폰트 라이선스 1.1(상업 이용·웹 임베딩 무료)</footer>
 
 </div>
 <script>

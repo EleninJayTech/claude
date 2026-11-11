@@ -250,6 +250,9 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
 
     <tr><th class="grp" colspan="4" scope="colgroup">Sessions side by side &middot; 03 §12</th></tr>
     <tr><td><code>/session-board</code></td><td>none &mdash; the hooks report on their own</td><td>More than one session is open in the same folder</td><td>A list of the other sessions and their edited files &mdash; nothing is blocked</td></tr>
+
+    <tr><th class="grp" colspan="4" scope="colgroup">Deploy and operate &middot; 03 §15</th></tr>
+    <tr><td><code>/ops-kit</code></td><td><code>init</code> | <code>runbook</code> | <code>hub</code> | <code>dashboard</code> | <code>health</code> | <code>backup</code> | <code>limits</code> | <code>sync</code> | <code>check</code> &mdash; <code>check</code> is read-only</td><td>A project you run alone is about to be deployed, or its deploy settings changed</td><td>Only the outputs you pick, under <code>docs/status/</code>, plus a status file</td></tr>
   </tbody>
 </table>
 </div>
@@ -265,6 +268,7 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
   <button class="chip" data-g="design" aria-pressed="false">Design</button>
   <button class="chip" data-g="pc" aria-pressed="false">PC</button>
   <button class="chip" data-g="board" aria-pressed="false">Parallel sessions</button>
+  <button class="chip" data-g="ops" aria-pressed="false">Operations</button>
   <span class="count" id="count"></span>
 </div>
 
@@ -335,7 +339,7 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
       <dl>
         <dt>Use when</dt><dd>You want this machine or this project brought up to the current documents. It is also the command for a first install, so you do not have to know which case you are in. Add <code>추천</code> when Claude or <code>/resume</code> has suggested an item your work now needs.</dd>
         <dt>It does</dt><dd>Finds document 00 (a copy in the same folder or <code>docs/</code>, a local clone, a folder you name, or the published raw file &mdash; raw is fetched byte for byte, never summarised, into a temporary folder outside the project), reads it, and runs its protocol exactly &mdash; detect what is already here, ask what you want, install only that, verify, and write the install record. The skill holds no steps of its own, so it can never drift from the document. As <code>/dropin-apply 추천</code> it takes the in-work suggestion path instead: it offers only the items your work has newly started to need and you have not installed, each with the sign it spotted, reuses your recorded answers to the opening questions, and installs only what you pick &mdash; the safety questions are still asked. In a folder with no install record it runs the normal install instead, where Minimal is the suggested start.</dd>
-        <dt>You get</dt><dd>A configuration that matches the documents, and an updated <code>dropin-applied</code> line saying so. Where a feature-docs, refactor, kr-ui-guide, kr-ui-styles, browser-check, pc-clean, session-board or <code>dropin-</code> skill was already installed, its files are compared by content &mdash; not just by name &mdash; so a version that only changed its wording is still replaced; a <code>dropin-</code> skill that differs from the published copy comes up with <code>reconcile</code> as the default. <code>/resume</code> and <code>/wrap</code> are only checked for presence &mdash; to get their new text, answer <code>reconcile</code> instead of the default <code>keep</code> when it asks about global items that are already installed. Items touched by a revision you approved start with <code>reconcile</code> as the default. A suggestion you decline is noted in the record and not offered again; to take it later, add it on a plain <code>/dropin-apply</code> re-run.</dd>
+        <dt>You get</dt><dd>A configuration that matches the documents, and an updated <code>dropin-applied</code> line saying so. Where a feature-docs, refactor, kr-ui-guide, kr-ui-styles, browser-check, pc-clean, session-board, ops-kit or <code>dropin-</code> skill was already installed, its files are compared by content &mdash; not just by name &mdash; so a version that only changed its wording is still replaced; a <code>dropin-</code> skill that differs from the published copy comes up with <code>reconcile</code> as the default. <code>/resume</code> and <code>/wrap</code> are only checked for presence &mdash; to get their new text, answer <code>reconcile</code> instead of the default <code>keep</code> when it asks about global items that are already installed. Items touched by a revision you approved start with <code>reconcile</code> as the default. A suggestion you decline is noted in the record and not offered again; to take it later, add it on a plain <code>/dropin-apply</code> re-run.</dd>
       </dl>
       <div class="warn soft"><b>Worth knowing.</b> This is the same thing as telling Claude &ldquo;learn this document and apply it&rdquo; &mdash; the sentence still works. The command exists because a door you cannot see is a door you do not open.</div>
       <div class="tags"><span class="tag">global</span><span class="tag">asks first</span></div>
@@ -695,6 +699,31 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
   </div>
 </section>
 
+<!-- ══════════ GROUP: ops ══════════ -->
+<section class="group" data-g="ops">
+  <div class="ghead">
+    <h2 style="margin-top:0">Deploy and operate</h2>
+    <span class="src">installed by document 03 §15 &middot; off by default</span>
+  </div>
+  <p class="gnote">For a project you deploy and keep running on your own. It looks at the project first and makes only what that project needs &mdash; a small site with no server or database gets no dashboard.</p>
+  <div class="cards">
+
+    <article class="skill" data-g="ops">
+      <div class="cmd"><span class="sl">/</span>ops-kit</div>
+      <div class="args">[init | runbook | hub | dashboard | health | backup | limits | sync | check] — check only reads; with none, it suggests <code>init</code> the first time and <code>check</code> after that</div>
+      <p class="one">Surveys a project you deploy alone and builds only the deploy and operations paperwork it actually needs &mdash; then keeps it in step with the code.</p>
+      <dl>
+        <dt>Use when</dt><dd>Before the first deploy (<code>/ops-kit init</code>), after the deploy settings change (<code>/ops-kit sync</code>), and whenever you want a read-only check (<code>/ops-kit check</code>) &mdash; overdue scheduled checks, unconfirmed figures, old check dates, broken links.</dd>
+        <dt>It does</dt><dd>Reads the deploy commands, hosting config, the <em>names</em> of secrets (never their values &mdash; it does not open <code>.env</code> or key files), databases, external services and any ops documents you already have. Then it shows one diagnosis table of seven possible outputs: a deploy runbook (first deploy, redeploy, rollback), an ops runbook (console checks, admin chores, recurring checks), an admin hub (every console link, account name and where to look, on one page), an <code>/admin</code> dashboard served by your app (daily users, new users, day-1 and day-7 return, payments, countries), a health check with outage alerts, a backup with a restore rehearsal, and a free-tier limit and cost watch. Each is marked needed, not needed or undecided, with the file and line it judged from; the first four are the usual picks, the last three optional. Nothing is written until you choose. Every runbook step has a paste-ready command, the text you should see on success, what to do if it fails, and a one-line report to send back to Claude so the next session can pick up. Secrets are typed into a masked prompt and their length printed before they go into the command line tool &mdash; never pasted from the clipboard.</dd>
+        <dt>You get</dt><dd>Only the outputs you picked, under <code>docs/status/</code>, and a status file <code>docs/status/ops-kit.md</code> with each verdict, the check dates, the next scheduled checks and why the rest were not needed &mdash; those are not suggested again unless something new in the project overturns the reason. If Claude can publish artifacts, the runbooks and hub are published privately and updated at the same link; otherwise they stay as local HTML files.</dd>
+      </dl>
+      <div class="warn soft"><b>Worth knowing.</b> It never deploys, enters a secret or connects an alert channel &mdash; you do those by following the runbook. It assumes no paid monitoring service. Limits, fees and similar outside figures are checked on the day and dated, or marked <code>[재확인]</code> for you to confirm. The dashboard ships closed &mdash; it answers 503 until a token secret of 32 or more characters is set. It is off by default because it can write code into your app (the dashboard, the health check); install marks it as suggested when it spots a deploy target &mdash; a <code>wrangler.toml</code>, <code>Dockerfile</code>, <code>vercel.json</code> or similar, a CI workflow with a deploy step, or a <code>deploy</code> script &mdash; but does not tick it for you, and it is not offered in a documents-only repository. Install suggests global scope; the outputs always land inside the project. By default it loads itself &mdash; its own rule is that nothing is made before you pick from the table; choose manual-only if you want it to run only when you call it. If you install it both as a copy and as the <code>dandi</code> plugin, both show up &mdash; keep one.</div>
+      <div class="tags"><span class="tag">global</span><span class="tag">off by default</span><span class="tag">approval gate</span><span class="tag">writes app code</span></div>
+    </article>
+
+  </div>
+</section>
+
 <p class="empty" id="empty">Nothing matches that filter. Try clearing the search box.</p>
 
 <h2>A day, in the order the skills come up</h2>
@@ -883,13 +912,14 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
     <tr><td><code>/kr-ui-styles</code></td><td>03 §9 (install 7)</td><td>same scope as kr-ui-guide &middot; or inside the <code>dandi-kr-ui-guide</code> plugin</td><td>Copy: delete the folder and the <code>스타일 팩:</code> line in the project override block. Plugin: it ships inside <code>dandi-kr-ui-guide</code>, so uninstalling that removes both.</td></tr>
     <tr><td><code>/pc-clean</code></td><td>03 §10</td><td>global &mdash; project scope commits Windows-only scripts to the repo &middot; or the <code>dandi</code> plugin</td><td>Plugin: <code>/plugin uninstall dandi-pc-clean@dandi</code>. Copy: delete the folder &mdash; in project scope, commit the deletion. No hooks, settings or scheduled tasks to unwind.</td></tr>
     <tr><td><code>/session-board</code></td><td>03 §12</td><td>global &mdash; fixed, not asked &middot; or the <code>dandi</code> plugin, offered first</td><td>Plugin: <code>/plugin uninstall dandi-session-board@dandi</code> &mdash; the hooks go with it. Copy: remove only the hook groups that run <code>board.mjs</code> from <code>~/.claude/settings.json</code>, then delete the folder. Deleting <code>~/.claude/session-board/</code> loses nothing &mdash; it holds session metadata only.</td></tr>
+    <tr><td><code>/ops-kit</code></td><td>03 §15</td><td>global &mdash; project scope commits one copy per repository &middot; or the <code>dandi</code> plugin</td><td>Plugin: <code>/plugin uninstall dandi-ops-kit@dandi</code>. Copy: delete the folder &mdash; in project scope, commit the deletion. No hooks, settings or scheduled tasks to unwind. What it made &mdash; <code>docs/status/</code> and any <code>/admin</code>, <code>/health</code> or workflow code you approved &mdash; stays: it is your project&rsquo;s code and data, so revert it with that project&rsquo;s git if you want it gone. Published pages you delete on claude.ai.</td></tr>
     <tr><td><code>/plan-&lt;model&gt;</code></td><td>02 STEP 3 ⓔ</td><td>asked at install &mdash; global or project</td><td>Delete the folder, the model usage table it created, and the lines about this command it added to <code>CLAUDE.md</code> and the handoff protocol.</td></tr>
   </tbody>
 </table>
 </div>
 <p class="lead" style="margin-top:16px">Every one of these has a documented removal path, which is deliberate: an install you cannot reverse was never really a choice. The full procedures &mdash; detect, install, verify, remove &mdash; are in the documents themselves. For what each install question means, see the <a href="options.html">options dictionary</a>; to work through it step by step, take the <a href="learn.html">course</a>. Some install items are missing here on purpose: policy notes (03 §11) and the feature change log (03 §13) add rule files, <code>.claude/rules/policy-recording.md</code> and <code>.claude/rules/feature-log.md</code>, not skills &mdash; there is no command to call, so they have no card.</p>
 
-<footer>Dandi &middot; Skill catalog &middot; 2026-11-10 &middot; Skills installed by documents 01 §D-4, 02 STEP 3 ⓔ, 03 §2, §3, §5, §7, §8, §9, §10, §12 and §14. Commands are shown without an alias; apply yours if you chose one at install time. &middot; Fonts: Pretendard, IBM Plex Mono &mdash; both SIL Open Font License 1.1 (free for commercial use and web embedding)</footer>
+<footer>Dandi &middot; Skill catalog &middot; 2026-11-11 &middot; Skills installed by documents 01 §D-4, 02 STEP 3 ⓔ, 03 §2, §3, §5, §7, §8, §9, §10, §12, §14 and §15. Commands are shown without an alias; apply yours if you chose one at install time. &middot; Fonts: Pretendard, IBM Plex Mono &mdash; both SIL Open Font License 1.1 (free for commercial use and web embedding)</footer>
 
 </div>
 <script>

@@ -344,6 +344,7 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
     <tr><td><b>Answer style</b></td><td>Changes Claude&rsquo;s tone and answer format</td><td>You have a preference like &ldquo;shorter&rdquo; or &ldquo;with explanations&rdquo;</td><td>Claude keeps its default tone</td></tr>
     <tr><td><b>Feature documentation</b></td><td>A helper that writes features up as documents and keeps them in step when the code changes</td><td>You need to maintain feature specs</td><td>People maintain the docs separately</td></tr>
     <tr><td><b>App screen checks</b></td><td>A connection that lets Claude read, tap and capture a running Flutter app itself</td><td>You build a Flutter app (desktop or mobile)</td><td>People check the app screens themselves</td></tr>
+    <tr><td><b>Operations</b></td><td>A helper that writes the deploy and day-to-day running paperwork and safeguards a project needs once it is online</td><td>You are about to deploy a service, or already run one</td><td>You keep deploy steps, checks and backups in your own head or notes</td></tr>
   </table>
   </div>
 
@@ -364,6 +365,7 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
     <tr><td><b>Answer style</b></td><td>05 output styles</td><td>Not detectable &mdash; only when you ask for it</td></tr>
     <tr><td><b>Feature documentation</b></td><td>From 03: the <b>feature-doc skill set</b> &mdash; six skills that write a spec per feature, run the tests written in it, and block commits that change code without updating the doc (pairing with 04&rsquo;s hook gate is recommended)</td><td>Pre-checked when an existing <code class="i">docs/features/</code> is detected. <b>Skipped for non-code repositories</b></td></tr>
     <tr><td><b>App screen checks</b><br><span style="font-size:12.5px;color:var(--ink-soft)">Flutter</span></td><td>From 03: <b>Flutter app screen checks</b> (read, drive and capture an app running in debug mode)</td><td>When a Flutter project is detected it is <b>shown as a suggestion but not pre-checked</b> (it adds a package to your app, so you pick it yourself). Not offered at all outside Flutter</td></tr>
+    <tr><td><b>Operations</b><br><span style="font-size:12.5px;color:var(--ink-soft)">deploy target</span></td><td>From 03: <b>ops-kit</b> (deploy and operations runbooks, a management hub, an admin dashboard, health checks, a backup rehearsal and a free-tier limit watch &mdash; only the ones its diagnosis shows you need)</td><td>When signs of a deploy target are found (a hosting config file such as <code class="i">vercel.json</code>, <code class="i">fly.toml</code> or a <code class="i">Dockerfile</code>, a CI workflow with a deploy step, a <code class="i">deploy</code> script) it is <b>shown as a suggestion but not pre-checked</b> (it can write code into your app, so you pick it yourself). Not offered for non-code repositories</td></tr>
   </table>
   </div>
 
@@ -849,13 +851,30 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
     </dl>
   </div>
 
+  <div class="opt">
+    <div class="opt-head"><span class="id">&sect;15</span><span class="name">ops-kit</span><span class="badge b-off">off by default &middot; projects that deploy</span></div>
+    <p class="lead">One skill for a project you are about to put online, or already run on your own. It first <b>looks over the project and shows a table</b> of the operations documents, screens and safeguards it needs, builds <b>only the ones you pick</b>, and updates them when your code or deploy setup changes.</p>
+    <dl>
+      <dt>What it can make</dt><dd>A <b>deploy runbook</b> (first deploy, redeploy, roll back) &middot; an <b>operations runbook</b> (outside consoles, paperwork, regular checks) &middot; a <b>management hub</b> (for each app: where it is managed, which account, where to look &mdash; one page) &middot; an <b>admin dashboard</b> (<code class="i">/admin</code> &mdash; it is deployed locked shut until an access token of at least 32 characters is set) &middot; <b>health checks and outage alerts</b> &middot; a <b>backup and restore rehearsal</b> &middot; a <b>free-tier limit and cost watch</b></dd>
+      <dt>How it decides</dt><dd>Each one is marked <b>needed / not needed / undecided</b>, with the file and line it based that on. Only what you pick is made. Anything marked not needed is written down with its reason in <code class="i">docs/status/ops-kit.md</code>, so it is not offered again</dd>
+      <dt>What it will not do</dt><dd>It <b>does not deploy, type in secrets or connect alert channels for you</b> &mdash; you do those yourself, following the runbook. Every runbook step has a command you can paste, what success looks like, what to do if it fails, and a short template for reporting back to Claude. Secrets are piped in after printing only their length &mdash; never through the clipboard</dd>
+      <dt>How you use it</dt><dd><code>/ops-kit init</code> before the first deploy &middot; <code>/ops-kit sync</code> when the deploy setup changes &middot; <code>/ops-kit check</code> to look things over (reads only, changes nothing)</dd>
+      <dt>Why it is off by default</dt><dd>It can write code into your app (the dashboard, a health endpoint), so you pick it yourself. When signs of a deploy target are found, the &ldquo;Operations&rdquo; bundle is shown as a suggestion but <b>is not pre-checked</b>. You can still install it without those signs. In a repository with no code it is not offered and is recorded as &ldquo;not applicable&rdquo;</dd>
+      <dt>Scope</dt><dd><b>Global by default</b> &mdash; it looks up each project&rsquo;s stack and hosting itself, so nothing about one project is built into it. Choose project if your team must share the same procedure; you are told that each repository then commits its own copy and every update has to be repeated per repository. Either way, what it makes (<code class="i">docs/status/</code>) always lives <b>inside the project</b></dd>
+      <dt>Invocation</dt><dd><b>Automatic by default</b> &mdash; it shows its table and creates no file until you choose. Because it writes app code, set it to <b>manual only</b> if even that is more than you want. With a skill name alias (2-7), the <code>/ops-kit</code> command is renamed too; the status file keeps its name</dd>
+      <dt>If similar documents exist</dt><dd>If the project already has runbooks or operations documents (or a similar skill), you are asked keep / replace. The skill can <b>adopt</b> existing documents into its status file, so they are no reason to delete anything</dd>
+      <dt>Publishing</dt><dd>If your Claude can publish private Artifact pages, the runbooks and hub are published privately and their links are noted in the status file. Otherwise they stay as local HTML files &mdash; that is not a requirement for installing</dd>
+      <dt>Removing it</dt><dd>Delete the <code class="i">ops-kit/</code> folder in the scope you installed it to (at project scope, commit the deletion) &mdash; it creates no hooks, settings or scheduled tasks. If you got it as a plugin, <code class="i">/plugin uninstall dandi-ops-kit@dandi</code>. What it made (<code class="i">docs/status/</code>, the <code class="i">/admin</code> and <code class="i">/health</code> code, check workflows) is <b>your project&rsquo;s own code and data</b> and is not removed &mdash; undo it with git. Published pages you delete on claude.ai</dd>
+    </dl>
+  </div>
+
   <h3>Follow-up questions for any skill</h3>
   <div class="tbl">
   <table>
     <tr><th style="width:120px">Question</th><th>Choices</th></tr>
     <tr>
       <td><b>Scope</b></td>
-      <td><b>Global</b> (<code class="i">~/.claude/skills/</code>) &mdash; available in every project on your machine / <b>project</b> (<code class="i">.claude/skills/</code>) &mdash; this repository only; commit it and the team shares it. The feature-doc set, refactor and kr-ui-guide are used regardless of repository, and pc-clean is a tool for the PC, so <b>global is their default</b>. Policy notes (&sect;11) and the feature change log (&sect;13) are <b>fixed</b> to the project and session-board (&sect;12) to global, so instead of this question you are simply told. This question is never skipped in any mode &mdash; if your machine already has a global skill of the same name, a project install is shadowed by it and never runs</td>
+      <td><b>Global</b> (<code class="i">~/.claude/skills/</code>) &mdash; available in every project on your machine / <b>project</b> (<code class="i">.claude/skills/</code>) &mdash; this repository only; commit it and the team shares it. The feature-doc set, refactor and kr-ui-guide are used regardless of repository, pc-clean is a tool for the PC, and ops-kit looks up each project itself, so <b>global is their default</b>. Policy notes (&sect;11) and the feature change log (&sect;13) are <b>fixed</b> to the project and session-board (&sect;12) to global, so instead of this question you are simply told. This question is never skipped in any mode &mdash; if your machine already has a global skill of the same name, a project install is shadowed by it and never runs</td>
     </tr>
     <tr>
       <td><b>Invocation</b></td>
@@ -1092,7 +1111,7 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
     Resolved or not, if you no longer want it (holding off, the organization has said no for good, you decided not to sign in), it is switched to &ldquo;not selected&rdquo; &mdash; so the same question stops coming back.
   </p>
   <p>
-    Copied skills (the feature-doc set, refactor, kr-ui-guide, browser-check, pc-clean, session-board) are compared with the published version <b>file by file, contents included</b> &mdash; a revision that only reworded things still counts.
+    Copied skills (the feature-doc set, refactor, kr-ui-guide, browser-check, pc-clean, session-board, ops-kit) are compared with the published version <b>file by file, contents included</b> &mdash; a revision that only reworded things still counts.
     If anything differs, the skill is shown as an <b>older install</b> and the install step replaces the whole folder.
   </p>
 
@@ -1140,7 +1159,7 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
 <a class="totop" href="#toc">&uarr; Contents</a>
 
 <footer>
-  Dandi &middot; Install options dictionary &middot; based on 00_통합-설치.md &middot; 2026-11-10<br>
+  Dandi &middot; Install options dictionary &middot; based on 00_통합-설치.md &middot; 2026-11-11<br>
   The source of truth for each item is its own document (01&ndash;06). This page exists so people can read and judge; it does not change the install procedure itself.<br>
   Repository: github.com/EleninJayTech/claude &middot;
   <a href="../index.html">Guide</a> &middot; <a href="intro.html">Intro</a> &middot; <a href="demo.html">Walkthrough</a> &middot; <a href="learn.html">Course</a> &middot; <a href="skills.html">Skill catalog</a><br>
