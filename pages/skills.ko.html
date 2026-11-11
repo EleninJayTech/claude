@@ -223,6 +223,7 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
     <tr><td><code>/dropin-update</code></td><td>없음</td><td>문서 사본 자체가 낡았을 때</td><td>새 문서 파일 &mdash; 구성은 그대로다</td></tr>
     <tr><td><code>/dropin-apply</code></td><td><code>[추천]</code> &mdash; 없으면 전체 절차</td><td>구성 자체를 최신으로 맞추고 싶을 때 &mdash; <code>추천</code>이면 작업이 새로 필요로 하는 것을 더할 때</td><td>문서·설치된 스킬·설정을 한 번에 재적용 &mdash; <code>추천</code>이면 고른 항목만</td></tr>
     <tr><td><code>/dropin-sync</code></td><td>없음 &middot; 수동 전용</td><td>세 단계를 고르지 않고 순서대로 다 돌리고 싶을 때</td><td>문서 갱신·상태 점검·구성 재적용을 한 번에, 보고는 하나</td></tr>
+    <tr><td><code>/dropin-pick</code></td><td><code>[분류&hellip;]</code> &mdash; 없으면 묻는다 &middot; 수동 전용</td><td>한 종류만 깔고 싶을 때 &mdash; 구성만, MCP만, 플러그인만</td><td>고른 항목만, 그리고 그에 맞춰 갱신된 적용 기록</td></tr>
 
     <tr><th class="grp" colspan="4" scope="colgroup">기능 문서·테스트·릴리스 &middot; 03 §7</th></tr>
     <tr><td><code>/feature-docs</code></td><td><code>init</code> | <code>sync [기준]</code></td><td>처음 문서화할 때, 바뀐 것을 반영할 때</td><td><code>docs/features/</code> 전체</td></tr>
@@ -352,6 +353,17 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
         <dt>언제</dt><dd>전부 최신으로 맞추고 싶은데 순서를 외우고 싶지 않을 때.</dd>
         <dt>하는 일</dt><dd>각 스킬 차례가 오면 그 스킬을 읽고 그대로 따른다. 자기 절차는 없어서 셋 중 하나를 고치면 이 스킬도 따라온다. 적용할 수 없는 단계(예: 원본 저장소 안의 문서 갱신)는 건너뜀으로 표시하고 다음 단계를 계속한다. 각 스킬이 끝에 붙이던 &ldquo;다음엔 ○○을 하라&rdquo; 안내는 뺀다 &mdash; 다음 단계가 이미 돌고 있기 때문이다.</dd>
         <dt>결과</dt><dd>단계별로 한 일과 남은 일을 담은 보고 하나. 개별 스킬이 묻던 질문은 같은 자리에서 그대로 묻는다 &mdash; 대신 승인해 주지 않는다. 예외는 하나다 &mdash; apply 단계의 &ldquo;문서부터 최신화하라&rdquo;는 권장은 첫 단계가 방금 했으므로 다시 꺼내지 않는다.</dd>
+      </dl>
+      <div class="tags"><span class="tag hand">수동 호출</span><span class="tag">글로벌</span><span class="tag">먼저 묻는다</span></div>
+    </article>
+    <article class="skill" data-g="session">
+      <div class="cmd"><span class="sl">/</span>dropin-pick</div>
+      <div class="args">[분류&hellip;] &mdash; <code>구성</code> &middot; <code>스킬</code> &middot; <code>플러그인</code> &middot; <code>MCP</code> &middot; <code>훅</code> &middot; <code>에이전트</code> &middot; <code>CLI</code> &middot; <code>CI</code> &middot; <code>스타일</code> &middot; <code>루틴</code>, 없으면 묻는다 &middot; 수동 호출 전용</div>
+      <p class="one">고른 설치 형태만 깐다 &mdash; 구성만, MCP만, 플러그인만처럼. 모드·번들 질문은 건너뛴다.</p>
+      <dl>
+        <dt>언제</dt><dd>필요한 종류가 이미 분명해서 설치 전체를 거치고 싶지 않을 때. 구성 전체는 <code>/dropin-apply</code>, 작업에 새로 필요해진 것은 <code>/dropin-apply 추천</code>이다.</dd>
+        <dt>하는 일</dt><dd><code>/dropin-apply</code>와 같은 방법으로 00 문서를 찾아 그 안의 분류 설치 절을 그대로 따른다 &mdash; 자기 단계나 분류 표는 갖지 않는다. 고른 분류가 걸린 문서만 받는다. 분류는 후보를 좁힐 뿐 대신 정해 주지 않는다 &mdash; 그 안의 항목도 각자 질문으로 제시하고, 기본 해제 항목은 해제된 채로 나온다. 모드·번들·빠른 경로 질문은 묻지 않는다. 적용 기록이 있으면 첫 공통 질문(언어·별칭·프로필)은 기록값을 그대로 쓰고, 없으면 그 셋만 묻는다. 이미 깐 문서가 현재보다 낡았으면 그 개정분부터 제시한다. 안전 질문과 회사 게이트는 그대로 묻는다.</dd>
+        <dt>결과</dt><dd>고른 항목만, 그리고 평소와 같은 <code>dropin-applied</code> 줄. 문서 일부만 깔았으면 그렇게 표시되므로, 나중에 그냥 <code>/dropin-apply</code>를 다시 돌리면 나머지를 추가할지 묻는다. 고르지 않은 분류의 문서는 깔지 않고, 손대지 않은 문서의 기록도 건드리지 않는다.</dd>
       </dl>
       <div class="tags"><span class="tag hand">수동 호출</span><span class="tag">글로벌</span><span class="tag">먼저 묻는다</span></div>
     </article>
@@ -877,6 +889,7 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
     <tr><td>구성 자체를 최신으로 올리고 싶다</td><td><code>/dropin-apply</code></td><td>문서·설치된 스킬·설정 중 내가 승인한 것</td><td>거절한 것 &mdash; 덮기 전에 묻는다</td></tr>
     <tr><td>셋을 순서대로 한 번에 하고 싶다</td><td><code>/dropin-sync</code></td><td>세 스킬이 바꿀 것 전부 &mdash; 각 부분은 묻는 자리에서 내가 승인</td><td>거절한 것</td></tr>
     <tr><td>작업이 새로 필요로 하는 것을 더하고 싶다</td><td><code>/dropin-apply 추천</code></td><td>추천된 항목 중 내가 고른 것만</td><td>나머지 전부 &mdash; 처음 공통 질문은 기록된 답을 그대로 쓴다</td></tr>
+    <tr><td>한 종류만 깔고 싶다</td><td><code>/dropin-pick</code></td><td>고른 분류에 드는 항목만 &mdash; 항목마다 여전히 묻는다</td><td>나머지 분류의 문서 &mdash; 첫 공통 질문의 기록값은 그대로</td></tr>
   </tbody>
 </table>
 <p class="lead" style="margin-top:14px">짧게 말하면 <b><code>/dropin-update</code>만으로는 업데이트가 아니다.</b> 그건 설명서를 새것으로 바꾸는 일이지, 설명서가 만드는 물건을 바꾸는 일이 아니다. 스킬에 파일이 늘었거나 문장이 바뀌었다면 그것을 내 디스크에 올리는 건 <code>/dropin-apply</code>뿐이다.</p>
@@ -902,7 +915,7 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
 <table>
   <thead><tr><th>스킬</th><th>문서</th><th>기본 스코프</th><th>제거</th></tr></thead>
   <tbody>
-    <tr><td><code>/resume</code> <code>/wrap</code> <code>/dropin-apply</code> <code>/dropin-check</code> <code>/dropin-update</code> <code>/dropin-sync</code></td><td>01 §D-4</td><td>글로벌 &mdash; <code>~/.claude/skills/</code></td><td>폴더 삭제. 쌓인 <code>docs/</code> 기록은 묻되 기본으로 남긴다 &mdash; 그건 데이터다.</td></tr>
+    <tr><td><code>/resume</code> <code>/wrap</code> <code>/dropin-apply</code> <code>/dropin-check</code> <code>/dropin-update</code> <code>/dropin-sync</code> <code>/dropin-pick</code></td><td>01 §D-4</td><td>글로벌 &mdash; <code>~/.claude/skills/</code></td><td>폴더 삭제. 쌓인 <code>docs/</code> 기록은 묻되 기본으로 남긴다 &mdash; 그건 데이터다.</td></tr>
     <tr><td><code>/svg-design</code></td><td>03 §2</td><td>설치할 때 묻는다 &mdash; 글로벌 또는 프로젝트</td><td>폴더 삭제.</td></tr>
     <tr><td><code>/frontend-design</code></td><td>03 §3</td><td>설치할 때 묻는다 &mdash; 글로벌(플러그인 또는 <code>npx skills add -g</code>) 또는 프로젝트(<code>npx skills add</code>)</td><td>폴더 삭제. npx가 링크만 걸어 뒀으면 링크가 가리키는 실체까지 지운다. <code>kr-ui-guide</code>까지 없으면 <code>CLAUDE.md</code>의 폰트 라이선스 정책 절도 지운다.</td></tr>
     <tr><td>기능 문서 6종</td><td>03 §7</td><td>글로벌 &mdash; 팀·CI가 공유해야 하면 프로젝트 스코프 &middot; 또는 <code>dandi</code> 플러그인</td><td>플러그인: <code>/plugin uninstall dandi-feature-docs@dandi</code>. 복사본: 가드부터 걷고 여섯 폴더. <code>docs/features/</code>·<code>tests/e2e/</code>·<code>tests/maestro/</code>는 남긴다.</td></tr>

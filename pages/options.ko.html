@@ -216,7 +216,7 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
     <tr><th style="width:64px">단계</th><th>하는 일</th><th style="width:190px">사용자가 고르는 것</th></tr>
     <tr><td><b>STEP 1</b></td><td>설치에 필요한 문서(01~06) 확보 — 같은 폴더에 없으면 GitHub에서 가져옴</td><td>없음</td></tr>
     <tr><td><b>STEP 2</b></td><td>환경 감지 — 이전에 적용한 기록(<code class="i">dropin-applied</code>), 기존 설정 파일, 팀이 커밋해 둔 Claude 구성, 프로젝트 유형 조사</td><td>없음</td></tr>
-    <tr><td><b>STEP 3</b></td><td><b>큰 선택</b> — 아래 §2의 질문들</td><td>(이미 구성된 PC면 맨 앞에 <b>빠른 경로</b>) · 기반 모드 · 목적 번들 · 운용 프로필 · 산출물 언어 · 스킬 이름 별칭 · (팀이 구성을 커밋해 둔 저장소에 처음 설치하면) <b>기존 팀 구성</b>(2-6)</td></tr>
+    <tr><td><b>STEP 3</b></td><td><b>큰 선택</b> — 아래 §2의 질문들</td><td>(이미 구성된 PC면 맨 앞에 <b>빠른 경로</b>) · 기반 모드 · 목적 번들 · 운용 프로필 · 산출물 언어 · 스킬 이름 별칭 · (팀이 구성을 커밋해 둔 저장소에 처음 설치하면) <b>기존 팀 구성</b>(2-6) · (<code class="i">/dropin-pick</code>으로 시작했으면 기반 모드·목적 번들 대신 <b>설치 형태</b>)</td></tr>
     <tr><td><b>STEP 4</b></td><td>고른 문서의 절차대로 설치. 문서 안 세부 항목(§3~§8)은 <b>‘사용자’ 모드면 전부</b> 물어보고, 그 밖의 모드면 <b>모드별 기본값이 정해진 문서만</b> 자동으로 정함 — 기본값이 없는 문서(02·05)와 기본으로 꺼진 항목은 물어봄</td><td>모드에 따라 다름</td></tr>
     <tr><td><b>STEP 5</b></td><td>검증하고 결과 보고 + <code class="i">CLAUDE.md</code> 맨 아래에 적용 기록 한 줄 남김</td><td>커밋 승인</td></tr>
   </table>
@@ -283,6 +283,19 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
     이미 있는 걸 덮어쓸지 묻는 <b>안전 질문</b>(팀 구성을 먼저 따를지 묻는 질문 포함 — 2-6), 회사 정책 확인, 어디에 둘지 고르는 <b>스코프 질문</b>, 기본으로 꺼진 항목을 켤지 묻는 질문은 <b>그대로 나옵니다</b>. ‘전체’ 모드로도 줄일 수 없는 것을 빠른 경로가 줄이면 안 되기 때문입니다. 잘못 가져왔다면 다음에 다시 돌릴 때 추가·제거를 물어보므로 되돌릴 수 있습니다.
   </div>
 
+  <div class="opt">
+    <div class="opt-head"><span class="name">설치 형태만 골라 깔기</span><span class="badge b-off"><code>/dropin-pick</code>으로 시작할 때만</span></div>
+    <p class="lead">“MCP만”, “플러그인만”처럼 <b>필요한 종류가 이미 분명할 때</b> 쓰는 다른 입구입니다. 새 모드가 아니라 <b>기반 모드·목적 번들(2-2·2-3)과 빠른 경로를 묻는 대신</b> 설치 형태를 묻습니다.</p>
+    <dl>
+      <dt>고르는 것</dt><dd>설치 형태 하나 이상(복수 선택) — <b>구성</b>(01 기본 셋업과 정책·기능 변경 기록) · <b>스킬</b> · <b>플러그인</b> · <b>MCP</b> · <b>훅</b> · <b>에이전트</b>(02 로스터) · <b>CLI·CI</b> · <b>출력 스타일</b> · <b>루틴</b>. <code class="i">/dropin-pick 스킬 MCP</code>처럼 명령 뒤에 적으면 이 질문을 건너뜁니다</dd>
+      <dt>생기는 것</dt><dd>고른 형태에 드는 항목만 <b>그 문서의 질문으로</b> 제시됩니다 — 형태를 골랐다고 자동으로 깔리지 않고, 기본으로 꺼진 항목도 꺼진 채로 보여 줍니다. 한 항목이 여러 형태에 걸치면(예: 브라우저 검증은 스킬·MCP·CLI 경로가 있습니다) 고른 형태에 해당하는 부분만 나옵니다. 고르지 않은 형태의 문서는 읽지도 깔지도 않습니다</dd>
+      <dt>공통 질문은</dt><dd>이 폴더에 적용 기록이 있으면 <b>운용 프로필·산출물 언어·스킬 이름 별칭은 기록값</b>을 보여 주고 확인만 받고, 없으면 그 셋만 묻습니다. 이미 깐 문서가 낡았으면 그 문서의 <b>바뀐 내용을 먼저</b> 보여 줍니다</dd>
+      <dt>그대로 나오는 것</dt><dd>빠른 경로와 같습니다 — 안전 질문·회사 정책 확인·스코프 질문·기본으로 꺼진 항목 질문</dd>
+      <dt>남는 자리</dt><dd>적용 기록의 기존 칸 그대로입니다(기록이 없던 폴더면 모드가 ‘사용자’로 남습니다). 문서 일부만 깔았으면 어떤 항목만 깔았는지가 남아, 다시 돌릴 때 나머지를 추가할지 물어봅니다</dd>
+      <dt>이럴 때</dt><dd>이미 구성된 프로젝트에 한 종류만 더하고 싶을 때. 무엇이 필요한지 모르겠으면 <code class="i">/dropin-apply</code>로 모드부터 고르세요</dd>
+    </dl>
+  </div>
+
   <h3>2-1. 적용 대상 — 이 PC인가, 이 프로젝트인가</h3>
   <p>모호할 때만 물어봅니다. <b>PC</b>를 고르면 <code class="i">~/.claude/</code>(내 계정 폴더)에, <b>프로젝트</b>를 고르면 지금 폴더의 <code class="i">.claude/</code>에 설정이 만들어집니다. 보통 처음 한 번은 PC 설정을 하고, 그다음부터는 프로젝트별로 합니다.</p>
 
@@ -293,7 +306,7 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
     <div class="opt-head"><span class="name">최소</span><span class="id">기록 없는 대상의 기본 추천</span><span class="badge b-off">01만</span></div>
     <p class="lead">기록 체계와 보안, 그리고 <b>나머지는 작업 중에 추천해 주는</b> 한 줄만 깝니다. 문서 안 세부 항목도 필수만. 새 PC나 아직 적용 기록이 없는 폴더의 기본 추천입니다.</p>
     <dl>
-      <dt>생기는 것</dt><dd>글로벌 <code>settings.json</code>(보안 잠금), <code>/resume</code>·<code>/wrap</code>·<code>dropin-</code> 계열 스킬(<code>/dropin-apply</code>·<code>/dropin-check</code>·<code>/dropin-update</code>·<code>/dropin-sync</code>), 프로젝트 <code>docs/</code> 3종, <code>~/.claude/CLAUDE.md</code>의 작업 중 추천 한 줄(01 ⓖ)</dd>
+      <dt>생기는 것</dt><dd>글로벌 <code>settings.json</code>(보안 잠금), <code>/resume</code>·<code>/wrap</code>·<code>dropin-</code> 계열 스킬(<code>/dropin-apply</code>·<code>/dropin-check</code>·<code>/dropin-update</code>·<code>/dropin-sync</code>·<code>/dropin-pick</code>), 프로젝트 <code>docs/</code> 3종, <code>~/.claude/CLAUDE.md</code>의 작업 중 추천 한 줄(01 ⓖ)</dd>
       <dt>이럴 때</dt><dd>처음 깔 때, 코드가 없는 문서 저장소, 혹은 “일단 기본만 써보고 싶다” — 나중에 작업이 테스트·CI·프론트엔드 스택처럼 더 필요해지면 Claude가 한 줄로 추천하고, 수락한 것만 깝니다</dd>
     </dl>
   </div>
@@ -486,13 +499,14 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
     <div class="opt-head"><span class="id">ⓒ</span><span class="name"><code>/resume</code> · <code>/wrap</code> · <code>dropin-</code> 계열</span><span class="badge b-on">기본 체크</span></div>
     <p class="lead">세션을 시작할 때와 끝낼 때 쓰는 슬래시 명령 두 개 + 구성을 점검하고 다시 최신으로 끌어올리는 <code>dropin-</code> 계열. <b>이 구성의 실질적인 핵심</b>입니다.</p>
     <dl>
-      <dt>만들 파일</dt><dd><code>skills/resume/SKILL.md</code> · <code>skills/wrap/SKILL.md</code> · <code>skills/dropin-apply/</code> · <code>skills/dropin-check/</code> · <code>skills/dropin-update/</code> · <code>skills/dropin-sync/</code></dd>
+      <dt>만들 파일</dt><dd><code>skills/resume/SKILL.md</code> · <code>skills/wrap/SKILL.md</code> · <code>skills/dropin-apply/</code> · <code>skills/dropin-check/</code> · <code>skills/dropin-update/</code> · <code>skills/dropin-sync/</code> · <code>skills/dropin-pick/</code></dd>
       <dt><code>/resume</code></dt><dd>원격이 있으면 <b>먼저 pull로 최신화</b>하고, <b>커밋 안 된 변경</b>을 찾고(진행 중이던 작업), 지난 기록·계획·최근 결정을 읽어 “지난번엔 X, 다음은 Y?”라고 보고. 설치가 오래됐으면(30일+) 점검을 권해줍니다. 워크트리 번호를 붙이면(<code>/resume 001</code>) 그 번호의 워크트리로 들어가 이어갑니다 — Claude가 워크트리를 만들 때 붙이는 3자리 번호입니다. 번호를 찾지 못하거나 들어가지 못하면 이유를 알리고 지금 폴더에서 평소대로 진행합니다. 본체 밖에 워크트리가 있으면 번호와 브랜치도 함께 보고합니다. 지금 브랜치를 <b>진행 중인 다른 브랜치 위에서</b> 땄다면 그 부모 브랜치가 몇 커밋 앞서갔는지도 알려 주고, 부모가 기본 브랜치에 병합됐거나 지워졌으면 내 브랜치를 기본 브랜치 위로 옮기는 방법을 안내합니다(옮길지는 사용자가 정합니다)</dd>
       <dt><code>/wrap</code></dt><dd>오늘 한 일을 기록에 추가하고, 새 결정을 남기고, 계획의 체크박스를 갱신하고, <b>커밋 안 했으면 경고</b></dd>
       <dt><code>/dropin-check</code></dt><dd>내 구성이 문서의 최신 버전으로 적용돼 있는지 <b>점검만</b>(아무것도 바꾸지 않음)</dd>
       <dt><code>/dropin-update</code></dt><dd>프로젝트에 넣어둔 문서 사본이 낡았으면 <b>물어보고</b> 최신본으로 교체</dd>
       <dt><code>/dropin-apply</code></dt><dd><b>구성 자체를 다시 적용</b> — 문서·설치된 스킬·설정까지. 00 문서를 읽어 그 절차를 그대로 돕니다. 처음 까는 경우에도 같은 명령입니다. 역할 구분에 주의: <code>/dropin-update</code>는 설명서를 새것으로 바꾸고, 이것은 설명서가 설명하는 물건을 다시 만듭니다</dd>
       <dt><code>/dropin-sync</code></dt><dd><code>/dropin-update</code>·<code>/dropin-check</code>·<code>/dropin-apply</code>를 <b>이 순서로</b> 명령 하나에 실행. 각 스킬이 묻던 질문은 같은 자리에서 그대로 묻습니다</dd>
+      <dt><code>/dropin-pick</code></dt><dd><b>설치 형태를 골라 그것만</b> 깝니다 — 구성만·스킬만·플러그인만·MCP만처럼(<code>/dropin-pick MCP</code>처럼 바로 적어도 되고, 안 적으면 물어봅니다). 기반 모드·목적 번들 질문 대신 쓰는 입구이고 나머지 질문은 그대로입니다 — 2-0 아래 ‘설치 형태만 골라 깔기’</dd>
       <dt>종류</dt><dd>resume·wrap은 환경에 따라 셋 중 하나 — 단일 저장소용 기본형 / 팀이 한 저장소를 나눠 쓰는 분할형 / 여러 저장소를 한 폴더에서 다루는 통합형</dd>
     </dl>
   </div>
@@ -1118,7 +1132,7 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
   <p>반대로 <b>이미 깐 것을 뺄 수도</b> 있습니다. 다시 돌릴 때 “제거”를 고르면 그 문서의 제거 절차대로 <b>설치가 만든 블록·키·파일만</b> 걷어냅니다 — 원래 내 설정에 있던 항목은 남기고, 그동안 쌓인 기록(<code class="i">docs/</code>의 진행·결정 기록, 기능 명세, 리팩터링 보고서)은 물어본 뒤 <b>기본으로 보존</b>합니다. 뺀 사실은 적용 기록에 남습니다.</p>
 
   <h3>최소로 시작했는데 나중에 더 깔려면?</h3>
-  <p>두 가지입니다. 작업이 어떤 항목을 필요로 하면 지금 작업이 끝난 뒤 Claude가 한 줄로 추천하고(01 ⓖ), 수락하면 고른 것만 깝니다. 아니면 언제든 <code class="i">/dropin-apply 추천</code>을 직접 부르면 됩니다. 어느 쪽이든 안전 질문은 그대로 나오고, 거절한 항목은 다시 권하지 않습니다.</p>
+  <p>두 가지입니다. 작업이 어떤 항목을 필요로 하면 지금 작업이 끝난 뒤 Claude가 한 줄로 추천하고(01 ⓖ), 수락하면 고른 것만 깝니다. 아니면 언제든 <code class="i">/dropin-apply 추천</code>을 직접 부르면 됩니다. 필요한 종류를 이미 안다면 <code class="i">/dropin-pick</code>으로 그 형태(MCP·플러그인 등)만 골라 깔 수도 있습니다(2-0 아래). 어느 쪽이든 안전 질문은 그대로 나오고, 거절한 항목은 다시 권하지 않습니다.</p>
 
   <h3>인터넷이 막힌 PC에 깔려면?</h3>
   <p>문서 저장소를 통째로 받은 폴더(git 클론이든 복사본이든)를 그 PC에 옮겨 두세요. Claude는 문서를 ① 이 폴더(또는 <code class="i">docs/</code>)의 사본 → ② 이 PC의 저장소 클론 순으로 찾고, 둘 다 없으면 <b>폴더 경로를 묻습니다</b> — 옮겨 둔 폴더를 알려 주면 거기서 읽고, 어디서 읽었는지가 적용 기록의 출처 칸에 남습니다. 아무 데서도 문서를 못 구하면 모드를 묻지 않고 <b>저장소 주소와 받는 방법을 안내한 뒤 멈춥니다</b> — 아무것도 깔지 않은 채 “완료”라고 하지 않습니다.</p>

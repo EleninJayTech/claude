@@ -223,6 +223,7 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
     <tr><td><code>/dropin-update</code></td><td>none</td><td>The documents themselves are out of date</td><td>Refreshed document files &mdash; the configuration is untouched</td></tr>
     <tr><td><code>/dropin-apply</code></td><td><code>[추천]</code> &mdash; full run if omitted</td><td>You want the configuration itself brought up to date &mdash; or, with <code>추천</code>, to add what your work now needs</td><td>Documents, installed skills and settings, all re-applied &mdash; with <code>추천</code>, only the items you pick</td></tr>
     <tr><td><code>/dropin-sync</code></td><td>none &middot; manual only</td><td>You want all three steps, in order, without choosing</td><td>Documents refreshed, state checked, configuration re-applied &mdash; one report</td></tr>
+    <tr><td><code>/dropin-pick</code></td><td><code>[kind&hellip;]</code> &mdash; asked if omitted &middot; manual only</td><td>You want only one kind of item &mdash; just the configuration, just MCP, just plugins</td><td>Only the items you picked, and the install record updated to match</td></tr>
 
     <tr><th class="grp" colspan="4" scope="colgroup">Feature docs, tests, releases &middot; 03 §7</th></tr>
     <tr><td><code>/feature-docs</code></td><td><code>init</code> | <code>sync [base]</code></td><td>First write-up, or folding in what changed</td><td>All of <code>docs/features/</code></td></tr>
@@ -352,6 +353,17 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
         <dt>Use when</dt><dd>You just want everything brought up to date and do not want to remember the order.</dd>
         <dt>It does</dt><dd>Reads each of those skills when its turn comes and follows it exactly. It holds no procedure of its own, so changing one of them changes this too. A step that cannot apply &mdash; for example the document refresh inside the source repository &mdash; is marked as skipped and the next step still runs. The closing &ldquo;next, run &hellip;&rdquo; advice of each skill is left out, because the next step is already running.</dd>
         <dt>You get</dt><dd>One report: what each step did and what is still open. Every question the individual skills ask is still asked, in the same place &mdash; nothing is approved for you. The one exception is the apply step&rsquo;s suggestion to refresh the documents first &mdash; step one has just done that, so it is not raised again.</dd>
+      </dl>
+      <div class="tags"><span class="tag hand">manual only</span><span class="tag">global</span><span class="tag">asks first</span></div>
+    </article>
+    <article class="skill" data-g="session">
+      <div class="cmd"><span class="sl">/</span>dropin-pick</div>
+      <div class="args">[kind&hellip;] &mdash; <code>구성</code> (config) &middot; <code>스킬</code> (skill) &middot; <code>플러그인</code> (plugin) &middot; <code>MCP</code> &middot; <code>훅</code> (hook) &middot; <code>에이전트</code> (agent) &middot; <code>CLI</code> &middot; <code>CI</code> &middot; <code>스타일</code> (style) &middot; <code>루틴</code> (routine); asked if omitted &middot; manual call only</div>
+      <p class="one">Installs only the kinds of item you pick &mdash; just the configuration, just MCP, just plugins &mdash; without the mode and bundle questions.</p>
+      <dl>
+        <dt>Use when</dt><dd>You already know what kind of thing you want and do not want to walk through the whole install. For the whole configuration use <code>/dropin-apply</code>; for what your work has started to need, <code>/dropin-apply 추천</code>.</dd>
+        <dt>It does</dt><dd>Finds document 00 the same way <code>/dropin-apply</code> does and follows its install-by-kind section; it holds no steps or kind list of its own. Only the documents your kinds touch are fetched. A kind narrows the list &mdash; it does not decide for you: each item in it is still offered with its own question, and items that are off by default start off. The mode, bundle and quick-path questions are skipped. If the folder has an install record, your recorded answers to the opening questions (language, alias, profile) are reused; if not, only those three are asked. If a document you already installed is behind the current one, its changes are offered first. Safety questions and company gates are still asked.</dd>
+        <dt>You get</dt><dd>Only the items you picked, and the usual <code>dropin-applied</code> line. A document installed only in part is marked that way, so a later plain <code>/dropin-apply</code> asks whether to add the rest. Documents for kinds you did not pick are not installed, and records for documents it did not touch are left alone.</dd>
       </dl>
       <div class="tags"><span class="tag hand">manual only</span><span class="tag">global</span><span class="tag">asks first</span></div>
     </article>
@@ -877,6 +889,7 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
     <tr><td>Bring the configuration itself up to date</td><td><code>/dropin-apply</code></td><td>Documents, installed skills, settings &mdash; whatever you approve</td><td>Anything you decline; it asks before replacing</td></tr>
     <tr><td>Do all three, in order</td><td><code>/dropin-sync</code></td><td>Whatever the three would change &mdash; you approve each part where it asks</td><td>Anything you decline</td></tr>
     <tr><td>Add what your work has started to need</td><td><code>/dropin-apply 추천</code></td><td>Only the suggested items you pick</td><td>Everything else &mdash; your recorded answers to the opening questions stand</td></tr>
+    <tr><td>Install only one kind of item</td><td><code>/dropin-pick</code></td><td>Only the items in the kinds you pick &mdash; each still asked</td><td>Documents for the other kinds &mdash; your recorded answers to the opening questions stand</td></tr>
   </tbody>
 </table>
 <p class="lead" style="margin-top:14px">The short version: <b><code>/dropin-update</code> alone is not an update.</b> It refreshes the instructions, not the thing the instructions build. If a skill gained a file or changed its wording, only <code>/dropin-apply</code> puts that on your disk.</p>
@@ -902,7 +915,7 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
 <table>
   <thead><tr><th>Skills</th><th>Document</th><th>Default scope</th><th>Removal</th></tr></thead>
   <tbody>
-    <tr><td><code>/resume</code> <code>/wrap</code> <code>/dropin-apply</code> <code>/dropin-check</code> <code>/dropin-update</code> <code>/dropin-sync</code></td><td>01 §D-4</td><td>global &mdash; <code>~/.claude/skills/</code></td><td>Delete the folder. Accumulated records under <code>docs/</code> stay by default (you are asked) &mdash; they are data.</td></tr>
+    <tr><td><code>/resume</code> <code>/wrap</code> <code>/dropin-apply</code> <code>/dropin-check</code> <code>/dropin-update</code> <code>/dropin-sync</code> <code>/dropin-pick</code></td><td>01 §D-4</td><td>global &mdash; <code>~/.claude/skills/</code></td><td>Delete the folder. Accumulated records under <code>docs/</code> stay by default (you are asked) &mdash; they are data.</td></tr>
     <tr><td><code>/svg-design</code></td><td>03 §2</td><td>asked at install &mdash; global or project</td><td>Delete the folder.</td></tr>
     <tr><td><code>/frontend-design</code></td><td>03 §3</td><td>asked at install &mdash; global (plugin or <code>npx skills add -g</code>) or project (<code>npx skills add</code>)</td><td>Delete the folder. If npx only left a link, delete what the link points to as well. Once <code>kr-ui-guide</code> is gone too, delete the font-licence policy section from the <code>CLAUDE.md</code>.</td></tr>
     <tr><td>the six feature skills</td><td>03 §7</td><td>global &mdash; project scope if the team and CI must share them &middot; or the <code>dandi</code> plugin</td><td>Plugin: <code>/plugin uninstall dandi-feature-docs@dandi</code>. Copy: guard first, then the six folders. <code>docs/features/</code>, <code>tests/e2e/</code> and <code>tests/maestro/</code> stay.</td></tr>

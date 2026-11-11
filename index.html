@@ -248,7 +248,7 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
       <svg width="26" height="26"><use href="#check"/></svg>
       <span class="no">01</span>
       <span class="desc"><b>Foundation &mdash; memory and safety.</b>
-        <p>AI forgets everything when the chat closes. Document 01 builds a work-log system plus <code class="i">/resume</code> (pick up where you left off), <code class="i">/wrap</code> (close out the session), <code class="i">/dropin-check</code> (audit your setup), <code class="i">/dropin-update</code> (refresh the documents), <code class="i">/dropin-apply</code> (re-apply the setup) and <code class="i">/dropin-sync</code> (all three in order), so <b>yesterday&rsquo;s work is still there today</b> &mdash; and it locks passwords and key files so the AI can neither read them nor send them anywhere.</p>
+        <p>AI forgets everything when the chat closes. Document 01 builds a work-log system plus <code class="i">/resume</code> (pick up where you left off), <code class="i">/wrap</code> (close out the session), <code class="i">/dropin-check</code> (audit your setup), <code class="i">/dropin-update</code> (refresh the documents), <code class="i">/dropin-apply</code> (re-apply the setup) and <code class="i">/dropin-sync</code> (update, check and apply, in that order) and <code class="i">/dropin-pick</code> (install only the kinds you pick &mdash; config only, MCP only, plugins only and so on), so <b>yesterday&rsquo;s work is still there today</b> &mdash; and it locks passwords and key files so the AI can neither read them nor send them anywhere.</p>
         <a href="https://github.com/EleninJayTech/claude/blob/main/01_Claude-Code-통합구성-범용마스터.md">01_Claude-Code-통합구성-범용마스터.md ↗</a></span>
     </li>
     <li>
@@ -301,6 +301,7 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
     <tr><td>Don't want to pick</td><td>Answer <b>recommended</b> at the "mode" question</td><td>The combination matching your project, installed automatically</td></tr>
     <tr><td>Mostly web UI work</td><td>Add the <b>design bundle</b> on top of a mode &mdash; "minimal + design"</td><td>A setup with the design items pre-checked</td></tr>
     <tr><td>Add-ons only</td><td>"Apply 03_확장기능-설치-체크리스트.md"</td><td>Pick what you need and install</td></tr>
+    <tr><td>Only one kind of thing (MCP only, plugins only, config only&hellip;)</td><td><code class="i">/dropin-pick MCP</code> &mdash; or <code class="i">config</code>, <code class="i">skill</code>, <code class="i">plugin</code>, <code class="i">hook</code>, <code class="i">agent</code>, <code class="i">CLI</code>, <code class="i">style</code>, <code class="i">routine</code> (once 01 is installed)</td><td>Only the items of that kind are offered &mdash; still one by one for you to choose (items that are off by default stay off), the mode and bundle questions are skipped, and safety questions still appear</td></tr>
     <tr><td>Automatic checks only</td><td>"Apply 04_검증-자동화.md to this project"</td><td>Checks on every edit, plus one before merging</td></tr>
     <tr><td>Pro plan (low allowance)</td><td>Answer <b>thrift</b> at the "operating profile" question</td><td>Quality-critical moments untouched; everyday consumption drops &mdash; you start everyday work on the lighter model yourself with <code class="i">/model sonnet</code> (it sticks), and open a fresh session on the higher model &mdash; for example <code class="i">claude --model opus</code> &mdash; for quality-critical work such as reviews</td></tr>
     <tr><td>Model split only</td><td>"Apply 02_모델분담-범용-플레이북.md to this project"</td><td>A team that splits work between expensive and cheap models</td></tr>
@@ -340,7 +341,7 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
     <b>/dropin-update</b><br>
     <span class="dim"># Bring the configuration itself up to date &mdash; documents, skills, settings</span><br>
     <b>/dropin-apply</b>  <span class="dim">&larr; this is the one that actually changes your setup</span><br>
-    <span class="dim"># Or all three in order, in one go</span><br>
+    <span class="dim"># Or all three in one go &mdash; update, then check, then apply</span><br>
     <b>/dropin-sync</b>
   </div>
   <ul>
