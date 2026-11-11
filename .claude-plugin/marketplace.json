@@ -44,6 +44,13 @@
       "description": "Let sessions in the same folder see each other: list other active sessions with their branch and edited files at session start, and warn once before editing a file another session changed. Hooks only, no model calls.",
       "license": "MIT",
       "keywords": ["sessions", "worktree", "hooks", "collaboration", "concurrency"]
+    },
+    {
+      "name": "dandi-ops-kit",
+      "source": "./plugins/dandi-ops-kit",
+      "description": "Diagnose a solo project first, then build only the deploy/ops pieces it needs: deploy runbook with rollback, ops runbook, admin hub, /admin dashboard, health check alerts, backup restore rehearsal, free-tier limit watch. Never deploys or sets secrets itself.",
+      "license": "MIT",
+      "keywords": ["deploy", "runbook", "admin", "monitoring", "backup"]
     }
   ]
 }
