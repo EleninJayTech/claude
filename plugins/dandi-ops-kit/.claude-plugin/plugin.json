@@ -1,6 +1,6 @@
 {
   "name": "dandi-ops-kit",
-  "version": "1.0.0+f6953ec7",
+  "version": "1.0.0+a3ab7b2f",
   "description": "Diagnose a solo project first, then build only the deploy/ops pieces it needs: deploy runbook with rollback, ops runbook, admin hub, /admin dashboard, health check alerts, backup restore rehearsal, free-tier limit watch. Never deploys or sets secrets itself. Skill instructions are written in Korean.",
   "author": { "name": "EleninJayTech", "url": "https://github.com/EleninJayTech" },
   "homepage": "https://eleninjaytech.github.io/claude/pages/skills.html",
