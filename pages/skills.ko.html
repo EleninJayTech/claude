@@ -224,6 +224,7 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
     <tr><td><code>/dropin-apply</code></td><td><code>[추천]</code> &mdash; 없으면 전체 절차</td><td>구성 자체를 최신으로 맞추고 싶을 때 &mdash; <code>추천</code>이면 작업이 새로 필요로 하는 것을 더할 때</td><td>문서·설치된 스킬·설정을 한 번에 재적용 &mdash; <code>추천</code>이면 고른 항목만</td></tr>
     <tr><td><code>/dropin-sync</code></td><td>없음 &middot; 수동 전용</td><td>세 단계를 고르지 않고 순서대로 다 돌리고 싶을 때</td><td>문서 갱신·상태 점검·구성 재적용을 한 번에, 보고는 하나</td></tr>
     <tr><td><code>/dropin-pick</code></td><td><code>[분류&hellip;]</code> &mdash; 없으면 묻는다 &middot; 수동 전용</td><td>한 종류만 깔고 싶을 때 &mdash; 구성만, MCP만, 플러그인만</td><td>고른 항목만, 그리고 그에 맞춰 갱신된 적용 기록</td></tr>
+    <tr><td><code>/scope</code></td><td><code>&lt;작업&gt;</code> &mdash; 없으면 묻는다 &middot; 수동 전용</td><td>이 세션은 한 가지만 하고 멈췄으면 할 때</td><td>끝내고 검증한 그 작업, 그리고 범위 밖으로 남긴 것을 한 줄씩 적은 목록</td></tr>
 
     <tr><th class="grp" colspan="4" scope="colgroup">기능 문서·테스트·릴리스 &middot; 03 §7</th></tr>
     <tr><td><code>/feature-docs</code></td><td><code>init</code> | <code>sync [기준]</code></td><td>처음 문서화할 때, 바뀐 것을 반영할 때</td><td><code>docs/features/</code> 전체</td></tr>
@@ -279,7 +280,7 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
     <h2 style="margin-top:0">세션을 여닫는 스킬</h2>
     <span class="src">01 §D-4가 설치 &middot; 글로벌 스코프</span>
   </div>
-  <p class="gnote">이것들이 셋업의 맥박이다. 둘은 매 세션을 열고 닫고, <code>dropin-</code> 계열은 다른 질문에 답한다 &mdash; 내 구성이 원본 문서에서 얼마나 밀렸는지, 그리고 그걸 어떻게 다시 따라잡는지.</p>
+  <p class="gnote">이것들이 셋업의 맥박이다. 둘은 매 세션을 열고 닫고, <code>dropin-</code> 계열은 다른 질문에 답한다 &mdash; 내 구성이 원본 문서에서 얼마나 밀렸는지, 그리고 그걸 어떻게 다시 따라잡는지. <code>/scope</code>는 결이 다르다 &mdash; 부르기 전에는 아무것도 바꾸지 않고, 부르면 그 세션을 내가 말한 한 작업에 묶어 둔다.</p>
   <div class="cards">
 
     <article class="skill" data-g="session">
@@ -340,7 +341,7 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
       <dl>
         <dt>언제</dt><dd>이 PC나 이 프로젝트를 현재 문서 기준으로 올리고 싶을 때. 처음 까는 경우에도 같은 명령이라, 내가 어느 쪽인지 몰라도 된다. Claude나 <code>/resume</code>이 작업에 새로 필요한 항목을 추천했으면 <code>추천</code>을 붙여 부른다.</dd>
         <dt>하는 일</dt><dd>00 문서를 찾아서(같은 폴더&middot;<code>docs/</code>의 사본·로컬 클론·내가 알려 준 폴더·배포된 raw 순 &mdash; raw는 요약하지 않고 파일 그대로 프로젝트 밖 임시 폴더에 받는다) 읽고 그 절차를 그대로 돈다 &mdash; 이미 있는 것을 감지하고, 무엇을 할지 묻고, 고른 것만 설치하고, 검증하고, 적용 기록을 쓴다. 스킬 자신은 단계를 하나도 갖지 않아서 문서와 갈릴 수가 없다. <code>/dropin-apply 추천</code>으로 부르면 작업 중 추천 경로를 탄다 &mdash; 작업이 새로 필요로 하게 됐는데 아직 안 깐 항목만, 무엇을 보고 걸렸는지 한 줄씩 붙여 내놓고, 처음 공통 질문은 기록된 답으로 갈음하며, 고른 것만 깐다. 안전 질문은 그대로 묻는다. 적용 기록이 없는 폴더에서는 이 경로 대신 일반 설치를 돌고, 거기서는 최소가 기본 추천이다.</dd>
-        <dt>결과</dt><dd>문서와 일치하는 구성, 그리고 그 사실을 적은 <code>dropin-applied</code> 줄. 기능 문서·refactor·kr-ui-guide·kr-ui-styles·browser-check·pc-clean·session-board·ops-kit과 <code>dropin-</code> 계열처럼 이미 깔린 스킬은 <b>이름이 아니라 내용으로</b> 대조하므로, 파일 수는 그대로고 문장만 바뀐 개정도 교체된다 &mdash; <code>dropin-</code> 계열은 배포본과 다르면 기본값이 <code>재구성</code>으로 나온다. <code>/resume</code>·<code>/wrap</code>은 있는지만 본다 &mdash; 새 본문으로 갈려면 이미 깔린 글로벌 항목을 묻는 질문에서 기본값 <code>유지</code> 대신 <code>재구성</code>을 고른다. 승인한 개정이 걸린 항목은 처음부터 <code>재구성</code>이 기본으로 나온다. 거절한 추천은 기록에 남아 다시 권하지 않는다 &mdash; 나중에 깔고 싶으면 인수 없이 <code>/dropin-apply</code>를 다시 돌려 추가한다.</dd>
+        <dt>결과</dt><dd>문서와 일치하는 구성, 그리고 그 사실을 적은 <code>dropin-applied</code> 줄. 기능 문서·refactor·kr-ui-guide·kr-ui-styles·browser-check·pc-clean·session-board·ops-kit·<code>/scope</code>와 <code>dropin-</code> 계열처럼 이미 깔린 스킬은 <b>이름이 아니라 내용으로</b> 대조하므로, 파일 수는 그대로고 문장만 바뀐 개정도 교체된다 &mdash; <code>dropin-</code> 계열과 <code>/scope</code>는 배포본과 다르면 기본값이 <code>재구성</code>으로 나온다. <code>/resume</code>·<code>/wrap</code>은 있는지만 본다 &mdash; 새 본문으로 갈려면 이미 깔린 글로벌 항목을 묻는 질문에서 기본값 <code>유지</code> 대신 <code>재구성</code>을 고른다. 승인한 개정이 걸린 항목은 처음부터 <code>재구성</code>이 기본으로 나온다. 거절한 추천은 기록에 남아 다시 권하지 않는다 &mdash; 나중에 깔고 싶으면 인수 없이 <code>/dropin-apply</code>를 다시 돌려 추가한다.</dd>
       </dl>
       <div class="warn soft"><b>알아 둘 것.</b> Claude에게 &ldquo;이 문서를 학습해서 적용해줘&rdquo;라고 말하는 것과 같은 일이다 &mdash; 그 문장도 그대로 동작한다. 명령이 따로 있는 이유는, 보이지 않는 문은 열리지 않기 때문이다.</div>
       <div class="tags"><span class="tag">글로벌</span><span class="tag">먼저 묻는다</span></div>
@@ -366,6 +367,19 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
         <dt>결과</dt><dd>고른 항목만, 그리고 평소와 같은 <code>dropin-applied</code> 줄. 문서 일부만 깔았으면 그렇게 표시되므로, 나중에 그냥 <code>/dropin-apply</code>를 다시 돌리면 나머지를 추가할지 묻는다. 고르지 않은 분류의 문서는 깔지 않고, 손대지 않은 문서의 기록도 건드리지 않는다.</dd>
       </dl>
       <div class="tags"><span class="tag hand">수동 호출</span><span class="tag">글로벌</span><span class="tag">먼저 묻는다</span></div>
+    </article>
+
+    <article class="skill" data-g="session">
+      <div class="cmd"><span class="sl">/</span>scope</div>
+      <div class="args">&lt;이 세션에서 할 작업&gt; &middot; 수동 호출 전용</div>
+      <p class="one">이 세션이 할 일을 한 번 선언한다 &mdash; Claude는 그 작업과 거기에 딸린 일까지만 하고 멈춘다.</p>
+      <dl>
+        <dt>언제</dt><dd>이 세션에서는 한 가지만 하고, 옆 코드 정리&middot;다음 단계 착수&middot;&ldquo;다음엔 ~할까요?&rdquo;로 번지지 않았으면 할 때. 세션을 시작할 때 부르거나, 긴 세션이 흐트러지기 시작하면 다시 부른다 &mdash; 새 선언이 앞 선언을 대신한다. 작업을 안 적고 부르면 무엇까지 할지 한 줄로 묻는다.</dd>
+        <dt>하는 일</dt><dd>먼저 <code>세션 범위: &lt;작업&gt;</code> 한 줄로 범위를 되풀이하고 하던 작업을 잇는다. <b>범위 안</b>은 선언한 작업, 그 작업이 깨뜨린 곳 고치기(호출부&middot;깨진 테스트&middot;타입 오류), 검증(테스트&middot;빌드&middot;설치해 둔 검증 스킬), 작업 때문에 함께 바뀌어야 하는 문서, <code>CLAUDE.md</code> 규칙이 요구하는 기록&middot;보고다. <b>범위 밖</b>은 관련돼 보이지만 작업 완료에 필요 없는 수정, 다음 기능&middot;다음 계획 단계 착수, 작업 중 발견한 별개의 버그, 구성&middot;도구 추천이다(작업을 마친 뒤 하는 한 줄 추천도 여기 든다). 범위 밖은 하지 않고 완료 보고 끝 <code>범위 밖 발견:</code> 목록에 한 줄씩만 적는다. 애매하면 하지 않고 그 목록에 넣는다.</dd>
+        <dt>결과</dt><dd>무엇을 했고 어떻게 검증했는지의 보고, <code>범위 밖 발견:</code> 목록, 그리고 이어 가려면 <code>/wrap</code> 뒤 <code>/clear</code> &rarr; <code>/resume</code>을 하라는 마지막 줄. 그리고 <strong>멈춘다</strong> &mdash; 후속 작업을 제안하거나 착수하지 않는다. 범위 밖 일을 내가 직접 시키면 그 요청이 우선한다 &mdash; <code>범위 확장: &lt;요청&gt;</code> 한 줄을 적고 진행한다.</dd>
+      </dl>
+      <div class="warn soft"><b>알아 둘 것.</b> 지침이지 강제가 아니다 &mdash; 훅처럼 막지 못하고, Claude가 따르는 규칙일 뿐이다. 수동 호출 전용이라 부르지 않으면 아무 동작도 바꾸지 않는다. 선언은 <code>/clear</code> 전까지 유효하고, 긴 세션에서 흐려지면 다시 선언한다. 재적용 때는 <code>dropin-</code> 계열처럼 배포본과 내용으로 대조된다.</div>
+      <div class="tags"><span class="tag hand">수동 호출</span><span class="tag">글로벌</span></div>
     </article>
 
   </div>
@@ -726,7 +740,7 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
       <p class="one">혼자 배포하는 프로젝트를 살펴보고, 배포·운영에 정말 필요한 문서·화면·안전장치만 만든다 &mdash; 그리고 코드가 바뀌면 함께 고친다.</p>
       <dl>
         <dt>언제</dt><dd>처음 배포하기 전(<code>/ops-kit init</code>), 배포 설정이 바뀐 뒤(<code>/ops-kit sync</code>), 그리고 읽기만 하는 점검이 필요할 때(<code>/ops-kit check</code>) &mdash; 지난 예정일, 확인 안 된 수치, 오래된 확인일, 깨진 링크를 본다.</dd>
-        <dt>하는 일</dt><dd>배포 명령, 호스팅 설정, 시크릿의 <em>이름</em>(값은 보지 않는다 &mdash; <code>.env</code>·키 파일은 열지 않는다), DB, 외부 서비스, 이미 있는 운영 문서를 읽는다. 그다음 만들 수 있는 산출물 7종을 진단 표 하나로 보여 준다: 배포 런북(첫 배포·재배포·롤백), 운영 런북(외부 콘솔·행정·정기 점검), 관리 허브(앱별 관리 사이트·계정 이름·확인 위치를 한 페이지에), 앱이 직접 띄우는 <code>/admin</code> 대시보드(일일 사용자·신규·D1/D7 재방문·결제·국가), 헬스체크와 장애 알림, 백업과 복구 리허설, 무료 한도·비용 감시. 항목마다 필요·불필요·판단 보류를 판정하고 근거가 된 파일과 줄을 붙인다. 앞의 넷이 보통 추천이고 뒤의 셋은 선택이다. 내가 고르기 전에는 아무 파일도 만들지 않는다. 런북의 단계마다 붙여 넣으면 도는 명령, 성공하면 보이는 문구, 실패하면 할 일, 다음 세션이 이어받을 수 있게 Claude에게 보낼 보고 한 줄이 붙는다. 시크릿은 숨김 입력으로 받아 길이를 먼저 출력한 뒤 명령줄 도구로 넘긴다 &mdash; 클립보드로 붙여 넣지 않는다.</dd>
+        <dt>하는 일</dt><dd>배포 명령, 호스팅 설정, 시크릿의 <em>이름</em>(값은 보지 않는다 &mdash; <code>.env</code>·키 파일은 열지 않는다), DB, 외부 서비스, 이미 있는 운영 문서를 읽는다. 그다음 만들 수 있는 산출물 7종을 진단 표 하나로 보여 준다: 배포 런북(첫 배포·재배포·롤백), 운영 런북(외부 콘솔·행정·정기 점검), 관리 허브(앱별 관리 사이트·계정 이름·확인 위치를 한 페이지에), 앱이 직접 띄우는 <code>/admin</code> 대시보드(일일 사용자·신규·D1/D7 재방문·결제·국가), 헬스체크와 장애 알림, 백업과 복구 리허설, 무료 한도·비용 감시. 허브에는 <b>프로젝트 기록 지도</b>도 실린다 &mdash; 정책 기록, 기능 변경 기록, 기능 명세, 릴리스 노트, 진행&middot;결정 기록, 계획서, 루틴 정의 같은 기록을 관례 경로에서 찾아 있음/없음&middot;건수&middot;마지막 갱신일&middot;이름 목록만 보여 준다. 읽기만 하고 본문을 옮기거나 기록을 만들지 않으며, 만든 날의 스냅샷이라 <code>/ops-kit sync</code>가 다시 맞춘다. 배포 대상이 있고 기록이 2종 이상이면 허브는 필요로 판정된다. 항목마다 필요·불필요·판단 보류를 판정하고 근거가 된 파일과 줄을 붙인다. 앞의 넷이 보통 추천이고 뒤의 셋은 선택이다. 내가 고르기 전에는 아무 파일도 만들지 않는다. 런북의 단계마다 붙여 넣으면 도는 명령, 성공하면 보이는 문구, 실패하면 할 일, 다음 세션이 이어받을 수 있게 Claude에게 보낼 보고 한 줄이 붙는다. 시크릿은 숨김 입력으로 받아 길이를 먼저 출력한 뒤 명령줄 도구로 넘긴다 &mdash; 클립보드로 붙여 넣지 않는다.</dd>
         <dt>결과</dt><dd>고른 산출물만 <code>docs/status/</code>에 생기고, 상태 파일 <code>docs/status/ops-kit.md</code>에 판정·확인일·다음 점검 예정·필요 없다고 본 이유가 남는다 &mdash; 그 항목은 프로젝트에 새 신호가 생겨 이유가 뒤집히지 않는 한 다시 권하지 않는다. Claude가 아티팩트를 게시할 수 있는 환경이면 런북과 허브를 비공개로 게시하고 고칠 때 같은 링크로 다시 게시한다. 아니면 로컬 HTML 파일로 둔다.</dd>
       </dl>
       <div class="warn soft"><b>알아 둘 것.</b> 배포·시크릿 입력·알림 채널 연결은 하지 않는다 &mdash; 그건 내가 런북을 보고 한다. 유료 모니터링 서비스를 전제하지 않는다. 한도·수수료 같은 바깥 수치는 그날 확인해 확인일을 붙이고, 확인 못 한 값엔 <code>[재확인]</code>을 붙인다. 대시보드는 닫힌 채로 나간다 &mdash; 32자 이상의 토큰 시크릿을 넣기 전까지 503으로 답한다. 앱에 코드(대시보드·헬스체크)를 쓸 수 있는 스킬이라 기본 해제로 나온다. 배포 대상(<code>wrangler.toml</code>·<code>Dockerfile</code>·<code>vercel.json</code> 같은 파일, 배포 단계가 있는 CI 워크플로, <code>deploy</code> 스크립트)이 보이면 설치 화면에 추천을 붙이지만 미리 체크하지는 않고, 문서만 있는 저장소에는 아예 내지 않는다. 스코프는 글로벌을 권하고, 산출물은 스코프와 상관없이 늘 프로젝트 안에 생긴다. 호출 방식은 자동 판단이 기본이다 &mdash; 표에서 고르기 전에는 만들지 않는 규칙을 스스로 지킨다. 내가 부를 때만 돌게 하려면 수동 호출 전용을 고른다. 복사본과 <code>dandi</code> 플러그인을 둘 다 깔면 둘 다 뜨니 하나만 남긴다.</div>
@@ -742,6 +756,7 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
 <p class="lead">하루에 스킬을 다 쓰지는 않는다. 실제 한 주는 이쪽에 가깝다.</p>
 <div class="day">
   <div class="step"><div class="t">/resume</div><p>세션을 연다. pull, 미커밋 작업, 최근 기록, 예정일, 작업이 새로 필요로 하는 항목. 감을 잡는 데 30초쯤.</p></div>
+  <div class="step"><div class="t">/scope &lt;작업&gt;</div><p>선택. 이 세션은 한 가지만 할 거라면 한 번 선언해 둔다. Claude는 그 작업을 끝내고, 눈에 띈 다른 것은 한 줄씩 적어 두고, 거기서 멈춘다.</p></div>
   <div class="step"><div class="t">— 여기서 실제로 만든다 —</div><p>평범한 작업이다. 스킬이 낄 자리가 아니다. 다만 작업이 처음으로 테스트를 들이거나 프론트엔드 스택을 붙이는 식으로 안 깐 단디 항목을 필요로 하게 되면, Claude가 하던 일을 마친 뒤 한 줄로 알려 준다. 수락하면 <code>/dropin-apply 추천</code>이 고른 것만 깐다.</p></div>
   <div class="step"><div class="t">/refactor</div><p>기능이 돌기 시작하면 정리는 별도 변경으로. 승인 게이트가 있어서 뭐가 움직이기 전에 후보 표를 먼저 본다.</p></div>
   <div class="step"><div class="t">/feature-docs sync</div><p>바꾼 것을 명세에 되먹인다. <code>/feature-doc-guard</code>를 깔았다면 이걸 해야 커밋이 통과한다.</p></div>
@@ -915,7 +930,7 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
 <table>
   <thead><tr><th>스킬</th><th>문서</th><th>기본 스코프</th><th>제거</th></tr></thead>
   <tbody>
-    <tr><td><code>/resume</code> <code>/wrap</code> <code>/dropin-apply</code> <code>/dropin-check</code> <code>/dropin-update</code> <code>/dropin-sync</code> <code>/dropin-pick</code></td><td>01 §D-4</td><td>글로벌 &mdash; <code>~/.claude/skills/</code></td><td>폴더 삭제. 쌓인 <code>docs/</code> 기록은 묻되 기본으로 남긴다 &mdash; 그건 데이터다.</td></tr>
+    <tr><td><code>/resume</code> <code>/wrap</code> <code>/dropin-apply</code> <code>/dropin-check</code> <code>/dropin-update</code> <code>/dropin-sync</code> <code>/dropin-pick</code> <code>/scope</code></td><td>01 §D-4</td><td>글로벌 &mdash; <code>~/.claude/skills/</code></td><td>폴더 삭제. 쌓인 <code>docs/</code> 기록은 묻되 기본으로 남긴다 &mdash; 그건 데이터다.</td></tr>
     <tr><td><code>/svg-design</code></td><td>03 §2</td><td>설치할 때 묻는다 &mdash; 글로벌 또는 프로젝트</td><td>폴더 삭제.</td></tr>
     <tr><td><code>/frontend-design</code></td><td>03 §3</td><td>설치할 때 묻는다 &mdash; 글로벌(플러그인 또는 <code>npx skills add -g</code>) 또는 프로젝트(<code>npx skills add</code>)</td><td>폴더 삭제. npx가 링크만 걸어 뒀으면 링크가 가리키는 실체까지 지운다. <code>kr-ui-guide</code>까지 없으면 <code>CLAUDE.md</code>의 폰트 라이선스 정책 절도 지운다.</td></tr>
     <tr><td>기능 문서 6종</td><td>03 §7</td><td>글로벌 &mdash; 팀·CI가 공유해야 하면 프로젝트 스코프 &middot; 또는 <code>dandi</code> 플러그인</td><td>플러그인: <code>/plugin uninstall dandi-feature-docs@dandi</code>. 복사본: 가드부터 걷고 여섯 폴더. <code>docs/features/</code>·<code>tests/e2e/</code>·<code>tests/maestro/</code>는 남긴다.</td></tr>
@@ -932,7 +947,7 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
 </div>
 <p class="lead" style="margin-top:16px">전부 제거 절차가 문서에 적혀 있는데, 이건 의도한 것이다. 되돌릴 수 없는 설치는 애초에 선택지를 준 게 아니기 때문이다. 감지·설치·검증·제거 4단 전체는 각 문서에 있다. 설치할 때 나오는 질문의 뜻은 <a href="options.ko.html">옵션 사전</a>에, 처음부터 차근히 밟아 보려면 <a href="learn.ko.html">학습 코스</a>에 있다. 설치 항목 몇 개는 일부러 여기 없다: 정책 기록(03 §11)과 기능 변경 기록(03 §13)은 스킬이 아니라 규칙 파일(<code>.claude/rules/policy-recording.md</code>, <code>.claude/rules/feature-log.md</code>)을 더하는 항목이라, 부를 명령이 없어 카드도 없다.</p>
 
-<footer>단디(Dandi) &middot; 스킬 카탈로그 &middot; 2026-11-11 &middot; 01 §D-4 · 02 STEP 3 ⓔ · 03 §2 · §3 · §5 · §7 · §8 · §9 · §10 · §12 · §14 · §15가 설치하는 스킬들. 명령은 별칭 없이 적었으니, 설치할 때 별칭을 골랐다면 그것을 얹어 읽으면 된다. &middot; 글꼴: Pretendard, IBM Plex Mono — 둘 다 SIL 오픈 폰트 라이선스 1.1(상업 이용·웹 임베딩 무료)</footer>
+<footer>단디(Dandi) &middot; 스킬 카탈로그 &middot; 2026-11-13 &middot; 01 §D-4 · 02 STEP 3 ⓔ · 03 §2 · §3 · §5 · §7 · §8 · §9 · §10 · §12 · §14 · §15가 설치하는 스킬들. 명령은 별칭 없이 적었으니, 설치할 때 별칭을 골랐다면 그것을 얹어 읽으면 된다. &middot; 글꼴: Pretendard, IBM Plex Mono — 둘 다 SIL 오픈 폰트 라이선스 1.1(상업 이용·웹 임베딩 무료)</footer>
 
 </div>
 <script>
