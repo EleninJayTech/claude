@@ -174,6 +174,22 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
   .skill dl{grid-template-columns:1fr;gap:2px 0}
   .skill dt{padding-top:8px}
 }
+/* ---------- 요점/상세 ---------- */
+details.more,details.faq,details.sect{margin:10px 0}
+details.more>summary,details.faq>summary,details.sect>summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:8px;min-height:44px;font-weight:600}
+details.more>summary::-webkit-details-marker,details.faq>summary::-webkit-details-marker,details.sect>summary::-webkit-details-marker{display:none}
+details.more>summary::after,details.faq>summary::after,details.sect>summary::after{content:"+";margin-left:auto;font-family:var(--mono);color:var(--ink-soft)}
+details.more[open]>summary::after,details.faq[open]>summary::after,details.sect[open]>summary::after{content:"\2212"}
+details.more>summary{font-size:14px;color:var(--blue)}
+details.faq{border-top:1px solid var(--line)}
+details.faq>summary{font-size:17px;padding:6px 0}
+details.sect{border-top:1px solid var(--line);padding-top:4px}
+details.sect>summary h2{margin:0}
+.xbtn{font:600 14px var(--sans);min-height:44px;padding:0 16px;border-radius:12px;border:1px solid var(--line-strong);background:var(--card);color:var(--ink);cursor:pointer}
+.xbtn[aria-pressed="true"]{background:var(--blue-soft);border-color:var(--blue-line)}
+@media print{details>summary::after{content:none}}
+[hidden]{display:none!important}
+details.sect>table{display:block;overflow-x:auto;min-width:0}
 </style>
 </head>
 <body>
@@ -184,7 +200,7 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
   <p class="eyebrow"><b>Dandi</b> &middot; EleninJayTech / claude &middot; skill catalog</p>
   <h1>Every skill, <span class="mark">one slash away</span> &mdash;<br>here is what each one actually does.</h1>
   <p class="sub">A skill is a folder of instructions Claude loads on demand. Dandi installs the ones on this page. This page is the field guide: what each does, when to reach for it, what it leaves on disk, and the places it bites.</p>
-  <p class="backlink" style="margin-top:10px"><a href="../index.html">&larr; Back to the guide</a> &middot; <a href="intro.html">Intro video</a> &middot; <a href="demo.html">Install walkthrough</a> &middot; <a href="options.html">Options dictionary</a> &middot; <a href="learn.html">Course</a> &middot; <a href="https://github.com/EleninJayTech/claude">GitHub repository &#8599;</a></p>
+  <p class="backlink" style="margin-top:10px"><a href="../index.html">&larr; Back to the guide</a> &middot; <a href="intro.html">Intro video</a> &middot; <a href="demo.html">Walkthrough</a> &middot; <a href="options.html">Options dictionary</a> &middot; <a href="learn.html">Course</a> &middot; <a href="https://github.com/EleninJayTech/claude">GitHub repository &#8599;</a></p>
 </header>
 
 <h2 style="margin-top:44px">First, what is a skill?</h2>
@@ -272,7 +288,7 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
   <button class="chip" data-g="pc" aria-pressed="false">PC</button>
   <button class="chip" data-g="board" aria-pressed="false">Parallel sessions</button>
   <button class="chip" data-g="ops" aria-pressed="false">Operations</button>
-  <span class="count" id="count"></span>
+  <span class="count" id="count"></span><button type="button" class="xbtn" data-expand data-open="Expand all" data-close="Collapse all" aria-pressed="false">Expand all</button>
 </div>
 
 <!-- ══════════ GROUP: session ══════════ -->
@@ -288,12 +304,14 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
       <div class="cmd"><span class="sl">/</span>resume</div>
       <div class="args">no arguments &middot; or a worktree number (e.g. <code>001</code>)</div>
       <p class="one">Opens the session by reconstructing where you left off &mdash; from git and from your own records, not from memory.</p>
+      <details class="more"><summary>Details</summary>
       <dl>
         <dt>Use when</dt><dd>At the very start of a session, and again after <code>/clear</code>.</dd>
         <dt>It does</dt><dd>Called with a worktree number (<code>/resume 001</code>), it first moves into that numbered worktree (<code>.claude/worktrees/001-…</code>) and does everything below there &mdash; under Dandi&rsquo;s rule Claude gives every worktree it creates a three-digit number, and if the worktree was deleted but the numbered branch remains, it brings the worktree back. If several match, it lists them and asks; if none matches or the switch fails, it says why and carries on in the current folder. Pulls with <code>--ff-only</code> if the tree is clean, finds uncommitted work through <code>git status</code> &mdash; which may belong to another session running in the same folder, so it asks before treating it as yours, continuing it or committing it &mdash; and reports the number and branch of any worktree outside the main folder. If the current branch was started on top of another branch still in progress, it reports how far that parent has moved ahead, and once the parent is merged into the default branch or deleted, how to move your branch onto the default branch &mdash; doing it is your call. Then it reads the top of <code>PROGRESS.md</code>, the last three decisions, and <code>PROJECT_PLAN.md</code>. If in-work suggestions are on (the default) and this folder has an install record, it also looks at the folder&rsquo;s file names &mdash; never their contents &mdash; for signs that your work now needs a Dandi item that is not installed and was not declined, ruled out or left to the team&rsquo;s setup.</dd>
         <dt>You get</dt><dd>A short "last time you did X, next is Y?" report, plus reminders when a scheduled check has come due, and one line suggesting <code>/dropin-apply 추천</code> when there is something to add.</dd>
       </dl>
       <div class="warn soft"><b>Worth knowing.</b> It reads only the ~5 newest entries, capped at ~700 characters each. Anything the next session must pick up belongs at the <em>front</em> of an entry &mdash; text at the end falls outside the cap and is never read.</div>
+      </details>
       <div class="tags"><span class="tag">global</span><span class="tag">read-mostly</span></div>
     </article>
 
@@ -301,12 +319,14 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
       <div class="cmd"><span class="sl">/</span>wrap</div>
       <div class="args">no arguments</div>
       <p class="one">Closes the session by writing today into the record, so the next <code>/resume</code> has something to find.</p>
+      <details class="more"><summary>Details</summary>
       <dl>
         <dt>Use when</dt><dd>Before you stop working &mdash; and always before <code>/clear</code>.</dd>
         <dt>It does</dt><dd>Appends an entry to <code>PROGRESS.md</code>, adds any new decision as <code>DEC-YYYYMMDD-&lt;author&gt;</code>, ticks the boxes in <code>PROJECT_PLAN.md</code>, and warns you if changes are still uncommitted. It reports only the files this session edited and lists any other uncommitted changes separately as &ldquo;outside this session&rdquo;, so another session's half-done work does not slip into your commit.</dd>
         <dt>You get</dt><dd>One line per session, in the fixed shape <code>[topic][Done] … — @author (branch) date</code>.</dd>
       </dl>
       <div class="warn soft"><b>Worth knowing.</b> Records are append-only. When a decision changes you add a new one and mark the old "Superseded by" &mdash; you never edit history in place.</div>
+      </details>
       <div class="tags"><span class="tag">global</span><span class="tag">writes records</span></div>
     </article>
 
@@ -314,11 +334,13 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
       <div class="cmd"><span class="sl">/</span>dropin-check</div>
       <div class="args">no arguments &middot; read-only</div>
       <p class="one">Tells you whether the configuration on this machine has fallen behind the documents that produced it.</p>
+      <details class="more"><summary>Details</summary>
       <dl>
         <dt>Use when</dt><dd><code>/resume</code> says the install record is over 30 days old, or you simply want to know if anything drifted.</dd>
         <dt>It does</dt><dd>Compares the <code>dropin-applied</code> records in the project and in your global <code>~/.claude/CLAUDE.md</code> against the current versions in the document repository, and reports differences only. It also looks at what is actually running on this machine &mdash; whether installed plugin versions match the record, whether an old <code>commands/</code> file lingers beside a skill of the same name, whether the session board is hooked twice (plugin and copy), and whether a Dandi session skill your team committed to the repo (<code>resume</code>, <code>wrap</code>, <code>scope</code>, the <code>dropin-</code> family) is hidden by a personal skill of the same name on this machine. A hidden skill is reported <b>only when the contents differ</b>, together with which side is newer &mdash; if the project copy is newer it suggests bringing your personal copy in line, if the personal copy is newer it suggests updating and committing the project copy. Identical contents are normal and stay quiet. For a same-name skill that Dandi did not install, it does not suggest copying either way; whether to clear the personal copy is left to you. It also checks whether the project folder looks like it is uploaded to a live web server as-is (a web entry file such as <code>index.php</code> or a server config such as <code>.htaccess</code> next to the Claude files). If so, it lists the Claude files and whether the repository shows any sign of keeping them out of the upload, then gives you the three ways to fix it and a command to try on your live site &mdash; it never sends a request to the site itself. Test servers are not in scope. This check runs on every install.</dd>
         <dt>You get</dt><dd>A difference report. Nothing is installed, nothing is edited. If it is offline or <code>git fetch</code> fails and it cannot see the documents, it does not call you up to date &mdash; it reports &ldquo;not checked against the documents&rdquo;.</dd>
       </dl>
+      </details>
       <div class="tags"><span class="tag">global</span><span class="tag">no writes</span></div>
     </article>
 
@@ -326,12 +348,14 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
       <div class="cmd"><span class="sl">/</span>dropin-update</div>
       <div class="args">no arguments</div>
       <p class="one">Brings your copies of the drop-in documents up to date &mdash; the documents themselves, not the configuration they describe.</p>
+      <details class="more"><summary>Details</summary>
       <dl>
         <dt>Use when</dt><dd><code>/dropin-check</code> reported that your document copies are older than the published ones. If the documents were copied into the project, <code>/dropin-apply</code> also suggests running this first, before it compares anything.</dd>
         <dt>It does</dt><dd>Works out how the documents got here &mdash; copied into the project, referenced from a local clone, or read straight from raw URLs &mdash; and updates each in the way that fits, after asking. If you point it at a folder outside the project, it first checks whether that folder is a git clone: a clone gets <code>git pull</code>, anything else is treated as a copy.</dd>
         <dt>You get</dt><dd>Refreshed document files &mdash; and nothing else. Your installed skills and settings are untouched, because re-applying them is a separate step: <code>/dropin-apply</code>. An install that reads straight from raw URLs has no files to refresh, so it ends with a version comparison and, if there is an applied record, asks whether to download a current copy.</dd>
       </dl>
       <div class="warn soft"><b>Worth knowing.</b> It refuses to run inside the source repository itself &mdash; there, <code>git pull</code> is the update path.</div>
+      </details>
       <div class="tags"><span class="tag">global</span><span class="tag">asks first</span></div>
     </article>
 
@@ -339,34 +363,40 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
       <div class="cmd"><span class="sl">/</span>dropin-apply</div>
       <div class="args">[추천] — the in-work suggestion path; full run if omitted</div>
       <p class="one">Re-applies the whole configuration &mdash; documents, installed skills and settings &mdash; in one command.</p>
+      <details class="more"><summary>Details</summary>
       <dl>
         <dt>Use when</dt><dd>You want this machine or this project brought up to the current documents. It is also the command for a first install, so you do not have to know which case you are in. Add <code>추천</code> when Claude or <code>/resume</code> has suggested an item your work now needs.</dd>
         <dt>It does</dt><dd>Finds document 00 (a copy in the same folder or <code>docs/</code>, a local clone, a folder you name, or the published raw file &mdash; raw is fetched byte for byte, never summarised, into a temporary folder outside the project), reads it, and runs its protocol exactly &mdash; detect what is already here, ask what you want, install only that, verify, and write the install record. The skill holds no steps of its own, so it can never drift from the document. As <code>/dropin-apply 추천</code> it takes the in-work suggestion path instead: it offers only the items your work has newly started to need and you have not installed, each with the sign it spotted, reuses your recorded answers to the opening questions, and installs only what you pick &mdash; the safety questions are still asked. In a folder with no install record it runs the normal install instead, where Minimal is the suggested start. If the project folder looks like it goes to a live web server as-is, the commit advice at the end opens with a warning that the committed Claude files would be readable by URL, with the three ways to keep them out and a command to check.</dd>
         <dt>You get</dt><dd>A configuration that matches the documents, and an updated <code>dropin-applied</code> line saying so. Where a feature-docs, refactor, kr-ui-guide, kr-ui-styles, browser-check, pc-clean, win-setup, session-board, ops-kit, <code>/scope</code> or <code>dropin-</code> skill was already installed, its files are compared by content &mdash; not just by name &mdash; so a version that only changed its wording is still replaced; a <code>dropin-</code> skill or <code>/scope</code> that differs from the published copy comes up with <code>reconcile</code> as the default. <code>/resume</code> and <code>/wrap</code> are only checked for presence &mdash; to get their new text, answer <code>reconcile</code> instead of the default <code>keep</code> when it asks about global items that are already installed. Items touched by a revision you approved start with <code>reconcile</code> as the default. A suggestion you decline is noted in the record and not offered again; to take it later, add it on a plain <code>/dropin-apply</code> re-run.</dd>
       </dl>
       <div class="warn soft"><b>Worth knowing.</b> This is the same thing as telling Claude &ldquo;learn this document and apply it&rdquo; &mdash; the sentence still works. The command exists because a door you cannot see is a door you do not open.</div>
+      </details>
       <div class="tags"><span class="tag">global</span><span class="tag">asks first</span></div>
     </article>
     <article class="skill" data-g="session">
       <div class="cmd"><span class="sl">/</span>dropin-sync</div>
       <div class="args">no arguments &middot; manual call only</div>
       <p class="one">Runs <code>/dropin-update</code>, <code>/dropin-check</code> and <code>/dropin-apply</code> in that order, in one command.</p>
+      <details class="more"><summary>Details</summary>
       <dl>
         <dt>Use when</dt><dd>You just want everything brought up to date and do not want to remember the order.</dd>
         <dt>It does</dt><dd>Reads each of those skills when its turn comes and follows it exactly. It holds no procedure of its own, so changing one of them changes this too. A step that cannot apply &mdash; for example the document refresh inside the source repository &mdash; is marked as skipped and the next step still runs. The closing &ldquo;next, run &hellip;&rdquo; advice of each skill is left out, because the next step is already running.</dd>
         <dt>You get</dt><dd>One report: what each step did and what is still open. Every question the individual skills ask is still asked, in the same place &mdash; nothing is approved for you. The one exception is the apply step&rsquo;s suggestion to refresh the documents first &mdash; step one has just done that, so it is not raised again.</dd>
       </dl>
+      </details>
       <div class="tags"><span class="tag hand">manual only</span><span class="tag">global</span><span class="tag">asks first</span></div>
     </article>
     <article class="skill" data-g="session">
       <div class="cmd"><span class="sl">/</span>dropin-pick</div>
       <div class="args">[kind&hellip;] &mdash; <code>구성</code> (config) &middot; <code>스킬</code> (skill) &middot; <code>플러그인</code> (plugin) &middot; <code>MCP</code> &middot; <code>훅</code> (hook) &middot; <code>에이전트</code> (agent) &middot; <code>CLI</code> &middot; <code>CI</code> &middot; <code>스타일</code> (style) &middot; <code>루틴</code> (routine); asked if omitted &middot; manual call only</div>
       <p class="one">Installs only the kinds of item you pick &mdash; just the configuration, just MCP, just plugins &mdash; without the mode and bundle questions.</p>
+      <details class="more"><summary>Details</summary>
       <dl>
         <dt>Use when</dt><dd>You already know what kind of thing you want and do not want to walk through the whole install. For the whole configuration use <code>/dropin-apply</code>; for what your work has started to need, <code>/dropin-apply 추천</code>.</dd>
         <dt>It does</dt><dd>Finds document 00 the same way <code>/dropin-apply</code> does and follows its install-by-kind section; it holds no steps or kind list of its own. Only the documents your kinds touch are fetched. A kind narrows the list &mdash; it does not decide for you: each item in it is still offered with its own question, and items that are off by default start off. The mode, bundle and quick-path questions are skipped. If the folder has an install record, your recorded answers to the opening questions (language, alias, profile) are reused; if not, only those three are asked. If a document you already installed is behind the current one, its changes are offered first. Safety questions and company gates are still asked.</dd>
         <dt>You get</dt><dd>Only the items you picked, and the usual <code>dropin-applied</code> line. A document installed only in part is marked that way, so a later plain <code>/dropin-apply</code> asks whether to add the rest. Documents for kinds you did not pick are not installed, and records for documents it did not touch are left alone.</dd>
       </dl>
+      </details>
       <div class="tags"><span class="tag hand">manual only</span><span class="tag">global</span><span class="tag">asks first</span></div>
     </article>
 
@@ -374,12 +404,14 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
       <div class="cmd"><span class="sl">/</span>scope</div>
       <div class="args">&lt;what this session is for&gt; &middot; manual call only</div>
       <p class="one">Declares, once, what this session is for &mdash; Claude does that task and what it needs, then stops.</p>
+      <details class="more"><summary>Details</summary>
       <dl>
         <dt>Use when</dt><dd>You want a session to do one thing and not drift into tidying nearby code, starting the next step or asking &ldquo;shall I do X next?&rdquo;. Call it at the start, or again when a long session starts to wander &mdash; a new declaration replaces the old one. Called with no task, it asks in one line how far to go.</dd>
         <dt>It does</dt><dd>Repeats the scope back in one line (<code>세션 범위:</code> &mdash; written in the language you are chatting in), then carries on with the work. <b>Inside the scope</b>: the task itself, fixing what the task broke (call sites, failing tests, type errors), checking it (tests, builds, any check skills you installed), the documents the task forces to change, and the records and reports your <code>CLAUDE.md</code> rules require. <b>Outside</b>: changes that only look related, the next feature or plan step, a separate bug it noticed, and configuration or tool suggestions &mdash; including the one-line suggestion your rules make after a task. Those are not done; each goes as one line in a <code>범위 밖 발견:</code> (out of scope) list at the end of the report. When unsure, it leaves the thing undone and lists it.</dd>
         <dt>You get</dt><dd>A report of what was done and how it was checked, the out-of-scope list, and a last line pointing you to <code>/wrap</code>, then <code>/clear</code> and <code>/resume</code> to continue. Then it <strong>stops</strong> &mdash; no follow-up suggestions, no starting the next thing. If you ask for something outside the scope yourself, your request wins: it writes <code>범위 확장:</code> (scope extended) with your request and goes ahead.</dd>
       </dl>
       <div class="warn soft"><b>Worth knowing.</b> It is guidance, not enforcement &mdash; unlike a hook it cannot block anything; it is a rule Claude follows. Being manual-only, it changes nothing until you call it. A declaration lasts until <code>/clear</code>; if it fades in a long session, declare it again. On a re-apply it is compared with the published copy by content, like the <code>dropin-</code> skills.</div>
+      </details>
       <div class="tags"><span class="tag hand">manual only</span><span class="tag">global</span></div>
     </article>
 
@@ -473,12 +505,14 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
       <div class="cmd"><span class="sl">/</span>feature-docs</div>
       <div class="args">init | sync [base commit or tag]</div>
       <p class="one">Writes down what the program actually does, checked twice: once in the code, once on the running screen.</p>
+      <details class="more"><summary>Details</summary>
       <dl>
         <dt>Use when</dt><dd><code>init</code> for a project with no spec yet (it works incrementally, so a big codebase is fine); <code>sync</code> after you add or change a feature.</dd>
         <dt>It does</dt><dd>Detects the stack, walks the features, drives the real UI through a browser tool (Playwright CLI, the Desktop app&rsquo;s browser or Claude in Chrome) or an emulator &mdash; or Marionette, for a Flutter app in debug mode when it is connected &mdash; and records every claim with the commit, branch and app version it was observed at.</dd>
         <dt>You get</dt><dd><code>docs/features/</code> &mdash; an inventory, a screen-flow map, a data model, a test index, one file per feature, and screenshots.</dd>
       </dl>
       <div class="warn soft"><b>Worth knowing.</b> It never guesses. Code-only evidence is labelled as such, and destructive actions (delete, payment, send) are documented from the code and marked unverified rather than executed.</div>
+      </details>
       <div class="tags"><span class="tag need">entry point</span><span class="tag">writes docs</span><span class="tag">drives the UI</span></div>
     </article>
 
@@ -486,12 +520,14 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
       <div class="cmd"><span class="sl">/</span>feature-test</div>
       <div class="args">[F-003 | TC-F003-01] — all if omitted</div>
       <p class="one">Runs the test cases from the spec on the real screen and, when one fails, works out whose fault it is.</p>
+      <details class="more"><summary>Details</summary>
       <dl>
         <dt>Use when</dt><dd>You want to know whether features still work &mdash; before a release, or after a risky change.</dd>
         <dt>It does</dt><dd>Follows each case exactly as written, prefers a converted script when one is registered, reads each expected value from the page text first &mdash; a screenshot decides only the cases about how something looks &mdash; and files every failure as (A) code bug, (B) stale doc, (C) environment, or (D) not enough evidence.</dd>
         <dt>You get</dt><dd>A dated report under <code>docs/features/test_reports/</code> &mdash; screenshots for failed cases and visual cases, the values read for passing ones &mdash; and a summary in the chat that separates newly failing from newly passing.</dd>
       </dl>
       <div class="warn soft"><b>Worth knowing.</b> It fixes nothing &mdash; not the docs, not the code. Even a confirmed stale doc is repaired afterwards by <code>/feature-docs sync</code>, with your approval. Because it operates your browser, install suggests making it manual-only &mdash; take that and you call it as <code>/feature-test</code> yourself.</div>
+      </details>
       <div class="tags hand"><span class="tag hand">manual-only suggested</span><span class="tag need">needs init</span><span class="tag">drives the UI</span></div>
     </article>
 
@@ -499,11 +535,13 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
       <div class="cmd"><span class="sl">/</span>feature-doc-audit</div>
       <div class="args">[commits-behind threshold, default 5]</div>
       <p class="one">A cheap health check on the docs &mdash; no browser, no tests, just arithmetic against git.</p>
+      <details class="more"><summary>Details</summary>
       <dl>
         <dt>Use when</dt><dd>Weekly, or whenever you want to know which feature to sync first without paying for a full test run.</dd>
         <dt>It does</dt><dd>Finds docs lagging behind <code>HEAD</code>, leftover unverified items, inventory mismatches, code references pointing at files that no longer exist, and cases missing from the test index.</dd>
         <dt>You get</dt><dd>A table and a suggested sync order, in the chat only. Ask and it saves a dated file under <code>docs/features/audit_reports/</code>. That is also why scheduling it with <code>claude -p</code> leaves no result anywhere.</dd>
       </dl>
+      </details>
       <div class="warn"><b>The trap.</b> Needs Python 3. Check it with <code>python -c "print(1)"</code>, not <code>python --version</code> &mdash; a Windows app-execution stub answers the version call and exits 0 while doing nothing at all.</div>
       <div class="tags"><span class="tag need">needs init</span><span class="tag need">needs Python 3</span><span class="tag">no writes</span></div>
     </article>
@@ -512,11 +550,13 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
       <div class="cmd"><span class="sl">/</span>feature-doc-guard</div>
       <div class="args">install | uninstall | check</div>
       <p class="one">Stops the commit where the code moved and the doc did not.</p>
+      <details class="more"><summary>Details</summary>
       <dl>
         <dt>Use when</dt><dd>Once the spec exists and you want it to stay true without anyone having to remember. At install it appears as a sub-choice of the set, unticked, and it is only offered after <code>/feature-docs init</code> because it needs <code>docs/features/00_inventory.md</code> to work. Committed at project scope it applies to every teammate's commits, so install says so and asks for approval.</dd>
         <dt>It does</dt><dd>Installs two guards &mdash; a <code>.git/hooks/pre-commit</code> hook and a Claude Code <code>PreToolUse</code> hook &mdash; that trace each staged source file back to the feature that owns it and block the commit if that feature's doc is not staged too.</dd>
         <dt>You get</dt><dd>A blocked commit with the list of missing docs. Unmapped files only produce a warning, never a block. Emergency bypass: <code>FEATURE_DOC_GUARD=0</code>.</dd>
       </dl>
+      </details>
       <div class="warn"><b>Remove it in order.</b> Run <code>/feature-doc-guard uninstall</code> <em>before</em> deleting the skill folder. Delete the folder first and the pre-commit hook stays behind, blocking commits with no visible way to lift it.</div>
       <div class="tags"><span class="tag need">needs init</span><span class="tag need">needs Python 3</span><span class="tag">installs hooks</span></div>
     </article>
@@ -525,12 +565,14 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
       <div class="cmd"><span class="sl">/</span>test-to-script</div>
       <div class="args">[F-003 | TC-F003-01] — all unconverted if omitted</div>
       <p class="one">Turns the hand-run cases into scripts a machine can run at three in the morning.</p>
+      <details class="more"><summary>Details</summary>
       <dl>
         <dt>Use when</dt><dd>You want tests in CI or on a scheduler. Unattended runs need this &mdash; hand-run cases need a browser tool in a live session, and without one every web case is set aside as an environment problem.</dd>
         <dt>It does</dt><dd>Converts cases to Playwright (web) or Maestro (Android, iOS), proposes <code>data-testid</code> attributes where the selectors are fragile, and registers the mapping in <code>04_script_map.md</code>.</dd>
         <dt>You get</dt><dd>Runnable test files, plus <code>/feature-test</code> automatically preferring the script for every case it registered.</dd>
       </dl>
       <div class="warn soft"><b>Worth knowing.</b> Install suggests making it manual-only, because stabilising selectors means editing your source.</div>
+      </details>
       <div class="tags"><span class="tag hand">manual-only suggested</span><span class="tag need">needs init</span><span class="tag">edits source</span></div>
     </article>
 
@@ -538,12 +580,14 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
       <div class="cmd"><span class="sl">/</span>release-notes</div>
       <div class="args">[from tag] [to tag — HEAD if omitted]</div>
       <p class="one">Writes release notes a user can read, built from the feature docs rather than from the commit log.</p>
+      <details class="more"><summary>Details</summary>
       <dl>
         <dt>Use when</dt><dd>You are cutting a release and need to say what changed in it.</dd>
         <dt>It does</dt><dd>Collects the change history in each feature doc, the version history, the git log and the latest test report, then groups everything by feature &mdash; several commits on one feature become one line.</dd>
         <dt>You get</dt><dd><code>docs/releases/&lt;end tag or date&gt;.md</code>, split into new, changed, fixed, removed, internal, and tests &mdash; with a separate list of commits no doc covers yet.</dd>
       </dl>
       <div class="warn soft"><b>Worth knowing.</b> It refuses to invent. When a commit message is unclear it reads the diff, and if that still does not settle it the line is marked for you to confirm.</div>
+      </details>
       <div class="tags"><span class="tag">writes docs</span></div>
     </article>
 
@@ -563,12 +607,14 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
       <div class="cmd"><span class="sl">/</span>refactor</div>
       <div class="args">[all | path | commitA..commitB | check [scope]] [nocheck]</div>
       <p class="one">Improves the code without changing what it does &mdash; and then proves it did not change what it does.</p>
+      <details class="more"><summary>Details</summary>
       <dl>
         <dt>Use when</dt><dd>Duplication has piled up, a structure needs untangling, a runtime version moved, or something is slow. Never for a new feature or a bug fix &mdash; keeping those out of the same change is the whole premise.</dd>
         <dt>It does</dt><dd>Picks a scope (recent work by default, starting with uncommitted changes), shows you a table of candidates and <strong>waits for your approval</strong>, refactors, then verifies across baselines, call-site contracts, characterization tests, static checks and real runs.</dd>
         <dt>You get</dt><dd>A report in the chat, saved to <code>docs/refactor/</code> on request. It never commits &mdash; you do, ideally one change per commit.</dd>
         <dt>When to run</dt><dd><strong>Right after a feature works and before you commit it</strong>, as its own change. Not while you are still adding to it &mdash; a refactor mixed into a feature commit is one nobody can review or revert separately. Not on code you have no way to exercise either: the verification stage is most of this skill's value, and without a test or a runnable path it has nothing to compare against. On a scope you are unsure about, run <code>/refactor check</code> first &mdash; it leaves existing code alone and only verifies (it may add characterization test files where none existed).</dd>
       </dl>
+      </details>
       <div class="warn"><b>Read the front matter correctly.</b> <code>allowed-tools</code> <em>widens</em> what runs without a prompt; it is not a sandbox. This skill can edit files despite the git-only list. The key that restricts is <code>disallowed-tools</code>.</div>
       <div class="tags"><span class="tag">edits source</span><span class="tag">approval gate</span><span class="tag"><code>check</code> = verify only</span></div>
     </article>
@@ -588,12 +634,14 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
       <div class="cmd"><span class="sl">/</span>plan-&lt;model&gt;</div>
       <div class="args">what to plan &middot; manual-only suggested</div>
       <p class="one">Plans a change with the model you picked at install, writes it down, and stops before any code.</p>
+      <details class="more"><summary>Details</summary>
       <dl>
         <dt>Use when</dt><dd>A change could go several ways and you want the judgement made before anyone starts typing. Not for a routine change with one obvious path.</dd>
         <dt>It does</dt><dd>Enters plan mode, reads only what it needs, and writes a plan that a cheaper model can follow without exploring again: what is confirmed, small steps, a check for each step, and the reason behind each decision.</dd>
         <dt>You get</dt><dd>A plan file copied to <code>docs/plans/</code>. The turn ends there &mdash; you start the implementation with a new prompt, on your usual model.</dd>
       </dl>
       <div class="warn soft"><b>Worth knowing.</b> If your session uses a different model, that one turn runs on the model you picked, and caches are per model, so the conversation so far is re-read once without cache. Call it early in a session or right after <code>/clear</code>.</div>
+      </details>
       <div class="tags"><span class="tag">global or project</span><span class="tag">off by default</span><span class="tag">no code changes</span></div>
     </article>
 
@@ -613,11 +661,13 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
       <div class="cmd"><span class="sl">/</span>svg-design</div>
       <div class="args">no arguments — describe the effect you want</div>
       <p class="one">Builds SVG filter effects &mdash; hand-drawn wobble, gooey blobs, liquid glass, neon text &mdash; that survive contact with real browsers.</p>
+      <details class="more"><summary>Details</summary>
       <dl>
         <dt>Use when</dt><dd>You are writing inline SVG filters, wrapping one in a React or Next.js component, or an effect looks right in Chrome and wrong in Safari.</dd>
         <dt>It does</dt><dd>Carries the rules that are easy to get wrong: unique filter ids from <code>useId()</code> so hydration does not break, padding around blur so WebKit stops clipping, and octave limits so phones keep their frame rate.</dd>
         <dt>You get</dt><dd>Filter code that is accessible and does not thrash the GPU cache on every render.</dd>
       </dl>
+      </details>
       <div class="tags"><span class="tag">global or project</span><span class="tag">front-end only</span></div>
     </article>
 
@@ -625,12 +675,14 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
       <div class="cmd"><span class="sl">/</span>frontend-design</div>
       <div class="args">no arguments — describe the UI</div>
       <p class="one">Pushes a new interface away from the default look that every AI-generated page shares.</p>
+      <details class="more"><summary>Details</summary>
       <dl>
         <dt>Use when</dt><dd>Starting a new screen, or reshaping one that came out looking templated.</dd>
         <dt>It does</dt><dd>Asks for a deliberate point of view on palette, typography and layout, grounded in the subject rather than in a component library's defaults.</dd>
         <dt>You get</dt><dd>Design direction before the markup, which is the only point where it is cheap to change.</dd>
       </dl>
       <div class="warn soft"><b>Worth knowing.</b> This one is published by Anthropic and installed as a plugin (<code>/plugin install</code>) or with <code>npx skills add</code>, so it updates on its own schedule rather than with the Dandi documents. A skill-name alias only applies on the npx or manual-copy routes, not the plugin route. <code>npx skills add -g</code> puts the files in <code>~/.agents/skills/</code> and only links them into <code>~/.claude/skills/</code>, and sometimes that link is not created &mdash; after installing, check that <code>~/.claude/skills/frontend-design</code> is there, and make the link yourself if it is not. It also does not check font licences &mdash; it changes typography freely and can land on a paid face, which is why installing it asks the font-licence question above.</div>
+      </details>
       <div class="tags"><span class="tag">global or project</span><span class="tag">front-end only</span></div>
     </article>
 
@@ -638,12 +690,14 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
       <div class="cmd"><span class="sl">/</span>browser-check</div>
       <div class="args">no arguments — it loads itself when Claude checks a page</div>
       <p class="one">Decides how Claude looks at a page before it looks: read the text when the text is the question, take a screenshot when the look is.</p>
+      <details class="more"><summary>Details</summary>
       <dl>
         <dt>Use when</dt><dd>Claude is checking a screen it just built, verifying a deployed page, or chasing a console or network error. It applies to whichever browser tool you have &mdash; Playwright CLI, the Desktop app&rsquo;s built-in browser, Claude in Chrome or Chrome DevTools MCP. It also covers a Flutter app running in debug mode, on the desktop or a phone &mdash; a window no browser tool can see.</dd>
         <dt>It does</dt><dd>Settles what counts as a pass first, then picks the observation by the kind of question: a plain HTTP fetch when nothing needs rendering; the page text, element tree, console and network when the DOM is the question; a screenshot &mdash; required, never swapped for text &mdash; when layout, overlap, colour or spacing is the question. A check that keeps repeating becomes a script. When the text comes back empty or unclear it steps up one level instead of calling the thing missing. When the question is <em>why</em> a page is slow or failing &mdash; load time, memory, a Lighthouse score &mdash; it uses Chrome DevTools MCP if you have it, and otherwise says the cause was not checked. For a page behind a login it signs in once with a test account and saves that session to a file to reuse; the file holds cookies, so it goes in <code>.gitignore</code> and is never committed. When there is no test account &mdash; Google, SSO or two-factor &mdash; it opens Chrome in a window with a dedicated profile outside the repository and waits while you sign in yourself; it never tries that in a DevTools MCP window, where Google refuses the sign-in. Before it starts it checks which tools this PC has installed and connected, and when the screen and an API disagree about a status, the screen wins. If Playwright cannot start a browser at all on a work PC (<code>Daemon process exited with code 1</code>), it first checks whether a browser policy that force-installs extensions clashes with Playwright&rsquo;s default extension switch, and works around it with a settings file kept outside the repository &mdash; it only reads the policy and never changes it. For a Flutter app it uses Marionette when that is connected &mdash; the element list and logs for the text, the app&rsquo;s own screenshots for the look &mdash; and finds things by key or visible text before falling back to coordinates. Without Marionette it says the app screen was not checked, rather than grabbing the OS screen instead.</dd>
         <dt>You get</dt><dd>Verdicts backed by the values read or the command output, with screenshots only where the look itself was judged. With no browser tool at all it stops at the HTTP check and says the screen was not checked.</dd>
       </dl>
       <div class="warn soft"><b>Worth knowing.</b> It comes with the browser-checking item, which also sets up the browser itself &mdash; you tick which routes to set up. It also comes with the Flutter app-screen item (offered only in Flutter projects, unticked), even if you leave the browser item unticked. Playwright CLI is ticked by default: it runs headless, so it never takes over your own browser, can run several sessions at once, and works the same in WSL, SSH or CI. Without Node its install would fail, so it then starts unticked and the other routes are offered instead. The Desktop browser needs no install but does not work over SSH. Claude in Chrome starts unticked: it uses your real logged-in session, but its tools appear only if it was connected when the session started. Install suggests turning off its <em>Enabled by default</em>, so start with <code>claude --chrome</code> when you want it &mdash; opening the extension in a session already running does nothing, and this skill then tells you to restart. Chrome DevTools MCP starts unticked &mdash; tick it for digging into why a page is slow or broken; it runs in a throwaway browser profile, never your open Chrome. On a work repo that item asks the company-approval questions first. Install suggests letting this skill load itself &mdash; it only helps if it is there at the moment Claude checks. It does not start your app; that is the built-in <code>/run</code> and <code>/verify</code>.</div>
+      </details>
       <div class="tags"><span class="tag">global or project</span><span class="tag">front-end only</span><span class="tag">no writes</span></div>
     </article>
 
@@ -651,12 +705,14 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
       <div class="cmd"><span class="sl">/</span>kr-ui-guide</div>
       <div class="args">no arguments — it loads itself for UI, icon, colour and game-screen work</div>
       <p class="one">Holds a screen for Korean users &mdash; a web page, an app or a game &mdash; to the rules Korean services converged on, and does the contrast maths instead of eyeballing it.</p>
+      <details class="more"><summary>Details</summary>
       <dl>
         <dt>Use when</dt><dd>Designing a flow, choosing or drawing icons, or settling a palette, dark mode or design tokens for a Korean-audience product. Game screens count as well, on PC, console or mobile.</dd>
         <dt>It does</dt><dd>Loads only the summary for the kind of work at hand &mdash; a game brings in one more, covering input devices and key remapping, touch and screen rotation, repeat-grind screens, Korean text overflowing a box that was sized for English, and purchase screens &mdash; applies its hard rules (contrast, bright colours as surfaces only, state by shape as well as colour, 44pt/48dp targets, labelled icons, one accent action, no dark patterns, fonts only once their licence has been read, muted autoplay, a button beside every gesture), and cites the principle or checklist item behind each proposal.</dd>
         <dt>You get</dt><dd>A design proposal with its reasoning, a self-check against the checklist, and every colour pair given with a calculated contrast ratio. Default design tokens come with it (neutral scale, type scale, spacing, radius, shadow, motion) &mdash; brand colours are left blank and asked for, with candidates offered once the summaries have been read. If a job adds or swaps a font, the report names it with its licence tag, the source URL and the date it was checked.</dd>
       </dl>
       <div class="warn soft"><b>Worth knowing.</b> The case studies name real brands. The skill takes the principle, never the brand&rsquo;s colour or icon, and treats the reports&rsquo; conversion figures as unverified. Install ticks this one for you only when it finds a front-end stack and a Korean audience, so on a game-engine project you have to tick it yourself. If you already know which project will get UI work, you can add a <code>## kr-ui-guide 오버라이드</code> block to that project&rsquo;s <code>CLAUDE.md</code> (brand colour, status colours, dark mode, domain, platform, style pack &mdash; optional, left out unless you pick it); its first line sets the order the skills load in, so even a question about a single colour or contrast reads this skill first. If you added the block earlier, a re-apply swaps in the new first line and leaves the values you filled in alone.</div>
+      </details>
       <div class="tags"><span class="tag">global</span><span class="tag">Korean audience</span></div>
     </article>
 
@@ -664,12 +720,14 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
       <div class="cmd"><span class="sl">/</span>kr-ui-styles</div>
       <div class="args">no arguments — it loads itself when the project names a style pack or you ask about other styles</div>
       <p class="one">Swaps kr-ui-guide&rsquo;s default look (restrained, blue-grey, rounded) for another direction drawn from research &mdash; for now editorial / monochrome, dark / neon, kitsch / illustrated and neo-brutalist &mdash; while kr-ui-guide&rsquo;s rules still apply.</p>
+      <details class="more"><summary>Details</summary>
       <dl>
         <dt>Use when</dt><dd>A Korean-audience product should read like a magazine rather than a utility app: fashion and lifestyle shops, brand media, premium cosmetics. Set <code>스타일 팩: editorial</code> in the project&rsquo;s <code>## kr-ui-guide 오버라이드</code> block. For streaming, esports stats, trading and OTT screens, set <code>스타일 팩: dark-neon</code>. For gamified commerce features, teen verticals, event banners and playful empty / 404 screens, set <code>스타일 팩: kitsch</code>. For limited-drop commerce, creator marketplaces, developer tools and campaign landings that want thick black borders and hard shadows, set <code>스타일 팩: neo-brutal</code>.</dd>
         <dt>It does</dt><dd>Reads the pack the project names and its tokens (for editorial: pure black and white, serif headlines from 20px up, sans-serif for anything 16px or smaller, 0px corners, no shadows, 56&ndash;80px between sections), applies them on top of kr-ui-guide, and checks the result against both checklists. With a pack set, it loads alongside kr-ui-guide even for a question about a single colour or contrast &mdash; the pack changes the background, surfaces and accent, so working from the defaults would give the wrong answer. With no pack set and no question about style, it reads nothing. Ask about other styles and it shows the list of packs; the one you pick goes into the project section once you approve.</dd>
         <dt>You get</dt><dd>A design in the pack&rsquo;s tokens with a calculated contrast ratio for every colour pair &mdash; the pack&rsquo;s orange sale accent, for example, is 3.43:1 on white, so it goes on as a badge with black text, not as small text.</dd>
       </dl>
       <div class="warn soft"><b>Worth knowing.</b> kr-ui-guide&rsquo;s hard rules always beat a pack. The pack&rsquo;s source report came from an AI research run, so its contrast figures were recalculated and every font licence was re-read at the source; fonts that need permission for commercial or web use are listed but not used by default.</div>
+      </details>
       <div class="tags"><span class="tag">global</span><span class="tag">Korean audience</span><span class="tag">off by default</span></div>
     </article>
 
@@ -689,12 +747,14 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
       <div class="cmd"><span class="sl">/</span>pc-clean</div>
       <div class="args">[점검만] — check only; check, then offer cleanup, if omitted</div>
       <p class="one">When this Windows PC has got slow, finds the likely causes without changing anything, then cleans only what you approve.</p>
+      <details class="more"><summary>Details</summary>
       <dl>
         <dt>Use when</dt><dd>The PC feels slow, memory or disk space is running low, <code>node.exe</code> or <code>claude.exe</code> processes have piled up, or you want TEMP and the recycle bin emptied. It also works as a start-of-day or end-of-day routine.</dd>
         <dt>It does</dt><dd>Runs a read-only check &mdash; free space on C:, free memory, uptime, orphaned <code>node.exe</code> processes (their parent is gone; leftover MCP and plugin servers are a common source), <code>claude.exe</code> sessions started before today, the top memory users, TEMP files older than seven days, the recycle bin and Outlook&rsquo;s logging folder. It then offers only the items over a threshold, in one question; for old <code>claude.exe</code> sessions it shows each process ID and start time and lets you pick which to end. With <code>점검만</code> it stops after the check.</dd>
         <dt>You get</dt><dd>One table from the check, and after a cleanup, free space on C: and free memory before and after. If the PC has been up seven days or more, a one-line suggestion to restart. Nothing is cleaned unless you approve it.</dd>
       </dl>
       <div class="warn soft"><b>Worth knowing.</b> Windows with PowerShell 7 (<code>pwsh</code>) only &mdash; on any other system install leaves it off the list, and without <code>pwsh</code> the skill stops before running anything. It is off by default because it serves this PC, not a project, and install suggests global scope. By default it loads itself &mdash; the check only reads and every cleanup item asks first; choose manual-only if you want it to run only when you call it. It never ends your current Claude session and does not touch your documents, photos, source or downloads. Deleted files and ended processes cannot be brought back. If you already have your own command named <code>pc-clean</code>, this skill hides it &mdash; install asks whether to keep or replace, and an alias lets you keep both.</div>
+      </details>
       <div class="tags"><span class="tag">global</span><span class="tag">off by default</span><span class="tag need">Windows + pwsh</span><span class="tag">approval gate</span></div>
     </article>
 
@@ -702,12 +762,14 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
       <div class="cmd"><span class="sl">/</span>win-setup</div>
       <div class="args">[진단만 | 검증] (diagnose | verify) — with none: diagnose, then fix only what you approve &middot; manual call only by default</div>
       <p class="one">Gets a Windows PC ready for Claude Code CLI work: checks the setup without changing anything, shows one verdict table, then fixes only the items you approve.</p>
+      <details class="more"><summary>Details</summary>
       <dl>
         <dt>Use when</dt><dd>You are setting up a Windows PC for Claude Code, or new terminal tabs keep opening the old Windows PowerShell 5.1 instead of PowerShell 7, a tool you installed is not found, or your user <code>Path</code> has piled up dead entries. <code>/win-setup 진단만</code> (<code>diagnose</code>) stops after the report. After the fixes, restart, open a new terminal tab and run <code>/win-setup 검증</code> (<code>verify</code>) for the final check.</dd>
         <dt>It does</dt><dd>Runs a read-only check of PowerShell 7, Windows Terminal and Git; the Terminal settings &mdash; one broken profile ID makes the whole file fail to load, which is why tabs open in 5.1 &mdash; and which profile opens by default; your user <code>Path</code> (folders that no longer exist, duplicates, and whether it is still stored in the form that expands <code>%USERPROFILE%</code>); developer mode, long paths and Windows <code>sudo</code>; the shell Claude Code uses for <code>!</code> commands (<code>defaultShell</code>); <code>jq</code>, <code>fd</code> and <code>gh</code>; and free disk space. It reports one table, asks once with a numbered list, and runs only the numbers you approve. The changes that need administrator rights are bundled so you see a single UAC prompt, and it warns you before it appears. Updating Git and moving Docker&rsquo;s disk image are left to you, with the steps.</dd>
         <dt>You get</dt><dd>A before / after / check table, what is left to do (restart, a new terminal tab, the items you do yourself, then <code>/win-setup 검증</code>) and where the backups are. Every change is backed up first under <code>%LOCALAPPDATA%\win-setup\backup\</code>, with logs in <code>%LOCALAPPDATA%\win-setup\logs\</code>.</dd>
       </dl>
       <div class="warn soft"><b>Worth knowing.</b> Windows only &mdash; on any other system install leaves it off the list. PowerShell 7 is not needed to install it: the check also runs on Windows PowerShell 5.1 and offers to install PowerShell 7 when it is missing. It is off by default because it changes this PC&rsquo;s settings, not a project, and install suggests global scope. Unlike <code>pc-clean</code> it is manual-only by default &mdash; it edits the registry, <code>Path</code> and settings files and raises UAC, so it should not load itself whenever terminals come up; you can choose to let it load itself, and the per-item approval stays either way. It never changes the system-wide <code>Path</code>, never installs a substitute <code>sudo</code> tool and does not open <code>.env</code> or key files. On a work PC, developer mode, <code>sudo</code> and machine-wide registry changes may go against policy &mdash; check first. Removing the skill does not undo what it changed: undo first, with the backups and the undo table in its <code>references/fix.md</code>. Cleaning TEMP and stray processes is <code>/pc-clean</code>&rsquo;s job, not this one.</div>
+      </details>
       <div class="tags"><span class="tag hand">manual only</span><span class="tag">global</span><span class="tag">off by default</span><span class="tag need">Windows</span><span class="tag">approval gate</span></div>
     </article>
 
@@ -727,12 +789,14 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
       <div class="cmd"><span class="sl">/</span>session-board</div>
       <div class="args">no arguments — the hooks report on their own; call it to look at the board yourself</div>
       <p class="one">When more than one session is open in the same folder, tells each of them about the others &mdash; before their uncommitted changes get mixed up.</p>
+      <details class="more"><summary>Details</summary>
       <dl>
         <dt>Use when</dt><dd>Two sessions are running in one folder, on purpose or by accident, and you want to see what the other one is doing &mdash; or decide whether to move this work to <code>claude --worktree &lt;name&gt;</code>. Also the check before you choose to stay in the same folder on purpose: it shows which files the other session edited &mdash; look at <code>git status</code> too, since files changed through the shell never reach the board.</dd>
         <dt>It does</dt><dd>Its hooks record each session&rsquo;s title (or, without one, the first 80 characters of its first prompt), branch and edited files under <code>~/.claude/session-board/</code>. When another active session is in the same folder (the same git top level &mdash; a worktree counts as a different folder), Claude is told at session start and on your next prompt, and gets one warning before it edits a file another session just changed. Calling the skill lists the board and suggests a worktree when the files overlap.</dd>
         <dt>You get</dt><dd>A line naming the other sessions, their branches and the files they edited. Nothing is blocked &mdash; you choose whether to carry on, move to a worktree or ask that session. With no other session open nothing is added to the conversation, and the hooks never call a model.</dd>
       </dl>
       <div class="warn soft"><b>Worth knowing.</b> Needs Node.js 18 or later &mdash; if you pick this item without it, install does not set the hooks or turn the plugin on, and offers to remove hooks already in place. Without Node the hooks are not silent: they raise a <code>hook error</code> notice. After installing Node, re-apply from a new terminal. It is off by default because its hooks run in every session on this PC, and it is always global because sessions belong to the PC, so install does not ask for a scope &mdash; it offers the <code>dandi</code> plugin first, or a copy. On a work PC it also reminds you that a plugin runs code with your permissions &mdash; and these hooks run on every edit. A skill-name alias only applies to the copy, not the plugin. The plugin brings the hooks with it and takes them away in one step; once it is on, you pick up revisions yourself with <code>/plugin marketplace update dandi</code> &mdash; a newer version in the install record does not change the hooks that are running. The copy adds hooks to <code>~/.claude/settings.json</code> beside the ones you already have, and does not add a second set if they are already there. Keep one or the other &mdash; with both, every event runs twice. The board holds titles, the first 80 characters of the first prompt, branches and file paths, never file contents; sessions idle for three hours or ended are ignored, and records older than a day are deleted. What it cannot see: a session at the root of a multi-repo workspace and one inside a sub-repository miss each other (different git top levels), files changed through the shell (Bash, PowerShell) are not listed, and each <code>claude -p</code> run shows up as a separate session. It does not replace the rule that a second session goes in a worktree &mdash; it is the tool for checking the same-folder exception, and what catches you before you commit when that exception stops holding.</div>
+      </details>
       <div class="tags"><span class="tag">global</span><span class="tag">off by default</span><span class="tag need">Node 18+</span><span class="tag">installs hooks</span></div>
     </article>
 
@@ -752,12 +816,14 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
       <div class="cmd"><span class="sl">/</span>ops-kit</div>
       <div class="args">[init | runbook | hub | dashboard | health | backup | limits | sync | check] — check only reads; with none, it suggests <code>init</code> the first time and <code>check</code> after that</div>
       <p class="one">Surveys a project you deploy alone and builds only the deploy and operations paperwork it actually needs &mdash; then keeps it in step with the code.</p>
+      <details class="more"><summary>Details</summary>
       <dl>
         <dt>Use when</dt><dd>Before the first deploy (<code>/ops-kit init</code>), after the deploy settings change (<code>/ops-kit sync</code>), and whenever you want a read-only check (<code>/ops-kit check</code>) &mdash; overdue scheduled checks, unconfirmed figures, old check dates, broken links.</dd>
         <dt>It does</dt><dd>Reads the deploy commands, hosting config, the <em>names</em> of secrets (never their values &mdash; it does not open <code>.env</code> or key files), databases, external services and any ops documents you already have. Then it shows one diagnosis table of seven possible outputs: a deploy runbook (first deploy, redeploy, rollback), an ops runbook (console checks, admin chores, recurring checks), an admin hub (every console link, account name and where to look, on one page), an <code>/admin</code> dashboard served by your app (daily users, new users, day-1 and day-7 return, payments, countries), a health check with outage alerts, a backup with a restore rehearsal, and a free-tier limit and cost watch. The hub also carries a <b>map of the project&rsquo;s records</b> &mdash; policy notes, feature change log, feature spec, release notes, progress, decisions, plans, routines and the like &mdash; found at their usual paths and shown as present or missing, with counts, last-changed dates and titles only. It reads them and never copies their text or creates a record; it is a snapshot of the day it was made, and <code>/ops-kit sync</code> refreshes it. A deploy target plus two or more kinds of records is enough to mark the hub needed. Each is marked needed, not needed or undecided, with the file and line it judged from; the first four are the usual picks, the last three optional. Nothing is written until you choose. Every runbook step has a paste-ready command, the text you should see on success, what to do if it fails, and a one-line report to send back to Claude so the next session can pick up. Secrets are typed into a masked prompt and their length printed before they go into the command line tool &mdash; never pasted from the clipboard. If the repository looks like it is uploaded to a live web server as-is, the diagnosis says so first: the pages under <code>docs/status/</code> &mdash; the hub with its account names above all &mdash; would go up too, and <code>noindex</code> only hides them from search, it does not block access. The deploy runbook then gets a step to confirm Claude files and <code>docs/</code> are left out of the live deploy, and an after-deploy check that those URLs answer <code>404</code> or <code>403</code>.</dd>
         <dt>You get</dt><dd>Only the outputs you picked, under <code>docs/status/</code>, and a status file <code>docs/status/ops-kit.md</code> with each verdict, the check dates, the next scheduled checks and why the rest were not needed &mdash; those are not suggested again unless something new in the project overturns the reason. If Claude can publish artifacts, the runbooks and hub are published privately and updated at the same link; otherwise they stay as local HTML files.</dd>
       </dl>
       <div class="warn soft"><b>Worth knowing.</b> It never deploys, enters a secret or connects an alert channel &mdash; you do those by following the runbook. It assumes no paid monitoring service. Limits, fees and similar outside figures are checked on the day and dated, or marked <code>[재확인]</code> for you to confirm. The dashboard ships closed &mdash; it answers 503 until a token secret of 32 or more characters is set. It is off by default because it can write code into your app (the dashboard, the health check); install marks it as suggested when it spots a deploy target &mdash; a <code>wrangler.toml</code>, <code>Dockerfile</code>, <code>vercel.json</code> or similar, a CI workflow with a deploy step, or a <code>deploy</code> script &mdash; but does not tick it for you, and it is not offered in a documents-only repository. Install suggests global scope; the outputs always land inside the project. By default it loads itself &mdash; its own rule is that nothing is made before you pick from the table; choose manual-only if you want it to run only when you call it. If you install it both as a copy and as the <code>dandi</code> plugin, both show up &mdash; keep one.</div>
+      </details>
       <div class="tags"><span class="tag">global</span><span class="tag">off by default</span><span class="tag">approval gate</span><span class="tag">writes app code</span></div>
     </article>
 
@@ -779,7 +845,7 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
   <div class="step"><div class="t">/release-notes v1.0.0</div><p>Release day only. Reads the feature docs the rest of the week built up.</p></div>
 </div>
 
-<h2>Checking one piece of work, and only that</h2>
+<details class="sect"><summary><h2>Checking one piece of work, and only that</h2></summary>
 <p class="lead">If you have just added feature A to a product already in production, what needs checking is A and whatever A touched &mdash; not the whole product. No single skill does all of it. Four skills that know how to narrow their scope do it together: the code side scopes by git diff or branch, the behaviour side by feature ID (F-xxx). If A was built on its own branch, that branch name is all it takes to mean &ldquo;only A&rdquo;.</p>
 <div class="path">
   <div class="p">
@@ -812,8 +878,9 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
   </div>
 </div>
 <p class="pathnote">Step 4 is built in and needs only git, today. Step 3 needs refactor (03 §8) installed; steps 1 and 2 need the feature-docs set (03 §7).</p>
+</details>
 
-<h2>Release day, from stale docs to release notes</h2>
+<details class="sect"><summary><h2>Release day, from stale docs to release notes</h2></summary>
 <p class="lead">The day above gives release day a single line. Taken apart it is four skills, and the order matters: the notes are built from the feature docs and the latest test report, so both should be current before you write them.</p>
 <div class="path">
   <div class="p">
@@ -846,8 +913,9 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
   </div>
 </div>
 <p class="pathnote">Steps 1&ndash;3 need the feature-docs set (03 §7) with <code>/feature-docs init</code> already run. <code>/release-notes</code> alone carries on without it &mdash; from <code>git log</code>, as a list of commits rather than features.</p>
+</details>
 
-<h2>Building a new screen for Korean users</h2>
+<details class="sect"><summary><h2>Building a new screen for Korean users</h2></summary>
 <p class="lead">Three skills share this job, and each owns a different part: one sets the direction, one holds it to what Korean users expect, one checks the result on the real screen. Used in this order they do not fight &mdash; and where they disagree, the hard rules win.</p>
 <div class="path">
   <div class="p">
@@ -873,8 +941,9 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
   </div>
 </div>
 <p class="pathnote">If the project already has a design system or tokens, its values beat kr-ui-guide&rsquo;s defaults; the hard rules still apply. Steps 2 and 3 usually load themselves &mdash; you rarely type them.</p>
+</details>
 
-<h2>When another session is already in this folder</h2>
+<details class="sect"><summary><h2>When another session is already in this folder</h2></summary>
 <p class="lead">Two sessions in one folder share one working tree, so their uncommitted changes mix. You find out either from the session board, if you installed it, or when <code>/resume</code> turns up uncommitted work you do not recognise. The default for a second session is a worktree. Staying in the same folder is an exception, allowed only while all four hold: you are already on the same work branch (not the default branch) and stay on it; the job is short and touches only files the other session does not; you leave shared files (lockfile, settings, <code>CLAUDE.md</code>) and repository-wide commands (formatter, <code>lint --fix</code>, package install, a full test run) alone, and record files are appended only through <code>/wrap</code>, one session at a time; and you commit only the paths you name (<code>git commit -- &lt;your files&gt;</code>), never switching, pulling, stashing, resetting or rebasing. The moment one stops holding, Claude stops and asks whether to move to a worktree &mdash; moving uncommitted work is your call. Either way, the steps below are the way out.</p>
 <div class="path">
   <div class="p">
@@ -907,8 +976,9 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
   </div>
 </div>
 <p class="pathnote">Numbered worktrees are not removed when the session ends &mdash; removing one after you merge is your call. The board only warns; it never stops an edit.</p>
+</details>
 
-<h2>Keeping all of this up to date</h2>
+<details class="sect"><summary><h2>Keeping all of this up to date</h2></summary>
 <p class="lead">Documents change. Skills change. Each command answers a different question, and mixing them up is the most common way people end up running a stale setup.</p>
 <table>
   <thead><tr><th>You want to&hellip;</th><th>Command</th><th>What it touches</th><th>What it leaves alone</th></tr></thead>
@@ -928,8 +998,9 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
   <div class="trap"><b>Already on as a Dandi plugin?</b><p>If you installed the feature-docs, refactor, kr-ui-guide, kr-ui-styles, browser-check, pc-clean, win-setup, session-board or ops-kit skills through the <code>dandi</code> plugin marketplace, the same skills already exist under plugin names such as <code>/dandi-refactor:refactor</code>. Install spots this and asks: <b>keep</b> the plugin and skip the copy, or <b>replace</b> it &mdash; remove the plugin, then copy. Two installs of one skill would both compete to load. To remove a plugin install later, use <code>/plugin uninstall</code> from that plugin&rsquo;s README, not the copy-removal steps.</p></div>
   <div class="trap"><b><code>/dropin-check</code> cannot see everything.</b><p>On an ordinary install there is no private mirror to compare against, so it reports &ldquo;current as far as the documents go &mdash; skill contents unchecked&rdquo; rather than a flat &ldquo;current&rdquo;. Run <code>/dropin-apply</code> when you want that second half answered &mdash; and to bring <code>/resume</code> and <code>/wrap</code> up to date too, choose <code>reconcile</code> for the global items already installed. <code>keep</code> leaves the old text in place.</p></div>
 </div>
+</details>
 
-<h2>Things that surprise people</h2>
+<details class="sect"><summary><h2>Things that surprise people</h2></summary>
 <div class="traps">
   <div class="trap"><b>The personal copy wins, silently.</b><p>Same skill name in <code>~/.claude/skills/</code> and in the project's <code>.claude/skills/</code>? The personal one runs and the project one never does &mdash; with no error to tell you. This is the most common reason a team's shared skill "does not work" on one machine.</p></div>
   <div class="trap"><b><code>allowed-tools</code> is a permission, not a fence.</b><p>It widens what may run without prompting. A skill listing only git commands can still edit your files. The key that actually restricts is <code>disallowed-tools</code>.</p></div>
@@ -938,8 +1009,9 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
   <div class="trap"><b>Uninstall the guard before deleting its skill.</b><p>The instructions for removing the commit guard live inside the skill. Delete the folder first and only the hook remains &mdash; commits keep failing and the cause is nowhere on screen.</p></div>
   <div class="trap"><b>An alias is two edits, not one.</b><p>Renaming the folder is half of it; the <code>name:</code> in the front matter has to match. If they differ the skill never loads, and nothing says why.</p></div>
 </div>
+</details>
 
-<h2>Where each one comes from</h2>
+<details class="sect"><summary><h2>Where each one comes from</h2></summary>
 <div class="tablewrap">
 <table>
   <thead><tr><th>Skills</th><th>Document</th><th>Default scope</th><th>Removal</th></tr></thead>
@@ -961,8 +1033,9 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
 </table>
 </div>
 <p class="lead" style="margin-top:16px">Every one of these has a documented removal path, which is deliberate: an install you cannot reverse was never really a choice. The full procedures &mdash; detect, install, verify, remove &mdash; are in the documents themselves. For what each install question means, see the <a href="options.html">options dictionary</a>; to work through it step by step, take the <a href="learn.html">course</a>. Some install items are missing here on purpose: policy notes (03 §11) and the feature change log (03 §13) add rule files, <code>.claude/rules/policy-recording.md</code> and <code>.claude/rules/feature-log.md</code>, not skills &mdash; there is no command to call, so they have no card. The diff review tools (03 §16) are not skills either: they put three command-line programs on your PC &mdash; lazygit, delta and difftastic &mdash; for reading what Claude changed in the terminal, and you start them yourself with <code>lazygit</code>.</p>
+</details>
 
-<footer>Dandi &middot; Skill catalog &middot; 2026-11-16 &middot; Skills installed by documents 01 §D-4, 02 STEP 3 ⓔ, 03 §2, §3, §5, §7, §8, §9, §10, §12, §14, §15 and §17. Commands are shown without an alias; apply yours if you chose one at install time. &middot; Fonts: Pretendard, IBM Plex Mono &mdash; both SIL Open Font License 1.1 (free for commercial use and web embedding)</footer>
+<footer>Dandi &middot; Skill catalog &middot; 2026-11-17 &middot; Skills installed by documents 01 §D-4, 02 STEP 3 ⓔ, 03 §2, §3, §5, §7, §8, §9, §10, §12, §14, §15 and §17. Commands are shown without an alias; apply yours if you chose one at install time. &middot; Fonts: Pretendard, IBM Plex Mono &mdash; both SIL Open Font License 1.1 (free for commercial use and web embedding)</footer>
 
 </div>
 <script>
@@ -978,6 +1051,7 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
       var okG = (g==='all' || c.dataset.g===g),
           okT = (!t || c.textContent.toLowerCase().indexOf(t)>-1);
       c.hidden = !(okG&&okT);
+      if(t && !c.hidden){ var d=c.querySelector('details.more'); if(d) d.open=true; }
       if(!c.hidden) n++;
     });
     groups.forEach(function(s){
@@ -997,6 +1071,28 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
     });
   });
   apply();
+})();
+</script>
+<script>
+(function(){
+  function openTo(id){
+    var el=id&&document.getElementById(id); if(!el) return;
+    if(el.tagName==='DETAILS') el.open=true;
+    var d=el.parentElement&&el.parentElement.closest('details');
+    while(d){ d.open=true; d=d.parentElement&&d.parentElement.closest('details'); }
+    el.scrollIntoView();
+  }
+  function fromHash(){ try{ openTo(decodeURIComponent(location.hash.slice(1))); }catch(e){} }
+  window.addEventListener('hashchange', fromHash); fromHash();
+  [].slice.call(document.querySelectorAll('[data-expand]')).forEach(function(b){
+    b.addEventListener('click', function(){
+      var open=b.getAttribute('aria-pressed')!=='true';
+      [].slice.call(document.querySelectorAll('details.more,details.faq,details.sect')).forEach(function(d){ d.open=open; });
+      b.setAttribute('aria-pressed', String(open));
+      b.textContent = open ? b.getAttribute('data-close') : b.getAttribute('data-open');
+    });
+  });
+  window.addEventListener('beforeprint', function(){ [].slice.call(document.querySelectorAll('details')).forEach(function(d){ d.open=true; }); });
 })();
 </script>
 <script>

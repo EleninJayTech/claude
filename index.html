@@ -128,6 +128,20 @@ th{background:var(--marker-soft);font-family:var(--sans);font-size:13px}
 .support{text-align:center}
 .support img{height:48px;max-width:100%}
 footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);font-size:13px;font-family:var(--sans);line-height:1.6}
+/* ---------- 요점/상세 ---------- */
+details.more,details.faq,details.sect{margin:10px 0}
+details.more>summary,details.faq>summary,details.sect>summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:8px;min-height:44px;font-weight:600}
+details.more>summary::-webkit-details-marker,details.faq>summary::-webkit-details-marker,details.sect>summary::-webkit-details-marker{display:none}
+details.more>summary::after,details.faq>summary::after,details.sect>summary::after{content:"+";margin-left:auto;font-family:var(--mono);color:var(--ink-soft)}
+details.more[open]>summary::after,details.faq[open]>summary::after,details.sect[open]>summary::after{content:"\2212"}
+details.more>summary{font-size:14px;color:var(--blue)}
+details.faq{border-top:1px solid var(--line)}
+details.faq>summary{font-size:17px;padding:6px 0}
+details.sect{border-top:1px solid var(--line);padding-top:4px}
+details.sect>summary h2{margin:0}
+.xbtn{font:600 14px var(--sans);min-height:44px;padding:0 16px;border-radius:12px;border:1px solid var(--line-strong);background:var(--card);color:var(--ink);cursor:pointer}
+.xbtn[aria-pressed="true"]{background:var(--blue-soft);border-color:var(--blue-line)}
+@media print{details>summary::after{content:none}}
 </style>
 </head>
 <body>
@@ -221,6 +235,9 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
     <li>You only need to copy <b>00</b> &mdash; Claude fetches the rest from this repository when it needs them.</li>
     <li><b>The documents are written in Korean, and that is fine.</b> Claude executes them the same way in any language, and the installer asks which language the <b>generated files</b> should use &mdash; answer English and your <code class="i">CLAUDE.md</code>, work logs and commit messages all come out in English.</li>
     <li>On a first install the suggested mode is <b>&ldquo;minimal&rdquo;</b> &mdash; security locks, the work log and the resume/wrap commands. You don&rsquo;t need to know up front what else you will want: in a folder you have set up, when your work starts needing more (adding tests or CI, starting front-end work and so on), Claude suggests the matching item in one line &mdash; once the current task is done, or when you start a session with <code class="i">/resume</code> &mdash; and installs only what you accept. You can also ask at any time with <code class="i">/dropin-apply 추천</code>. A suggestion you decline is not repeated.</li>
+  </ul>
+  <details class="more"><summary>More</summary>
+  <ul>
     <li>Would you rather install everything that fits right away? Pick <b>&ldquo;recommended&rdquo;</b> and the installer inspects your project and checks the fitting combination for you. Add purpose <b>bundles</b> (design, stronger verification, unattended automation and more) for combinations like <b>&ldquo;minimal + design&rdquo;</b>.</li>
     <li>If something is already installed, Claude asks whether to <b>keep / reconcile / replace</b> it first. Nothing is overwritten silently.</li>
     <li>The first time you install into a repository that already holds <b>a Claude setup your team has committed</b>, you are asked <b>Team setup first / Decide item by item</b> (later re-runs just show your earlier answer for you to confirm). Choose the recommended Team setup first and the team&rsquo;s files are not edited: an item that would have to edit a team file is skipped &mdash; and not suggested again later unless you switch to Decide item by item &mdash; while an item that only adds new files goes ahead with a note that committing it needs the team&rsquo;s agreement. The one exception is the single line that records the install in the repository&rsquo;s <code class="i">CLAUDE.md</code>; until the team agrees to commit it, it stays as an uncommitted change. In a company repository you are also asked whether your company has deployed managed settings; no choice can override them, so items they block are not installed and you are told why.</li>
@@ -230,6 +247,7 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
     <li>Want to learn the choices from scratch? The <a href="pages/learn.html"><b>options course</b></a> takes you chapter by chapter through a simulator you click yourself.</li>
     <li>Wondering what the installed <b>skills</b> actually do? The <a href="pages/skills.html"><b>skill catalog</b></a> explains every one &mdash; what each does, when to call it, and where it bites.</li>
   </ul>
+  </details>
 </section>
 
 <!-- 2 -->
@@ -262,7 +280,10 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
       <svg width="26" height="26"><use href="#check"/></svg>
       <span class="no">03</span>
       <span class="desc"><b>Convenience add-ons.</b>
+        <p>A menu of add-ons — status line, design, browser checks, feature docs, refactoring, PC cleanup, parallel sessions, operations — install only the ones you need.</p>
+        <details class="more"><summary>Full list</summary>
         <p><b>claude-hud</b> (a live meter of how much of your AI usage allowance you have used) &middot; <b>svg-design</b> (the graphics technique behind the yellow animation above) &middot; <b>frontend-design</b> (Anthropic&rsquo;s official design guidance for UI that doesn&rsquo;t look AI-generated &mdash; this page was built with it) &middot; <b>MCP</b> (connecting external tools) &middot; <b>browser verification</b> (the AI opens the screens it built and checks them &mdash; reading the page as text first, taking a screenshot only when the look itself is the question; you also pick the browser it uses: a background browser that leaves yours alone (Playwright CLI, the default &mdash; it needs Node.js, so without Node it starts unchecked), your own Chrome only when a check needs your real sign-in (Claude in Chrome, off by default), a debugging tool for digging into why a page is slow or broken (Chrome DevTools MCP, off by default), or the browser built into the Desktop app (nothing to install)) &middot; <b>feature-doc skill set</b> (a spec per feature, plus tests, a commit guard and release notes built on it) &middot; <b>refactor</b> (clean the code up and prove the behaviour did not change) &middot; <b>kr-ui-guide</b> (designs and checks UI/UX, icons and colour for Korean-audience web, app and game screens against research on Korean services; pick it and you are also asked about <b>kr-ui-styles</b>, style packs that swap its restrained default look for another direction &mdash; editorial monochrome, dark neon and others &mdash; chosen per project, off by default) &middot; <b>pc-clean</b> (Windows only: when the PC gets slow, checks the usual causes &mdash; leftover background processes, old Claude sessions, stale temp files &mdash; without changing anything, then cleans up only the items you approve) &middot; <b>policy notes</b> (as soon as Claude spots a product rule in the code or conversation &mdash; when a status may change, who may see what, how amounts or deadlines are calculated &mdash; it writes it into this project&rsquo;s <code class="i">.claude/rules/policies/</code> and checks it first whenever that code comes up, even if you don&rsquo;t mention it; guesses from code and confirmed rules are marked apart; off by default) &middot; <b>session-board</b> (when two or more Claude sessions run in the same folder, each is told about the others&rsquo; branch and edited files, and gets one warning before editing a file another session just changed &mdash; nothing is blocked; needs Node.js 18 or later, off by default) &middot; <b>feature change log</b> (from the moment it is installed, whenever a feature people use &mdash; a screen, API, command or setting &mdash; is added, changed or removed, Claude writes one line into this project&rsquo;s <code class="i">.claude/rules/feature-log/</code> with the file path and date (for a removal, the reason) and checks those lines first on related work, even if you don&rsquo;t mention it; if a request would bring back a removed feature, it tells you why it was removed. Only changes after install are logged &mdash; full specs of existing features are the feature-doc skill set&rsquo;s job; off by default) &middot; <b>Flutter app screen check</b> (Flutter projects only: while your app runs in debug mode, the AI uses Marionette to read its screens, tap and type, and capture what the app itself draws &mdash; for screens that are not in a browser. By default it adds a development-only package and a separate start file, so your app&rsquo;s real entry point is left alone; you also pick how it connects (an MCP server by default, or a command-line tool) and whether that connection stays yours or is shared with the team. When Flutter is detected it is marked as suggested and offered as the <b>app screen check bundle</b>, but never pre-checked; off by default) &middot; <b>ops-kit</b> (for a project you deploy: it first looks the project over and shows a table of what it needs and why, then makes only the pieces you pick &mdash; deploy and operations runbooks with commands you can paste, a hub listing each app&rsquo;s admin sites and a map of the project&rsquo;s records (which policy notes, change logs, specs, progress logs, decisions and plans exist, where, how many and when last updated &mdash; read-only, it never copies their contents), an <code class="i">/admin</code> dashboard, health checks and alerts, a backup-and-restore rehearsal, and free-tier limit and cost watching &mdash; and keeps them up to date when the code changes. It never deploys, enters secrets or connects alert channels itself; you do that by following the runbook. When deploy settings are detected it is marked as suggested and offered as the <b>operations bundle</b>, but never pre-checked; off by default) &middot; <b>diff review tools</b> (read the code Claude changed in the terminal, file by file and hunk by hunk, without opening an IDE &mdash; keep the good edits and throw away the wrong ones before you commit. It installs three command-line tools on this PC &mdash; <b>lazygit</b> (a terminal screen for git: stage, discard, commit), <b>delta</b> (highlights even the changed words inside a line) and <b>difftastic</b> (compares code structure, so lines where only indentation or line breaks changed drop out) &mdash; and sets lazygit up so the <code class="i">|</code> key cycles between them. It helps your own final review and does not replace the AI review. Installed once for the whole PC rather than per project (Windows via winget, macOS via Homebrew, Linux by each tool&rsquo;s own install guide); off by default) &middot; <b>win-setup</b> (Windows only: gets a Windows PC ready for Claude Code in the terminal. It first checks the PC without changing anything &mdash; whether the terminal opens in PowerShell 7, broken or duplicate entries in your user PATH, Developer Mode, long paths, sudo, the shell Claude uses, and the jq, fd and gh tools &mdash; and shows a table of what needs fixing, then fixes only the items you approve, backing up first (one admin prompt covers the settings that need it). It never touches the system-wide PATH. You run it yourself with <code class="i">/win-setup</code> (add <code class="i">diagnose</code> to only check, or <code class="i">verify</code> after a restart) &mdash; Claude won&rsquo;t call it on its own unless you choose that at install. Installed for all your projects by default; off by default). Pick <b>frontend-design</b> or <b>kr-ui-guide</b> and the installer also asks for a <b>font licence policy</b> &mdash; freely usable fonts only, or be told the terms first and decide each time (or leave it out) &mdash; and writes your answer into the setup so it holds whenever fonts are added or swapped.</p>
+        </details>
         <a href="https://github.com/EleninJayTech/claude/blob/main/03_확장기능-설치-체크리스트.md">03_확장기능-설치-체크리스트.md ↗</a></span>
     </li>
     <li>
@@ -356,26 +377,36 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
 <section>
   <div class="h-row"><svg width="30" height="30"><use href="#check"/></svg><h2>Frequently asked</h2></div>
   <p class="goal">The questions everyone has at first</p>
-  <h3>What is Claude Code?</h3>
+  <details class="faq"><summary>What is Claude Code?</summary>
   <p>An AI development tool from Anthropic. Say "build me a program that does this" as if you were chatting, and the AI creates and edits files directly on your machine. The documents in this repository configure that tool to run more safely and more capably.</p>
-  <h3>Can I use it without a development background?</h3>
+  </details>
+  <details class="faq"><summary>Can I use it without a development background?</summary>
   <p>Yes. Dropping the files into a folder and saying one sentence is the whole job; Claude asks you about the rest as it goes. Hit a term you don't know and you can just ask Claude to "explain it simply".</p>
-  <h3>Why are the documents all plain markdown?</h3>
+  </details>
+  <details class="faq"><summary>Why are the documents all plain markdown?</summary>
   <p>Because they exist <b>for Claude to read and execute</b>, not for people. The human-facing guides are kept separately: this page plus the <a href="pages/intro.html">intro</a>, <a href="pages/demo.html">walkthrough</a>, <a href="pages/options.html">options dictionary</a>, <a href="pages/learn.html">options course</a> and <a href="pages/skills.html">skill catalog</a> in the <code class="i">pages/</code> folder. That is also why the markdown stays Korean &mdash; Claude executes it identically either way, and the install asks separately which language your generated files should use.</p>
-  <h3>Can I trust the content?</h3>
+  </details>
+  <details class="faq"><summary>Can I trust the content?</summary>
   <p>Every technical claim records the date it was checked against Anthropic's official documentation, and the whole set is re-checked every six months.</p>
-  <h3>Can I get just the skills, without the install documents?</h3>
+  </details>
+  <details class="faq"><summary>Can I get just the skills, without the install documents?</summary>
   <p>Yes, for the feature-docs set, <code class="i">refactor</code>, <code class="i">kr-ui-guide</code>, <code class="i">kr-ui-styles</code>, <code class="i">browser-check</code>, <code class="i">pc-clean</code>, <code class="i">session-board</code>, <code class="i">ops-kit</code> and <code class="i">win-setup</code>: they are also published as Claude Code plugins in the <b><code class="i">dandi</code></b> marketplace &mdash; <code class="i">/plugin marketplace add EleninJayTech/claude</code>, then <code class="i">/plugin install dandi-refactor@dandi</code> (or <code class="i">dandi-feature-docs</code>, <code class="i">dandi-kr-ui-guide</code> (which carries kr-ui-styles too), <code class="i">dandi-browser-check</code>, <code class="i">dandi-pc-clean</code>, <code class="i">dandi-session-board</code>, <code class="i">dandi-ops-kit</code>, <code class="i">dandi-win-setup</code> &mdash; for session-board the one plugin also turns on the hooks it needs). Use one route per skill; both at once shows every skill twice. If the installer finds one of these plugins already turned on, it asks whether to <b>keep the plugin</b> (and skip the copy) or <b>replace it</b> (remove the plugin, then copy). Details in the <a href="https://github.com/EleninJayTech/claude#skills-as-plugins">README</a>.</p>
-  <h3>What if one of my existing skills, like <code class="i">/resume</code>, has the same name?</h3>
+  </details>
+  <details class="faq"><summary>What if one of my existing skills, like <code class="i">/resume</code>, has the same name?</summary>
   <p>That is what the <b>skill name alias</b> question during install is for. When names clash, the skill installed for your whole PC wins over the one in this project, so the new skill may never run, or may overwrite yours. Claude checks for clashes before installing and tells you; if it finds one, it suggests adding an alias such as <code class="i">dandi-resume</code> to just that skill. With no clash, the default, <b>none</b>, is the better choice. Details in the <a href="pages/options.html#common">install options guide</a>.</p>
-  <h3>I want my work notes and commit messages in English (or Korean)</h3>
+  </details>
+  <details class="faq"><summary>I want my work notes and commit messages in English (or Korean)</summary>
   <p>Pick it under <b>output language</b> during install. The install documents are written in Korean, but this setting decides the language of what Claude <b>produces</b> &mdash; the project&rsquo;s <code class="i">CLAUDE.md</code>, the work log, commit messages and the names of files it creates. The default is the language you are chatting with Claude in, and if the project already has notes, their language wins (so one log never ends up in two languages). Your choice is kept when you install again.</p>
-  <h3>Policy notes or the feature change log ask for approval every time they write</h3>
+  </details>
+  <details class="faq"><summary>Policy notes or the feature change log ask for approval every time they write</summary>
   <p>That is expected. Both are written inside Claude&rsquo;s settings folder (<code class="i">.claude/</code>), which is protected: in the default permission mode and in auto-accept-edits mode every write asks for approval, and adding it to the allow list does not change that. Auto mode and the mode that skips all permission checks write without asking. A one-shot run without questions (<code class="i">claude -p</code>) cannot write these notes unless it is in one of those two modes. The installer tells you this too.</p>
-  <h3>Are passwords and secrets safe?</h3>
+  </details>
+  <details class="faq"><summary>Are passwords and secrets safe?</summary>
   <p>Installing 01 locks passwords, certificates and key files so the AI can neither read them nor upload them. The underlying principle still holds, though: <b>real secrets do not belong in your working folder</b>.</p>
-  <h3>What if my site uploads the working folder straight to the live server?</h3>
+  </details>
+  <details class="faq"><summary>What if my site uploads the working folder straight to the live server?</summary>
   <p>When the repository folder itself goes up to a public live server &mdash; common with PHP and static sites (uploading the whole folder by FTP or as an archive, or running <code class="i">git pull</code> on the server) &mdash; the files the installer creates, such as <code class="i">CLAUDE.md</code>, <code class="i">.claude/</code> and the work logs in <code class="i">docs/</code>, become readable by anyone who types the address. When the installer sees the signs (a front-page file like <code class="i">index.php</code> or <code class="i">index.html</code>, or a server config like <code class="i">.htaccess</code>, in that folder), it warns you first in the install report and the commit guidance, and shows three ways to close it (leave those files out of the live deploy &middot; block those paths on the live server &middot; keep them uncommitted, on your machine only) plus how to check (after deploying, <code class="i">https://your-domain/CLAUDE.md</code> should return 404 or 403). Which one to pick, and any server settings, are your call &mdash; the installer does not write server configuration. Review and test servers are not affected. If you installed <b>ops-kit</b>, its diagnosis table flags this too, and the deploy runbook gets a step in the live deploy that checks those files were left out.</p>
+  </details>
   <div class="note"><b>The founding principle</b>Output quality comes first. Saving tokens is second, and only within what quality allows. A faster way to the same quality becomes the default only when it costs barely any more; if it multiplies the cost, it is offered as an option only.</div>
 </section>
 
@@ -401,8 +432,30 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
 
 </main>
 
-<footer>Dandi &middot; How-to page &middot; 2026-11-16 &middot; Repository: <a href="https://github.com/EleninJayTech/claude">github.com/EleninJayTech/claude</a> &middot; <a href="https://github.com/EleninJayTech/claude/releases/latest">Latest release notes</a> &middot; The install documents 00&ndash;06 (markdown) are the source of truth &mdash; this page is the human-facing guide. The hero graphic uses the 03 svg-design recipe (Gooey, Squiggle). Design follows the kr-ui-guide skill (repository skills/kr-ui-guide). &middot; Fonts: Pretendard, IBM Plex Mono &mdash; both SIL Open Font License 1.1 (free for commercial use and web embedding)</footer>
+<footer>Dandi &middot; How-to page &middot; 2026-11-17 &middot; Repository: <a href="https://github.com/EleninJayTech/claude">github.com/EleninJayTech/claude</a> &middot; <a href="https://github.com/EleninJayTech/claude/releases/latest">Latest release notes</a> &middot; The install documents 00&ndash;06 (markdown) are the source of truth &mdash; this page is the human-facing guide. The hero graphic uses the 03 svg-design recipe (Gooey, Squiggle). Design follows the kr-ui-guide skill (repository skills/kr-ui-guide). &middot; Fonts: Pretendard, IBM Plex Mono &mdash; both SIL Open Font License 1.1 (free for commercial use and web embedding)</footer>
 
+<script>
+(function(){
+  function openTo(id){
+    var el=id&&document.getElementById(id); if(!el) return;
+    if(el.tagName==='DETAILS') el.open=true;
+    var d=el.parentElement&&el.parentElement.closest('details');
+    while(d){ d.open=true; d=d.parentElement&&d.parentElement.closest('details'); }
+    el.scrollIntoView();
+  }
+  function fromHash(){ try{ openTo(decodeURIComponent(location.hash.slice(1))); }catch(e){} }
+  window.addEventListener('hashchange', fromHash); fromHash();
+  [].slice.call(document.querySelectorAll('[data-expand]')).forEach(function(b){
+    b.addEventListener('click', function(){
+      var open=b.getAttribute('aria-pressed')!=='true';
+      [].slice.call(document.querySelectorAll('details.more,details.faq,details.sect')).forEach(function(d){ d.open=open; });
+      b.setAttribute('aria-pressed', String(open));
+      b.textContent = open ? b.getAttribute('data-close') : b.getAttribute('data-open');
+    });
+  });
+  window.addEventListener('beforeprint', function(){ [].slice.call(document.querySelectorAll('details')).forEach(function(d){ d.open=true; }); });
+})();
+</script>
 <script>
 (function(){try{
   if(localStorage.getItem('lang'))return;

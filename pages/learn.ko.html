@@ -220,6 +220,7 @@ footer{max-width:1120px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
   *,*::before,*::after{transition:none!important;animation:none!important}
   html{scroll-behavior:auto}
 }
+.wrap>*{min-width:0}
 </style>
 </head>
 <body>
@@ -352,7 +353,7 @@ footer{max-width:1120px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
   <p class="eyebrow">챕터 5 · 나머지 공통 질문</p>
   <h2 id="t5">운용 프로필, 산출물 언어, 이름 별칭, 그리고 이미 있을 때</h2>
 
-  <h3>빠른 경로 — 이미 구성된 PC에서만</h3>
+  <details class="acc"><summary>빠른 경로 — 이미 구성된 PC에서만</summary><div class="acc-b">
   <p>이 PC에 <b>이미 설치한 기록이 있고, 이번 프로젝트에는 아직 설치 기록이 없을 때만</b> 맨 처음에 나오는 질문입니다. 기록에 적힌 PC 이름을 보여 주고 <b>이 PC가 맞는지</b> 먼저 확인합니다(아니라고 답하면 이 질문은 접고 하나씩 묻습니다). 팀원이 이미 설치해 둔 저장소를 받았거나 다시 적용하는 중이라면 나오지 않습니다 — 팀이 맞춰 둔 값을 내 PC 값으로 덮지 않기 위해서입니다. 새 모드가 아니라, 공통 질문(기반 모드·번들·프로필·언어·별칭)에 <b>한 번에 답하는 지름길</b>입니다. 어느 것을 고르든 가져올 값을 보여 주고 <b>확인을 받습니다</b>.</p>
   <ul>
     <li><b>이 PC 기본값으로</b>(기본 추천) — 이 PC에 정해 둔 프로필(있으면 언어·별칭도)을 쓰고 모드는 최소(+작업 중 추천)로 갑니다. 값을 보여 주고 <b>확인만</b> 받습니다. 이 PC에 적힌 값이 없는 항목은 그 질문만 따로 물어봅니다. 같은 PC에서 두 번째 프로젝트부터 이것.</li>
@@ -360,6 +361,7 @@ footer{max-width:1120px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
     <li><b>권장 모드로</b> — 이 폴더만 보고 Claude가 조합한 ‘권장’과 기본값으로 갑니다.</li>
     <li><b>하나씩 고르기</b> — 지름길 없이 공통 질문을 처음부터 전부 받습니다.</li>
   </ul>
+  </div></details>
   <div class="coach"><span class="who">📌</span><div>
     <b>빠른 경로가 줄여 주는 건 공통 질문뿐입니다</b>
     안전 질문("이미 있는 걸 덮어쓸까요?"), 아래의 기존 팀 구성 질문, 회사 정책 확인, 어디에 둘지 고르는 스코프 질문, 기본으로 꺼진 항목을 켤지 묻는 질문은 <b>그대로 나옵니다</b>. ‘전체’ 모드로도 줄일 수 없는 것을 지름길이 줄이면 안 되기 때문입니다.
@@ -378,12 +380,14 @@ footer{max-width:1120px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
     </div>
   </div>
 
-  <h3>산출물 언어 — 한국어 / English</h3>
+  <details class="acc"><summary>산출물 언어 — 한국어 / English</summary><div class="acc-b">
   <p>오해하기 쉬운 항목입니다 — <b>문서의 언어가 아니라</b> <b>설치가 만들어 내는 것</b>의 언어입니다. 드롭인 문서는 한국어 그대로 두고(Claude는 어느 언어로든 같게 실행합니다), 이 답이 대상 <code class="i">CLAUDE.md</code> 본문·<code class="i">docs/</code> 기록·커밋 메시지·산출물 파일명(<code class="i">docs/난이도-매트릭스.md</code> ↔ <code class="i">docs/difficulty-matrix.md</code>)의 언어를 정합니다. <code class="i">[갈래][Done]</code> 같은 형식 키워드는 어느 언어에서도 고정입니다 — <code class="i">/resume</code>·<code class="i">/wrap</code>이 그 문자열로 찾기 때문입니다. 기본값은 지금 대화하는 언어이고, 이미 만들어진 산출물이 있으면 그 언어를 우선합니다.</p>
 
-  <h3>스킬 이름 별칭 — 없음 / 전부 / 고른 것만</h3>
+  <details class="acc"><summary>스킬 이름 별칭 — 없음 / 전부 / 고른 것만</summary><div class="acc-b">
   <p>설치되는 스킬 이름(<code class="i">resume</code>·<code class="i">wrap</code>·<code class="i">svg-design</code>)은 흔합니다. 내 PC에 <b>같은 이름의 다른 스킬</b>이 이미 있으면 그쪽이 이겨서, 설치는 됐는데 눌러 보면 엉뚱한 게 돌거나 쓰던 게 덮입니다. 이 질문이 그 회피 수단입니다 — 애칭 <b>단디</b>를 붙여 <code class="i">dandi-resume</code>(앞) 또는 <code class="i">resume-dandi</code>(뒤)로 만듭니다. 붙이기로 하면 붙일 글자(기본 <code class="i">dandi</code>)와 위치(앞/뒤)를 이어서 묻고, <b>고른 것만</b>이면 설치할 스킬 목록에서 직접 고릅니다. <b>기본은 없음</b>이고, 설치 전에 같은 이름이 있는지 찾아본 뒤 있으면 그 스킬만 체크한 '고른 것만'을 권합니다. <b>기능 문서 세트 6종은 서로를 이름으로 부르니 여섯 개가 함께 움직입니다</b>. 다시 적용할 때는 기록된 별칭을 그대로 쓰고 다시 묻지 않습니다. 기록과 이 PC에 깔린 이름이 다르면 이 PC 것을 기록에 맞출지, 별칭을 붙여 하나 더 깔지(같은 스킬이 두 이름으로 뜹니다), 이 PC만 예외로 둘지 묻습니다. frontend-design과 session-board를 플러그인으로 깔면 별칭이 붙지 않으니, 붙이려면 다른 설치 경로를 고릅니다. 자세한 건 <a href="options.ko.html#common">옵션 사전 2-7</a>.</p>
 
+  </div></details>
+  </div></details>
   <h3>이미 설치돼 있으면 — 유지 / 재구성 / 교체</h3>
   <p>기존 설정이 감지된 항목마다, 모드와 상관없이 <b>항상</b> 물어봅니다. 눌러서 차이를 보세요.</p>
   <p>다만 <b>이 PC에 이미 있는 글로벌 항목</b>(모든 프로젝트가 함께 쓰는 설정)은 프로젝트를 새로 깔 때마다 같은 답을 하지 않도록 <b>한 문항으로 묶어</b> 물어봅니다 — 목록을 보여 주고 기본은 <b>유지</b>입니다. <b>재구성·교체</b>를 고른 것만 하나씩 나눠 묻습니다. 다시 적용하면서 승인한 변경이 걸린 항목은 기본이 <b>재구성</b>입니다.</p>
@@ -392,7 +396,7 @@ footer{max-width:1120px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
     <div class="feedback ok" id="keepFb"></div>
   </div>
 
-  <h3>팀이 커밋해 둔 Claude 구성이 있으면 — 팀 구성 우선 / 항목별</h3>
+  <details class="acc"><summary>팀이 커밋해 둔 Claude 구성이 있으면 — 팀 구성 우선 / 항목별</summary><div class="acc-b">
   <p><b>첫 설치</b>(아직 설치 기록이 없을 때)에서, 저장소에 팀이 이미 커밋해 둔 Claude 구성(<code class="i">CLAUDE.md</code>·<code class="i">.claude/CLAUDE.md</code>·<code class="i">AGENTS.md</code>·<code class="i">.mcp.json</code>·<code class="i">.claude/</code> 아래 설정·스킬·에이전트 등)이 있을 때만 나오는 질문입니다. 내 PC에만 있고 커밋되지 않은 파일은 따지지 않습니다. 설치 기록이 생긴 뒤에는 다시 판정하지 않습니다 — 그때 보이는 구성은 앞선 설치가 직접 커밋한 것일 수 있기 때문입니다.</p>
   <ul>
     <li><b>팀 구성 우선</b>(감지되면 기본 추천) — 겹치는 항목은 전부 <b>유지</b>로 처리하고 <b>팀 파일은 고치지 않습니다</b>. 팀 파일을 고쳐야 하는 항목은 <b>설치하지 않고</b> 기록에 미선택으로 남기며, 이 답을 유지하는 동안에는 다시 돌릴 때도 작업 중 추천에서도 다시 권하지 않습니다(풀려면 항목별로 바꿉니다). 새 파일만 더하는 항목은 깔되, 커밋은 팀과 합의하라고 안내합니다. 단 하나의 예외는 <b>설치 기록 한 줄</b>입니다 — 이 줄은 그래도 <code class="i">CLAUDE.md</code>에 적히고, 팀이 커밋에 합의하기 전까지는 미커밋으로 남아 <code class="i">/resume</code>이 pull 대신 fetch만 하고 <code class="i">/wrap</code>이 매번 미커밋을 경고합니다.</li>
@@ -400,6 +404,7 @@ footer{max-width:1120px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
   </ul>
   <p>고른 값은 설치 기록에 남아 팀이 함께 씁니다. 다음에 다시 돌리거나 팀원이 새로 합류하면 그 값을 보여 주고 확인만 받습니다. 위의 빠른 경로로도 줄어들지 않습니다 — 팀이 맞춰 둔 구성을 새로 온 사람의 기본값으로 덮지 않기 위해서입니다.
   회사 맥락(회사 번들, 또는 조직 승인 확인)이면 회사가 배포한 <b>관리 설정</b>이 있는지도 확인합니다 — <code class="i">/status</code>의 <code class="i">Setting sources</code> 줄을 봐 달라고 묻고, 그 설정과 부딪히는 항목은 설치하지 않고 알려 줍니다(관리 설정은 어떤 선택으로도 덮을 수 없습니다).</p>
+  </div></details>
 </section>
 
 <!-- ═══ CH6 01 기본 셋업 ═══ -->
@@ -560,7 +565,7 @@ footer{max-width:1120px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
 <!-- ═══ CH9 종합 연습 ═══ -->
 <section class="chapter" data-ch="9" aria-labelledby="t9" hidden>
   <p class="eyebrow">챕터 9 · 종합 연습</p>
-  <h2 t9 id="t9">내 상황으로 조합해 보기</h2>
+  <h2 id="t9">내 상황으로 조합해 보기</h2>
   <p class="lead">
     지금까지 배운 세 가지 선택(모드·번들·프로필)을 한 번에 조합합니다.
     상황 버튼을 누르면 추천 조합이 자동으로 들어가고, 아래에서 직접 바꿀 수도 있습니다.
@@ -609,14 +614,17 @@ footer{max-width:1120px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
   </table>
   <h3>사람들이 가장 많이 헷갈리는 것</h3>
   <p><b><code>/dropin-update</code>만으로는 업데이트가 아닙니다.</b> 그건 설명서를 새것으로 바꾸는 일이지, 설명서가 만드는 물건을 바꾸는 일이 아닙니다. 설치된 스킬과 설정은 <code>/dropin-apply</code>를 돌리기 전까지 그대로입니다.</p>
-  <h3>아직 설치하지 않은 PC에서는</h3>
+  <details class="acc"><summary>아직 설치하지 않은 PC에서는</summary><div class="acc-b">
   <p><code>/dropin-apply</code>는 첫 설치 명령이기도 해서, 내가 어느 경우인지 따질 필요가 없습니다. 그 PC에 명령이 아직 없으면 말로 하면 됩니다: <i>“저장소의 <code>00_통합-설치.md</code>를 받아서 이 PC에 적용해줘”</i> — 그러면 이 명령도 다른 것들과 같이 깔립니다.</p>
-  <h3>다시 적용하면 무엇을 보여 주나</h3>
+  <details class="acc"><summary>다시 적용하면 무엇을 보여 주나</summary><div class="acc-b">
   <p>다시 돌리면 기록된 버전 이후 바뀐 내용을 문서별로, 버전마다 한 행씩 보여 주고 <b>행 단위로 승인</b>합니다. 승인한 행만 설치됩니다(오래된 구간을 요약한 행은 한 행으로 칩니다). 보류한 행은 적용 기록에 남아, 사라지지 않고 다음에 다시 나옵니다. 기록이 오래돼 요약 행에 걸리면 그 문서를 전부 다시 적용할지도 묻습니다.</p>
   <p>버전이 같아도 세 가지는 묻습니다. 어긋난 곳을 점검할지, 안 골랐던 것을 추가하거나 깐 것을 뺄지(안 고른 문서는 무엇인지 한 줄로 보여 줍니다), 지난번에 막혔거나 대기로 남은 것(인증 대기, 조직 승인, 문서를 못 받음)이 풀렸는지입니다. 풀렸으면 설치하고, 더는 원하지 않으면 미선택으로 바꿔 같은 질문이 반복되지 않게 합니다. <b>해당 없음</b>으로 적힌 것과 <b>작업 중 추천을 거절</b>한 것은 다시 권하지 않습니다 — 거절한 것은 재적용 때 직접 추가할 수 있습니다.</p>
   <p>팀원이 이미 설치한 저장소를 이 PC에서 처음 돌리면 재적용이 아니라 <b>신규 합류</b>로 봅니다. 저장소의 구성을 그대로 따르는 것(유지)이 기본이고, 이 PC에 없는 글로벌 항목(<code>/resume</code>·<code>/wrap</code> 같은 명령)은 버전과 상관없이 설치 목록에 올립니다. 기본으로 꺼진 항목은 꺼진 채로 보여 줍니다.</p>
-  <h3>이름만 보는 점검으로는 왜 부족한가</h3>
+  <details class="acc"><summary>이름만 보는 점검으로는 왜 부족한가</summary><div class="acc-b">
   <p>스킬은 파일이 하나도 늘거나 줄지 않은 채 문장만 바뀔 수 있습니다. 파일 이름을 대조하는 점검은 그걸 “이미 최신”이라고 말합니다. 설치 절차는 파일 <b>내용</b>까지 대조하므로, 문장만 손본 개정도 내 디스크까지 도달합니다.</p>
+  </div></details>
+  </div></details>
+  </div></details>
   <div class="coach tip"><span class="who">💡</span><div>
     <b>다시 돌렸더니 &ldquo;기록이 문서보다 새 버전&rdquo;이라며 멈춘다면</b>
     다른 PC나 팀원이 이 PC에 있는 사본보다 새 문서로 이미 설치했을 때 생깁니다. 그대로 진행하면 옛 절차로 구성을 덮어쓰게 되므로, Claude가 문서부터 최신으로 바꾼 뒤 재적용을 처음부터 다시 시작합니다. 문서를 받아 올 수 없으면 그 문서만 건너뛰고, 다음에 다시 시도하도록 이 PC의 기록에 메모를 남깁니다.
@@ -654,7 +662,7 @@ footer{max-width:1120px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
 </div>
 
 <footer>
-  단디 · 설치 옵션 학습 코스 · 2026-11-16<br>
+  단디 · 설치 옵션 학습 코스 · 2026-11-17<br>
   각 항목의 정본은 해당 하위 문서(01~06)입니다. 이 페이지는 사람이 배우기 위한 안내이며, 설치 절차 자체를 바꾸지 않습니다. 진행도는 이 브라우저의 localStorage에만 저장됩니다.<br>
   저장소: github.com/EleninJayTech/claude ·
   <a href="../index.ko.html">사용법</a> · <a href="intro.ko.html">소개 영상</a> · <a href="demo.ko.html">설치 시연</a> · <a href="options.ko.html">옵션 사전</a> · <a href="skills.ko.html">스킬 카탈로그</a><br>

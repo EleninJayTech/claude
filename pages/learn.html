@@ -220,6 +220,7 @@ footer{max-width:1120px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
   *,*::before,*::after{transition:none!important;animation:none!important}
   html{scroll-behavior:auto}
 }
+.wrap>*{min-width:0}
 </style>
 </head>
 <body>
@@ -352,7 +353,7 @@ footer{max-width:1120px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
   <p class="eyebrow">Chapter 5 &middot; the remaining common questions</p>
   <h2 id="t5">Operating profile, output language, name alias, and what is already there</h2>
 
-  <h3>Quick path &mdash; only on an already-set-up PC</h3>
+  <details class="acc"><summary>Quick path &mdash; only on an already-set-up PC</summary><div class="acc-b">
   <p>The question that comes <b>first, and only when this PC already has an install record but this project does not have one yet</b>. It shows the PC name from that record and asks you to <b>confirm it is this PC</b> first (answer no and the shortcut folds away and each question is asked). It does not appear when you cloned a repo a teammate already set up, or when re-applying &mdash; so the team&rsquo;s settled values are never overwritten by your PC&rsquo;s. It is not a new mode &mdash; it is <b>a shortcut for answering the common questions in one go</b> (base mode, bundles, profile, language, alias). Whichever you pick, the values it will carry over are shown and <b>you confirm them</b>.</p>
   <ul>
     <li><b>This PC&rsquo;s defaults</b> (default pick) &mdash; uses the profile (and language and alias, if recorded) already settled on this PC and goes with mode Minimal (plus in-work suggestions). The values are shown and you <b>only confirm</b>. Anything this PC has no value for is asked as its own question. From the second project on the same PC, this one.</li>
@@ -360,6 +361,7 @@ footer{max-width:1120px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
     <li><b>Recommended mode</b> &mdash; the Recommended mix Claude puts together by looking at this folder alone, plus defaults.</li>
     <li><b>One by one</b> &mdash; no shortcut; you get the common questions from the start, all of them.</li>
   </ul>
+  </div></details>
   <div class="coach"><span class="who">📌</span><div>
     <b>The quick path only shortens the common questions</b>
     The safety questions (&ldquo;may I overwrite what is already there?&rdquo;), the existing-team-setup question below, the company-policy check, the scope questions about where things should live, and the questions about items that are off by default <b>still appear</b>. Not even the &ldquo;everything&rdquo; mode can skip those, so a shortcut must not either.
@@ -378,12 +380,14 @@ footer{max-width:1120px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
     </div>
   </div>
 
-  <h3>Output language &mdash; Korean / English</h3>
+  <details class="acc"><summary>Output language &mdash; Korean / English</summary><div class="acc-b">
   <p>This one is easy to misread: it is <b>not the language of the documents</b> but the language of <b>what the install produces</b>. The drop-in documents stay Korean &mdash; Claude executes them identically either way &mdash; while your answer here decides the language of the target <code class="i">CLAUDE.md</code> body, the <code class="i">docs/</code> entries, commit messages and generated filenames (<code class="i">docs/difficulty-matrix.md</code> vs <code class="i">docs/난이도-매트릭스.md</code>). Format keywords such as <code class="i">[topic][Done]</code> stay fixed in either language, because <code class="i">/resume</code> and <code class="i">/wrap</code> find them by those exact strings. The default is the language you are chatting in, and if outputs already exist, their language comes first.</p>
 
-  <h3>Skill name alias &mdash; none / all / selected only</h3>
+  <details class="acc"><summary>Skill name alias &mdash; none / all / selected only</summary><div class="acc-b">
   <p>The skill names being installed (<code class="i">resume</code>, <code class="i">wrap</code>, <code class="i">svg-design</code>) are common ones. If a <b>different skill of the same name</b> already sits on your machine, that one wins &mdash; the install reports success but the wrong thing runs, or what you were using gets buried. This question is the way out: attach the nickname <b>Dandi</b> to get <code class="i">dandi-resume</code> (prefix) or <code class="i">resume-dandi</code> (suffix). If you choose to attach one, it goes on to ask for the text (default <code class="i">dandi</code>) and the position (prefix/suffix); with <b>selected only</b> you tick the skills from the install list yourself. <b>None is the default</b> &mdash; the installer looks for collisions first, and if it finds any it suggests &ldquo;selected only&rdquo; with just those skills ticked. <b>The six feature-doc skills call each other by name, so they move together</b>. On a re-run the recorded alias is reused without asking again. If the record and the names installed on this PC differ, you are asked whether to rename this PC&rsquo;s to match, install one more under the alias (the same skill then appears under two names), or keep an exception for this PC only. Installing frontend-design or session-board as a plugin attaches no alias &mdash; to have one, pick another install path. Details in the <a href="options.html#common">options dictionary, 2-7</a>.</p>
 
+  </div></details>
+  </div></details>
   <h3>If something is already installed &mdash; keep / reconcile / replace</h3>
   <p>Asked for every item where existing settings are detected &mdash; <b>always</b>, whatever the mode. Click to see the difference.</p>
   <p>The exception in how it is asked: <b>global items already on this PC</b> (settings every project shares) are bundled into <b>one question</b> so you do not answer the same thing every time you set up a project &mdash; the list is shown and the default is <b>keep</b>. Only the ones you answer <b>reconcile</b> or <b>replace</b> for are split out and asked one by one. An item touched by a change you approved during a re-run defaults to <b>reconcile</b>.</p>
@@ -392,7 +396,7 @@ footer{max-width:1120px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
     <div class="feedback ok" id="keepFb"></div>
   </div>
 
-  <h3>If the team has a committed Claude setup &mdash; team setup first / item by item</h3>
+  <details class="acc"><summary>If the team has a committed Claude setup &mdash; team setup first / item by item</summary><div class="acc-b">
   <p>Asked only on the <b>first install</b> (no install record yet), when the repository already has a Claude setup the team committed (<code class="i">CLAUDE.md</code>, <code class="i">.claude/CLAUDE.md</code>, <code class="i">AGENTS.md</code>, <code class="i">.mcp.json</code>, settings, skills or agents under <code class="i">.claude/</code> and so on). Files that exist only on your machine and were never committed do not count. Once a record exists, the setup it finds is not judged again &mdash; much of it may be what the earlier install itself committed.</p>
   <ul>
     <li><b>Team setup first</b> (recommended when detected) &mdash; every overlapping item is treated as <b>keep</b> and <b>the team&rsquo;s files are not edited</b>. An item that would need a team file changed is <b>not installed</b> &mdash; it is noted in the record as not chosen, and later runs and in-work suggestions do not offer it again while this answer stands (switch to item by item to lift that). Items that only add new files go ahead, with a note that committing them needs the team&rsquo;s agreement. The one exception is the <b>install-record line</b> itself, which is still written into <code class="i">CLAUDE.md</code>; until the team agrees to commit it, it stays uncommitted, so <code class="i">/resume</code> only fetches instead of pulling and <code class="i">/wrap</code> warns about it each time.</li>
@@ -400,6 +404,7 @@ footer{max-width:1120px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
   </ul>
   <p>Your answer is saved in the install record the team shares. When you run it again, or a teammate joins, that value is shown and you only confirm it. The quick path above does not skip this either &mdash; so a newcomer&rsquo;s defaults never overwrite what the team agreed on.
   In a company setting (the company bundle, or an organization approval check) it also checks for <b>managed settings</b> your company pushed out &mdash; it asks you to look at the <code class="i">Setting sources</code> line in <code class="i">/status</code>, and any item that would clash with them is not installed, with a note why (no choice can override managed settings).</p>
+  </div></details>
 </section>
 
 <!-- ═══ CH6 01 기본 셋업 ═══ -->
@@ -560,7 +565,7 @@ footer{max-width:1120px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
 <!-- ═══ CH9 종합 연습 ═══ -->
 <section class="chapter" data-ch="9" aria-labelledby="t9" hidden>
   <p class="eyebrow">Chapter 9 &middot; putting it together</p>
-  <h2 t9 id="t9">Combine it for your own situation</h2>
+  <h2 id="t9">Combine it for your own situation</h2>
   <p class="lead">
     Combine the three choices you have learned (mode, bundles, profile) in one go.
     Press a situation button to load the recommended combination, then change it yourself below.
@@ -609,14 +614,17 @@ footer{max-width:1120px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
   </table>
   <h3>The one thing people get wrong</h3>
   <p><b><code>/dropin-update</code> on its own is not an update.</b> It refreshes the instruction manual, not the thing the manual builds. Your installed skills and settings stay exactly as they were until <code>/dropin-apply</code> runs.</p>
-  <h3>On a machine you have not set up yet</h3>
+  <details class="acc"><summary>On a machine you have not set up yet</summary><div class="acc-b">
   <p><code>/dropin-apply</code> is also the first-install command, so you never have to work out which case you are in. If the command does not exist there yet, say it in words instead: <i>&ldquo;read <code>00_&#54648;&#54633;-&#49444;&#52824;.md</code> from the repository and apply it to this machine&rdquo;</i> &mdash; and the command arrives with everything else.</p>
-  <h3>What re-applying shows you</h3>
+  <details class="acc"><summary>What re-applying shows you</summary><div class="acc-b">
   <p>Re-running lists what changed since your recorded version, document by document, one row per version, and <b>you approve row by row</b> &mdash; only approved rows get installed (a row that sums up an older stretch of versions counts as one). A row you hold back is noted in the install record, so it comes up again next time instead of vanishing. If your record is old enough to fall inside a summary row, you are also asked whether to re-apply that whole document.</p>
   <p>Even when versions match, three things are asked: whether to check for anything out of line; whether to add what you skipped or take out what is installed (each skipped document is shown in one line); and whether anything blocked or left waiting last time (sign-in pending, org approval, a document that could not be fetched) has cleared. If it has, it gets installed; if you no longer want it, it switches to not chosen so the question stops repeating. Things recorded as <b>not applicable</b> or <b>declined in an in-work suggestion</b> are not offered again &mdash; declined ones you can still add yourself on a re-run.</p>
   <p>Running it for the first time on this PC in a repository a teammate already set up counts not as a re-apply but as <b>joining</b>. Following the repository&rsquo;s setup (keep) is the default, and global items missing from this PC (commands like <code>/resume</code> and <code>/wrap</code>) go on the install list whatever the version. Items that are off by default are shown still off.</p>
-  <h3>Why a name check is not enough</h3>
+  <details class="acc"><summary>Why a name check is not enough</summary><div class="acc-b">
   <p>A skill can be revised without gaining or losing a single file &mdash; only its wording changes. A check that compares file names calls that &ldquo;already current&rdquo;. The install steps compare file <b>contents</b> as well, which is why a wording-only revision still reaches your disk.</p>
+  </div></details>
+  </div></details>
+  </div></details>
   <div class="coach tip"><span class="who">💡</span><div>
     <b>Re-running stops and says the record is newer than your documents?</b>
     That happens when another PC or a teammate already installed with newer documents than the copy on this machine. Carrying on would overwrite the setup with the older procedure, so Claude updates the documents first and then starts the re-apply again. If the documents cannot be fetched, only that document is skipped, and a note stays in this machine&rsquo;s record so the next run tries again.
@@ -654,7 +662,7 @@ footer{max-width:1120px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
 </div>
 
 <footer>
-  Dandi &middot; Install options course &middot; 2026-11-16<br>
+  Dandi &middot; Install options course &middot; 2026-11-17<br>
   The source of truth for each item is its own document (01&ndash;06). This page exists for people to learn from; it does not change the install procedure. Progress is stored only in this browser&rsquo;s localStorage.<br>
   저장소: github.com/EleninJayTech/claude ·
   <a href="../index.html">Guide</a> &middot; <a href="intro.html">Intro</a> &middot; <a href="demo.html">Walkthrough</a> &middot; <a href="options.html">Dictionary</a> &middot; <a href="skills.html">Skill catalog</a><br>

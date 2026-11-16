@@ -112,6 +112,20 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
 .totop{position:fixed;right:22px;bottom:22px;z-index:10;font-family:var(--sans);font-size:13px;display:inline-flex;align-items:center;min-height:44px;background:var(--ink);color:var(--paper);text-decoration:none;padding:9px 14px;border-radius:12px;box-shadow:var(--shadow-3);transition:transform 150ms var(--ease)}
 .totop:hover{transform:translateY(-2px)}
 .totop:active{transform:translateY(0) scale(.96)}
+/* ---------- 요점/상세 ---------- */
+details.more,details.faq,details.sect{margin:10px 0}
+details.more>summary,details.faq>summary,details.sect>summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:8px;min-height:44px;font-weight:600}
+details.more>summary::-webkit-details-marker,details.faq>summary::-webkit-details-marker,details.sect>summary::-webkit-details-marker{display:none}
+details.more>summary::after,details.faq>summary::after,details.sect>summary::after{content:"+";margin-left:auto;font-family:var(--mono);color:var(--ink-soft)}
+details.more[open]>summary::after,details.faq[open]>summary::after,details.sect[open]>summary::after{content:"\2212"}
+details.more>summary{font-size:14px;color:var(--blue)}
+details.faq{border-top:1px solid var(--line)}
+details.faq>summary{font-size:17px;padding:6px 0}
+details.sect{border-top:1px solid var(--line);padding-top:4px}
+details.sect>summary h2{margin:0}
+.xbtn{font:600 14px var(--sans);min-height:44px;padding:0 16px;border-radius:12px;border:1px solid var(--line-strong);background:var(--card);color:var(--ink);cursor:pointer}
+.xbtn[aria-pressed="true"]{background:var(--blue-soft);border-color:var(--blue-line)}
+@media print{details>summary::after{content:none}}
 </style>
 </head>
 <body>
@@ -149,6 +163,7 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
     <li><a href="#faq">10. Commonly confused</a></li>
   </ol>
 </nav>
+  <p style="margin:12px 0"><button type="button" class="xbtn" data-expand data-open="Expand all" data-close="Collapse all" aria-pressed="false">Expand all</button></p>
 
 <!-- ═══════════ 0. 용어 ═══════════ -->
 <section id="words">
@@ -244,40 +259,48 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
   <div class="opt">
     <div class="opt-head"><span class="name">This PC&rsquo;s defaults</span><span class="id">default</span><span class="badge b-on">confirm only</span></div>
     <p class="lead">Reuses the <b>profile, output language and skill name alias</b> already settled on this PC, and goes with base mode <b>Minimal</b> (plus in-work suggestions).</p>
-    <dl>
+    <details class="more"><summary>Details</summary>
+<dl>
       <dt>What appears</dt><dd>The values left in this PC&rsquo;s install record + base mode &ldquo;Minimal&rdquo; + the bundles Claude detected as a good fit. The values are shown once and <b>you only confirm</b>. A value this PC&rsquo;s record does not hold is asked as its own question instead</dd>
       <dt>Is it really this PC?</dt><dd>The machine name in that record is shown alongside, and <b>you judge</b> whether it is this PC (a record restored from another PC&rsquo;s backup would carry someone else&rsquo;s values). Answer no and the quick path is dropped &mdash; you get the questions one by one</dd>
       <dt>Choose it when</dt><dd>Setting up a second or third project on the same PC &mdash; if you keep giving the same answers, this is the one</dd>
       <dt>If you don&rsquo;t</dt><dd>You get the common questions one by one (the same as &ldquo;One by one&rdquo; below)</dd>
     </dl>
+</details>
   </div>
 
   <div class="opt">
     <div class="opt-head"><span class="name">Same as another project</span><span class="badge b-keep">another project on this PC</span></div>
     <p class="lead">Carries over the mode, bundles, language and alias recorded in <b>another project</b> on this PC.</p>
-    <dl>
+    <details class="more"><summary>Details</summary>
+<dl>
       <dt>What appears</dt><dd>The chosen project&rsquo;s base mode + bundles, output language and skill name alias. <b>Only the operating profile comes from this PC</b> &mdash; a profile belongs to the machine, not the project. If that project gave the alias to <b>only some skills</b>, which skills is not copied &mdash; it is worked out again from the same-named skills found here</dd>
       <dt>What is offered</dt><dd>Only projects that <b>actually exist</b> on this PC now and have an install record. Folders you moved or deleted, folders with no record, and projects installed in &ldquo;custom&rdquo; mode (they have no mode and bundles to copy) are left out; working copies (worktrees) of the same repository are folded into one. If there are none, this choice does not appear at all</dd>
       <dt>Not in the list?</dt><dd>The list is built from traces of past sessions, so it is only a hint. If the project you want is missing, <b>type its path yourself</b> (Other)</dd>
       <dt>What is not recorded</dt><dd>Which project the values came from is <b>not written to the record</b> &mdash; this project&rsquo;s record is shared with the team</dd>
       <dt>If you don&rsquo;t</dt><dd>You settle this project&rsquo;s own values one by one</dd>
     </dl>
+</details>
   </div>
 
   <div class="opt">
     <div class="opt-head"><span class="name">Recommended mode</span><span class="badge b-off">detection-based</span></div>
     <p class="lead">Uses the <b>Recommended</b> mix Claude puts together from detection, and takes defaults for the rest.</p>
-    <dl>
+    <details class="more"><summary>Details</summary>
+<dl>
       <dt>Choose it when</dt><dd>You want this folder judged on its own, ignoring this PC&rsquo;s earlier values and other projects</dd>
     </dl>
+</details>
   </div>
 
   <div class="opt">
     <div class="opt-head"><span class="name">One by one</span><span class="badge b-off">no shortcut</span></div>
     <p class="lead">No shortcut &mdash; you get the questions below <b>from the start, all of them</b>.</p>
-    <dl>
+    <details class="more"><summary>Details</summary>
+<dl>
       <dt>Choose it when</dt><dd>You want something different from last time, or want to read what each question means as you go</dd>
     </dl>
+</details>
   </div>
 
   <div class="note">
@@ -288,7 +311,8 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
   <div class="opt">
     <div class="opt-head"><span class="name">Pick by install type</span><span class="badge b-off">only when you start with <code>/dropin-pick</code></span></div>
     <p class="lead">A different entrance for when <b>you already know the kind of thing you need</b> &mdash; &ldquo;just MCP&rdquo;, &ldquo;just plugins&rdquo;. It is not a new mode: <b>instead of the base mode, the purpose bundles (2-2, 2-3) and the quick path</b>, it asks for install types.</p>
-    <dl>
+    <details class="more"><summary>Details</summary>
+<dl>
       <dt>What you choose</dt><dd>One or more install types (multiple choice) &mdash; <b>config</b> (the 01 basic setup plus the policy and feature-change records) &middot; <b>skills</b> &middot; <b>plugins</b> &middot; <b>MCP</b> &middot; <b>hooks</b> &middot; <b>agents</b> (the 02 roster) &middot; <b>CLI &amp; CI</b> &middot; <b>output styles</b> &middot; <b>routines</b>. Name them after the command, as in <code class="i">/dropin-pick skill MCP</code>, and this question is skipped</dd>
       <dt>What appears</dt><dd>Only the items that belong to the chosen types are offered, <b>through that document&rsquo;s own questions</b> &mdash; picking a type installs nothing by itself, and items that are off by default are shown off. When one item spans several types (browser checking, for example, has skill, MCP and CLI routes), only the part matching your type appears. Documents for types you did not pick are neither read nor installed</dd>
       <dt>Common questions</dt><dd>If this folder has an install record, the <b>usage profile, output language and skill name alias come from the record</b> and are shown for confirmation; if not, only those three are asked. If a document you installed before is out of date, <b>its changes are shown first</b></dd>
@@ -296,6 +320,7 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
       <dt>Where it is kept</dt><dd>In the usual fields of the install record (a folder with no record before is recorded with mode &lsquo;Custom&rsquo;). If only part of a document was installed, the record says which items, so the next re-run asks whether to add the rest</dd>
       <dt>Choose it when</dt><dd>You want to add just one kind of thing to an already set-up project. If you are not sure what you need, use <code class="i">/dropin-apply</code> and start from the mode</dd>
     </dl>
+</details>
   </div>
 
   <h3>2-1. Target &mdash; this PC, or this project</h3>
@@ -307,36 +332,44 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
   <div class="opt">
     <div class="opt-head"><span class="name">Minimal</span><span class="id">default with no install record</span><span class="badge b-off">01 only</span></div>
     <p class="lead">Only the record system and security, plus one line that <b>suggests the rest while you work</b>. Even within the document, only the essentials. The default on a new PC or a folder with no install record yet.</p>
-    <dl>
+    <details class="more"><summary>Details</summary>
+<dl>
       <dt>What appears</dt><dd>A global <code>settings.json</code> (security locks), the <code>/resume</code> and <code>/wrap</code> skills plus the <code>dropin-</code> skills (<code>/dropin-apply</code>, <code>/dropin-check</code>, <code>/dropin-update</code>, <code>/dropin-sync</code>, <code>/dropin-pick</code>) and the <code>/scope</code> skill, three <code>docs/</code> files in the project, and one in-work suggestion line in <code>~/.claude/CLAUDE.md</code> (01 &#9430;)</dd>
       <dt>Choose it when</dt><dd>You are setting up for the first time, the repository is documentation with no code, or you just want the basics first &mdash; when your work later needs more (tests, CI, a frontend stack), Claude suggests it in one line and installs only what you accept</dd>
     </dl>
+</details>
   </div>
 
   <div class="opt">
     <div class="opt-head"><span class="name">Recommended</span><span class="badge b-on">auto-combined per situation</span></div>
     <p class="lead">Claude combines things based on what it detected and <b>shows you in one line why it chose that</b>.</p>
-    <dl>
+    <details class="more"><summary>Details</summary>
+<dl>
       <dt>The rule</dt><dd>New PC &rarr; 01 (global) + 03 (HUD) / development project &rarr; 01+02+04 (03&rsquo;s items are decided by bundles and detection) / documentation or non-code repository &rarr; 01 only / somewhere 01 already exists &rarr; only what is still missing and needed</dd>
       <dt>Choose it when</dt><dd>You want everything that fits this folder installed now rather than suggested later</dd>
     </dl>
+</details>
   </div>
 
   <div class="opt">
     <div class="opt-head"><span class="name">Full</span><span class="badge b-off">all of 01&ndash;06</span></div>
     <p class="lead">Anything that does not apply (02 in a repository with no code, say) is dropped and reported.</p>
-    <dl>
+    <details class="more"><summary>Details</summary>
+<dl>
       <dt>Note</dt><dd>Even &ldquo;full&rdquo; <b>never overwrites existing settings silently</b> &mdash; it asks keep / reconcile / replace every time</dd>
       <dt>Choose it when</dt><dd>You want a new project set up properly and have time to answer questions</dd>
     </dl>
+</details>
   </div>
 
   <div class="opt">
     <div class="opt-head"><span class="name">Custom</span><span class="badge b-off">two-stage manual choice</span></div>
     <p class="lead">Pick the documents, then pick the items inside them. Everything in &sect;3&ndash;&sect;8 below arrives as a question.</p>
-    <dl>
+    <details class="more"><summary>Details</summary>
+<dl>
       <dt>Choose it when</dt><dd>You want exactly what you need and nothing else &mdash; typically after one install has taught you the structure</dd>
     </dl>
+</details>
   </div>
 
   <h3>2-3. Purpose bundles &mdash; zero or more (multi-select)</h3>
@@ -390,13 +423,15 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
   <div class="opt">
     <div class="opt-head"><span class="name">Thrift</span><span class="badge b-keep">Pro plan &middot; managing an allowance</span></div>
     <p class="lead">For when the usage allowance matters. What it cuts is <b>only model assignment and waste</b>.</p>
-    <dl>
+    <details class="more"><summary>Details</summary>
+<dl>
       <dt>What changes</dt><dd>Everyday work goes to the lower model &middot; hard work stays on the stronger model, or, as an option, runs on Sonnet with the stronger model as an on-call advisor (raise that session with <code>/effort high</code>; where the advisor is unavailable, hard work stays on the stronger model) &middot; routine execution and tests lean on Haiku &middot; a smaller roster &middot; context-saving habits &middot; claude-hud pre-checked (you cannot economize on what you cannot see)</dd>
       <dt>What you do yourself</dt><dd>The install does not switch this for you: <b>start everyday sessions on the lower model</b> (<code>/model sonnet</code>, say &mdash; it is saved, so later sessions start there too), and do the work that is never cut (below) in a <b>new session opened with <code>claude --model &lt;stronger model&gt;</code></b>. Raising it with <code>/model</code> instead is saved as well, and your everyday sessions drift back to the stronger model</dd>
       <dt>What stays the same</dt><dd><b>effort (reasoning depth) values</b> &mdash; identical on standard and thrift. The lever is which model does the work, not how hard it thinks</dd>
       <dt>What is never cut</dt><dd>Difficulty triage &middot; pinning down requirements &middot; final review &middot; verification gates. <b>Saving here costs more in rework</b></dd>
       <dt>If you chose before</dt><dd>When this machine&rsquo;s install record already holds a profile, it is shown as the default and you <b>just confirm</b> it (it is never inherited silently)</dd>
     </dl>
+</details>
   </div>
 
   <h3>2-5. Output language &mdash; Korean / English</h3>
@@ -404,12 +439,14 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
   <div class="opt">
     <div class="opt-head"><span class="name">Language</span><span class="badge b-on">default = the language you are chatting in</span></div>
     <p class="lead">Your answer sets the language of the <b>target <code>CLAUDE.md</code> body, the <code>docs/</code> record entries, commit messages and generated filenames</b>.</p>
-    <dl>
+    <details class="more"><summary>Details</summary>
+<dl>
       <dt>Filenames change too</dt><dd><code>docs/난이도-매트릭스.md</code> &harr; <code>docs/difficulty-matrix.md</code>, <code>docs/핸드오프-규약.md</code> &harr; <code>docs/handoff-protocol.md</code>. <b>If one already exists under another name, that name is kept</b></dd>
       <dt>What does not change</dt><dd>Format keywords &mdash; markers like <code>[topic][Done]</code> and <code>dropin-applied</code> are <b>fixed regardless of language</b>, because <code>/resume</code>, <code>/wrap</code> and the check script find them by those exact strings</dd>
       <dt>If records already exist</dt><dd>Their language wins &mdash; mixing languages inside one file splits the record that <code>/resume</code> reads</dd>
       <dt>Where it is stored</dt><dd>As <code>언어=ko</code> or <code>언어=en</code> in the install record, so it survives re-application</dd>
     </dl>
+</details>
   </div>
 
   <h3>2-6. If something is already installed &mdash; keep / reconcile / replace</h3>
@@ -427,18 +464,22 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
   <div class="opt">
     <div class="opt-head"><span class="name">Team setup first</span><span class="id">recommended when detected</span><span class="badge b-on">team files untouched &middot; except one record line</span></div>
     <p class="lead">Every overlapping item is treated as answered <b>keep</b>, and <b>files the team committed</b> (the setup files found above, plus <code class="i">.gitignore</code> and <code class="i">.gitattributes</code> &mdash; what this install created, as listed in the install record, does not count as a team file) <b>are never edited</b> &mdash; the one exception is the install-record line written to <code class="i">CLAUDE.md</code> (&#9312; below).</p>
-    <dl>
+    <details class="more"><summary>Details</summary>
+<dl>
       <dt>What you get</dt><dd>Items that would need a team file changed are <b>not installed</b> and are recorded as &ldquo;not chosen &mdash; team setup first&rdquo;. They are not moved into your personal files either &mdash; a moved copy would never show up in the record or the removal steps later. While this answer stands, those items are <b>not offered again</b> on a re-run or as in-work suggestions (switch this question to &ldquo;decide item by item&rdquo; to release them). Items that only add new files go ahead, with a note that committing them <b>needs the team&rsquo;s agreement</b></dd>
       <dt>When</dt><dd>You want to layer your setup onto a repository whose team or company has already settled its Claude configuration &mdash; no team file is touched apart from the one install-record line</dd>
     </dl>
+</details>
   </div>
 
   <div class="opt">
     <div class="opt-head"><span class="name">Decide item by item</span><span class="badge b-off">one at a time</span></div>
     <p class="lead">For each overlapping item, the <b>keep / reconcile / replace</b> question above is asked separately.</p>
-    <dl>
+    <details class="more"><summary>Details</summary>
+<dl>
       <dt>When</dt><dd>You have the rights and the team&rsquo;s agreement to change the shared setup, and want some of it brought up to the newer version</dd>
     </dl>
+</details>
   </div>
 
   <div class="note">
@@ -454,7 +495,8 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
   <div class="opt">
     <div class="opt-head"><span class="name">Alias</span><span class="badge b-off">default = none</span></div>
     <p class="lead">Attaches this project&rsquo;s nickname <b>Dandi</b> to the name to dodge the collision &mdash; <code class="i">dandi-resume</code> (prefix) or <code class="i">resume-dandi</code> (suffix).</p>
-    <dl>
+    <details class="more"><summary>Details</summary>
+<dl>
       <dt>Off by default</dt><dd>The installer <b>looks for same-named skills first</b> and only suggests an alias for the ones it finds. With no collision, leaving it off is better &mdash; names get longer and your teammates end up calling it something else</dd>
       <dt>What you choose</dt><dd><b>None</b> / <b>all</b> / <b>only the ones you pick</b>, and <b>prefix or suffix</b>. The word itself is yours to change (a team name instead of <code class="i">dandi</code> &mdash; lowercase, digits and hyphens only)</dd>
       <dt>Where it cannot apply</dt><dd>Installing <code class="i">frontend-design</code> or <code class="i">session-board</code> <b>as a plugin</b> lets the marketplace create the folder, so no alias attaches. Pick the <code class="i">npx</code> or manual-copy route (for session-board, the copy install) if you want one</dd>
@@ -462,6 +504,7 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
       <dt>Where it is stored</dt><dd>The install record keeps <code class="i">별칭=없음</code> or <code class="i">별칭=dandi-*</code> and reuses it next time (<code class="i">*</code> marks where the original name goes). Change it later and you are asked whether to <b>rename what exists or install a second copy under the new name</b></dd>
       <dt>When the record and your machine disagree</dt><dd>On any re-run &mdash; joining a team repository or re-applying your own &mdash; if the repository record&rsquo;s alias <b>differs from the names already installed on your machine</b>, you pick one of three &mdash; <b>rename</b> (match the record; this is machine-wide, so the name other projects used changes too) / <b>install another copy</b> (with a warning that the same skill will appear under two names) / <b>keep this machine as an exception</b> (your names stay, and that fact goes into the machine&rsquo;s own record)</dd>
     </dl>
+</details>
   </div>
 </section>
 
@@ -479,28 +522,33 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
   <div class="opt">
     <div class="opt-head"><span class="id">&#9424;</span><span class="name">Global behavior rules</span><span class="badge b-on">pre-checked</span></div>
     <p class="lead">Applies <b>working habits for Claude</b> &mdash; &ldquo;ask instead of guessing&rdquo;, &ldquo;build nothing beyond what was asked&rdquo; &mdash; across your whole machine.</p>
-    <dl>
+    <details class="more"><summary>Details</summary>
+<dl>
       <dt>File created</dt><dd><code>~/.claude/CLAUDE.md</code></dd>
       <dt>Example contents</dt><dd>State assumptions &middot; simplicity first &middot; don&rsquo;t touch code outside scope &middot; no re-printing whole files &middot; never read <code>.env</code></dd>
       <dt>Can I skip it</dt><dd>If you already run your own global rules, answer &ldquo;keep&rdquo;</dd>
     </dl>
+</details>
   </div>
 
   <div class="opt">
     <div class="opt-head"><span class="id">&#9425;</span><span class="name">Global security</span><span class="badge b-keep">unchecking not advised</span></div>
     <p class="lead">Blocks Claude from reading password and certificate files, and warns you when the conversation is about to be compacted.</p>
-    <dl>
+    <details class="more"><summary>Details</summary>
+<dl>
       <dt>File created</dt><dd><code>permissions.deny</code> and <code>hooks</code> in <code>~/.claude/settings.json</code></dd>
       <dt>What it blocks</dt><dd>Reading <code>.env</code>, <code>*.pem</code>, <code>*.key</code> &mdash; and the <b>shell-command detour</b> such as <code>cat .env</code> along with it</dd>
       <dt>Limits</dt><dd>It cannot stop a Python or Node script from opening the file itself. <b>The real fix is keeping secrets out of the repository</b></dd>
       <dt>If you skip it</dt><dd>Claude may read a password by accident and it stays in the transcript. <b>Leave it on unless you are skipping it deliberately</b></dd>
     </dl>
+</details>
   </div>
 
   <div class="opt">
     <div class="opt-head"><span class="id">&#9426;</span><span class="name"><code>/resume</code> &middot; <code>/wrap</code> &middot; <code>dropin-</code> skills &middot; <code>/scope</code></span><span class="badge b-on">pre-checked</span></div>
     <p class="lead">Two slash commands for opening and closing a session, plus the <code>dropin-</code> family for checking your setup and pulling it back up to date, and <code>/scope</code> for keeping a session to one task. <b>This is the practical heart of the whole thing.</b></p>
-    <dl>
+    <details class="more"><summary>Details</summary>
+<dl>
       <dt>Files created</dt><dd><code>skills/resume/SKILL.md</code> &middot; <code>skills/wrap/SKILL.md</code> &middot; <code>skills/dropin-apply/</code> &middot; <code>skills/dropin-check/</code> &middot; <code>skills/dropin-update/</code> &middot; <code>skills/dropin-sync/</code> &middot; <code>skills/dropin-pick/</code> &middot; <code>skills/scope/</code></dd>
       <dt><code>/resume</code></dt><dd>Pulls from the remote first if there is one, finds <b>uncommitted changes</b> (work in progress), reads the last records, plan and recent decisions, and reports &ldquo;last time X, next is Y?&rdquo;. If the install is old (30+ days) it suggests an audit. Add a worktree number (<code>/resume 001</code>) and it moves into that worktree and carries on there &mdash; Claude gives every worktree it creates a three-digit number. If the number cannot be found or the switch fails, it tells you why and carries on normally in the current folder. Any worktrees outside the main folder are reported with their number and branch. If the current branch was started <b>on top of another branch still in progress</b>, it also reports how far that parent branch has moved ahead &mdash; and once the parent has been merged into the default branch or deleted, how to move your branch onto the default branch (doing it stays your call)</dd>
       <dt><code>/wrap</code></dt><dd>Appends today&rsquo;s work to the record, files new decisions, updates the plan checkboxes, and <b>warns you if nothing is committed</b></dd>
@@ -512,36 +560,42 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
       <dt><code>/scope</code></dt><dd>Declares <b>what this session will do</b>, once &mdash; <code>/scope &lt;task&gt;</code>. Claude then does that task, fixes what the task itself broke, verifies it and writes the records your rules require, and <b>stops there</b>. Related-looking fixes, the next task and follow-up suggestions are not done; they go one line each into an <code>Out of scope:</code> list at the end of its report (in-work suggestions too). <b>Manual only</b> &mdash; it changes nothing until you call it. It is an instruction Claude follows, not a lock that blocks anything. The declaration lasts until <code>/clear</code>; declare again if a long session drifts. If you ask for something outside it yourself, your request wins</dd>
       <dt>Variants</dt><dd>resume and wrap come in three shapes depending on your environment &mdash; the basic single-repository form, a split form for a team sharing one repository, and a unified form for several repositories under one folder</dd>
     </dl>
+</details>
   </div>
 
   <div class="opt">
     <div class="opt-head"><span class="id">&#9427;</span><span class="name">Project record system</span><span class="badge b-on">pre-checked</span></div>
     <p class="lead">Decides <b>where and in what format</b> records are kept, and pins those rules into the project&rsquo;s <code class="i">CLAUDE.md</code>.</p>
-    <dl>
+    <details class="more"><summary>Details</summary>
+<dl>
       <dt>Files created</dt><dd><code>docs/PROJECT_PLAN.md</code> (roadmap) &middot; <code>docs/PROGRESS.md</code> (session log) &middot; <code>docs/DECISIONS.md</code> (decision log) &middot; <code>.gitattributes</code> &middot; <code>.gitignore</code></dd>
       <dt>The core rule</dt><dd>Records are <b>appended at the top only</b>; past lines are never edited. When your thinking changes you add a new decision and mark the old one &ldquo;superseded&rdquo;</dd>
       <dt><code>.gitattributes</code></dt><dd><code>merge=union</code> &mdash; when two people append at once, <b>both entries survive with no git conflict</b></dd>
       <dt>If the repo has <code>AGENTS.md</code></dt><dd>That is the instruction file other coding agents read. Once a <code>CLAUDE.md</code> exists, Claude Code stops reading <code>AGENTS.md</code> on its own &mdash; so a newly created <code>CLAUDE.md</code> starts with an <code>@AGENTS.md</code> line that keeps it loaded. Not asked, just reported; if a <code>CLAUDE.md</code> already exists you are only told. Whether these files exist is judged by <b>what is committed to the repository</b> &mdash; even if something on your own machine (a parent-folder setup, a personal file) had stopped it loading for you, your teammates are still reading <code>AGENTS.md</code>. If <code>/init</code> or <code>/import</code> has <b>copied</b> the <code>AGENTS.md</code> content into <code>CLAUDE.md</code>, keep only one of the two (the copy or the import line) &mdash; with both, the same instructions load twice</dd>
       <dt><code>.gitignore</code></dt><dd>Keeps personal settings (<code>.claude/settings.local.json</code>) and isolated work folders (<code>.claude/worktrees/</code>) out of commits &mdash; without it, the contents of an isolated checkout all show up as untracked</dd>
     </dl>
+</details>
   </div>
 
   <div class="opt">
     <div class="opt-head"><span class="id">&#9428;</span><span class="name">Project permissions</span><span class="badge b-on">pre-checked</span></div>
     <p class="lead">Decides <b>what may run without asking</b> in this project.</p>
-    <dl>
+    <details class="more"><summary>Details</summary>
+<dl>
       <dt>File created</dt><dd><code>.claude/settings.json</code></dd>
       <dt>allow examples</dt><dd><code>git status</code>, <code>git diff</code>, <code>npm run</code>, <code>./gradlew</code> &mdash; <b>safe and frequent</b></dd>
       <dt>ask examples</dt><dd><code>git push --force</code>, <code>git reset --hard</code>, <code>rm -rf</code> &mdash; <b>hard to undo</b></dd>
       <dt><code>git push</code></dt><dd><b>Deliberately in</b> <code>allow</code> &mdash; so everyday pushes do not prompt every time; force pushes still ask, as above. Allowing it is only permission: when to push stays your decision. It does not stop pushes to the default branch, so if those must be blocked, use branch protection on the remote</dd>
       <dt>Note</dt><dd>Allowing everything with <code>Bash(*)</code> is a personal choice and <b>is not recommended for teams</b></dd>
     </dl>
+</details>
   </div>
 
   <div class="opt">
     <div class="opt-head"><span class="id">&#9429;</span><span class="name">effort bundle &amp; cache guidance</span><span class="badge">writes <code>modelSettings</code> only when needed</span></div>
     <p class="lead">Each model <b>starts from its own default reasoning depth</b>. A per-model value is written <b>only for a model that should run at a different depth</b> &mdash; then picking that model brings its depth with it. The habits that keep the conversation cache intact come as advice alongside it.</p>
-    <dl>
+    <details class="more"><summary>Details</summary>
+<dl>
       <dt>What gets written</dt><dd>Only when there is a reason. A <code>modelSettings</code> entry goes into <code>~/.claude/settings.json</code>, your own machine, for the model that takes routine conversions and small edits &mdash; and only if its default is <b>higher than <code>medium</code></b>; it is then set to <code>medium</code>. If that model&rsquo;s default is <b>already <code>medium</code>, there is nothing to write</b> &mdash; no value is added and the install record notes &ldquo;no &#9429; key&rdquo;, so a later re-run does not treat it as missing and ask again. The stronger models are not written: their default is the starting point the model maker tuned, and a value written down would go stale when the next generation arrives. Lowered only where <b>more depth would not buy quality</b>, so thrift and quality point the same way. The value is the same on the thrift profile</dd>
       <dt>Which model name</dt><dd>Not copied from the document&rsquo;s example &mdash; the <b>full ID of a model this machine can actually use</b> is read from the <code>/model</code> list first. Plans differ in which models they offer, and a name that does not match is saved but applies to no model at all</dd>
       <dt>When to raise it</dt><dd>Writing tests or refactoring on that model needs edge cases looked at, so raise it to <code>high</code> for that session only, with <code>s</code> (this session) on the <code>/effort</code> slider. The final review is done by the stronger model, not this one. Long autonomous coding does not run at <code>medium</code> either &mdash; the quality gap there is large, so it is not sent to this seat</dd>
@@ -553,12 +607,14 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
       <dt>If you step away</dt><dd>On by default (idle compaction): leave a large conversation (200,000+ tokens of context, on the one-hour cache) for about an hour, and the next message sends a <b>summary</b> instead of the whole thing. It avoids the reprocessing but loses detail, so <b>if there are decisions to keep, run <code>/wrap</code> before you step away</b>. To turn it off, use Idle compaction in <code>/config</code></dd>
       <dt>Measuring</dt><dd>The <code>Prompt cache</code> line in <code>/usage</code>. Misses piling up every turn mean one of the breaking actions above is happening mid-task</dd>
     </dl>
+</details>
   </div>
 
   <div class="opt">
     <div class="opt-head"><span class="id">&#9430;</span><span class="name">In-work suggestions</span><span class="badge b-on">pre-checked (minimal included)</span></div>
     <p class="lead">Lets you <b>start light and add the rest when your work actually needs it</b> &mdash; Claude suggests a missing drop-in item in one line instead of you hunting for it.</p>
-    <dl>
+    <details class="more"><summary>Details</summary>
+<dl>
       <dt>What gets written</dt><dd>One <code>## 10.</code> line in <code>~/.claude/CLAUDE.md</code>, your own machine (not the project&rsquo;s <code>CLAUDE.md</code>)</dd>
       <dt>Where it speaks</dt><dd>Only in a folder that <b>already has an install record</b>. A folder with none may be one where you do not use these documents, so nothing is suggested there &mdash; run <code>/dropin-apply</code> yourself when you want to install</dd>
       <dt>When it speaks</dt><dd>When your work newly runs into a state that needs a drop-in item &mdash; introducing tests or CI, adding a frontend stack, creating <code>docs/features/</code> &mdash; Claude <b>finishes the current task first</b>, then suggests it in one line. Accept and <code>/dropin-apply 추천</code> installs <b>only what you pick</b>. <code>/resume</code> gives the same one-line hint at session start (looking at file names only)</dd>
@@ -567,6 +623,7 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
       <dt>If you skip it</dt><dd>No suggestions appear &mdash; the items you need later you find yourself with <code>/dropin-apply</code></dd>
       <dt>Removing it</dt><dd>Delete that one line; the file and its other sections stay</dd>
     </dl>
+</details>
   </div>
 
   <h3>Confirmed alongside &mdash; the project type</h3>
@@ -607,11 +664,13 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
   <div class="opt">
     <div class="opt-head"><span class="id">&#9424;</span><span class="name">Difficulty rubric</span><span class="badge b-on">pre-checked</span></div>
     <p class="lead">The reference table for <b>what counts as hard</b> in this project. Without it there is nothing to route on.</p>
-    <dl>
+    <details class="more"><summary>Details</summary>
+<dl>
       <dt>File created</dt><dd><code>docs/difficulty-matrix.md</code> (<code>docs/난이도-매트릭스.md</code> when the output language is Korean)</dd>
       <dt>Hard</dt><dd>Cryptography, authentication, concurrency, state management, external integration contracts, huge tangled files, performance-critical paths</dd>
       <dt>Easy</dt><dd>Plain CRUD, lookups, fixed-format conversions, boilerplate</dd>
     </dl>
+</details>
   </div>
 
   <div class="opt">
@@ -628,41 +687,49 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
         <tr><td><b>parity-tester</b></td><td>Runs the tests and reports pass/diff only, fast. Root-cause analysis goes back upstream</td><td>haiku</td><td>low</td></tr>
       </table>
     </div>
-    <dl>
+    <details class="more"><summary>Details</summary>
+<dl>
       <dt>Asked first</dt><dd>If the code cannot tell, you are asked <b>what kind of work this is</b> &mdash; migration or refactor / new development / audit / bug hunting. The answer changes what is checked by default. Constraints you must keep, which area comes first, and what counts as the right answer (existing tests, for example) are asked at the same time if unknown</dd>
       <dt>How to choose</dt><dd><b>Changing existing code</b> (migration, refactor) &rarr; everything except spec-writer. <b>Building something new</b> &rarr; drop surveyor and triage and start from <b>spec-writer</b>. An <b>audit</b> reuses surveyor (find) and analyst (verify) with their roles changed; <b>bug hunting</b> runs surveyor (reproduce) &rarr; analyst (cause) &rarr; implementer (fix) &rarr; parity-tester (regression check)</dd>
       <dt>Where they live</dt><dd><b>Shared with the team</b> = the project&rsquo;s <code>.claude/agents/</code> (committed, everyone uses them) / <b>personal experiment</b> = <code>~/.claude/agents/</code> (your machine only). Asked in every mode</dd>
       <dt>Parallel option</dt><dd>When the job is large and the slices never touch the same files, running <b>several implementers at once</b> (<code>isolation: worktree</code>) is offered as a choice. It is attached one of two ways &mdash; <b>always on</b>, set in the implementer file / <b>only when run in parallel</b> (steps done one after another skip building an isolated work folder each time, so it is lighter; since this leaves no trace in the file, the rule is written into the &#9427; handoff protocol document)</dd>
     </dl>
+</details>
   </div>
 
   <div class="opt">
     <div class="opt-head"><span class="id">&#9426;</span><span class="name">Custom reviewer</span><span class="badge b-off">unchecked by default</span></div>
     <p class="lead">An agent for code review. <b>Not created by default</b> &mdash; Claude Code already ships <code class="i">/code-review</code>.</p>
-    <dl>
+    <details class="more"><summary>Details</summary>
+<dl>
       <dt>Check it when</dt><dd>You have <b>project-specific criteria</b> the built-in review cannot know &mdash; cross-checking spec against implementation, enforcing domain conventions</dd>
       <dt>Note</dt><dd>The built-ins are <code>/code-review</code> (general) and <code>/simplify</code> (simplification only &mdash; it does not hunt bugs)</dd>
     </dl>
+</details>
   </div>
 
   <div class="opt">
     <div class="opt-head"><span class="id">&#9427;</span><span class="name">Handoff document protocol</span><span class="badge b-on">pre-checked</span></div>
     <p class="lead">The rule that results pass between stages <b>as files</b>. Handing them over as a chat summary leaks content and fails.</p>
-    <dl>
+    <details class="more"><summary>Details</summary>
+<dl>
       <dt>File created</dt><dd><code>docs/handoff-protocol.md</code> (<code>docs/핸드오프-규약.md</code> in Korean; if a protocol already exists under another name, that name is kept) &mdash; which stage leaves what in which file</dd>
     </dl>
+</details>
   </div>
 
   <div class="opt">
     <div class="opt-head"><span class="id">&#9428;</span><span class="name">Planning-only model command</span><span class="badge b-off">unchecked by default</span></div>
     <p class="lead">Creates one <code class="i">/plan-&lt;model&gt;</code> command that runs a different model <b>only while planning</b>. When the plan is done it <b>returns to your normal model by itself</b> &mdash; nothing to undo.</p>
-    <dl>
+    <details class="more"><summary>Details</summary>
+<dl>
       <dt>Why build it yourself</dt><dd>The only planning-stage model switches Claude Code ships are <code>opusplan</code> (plan = Opus, execute = Sonnet) and <code>haiku</code> (only planning is raised to Sonnet). Any other pairing &mdash; <b>planning with Fable</b>, say &mdash; only exists if you make it</dd>
       <dt>Files created</dt><dd><code>skills/plan-&lt;model&gt;/SKILL.md</code> and <code>docs/model-usage-table.md</code> (<code>docs/모델-운용표.md</code> in Korean). The table has three columns &mdash; situation, model, effort &mdash; laying out which work goes to which model at which strength. If the skill goes machine-wide, your global <code>CLAUDE.md</code> also gets one entry saying <b>when to use it and when not to</b>. Removal takes all of these</dd>
       <dt>Asked alongside</dt><dd>The <b>model</b> and <b>strength</b> for planning (default <code>high</code>) &middot; whether to make it <b>manual only</b> (recommended &mdash; invoked automatically, that turn goes to a different model without you noticing) &middot; <b>your machine or shared with the team</b> (asked separately from the roster&rsquo;s placement). The skill name alias (2-7) applies to its folder name too</dd>
       <dt>When to use it</dt><dd>Only for <b>work with several design paths that needs a decision before implementing</b>. When the path is already set, planning and building straight in the session is cheaper &mdash; if it differs from the session model, calling it reprocesses the whole conversation so far once, at that model&rsquo;s price (cheapest early in a session or right after <code>/clear</code>)</dd>
       <dt>Check it when</dt><dd>You want a specific model just for the planning stage. Most projects do not, so it is <b>unchecked by default</b></dd>
     </dl>
+</details>
   </div>
 </section>
 
@@ -674,49 +741,58 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
   <div class="opt">
     <div class="opt-head"><span class="id">&sect;1</span><span class="name">claude-hud</span><span class="badge b-keep">user scope</span></div>
     <p class="lead">A plugin that draws a <b>status line</b> under the input box, showing how much context you have used and how much of your plan allowance is gone.</p>
-    <dl>
+    <details class="more"><summary>Details</summary>
+<dl>
       <dt>How to install</dt><dd>In a session: <code>/plugin marketplace add jarrodwatts/claude-hud</code> &rarr; <code>/plugin install claude-hud</code> &rarr; <code>/reload-plugins</code> &rarr; <code>/hud</code></dd>
       <dt>Requires</dt><dd>A recent Claude Code and Node.js 22.18 or newer (if missing on Windows, <code>winget install OpenJS.NodeJS.LTS</code>)</dd>
       <dt>Asked alongside</dt><dd><b>The display layout</b> &mdash; interactive setup (pick the items yourself in <code>/hud</code>) / the author&rsquo;s recommended layout (model, effort, running agents, context, usage with reset time and uncommitted changes on &mdash; the 7-day limit shown at all times, even while usage is low; noise items off) / leave the defaults. Then, separately, <b>whether to add <code>refreshInterval</code></b> &mdash; with it (5 seconds, say) the countdowns keep ticking between messages, but the timer runs even in idle windows, so redraws <b>multiply by the number of windows you keep open</b>. With many terminals open, leave it out (usage values still update without it). Windows Git Bash can throw errors at short intervals, so there leave it out or use 30 seconds or more</dd>
       <dt>Pre-checked</dt><dd><b>On the thrift profile or a new PC.</b> Practically required on thrift &mdash; economizing on what you cannot see is guesswork</dd>
       <dt>Note</dt><dd>If you already run another status line, you are always asked before replacing it</dd>
     </dl>
+</details>
   </div>
 
   <div class="opt">
     <div class="opt-head"><span class="id">&sect;2</span><span class="name">svg-design</span><span class="badge b-off">design bundle</span></div>
     <p class="lead">A rulebook for <b>implementing SVG filter effects correctly</b> &mdash; hand-drawn jitter, droplets merging (Gooey), glass refraction, neon type.</p>
-    <dl>
+    <details class="more"><summary>Details</summary>
+<dl>
       <dt>File created</dt><dd><code>skills/svg-design/SKILL.md</code></dd>
       <dt>Mistakes it prevents</dt><dd>Duplicate filter ids breaking the page &middot; effects clipped in Safari &middot; settings that wreck performance &middot; turning text into images so it <b>cannot be copied or read by a screen reader</b> &middot; XSS when external input flows in</dd>
       <dt>Choose it when</dt><dd>You build web screens yourself. Backend or app projects do not need it</dd>
     </dl>
+</details>
   </div>
 
   <div class="opt">
     <div class="opt-head"><span class="id">&sect;3</span><span class="name">frontend-design</span><span class="badge b-off">design bundle</span></div>
     <p class="lead">An official Anthropic skill. Steers away from <b>UI that looks AI-generated</b> (predictable fonts, purple gradients, excessive animation) toward deliberate design that fits the subject.</p>
-    <dl>
+    <details class="more"><summary>Details</summary>
+<dl>
       <dt>How to install</dt><dd>As a bundle with <code>/plugin marketplace add anthropics/skills</code> &middot; just this one with <code>/plugin install frontend-design@claude-plugins-official</code> &middot; or individually with <code>npx skills add &hellip; --skill frontend-design</code> (add <code>-g</code> for global; this route needs Node.js 22.20 or later). The two plugin routes take no skill name alias (2-7)</dd>
       <dt>Difference from svg-design</dt><dd>This one covers <b>design direction and the UI as a whole</b>; svg-design covers <b>implementing SVG filter effects</b>. Installing both causes no conflict</dd>
       <dt>Font licences</dt><dd>This skill <b>does not look at them</b> &mdash; it changes typography freely and can suggest a paid font. So ticking it brings up the <b>font licence policy</b> question below, and the answer is written down even if you did not install &sect;9</dd>
     </dl>
+</details>
   </div>
 
   <div class="opt">
     <div class="opt-head"><span class="id">&sect;4</span><span class="name">MCP servers</span><span class="badge b-off">optional</span></div>
     <p class="lead">Connects external tools to Claude. Which servers to attach is <b>asked separately, as a list</b>.</p>
-    <dl>
+    <details class="more"><summary>Details</summary>
+<dl>
       <dt>Examples</dt><dd>GitHub (read PRs, issues, CI logs) &middot; Context7 (fetch current library docs) &middot; Playwright (drive a browser &mdash; for checking screens during coding, the Playwright CLI in &sect;5 is recommended instead)</dd>
       <dt>Scope</dt><dd><b>This repo, just you</b> (default) / <b>shared with the team</b> = commit <code>.mcp.json</code> (each teammate approves on first run) / <b>you, every project</b> = <code>claude mcp add --scope user</code></dd>
       <dt>At work &#128308;</dt><dd>An MCP server <b>can send your conversation outside</b>. If you handle internal code, connect only servers your organization allows. Put tokens in environment variables, never directly in <code>.mcp.json</code>. Check this item and, <b>in every mode</b>, you are asked whether this is a company repository, whether you have checked the organization&rsquo;s policy, and whether it is approved (answering &ldquo;not sure&rdquo; counts as a company repository). Without approval only this item is left out and the rest installs; the block is recorded so it is checked again next time</dd>
     </dl>
+</details>
   </div>
 
   <div class="opt">
     <div class="opt-head"><span class="id">&sect;5</span><span class="name">Browser verification</span><span class="badge b-off">design bundle</span></div>
     <p class="lead">Lets <b>Claude open the screens it built and fix them</b>. It completes the loop: build &rarr; check itself &rarr; fix.</p>
-    <dl>
+    <details class="more"><summary>Details</summary>
+<dl>
       <dt>Browser routes (pick any)</dt><dd>Once you tick &sect;5, a separate question asks <b>what Claude should open screens with</b>. You can keep several, and anything already installed on this PC is shown next to its choice. Other tools are reference only and are not installed</dd>
       <dt>Playwright CLI (pre-checked when Node.js is present)</dt><dd><b>You get</b> &mdash; a browser that runs without a screen (Node.js 18 or later). It saves page contents to a file instead of loading them into the conversation, and <b>it does not take over the browser you are using</b>, so several sessions can check at once. It works the same way on WSL, SSH and CI, which is why <b>it is the default even on a PC with a screen</b>. Pages behind a login are opened with a state file saved from one sign-in with a test account (that file goes in <code>.gitignore</code> so it is never committed). When there is no test account &mdash; Google, SSO or two-factor &mdash; Chrome opens in a window with a dedicated profile kept outside the repository and <b>you sign in once yourself</b>; no extension needed. The log folder it leaves in the working folder (<code>.playwright-cli/</code>) holds page contents too, so it is not committed either. <b>Without Node.js</b> the install would fail, so it appears unticked, with the other routes shown as alternatives. <b>If you skip it</b> &mdash; checks run only through the other routes below</dd>
       <dt>Claude in Chrome (backup, off by default)</dt><dd><b>You get</b> &mdash; the official extension in your own Chrome, checking <b>with your logged-in state as is</b>. It works <b>only if it was connected when the session started</b> &mdash; opening the extension later does not add its tools to a session already running, so restart with <code>claude --chrome</code> then. Login screens such as Google can also be opened through Playwright CLI, so this stays a backup &mdash; it also moves visibly in your Chrome window, so it does not suit repeated checks. Only on plans contracted directly with Anthropic &mdash; Pro, Max, Ultra, Team, Enterprise; not via Bedrock, Google Cloud or Foundry. Installing the extension alone does not connect it; you must activate with <code>claude --chrome</code> or <code>/chrome</code> and authenticate with <code>/login</code> (no WSL support). <b>If you skip it</b> &mdash; Claude cannot open pages that only show up with your own logged-in session</dd>
@@ -728,12 +804,14 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
       <dt>At work &#128308;</dt><dd>Connecting a browser also reaches <b>your logged-in sessions</b>. Keep the extension&rsquo;s site permissions narrowed to <code>localhost</code> and staging. DevTools MCP <b>does not use the mode that attaches to your running Chrome</b> &mdash; every open window in that profile would be visible. Setups that copy your whole browser profile are not used either. The same approval questions as &sect;4 are asked <b>in every mode</b>, and without approval only this item is left out</dd>
       <dt>Removing it</dt><dd>For Chrome, turning it off in <code>/chrome</code> only disconnects it; to remove it fully, uninstall the extension or revoke its site permissions &middot; Playwright CLI: <code>npm uninstall -g @playwright/cli</code> (you are asked whether to delete the login state file, the profile you signed into yourself and the <code>.playwright-cli/</code> folder) &middot; DevTools MCP: <code>claude mcp remove chrome-devtools --scope user</code> &middot; the skill: delete the <code class="i">browser-check/</code> folder in the scope you installed it to</dd>
     </dl>
+</details>
   </div>
 
   <div class="opt">
     <div class="opt-head"><span class="id">&sect;7</span><span class="name">Feature-doc skill set</span><span class="badge b-off">feature documentation bundle</span></div>
     <p class="lead">Six skills that keep a <b>written spec for every feature</b> and keep it honest. Claude reads the code <i>and</i> opens the real screen, writes what it actually saw into <code class="i">docs/features/</code>, and from then on that folder drives the tests, the commit guard and the release notes.</p>
-    <dl>
+    <details class="more"><summary>Details</summary>
+<dl>
       <dt>The six</dt><dd><b>feature-docs</b> (write and update the specs) &middot; <b>feature-test</b> (run the test cases written in them, on the real screen) &middot; <b>feature-doc-audit</b> (find which docs have gone stale, no test run needed) &middot; <b>feature-doc-guard</b> (block a commit that changes code without touching its doc) &middot; <b>test-to-script</b> (turn test cases into Playwright/Maestro scripts) &middot; <b>release-notes</b> (build release notes from the doc history)</dd>
       <dt>Installed together, always</dt><dd>They share one folder layout, so a partial install leaves the rest quietly broken. Start with <code>/feature-docs init</code> &mdash; four of the other five refuse to run until it exists (<code>/release-notes</code> still runs, from git history alone)</dd>
       <dt>Asked alongside &mdash; commit guard</dt><dd>Asked separately, <b>unchecked by default</b>. It is a hook that blocks a commit changing feature code without touching that feature&rsquo;s doc, so installed in the project it applies to <b>every teammate&rsquo;s commits</b> (hence the approval). It needs the spec inventory to work, so it is only offered after <code>/feature-docs init</code></dd>
@@ -742,12 +820,14 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
       <dt>Choose it when</dt><dd>The project has real features and real screens. <b>Not for documentation-only repositories</b> &mdash; there is nothing to specify or run</dd>
       <dt>Removing it</dt><dd>Uninstall <b>the guard first</b> (<code>/feature-doc-guard uninstall</code>), then delete the folders. The other order leaves a commit hook with nothing left to remove it, and commits keep getting blocked. Your <code class="i">docs/features/</code> and the test scripts <code>/test-to-script</code> wrote (<code class="i">tests/e2e/</code> for web, <code class="i">tests/maestro/</code> for apps) are data &mdash; they are kept, not deleted</dd>
     </dl>
+</details>
   </div>
 
   <div class="opt">
     <div class="opt-head"><span class="id">&sect;8</span><span class="name">refactor</span><span class="badge b-off">off by default &middot; pick it yourself</span></div>
     <p class="lead">One skill that makes code cleaner <b>and then checks that it still behaves the same</b>. It merges duplicated functions, tidies structure and clears out dated syntax &mdash; then traces what the change touched, across call sites, contracts, data formats and an actual run.</p>
-    <dl>
+    <details class="more"><summary>Details</summary>
+<dl>
       <dt>Picking the scope</dt><dd>Defaults to <b>what you worked on recently</b>. You can point it at <code>all</code> (the whole project), a path, or a commit range; add <code>check</code> and it <b>only verifies, changing nothing</b></dd>
       <dt>It asks before it edits</dt><dd>Candidates come back as a table &mdash; <b>what / why / risk / how many callers</b> &mdash; and only what you pick gets changed. Nothing is touched before you approve</dd>
       <dt>What it won't do</dt><dd>New features and bug fixes. Mixing those with a refactor makes it impossible to tell what broke, so a bug it spots along the way goes <b>into the report, not into the code</b></dd>
@@ -755,12 +835,14 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
       <dt>How it relates to &sect;7</dt><dd><b>They are separate.</b> With &sect;7 installed, verification gains one more layer &mdash; "do the feature docs' test cases still pass?" &mdash; and without it, that line is simply skipped. <b>Either one alone is fine</b></dd>
       <dt>Removing it</dt><dd>Delete one folder and you're done (it installs no hooks or settings). The <code class="i">docs/refactor/</code> reports and the tests it wrote are data &mdash; they stay</dd>
     </dl>
+</details>
   </div>
 
   <div class="opt">
     <div class="opt-head"><span class="id">&sect;9</span><span class="name">kr-ui-guide</span><span class="badge b-off">off by default &middot; on with the design bundle in Korean</span></div>
     <p class="lead">One skill that gives Claude <b>design rules drawn from research on Korean web, app and game services</b> &mdash; UX patterns, icon systems, colour systems, current style conventions and game UI. It is a yardstick, not a look to copy.</p>
-    <dl>
+    <details class="more"><summary>Details</summary>
+<dl>
       <dt>What it enforces</dt><dd>Contrast it <b>calculates</b> for every colour pair it proposes (4.5:1 for body text, 3:1 for icons and large text), touch targets of at least 44pt / 48dp, labels next to icons, state shown by shape as well as colour, one accent action per screen, no dark patterns</dd>
       <dt>How it reads</dt><dd>A short summary per topic loads only for the kind of work at hand &mdash; screens, icons, colour, style conventions or game UI (input devices, touch, repeated content, Korean text, purchase screens). The full research reports come along too, and are opened section by section only when a specific case is needed. A default token set (neutral colours, type scale, spacing, radius, shadow, motion) and an asset licence table come along &mdash; brand colours are left blank and asked for</dd>
       <dt>What it won't do</dt><dd>Copy a brand's colours or icons from the case studies, or quote the reports' conversion figures as evidence &mdash; those come from secondary sources and are unverified</dd>
@@ -770,23 +852,27 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
       <dt>Style pack (optional)</dt><dd>Asked alongside, <b>unchecked by default</b>. Installs a second skill, <code>kr-ui-styles</code>, that swaps the default look (restrained, blue-grey, rounded) for another researched direction &mdash; for now <code>editorial</code> (pure black and white, serif headlines, square corners, no shadows, generous spacing) for fashion, lifestyle and brand-media products, and <code>dark-neon</code> (deep charcoal, one neon accent, small 4&ndash;12px corners, dense layout) for streaming, esports, trading and OTT, and <code>kitsch</code> (warm cream canvas, ink outlines, hard offset shadows, several saturated accents, doodle characters) for gamified commerce features, teen verticals and event screens, and <code>neo-brutal</code> (0px corners, 2&ndash;3px black borders, collapsing hard shadows, two or three fluorescent blocks, geometric bold or pixel display type) for limited-drop commerce, creator marketplaces, developer tools and campaign landings. You pick the pack with a <code>스타일 팩:</code> line in the project note above. <b>Skip it and nothing changes</b> &mdash; kr-ui-guide&rsquo;s default look stays. The rules above still win over any pack</dd>
       <dt>Removing it</dt><dd>Delete the folder. If you added the project note above, delete that <code>CLAUDE.md</code> block too &mdash; otherwise it's the only thing left behind. The font licence section below is <b>shared with &sect;3</b>, so it only goes once neither design skill is left</dd>
     </dl>
+</details>
   </div>
 
   <div class="opt">
     <div class="opt-head"><span class="name">Font licence policy</span><span class="badge b-keep">asked once you tick &sect;3 or &sect;9</span></div>
     <p class="lead">Tick either design skill and one more question follows: <b>what Claude may do with a font that is not free to use</b>. Your answer is written as a short section at the end of the <code>CLAUDE.md</code> for the scope you installed into, so <b>whichever UI skill is working, it reads the same rule from one place</b>.</p>
-    <dl>
+    <details class="more"><summary>Details</summary>
+<dl>
       <dt>Three answers</dt><dd><b>Free-use only</b> (the default) &mdash; a font that is not clearly free is not used; ask for one and you get the reason and a free alternative instead / <b>tell me, then I choose</b> &mdash; the conditions (purchase, attribution, where it may be used) are put in front of you first, and the font is used only after you say so / <b>do not add the section</b> &mdash; nothing is written, and you are told what that means: &sect;9 behaves as if free-use only, and &sect;3 does not check licences at all</dd>
       <dt>How a font gets judged</dt><dd>By <b>reading the licence text itself on the day</b> (<code class="i">LICENSE</code>, <code class="i">OFL.txt</code>, the official distribution page) rather than from memory, and tagging it &mdash; free / attribution required / conditional / paid / unconfirmed. Anything it could not confirm counts as unconfirmed and is <b>not used under either policy</b></dd>
       <dt>What you get back</dt><dd>Every font added or swapped is reported as one line &mdash; <b>name, licence, source URL, date checked</b>. A system font named only in a fallback stack is marked as not distributed</dd>
       <dt>If the section already exists</dt><dd>You are asked whether to keep it or change it, and only the policy line is rewritten &mdash; the rest of the section stays as it is</dd>
     </dl>
+</details>
   </div>
 
   <div class="opt">
     <div class="opt-head"><span class="id">&sect;10</span><span class="name">pc-clean</span><span class="badge b-off">off by default &middot; Windows only</span></div>
     <p class="lead">One skill for when your PC has slowed down: it <b>only reads</b> the likely causes and shows them in one table, then cleans up <b>only the items you approve</b>.</p>
-    <dl>
+    <details class="more"><summary>Details</summary>
+<dl>
       <dt>What it looks at</dt><dd>Free space on C: and free memory &middot; how many days since the last restart &middot; leftover <code>node.exe</code> processes whose parent is gone (MCP and plugin servers often leave these) &middot; <code>claude.exe</code> sessions started before today &middot; the processes using the most memory &middot; old files in TEMP &middot; the Recycle Bin &middot; the Outlook logging folder</dd>
       <dt>Cleans only what you approve</dt><dd>The check changes nothing. Cleanup asks item by item and does only what you pick &mdash; deleted files and stopped processes cannot be brought back</dd>
       <dt>What it needs</dt><dd><b>Windows + PowerShell 7</b> (<code>pwsh</code>). On any other OS it is left out of the list and recorded as &ldquo;not applicable&rdquo;, so you are not asked again. Without <code>pwsh</code> it still installs, but the skill stops at its first step &mdash; you are told to run <code>winget install Microsoft.PowerShell</code> yourself, and it is recorded as &ldquo;pending&rdquo;</dd>
@@ -795,12 +881,14 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
       <dt>Watch out</dt><dd>If a command with the same name (<code class="i">.claude/commands/pc-clean.md</code>) already exists, this skill hides it. You are asked whether to keep or replace it; to keep the old command, give the skill an alias (2-7)</dd>
       <dt>Removing it</dt><dd>Delete the one folder and you are done (it creates no hooks, settings or scheduled tasks)</dd>
     </dl>
+</details>
   </div>
 
   <div class="opt">
     <div class="opt-head"><span class="id">&sect;11</span><span class="name">Policy notes</span><span class="badge b-off">off by default &middot; project only</span></div>
     <p class="lead">When development turns up a <b>product policy</b> &mdash; a rule you cannot tell from the names alone, such as when a status may change, who may see or do what, or how amounts, quantities and deadlines are calculated &mdash; Claude writes it down the moment it finds it, and on related work checks that policy first <b>without being told</b>. These are <b>rule files for Claude to read</b>, not documents for people.</p>
-    <dl>
+    <details class="more"><summary>Details</summary>
+<dl>
       <dt>Files it creates</dt><dd>One always-loaded instruction file (<code class="i">.claude/rules/policy-recording.md</code>) and a folder where policies accumulate (<code class="i">.claude/rules/policies/</code>). A policy inferred from code is marked <b>[추정]</b> (inferred); one confirmed by a person or a planning document is marked <b>[확인]</b> (confirmed). When one is recorded, you get a one-line note at the end of the turn</dd>
       <dt>Token cost</dt><dd>Each policy file is tied to <b>the code paths it governs</b>, so it loads only when that code is read or edited. Day to day, only the instruction file and its index are loaded</dd>
       <dt>When an inferred policy matters</dt><dd>If the implementation depends on an inferred policy, Claude asks you in one line before going on, and marks it confirmed once you answer. If a request goes against a policy, Claude points to it &mdash; and then <b>follows your decision</b></dd>
@@ -812,12 +900,14 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
       <dt>Relation to &sect;7</dt><dd>Feature docs are per feature; policies cut across features. Policies are not copied into feature docs &mdash; only the policy ID is referenced</dd>
       <dt>Removing it</dt><dd>Deleting the instruction file stops the recording and lookups. The accumulated policy folder is <b>your data</b>, so you are asked whether to keep it (if kept, each file still loads when its code is worked on)</dd>
     </dl>
+</details>
   </div>
 
   <div class="opt">
     <div class="opt-head"><span class="id">&sect;12</span><span class="name">session-board</span><span class="badge b-off">off by default &middot; global only</span></div>
     <p class="lead">Lets Claude sessions <b>open in the same folder at the same time</b> know about each other. When a session starts or you send a message, Claude is told <b>the other sessions&rsquo; titles (or, without a title, the first 80 characters of the first message), branches and edited files</b>, and if it is about to edit a file another session just changed, it gets <b>one warning</b>.</p>
-    <dl>
+    <details class="more"><summary>Details</summary>
+<dl>
       <dt>It does not block</dt><dd>Whether to carry on, open a separate workspace with <code>claude --worktree &lt;name&gt;</code>, or ask the other session is your call. Two sessions in one folder default to separate workspaces (worktrees); staying in the same folder is only for cases where every condition holds, such as briefly editing different files on the same work branch. The board is how you check which files the other session changed when making that call (files changed by terminal commands do not show up on it, so look at <code>git status</code> too), and the safety net that lets you <b>notice before committing</b> when a condition breaks</dd>
       <dt>Token cost</dt><dd>The hooks never call the model; they only write a small per-session file. <b>With no other session running, nothing is added to the conversation</b></dd>
       <dt>How to install</dt><dd>Choose <b>plugin</b> (offered first &mdash; run <code>/plugin marketplace add EleninJayTech/claude</code> &rarr; <code>/plugin install dandi-session-board@dandi</code> yourself; the hooks switch on in one go and come off in one go) or <b>copy</b> (the skill folder is fetched and five hooks are appended to your machine&rsquo;s settings &mdash; existing hooks are kept). If both are present every notice runs twice, so you are asked to keep only one. If the plugin is already on, fetch new versions yourself with <code>/plugin marketplace update dandi</code> &mdash; re-applying alone does not change the hooks already running. On a work PC you are also reminded that a plugin runs code with your permissions &mdash; and these hooks run on every edit</dd>
@@ -828,12 +918,14 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
       <dt>Watch out</dt><dd>If you already have hooks that deal with other sessions or simultaneous edits at session start or on file edits, you are asked whether to keep or replace them</dd>
       <dt>Removing it</dt><dd>For the plugin, <code class="i">/plugin uninstall dandi-session-board@dandi</code> (the hooks go with it). For a copy, remove just these hooks from your settings, then delete the skill folder and <code class="i">~/.claude/session-board/</code> &mdash; it only holds session titles, the start of the first message, branches and file paths, so nothing is lost</dd>
     </dl>
+</details>
   </div>
 
   <div class="opt">
     <div class="opt-head"><span class="id">&sect;13</span><span class="name">Feature change log</span><span class="badge b-off">off by default &middot; project only</span></div>
     <p class="lead">From the moment it is installed, whenever a feature people use (a screen, an API, a command, a setting) is <b>added, changed or removed</b>, Claude writes it down <b>in one line</b> in that same turn, and on related work checks that line first <b>without being told</b>. It is <b>an index for finding things</b>, not a spec for people &mdash; the details are found in the code and git history, using the file path and date on the line.</p>
-    <dl>
+    <details class="more"><summary>Details</summary>
+<dl>
       <dt>Files it creates</dt><dd>One always-loaded instruction file (<code class="i">.claude/rules/feature-log.md</code>) and a folder where lines accumulate by area (<code class="i">.claude/rules/feature-log/</code>). Each line carries an <b>[추가] (added) / [변경] (changed) / [삭제] (removed)</b> tag, the feature name, a one-line definition, a file path and a date; a removed feature keeps its line, with <b>the reason it was removed</b>. When one is recorded, you get a one-line note at the end of the turn</dd>
       <dt>What it leaves out</dt><dd>Changes that leave the feature&rsquo;s definition as it was &mdash; refactoring, bug fixes, performance work. Nor does it go back and write up every feature that existed before the install</dd>
       <dt>Token cost</dt><dd>Each area file is tied to <b>the code paths it covers</b>, so it loads only when that code is read or edited. Day to day, only the instruction file and its index are loaded</dd>
@@ -847,12 +939,14 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
       <dt>On a re-run</dt><dd>If the instruction file differs from the new version, reconcile is offered as the default. The <b>index</b> built up so far is your data and is kept whatever you choose</dd>
       <dt>Removing it</dt><dd>Deleting the instruction file stops the recording and lookups. The accumulated area folder is <b>your data</b>, so you are asked whether to keep it (if kept, each file still loads when its code is worked on)</dd>
     </dl>
+</details>
   </div>
 
   <div class="opt">
     <div class="opt-head"><span class="id">&sect;14</span><span class="name">Flutter app screen checks</span><span class="badge b-off">off by default &middot; Flutter projects only</span></div>
     <p class="lead">Claude attaches to <b>a Flutter app running in debug mode</b> (desktop, mobile or web), reads the elements on screen, taps, types and scrolls, and captures <b>the screen the app itself drew</b>. Where &sect;5 covers browser screens, this item covers <b>Flutter screens outside a browser</b>. The tool is LeanCode&rsquo;s Marionette (Apache-2.0).</p>
-    <dl>
+    <details class="more"><summary>Details</summary>
+<dl>
       <dt>Where it applies</dt><dd>It appears in the list only for a project whose <code class="i">pubspec.yaml</code> depends on the Flutter SDK. Otherwise it is left out and recorded as &ldquo;not applicable&rdquo;. The <code>flutter</code> and <code>dart</code> commands need to run on this PC</dd>
       <dt>Why it is off by default</dt><dd>It adds a package to your app&rsquo;s <code class="i">pubspec.yaml</code>, so you pick it yourself. In a Flutter project the &ldquo;App screen checks&rdquo; bundle is shown as a suggestion but <b>is not pre-checked</b></dd>
       <dt>How Claude connects (pick any)</dt><dd><b>MCP server (pre-checked)</b> &mdash; <b>You get</b>: tools Claude uses mid-conversation to read and drive the app. <b>A session that has just registered it does not get the tools</b>, so you use it from the next session. <b>If you skip it</b>: the app is driven only through the CLI below / <b>CLI (not pre-checked)</b> &mdash; <b>You get</b>: the same actions as terminal commands (<code>marionette</code>). For setups where MCP cannot be attached, or when you need it in the very session that registered it. <b>If you skip it</b>: the app is driven only through MCP</dd>
@@ -864,12 +958,14 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
       <dt>At work &#128308;</dt><dd>This item adds a third-party package to your app&rsquo;s dependencies and registers an MCP server. The same approval questions as &sect;4 are asked <b>in every mode</b>, and without approval only this item is left out. The server runs on this PC. Whoever holds the address used to attach to the app can drive it, so that address is never recorded or committed</dd>
       <dt>Removing it</dt><dd><code>claude mcp remove marionette</code> (if shared, delete the entry from <code class="i">.mcp.json</code> and commit) &middot; global tools: <code>dart pub global deactivate marionette_mcp</code> (the CLI is <code>marionette_cli</code>) &middot; the app: <code>flutter pub remove marionette_flutter</code>, then delete the entry file or put <code class="i">lib/main.dart</code> back as it was &middot; <code class="i">browser-check</code> is removed only if &sect;5 is not used either</dd>
     </dl>
+</details>
   </div>
 
   <div class="opt">
     <div class="opt-head"><span class="id">&sect;15</span><span class="name">ops-kit</span><span class="badge b-off">off by default &middot; projects that deploy</span></div>
     <p class="lead">One skill for a project you are about to put online, or already run on your own. It first <b>looks over the project and shows a table</b> of the operations documents, screens and safeguards it needs, builds <b>only the ones you pick</b>, and updates them when your code or deploy setup changes.</p>
-    <dl>
+    <details class="more"><summary>Details</summary>
+<dl>
       <dt>What it can make</dt><dd>A <b>deploy runbook</b> (first deploy, redeploy, roll back) &middot; an <b>operations runbook</b> (outside consoles, paperwork, regular checks) &middot; a <b>management hub</b> (for each app: where it is managed, which account, where to look &mdash; one page; below that, a <b>map of the project&rsquo;s records</b> &mdash; policies, feature changes, feature specs, progress, decisions, plans and so on: for each, whether it exists, where, how many and when it was last updated. It only reads them, as a snapshot &mdash; it does not create or copy records) &middot; an <b>admin dashboard</b> (<code class="i">/admin</code> &mdash; it is deployed locked shut until an access token of at least 32 characters is set) &middot; <b>health checks and outage alerts</b> &middot; a <b>backup and restore rehearsal</b> &middot; a <b>free-tier limit and cost watch</b></dd>
       <dt>How it decides</dt><dd>Each one is marked <b>needed / not needed / undecided</b>, with the file and line it based that on. Only what you pick is made. Anything marked not needed is written down with its reason in <code class="i">docs/status/ops-kit.md</code>, so it is not offered again. If the project folder looks like it goes onto the live server as it is (<a href="#webexpose">see the FAQ</a>), the table says first that its <code class="i">docs/status/</code> pages &mdash; the hub lists account names &mdash; would be readable too, and the deploy runbook gets a step to leave them out and a URL check after deploying</dd>
       <dt>What it will not do</dt><dd>It <b>does not deploy, type in secrets or connect alert channels for you</b> &mdash; you do those yourself, following the runbook. Every runbook step has a command you can paste, what success looks like, what to do if it fails, and a short template for reporting back to Claude. Secrets are piped in after printing only their length &mdash; never through the clipboard</dd>
@@ -881,12 +977,14 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
       <dt>Publishing</dt><dd>If your Claude can publish private Artifact pages, the runbooks and hub are published privately and their links are noted in the status file. Otherwise they stay as local HTML files &mdash; that is not a requirement for installing</dd>
       <dt>Removing it</dt><dd>Delete the <code class="i">ops-kit/</code> folder in the scope you installed it to (at project scope, commit the deletion) &mdash; it creates no hooks, settings or scheduled tasks. If you got it as a plugin, <code class="i">/plugin uninstall dandi-ops-kit@dandi</code>. What it made (<code class="i">docs/status/</code>, the <code class="i">/admin</code> and <code class="i">/health</code> code, check workflows) is <b>your project&rsquo;s own code and data</b> and is not removed &mdash; undo it with git. Published pages you delete on claude.ai</dd>
     </dl>
+</details>
   </div>
 
   <div class="opt">
     <div class="opt-head"><span class="id">&sect;16</span><span class="name">diff review tools</span><span class="badge b-off">off by default &middot; this PC</span></div>
     <p class="lead">Lets you <b>read what Claude changed in the terminal</b>, file by file and hunk by hunk, keep the good parts and throw away the bad ones &mdash; without opening an IDE. Three command-line tools go onto your PC: <b>lazygit</b> (a git screen in the terminal &mdash; stage, discard, commit), <b>delta</b> (a diff that also highlights the changed words inside a line) and <b>difftastic</b> (compares code by structure, so lines that only changed indentation or line breaks drop out). It is a help for <b>your own final review</b>; it does not replace the AI review (<code class="i">/code-review</code>).</p>
-    <dl>
+    <details class="more"><summary>Details</summary>
+<dl>
       <dt>What gets set up</dt><dd>The three tools (Windows: <code>winget</code> &middot; macOS: <code>brew</code> &middot; Linux: each tool&rsquo;s official install page, since it differs per distribution) and three diff views in lazygit&rsquo;s own settings file (<code class="i">config.yml</code>) &mdash; delta, difftastic and plain git. Claude runs the installs after you approve; tools you already have are skipped. If an install fails, you are told to run it yourself and it is recorded as waiting. Open a <b>new terminal</b> afterwards so the commands are found</dd>
       <dt>How you use it</dt><dd>In a repository folder, run <code>lazygit</code> &rarr; read the diff in the <b>Files</b> panel (<code>2</code>) &rarr; press <code>|</code> to cycle delta / difftastic / plain (difftastic when formatting changes make a diff hard to read) &rarr; <code>Space</code> to stage a good file, <code>d</code> to discard a bad change, <code>c</code> to commit. Already-committed work: <b>Commits</b> (<code>4</code>) then <code>Enter</code>; <code>?</code> lists the keys. In the difftastic view, staging single hunks or lines may not work &mdash; switch to delta or plain with <code>|</code> to stage. These steps are shown at the end of the install report</dd>
       <dt>If you already have lazygit settings</dt><dd>Your <code class="i">config.yml</code> is never overwritten &mdash; only the diff views are added under <code class="i">git:</code>, other settings untouched. If it already has its own diff views, you are asked keep / rebuild / replace. An old lazygit is reported with a suggestion to update it</dd>
@@ -895,12 +993,14 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
       <dt>Checking it worked</dt><dd>The three version outputs, plus a harmless test on two scratch files outside your projects. lazygit is a full-screen terminal app Claude cannot see, so you are asked to open it, press <code>|</code> and say whether the view changes; until then it is noted as waiting for your check</dd>
       <dt>Removing it</dt><dd>Only the diff views it added are taken out of <code class="i">config.yml</code> (the file itself goes if it made the file and nothing else is left). The tools are uninstalled the same way they came in (<code>winget uninstall</code> / <code>brew uninstall</code> / your Linux package manager) &mdash; tools you had before are left alone</dd>
     </dl>
+</details>
   </div>
 
   <div class="opt">
     <div class="opt-head"><span class="id">&sect;17</span><span class="name">win-setup</span><span class="badge b-off">off by default &middot; Windows only</span></div>
     <p class="lead">One skill that <b>diagnoses, read-only,</b> the setup you would otherwise tune by hand on every Windows PC before using Claude Code in the terminal, shows it as one verdict table, and then fixes <b>only the items you approve</b>. It saves new PCs from getting stuck on a terminal that opens the old PowerShell (5.1) or a broken PATH.</p>
-    <dl>
+    <details class="more"><summary>Details</summary>
+<dl>
       <dt>What it looks at</dt><dd>PowerShell 7 &middot; Windows Terminal settings (broken profiles, the default profile) &middot; your user PATH (missing folders, duplicates) &middot; Developer Mode &middot; long paths &middot; <code>sudo</code> &middot; the shell Claude uses for <code>!</code> commands (<code class="i">defaultShell</code>) &middot; <code>jq</code>, <code>fd</code>, <code>gh</code> &middot; free disk space</dd>
       <dt>Only what you approve</dt><dd>The diagnosis changes nothing. Fixes are offered as one numbered list and only the ones you pick are done, with a backup in <code class="i">%LOCALAPPDATA%\win-setup\backup\</code> first. Everything that needs admin rights is bundled so the <b>UAC prompt appears once</b>. The system PATH is never touched; a Git update or moving Docker&rsquo;s disk image is only explained for you to do</dd>
       <dt>How you use it</dt><dd><code>/win-setup</code> (diagnose &rarr; verdict table &rarr; approve &rarr; fix &rarr; report) &middot; <code>/win-setup diagnose</code> (stops at the table) &middot; after a reboot, in a new terminal tab, <code>/win-setup verify</code></dd>
@@ -911,6 +1011,7 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
       <dt>Versus pc-clean</dt><dd>Clearing TEMP, the Recycle Bin and leftover processes is &sect;10 pc-clean&rsquo;s job; this skill only handles the development setup</dd>
       <dt>Removing it</dt><dd>Delete the <code class="i">win-setup/</code> folder in the scope you installed it to (it creates no hooks, settings or scheduled tasks). If you got it as a plugin, <code class="i">/plugin uninstall dandi-win-setup@dandi</code>. <b>PC settings the skill changed stay after you remove it</b> &mdash; to undo them, follow the skill&rsquo;s undo steps (using the backup) before deleting it</dd>
     </dl>
+</details>
   </div>
 
   <h3>Follow-up questions for any skill</h3>
@@ -950,7 +1051,8 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
   <div class="opt">
     <div class="opt-head"><span class="id">&sect;1</span><span class="name">Hook quality gate</span><span class="badge b-on">highest impact</span></div>
     <p class="lead">A linter or syntax check runs automatically <b>every time Claude edits a file</b>. On failure the output goes back to Claude, which fixes it itself.</p>
-    <dl>
+    <details class="more"><summary>Details</summary>
+<dl>
       <dt>File changed</dt><dd><code>hooks.PostToolUse</code> in <code>.claude/settings.json</code></dd>
       <dt>Example commands</dt><dd>Flutter &rarr; <code>flutter analyze</code> &middot; JS &rarr; <code>node --check</code> &middot; TS &rarr; <code>npm run check-types</code></dd>
       <dt>What not to put here</dt><dd><b>Slow tests.</b> Minutes on every edit makes the session sluggish and burns tokens &mdash; that is CI&rsquo;s job</dd>
@@ -960,27 +1062,32 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
       <dt>If a hook already exists</dt><dd>A gate of the old kind, whose failures never reach Claude, is pointed out and <b>rebuild</b> is recommended (keeping it is fine if the hook only auto-fixes with a formatter)</dd>
       <dt>Pre-checked</dt><dd>In recommended and full modes. &sect;2 and &sect;3 below are pre-checked only when the host or CI config is detected; otherwise they are <b>shown unchecked</b> (not hidden). With no remote repository yet, only this &sect;1 is installed and &sect;2&ndash;&sect;3 are asked again once a remote exists</dd>
     </dl>
+</details>
   </div>
 
   <div class="opt">
     <div class="opt-head"><span class="id">&sect;2</span><span class="name">Host CLI (<code>gh</code> / <code>glab</code>)</span><span class="badge b-off">optional</span></div>
     <p class="lead">The command-line tool that lets Claude open PRs, read issues, and <b>read CI failure logs directly so it can fix them</b>.</p>
-    <dl>
+    <details class="more"><summary>Details</summary>
+<dl>
       <dt>Which one</dt><dd>GitHub &rarr; <code>gh</code> / GitLab (including self-hosted) &rarr; <code>glab</code> / any other host &rarr; not installed</dd>
       <dt>Install</dt><dd>Windows: <code>winget install GitHub.cli</code>; macOS: <code>brew install gh</code> &rarr; then <code>gh auth login</code></dd>
       <dt>Authentication</dt><dd><b>You sign in yourself</b>, in a browser. Claude never creates or stores a token</dd>
     </dl>
+</details>
   </div>
 
   <div class="opt">
     <div class="opt-head"><span class="id">&sect;3</span><span class="name">CI integration</span><span class="badge b-gate">&#128308; org approval required at work</span></div>
     <p class="lead">Claude joins the review at the PR stage. Mention <code class="i">@claude</code> on a PR and it reviews or fixes. On GitHub it responds only once the workflow is merged to the default branch &mdash; silence before the install PR is merged is normal.</p>
-    <dl>
+    <details class="more"><summary>Details</summary>
+<dl>
       <dt>GitHub</dt><dd>Creates <code>.github/workflows/claude.yml</code> &mdash; the official action <code>anthropics/claude-code-action@v1</code></dd>
       <dt>GitLab and others</dt><dd>GitLab uses the canonical template from the official CI/CD integration (beta) &mdash; that job runs on manual and MR-event pipelines, and running it from an <code>@claude</code> mention means building a listener yourself that calls the webhook and pipeline trigger; other hosts fall back to calling <code>claude -p "&hellip;"</code> directly in a CI step</dd>
       <dt>Requires</dt><dd>On GitHub, <b>the Claude GitHub App installed on the repository</b> first &mdash; needed even when the workflow file is written by hand. You install it yourself, which takes admin rights on the repository (a GitHub App of your own is the alternative). Then <code>ANTHROPIC_API_KEY</code> in the repository secrets (on GitHub, Pro, Max, Ultra, Team and Enterprise subscribers can use <code>CLAUDE_CODE_OAUTH_TOKEN</code> instead &mdash; but it is tied to the issuer&rsquo;s own subscription, so use an API key for a secret shared across repositories); GitLab takes API keys only, plus an access token. <b>Claude cannot add these for you &mdash; you register them yourself</b></dd>
       <dt>At work &#128308;</dt><dd>CI <b>sends your code to the Anthropic API</b>. Check your organization&rsquo;s external-AI policy first. In the same round you are also asked <b>whether you have admin rights &middot; whether the secret-registration method is one your organization allows &middot; whether accepting the app&rsquo;s whole permission set is acceptable &middot; both runner time and token cost</b> &mdash; only the ones that apply to the host detected (the app permission set is asked only for GitHub; GitLab and others are asked about that host&rsquo;s own permissions, variables and cost instead). Without approval, CI alone is left out and &sect;1&ndash;&sect;2 install as normal</dd>
     </dl>
+</details>
   </div>
 </section>
 
@@ -1008,22 +1115,26 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
         <tr><td><b>Concise</b></td><td>Leads with the result and drops preamble and narration &mdash; the thoroughness of the work is unchanged</td></tr>
       </table>
     </div>
-    <dl>
+    <details class="more"><summary>Details</summary>
+<dl>
       <dt>How to switch</dt><dd><code>/output-style &lt;name&gt;</code> (type it alone to see the list and the current style) or Output style in the <code>/config</code> menu &mdash; both save to <code>.claude/settings.local.json</code>. The command came back in Claude Code v2.1.269; on an older version, use <code>/config</code></dd>
       <dt>&#9888;&#65039; Gotcha</dt><dd><b>Switching takes effect from your next message</b> (Claude Code v2.1.251+). Editing a style <i>file</i> is different &mdash; files are read at startup, so restart to pick up the edit</dd>
     </dl>
+</details>
   </div>
 
   <div class="opt">
     <div class="opt-head"><span class="id">&sect;2</span><span class="name">Create a custom style</span><span class="badge b-off">optional</span></div>
     <p class="lead">Write the role, tone and format you want into a single markdown file.</p>
-    <dl>
+    <details class="more"><summary>Details</summary>
+<dl>
       <dt>File created</dt><dd><code>output-styles/&lt;name&gt;.md</code></dd>
       <dt>Follow-up questions</dt><dd><b>Purpose</b> (which role and tone) &middot; <b>scope</b> (global or project) &middot; <b>whether to keep the coding instructions</b> &middot; <b>where to switch it on</b> (which settings file gets the activation key &mdash; a <b>separate axis</b> from where the file lives, so both are asked: <b>this repo, just you</b> = the <code>/config</code> picker&rsquo;s default &mdash; a globally-created style still will not activate in other projects / <b>your whole machine</b> = <code>~/.claude/settings.json</code> &mdash; one per machine, so it overrides a style chosen in other projects / <b>the team&rsquo;s default</b> = commit it in <code>.claude/settings.json</code>) &middot; and if you also chose a built-in switch, <b>which one is active now</b></dd>
       <dt>&#128308; Gotcha</dt><dd><code>keep-coding-instructions</code> defaults to <b>false</b>, and false makes Claude Code&rsquo;s <b>entire built-in coding guidance disappear</b> &mdash; verification habits and the minimal-change principle included. <b>If you will also be coding, set it to <code>true</code></b>. Use false only for a genuinely different role, such as writer or analyst. This key only has an effect <b>under the full system prompt</b> &mdash; models whose default is the short prompt do not have that section, so the value makes no difference there</dd>
       <dt>Cost</dt><dd>The style body is <b>a fixed cost loaded into the system prompt every session</b>. Keep it to a few dozen lines</dd>
       <dt>Where it does not apply</dt><dd>Not to subagents &mdash; each of those uses its own prompt. The exception is a conversation fork (<code>/subtask</code> and the like), which inherits the parent&rsquo;s style</dd>
     </dl>
+</details>
   </div>
 </section>
 
@@ -1053,10 +1164,12 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
   <div class="opt">
     <div class="opt-head"><span class="id">&sect;2</span><span class="name">Repository prerequisites</span><span class="badge b-on">pre-checked when you create a routine</span></div>
     <p class="lead">Groundwork so the job actually works in the cloud.</p>
-    <dl>
+    <details class="more"><summary>Details</summary>
+<dl>
       <dt>The key point</dt><dd>A routine <b>cannot use the personal MCP servers registered on your machine</b>. If it needs them, commit them to the repository as <code>.mcp.json</code></dd>
       <dt>What comes along</dt><dd><code>CLAUDE.md</code> and <code>.claude/settings.json</code> are in the clone, so they <b>apply unchanged</b> &mdash; document 01&rsquo;s record rules stay alive in cloud runs too</dd>
     </dl>
+</details>
   </div>
 
   <div class="opt">
@@ -1070,10 +1183,12 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
         <tr><td><b>GitHub</b></td><td>Create on the web or with <code>/schedule</code> &mdash; PR, release and issue events, plus filters (author, label, regex). <b>The Claude GitHub App must already be installed</b> for events to fire (if you do not want CI, install just the App, without a workflow). A manual run (Run now) skips the event path, so verification uses <b>one test event (a draft PR, say)</b> to confirm it really fires</td><td>Checklist review when a PR opens</td></tr>
       </table>
     </div>
-    <dl>
+    <details class="more"><summary>Details</summary>
+<dl>
       <dt>Decided alongside</dt><dd>Target repository &middot; the prompt &middot; the connectors it needs (<b>everything is included by default, so remove what you do not need</b> &mdash; least privilege) &middot; the cloud environment&rsquo;s network trust level (default <b>Trusted</b>: only package registries and GitHub are reachable)</dd>
       <dt>On the thrift profile</dt><dd>You are advised to start <b>weekly</b>. Routine runs consume your plan allowance too</dd>
     </dl>
+</details>
   </div>
 
   <div class="opt">
@@ -1140,7 +1255,7 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
 <section id="faq">
   <h2>10. Commonly confused</h2>
 
-  <h3>Can I run it again if it is already installed?</h3>
+  <details class="faq"><summary>Can I run it again if it is already installed?</summary>
   <p>
     Yes &mdash; that is the intended use. When an install finishes, a line like this is left at the bottom of <code class="i">CLAUDE.md</code>:
   </p>
@@ -1159,25 +1274,25 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
     Copied skills (the feature-doc set, refactor, kr-ui-guide, browser-check, pc-clean, session-board, ops-kit, win-setup) are compared with the published version <b>file by file, contents included</b> &mdash; a revision that only reworded things still counts.
     If anything differs, the skill is shown as an <b>older install</b> and the install step replaces the whole folder.
   </p>
-
-  <h3>If I skip a checkbox, is it gone for good?</h3>
+  </details>
+  <details class="faq"><summary>If I skip a checkbox, is it gone for good?</summary>
   <p>You can run it again any time and add it. The documents are independent, so order barely matters &mdash; though 02 flows naturally once 01&rsquo;s record system is in place.</p>
   <p>It works the other way too &mdash; <b>you can take out something already installed</b>. Choose &ldquo;remove&rdquo; on a re-run and the document&rsquo;s own removal steps take out <b>only the blocks, keys and files the install created</b>. Entries that were in your settings before stay, and the records built up since (progress and decision logs in <code class="i">docs/</code>, feature specs, refactor reports) are asked about and <b>kept by default</b>. The removal is noted in the install record.</p>
-
-  <h3>I started with minimal &mdash; how do I add more later?</h3>
+  </details>
+  <details class="faq"><summary>I started with minimal &mdash; how do I add more later?</summary>
   <p>Two ways. When your work needs an item, Claude suggests it in one line once the current task is done (01 &#9430;) &mdash; accept and only what you pick is installed. Or call <code class="i">/dropin-apply 추천</code> yourself at any time. If you already know the kind of thing you need, <code class="i">/dropin-pick</code> installs just that install type (MCP, plugins and so on &mdash; see under 2-0). Either way the safety questions still appear, and a declined item is not suggested again.</p>
-
-  <h3>How do I install on a PC with no internet access?</h3>
+  </details>
+  <details class="faq"><summary>How do I install on a PC with no internet access?</summary>
   <p>Move a folder holding the whole document repository (a git clone or a plain copy) onto that PC. Claude looks for the documents in this order &mdash; &#9312; a copy in this folder (or <code class="i">docs/</code>) &rarr; &#9313; a clone of the repository on this PC &mdash; and if neither turns up, <b>it asks for a folder path</b>. Point it at the folder you moved and it reads from there; where it read from is kept in the source field of the install record. If it cannot get the documents from anywhere, it does not ask about modes &mdash; it <b>gives you the repository address and how to fetch it, then stops</b>, rather than calling it &ldquo;done&rdquo; with nothing installed.</p>
-
-  <h3>I am worried something will get overwritten</h3>
+  </details>
+  <details class="faq"><summary>I am worried something will get overwritten</summary>
   <p>
     The principle running through the whole install is <b>&ldquo;never overwrite without approval&rdquo;</b>. Detected settings always
     prompt keep / reconcile / replace, and edits to <code class="i">settings.json</code> <b>merge just that key</b> rather than replacing the file.
     Secrets (<code class="i">.env</code>, keys, certificates) are neither read nor committed.
   </p>
-
-  <h3 id="webexpose">Claude warned that my Claude files could be read on the live site</h3>
+  </details>
+  <details class="faq" id="webexpose"><summary>Claude warned that my Claude files could be read on the live site</summary>
   <p>
     This warning appears when the folder that holds the Claude files (usually the repository root) also holds a web entry file
     (<code class="i">index.php</code>, <code class="i">index.html</code> and the like) or a web server config
@@ -1196,14 +1311,14 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
     If a page comes back, look at whether it is really that file (some sites return the home page for any address).
     If it was already readable, review what those files said about you and replace any secret they held.
   </p>
-
-  <h3>I installed it but <code>/resume</code> does not appear in autocomplete</h3>
+  </details>
+  <details class="faq"><summary>I installed it but <code>/resume</code> does not appear in autocomplete</summary>
   <p>
     Restart the IDE or terminal. If that does not do it, checking the folder and file name
     (<code class="i">skills/resume/SKILL.md</code>) and the <code class="i">name:</code> line at the top of the file solves it in nearly every case.
   </p>
-
-  <h3>Typing <code>/resume</code> shows <b>several</b> entries with the same name &mdash; did it install wrong?</h3>
+  </details>
+  <details class="faq"><summary>Typing <code>/resume</code> shows <b>several</b> entries with the same name &mdash; did it install wrong?</summary>
   <p>
     Usually that is correct. The setup puts a copy in the repo (<code class="i">.claude/skills/</code>) to share with the team and another on
     your machine (<code class="i">~/.claude/skills/</code>) to actually run, so one machine holds two copies of the same name and autocomplete lists them
@@ -1211,12 +1326,13 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
     <b>whether the two copies have the same content</b> &mdash; if they differ, tell Claude to &ldquo;align the global skill with the repo copy&rdquo;.
     The exception: two entries caused by a leftover <code class="i">~/.claude/commands/resume.md</code> from the old style &mdash; delete that file.
   </p>
-
-  <h3>The &ldquo;document version&rdquo; keeps climbing &mdash; must I keep up every time?</h3>
+  </details>
+  <details class="faq"><summary>The &ldquo;document version&rdquo; keeps climbing &mdash; must I keep up every time?</summary>
   <p>
     No. Many version bumps are <b>a re-check against the official documentation, or tidying that does not change what gets installed</b>.
     On re-application Claude summarizes what changed in each document row by row, with a recommendation to <b>apply, hold back or skip as not applicable</b> &mdash; choose from that table.
   </p>
+  </details>
 </section>
 
 </main>
@@ -1224,13 +1340,35 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
 <a class="totop" href="#toc">&uarr; Contents</a>
 
 <footer>
-  Dandi &middot; Install options dictionary &middot; based on 00_통합-설치.md &middot; 2026-11-16<br>
+  Dandi &middot; Install options dictionary &middot; based on 00_통합-설치.md &middot; 2026-11-17<br>
   The source of truth for each item is its own document (01&ndash;06). This page exists so people can read and judge; it does not change the install procedure itself.<br>
   Repository: github.com/EleninJayTech/claude &middot;
   <a href="../index.html">Guide</a> &middot; <a href="intro.html">Intro</a> &middot; <a href="demo.html">Walkthrough</a> &middot; <a href="learn.html">Course</a> &middot; <a href="skills.html">Skill catalog</a><br>
   Fonts: Pretendard, IBM Plex Mono &mdash; both SIL Open Font License 1.1 (free for commercial use and web embedding)
 </footer>
 
+<script>
+(function(){
+  function openTo(id){
+    var el=id&&document.getElementById(id); if(!el) return;
+    if(el.tagName==='DETAILS') el.open=true;
+    var d=el.parentElement&&el.parentElement.closest('details');
+    while(d){ d.open=true; d=d.parentElement&&d.parentElement.closest('details'); }
+    el.scrollIntoView();
+  }
+  function fromHash(){ try{ openTo(decodeURIComponent(location.hash.slice(1))); }catch(e){} }
+  window.addEventListener('hashchange', fromHash); fromHash();
+  [].slice.call(document.querySelectorAll('[data-expand]')).forEach(function(b){
+    b.addEventListener('click', function(){
+      var open=b.getAttribute('aria-pressed')!=='true';
+      [].slice.call(document.querySelectorAll('details.more,details.faq,details.sect')).forEach(function(d){ d.open=open; });
+      b.setAttribute('aria-pressed', String(open));
+      b.textContent = open ? b.getAttribute('data-close') : b.getAttribute('data-open');
+    });
+  });
+  window.addEventListener('beforeprint', function(){ [].slice.call(document.querySelectorAll('details')).forEach(function(d){ d.open=true; }); });
+})();
+</script>
 <script>
 (function(){try{
   if(localStorage.getItem('lang'))return;
