@@ -1,6 +1,6 @@
 # Claude Code 통합 구성 — 범용 마스터 (드롭인 적용)
 
-> **문서 버전: v1.119** · 최종 갱신: **2026-11-13** · **최근 재검증: 2026-11-02** · 기준: Claude Code v2.1.316 (Opus 5.5 · Sonnet 5.5 · Haiku 5.5 · Fable 5.1)
+> **문서 버전: v1.120** · 최종 갱신: **2026-11-16** · **최근 재검증: 2026-11-02** · 기준: Claude Code v2.1.316 (Opus 5.5 · Sonnet 5.5 · Haiku 5.5 · Fable 5.1)
 >
 > | 버전 | 날짜 | 변경 내용 |
 > | --- | --- | --- |
@@ -26,6 +26,7 @@
 > | v1.117 | 2026-11-07 | **§F-1 같은 폴더 동시 세션 — 기본은 워크트리 + 조건부 같은 폴더 예외**(같은 작업 브랜치 고정·다른 파일만·공용 파일과 전체 명령 금지·경로 지정 커밋, 어긋나면 그 시점에 이동 질문) · §G·§D 사본 · §L. **목표(R43)**: 1 — 위험 조건이 없는 짧은 작업에서 워크트리 준비 비용(의존성 설치·`.env` 복사)을 없앤다(같은 품질 위의 속도) · 7 — 예외 조건과 이탈 시 이동 질문으로 미커밋 혼입 방지는 유지한다 |
 > | v1.118 | 2026-11-11 | **§D-4 `/dropin-pick` 편입** — 설치 형태 분류만 고르는 진입점(절차는 00 §C-5) · §A STEP 3 ⓒ·제거·검증·§D-1·§D-2 예외·§D-5 열거에 추가. **목표(R43)**: 8 — 필요한 종류만 까는 슬래시 진입점 · 3 — 배포 자산이라 배포본만으로 설치된다 |
 > | v1.119 | 2026-11-13 | **§D-4 `/scope` 편입(세션 범위 선언)** — `/scope <작업>`으로 이 세션이 할 일을 한 번 선언하면 그 작업과 사이드이펙트 수정·검증·규칙이 요구하는 기록까지만 하고 멈춘다(범위 밖은 `범위 밖 발견:` 한 줄 — `## 10.` 추천 포함). 수동 호출 전용·지침이라 강제는 아님 · §A STEP 3 ⓒ·제거·검증·§D-1·§D-2 예외·§D-5 열거에 추가 · `dropin-check`·`dropin-apply`의 스킬 이름 줄에 반영. **목표(R43)**: 1 — 요청하지 않은 수정·후속 착수를 막는다 · 7 — 세션 경계를 `/wrap`→`/clear`→`/resume` 흐름에 맞춘다 |
+> | v1.120 | 2026-11-16 | **§J 웹 노출(운영 서버에 Claude 파일이 올라가는 경우)** — 신호(Claude 파일 폴더의 웹 진입 파일·서버 설정)·대응 3택(운영 배포 제외·서버 차단·로컬 전용)·확인 명령의 정본 · §A STEP 1 감지와 STEP 4 고지 · §E-1 커밋 안내 · §F-1 한 줄(배포를 도울 때 확인) · §K 증상 행 · §L. 검수·테스트 서버는 대상 아님, 서버 설정은 만들지 않는다. **목표(R43)**: 2 — 저장소 루트가 곧 웹 루트인 PHP·정적 사이트에서도 드롭인 산출물이 정보 노출이 되지 않는다 · 8 — 입문자가 모르는 노출 경로를 설치 시점에 알린다 |
 > ※ 갱신 시: 이 표에 한 줄 추가 + 하단 "문서 정보" 날짜 수정 + §L 재검증 체크리스트 수행.
 
 > **사용법**: 이 파일을 아무 프로젝트 루트(또는 `docs/`)에 넣고 Claude에게
@@ -51,6 +52,7 @@
 - 현재 루트 아래 **독립 git repo가 몇 개**인가(각 폴더의 `.git` 유무)?
 - 상위 폴더가 git인가? 하위 repo들이 한 폴더 아래 모여 있나, 흩어져 있나?
 - 빌드/스택 감지(`package.json`·`pom.xml`·`build.gradle`·`composer.json`·`go.mod`·`Cargo.toml`…).
+- **웹 노출 신호**(정본은 §J `웹 노출` 줄): 있으면 STEP 4 보고 맨 위에 그 줄의 경고·대응·확인 명령을 한 번 알린다 — 운영 배포는 대개 수동이라 Claude가 배포 시점을 볼 수 없고, 설치 시점이 확실한 고지 자리다. 서버 설정은 만들지 않는다.
 - 기존 `CLAUDE.md`·`AGENTS.md`·`docs/`·`.claude/` 유무, git 브랜치·미커밋.
 - **다인 여부**: `git shortlog -sne --since="6 months"`의 기여자 수 → 2명 이상이면 다인으로 본다 — 다만 기여자 수는 **ⓐ 여부만** 정하므로 **ⓑ/ⓒ 경계는 반드시 묻는다**(커밋 로그엔 갈래가 겹치는지가 없다).
 
@@ -258,7 +260,7 @@ New-Item -ItemType Directory -Path .claude/skills/scope -Force
 ### E-1. 🅱️ 단일 repo (B)
 - `docs/` **flat**: `PROJECT_PLAN.md` · `PROGRESS.md` · `DECISIONS.md` (§F-6 양식). 계획서를 쓰는 repo는 `docs/plans/`(단위 분할이면 `docs/<단위>/plans/`) — 02 ⓔ 산출물, 없어도 된다.
 - 스킬: 글로벌 기본형(§F-2 A) 사용. `.gitattributes` merge=union(§F-4)은 **동시성 ⓑ·ⓒ면 필수**(§I 2).
-- 커밋: `git add CLAUDE.md docs .claude .gitignore .gitattributes`(있는 것만 — 없는 경로 하나로 `git add` 전체가 실패한다) → 한 repo에서 커밋.
+- 커밋: `git add CLAUDE.md docs .claude .gitignore .gitattributes`(있는 것만 — 없는 경로 하나로 `git add` 전체가 실패한다) → 한 repo에서 커밋. §A STEP 1에서 웹 노출 신호가 있었으면 이 커밋 안내에 §J `웹 노출` 줄의 대응 3택을 함께 적는다.
 
 ### E-2. 🅰️ 통합 멀티레포 (A-1 공통상위 / A-2 흩어짐)
 - **권장 기본값 = 개별 repo에서 각자 적용**(§E-1). 루트 레이어(§E-4)는 통합 조회가 필요한 개인의 **선택 사항**이고 팀 표준으로 강제하지 않는다 — 루트를 쓰면 §F-2 C(글로벌 스킬 교체)가 따라오는데 그건 그 PC의 **다른 프로젝트 전부**에 전파된다.
@@ -339,6 +341,7 @@ New-Item -ItemType Directory -Path .claude/skills/scope -Force
 - 공유(커밋): CLAUDE.md·.claude/skills·.claude/settings.json·.gitattributes·docs/·.mcp.json(팀 MCP 서버 — 각자 첫 실행 때 승인).
 - 개인(커밋 금지): .claude/settings.local.json·CLAUDE.local.md. 개인 노트는 auto-memory(~/.claude/projects/<proj>/memory, 머신 로컬·200줄/25KB).
 - 시크릿(.env·키·비밀번호)은 읽지도 커밋하지도 않는다.
+- **웹 노출**: 커밋한 Claude 파일(`CLAUDE.md`·`.claude/`·`docs/`·`.mcp.json` 등)은 저장소째 운영 서버에 올리면 URL로 읽힌다(검수·테스트 서버는 무관). 운영 배포 목록·배포 스크립트를 만들거나 고칠 때, 운영 배포를 도울 때 이 파일들이 빠지는지 확인하고 빠지지 않으면 사용자에게 알린다(제외·차단 설정은 사용자 결정). 확인: 배포 뒤 `https://<운영 도메인>/CLAUDE.md`가 `404`·`403`인지.
 
 ### 토큰 참고
 - docs/는 자동 선로딩되지 않고 필요 시만 읽힌다. 분할은 토큰이 아니라 정리·타겟 정확도용.
@@ -581,6 +584,7 @@ CLAUDE.local.md
 - **최선**: 진짜 비밀번호·API 키·인증서를 **작업 레포에 두지 않기**(별도 vault·환경변수·`_secure_config` 등).
 - **차선**: 불가피하면 `.env` + deny + (macOS·Linux·WSL2면) 샌드박스 + `sandbox.credentials`. 단 완전 차단 아님을 인지(샌드박스 프록시는 기본적으로 TLS 내용을 검사하지 않음 — 넓은 도메인 allow는 유출 경로가 될 수 있음).
 - 글로벌 `CLAUDE.md #8`이 "cat .env 금지"를 행동 규칙으로 보완.
+- **웹 노출 — 운영 서버에 Claude 파일이 올라가는 경우** 🔴: 저장소 폴더가 **그대로** 운영(외부 공개) 서버의 웹 루트가 되면(폴더째 FTP·압축 업로드, 서버에서 `git pull`) 커밋한 `CLAUDE.md`·`AGENTS.md`·`.claude/`·`.mcp.json`·`docs/`(PROGRESS·DECISIONS·plans, 03 §15 ops-kit의 `docs/status/`)·드롭인 문서 사본이 URL로 읽힌다(대소문자를 가리지 않는 서버면 `/claude.md`로도). 검수·테스트 서버는 대상이 아니다 — 문제는 외부에 열린 운영 서버다. **신호(이 줄이 정본)**: Claude 파일이 놓이는 폴더(보통 저장소 루트)에 웹 진입 파일(`index.php`·`index.html`·`index.jsp`·`default.aspx` 등)이나 웹 서버 설정(`.htaccess`·`web.config`)이 있다 — 빌드 산출물(`dist/`·`build/`)이나 하위 공개 폴더(`public/`·`webroot/`)만 서빙하는 구조면 신호가 아니다. **대응은 셋 중 하나**(설정 변경은 사용자·배포 담당자 결정 — 이 문서는 서버 설정을 만들지 않는다): ⓐ 운영 배포에서 제외(업로드 목록·배포 스크립트의 제외 목록, `git archive`로 묶으면 `.gitattributes`의 `export-ignore`) ⓑ 운영 웹 서버에서 그 경로 접근 차단(방법은 그 서버의 공식 문서) ⓒ 커밋하지 않고 로컬 전용(`.git/info/exclude` — 팀 공유를 포기한다). **확인**: 운영 배포 뒤 `curl -s -o /dev/null -w "%{http_code}" https://<운영 도메인>/CLAUDE.md`(Windows PowerShell은 `curl.exe`)가 `404`·`403`이면 통과 — `200`이면 받은 내용이 그 파일인지 본다(없는 경로에도 첫 화면을 돌려주는 사이트가 있다). `/claude.md`·`/.claude/settings.json`·`/docs/PROGRESS.md`도 같은 방법으로 본다. 이미 열려 있었으면 그 파일에 적힌 내부 정보(경로·계정 이름·결정 기록)를 점검하고 시크릿이 있었으면 교체한다.
 
 ### J-1. 권한 모드 운용 — auto mode 🟢
 "매번 승인(manual)"과 "전부 스킵(`--dangerously-skip-permissions`)" 사이의 중간지대. **별도 분류기 모델**(기본 Sonnet 5)이 각 액션을 실행 전 심사해 안전한 것은 통과시키고, 요청 범위를 벗어난 행동·미인식 인프라 대상·읽은 콘텐츠(프롬프트 인젝션)에서 유래한 행동을 차단한다.
@@ -607,6 +611,7 @@ CLAUDE.local.md
 | 여러 repo 한 번에 커밋 안 됨 | 정상 — 독립 git. repo별 따로 |
 | 커밋은 됐는데 push가 403·권한 없음 | **로컬 커밋 유지 + 권한자 경유**(PR·패치 전달) — 기록은 커밋에 남아 다음 /resume가 발견한다 |
 | `.env`를 Claude가 읽으려 함 | deny + CLAUDE.md #8 / **근본은 시크릿 분리** |
+| 운영 사이트에서 `/CLAUDE.md`·`/claude.md`가 열림 | 저장소째 운영 서버로 올라간 것 — §J `웹 노출`(운영 배포 제외·서버 차단·로컬 전용 중 하나) · 열려 있던 파일의 내부 정보 점검·시크릿 교체 |
 | Windows에서 Bash 없다고 에러 | Claude Code `v2.1.120+`로 업데이트(PowerShell만으로 동작) · Bash 도구를 쓰려면 Git for Windows(§D 서두) — 깔았는데 못 찾으면 `env`의 `CLAUDE_CODE_GIT_BASH_PATH` |
 | 셋업이 전반적으로 이상함 | **`/doctor`** — 구성 전체 진단+수정 제안(비대 CLAUDE.md 트림 제안 포함 v2.1.206+, `/checkup` 별칭) |
 | 새 모델로 바꾼 뒤 지시가 낡았는지 | **`/doctor prompt-audit [경로]`**(v2.1.283+) — `CLAUDE.md`·`AGENTS.md`·rules·skills·commands·subagents·output styles에서 **구 모델용 지시·없는 파일/명령 참조·서로 상충하는 파일**을 찾아 보고·편집 제안만 한다(적용하라고 할 때까지 파일은 그대로) |
@@ -641,6 +646,7 @@ Claude Code는 매주 바뀐다. 6개월마다 30분:
 - **§G 세션 분리 축** — `claude -c`(그 폴더의 가장 최근 대화)·`-n`/`/rename`(세션 이름)·`--resume <이름>`·`--worktree`(worktree 위치·분기·정리) 동작 · `--worktree`의 브랜치 이름(`worktree-<이름>`)·이름 재사용·`EnterWorktree` `path`의 `.claude/worktrees/` 밖 승인(§F-1 고유번호 규칙의 전제)(공식 sessions·worktrees, 2026-09-13 확인 · 고유번호 전제는 2026-10-26 확인). 같은 폴더 동시 세션에 대한 **공식 경고는 없다**(같은 날 확인) — 생기면 §G 줄의 근거를 그쪽으로 바꾼다.
 - **§K 크레딧 잔액 오류 행** — Max·Ultra·Team API 크레딧의 대상(Claude Code 제외)·`Credit balance too low` 문구·인증 우선순위(`-p`는 `ANTHROPIC_API_KEY`를 항상 쓰고 대화형은 1회 승인)가 유지되는지(platform `api-credits-for-subscribers`·code.claude.com `authentication`, 2026-10-18 확인).
 - 🟡 `~/.claude/`가 `blockReadsOutsideWorkingDirectories` 차단 대상인지(맞으면 글로벌 기록 읽기가 막혀 신규 합류로 오판한다) · `.claude/worktrees/` 안 세션이 상위 탐색으로 본체 `CLAUDE.md`를 함께 로드하는지.
+- **§J 웹 노출의 Claude 파일 목록** — Claude Code가 프로젝트에 두는 파일(`CLAUDE.md`·`CLAUDE.local.md`·`.claude/`·`.mcp.json`·`AGENTS.md`)이 공식 memory·settings 문서와 맞는지(새 프로젝트 파일이 생기면 §J 목록에 더한다).
 - **자기 점검(갱신 의식)** — 재검증·개정은 기억이 아니라 **당일 공식 문서** 조회로 한다(확인 못 한 항목엔 🟡을 단다). 고쳤으면 ① 버전 표에 한 줄(무엇을 왜) ② 헤더·푸터의 버전과 "최종 갱신"·"최근 재검증" 날짜 ③ 저장소 `CLAUDE.md` 구성물 표 ④ 이 체크리스트 ⑤ 기계 검사 통과를 빠짐없이 한다. 버전은 네 곳에 있고 **하나만 빠져도 4축이 어긋난다** — 골격 규칙의 정본은 `docs/DOC_CONTRACT.md`다.
 - ✅ 해소된 과거 항목(재확인 불필요): CLAUDE.local.md deprecation 우려 → **계속 지원**(2026-07-20 확인, `.gitignore` 추가 권장 유지).
 
@@ -649,5 +655,5 @@ Claude Code는 매주 바뀐다. 6개월마다 30분:
 ## 핵심 출처 🟢
 IDE 통합·`--add-dir`(ide-integrations·large-codebases) / permissions·deny 한계 / hooks / skills / memory·auto-memory — 모두 `code.claude.com/docs` 및 `docs.anthropic.com`.
 
-**문서 정보** — 통합 마스터(범용) **v1.119**. 변경 이력은 최상단 버전 표 참조(유래: 8개 소스 통합 초판 — 최상단 병합 행).
-최종 갱신: 2026-11-13 · 최근 재검증: 2026-11-02 / 참조: Claude Code v2.1.316, Opus 5.5(v2.1.280+) · Sonnet 5.5(v2.1.284+) · Haiku 5.5(v2.1.293+) · Fable 5.1(v2.1.257+).
+**문서 정보** — 통합 마스터(범용) **v1.120**. 변경 이력은 최상단 버전 표 참조(유래: 8개 소스 통합 초판 — 최상단 병합 행).
+최종 갱신: 2026-11-16 · 최근 재검증: 2026-11-02 / 참조: Claude Code v2.1.316, Opus 5.5(v2.1.280+) · Sonnet 5.5(v2.1.284+) · Haiku 5.5(v2.1.293+) · Fable 5.1(v2.1.257+).

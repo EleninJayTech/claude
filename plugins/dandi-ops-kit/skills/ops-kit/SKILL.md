@@ -50,6 +50,7 @@ argument-hint: "[init | runbook | hub | dashboard | health | backup | limits | s
 
 - **배포 명령**: `package.json` scripts(`deploy`·`release`), `Makefile`, `justfile`, CI 워크플로(`.github/workflows/*`의 배포 단계).
 - **호스팅 설정**: `wrangler.toml`/`wrangler.jsonc`·`fly.toml`·`vercel.json`·`netlify.toml`·`render.yaml`·`Dockerfile`·`Procfile`·`app.yaml`·`serverless.yml`. 상시 실행인지(서버·Worker·봇) 정적 배포인지 가른다.
+- **웹 노출 신호**: 저장소 루트(Claude 파일과 `docs/status/`가 놓이는 폴더)에 웹 진입 파일(`index.php`·`index.html` 등)이나 웹 서버 설정(`.htaccess`·`web.config`)이 있으면 저장소째 운영 서버로 가는 구조일 수 있다(빌드 산출물·`public/`만 서빙하면 아니다). 있으면 ①·③의 진단 근거에 적는다 — 정의의 정본은 단디 01 §J `웹 노출` 줄.
 - **시크릿 이름**: 설정 파일의 바인딩·env 타입 정의·`.env.example`·런타임 코드의 `env.X`·`process.env.X`. 값은 보지 않는다.
 - **DB·스토리지**: D1·SQLite 파일·Postgres·MySQL·KV·버킷 바인딩, 마이그레이션 폴더, ORM 스키마.
 - **이벤트·사용자 데이터**: 사용자 테이블, 이벤트 테이블·로깅 호출(세션 시작·핵심 행동·결제).
@@ -120,6 +121,7 @@ unset t
 - 도구가 없으면 로컬 경로만 알린다(브라우저로 열 수 있다).
 - 프로젝트에서 `kr-ui-guide` 스킬을 쓸 수 있고 산출물 언어가 한국어면 그 기준(대비·터치 영역·마이크로카피)을 따른다.
 - 새 앱을 배포했거나 설정이 바뀐 세션은 허브(③) 목록을 고쳐 다시 게시한다. 새 계정·관리 사이트 위치가 나오면 허브에 적는다(비밀번호류 제외).
+- **웹 노출 신호(§2)가 있으면** `docs/status/*.html`도 운영 서버에 같이 올라간다 — 허브(③)는 계정 이름·관리 사이트 목록이라 특히 그렇다. 진단 표에서 먼저 알리고, 배포 런북(①)의 운영 배포 단계에 제외 확인을 넣는다(`references/runbook-deploy.md`). `noindex`는 검색 노출만 막고 접근은 막지 않는다.
 
 ## 6. 상태 파일 `docs/status/ops-kit.md`
 
