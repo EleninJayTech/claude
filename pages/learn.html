@@ -652,7 +652,7 @@ footer{max-width:1120px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
 </div>
 
 <footer>
-  Dandi &middot; Install options course &middot; 2026-11-13<br>
+  Dandi &middot; Install options course &middot; 2026-11-16<br>
   The source of truth for each item is its own document (01&ndash;06). This page exists for people to learn from; it does not change the install procedure. Progress is stored only in this browser&rsquo;s localStorage.<br>
   저장소: github.com/EleninJayTech/claude ·
   <a href="../index.html">Guide</a> &middot; <a href="intro.html">Intro</a> &middot; <a href="demo.html">Walkthrough</a> &middot; <a href="options.html">Dictionary</a> &middot; <a href="skills.html">Skill catalog</a><br>
@@ -678,10 +678,10 @@ var TERMS = [
 
 var STEPS = [
   ['STEP 1','Obtain documents','If the documents needed (01\u201306) are not in the folder, they are fetched from GitHub. No questions.'],
-  ['STEP 2','Detect environment','Inspects the prior install record (dropin-applied), existing config files, any Claude setup the team committed, and the project type. No questions.'],
+  ['STEP 2','Detect environment','Inspects the prior install record (dropin-applied), existing config files, any Claude setup the team committed, the project type, and whether the repository folder is itself the website folder (files such as index.php or .htaccess sitting where the Claude files go). No questions.'],
   ['STEP 3','The big choices','Asks for base mode, purpose bundles, operating profile, output language and skill name alias (plus, if the team committed a setup, how to treat it) \u2014 chapters 3\u20135 of this course.'],
   ['STEP 4','Run the install','Installs by each chosen document\u2019s procedure. Only "custom" mode asks about each per-document item (chapters 6\u20138), but items that are off by default and safety questions such as scope come up in every mode.'],
-  ['STEP 5','Verify and record','Reports the result with evidence and leaves one install-record line at the bottom of CLAUDE.md.']
+  ['STEP 5','Verify and record','Reports the result with evidence and leaves one install-record line at the bottom of CLAUDE.md. It also tells you how to save (commit) the result — and if the site looks like it goes to the production server as the whole repository, it adds a warning that files such as CLAUDE.md, .claude/ and docs/ could be read by URL, three ways to prevent it (leave them out of the production deploy, block them on the server, or keep them on this PC without committing) and how to check. Staging and test servers are not affected, and no server settings are created.']
 ];
 
 var MODES = {

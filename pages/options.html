@@ -217,10 +217,10 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
   <table>
     <tr><th style="width:64px">Step</th><th>What happens</th><th style="width:190px">What you choose</th></tr>
     <tr><td><b>STEP 1</b></td><td>Obtain the documents needed (01&ndash;06) &mdash; fetched from GitHub if not in the folder</td><td>Nothing</td></tr>
-    <tr><td><b>STEP 2</b></td><td>Detect the environment &mdash; prior install record (<code class="i">dropin-applied</code>), existing config files, any Claude setup the team has committed, project type</td><td>Nothing</td></tr>
+    <tr><td><b>STEP 2</b></td><td>Detect the environment &mdash; prior install record (<code class="i">dropin-applied</code>), existing config files, any Claude setup the team has committed, project type, and whether this folder looks like it goes onto a live website as it is (<a href="#webexpose">see the FAQ</a>)</td><td>Nothing</td></tr>
     <tr><td><b>STEP 3</b></td><td><b>The big choices</b> &mdash; the questions in &sect;2 below</td><td>(on an already-set-up PC, a <b>quick path</b> first) &middot; base mode &middot; bundles &middot; profile &middot; output language &middot; skill name alias &middot; (first install in a repository where the team has committed a setup) <b>existing team setup</b> (2-6) &middot; (started with <code class="i">/dropin-pick</code>: <b>install types</b> instead of base mode and bundles)</td></tr>
     <tr><td><b>STEP 4</b></td><td>Install by each chosen document&rsquo;s own procedure. The per-document items (&sect;3&ndash;&sect;8) are <b>all asked in &ldquo;custom&rdquo; mode</b>; in the other modes they are settled automatically <b>only for documents that define per-mode defaults</b> &mdash; documents without them (02, 05) and items that are off by default are asked</td><td>Depends on the mode</td></tr>
-    <tr><td><b>STEP 5</b></td><td>Verify, report, and leave one install-record line at the bottom of <code class="i">CLAUDE.md</code></td><td>Approving the commit</td></tr>
+    <tr><td><b>STEP 5</b></td><td>Verify, report, and leave one install-record line at the bottom of <code class="i">CLAUDE.md</code>. If STEP 2 saw signs of a live website, the commit instructions open with a warning about it</td><td>Approving the commit</td></tr>
   </table>
   </div>
 
@@ -871,7 +871,7 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
     <p class="lead">One skill for a project you are about to put online, or already run on your own. It first <b>looks over the project and shows a table</b> of the operations documents, screens and safeguards it needs, builds <b>only the ones you pick</b>, and updates them when your code or deploy setup changes.</p>
     <dl>
       <dt>What it can make</dt><dd>A <b>deploy runbook</b> (first deploy, redeploy, roll back) &middot; an <b>operations runbook</b> (outside consoles, paperwork, regular checks) &middot; a <b>management hub</b> (for each app: where it is managed, which account, where to look &mdash; one page; below that, a <b>map of the project&rsquo;s records</b> &mdash; policies, feature changes, feature specs, progress, decisions, plans and so on: for each, whether it exists, where, how many and when it was last updated. It only reads them, as a snapshot &mdash; it does not create or copy records) &middot; an <b>admin dashboard</b> (<code class="i">/admin</code> &mdash; it is deployed locked shut until an access token of at least 32 characters is set) &middot; <b>health checks and outage alerts</b> &middot; a <b>backup and restore rehearsal</b> &middot; a <b>free-tier limit and cost watch</b></dd>
-      <dt>How it decides</dt><dd>Each one is marked <b>needed / not needed / undecided</b>, with the file and line it based that on. Only what you pick is made. Anything marked not needed is written down with its reason in <code class="i">docs/status/ops-kit.md</code>, so it is not offered again</dd>
+      <dt>How it decides</dt><dd>Each one is marked <b>needed / not needed / undecided</b>, with the file and line it based that on. Only what you pick is made. Anything marked not needed is written down with its reason in <code class="i">docs/status/ops-kit.md</code>, so it is not offered again. If the project folder looks like it goes onto the live server as it is (<a href="#webexpose">see the FAQ</a>), the table says first that its <code class="i">docs/status/</code> pages &mdash; the hub lists account names &mdash; would be readable too, and the deploy runbook gets a step to leave them out and a URL check after deploying</dd>
       <dt>What it will not do</dt><dd>It <b>does not deploy, type in secrets or connect alert channels for you</b> &mdash; you do those yourself, following the runbook. Every runbook step has a command you can paste, what success looks like, what to do if it fails, and a short template for reporting back to Claude. Secrets are piped in after printing only their length &mdash; never through the clipboard</dd>
       <dt>How you use it</dt><dd><code>/ops-kit init</code> before the first deploy &middot; <code>/ops-kit sync</code> when the deploy setup changes &middot; <code>/ops-kit check</code> to look things over (reads only, changes nothing)</dd>
       <dt>Why it is off by default</dt><dd>It can write code into your app (the dashboard, a health endpoint), so you pick it yourself. When signs of a deploy target are found, the &ldquo;Operations&rdquo; bundle is shown as a suggestion but <b>is not pre-checked</b>. You can still install it without those signs. In a repository with no code it is not offered and is recorded as &ldquo;not applicable&rdquo;</dd>
@@ -1147,6 +1147,26 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
     Secrets (<code class="i">.env</code>, keys, certificates) are neither read nor committed.
   </p>
 
+  <h3 id="webexpose">Claude warned that my Claude files could be read on the live site</h3>
+  <p>
+    This warning appears when the folder that holds the Claude files (usually the repository root) also holds a web entry file
+    (<code class="i">index.php</code>, <code class="i">index.html</code> and the like) or a web server config
+    (<code class="i">.htaccess</code>, <code class="i">web.config</code>). If that folder is uploaded to the live server <b>as it is</b>
+    (the whole folder by FTP or as an archive, or <code class="i">git pull</code> on the server), the committed
+    <code class="i">CLAUDE.md</code>, <code class="i">.claude/</code>, <code class="i">docs/</code> records and so on can be opened by anyone with the URL.
+    Sites that serve only a build folder (<code class="i">dist/</code>, <code class="i">build/</code>) or a public subfolder (<code class="i">public/</code>) are not affected,
+    and staging or test servers are not the concern &mdash; only the live, public one is.
+    It comes at the start of the commit instructions at the end of the install, even if you did not pick 01; if you did, the top of 01&rsquo;s report says it once too.
+  </p>
+  <p>
+    <b>Pick one fix</b> (it is your call, or your deploy owner&rsquo;s &mdash; Claude does not change server settings):
+    leave those files out of the live deploy (the upload list or deploy script) &middot; block those paths on the live web server &middot;
+    keep them on your PC only, uncommitted (you give up sharing them with the team).
+    <b>To check</b>, after a live deploy open <code class="i">https://&lt;your domain&gt;/CLAUDE.md</code> &mdash; a <code class="i">404</code> or <code class="i">403</code> means you are fine.
+    If a page comes back, look at whether it is really that file (some sites return the home page for any address).
+    If it was already readable, review what those files said about you and replace any secret they held.
+  </p>
+
   <h3>I installed it but <code>/resume</code> does not appear in autocomplete</h3>
   <p>
     Restart the IDE or terminal. If that does not do it, checking the folder and file name
@@ -1174,7 +1194,7 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
 <a class="totop" href="#toc">&uarr; Contents</a>
 
 <footer>
-  Dandi &middot; Install options dictionary &middot; based on 00_통합-설치.md &middot; 2026-11-13<br>
+  Dandi &middot; Install options dictionary &middot; based on 00_통합-설치.md &middot; 2026-11-16<br>
   The source of truth for each item is its own document (01&ndash;06). This page exists so people can read and judge; it does not change the install procedure itself.<br>
   Repository: github.com/EleninJayTech/claude &middot;
   <a href="../index.html">Guide</a> &middot; <a href="intro.html">Intro</a> &middot; <a href="demo.html">Walkthrough</a> &middot; <a href="learn.html">Course</a> &middot; <a href="skills.html">Skill catalog</a><br>

@@ -373,6 +373,8 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
   <p>정상입니다. 두 기록은 Claude 설정 폴더(<code class="i">.claude/</code>) 안에 쓰이는데, 이 폴더는 보호돼 있어서 기본 권한 모드와 편집 자동 승인 모드에서는 쓸 때마다 승인을 묻습니다. 허용 목록에 넣어도 풀리지 않습니다. auto 모드와 모든 권한을 건너뛰는 모드에서는 묻지 않고 적습니다. 질문 없이 한 번에 실행하는 <code class="i">claude -p</code>는 이 두 모드가 아니면 기록이 막힙니다. 설치할 때도 이 내용을 알려 줍니다.</p>
   <h3>비밀번호 같은 건 안전한가요?</h3>
   <p>01을 설치하면 비밀번호·인증서·열쇠 파일을 AI가 읽지도, 인터넷에 올리지도 못하게 잠급니다. 그래도 근본 원칙은 "진짜 비밀은 작업 폴더에 두지 않기"입니다.</p>
+  <h3>작업 폴더를 그대로 운영 서버에 올리는 사이트라면요?</h3>
+  <p>PHP나 정적 사이트처럼 저장소 폴더가 통째로 외부에 열린 운영 서버로 올라가면(폴더째 FTP·압축 업로드, 서버에서 <code class="i">git pull</code>), 설치가 만든 <code class="i">CLAUDE.md</code>·<code class="i">.claude/</code>·작업 일지(<code class="i">docs/</code>) 같은 파일도 주소만 치면 누구나 읽을 수 있게 됩니다. 설치는 그 신호(작업 폴더에 <code class="i">index.php</code>·<code class="i">index.html</code> 같은 첫 화면 파일이나 <code class="i">.htaccess</code> 같은 서버 설정이 있음)를 보면 설치 보고와 커밋 안내에서 먼저 알려 주고, 막는 방법 셋(운영 배포에서 빼기 · 운영 서버에서 그 경로 막기 · 커밋하지 않고 내 컴퓨터에만 두기)과 확인 방법(배포 뒤 <code class="i">https://내-도메인/CLAUDE.md</code>가 404나 403으로 나오는지)을 함께 보여 줍니다. 어느 것을 고를지와 서버 설정은 직접 정합니다 — 설치가 서버 설정을 만들지는 않습니다. 검수·테스트 서버는 해당하지 않습니다. <b>ops-kit</b>을 깔았다면 진단 표에서도 알려 주고, 배포 런북의 운영 배포 단계에 이 파일들이 빠졌는지 확인하는 단계를 넣습니다.</p>
   <div class="note"><b>이 저장소의 기본 원칙</b>1순위는 최적의 결과물입니다. 토큰 절약은 품질을 해치지 않는 범위의 2순위입니다. 같은 품질을 더 빨리 내는 방법은 비용이 거의 늘지 않을 때만 기본으로 쓰고, 비용이 몇 배로 늘면 선택지로만 둡니다.</div>
 </section>
 
@@ -398,7 +400,7 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
 
 </main>
 
-<footer>단디 · 사용법 페이지 · 2026-11-13 · 저장소: <a href="https://github.com/EleninJayTech/claude">github.com/EleninJayTech/claude</a> · <a href="https://github.com/EleninJayTech/claude/releases/latest">최신 릴리스 노트</a> · 설치 문서 정본은 00~06 md — 이 페이지는 사람용 안내이며, 대표 이미지는 03 svg-design 레시피(Gooey·Squiggle)로 만들었습니다. 디자인은 kr-ui-guide 스킬(저장소 skills/kr-ui-guide) 기준을 따릅니다. · 글꼴: Pretendard, IBM Plex Mono — 둘 다 SIL 오픈 폰트 라이선스 1.1(상업 이용·웹 임베딩 무료)</footer>
+<footer>단디 · 사용법 페이지 · 2026-11-16 · 저장소: <a href="https://github.com/EleninJayTech/claude">github.com/EleninJayTech/claude</a> · <a href="https://github.com/EleninJayTech/claude/releases/latest">최신 릴리스 노트</a> · 설치 문서 정본은 00~06 md — 이 페이지는 사람용 안내이며, 대표 이미지는 03 svg-design 레시피(Gooey·Squiggle)로 만들었습니다. 디자인은 kr-ui-guide 스킬(저장소 skills/kr-ui-guide) 기준을 따릅니다. · 글꼴: Pretendard, IBM Plex Mono — 둘 다 SIL 오픈 폰트 라이선스 1.1(상업 이용·웹 임베딩 무료)</footer>
 
 </body>
 </html>
