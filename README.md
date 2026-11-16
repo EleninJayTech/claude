@@ -74,6 +74,10 @@ The skills the installer copies (feature docs, refactor, kr-ui-guide, kr-ui-styl
 | [`06_루틴-자동화.md`](06_루틴-자동화.md) | **Scheduled runs.** Work happens in the cloud at set times even while your machine is off (nightly code review, weekly doc checks) — Pro plan or above and a GitHub repository, and with approval at companies |
 | [`index.html`](index.html) | **The human-facing guide** (GitHub Pages landing) — [view on the web](https://eleninjaytech.github.io/claude/) |
 | [`pages/`](pages/) | The rest of the human-facing pages — [intro](pages/intro.html) · [walkthrough](pages/demo.html) · [options dictionary](pages/options.html) · [options course](pages/learn.html) · [skill catalog](pages/skills.html) |
+| [`skills/`](skills/) | The skill files document 03 installs (feature docs, refactor, kr-ui-guide and the rest) — the installer copies them from here on its own |
+| [`global-config/skills/`](global-config/skills/) | The commands document 01 installs alongside `/resume` and `/wrap` — `/dropin-apply`, `/dropin-check`, `/dropin-update`, `/dropin-sync`, `/dropin-pick`, `/scope` |
+| [`plugins/`](plugins/) | The `dandi` plugin marketplace (see [Skills as plugins](#skills-as-plugins)) — built from `skills/`, with the marketplace list in `.claude-plugin/` |
+| [`.claude/skills/dropin-rollout/`](.claude/skills/dropin-rollout/) | `/dropin-rollout` — available when you open `claude` in a clone of this repository, to update every project on this PC at once |
 
 ## Principles behind Dandi
 

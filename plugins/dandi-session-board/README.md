@@ -1,6 +1,6 @@
 # dandi-session-board
 
-Lets Claude Code sessions that run in the same folder (same git top-level) know about each other. Hooks record each session's title, branch and edited files under `~/.claude/session-board/`. When another active session exists, Claude is told at session start and on the next prompt, and it gets one warning before editing a file another session just changed. Nothing is blocked — you decide whether to keep going, move the work to `claude --worktree <name>`, or ask the other session.
+Lets Claude Code sessions that run in the same folder (same git top-level) know about each other. Hooks record each session's title, branch and edited files under `~/.claude/session-board/`. When another active session exists, Claude is told at session start and on the first prompt after a new one appears, and it gets one warning before editing a file another session just changed. Nothing is blocked — you decide whether to keep going, move the work to `claude --worktree <name>`, or ask the other session.
 
 The hooks never call a model. When no other session is active, nothing is added to the conversation.
 

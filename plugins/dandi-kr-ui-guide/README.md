@@ -16,7 +16,7 @@ Third-party marketplaces don't auto-update by default — enable it in `/plugin`
 | Command | What it does | Arguments |
 |---|---|---|
 | `/dandi-kr-ui-guide:kr-ui-guide` | Loads the required rules (contrast, touch targets, labels, free-to-use fonts, …) plus the references for the task at hand, proposes a design, and self-checks the result | — |
-| `/dandi-kr-ui-guide:kr-ui-styles` | Applies the style pack named in the project's `## kr-ui-guide 오버라이드` block (`스타일 팩:`); reads nothing when no pack is set | — |
+| `/dandi-kr-ui-guide:kr-ui-styles` | Applies the style pack named in the project's `## kr-ui-guide 오버라이드` block (`스타일 팩:`); reads nothing when no pack is set and you haven't asked about styles; if you ask, it shows the pack catalog and suggests the line to add | — |
 
 Claude also invokes it automatically when you design screens, pick icons or colors, or write design tokens for Korean users. Set `스타일 팩: editorial` to get the editorial / monochrome direction instead of the default, `스타일 팩: dark-neon` for the dark / high-contrast / neon direction, `스타일 팩: kitsch` for the kitsch / illustrated / B-grade direction (cream canvas, ink outlines, hard offset shadows, doodle characters), or `스타일 팩: neo-brutal` for the neo-brutalist direction (0px corners, 2–3px black borders, collapsing hard shadows, geometric bold or pixel display type, bento density).
 

@@ -22,7 +22,7 @@ Third-party marketplaces don't auto-update by default — enable it in `/plugin`
 | `/dandi-feature-docs:test-to-script` | Convert test cases into Playwright (web) or Maestro (Android/iOS) scripts | `[F-id or TC-id]` |
 | `/dandi-feature-docs:release-notes` | Build feature-grouped release notes between two tags or commits | `[start] [end, default HEAD]` |
 
-Start with `feature-docs init`; the other five read the `docs/features/` layout it creates.
+Start with `feature-docs init`; the other skills read the `docs/features/` layout it creates.
 
 ## Requirements
 

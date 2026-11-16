@@ -19,7 +19,7 @@ Third-party marketplaces don't auto-update by default — enable it in `/plugin`
 
 ## Requirements
 
-Any one of Claude in Chrome, the Claude Desktop browser, or Playwright CLI. With none, the skill stops at HTTP checks and says the screen was not checked. Launching your app is out of scope — that's the built-in `/run` and `/verify`. For a running Flutter app (desktop or mobile), the skill uses Marionette when it is connected; it does not install it.
+Any one of Playwright CLI, the Claude Desktop browser, Claude in Chrome, or Chrome DevTools MCP (used for root-cause debugging). The skill checks which of them are installed before choosing. With none, the skill stops at HTTP checks and says the screen was not checked. Launching your app is out of scope — that's the built-in `/run` and `/verify`. For a running Flutter app (desktop or mobile), the skill uses Marionette when it is connected; it does not install it.
 
 ## Uninstall
 

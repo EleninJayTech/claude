@@ -73,6 +73,10 @@
 | [`06_루틴-자동화.md`](06_루틴-자동화.md) | **자동 실행 예약.** 내 컴퓨터가 꺼져 있어도 클라우드에서 정해진 시간에 AI가 알아서 작업(야간 코드 검토·주간 문서 점검 등) — Pro 요금제 이상·GitHub 저장소 필요, 회사에서는 승인 후 |
 | [`index.html`](index.html) | **사람용 안내 페이지**(GitHub Pages 랜딩) — [웹에서 보기](https://eleninjaytech.github.io/claude/) |
 | [`pages/`](pages/) | 나머지 사람용 페이지 — [소개 영상](pages/intro.html) · [설치 시연](pages/demo.html) · [설치 옵션 사전](pages/options.html) · [설치 옵션 학습 코스](pages/learn.html) · [스킬 카탈로그](pages/skills.html) |
+| [`skills/`](skills/) | 03 문서가 설치하는 스킬 실물(기능 문서·refactor·kr-ui-guide 등) — 설치할 때 Claude가 여기서 알아서 복사 |
+| [`global-config/skills/`](global-config/skills/) | 01 문서가 `/resume`·`/wrap`과 함께 설치하는 명령 — `/dropin-apply`·`/dropin-check`·`/dropin-update`·`/dropin-sync`·`/dropin-pick`·`/scope` |
+| [`plugins/`](plugins/) | 플러그인 마켓 `dandi`([스킬을 플러그인으로 받기](#스킬을-플러그인으로-받기) 참고) — `skills/`에서 만들어지고, 마켓 목록은 `.claude-plugin/`에 있다 |
+| [`.claude/skills/dropin-rollout/`](.claude/skills/dropin-rollout/) | `/dropin-rollout` — 이 저장소를 클론한 폴더에서 `claude`를 열면 쓸 수 있고, 이 PC의 적용 프로젝트를 한 번에 최신화 |
 
 ## 단디의 원칙
 
