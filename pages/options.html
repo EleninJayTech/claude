@@ -883,6 +883,20 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
     </dl>
   </div>
 
+  <div class="opt">
+    <div class="opt-head"><span class="id">&sect;16</span><span class="name">diff review tools</span><span class="badge b-off">off by default &middot; this PC</span></div>
+    <p class="lead">Lets you <b>read what Claude changed in the terminal</b>, file by file and hunk by hunk, keep the good parts and throw away the bad ones &mdash; without opening an IDE. Three command-line tools go onto your PC: <b>lazygit</b> (a git screen in the terminal &mdash; stage, discard, commit), <b>delta</b> (a diff that also highlights the changed words inside a line) and <b>difftastic</b> (compares code by structure, so lines that only changed indentation or line breaks drop out). It is a help for <b>your own final review</b>; it does not replace the AI review (<code class="i">/code-review</code>).</p>
+    <dl>
+      <dt>What gets set up</dt><dd>The three tools (Windows: <code>winget</code> &middot; macOS: <code>brew</code> &middot; Linux: each tool&rsquo;s official install page, since it differs per distribution) and three diff views in lazygit&rsquo;s own settings file (<code class="i">config.yml</code>) &mdash; delta, difftastic and plain git. Claude runs the installs after you approve; tools you already have are skipped. If an install fails, you are told to run it yourself and it is recorded as waiting. Open a <b>new terminal</b> afterwards so the commands are found</dd>
+      <dt>How you use it</dt><dd>In a repository folder, run <code>lazygit</code> &rarr; read the diff in the <b>Files</b> panel (<code>2</code>) &rarr; press <code>|</code> to cycle delta / difftastic / plain (difftastic when formatting changes make a diff hard to read) &rarr; <code>Space</code> to stage a good file, <code>d</code> to discard a bad change, <code>c</code> to commit. Already-committed work: <b>Commits</b> (<code>4</code>) then <code>Enter</code>; <code>?</code> lists the keys. In the difftastic view, staging single hunks or lines may not work &mdash; switch to delta or plain with <code>|</code> to stage. These steps are shown at the end of the install report</dd>
+      <dt>If you already have lazygit settings</dt><dd>Your <code class="i">config.yml</code> is never overwritten &mdash; only the diff views are added under <code class="i">git:</code>, other settings untouched. If it already has its own diff views, you are asked keep / rebuild / replace. An old lazygit is reported with a suggestion to update it</dd>
+      <dt>Scope</dt><dd><b>Fixed to this PC</b>, so you are not asked &mdash; the tools and the settings file belong to your user account. It is only useful inside a git repository</dd>
+      <dt>Why it is off by default</dt><dd>It installs three outside programs on your PC and edits a settings file of yours, so no mode switches it on for you. On a work PC, check the software install policy first &mdash; nothing leaves your machine, so it is not part of the company-policy gate</dd>
+      <dt>Checking it worked</dt><dd>The three version outputs, plus a harmless test on two scratch files outside your projects. lazygit is a full-screen terminal app Claude cannot see, so you are asked to open it, press <code>|</code> and say whether the view changes; until then it is noted as waiting for your check</dd>
+      <dt>Removing it</dt><dd>Only the diff views it added are taken out of <code class="i">config.yml</code> (the file itself goes if it made the file and nothing else is left). The tools are uninstalled the same way they came in (<code>winget uninstall</code> / <code>brew uninstall</code> / your Linux package manager) &mdash; tools you had before are left alone</dd>
+    </dl>
+  </div>
+
   <h3>Follow-up questions for any skill</h3>
   <div class="tbl">
   <table>
