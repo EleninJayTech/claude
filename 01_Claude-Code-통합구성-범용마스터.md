@@ -1,6 +1,6 @@
 # Claude Code 통합 구성 — 범용 마스터 (드롭인 적용)
 
-> **문서 버전: v1.120** · 최종 갱신: **2026-11-16** · **최근 재검증: 2026-11-02** · 기준: Claude Code v2.1.316 (Opus 5.5 · Sonnet 5.5 · Haiku 5.5 · Fable 5.1)
+> **문서 버전: v1.121** · 최종 갱신: **2026-11-16** · **최근 재검증: 2026-11-02** · 기준: Claude Code v2.1.316 (Opus 5.5 · Sonnet 5.5 · Haiku 5.5 · Fable 5.1)
 >
 > | 버전 | 날짜 | 변경 내용 |
 > | --- | --- | --- |
@@ -27,6 +27,7 @@
 > | v1.118 | 2026-11-11 | **§D-4 `/dropin-pick` 편입** — 설치 형태 분류만 고르는 진입점(절차는 00 §C-5) · §A STEP 3 ⓒ·제거·검증·§D-1·§D-2 예외·§D-5 열거에 추가. **목표(R43)**: 8 — 필요한 종류만 까는 슬래시 진입점 · 3 — 배포 자산이라 배포본만으로 설치된다 |
 > | v1.119 | 2026-11-13 | **§D-4 `/scope` 편입(세션 범위 선언)** — `/scope <작업>`으로 이 세션이 할 일을 한 번 선언하면 그 작업과 사이드이펙트 수정·검증·규칙이 요구하는 기록까지만 하고 멈춘다(범위 밖은 `범위 밖 발견:` 한 줄 — `## 10.` 추천 포함). 수동 호출 전용·지침이라 강제는 아님 · §A STEP 3 ⓒ·제거·검증·§D-1·§D-2 예외·§D-5 열거에 추가 · `dropin-check`·`dropin-apply`의 스킬 이름 줄에 반영. **목표(R43)**: 1 — 요청하지 않은 수정·후속 착수를 막는다 · 7 — 세션 경계를 `/wrap`→`/clear`→`/resume` 흐름에 맞춘다 |
 > | v1.120 | 2026-11-16 | **§J 웹 노출(운영 서버에 Claude 파일이 올라가는 경우)** — 신호(Claude 파일 폴더의 웹 진입 파일·서버 설정)·대응 3택(운영 배포 제외·서버 차단·로컬 전용)·확인 명령의 정본 · §A STEP 1 감지와 STEP 4 고지 · §E-1 커밋 안내 · §F-1 한 줄(배포를 도울 때 확인) · §K 증상 행 · §L. 검수·테스트 서버는 대상 아님, 서버 설정은 만들지 않는다. **목표(R43)**: 2 — 저장소 루트가 곧 웹 루트인 PHP·정적 사이트에서도 드롭인 산출물이 정보 노출이 되지 않는다 · 8 — 입문자가 모르는 노출 경로를 설치 시점에 알린다 |
+> | v1.121 | 2026-11-16 | **외부 조사(Windows 터미널 환경) 중 공식 확인분 반영** — §D 서두 Windows 문단에 agent view 한 문장(터미널 종료·절전 뒤에도 세션 유지 — 멀티플렉서 대신 공식 수단, `/bg`·`←` 전환은 격리 없음, 셧다운 시 중지, 세션별 쿼터) · §K WinGet 설치본 자동 업데이트 꺼짐 행 · §L. 설치 항목·산출물 불변. DEC-20261116-bsjeong87-03. **목표(R43)**: 7 — 터미널을 닫아도 세션이 이어지는 공식 수단을 쓴다 · 1 — WinGet 설치로 낡은 버전에 머무는 원인을 짚는다 |
 > ※ 갱신 시: 이 표에 한 줄 추가 + 하단 "문서 정보" 날짜 수정 + §L 재검증 체크리스트 수행.
 
 > **사용법**: 이 파일을 아무 프로젝트 루트(또는 `docs/`)에 넣고 Claude에게
@@ -101,7 +102,7 @@
 ## D. 글로벌 셋업 (PC당 1회) — 전 환경 공통
 
 > 아래 명령 블록은 Windows(PowerShell) 기준이다 — macOS·Linux는 홈을 `~`로 읽고 D-1을 `mkdir -p ~/.claude/skills/{resume,wrap,dropin-apply,dropin-check,dropin-update,dropin-sync,dropin-pick,scope}`로 대체한다(만드는 내용물 D-2~D-4는 OS 무관. OS별 CLI 설치 분기는 04 §2와 같은 방식).
-> **Windows — Git for Windows 권장**(감지·권고만, 설치는 사용자): 네이티브 Windows에서 `git --version`이 실패하거나 Git Bash(`bash.exe`)가 없으면 Git for Windows(`git-scm.com/downloads/win`) 설치를 한 줄로 권한다(그 세션 1회). 있으면 **Bash·Monitor 도구**가 열려 bash 문법을 전제한 명령·훅이 그대로 돌고, 없으면 셸 도구는 PowerShell 하나다(공식 setup: 권장이되 선택). 깔아도 PowerShell 도구는 함께 남는다(claude.ai·Console 계정 기본 켜짐 · Bedrock·Agent Platform·Foundry는 `CLAUDE_CODE_USE_POWERSHELL_TOOL=1`) — 단 그 상태에서 `Bash` 도구 통째 deny는 PowerShell 도구까지 끈다. 깔았는데 Bash 도구가 안 뜨면 `settings.json` `env`에 `"CLAUDE_CODE_GIT_BASH_PATH": "C:\Program Files\Git\bin\bash.exe"`(실제 경로)를 넣고, **새 세션**에서 Bash 도구로 `echo $BASH_VERSION`이 나오는지로 확인한다. 이 문서는 설치하지 않으므로 제거 절차도 두지 않는다(앱 제거는 OS 몫 — 설치 항목이 아니다). **세션을 여럿 함께 돌리면** Windows Terminal의 탭=프로젝트·분할 패널=세션 구성도 함께 권한다 — 같은 탭의 둘째 패널부터는 `claude --worktree <이름>`으로 각자 워크트리에서 띄우고(같은 폴더 동시 세션은 기본이 워크트리 — §F-1), 끝난·승인 대기 세션은 `preferredNotifChannel: "terminal_bell"`(데스크톱 알림 기본 목록에 없는 터미널에 공식 terminal-config가 안내하는 값)로 벨을 울려 찾는다. 단계별 안내(Windows Terminal 벨·분할 단축키·레이아웃 스크립트): `https://claude.ai/artifact/JT7ewXKhrnFZzeVhRJY31s` — 외부 참고 페이지라 이 문서가 설치하지 않는다.
+> **Windows — Git for Windows 권장**(감지·권고만, 설치는 사용자): 네이티브 Windows에서 `git --version`이 실패하거나 Git Bash(`bash.exe`)가 없으면 Git for Windows(`git-scm.com/downloads/win`) 설치를 한 줄로 권한다(그 세션 1회). 있으면 **Bash·Monitor 도구**가 열려 bash 문법을 전제한 명령·훅이 그대로 돌고, 없으면 셸 도구는 PowerShell 하나다(공식 setup: 권장이되 선택). 깔아도 PowerShell 도구는 함께 남는다(claude.ai·Console 계정 기본 켜짐 · Bedrock·Agent Platform·Foundry는 `CLAUDE_CODE_USE_POWERSHELL_TOOL=1`) — 단 그 상태에서 `Bash` 도구 통째 deny는 PowerShell 도구까지 끈다. 깔았는데 Bash 도구가 안 뜨면 `settings.json` `env`에 `"CLAUDE_CODE_GIT_BASH_PATH": "C:\Program Files\Git\bin\bash.exe"`(실제 경로)를 넣고, **새 세션**에서 Bash 도구로 `echo $BASH_VERSION`이 나오는지로 확인한다. 이 문서는 설치하지 않으므로 제거 절차도 두지 않는다(앱 제거는 OS 몫 — 설치 항목이 아니다). **세션을 여럿 함께 돌리면** Windows Terminal의 탭=프로젝트·분할 패널=세션 구성도 함께 권한다 — 같은 탭의 둘째 패널부터는 `claude --worktree <이름>`으로 각자 워크트리에서 띄우고(같은 폴더 동시 세션은 기본이 워크트리 — §F-1), 끝난·승인 대기 세션은 `preferredNotifChannel: "terminal_bell"`(데스크톱 알림 기본 목록에 없는 터미널에 공식 terminal-config가 안내하는 값)로 벨을 울려 찾는다. 단계별 안내(Windows Terminal 벨·분할 단축키·레이아웃 스크립트): `https://claude.ai/artifact/JT7ewXKhrnFZzeVhRJY31s` — 외부 참고 페이지라 이 문서가 설치하지 않는다. **터미널을 닫아도 세션을 살려 두려면** tmux류 멀티플렉서를 따로 깔지 않고 agent view를 쓴다(`claude --bg "<작업>"`로 시작·`claude agents`로 목록 — research preview): 별도 supervisor가 돌려 터미널을 닫거나 절전해도 이어지고 기본은 `.claude/worktrees/` 아래 워크트리로 격리된다 — 단 `/bg`·`←`로 보낸 세션은 격리를 건너뛰어 같은 폴더에서 돌고(같은 폴더 동시 세션이 된다 — §F-1 규칙을 따른다), PC를 끄거나 재시작하면 실행 중 세션이 멈추며(대화는 남아 attach·답장으로 재개), 세션마다 구독 쿼터를 따로 쓴다(공식 agent-view, 2026-11-16 확인).
 
 ### D-1. 폴더
 ```powershell
@@ -613,6 +614,7 @@ CLAUDE.local.md
 | `.env`를 Claude가 읽으려 함 | deny + CLAUDE.md #8 / **근본은 시크릿 분리** |
 | 운영 사이트에서 `/CLAUDE.md`·`/claude.md`가 열림 | 저장소째 운영 서버로 올라간 것 — §J `웹 노출`(운영 배포 제외·서버 차단·로컬 전용 중 하나) · 열려 있던 파일의 내부 정보 점검·시크릿 교체 |
 | Windows에서 Bash 없다고 에러 | Claude Code `v2.1.120+`로 업데이트(PowerShell만으로 동작) · Bash 도구를 쓰려면 Git for Windows(§D 서두) — 깔았는데 못 찾으면 `env`의 `CLAUDE_CODE_GIT_BASH_PATH` |
+| Windows에서 Claude Code 버전이 오르지 않는다 | WinGet 설치본은 자동 업데이트가 꺼져 있다 — WinGet으로 직접 올리거나 `env`에 `"CLAUDE_CODE_PACKAGE_MANAGER_AUTO_UPDATE": "1"`(세션이 돌고 있으면 exe 잠금으로 업그레이드가 실패할 수 있다 — 세션을 닫고 다시) · 네이티브 설치(`irm https://claude.ai/install.ps1 \| iex`, 관리자 불필요)는 스스로 갱신한다 |
 | 셋업이 전반적으로 이상함 | **`/doctor`** — 구성 전체 진단+수정 제안(비대 CLAUDE.md 트림 제안 포함 v2.1.206+, `/checkup` 별칭) |
 | 새 모델로 바꾼 뒤 지시가 낡았는지 | **`/doctor prompt-audit [경로]`**(v2.1.283+) — `CLAUDE.md`·`AGENTS.md`·rules·skills·commands·subagents·output styles에서 **구 모델용 지시·없는 파일/명령 참조·서로 상충하는 파일**을 찾아 보고·편집 제안만 한다(적용하라고 할 때까지 파일은 그대로) |
 | Claude Code에서 `Credit balance too low · Add funds` | 환경의 `ANTHROPIC_API_KEY`(또는 `apiKeyHelper`)가 **Max·Ultra·Team API 크레딧만 있는 Console 조직** 키라서 — 그 크레딧은 Claude Code를 덮지 않는다. `/status`로 쓰고 있는 인증을 확인하고, 셸 프로필·settings `env`에서 그 키를 빼 구독으로 돌아간다(`-p`는 키가 있으면 무조건 키를 쓴다). 크레딧을 쓰는 경로는 02 §F 팬아웃 주석 |
@@ -635,6 +637,7 @@ Claude Code는 매주 바뀐다. 6개월마다 30분:
 - **dev container 격리 경로**(§J 격리 3단) — feature 이미지·이그레스 방화벽 스크립트 구성이 유지되는지, 네이티브 Windows 대안이라는 위치가 바뀌지 않았는지(내장 샌드박스가 Windows를 지원하기 시작하면 이 줄의 근거가 사라진다).
 - **§D 서두 멀티세션 구성 권고** — `preferredNotifChannel`의 `terminal_bell` 값·데스크톱 알림 기본 목록(Windows Terminal 미포함)·`--worktree` 이름 재사용(같은 이름이면 기존 워크트리를 연다)이 유지되는지(terminal-config `#get-a-terminal-bell-or-notification`·worktrees `#reuse-a-worktree-name`, 2026-11-07 확인). 링크한 외부 페이지는 내용이 바뀔 수 있어 재검증 때 같은 축(워크트리·doctor 서술)을 다시 읽는다.
 - **§D 서두 Git for Windows 권장** — 공식 setup의 권장/선택 표기·없을 때 PowerShell 대체·Monitor 도구 요건·`CLAUDE_CODE_GIT_BASH_PATH`·PowerShell 도구 기본값(계정 종류별)·`Bash` deny가 PowerShell 도구를 끄는 조건이 유지되는지(setup `#install-on-native-windows`·tools-reference `#powershell-tool`, 2026-11-07 확인). 🟡 `claude doctor`가 Git Bash 인식을 보고하는지는 공식 미명시.
+- **§D 서두 agent view · §K WinGet 자동 업데이트** — agent view의 research preview 표기·워크트리 격리와 그 예외(`/bg`·`←`·비-git)·셧다운 동작·세션별 쿼터(agent-view), WinGet 자동 업데이트 꺼짐·`CLAUDE_CODE_PACKAGE_MANAGER_AUTO_UPDATE`·exe 잠금(setup)이 유지되는지(2026-11-16 확인). preview가 끝나 명령·동작이 바뀌면 §D 서두 문장을 고친다.
 - `/model` 최신 정책(별칭이 가리키는 실제 모델·`best`의 해석), `claude --version`.
 - `/effort` 단계 명칭·모델별 지원 범위·`ultracode` 동작, 에이전트·스킬 frontmatter 키 생존 — `effort:`·`arguments:`·`allowed-tools`·`disable-model-invocation`(정본 §F-2. `effort:`는 2026-07-20 확정).
 - **§J-1 첫 외부 읽기 프롬프트** — 선택지·`blockReadsOutsideWorkingDirectories` 기록 위치·해제 방법이 유지되는지(공식 permission-modes, 2026-11-02 확인).
@@ -655,5 +658,5 @@ Claude Code는 매주 바뀐다. 6개월마다 30분:
 ## 핵심 출처 🟢
 IDE 통합·`--add-dir`(ide-integrations·large-codebases) / permissions·deny 한계 / hooks / skills / memory·auto-memory — 모두 `code.claude.com/docs` 및 `docs.anthropic.com`.
 
-**문서 정보** — 통합 마스터(범용) **v1.120**. 변경 이력은 최상단 버전 표 참조(유래: 8개 소스 통합 초판 — 최상단 병합 행).
+**문서 정보** — 통합 마스터(범용) **v1.121**. 변경 이력은 최상단 버전 표 참조(유래: 8개 소스 통합 초판 — 최상단 병합 행).
 최종 갱신: 2026-11-16 · 최근 재검증: 2026-11-02 / 참조: Claude Code v2.1.316, Opus 5.5(v2.1.280+) · Sonnet 5.5(v2.1.284+) · Haiku 5.5(v2.1.293+) · Fable 5.1(v2.1.257+).
