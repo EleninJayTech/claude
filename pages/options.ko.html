@@ -895,17 +895,33 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
     </dl>
   </div>
 
+  <div class="opt">
+    <div class="opt-head"><span class="id">§17</span><span class="name">win-setup</span><span class="badge b-off">기본 해제 · Windows 전용</span></div>
+    <p class="lead">Windows PC에서 Claude Code를 터미널로 쓰기 전에 PC마다 손으로 맞추던 환경을 <b>읽기만 해서 진단</b>하고 판정표 한 장으로 보여 준 뒤, <b>내가 승인한 항목만</b> 고치는 스킬 하나입니다. 새 PC에서 터미널이 옛 PowerShell(5.1)로 뜨거나 PATH가 깨져 막히는 일을 줄여 줍니다.</p>
+    <dl>
+      <dt>살펴보는 것</dt><dd>PowerShell 7 · Windows Terminal 설정(깨진 프로필·기본 프로필) · 사용자 PATH(없는 경로·중복) · 개발자 모드 · 긴 경로 · <code>sudo</code> · Claude의 <code>!</code> 명령 셸(<code class="i">defaultShell</code>) · <code>jq</code>·<code>fd</code>·<code>gh</code> · 디스크 여유</dd>
+      <dt>정비는 승인한 것만</dt><dd>진단은 아무것도 바꾸지 않습니다. 고칠 항목을 번호로 한 번에 묻고 고른 것만 하며, 바꾸기 전에 <code class="i">%LOCALAPPDATA%\win-setup\backup\</code>에 백업을 남깁니다. 관리자 권한이 필요한 것은 한 번에 묶어 <b>UAC 창을 한 번만</b> 띄웁니다. 시스템 PATH는 건드리지 않고, Git 업데이트·Docker 디스크 이동은 직접 하도록 안내만 합니다</dd>
+      <dt>쓰는 법</dt><dd><code>/win-setup</code>(진단 → 판정표 → 승인 → 정비 → 보고) · <code>/win-setup 진단만</code>(<code>diagnose</code> — 판정표까지만) · 재부팅 뒤 새 터미널 탭에서 <code>/win-setup 검증</code>(<code>verify</code>)</dd>
+      <dt>필요한 것</dt><dd><b>Windows</b>. Windows가 아니면 목록에 나오지 않고 “해당 없음”으로 기록돼 다시 묻지 않습니다. PowerShell 7이 없어도 진단은 돌고, 없으면 설치부터 제안합니다</dd>
+      <dt>왜 기본 해제인가</dt><dd>레지스트리·PATH·설정 파일을 고치는 <b>PC 단위 도구</b>라, 프로젝트를 보고 켤 근거가 없습니다. 필요하면 직접 체크하세요. 회사 PC면 개발자 모드·<code>sudo</code>가 보안 정책에 걸릴 수 있으니 먼저 확인하세요 — 데이터가 밖으로 나가지 않으므로 회사 정책 확인 게이트 대상은 아닙니다</dd>
+      <dt>스코프</dt><dd><b>글로벌이 기본</b>입니다 — 저장소와 상관없는 PC 작업입니다. 프로젝트를 고르면 Windows 전용 스크립트가 그 저장소에 커밋됩니다</dd>
+      <dt>호출 방식</dt><dd><b>수동 호출 전용이 기본</b>입니다 — PC 설정을 바꾸고 UAC를 띄우는 스킬이라 터미널 이야기가 나올 때마다 스스로 불리면 안 됩니다. 자동 판단을 골라도 항목별 승인은 그대로 남습니다</dd>
+      <dt>pc-clean과의 차이</dt><dd>TEMP·휴지통·남은 프로세스 정리는 §10 pc-clean 몫이고, 이 스킬은 개발 환경 설정만 다룹니다</dd>
+      <dt>지울 때</dt><dd>설치한 스코프의 <code class="i">win-setup/</code> 폴더를 지웁니다(훅·설정·예약 작업을 만들지 않습니다). 플러그인으로 받았다면 <code class="i">/plugin uninstall dandi-win-setup@dandi</code>. <b>스킬로 바꾼 PC 설정은 스킬을 지워도 남습니다</b> — 되돌리려면 지우기 전에 스킬의 되돌리기 절차(백업 사용)를 따릅니다</dd>
+    </dl>
+  </div>
+
   <h3>스킬을 고르면 따라오는 질문</h3>
   <div class="tbl">
   <table>
     <tr><th style="width:120px">질문</th><th>선택지</th></tr>
     <tr>
       <td><b>스코프</b></td>
-      <td><b>글로벌</b>(<code class="i">~/.claude/skills/</code>) — 내 PC 모든 프로젝트에서 쓸 수 있음 / <b>프로젝트</b>(<code class="i">.claude/skills/</code>) — 이 저장소에서만, 커밋하면 팀 공유. 기능 문서 세트·refactor·kr-ui-guide는 저장소를 가리지 않고 쓰이고 pc-clean은 PC 단위 도구, ops-kit은 프로젝트를 스스로 조사하는 스킬이라 <b>글로벌이 기본</b>입니다. 정책 기록(§11)·기능 변경 기록(§13)은 프로젝트, session-board(§12)는 글로벌로 <b>고정</b>이라 이 질문 없이 알려만 줍니다. 어떤 모드에서도 생략되지 않는 질문입니다 — 내 PC 글로벌에 같은 이름이 있으면 프로젝트에 깔아도 그쪽에 가려 실행되지 않습니다</td>
+      <td><b>글로벌</b>(<code class="i">~/.claude/skills/</code>) — 내 PC 모든 프로젝트에서 쓸 수 있음 / <b>프로젝트</b>(<code class="i">.claude/skills/</code>) — 이 저장소에서만, 커밋하면 팀 공유. 기능 문서 세트·refactor·kr-ui-guide는 저장소를 가리지 않고 쓰이고 pc-clean·win-setup은 PC 단위 도구, ops-kit은 프로젝트를 스스로 조사하는 스킬이라 <b>글로벌이 기본</b>입니다. 정책 기록(§11)·기능 변경 기록(§13)은 프로젝트, session-board(§12)는 글로벌, diff 검수 도구(§16)는 이 PC로 <b>고정</b>이라 이 질문 없이 알려만 줍니다. 어떤 모드에서도 생략되지 않는 질문입니다 — 내 PC 글로벌에 같은 이름이 있으면 프로젝트에 깔아도 그쪽에 가려 실행되지 않습니다</td>
     </tr>
     <tr>
       <td><b>호출 방식</b></td>
-      <td><b>자동 판단</b> — 관련 작업이 감지되면 Claude가 알아서 불러 씀(기본) / <b>수동 호출 전용</b> — 내가 <code class="i">/svg-design</code>이라고 쳐야만 동작(파일에 <code class="i">disable-model-invocation: true</code> 한 줄이 추가됨). 브라우저 확인 규칙(<code class="i">browser-check</code>)은 <b>자동 판단을 권합니다</b> — 확인할 때 스스로 불려야 쓸모가 있습니다</td>
+      <td><b>자동 판단</b> — 관련 작업이 감지되면 Claude가 알아서 불러 씀(기본) / <b>수동 호출 전용</b> — 내가 <code class="i">/svg-design</code>이라고 쳐야만 동작(파일에 <code class="i">disable-model-invocation: true</code> 한 줄이 추가됨). 브라우저 확인 규칙(<code class="i">browser-check</code>)은 <b>자동 판단을 권합니다</b> — 확인할 때 스스로 불려야 쓸모가 있습니다. 반대로 <code class="i">win-setup</code>은 PC 설정을 바꾸는 스킬이라 <b>수동 호출 전용이 기본</b>입니다</td>
     </tr>
     <tr>
       <td><b>이름 별칭</b></td>
@@ -913,7 +929,7 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
     </tr>
     <tr>
       <td><b>이미 플러그인</b></td>
-      <td>기능 문서 세트·refactor·kr-ui-guide·browser-check·pc-clean에서만, 같은 스킬이 <code class="i">dandi</code> 플러그인으로 이미 켜져 있을 때만 묻습니다. <b>유지</b> — 플러그인을 그대로 두고 복사 설치는 건너뜀 / <b>교체</b> — 플러그인을 지운 뒤 복사 설치. 둘 다 두면 똑같은 스킬 두 개가 Claude 앞에 놓입니다. 플러그인으로 받은 스킬을 뺄 때는 그 플러그인의 제거 방법을 따릅니다(예: <code class="i">/plugin uninstall dandi-refactor@dandi</code>)</td>
+      <td>기능 문서 세트·refactor·kr-ui-guide·browser-check·pc-clean·win-setup에서만, 같은 스킬이 <code class="i">dandi</code> 플러그인으로 이미 켜져 있을 때만 묻습니다. <b>유지</b> — 플러그인을 그대로 두고 복사 설치는 건너뜀 / <b>교체</b> — 플러그인을 지운 뒤 복사 설치. 둘 다 두면 똑같은 스킬 두 개가 Claude 앞에 놓입니다. 플러그인으로 받은 스킬을 뺄 때는 그 플러그인의 제거 방법을 따릅니다(예: <code class="i">/plugin uninstall dandi-refactor@dandi</code>)</td>
     </tr>
   </table>
   </div>
@@ -1138,7 +1154,7 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
     해소 여부와 상관없이 더는 원하지 않으면(일단 보류, 조직 불허 확정, 인증 안 하기로 함) “미선택”으로 바꿔 기록합니다 — 같은 질문이 계속 반복되지 않게요.
   </p>
   <p>
-    복사해 까는 스킬(기능 문서 세트·refactor·kr-ui-guide·browser-check·pc-clean·session-board·ops-kit)은 배포본과 <b>파일마다 내용까지</b> 대조합니다 — 문구만 바뀐 개정도 놓치지 않습니다.
+    복사해 까는 스킬(기능 문서 세트·refactor·kr-ui-guide·browser-check·pc-clean·session-board·ops-kit·win-setup)은 배포본과 <b>파일마다 내용까지</b> 대조합니다 — 문구만 바뀐 개정도 놓치지 않습니다.
     하나라도 다르면 <b>구설치본</b>으로 보여주고, 설치 단계에서 폴더째 새것으로 바꿉니다.
   </p>
 

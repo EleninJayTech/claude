@@ -897,17 +897,33 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
     </dl>
   </div>
 
+  <div class="opt">
+    <div class="opt-head"><span class="id">&sect;17</span><span class="name">win-setup</span><span class="badge b-off">off by default &middot; Windows only</span></div>
+    <p class="lead">One skill that <b>diagnoses, read-only,</b> the setup you would otherwise tune by hand on every Windows PC before using Claude Code in the terminal, shows it as one verdict table, and then fixes <b>only the items you approve</b>. It saves new PCs from getting stuck on a terminal that opens the old PowerShell (5.1) or a broken PATH.</p>
+    <dl>
+      <dt>What it looks at</dt><dd>PowerShell 7 &middot; Windows Terminal settings (broken profiles, the default profile) &middot; your user PATH (missing folders, duplicates) &middot; Developer Mode &middot; long paths &middot; <code>sudo</code> &middot; the shell Claude uses for <code>!</code> commands (<code class="i">defaultShell</code>) &middot; <code>jq</code>, <code>fd</code>, <code>gh</code> &middot; free disk space</dd>
+      <dt>Only what you approve</dt><dd>The diagnosis changes nothing. Fixes are offered as one numbered list and only the ones you pick are done, with a backup in <code class="i">%LOCALAPPDATA%\win-setup\backup\</code> first. Everything that needs admin rights is bundled so the <b>UAC prompt appears once</b>. The system PATH is never touched; a Git update or moving Docker&rsquo;s disk image is only explained for you to do</dd>
+      <dt>How you use it</dt><dd><code>/win-setup</code> (diagnose &rarr; verdict table &rarr; approve &rarr; fix &rarr; report) &middot; <code>/win-setup diagnose</code> (stops at the table) &middot; after a reboot, in a new terminal tab, <code>/win-setup verify</code></dd>
+      <dt>What it needs</dt><dd><b>Windows</b>. On anything else it does not appear in the list and is recorded as &ldquo;not applicable&rdquo;, so you are not asked again. The diagnosis runs even without PowerShell 7, and installing it is the first thing offered</dd>
+      <dt>Why it is off by default</dt><dd>It is a <b>tool for the PC</b> that edits the registry, PATH and settings files, so a project gives no reason to switch it on. Tick it yourself if you want it. On a work PC, Developer Mode and <code>sudo</code> may clash with security policy, so check first &mdash; nothing leaves your machine, so it is not part of the company-policy gate</dd>
+      <dt>Scope</dt><dd><b>Global by default</b> &mdash; it is PC work that has nothing to do with any repository. Choosing project commits Windows-only scripts into that repository</dd>
+      <dt>Invocation</dt><dd><b>Manual only by default</b> &mdash; it changes PC settings and raises UAC, so it must not load itself whenever the terminal comes up. Even if you choose automatic, the per-item approval stays</dd>
+      <dt>Versus pc-clean</dt><dd>Clearing TEMP, the Recycle Bin and leftover processes is &sect;10 pc-clean&rsquo;s job; this skill only handles the development setup</dd>
+      <dt>Removing it</dt><dd>Delete the <code class="i">win-setup/</code> folder in the scope you installed it to (it creates no hooks, settings or scheduled tasks). If you got it as a plugin, <code class="i">/plugin uninstall dandi-win-setup@dandi</code>. <b>PC settings the skill changed stay after you remove it</b> &mdash; to undo them, follow the skill&rsquo;s undo steps (using the backup) before deleting it</dd>
+    </dl>
+  </div>
+
   <h3>Follow-up questions for any skill</h3>
   <div class="tbl">
   <table>
     <tr><th style="width:120px">Question</th><th>Choices</th></tr>
     <tr>
       <td><b>Scope</b></td>
-      <td><b>Global</b> (<code class="i">~/.claude/skills/</code>) &mdash; available in every project on your machine / <b>project</b> (<code class="i">.claude/skills/</code>) &mdash; this repository only; commit it and the team shares it. The feature-doc set, refactor and kr-ui-guide are used regardless of repository, pc-clean is a tool for the PC, and ops-kit looks up each project itself, so <b>global is their default</b>. Policy notes (&sect;11) and the feature change log (&sect;13) are <b>fixed</b> to the project and session-board (&sect;12) to global, so instead of this question you are simply told. This question is never skipped in any mode &mdash; if your machine already has a global skill of the same name, a project install is shadowed by it and never runs</td>
+      <td><b>Global</b> (<code class="i">~/.claude/skills/</code>) &mdash; available in every project on your machine / <b>project</b> (<code class="i">.claude/skills/</code>) &mdash; this repository only; commit it and the team shares it. The feature-doc set, refactor and kr-ui-guide are used regardless of repository, pc-clean and win-setup are tools for the PC, and ops-kit looks up each project itself, so <b>global is their default</b>. Policy notes (&sect;11) and the feature change log (&sect;13) are <b>fixed</b> to the project, session-board (&sect;12) to global and the diff review tools (&sect;16) to this PC, so instead of this question you are simply told. This question is never skipped in any mode &mdash; if your machine already has a global skill of the same name, a project install is shadowed by it and never runs</td>
     </tr>
     <tr>
       <td><b>Invocation</b></td>
-      <td><b>Automatic</b> &mdash; Claude loads it when it detects relevant work (default) / <b>manual only</b> &mdash; it runs only when you type <code class="i">/svg-design</code> (adds one <code class="i">disable-model-invocation: true</code> line to the file). For the browser checking rules (<code class="i">browser-check</code>), <b>automatic is recommended</b> &mdash; they only help if they load themselves when Claude checks</td>
+      <td><b>Automatic</b> &mdash; Claude loads it when it detects relevant work (default) / <b>manual only</b> &mdash; it runs only when you type <code class="i">/svg-design</code> (adds one <code class="i">disable-model-invocation: true</code> line to the file). For the browser checking rules (<code class="i">browser-check</code>), <b>automatic is recommended</b> &mdash; they only help if they load themselves when Claude checks. <code class="i">win-setup</code>, on the other hand, changes PC settings, so it is <b>manual only by default</b></td>
     </tr>
     <tr>
       <td><b>Name alias</b></td>
@@ -915,7 +931,7 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
     </tr>
     <tr>
       <td><b>Already a plugin</b></td>
-      <td>Asked only for the feature-doc set, refactor, kr-ui-guide, browser-check and pc-clean, and only when the same skills are already turned on as a <code class="i">dandi</code> plugin. <b>Keep</b> &mdash; the plugin stays and the copy is skipped / <b>replace</b> &mdash; the plugin is removed, then the copy is installed. Having both would put two identical skills in front of Claude. To remove a skill you got as a plugin, follow that plugin&rsquo;s own uninstall steps (<code class="i">/plugin uninstall dandi-refactor@dandi</code>, for example)</td>
+      <td>Asked only for the feature-doc set, refactor, kr-ui-guide, browser-check, pc-clean and win-setup, and only when the same skills are already turned on as a <code class="i">dandi</code> plugin. <b>Keep</b> &mdash; the plugin stays and the copy is skipped / <b>replace</b> &mdash; the plugin is removed, then the copy is installed. Having both would put two identical skills in front of Claude. To remove a skill you got as a plugin, follow that plugin&rsquo;s own uninstall steps (<code class="i">/plugin uninstall dandi-refactor@dandi</code>, for example)</td>
     </tr>
   </table>
   </div>
@@ -1140,7 +1156,7 @@ footer{max-width:1040px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
     Resolved or not, if you no longer want it (holding off, the organization has said no for good, you decided not to sign in), it is switched to &ldquo;not selected&rdquo; &mdash; so the same question stops coming back.
   </p>
   <p>
-    Copied skills (the feature-doc set, refactor, kr-ui-guide, browser-check, pc-clean, session-board, ops-kit) are compared with the published version <b>file by file, contents included</b> &mdash; a revision that only reworded things still counts.
+    Copied skills (the feature-doc set, refactor, kr-ui-guide, browser-check, pc-clean, session-board, ops-kit, win-setup) are compared with the published version <b>file by file, contents included</b> &mdash; a revision that only reworded things still counts.
     If anything differs, the skill is shown as an <b>older install</b> and the install step replaces the whole folder.
   </p>
 

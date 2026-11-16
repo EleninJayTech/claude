@@ -198,7 +198,7 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
   <div class="basic">
     <span class="n">02</span>
     <b>부르는 방법은 두 가지</b>
-    <p><code>/이름</code>을 직접 치거나, Claude가 <em>설명</em>과 내 요청을 맞춰 보고 알아서 불러온다. 일부러 수동 호출 전용으로 두는 스킬도 있다 &mdash; 브라우저를 조작하거나 소스에 테스트 코드를 넣는 스킬은 설치할 때 그렇게 권한다.</p>
+    <p><code>/이름</code>을 직접 치거나, Claude가 <em>설명</em>과 내 요청을 맞춰 보고 알아서 불러온다. 일부러 수동 호출 전용으로 두는 스킬도 있다 &mdash; 브라우저를 조작하거나, 소스에 테스트 코드를 넣거나, PC 설정을 바꾸는 스킬은 설치할 때 그렇게 권한다.</p>
   </div>
   <div class="basic">
     <span class="n">03</span>
@@ -247,8 +247,9 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
     <tr><td><code>/kr-ui-guide</code></td><td>없음 &mdash; 스스로 불린다</td><td>한국 사용자 대상 UI·아이콘·색 작업 &mdash; 게임 화면도</td><td>대비 계산과 토큰이 붙은 설계안</td></tr>
     <tr><td><code>/kr-ui-styles</code></td><td>없음 &mdash; 스타일 팩이 지정되거나 다른 스타일을 물으면 스스로 불린다</td><td>한국 사용자 대상 화면을 기본 대신 에디토리얼·모노크롬, 다크·네온, 키치·일러스트, 네오브루탈로</td><td>팩 토큰으로 만든 설계와 대비 계산</td></tr>
 
-    <tr><th class="grp" colspan="4" scope="colgroup">PC 관리 &middot; 03 §10</th></tr>
+    <tr><th class="grp" colspan="4" scope="colgroup">PC 관리 &middot; 03 §10 · §17</th></tr>
     <tr><td><code>/pc-clean</code></td><td><code>[점검만]</code> &mdash; 점검만 · 없으면 점검 후 정리 제안</td><td>이 Windows PC가 느려졌을 때</td><td>점검 표 한 장 &mdash; 정리는 승인한 항목만</td></tr>
+    <tr><td><code>/win-setup</code></td><td><code>[진단만|diagnose | 검증|verify]</code> &mdash; 진단만 · 재부팅 뒤 최종 확인 · 없으면 진단 후 승인한 것만 정비 · 수동 호출 전용</td><td>Windows PC를 Claude Code용으로 갖출 때, 터미널이 아직 옛 PowerShell로 뜰 때</td><td>판정표 한 장 &mdash; 승인한 항목만, 백업한 뒤 바꾼다</td></tr>
 
     <tr><th class="grp" colspan="4" scope="colgroup">동시 세션 &middot; 03 §12</th></tr>
     <tr><td><code>/session-board</code></td><td>없음 &mdash; 훅이 알아서 알린다</td><td>같은 폴더에 세션이 둘 이상 떠 있을 때</td><td>다른 세션과 그 세션이 고친 파일 목록 &mdash; 막는 것은 없다</td></tr>
@@ -341,7 +342,7 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
       <dl>
         <dt>언제</dt><dd>이 PC나 이 프로젝트를 현재 문서 기준으로 올리고 싶을 때. 처음 까는 경우에도 같은 명령이라, 내가 어느 쪽인지 몰라도 된다. Claude나 <code>/resume</code>이 작업에 새로 필요한 항목을 추천했으면 <code>추천</code>을 붙여 부른다.</dd>
         <dt>하는 일</dt><dd>00 문서를 찾아서(같은 폴더&middot;<code>docs/</code>의 사본·로컬 클론·내가 알려 준 폴더·배포된 raw 순 &mdash; raw는 요약하지 않고 파일 그대로 프로젝트 밖 임시 폴더에 받는다) 읽고 그 절차를 그대로 돈다 &mdash; 이미 있는 것을 감지하고, 무엇을 할지 묻고, 고른 것만 설치하고, 검증하고, 적용 기록을 쓴다. 스킬 자신은 단계를 하나도 갖지 않아서 문서와 갈릴 수가 없다. <code>/dropin-apply 추천</code>으로 부르면 작업 중 추천 경로를 탄다 &mdash; 작업이 새로 필요로 하게 됐는데 아직 안 깐 항목만, 무엇을 보고 걸렸는지 한 줄씩 붙여 내놓고, 처음 공통 질문은 기록된 답으로 갈음하며, 고른 것만 깐다. 안전 질문은 그대로 묻는다. 적용 기록이 없는 폴더에서는 이 경로 대신 일반 설치를 돌고, 거기서는 최소가 기본 추천이다. 프로젝트 폴더가 그대로 운영 웹 서버에 올라가는 구조로 보이면, 마지막 커밋 안내 첫머리에 커밋한 Claude 파일이 URL로 읽힌다는 경고와 막는 방법 세 가지, 확인 명령이 붙는다.</dd>
-        <dt>결과</dt><dd>문서와 일치하는 구성, 그리고 그 사실을 적은 <code>dropin-applied</code> 줄. 기능 문서·refactor·kr-ui-guide·kr-ui-styles·browser-check·pc-clean·session-board·ops-kit·<code>/scope</code>와 <code>dropin-</code> 계열처럼 이미 깔린 스킬은 <b>이름이 아니라 내용으로</b> 대조하므로, 파일 수는 그대로고 문장만 바뀐 개정도 교체된다 &mdash; <code>dropin-</code> 계열과 <code>/scope</code>는 배포본과 다르면 기본값이 <code>재구성</code>으로 나온다. <code>/resume</code>·<code>/wrap</code>은 있는지만 본다 &mdash; 새 본문으로 갈려면 이미 깔린 글로벌 항목을 묻는 질문에서 기본값 <code>유지</code> 대신 <code>재구성</code>을 고른다. 승인한 개정이 걸린 항목은 처음부터 <code>재구성</code>이 기본으로 나온다. 거절한 추천은 기록에 남아 다시 권하지 않는다 &mdash; 나중에 깔고 싶으면 인수 없이 <code>/dropin-apply</code>를 다시 돌려 추가한다.</dd>
+        <dt>결과</dt><dd>문서와 일치하는 구성, 그리고 그 사실을 적은 <code>dropin-applied</code> 줄. 기능 문서·refactor·kr-ui-guide·kr-ui-styles·browser-check·pc-clean·win-setup·session-board·ops-kit·<code>/scope</code>와 <code>dropin-</code> 계열처럼 이미 깔린 스킬은 <b>이름이 아니라 내용으로</b> 대조하므로, 파일 수는 그대로고 문장만 바뀐 개정도 교체된다 &mdash; <code>dropin-</code> 계열과 <code>/scope</code>는 배포본과 다르면 기본값이 <code>재구성</code>으로 나온다. <code>/resume</code>·<code>/wrap</code>은 있는지만 본다 &mdash; 새 본문으로 갈려면 이미 깔린 글로벌 항목을 묻는 질문에서 기본값 <code>유지</code> 대신 <code>재구성</code>을 고른다. 승인한 개정이 걸린 항목은 처음부터 <code>재구성</code>이 기본으로 나온다. 거절한 추천은 기록에 남아 다시 권하지 않는다 &mdash; 나중에 깔고 싶으면 인수 없이 <code>/dropin-apply</code>를 다시 돌려 추가한다.</dd>
       </dl>
       <div class="warn soft"><b>알아 둘 것.</b> Claude에게 &ldquo;이 문서를 학습해서 적용해줘&rdquo;라고 말하는 것과 같은 일이다 &mdash; 그 문장도 그대로 동작한다. 명령이 따로 있는 이유는, 보이지 않는 문은 열리지 않기 때문이다.</div>
       <div class="tags"><span class="tag">글로벌</span><span class="tag">먼저 묻는다</span></div>
@@ -679,9 +680,9 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
 <section class="group" data-g="pc">
   <div class="ghead">
     <h2 style="margin-top:0">PC 관리</h2>
-    <span class="src">문서 03 §10이 설치 &middot; 기본 해제</span>
+    <span class="src">문서 03 §10 · §17이 설치 &middot; 기본 해제</span>
   </div>
-  <p class="gnote">어느 프로젝트가 아니라 이 PC 자체를 위한 스킬이다. 위의 스킬들과 상관없고 코드는 건드리지 않는다.</p>
+  <p class="gnote">어느 프로젝트가 아니라 이 PC 자체를 위한 스킬들이다. 위의 스킬들과 상관없고 코드는 건드리지 않는다. <code>/pc-clean</code>은 느려진 PC를, <code>/win-setup</code>은 Windows PC를 처음부터 Claude Code에 맞게 갖추는 일을 맡는다.</p>
   <div class="cards">
 
     <article class="skill" data-g="pc">
@@ -695,6 +696,19 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
       </dl>
       <div class="warn soft"><b>알아 둘 것.</b> Windows + PowerShell 7(<code>pwsh</code>) 전용이다 &mdash; 다른 OS면 설치 목록에 아예 안 나오고, <code>pwsh</code>가 없으면 스킬이 아무것도 실행하지 않고 멈춘다. 프로젝트가 아니라 이 PC를 위한 도구라 기본 해제로 나오고, 스코프는 글로벌을 권한다. 호출 방식은 자동 판단이 기본이다 &mdash; 점검은 읽기만 하고 정리는 항목마다 묻기 때문이다. 내가 부를 때만 돌게 하려면 수동 호출 전용을 고른다. 지금 쓰는 Claude 세션은 끝내지 않고, 문서·사진·소스·다운로드 폴더 파일은 지우지 않는다. 지운 파일과 끝낸 프로세스는 되돌릴 수 없다. 이미 <code>pc-clean</code>이라는 내 명령이 있으면 이 스킬이 그것을 가린다 &mdash; 설치 절차가 유지/교체를 묻고, 별칭을 붙이면 둘 다 살릴 수 있다.</div>
       <div class="tags"><span class="tag">글로벌</span><span class="tag">기본 해제</span><span class="tag need">Windows + pwsh</span><span class="tag">승인 게이트</span></div>
+    </article>
+
+    <article class="skill" data-g="pc">
+      <div class="cmd"><span class="sl">/</span>win-setup</div>
+      <div class="args">[진단만 | 검증] (diagnose | verify) — 없으면 진단 후 승인한 것만 정비 &middot; 기본은 수동 호출 전용</div>
+      <p class="one">Windows PC를 Claude Code CLI 개발용으로 갖춘다 &mdash; 아무것도 바꾸지 않고 먼저 진단해 판정표 한 장을 보이고, 내가 승인한 항목만 고친다.</p>
+      <dl>
+        <dt>언제</dt><dd>Windows PC에 Claude Code를 처음 갖출 때, 또는 새 터미널 탭이 PowerShell 7이 아니라 옛 Windows PowerShell 5.1로 뜨거나, 깔아 둔 도구를 못 찾거나, 사용자 <code>Path</code>에 죽은 항목이 쌓였을 때. <code>/win-setup 진단만</code>(<code>diagnose</code>)은 보고에서 멈춘다. 정비가 끝나면 재부팅하고 <b>새 터미널 탭</b>에서 <code>/win-setup 검증</code>(<code>verify</code>)으로 최종 확인한다.</dd>
+        <dt>하는 일</dt><dd>읽기 전용으로 진단한다 &mdash; PowerShell 7·Windows Terminal·Git 설치 여부, 터미널 설정(프로필 ID 하나만 깨져도 설정 파일 전체가 안 읽혀 탭이 5.1로 뜬다)과 기본 프로필, 사용자 <code>Path</code>(없는 폴더, 중복, <code>%USERPROFILE%</code>가 풀리는 형식으로 저장돼 있는지), 개발자 모드·긴 경로·Windows <code>sudo</code>, Claude Code의 <code>!</code> 명령 셸(<code>defaultShell</code>), <code>jq</code>·<code>fd</code>·<code>gh</code>, 디스크 여유. 판정표 한 장을 보이고 번호 목록으로 한 번 묻고, 승인한 번호만 실행한다. 관리자 권한이 필요한 변경은 한데 묶어 UAC 창이 한 번만 뜨고, 뜨기 전에 미리 알려 준다. Git 업데이트와 Docker 디스크 이미지 이동은 직접 하도록 절차만 안내한다.</dd>
+        <dt>결과</dt><dd>항목별 전·후·검증 표, 남은 일(재부팅, 새 터미널 탭, 직접 할 항목, 그다음 <code>/win-setup 검증</code>), 백업 위치. 바꾸기 전에는 항상 <code>%LOCALAPPDATA%\win-setup\backup\</code>에 백업하고, 로그는 <code>%LOCALAPPDATA%\win-setup\logs\</code>에 남긴다.</dd>
+      </dl>
+      <div class="warn soft"><b>알아 둘 것.</b> Windows 전용이다 &mdash; 다른 OS면 설치 목록에 아예 안 나온다. 설치에 PowerShell 7은 필요 없다 &mdash; 진단은 Windows PowerShell 5.1에서도 돌고, 7이 없으면 설치를 제안한다. 프로젝트가 아니라 이 PC 설정을 바꾸는 도구라 기본 해제로 나오고, 스코프는 글로벌을 권한다. <code>pc-clean</code>과 달리 호출 방식은 수동 호출 전용이 기본이다 &mdash; 레지스트리·<code>Path</code>·설정 파일을 고치고 UAC를 띄우는 스킬이라 터미널 이야기가 나올 때마다 스스로 불리면 안 되기 때문이다. 자동 판단을 골라도 항목별 승인은 그대로다. 시스템 전체 <code>Path</code>는 건드리지 않고, 대체 <code>sudo</code> 도구를 멋대로 깔지 않으며, <code>.env</code>·키 파일은 열지 않는다. 회사 PC라면 개발자 모드·<code>sudo</code>·시스템 레지스트리 변경이 보안 정책에 걸릴 수 있으니 먼저 확인한다. 스킬을 지워도 바꾼 설정은 되돌아가지 않는다 &mdash; 되돌리려면 지우기 전에 백업과 <code>references/fix.md</code>의 되돌리기 표를 따른다. TEMP·남은 프로세스 정리는 이 스킬이 아니라 <code>/pc-clean</code>의 몫이다.</div>
+      <div class="tags"><span class="tag hand">수동 호출 전용</span><span class="tag">글로벌</span><span class="tag">기본 해제</span><span class="tag need">Windows</span><span class="tag">승인 게이트</span></div>
     </article>
 
   </div>
@@ -911,7 +925,7 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
 <div class="traps">
   <div class="trap"><b>이 셋업을 한 번도 안 깐 PC라면.</b><p>거기서도 <code>/dropin-apply</code>다 &mdash; 처음 까는 경우에도 같은 명령이다. 스킬이 아직 없으면 Claude에게 이렇게 말하면 된다: <i>&ldquo;저장소의 <code>00_통합-설치.md</code>를 받아서 이 PC에 적용해줘&rdquo;</i>. 그러면 이 스킬도 다른 것들과 함께 깔린다.</p></div>
   <div class="trap"><b>파일 이름은 그대로인데 내용만 낡은 경우.</b><p>스킬은 파일이 하나도 늘거나 줄지 않은 채로 개정될 수 있다. 이름만 대조하는 점검은 그걸 &ldquo;이미 최신&rdquo;이라고 말한다. 설치 절차는 내용까지 대조하므로, 문장만 바뀐 개정도 교체된다.</p></div>
-  <div class="trap"><b>이미 단디 플러그인으로 켜 두었다면.</b><p>기능 문서·refactor·kr-ui-guide·kr-ui-styles·browser-check·pc-clean·session-board·ops-kit 스킬을 <code>dandi</code> 플러그인 마켓으로 깔았다면, 같은 스킬이 <code>/dandi-refactor:refactor</code> 같은 플러그인 이름으로 이미 있다. 설치 절차가 이걸 알아채고 묻는다: 플러그인을 <b>유지</b>하고 복사 설치를 건너뛸지, 플러그인을 걷고 복사본으로 <b>교체</b>할지. 한 스킬이 두 벌 깔리면 둘이 서로 불려 가려고 다툰다. 나중에 플러그인 설치를 지울 때는 복사본 제거 절차가 아니라 그 플러그인 README의 <code>/plugin uninstall</code>을 따른다.</p></div>
+  <div class="trap"><b>이미 단디 플러그인으로 켜 두었다면.</b><p>기능 문서·refactor·kr-ui-guide·kr-ui-styles·browser-check·pc-clean·win-setup·session-board·ops-kit 스킬을 <code>dandi</code> 플러그인 마켓으로 깔았다면, 같은 스킬이 <code>/dandi-refactor:refactor</code> 같은 플러그인 이름으로 이미 있다. 설치 절차가 이걸 알아채고 묻는다: 플러그인을 <b>유지</b>하고 복사 설치를 건너뛸지, 플러그인을 걷고 복사본으로 <b>교체</b>할지. 한 스킬이 두 벌 깔리면 둘이 서로 불려 가려고 다툰다. 나중에 플러그인 설치를 지울 때는 복사본 제거 절차가 아니라 그 플러그인 README의 <code>/plugin uninstall</code>을 따른다.</p></div>
   <div class="trap"><b><code>/dropin-check</code>가 다 보지는 못한다.</b><p>일반 설치에는 대조할 사설 사본이 아예 없다. 그래서 그냥 &ldquo;최신&rdquo;이 아니라 &ldquo;문서 기준 최신 &mdash; 스킬 실물 내용은 미확인&rdquo;이라고 보고한다. 그 나머지 절반이 궁금하면 <code>/dropin-apply</code>를 돌리면 된다 &mdash; <code>/resume</code>·<code>/wrap</code>까지 새 본문으로 받으려면 이미 깔린 글로벌 항목에서 <code>재구성</code>을 고른다. <code>유지</code>면 낡은 본문이 그대로 남는다.</p></div>
 </div>
 
@@ -939,6 +953,7 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
     <tr><td><code>/kr-ui-guide</code></td><td>03 §9</td><td>글로벌 &middot; 또는 <code>dandi</code> 플러그인</td><td>플러그인: <code>/plugin uninstall dandi-kr-ui-guide@dandi</code>. 복사본: 폴더 삭제. 프로젝트 CLAUDE.md에 선택적 오버라이드 절을 추가했으면 그것도 지우고, <code>frontend-design</code>까지 없으면 폰트 라이선스 정책 절도 지운다.</td></tr>
     <tr><td><code>/kr-ui-styles</code></td><td>03 §9 (설치 7)</td><td>kr-ui-guide와 같은 스코프 &middot; 또는 <code>dandi-kr-ui-guide</code> 플러그인 안</td><td>복사본: 폴더를 지우고 프로젝트 오버라이드 절의 <code>스타일 팩:</code> 줄을 지운다. 플러그인: <code>dandi-kr-ui-guide</code>에 함께 실려 있어 그 플러그인을 지우면 둘 다 지워진다.</td></tr>
     <tr><td><code>/pc-clean</code></td><td>03 §10</td><td>글로벌 &mdash; 프로젝트 스코프면 Windows 전용 스크립트가 repo에 커밋된다 &middot; 또는 <code>dandi</code> 플러그인</td><td>플러그인: <code>/plugin uninstall dandi-pc-clean@dandi</code>. 복사본: 폴더 삭제 &mdash; 프로젝트 스코프면 삭제를 커밋한다. 걷을 훅·설정·예약 작업은 없다.</td></tr>
+    <tr><td><code>/win-setup</code></td><td>03 §17</td><td>글로벌 &mdash; 프로젝트 스코프면 Windows 전용 스크립트가 repo에 커밋된다 &middot; 또는 <code>dandi</code> 플러그인</td><td>플러그인: <code>/plugin uninstall dandi-win-setup@dandi</code>. 복사본: 폴더 삭제 &mdash; 프로젝트 스코프면 삭제를 커밋한다. 걷을 훅·설정·예약 작업은 없다. 어느 쪽이든 PC에 적용한 변경은 남는다 &mdash; 되돌리려면 지우기 <em>전에</em> <code>references/fix.md</code> 4절 「되돌리기」를 따른다(백업은 <code>%LOCALAPPDATA%\win-setup\backup\</code>). 되돌릴 것이 없으면 <code>%LOCALAPPDATA%\win-setup\</code>도 지운다.</td></tr>
     <tr><td><code>/session-board</code></td><td>03 §12</td><td>글로벌 &mdash; 고정이라 묻지 않는다 &middot; 또는 <code>dandi</code> 플러그인(먼저 권한다)</td><td>플러그인: <code>/plugin uninstall dandi-session-board@dandi</code> &mdash; 훅도 함께 사라진다. 복사본: <code>~/.claude/settings.json</code>의 훅 중 <code>board.mjs</code>를 부르는 묶음만 지우고 폴더를 삭제한다. <code>~/.claude/session-board/</code>는 세션 메타데이터뿐이라 지워도 잃는 것이 없다.</td></tr>
     <tr><td><code>/ops-kit</code></td><td>03 §15</td><td>글로벌 &mdash; 프로젝트 스코프면 repo마다 한 벌씩 커밋된다 &middot; 또는 <code>dandi</code> 플러그인</td><td>플러그인: <code>/plugin uninstall dandi-ops-kit@dandi</code>. 복사본: 폴더 삭제 &mdash; 프로젝트 스코프면 삭제를 커밋한다. 걷을 훅·설정·예약 작업은 없다. 만든 것 &mdash; <code>docs/status/</code>와 승인한 <code>/admin</code>·<code>/health</code>·점검 워크플로 코드 &mdash; 은 남는다. 그 프로젝트의 코드·데이터라서, 없애려면 그 프로젝트의 git으로 되돌린다. 게시한 페이지는 claude.ai에서 직접 지운다.</td></tr>
     <tr><td><code>/plan-&lt;모델&gt;</code></td><td>02 STEP 3 ⓔ</td><td>설치 때 묻는다 &mdash; 글로벌 또는 프로젝트</td><td>폴더 삭제. 함께 만든 모델 운용표와, <code>CLAUDE.md</code>·핸드오프 규약에 적어 둔 이 명령 안내 줄도 지운다.</td></tr>
@@ -947,7 +962,7 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
 </div>
 <p class="lead" style="margin-top:16px">전부 제거 절차가 문서에 적혀 있는데, 이건 의도한 것이다. 되돌릴 수 없는 설치는 애초에 선택지를 준 게 아니기 때문이다. 감지·설치·검증·제거 4단 전체는 각 문서에 있다. 설치할 때 나오는 질문의 뜻은 <a href="options.ko.html">옵션 사전</a>에, 처음부터 차근히 밟아 보려면 <a href="learn.ko.html">학습 코스</a>에 있다. 설치 항목 몇 개는 일부러 여기 없다: 정책 기록(03 §11)과 기능 변경 기록(03 §13)은 스킬이 아니라 규칙 파일(<code>.claude/rules/policy-recording.md</code>, <code>.claude/rules/feature-log.md</code>)을 더하는 항목이라, 부를 명령이 없어 카드도 없다. diff 검수 도구(03 §16)도 스킬이 아니다 — Claude가 고친 내용을 터미널에서 읽는 명령줄 프로그램 셋(lazygit·delta·difftastic)을 PC에 까는 항목이라, 직접 <code>lazygit</code>으로 연다.</p>
 
-<footer>단디(Dandi) &middot; 스킬 카탈로그 &middot; 2026-11-16 &middot; 01 §D-4 · 02 STEP 3 ⓔ · 03 §2 · §3 · §5 · §7 · §8 · §9 · §10 · §12 · §14 · §15가 설치하는 스킬들. 명령은 별칭 없이 적었으니, 설치할 때 별칭을 골랐다면 그것을 얹어 읽으면 된다. &middot; 글꼴: Pretendard, IBM Plex Mono — 둘 다 SIL 오픈 폰트 라이선스 1.1(상업 이용·웹 임베딩 무료)</footer>
+<footer>단디(Dandi) &middot; 스킬 카탈로그 &middot; 2026-11-16 &middot; 01 §D-4 · 02 STEP 3 ⓔ · 03 §2 · §3 · §5 · §7 · §8 · §9 · §10 · §12 · §14 · §15 · §17이 설치하는 스킬들. 명령은 별칭 없이 적었으니, 설치할 때 별칭을 골랐다면 그것을 얹어 읽으면 된다. &middot; 글꼴: Pretendard, IBM Plex Mono — 둘 다 SIL 오픈 폰트 라이선스 1.1(상업 이용·웹 임베딩 무료)</footer>
 
 </div>
 <script>

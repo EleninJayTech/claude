@@ -39,6 +39,13 @@
       "keywords": ["windows", "cleanup", "processes", "maintenance", "powershell"]
     },
     {
+      "name": "dandi-win-setup",
+      "source": "./plugins/dandi-win-setup",
+      "description": "Diagnose and set up a Windows PC for Claude Code CLI work (PowerShell 7 terminal profile, user PATH, developer mode, long paths, sudo, defaultShell, jq/fd/gh) read-only first, then apply only the fixes you approve.",
+      "license": "MIT",
+      "keywords": ["windows", "setup", "powershell", "terminal", "path"]
+    },
+    {
       "name": "dandi-session-board",
       "source": "./plugins/dandi-session-board",
       "description": "Let sessions in the same folder see each other: list other active sessions with their branch and edited files at session start, and warn once before editing a file another session changed. Hooks only, no model calls.",
