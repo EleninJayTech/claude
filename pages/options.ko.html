@@ -497,7 +497,7 @@ details.sect>summary h2{margin:0}
 <dl>
       <dt>기본은 안 붙임</dt><dd>설치 전에 <b>같은 이름이 있는지 먼저 찾아보고</b>, 있을 때만 그 스킬을 체크해 권합니다. 충돌이 없으면 안 붙이는 편이 낫습니다 — 이름이 길어지고 팀원이 다른 이름으로 부르게 됩니다</dd>
       <dt>고를 수 있는 것</dt><dd><b>없음</b> / <b>전부</b> / <b>고른 것만</b>, 그리고 <b>앞이냐 뒤냐</b>. 글자도 바꿀 수 있습니다(<code class="i">dandi</code> 대신 팀 이름 등 — 소문자·숫자·하이픈만)</dd>
-      <dt>안 붙는 자리</dt><dd><code class="i">frontend-design</code>·<code class="i">session-board</code>를 <b>플러그인으로</b> 깔면 폴더를 마켓이 만들어 별칭이 안 붙습니다. 붙이려면 <code class="i">npx</code>·수동 복사 경로(session-board는 복사 설치)를 고르세요</dd>
+      <dt>안 붙는 자리</dt><dd><code class="i">frontend-design</code>·<code class="i">session-board</code>·<code class="i">agent-guard</code>를 <b>플러그인으로</b> 깔면 폴더를 마켓이 만들어 별칭이 안 붙습니다. 붙이려면 <code class="i">npx</code>·수동 복사 경로(session-board·agent-guard는 복사 설치)를 고르세요</dd>
       <dt>묶음으로 움직이는 것</dt><dd><b>기능 문서 세트 6종</b>은 서로를 이름으로 부르기 때문에 <b>여섯 개 전부</b> 붙이거나 전혀 안 붙이거나 둘 중 하나입니다</dd>
       <dt>남는 자리</dt><dd>적용 기록에 <code class="i">별칭=없음</code>·<code class="i">별칭=dandi-*</code>처럼 남아 재적용 때 유지됩니다(<code class="i">*</code>가 원래 이름 자리). 나중에 바꾸려 하면 <b>기존 걸 옮길지, 새 이름으로 하나 더 깔지</b>를 물어봅니다</dd>
       <dt>기록과 내 PC 이름이 다를 때</dt><dd>다시 돌릴 때마다(팀 저장소 합류든 내 저장소 재적용이든) 저장소 기록의 별칭과 <b>내 PC에 이미 깔린 이름이 다르면</b> 셋 중 하나를 고릅니다 — <b>이름 옮기기</b>(기록에 맞춤. PC 전체 설정이라 다른 프로젝트에서 부르던 이름도 바뀝니다) / <b>하나 더 깔기</b>(같은 스킬이 두 이름으로 뜬다는 경고가 붙습니다) / <b>이 PC만 예외</b>(내 PC 이름을 그대로 쓰고 그 사실을 PC 기록에 남깁니다)</dd>
@@ -1030,13 +1030,33 @@ details.sect>summary h2{margin:0}
 </details>
   </div>
 
+  <div class="opt">
+    <div class="opt-head"><span class="id">§19</span><span class="name">agent-guard</span><span class="badge b-off">기본 해제 · 글로벌 고정</span></div>
+    <p class="lead">Claude가 서브에이전트를 <b>여러 개 동시에</b> 띄울 때, 이 PC의 코어 수·메모리와 <b>그 순간의 여유 메모리·CPU</b>를 보고 동시에 돌릴 수를 정해 주는 장치입니다. 세션을 시작할 때 “지금 몇 개까지”를 한 줄로 미리 알려 처음부터 나눠 띄우게 하고, 그래도 넘치는 스폰은 <b>거부</b>합니다 — Claude는 앞선 에이전트가 끝난 뒤 다시 띄웁니다.</p>
+    <details class="more"><summary>자세히</summary>
+<dl>
+      <dt>왜 필요한가</dt><dd>Claude Code에도 동시 실행 상한이 있지만 <b>고정 숫자</b>라 PC 사양을 보지 않습니다. 저사양 PC에서 브라우저·에뮬레이터·빌드를 돌리는 에이전트가 한꺼번에 뜨면 PC가 버벅이고 시간 초과나 거짓 실패가 납니다</dd>
+      <dt>막혀서 멈추지는 않습니다</dt><dd><b>세션마다 1개는 항상 허용</b>합니다. 상한은 코어 수와 전체 메모리로 계산하고(최대 8), 스폰마다 여유 메모리(에이전트당 약 1GB로 어림)와 CPU 사용률을 다시 봅니다. 값은 <code class="i">~/.claude/agent-guard/config.json</code>으로 바꿀 수 있고, 방법은 스킬이 안내합니다</dd>
+      <dt>토큰은</dt><dd>훅이 모델을 부르지 않고 실행 중 표식만 씁니다. 대화에 더해지는 것은 세션 시작 때의 안내 한 줄과, 거부할 때의 알림뿐입니다</dd>
+      <dt>설치 방법</dt><dd><b>플러그인</b>(먼저 권함 — <code>/plugin marketplace add EleninJayTech/claude</code> → <code>/plugin install dandi-agent-guard@dandi</code>, 직접 실행). <b>고르면</b> 훅까지 한 번에 켜지고 지울 때도 한 번입니다. 다만 폴더를 마켓이 만들어 스킬 이름 별칭(2-7)은 붙지 않습니다 / <b>복사 설치</b> — <b>고르면</b> 스킬 폴더를 받고 내 PC 설정에 훅 다섯 개를 덧붙입니다(기존 훅은 지우지 않습니다). 별칭을 붙이려면 이쪽입니다. 둘 다 있으면 실행 중 표식이 두 번 쓰여 상한이 절반으로 줄어서 하나만 남기라고 묻습니다. 플러그인이 이미 켜져 있으면 새 버전은 <code>/plugin marketplace update dandi</code>로 직접 받습니다. 회사 PC면 플러그인이 내 권한으로 코드를 실행한다는 점을 함께 알립니다 — 이 훅은 모든 서브에이전트 스폰에 돕니다</dd>
+      <dt>워크플로 상한(선택 — 물어봅니다)</dt><dd>워크플로가 띄우는 에이전트는 이 훅을 거치지 않아 거부할 수 없습니다. <b>고르면</b> 이 PC 사양으로 계산한 상한을 내 PC 설정(<code class="i">~/.claude/settings.json</code>)의 환경변수 <code class="i">CLAUDE_CODE_WORKFLOW_MAX_CONCURRENT_AGENTS</code>에 넣어 워크플로도 그 수로 묶습니다. PC마다 다른 값이라 프로젝트 설정에는 넣지 않습니다. 이 자리의 환경변수가 실제로 먹는지는 공식 문서에 적혀 있지 않아, 새 세션에서 확인하고 안 먹으면 지운 뒤 알려 줍니다. <b>안 고르면</b> 워크플로는 세션 시작 안내만 받고 Claude Code의 기본 상한을 따릅니다. 플러그인·복사 설치 어느 쪽이든 묻습니다</dd>
+      <dt>스코프</dt><dd><b>글로벌 고정</b>이라 묻지 않습니다 — PC 자원은 PC 단위라, 프로젝트에 두면 그 저장소의 세션만 세어 상한이 새어 나갑니다</dd>
+      <dt>필요한 것</dt><dd><b>Node.js 18 이상</b>. 없으면 <b>훅을 걸지 않고</b>(플러그인도 켜지 않습니다) 이미 걸려 있으면 걷어낼지 묻습니다. 알려 주고 <b>이 PC의</b> <code class="i">~/.claude/CLAUDE.md</code>에 “대기”로 기록하며, Node.js를 설치한 뒤 새 터미널에서 다시 적용합니다</dd>
+      <dt>왜 기본 해제인가</dt><dd>이 PC의 <b>모든 세션</b>에 훅을 걸고 스폰을 거부하는 항목이라 모드가 대신 켜지 않고, 어떤 번들에도 들지 않습니다. 저사양 PC에서 병렬 작업을 자주 돌린다면 직접 체크하세요</dd>
+      <dt>주의</dt><dd>서브에이전트 스폰을 막거나 세는 훅, 또는 동시 실행 수를 정하는 환경변수가 이미 있으면 값을 보여 주고 유지할지 교체할지 묻습니다</dd>
+      <dt>확인 방법</dt><dd>설치 뒤 새 세션의 시작 안내에 <code class="i">[agent-guard]</code>로 시작하는 상한 한 줄이 보여야 합니다 — 없으면 훅이 불리지 않는 것입니다</dd>
+      <dt>지울 때</dt><dd>플러그인이면 <code class="i">/plugin uninstall dandi-agent-guard@dandi</code>(훅도 함께 사라집니다). 복사 설치면 설정에서 이 훅들만 지우고 스킬 폴더를 지웁니다. 어느 쪽이든 <code class="i">~/.claude/agent-guard/</code>를 지우고(실행 중 표식과 선택 설정뿐이라 잃는 것이 없습니다), 워크플로 상한을 넣었다면 그 환경변수도 지웁니다</dd>
+    </dl>
+</details>
+  </div>
+
   <h3>스킬을 고르면 따라오는 질문</h3>
   <div class="tbl">
   <table>
     <tr><th style="width:120px">질문</th><th>선택지</th></tr>
     <tr>
       <td><b>스코프</b></td>
-      <td><b>글로벌</b>(<code class="i">~/.claude/skills/</code>) — 내 PC 모든 프로젝트에서 쓸 수 있음 / <b>프로젝트</b>(<code class="i">.claude/skills/</code>) — 이 저장소에서만, 커밋하면 팀 공유. 기능 문서 세트·refactor·kr-ui-guide는 저장소를 가리지 않고 쓰이고 pc-clean·win-setup은 PC 단위 도구, ops-kit은 프로젝트를 스스로 조사하는 스킬, kb-dashboard는 다른 폴더 세션에서도 부르는 스킬이라 <b>글로벌이 기본</b>입니다. 정책 기록(§11)·기능 변경 기록(§13)은 프로젝트, session-board(§12)는 글로벌, diff 검수 도구(§16)는 이 PC로 <b>고정</b>이라 이 질문 없이 알려만 줍니다. 어떤 모드에서도 생략되지 않는 질문입니다 — 내 PC 글로벌에 같은 이름이 있으면 프로젝트에 깔아도 그쪽에 가려 실행되지 않습니다</td>
+      <td><b>글로벌</b>(<code class="i">~/.claude/skills/</code>) — 내 PC 모든 프로젝트에서 쓸 수 있음 / <b>프로젝트</b>(<code class="i">.claude/skills/</code>) — 이 저장소에서만, 커밋하면 팀 공유. 기능 문서 세트·refactor·kr-ui-guide는 저장소를 가리지 않고 쓰이고 pc-clean·win-setup은 PC 단위 도구, ops-kit은 프로젝트를 스스로 조사하는 스킬, kb-dashboard는 다른 폴더 세션에서도 부르는 스킬이라 <b>글로벌이 기본</b>입니다. 정책 기록(§11)·기능 변경 기록(§13)은 프로젝트, session-board(§12)·agent-guard(§19)는 글로벌, diff 검수 도구(§16)는 이 PC로 <b>고정</b>이라 이 질문 없이 알려만 줍니다. 어떤 모드에서도 생략되지 않는 질문입니다 — 내 PC 글로벌에 같은 이름이 있으면 프로젝트에 깔아도 그쪽에 가려 실행되지 않습니다</td>
     </tr>
     <tr>
       <td><b>호출 방식</b></td>
@@ -1287,7 +1307,7 @@ details.sect>summary h2{margin:0}
     해소 여부와 상관없이 더는 원하지 않으면(일단 보류, 조직 불허 확정, 인증 안 하기로 함) “미선택”으로 바꿔 기록합니다 — 같은 질문이 계속 반복되지 않게요.
   </p>
   <p>
-    복사해 까는 스킬(기능 문서 세트·refactor·kr-ui-guide·browser-check·pc-clean·session-board·ops-kit·win-setup·kb-dashboard)은 배포본과 <b>파일마다 내용까지</b> 대조합니다 — 문구만 바뀐 개정도 놓치지 않습니다.
+    복사해 까는 스킬(기능 문서 세트·refactor·kr-ui-guide·browser-check·pc-clean·session-board·ops-kit·win-setup·kb-dashboard·agent-guard)은 배포본과 <b>파일마다 내용까지</b> 대조합니다 — 문구만 바뀐 개정도 놓치지 않습니다.
     하나라도 다르면 <b>구설치본</b>으로 보여주고, 설치 단계에서 폴더째 새것으로 바꿉니다.
   </p>
   </details>
@@ -1354,7 +1374,7 @@ details.sect>summary h2{margin:0}
 <a class="totop" href="#toc">↑ 목차</a>
 
 <footer>
-  단디 · 설치 옵션 사전 · 00_통합-설치.md 기준 · 2026-11-18<br>
+  단디 · 설치 옵션 사전 · 00_통합-설치.md 기준 · 2026-11-19<br>
   각 항목의 정본은 해당 하위 문서(01~06)입니다. 이 페이지는 사람이 읽고 판단하기 위한 안내이며, 설치 절차 자체를 바꾸지 않습니다.<br>
   저장소: github.com/EleninJayTech/claude ·
   <a href="../index.ko.html">사용법</a> · <a href="intro.ko.html">소개 영상</a> · <a href="demo.ko.html">설치 시연</a> · <a href="learn.ko.html">학습 코스</a> · <a href="skills.ko.html">스킬 카탈로그</a><br>

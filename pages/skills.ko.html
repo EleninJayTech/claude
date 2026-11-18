@@ -204,7 +204,7 @@ details.sect>table{display:block;overflow-x:auto;min-width:0}
 </header>
 
 <h2 style="margin-top:44px">스킬이 대체 뭔가</h2>
-<p class="lead">한 번도 안 써 봤다면 이렇게 생각하면 된다. 스킬은 실행하는 프로그램도 아니고 import 하는 라이브러리도 아니다. <code>SKILL.md</code> 하나가 든 폴더이고, Claude는 필요할 때만 그 파일을 읽는다. 그래서 전부 깔아 둬도 부르기 전까지는 아무 비용이 없다. 예외는 <code>session-board</code> 하나다 &mdash; 부르지 않아도 훅이 모든 세션에서 돈다.</p>
+<p class="lead">한 번도 안 써 봤다면 이렇게 생각하면 된다. 스킬은 실행하는 프로그램도 아니고 import 하는 라이브러리도 아니다. <code>SKILL.md</code> 하나가 든 폴더이고, Claude는 필요할 때만 그 파일을 읽는다. 그래서 전부 깔아 둬도 부르기 전까지는 아무 비용이 없다. 예외는 <code>session-board</code>와 <code>agent-guard</code>다 &mdash; 부르지 않아도 훅이 모든 세션에서 돈다.</p>
 <div class="basics">
   <div class="basic">
     <span class="n">01</span>
@@ -270,6 +270,9 @@ details.sect>table{display:block;overflow-x:auto;min-width:0}
     <tr><th class="grp" colspan="4" scope="colgroup">동시 세션 &middot; 03 §12</th></tr>
     <tr><td><code>/session-board</code></td><td>없음 &mdash; 훅이 알아서 알린다</td><td>같은 폴더에 세션이 둘 이상 떠 있을 때</td><td>다른 세션과 그 세션이 고친 파일 목록 &mdash; 막는 것은 없다</td></tr>
 
+    <tr><th class="grp" colspan="4" scope="colgroup">병렬 에이전트 &middot; 03 §19</th></tr>
+    <tr><td><code>/agent-guard</code></td><td>없음 &mdash; 훅이 알아서 돈다</td><td>병렬 서브에이전트로 PC가 느려지거나, 스폰이 거부됐거나, 상한을 바꾸고 싶을 때</td><td>세션 시작 때 상한 한 줄 &mdash; 넘는 스폰은 거부되고 나중에 다시 뜬다</td></tr>
+
     <tr><th class="grp" colspan="4" scope="colgroup">배포·운영 &middot; 03 §15</th></tr>
     <tr><td><code>/ops-kit</code></td><td><code>init</code> | <code>runbook</code> | <code>hub</code> | <code>dashboard</code> | <code>health</code> | <code>backup</code> | <code>limits</code> | <code>sync</code> | <code>check</code> &mdash; <code>check</code>는 읽기만</td><td>혼자 운영할 프로젝트를 배포하기 전, 또는 배포 설정이 바뀌었을 때</td><td>고른 산출물만 <code>docs/status/</code>에 &mdash; 상태 파일 하나와 함께</td></tr>
 
@@ -290,6 +293,7 @@ details.sect>table{display:block;overflow-x:auto;min-width:0}
   <button class="chip" data-g="design" aria-pressed="false">디자인</button>
   <button class="chip" data-g="pc" aria-pressed="false">PC</button>
   <button class="chip" data-g="board" aria-pressed="false">동시 세션</button>
+  <button class="chip" data-g="guard" aria-pressed="false">병렬 에이전트</button>
   <button class="chip" data-g="ops" aria-pressed="false">운영</button>
   <button class="chip" data-g="kb" aria-pressed="false">지식 베이스</button>
   <span class="count" id="count"></span><button type="button" class="xbtn" data-expand data-open="모두 펼치기" data-close="모두 접기" aria-pressed="false">모두 펼치기</button>
@@ -371,7 +375,7 @@ details.sect>table{display:block;overflow-x:auto;min-width:0}
       <dl>
         <dt>언제</dt><dd>이 PC나 이 프로젝트를 현재 문서 기준으로 올리고 싶을 때. 처음 까는 경우에도 같은 명령이라, 내가 어느 쪽인지 몰라도 된다. Claude나 <code>/resume</code>이 작업에 새로 필요한 항목을 추천했으면 <code>추천</code>을 붙여 부른다.</dd>
         <dt>하는 일</dt><dd>00 문서를 찾아서(같은 폴더&middot;<code>docs/</code>의 사본·로컬 클론·내가 알려 준 폴더·배포된 raw 순 &mdash; raw는 요약하지 않고 파일 그대로 프로젝트 밖 임시 폴더에 받는다) 읽고 그 절차를 그대로 돈다 &mdash; 이미 있는 것을 감지하고, 무엇을 할지 묻고, 고른 것만 설치하고, 검증하고, 적용 기록을 쓴다. 스킬 자신은 단계를 하나도 갖지 않아서 문서와 갈릴 수가 없다. <code>/dropin-apply 추천</code>으로 부르면 작업 중 추천 경로를 탄다 &mdash; 작업이 새로 필요로 하게 됐는데 아직 안 깐 항목만, 무엇을 보고 걸렸는지 한 줄씩 붙여 내놓고, 처음 공통 질문은 기록된 답으로 갈음하며, 고른 것만 깐다. 안전 질문은 그대로 묻는다. 적용 기록이 없는 폴더에서는 이 경로 대신 일반 설치를 돌고, 거기서는 최소가 기본 추천이다. 프로젝트 폴더가 그대로 운영 웹 서버에 올라가는 구조로 보이면, 마지막 커밋 안내 첫머리에 커밋한 Claude 파일이 URL로 읽힌다는 경고와 막는 방법 세 가지, 확인 명령이 붙는다.</dd>
-        <dt>결과</dt><dd>문서와 일치하는 구성, 그리고 그 사실을 적은 <code>dropin-applied</code> 줄. 기능 문서·refactor·kr-ui-guide·kr-ui-styles·browser-check·pc-clean·win-setup·session-board·ops-kit·kb-dashboard·<code>/scope</code>와 <code>dropin-</code> 계열처럼 이미 깔린 스킬은 <b>이름이 아니라 내용으로</b> 대조하므로, 파일 수는 그대로고 문장만 바뀐 개정도 교체된다 &mdash; <code>dropin-</code> 계열과 <code>/scope</code>는 배포본과 다르면 기본값이 <code>재구성</code>으로 나온다. <code>/resume</code>·<code>/wrap</code>은 있는지만 본다 &mdash; 새 본문으로 갈려면 이미 깔린 글로벌 항목을 묻는 질문에서 기본값 <code>유지</code> 대신 <code>재구성</code>을 고른다. 승인한 개정이 걸린 항목은 처음부터 <code>재구성</code>이 기본으로 나온다. 거절한 추천은 기록에 남아 다시 권하지 않는다 &mdash; 나중에 깔고 싶으면 인수 없이 <code>/dropin-apply</code>를 다시 돌려 추가한다.</dd>
+        <dt>결과</dt><dd>문서와 일치하는 구성, 그리고 그 사실을 적은 <code>dropin-applied</code> 줄. 기능 문서·refactor·kr-ui-guide·kr-ui-styles·browser-check·pc-clean·win-setup·session-board·agent-guard·ops-kit·kb-dashboard·<code>/scope</code>와 <code>dropin-</code> 계열처럼 이미 깔린 스킬은 <b>이름이 아니라 내용으로</b> 대조하므로, 파일 수는 그대로고 문장만 바뀐 개정도 교체된다 &mdash; <code>dropin-</code> 계열과 <code>/scope</code>는 배포본과 다르면 기본값이 <code>재구성</code>으로 나온다. <code>/resume</code>·<code>/wrap</code>은 있는지만 본다 &mdash; 새 본문으로 갈려면 이미 깔린 글로벌 항목을 묻는 질문에서 기본값 <code>유지</code> 대신 <code>재구성</code>을 고른다. 승인한 개정이 걸린 항목은 처음부터 <code>재구성</code>이 기본으로 나온다. 거절한 추천은 기록에 남아 다시 권하지 않는다 &mdash; 나중에 깔고 싶으면 인수 없이 <code>/dropin-apply</code>를 다시 돌려 추가한다.</dd>
       </dl>
       <div class="warn soft"><b>알아 둘 것.</b> Claude에게 &ldquo;이 문서를 학습해서 적용해줘&rdquo;라고 말하는 것과 같은 일이다 &mdash; 그 문장도 그대로 동작한다. 명령이 따로 있는 이유는, 보이지 않는 문은 열리지 않기 때문이다.</div>
       </details>
@@ -530,7 +534,7 @@ details.sect>table{display:block;overflow-x:auto;min-width:0}
         <dt>하는 일</dt><dd>케이스를 적힌 그대로 따라가고, 변환된 스크립트가 등록돼 있으면 그쪽을 먼저 쓴다. 기대값은 페이지 텍스트로 먼저 읽고, 보이는 모습 자체가 기대값인 케이스만 스크린샷으로 판정한다. 실패는 (A) 코드 버그 · (B) 문서 노후 · (C) 환경 문제 · (D) 판정 불가 중 하나로 분류한다.</dd>
         <dt>결과</dt><dd><code>docs/features/test_reports/</code>에 날짜·커밋이 박힌 리포트 &mdash; 스크린샷은 실패한 케이스와 시각 판정 케이스만 남고, 통과한 나머지는 읽은 값이 근거로 남는다. 채팅에는 요약만 나오고, 새로 실패한 것과 새로 통과한 것을 구분해 준다.</dd>
       </dl>
-      <div class="warn soft"><b>알아 둘 것.</b> 아무것도 고치지 않는다 &mdash; 문서도 코드도. 문서 노후로 판정된 것조차 승인을 받아 <code>/feature-docs sync</code>가 따로 고친다. 브라우저를 직접 조작하므로 설치할 때 수동 호출 전용을 권한다 &mdash; 그렇게 두면 <code>/feature-test</code>로 직접 불러야 한다.</div>
+      <div class="warn soft"><b>알아 둘 것.</b> 아무것도 고치지 않는다 &mdash; 문서도 코드도. 문서 노후로 판정된 것조차 승인을 받아 <code>/feature-docs sync</code>가 따로 고친다. 브라우저를 직접 조작하므로 설치할 때 수동 호출 전용을 권한다 &mdash; 그렇게 두면 <code>/feature-test</code>로 직접 불러야 한다. 케이스는 기본이 순차 실행이다. 서브에이전트로 나눠 돌릴 때는 같은 계정·같은 데이터를 쓰거나 서로 의존하는 케이스를 한 묶음에 넣어 그 안에서 차례로 돌리고, 동시에 띄우는 브라우저·에뮬레이터 수는 PC 여유에 맞춘다 &mdash; <code>agent-guard</code>가 깔려 있으면 세션 시작 때 받은 상한을, 없으면 2개를 넘기지 않는다.</div>
       </details>
       <div class="tags"><span class="tag hand">수동 호출 권장</span><span class="tag need">init 필요</span><span class="tag">화면을 조작</span></div>
     </article>
@@ -807,6 +811,33 @@ details.sect>table{display:block;overflow-x:auto;min-width:0}
   </div>
 </section>
 
+<!-- ══════════ GROUP: guard ══════════ -->
+<section class="group" data-g="guard">
+  <div class="ghead">
+    <h2 style="margin-top:0">병렬 에이전트</h2>
+    <span class="src">문서 03 §19가 설치 &middot; 기본 해제</span>
+  </div>
+  <p class="gnote">Claude가 서브에이전트를 한꺼번에 여럿 띄우는데 PC가 감당하지 못할 때를 위한, 훅이 딸린 스킬이다. 세션 보드와 달리 막는 것이 있다 &mdash; 상한을 넘는 스폰은 거부되고, Claude가 나중에 다시 띄운다.</p>
+  <div class="cards">
+
+    <article class="skill" data-g="guard">
+      <div class="cmd"><span class="sl">/</span>agent-guard</div>
+      <div class="args">인수 없음 — 훅이 알아서 돈다, 상한을 보거나 바꾸고 싶을 때 부른다 &middot; 플러그인이면 /dandi-agent-guard:agent-guard</div>
+      <p class="one">동시에 도는 서브에이전트 수를 이 PC가 지금 감당할 수 있는 만큼으로 묶는다 &mdash; 코어 수·메모리와, 그 순간 남은 메모리·CPU를 보고.</p>
+      <details class="more"><summary>자세히</summary>
+      <dl>
+        <dt>언제</dt><dd>병렬 서브에이전트 때문에 PC가 느려질 때 &mdash; 특히 브라우저·에뮬레이터·빌드를 띄우는 에이전트들 &mdash; 스폰이 거부돼 이유가 궁금할 때, 상한을 바꾸거나 가드를 잠시 끄고 싶을 때.</dd>
+        <dt>하는 일</dt><dd>세션을 시작할 때 &ldquo;지금 서브에이전트를 몇 개까지 동시에 돌릴 수 있는지&rdquo;를 Claude에게 한 줄로 알려, 처음부터 나눠 띄우게 한다. 상한은 PC에서 계산한다: 논리 코어의 절반, 전체 메모리(GB)의 4분의 1, 기본 최대 8 중 가장 작은 값. 서브에이전트를 띄울 때마다 훅이 다시 보고, 그 상한에 닿았거나 남은 메모리로 하나 더 띄울 수 없거나 CPU 사용률이 85% 이상이면 그 스폰을 거부한다 &mdash; Claude는 앞선 에이전트가 끝난 뒤 다시 띄운다. 세션마다 1개는 항상 허용하므로 다른 세션 때문에 멈춰 버리지는 않는다. 스킬을 부르면 PC 사양·남은 메모리·CPU·상한·실행 중인 수와 조정 방법을 보여 준다.</dd>
+        <dt>결과</dt><dd>세션마다 시작할 때 상한 한 줄, 그리고 한꺼번에가 아니라 묶음으로 뜨는 스폰. 프로젝트에는 아무것도 쓰지 않는다 &mdash; 훅은 모델을 부르지 않고 <code>~/.claude/agent-guard/</code>에 작은 &ldquo;실행 중&rdquo; 표식만 남긴다. 숫자를 바꾸거나 끄려면 스킬이 <code>~/.claude/agent-guard/config.json</code>을 안내한다 &mdash; 바꿀지는 내가 정하고, 스폰이 거부됐다고 Claude가 스스로 가드를 끄지는 않는다.</dd>
+      </dl>
+      <div class="warn soft"><b>알아 둘 것.</b> Node.js 18 이상이 필요하다 &mdash; 이 항목을 골랐는데 없으면 훅을 걸지 않고 플러그인도 켜지 않으며, 이미 걸려 있으면 걷어낼지 묻는다. Node를 깐 뒤에는 새 터미널에서 재적용한다. 훅이 이 PC의 모든 세션에 걸리고 스폰을 거부하기 때문에 기본 해제로 나오고, PC 자원은 그 PC의 세션 전부가 나눠 쓰므로 스코프는 글로벌로 고정이다 &mdash; 설치 절차는 스코프 대신 <code>dandi</code> 플러그인(먼저 권한다)과 복사본 중 무엇으로 깔지를 묻는다. 회사 PC면 플러그인이 내 권한으로 코드를 돌린다는 점도 함께 알린다 &mdash; 이 훅은 서브에이전트를 띄울 때마다 돈다. 스킬 이름 별칭은 복사본에만 붙고 플러그인에는 붙지 않는다. 둘 중 하나만 남긴다 &mdash; 둘 다 있으면 스폰이 두 번 세어져 상한이 사실상 절반이 된다. 워크플로가 띄우는 에이전트는 훅을 거치지 않아 거부되지 않는다 &mdash; 세션 시작 때 같은 상한을 Claude에게 알리고, 설치 절차가 <code>~/.claude/settings.json</code> 설정 하나로 워크플로 동시 실행 수도 이 PC 상한에 맞출지 선택 단계로 묻는다. 에이전트가 실제로 얼마나 무거울지는 띄우기 전에 알 수 없어 하나당 1GB 정도로 어림한다 &mdash; 브라우저·에뮬레이터를 많이 쓰면 설정에서 올린다.</div>
+      </details>
+      <div class="tags"><span class="tag">글로벌</span><span class="tag">기본 해제</span><span class="tag need">Node 18+</span><span class="tag">훅 설치</span></div>
+    </article>
+
+  </div>
+</section>
+
 <!-- ══════════ GROUP: ops ══════════ -->
 <section class="group" data-g="ops">
   <div class="ghead">
@@ -1026,7 +1057,7 @@ details.sect>table{display:block;overflow-x:auto;min-width:0}
 <div class="traps">
   <div class="trap"><b>이 셋업을 한 번도 안 깐 PC라면.</b><p>거기서도 <code>/dropin-apply</code>다 &mdash; 처음 까는 경우에도 같은 명령이다. 스킬이 아직 없으면 Claude에게 이렇게 말하면 된다: <i>&ldquo;저장소의 <code>00_통합-설치.md</code>를 받아서 이 PC에 적용해줘&rdquo;</i>. 그러면 이 스킬도 다른 것들과 함께 깔린다.</p></div>
   <div class="trap"><b>파일 이름은 그대로인데 내용만 낡은 경우.</b><p>스킬은 파일이 하나도 늘거나 줄지 않은 채로 개정될 수 있다. 이름만 대조하는 점검은 그걸 &ldquo;이미 최신&rdquo;이라고 말한다. 설치 절차는 내용까지 대조하므로, 문장만 바뀐 개정도 교체된다.</p></div>
-  <div class="trap"><b>이미 단디 플러그인으로 켜 두었다면.</b><p>기능 문서·refactor·kr-ui-guide·kr-ui-styles·browser-check·pc-clean·win-setup·session-board·ops-kit·kb-dashboard 스킬을 <code>dandi</code> 플러그인 마켓으로 깔았다면, 같은 스킬이 <code>/dandi-refactor:refactor</code> 같은 플러그인 이름으로 이미 있다. 설치 절차가 이걸 알아채고 묻는다: 플러그인을 <b>유지</b>하고 복사 설치를 건너뛸지, 플러그인을 걷고 복사본으로 <b>교체</b>할지. 한 스킬이 두 벌 깔리면 둘이 서로 불려 가려고 다툰다. 나중에 플러그인 설치를 지울 때는 복사본 제거 절차가 아니라 그 플러그인 README의 <code>/plugin uninstall</code>을 따른다.</p></div>
+  <div class="trap"><b>이미 단디 플러그인으로 켜 두었다면.</b><p>기능 문서·refactor·kr-ui-guide·kr-ui-styles·browser-check·pc-clean·win-setup·session-board·agent-guard·ops-kit·kb-dashboard 스킬을 <code>dandi</code> 플러그인 마켓으로 깔았다면, 같은 스킬이 <code>/dandi-refactor:refactor</code> 같은 플러그인 이름으로 이미 있다. 설치 절차가 이걸 알아채고 묻는다: 플러그인을 <b>유지</b>하고 복사 설치를 건너뛸지, 플러그인을 걷고 복사본으로 <b>교체</b>할지. 한 스킬이 두 벌 깔리면 둘이 서로 불려 가려고 다툰다. 나중에 플러그인 설치를 지울 때는 복사본 제거 절차가 아니라 그 플러그인 README의 <code>/plugin uninstall</code>을 따른다.</p></div>
   <div class="trap"><b><code>/dropin-check</code>가 다 보지는 못한다.</b><p>일반 설치에는 대조할 사설 사본이 아예 없다. 그래서 그냥 &ldquo;최신&rdquo;이 아니라 &ldquo;문서 기준 최신 &mdash; 스킬 실물 내용은 미확인&rdquo;이라고 보고한다. 그 나머지 절반이 궁금하면 <code>/dropin-apply</code>를 돌리면 된다 &mdash; <code>/resume</code>·<code>/wrap</code>까지 새 본문으로 받으려면 이미 깔린 글로벌 항목에서 <code>재구성</code>을 고른다. <code>유지</code>면 낡은 본문이 그대로 남는다.</p></div>
 </div>
 </details>
@@ -1058,6 +1089,7 @@ details.sect>table{display:block;overflow-x:auto;min-width:0}
     <tr><td><code>/pc-clean</code></td><td>03 §10</td><td>글로벌 &mdash; 프로젝트 스코프면 Windows 전용 스크립트가 repo에 커밋된다 &middot; 또는 <code>dandi</code> 플러그인</td><td>플러그인: <code>/plugin uninstall dandi-pc-clean@dandi</code>. 복사본: 폴더 삭제 &mdash; 프로젝트 스코프면 삭제를 커밋한다. 걷을 훅·설정·예약 작업은 없다.</td></tr>
     <tr><td><code>/win-setup</code></td><td>03 §17</td><td>글로벌 &mdash; 프로젝트 스코프면 Windows 전용 스크립트가 repo에 커밋된다 &middot; 또는 <code>dandi</code> 플러그인</td><td>플러그인: <code>/plugin uninstall dandi-win-setup@dandi</code>. 복사본: 폴더 삭제 &mdash; 프로젝트 스코프면 삭제를 커밋한다. 걷을 훅·설정·예약 작업은 없다. 어느 쪽이든 PC에 적용한 변경은 남는다 &mdash; 되돌리려면 지우기 <em>전에</em> <code>references/fix.md</code> 4절 「되돌리기」를 따른다(백업은 <code>%LOCALAPPDATA%\win-setup\backup\</code>). 되돌릴 것이 없으면 <code>%LOCALAPPDATA%\win-setup\</code>도 지운다.</td></tr>
     <tr><td><code>/session-board</code></td><td>03 §12</td><td>글로벌 &mdash; 고정이라 묻지 않는다 &middot; 또는 <code>dandi</code> 플러그인(먼저 권한다)</td><td>플러그인: <code>/plugin uninstall dandi-session-board@dandi</code> &mdash; 훅도 함께 사라진다. 복사본: <code>~/.claude/settings.json</code>의 훅 중 <code>board.mjs</code>를 부르는 묶음만 지우고 폴더를 삭제한다. <code>~/.claude/session-board/</code>는 세션 메타데이터뿐이라 지워도 잃는 것이 없다.</td></tr>
+    <tr><td><code>/agent-guard</code></td><td>03 §19</td><td>글로벌 &mdash; 고정이라 묻지 않는다 &middot; 또는 <code>dandi</code> 플러그인(먼저 권한다)</td><td>플러그인: <code>/plugin uninstall dandi-agent-guard@dandi</code> &mdash; 훅도 함께 사라진다. 복사본: <code>~/.claude/settings.json</code>의 훅 중 <code>guard.mjs</code>를 부르는 묶음만 지우고 폴더를 삭제한다. 어느 쪽이든 <code>~/.claude/agent-guard/</code>를 지운다 &mdash; 실행 중 표식과 선택 설정뿐이라 잃는 것이 없다. 워크플로 선택 단계를 했다면 <code>~/.claude/settings.json</code>의 <code>env</code>에서 <code>CLAUDE_CODE_WORKFLOW_MAX_CONCURRENT_AGENTS</code>도 지운다.</td></tr>
     <tr><td><code>/ops-kit</code></td><td>03 §15</td><td>글로벌 &mdash; 프로젝트 스코프면 repo마다 한 벌씩 커밋된다 &middot; 또는 <code>dandi</code> 플러그인</td><td>플러그인: <code>/plugin uninstall dandi-ops-kit@dandi</code>. 복사본: 폴더 삭제 &mdash; 프로젝트 스코프면 삭제를 커밋한다. 걷을 훅·설정·예약 작업은 없다. 만든 것 &mdash; <code>docs/status/</code>와 승인한 <code>/admin</code>·<code>/health</code>·점검 워크플로 코드 &mdash; 은 남는다. 그 프로젝트의 코드·데이터라서, 없애려면 그 프로젝트의 git으로 되돌린다. 게시한 페이지는 claude.ai에서 직접 지운다.</td></tr>
     <tr><td><code>/kb-dashboard</code></td><td>03 §18</td><td>글로벌 &mdash; 프로젝트 스코프면 그 저장소에서만 뜬다 &middot; 또는 <code>dandi</code> 플러그인</td><td>플러그인: <code>/plugin uninstall dandi-kb-dashboard@dandi</code>. 복사본: 폴더 삭제 &mdash; 프로젝트 스코프면 삭제를 커밋한다. 걷을 훅·설정·예약 작업은 없다. 어느 쪽이든 만들어진 페이지 <code>~/.claude/kb-dashboard/</code>는 직접 지운다. 기록 저장소의 <code>.claude/kb-dashboard.json</code>은 그 저장소 소유라 남는다 &mdash; 더 쓰지 않으면 그 저장소에서 지우고 커밋한다. 링크 목록은 기록이라 지우지 않는다.</td></tr>
     <tr><td><code>/plan-&lt;모델&gt;</code></td><td>02 STEP 3 ⓔ</td><td>설치 때 묻는다 &mdash; 글로벌 또는 프로젝트</td><td>폴더 삭제. 함께 만든 모델 운용표와, <code>CLAUDE.md</code>·핸드오프 규약에 적어 둔 이 명령 안내 줄도 지운다.</td></tr>
@@ -1067,7 +1099,7 @@ details.sect>table{display:block;overflow-x:auto;min-width:0}
 <p class="lead" style="margin-top:16px">전부 제거 절차가 문서에 적혀 있는데, 이건 의도한 것이다. 되돌릴 수 없는 설치는 애초에 선택지를 준 게 아니기 때문이다. 감지·설치·검증·제거 4단 전체는 각 문서에 있다. 설치할 때 나오는 질문의 뜻은 <a href="options.ko.html">옵션 사전</a>에, 처음부터 차근히 밟아 보려면 <a href="learn.ko.html">학습 코스</a>에 있다. 설치 항목 몇 개는 일부러 여기 없다: 정책 기록(03 §11)과 기능 변경 기록(03 §13)은 스킬이 아니라 규칙 파일(<code>.claude/rules/policy-recording.md</code>, <code>.claude/rules/feature-log.md</code>)을 더하는 항목이라, 부를 명령이 없어 카드도 없다. diff 검수 도구(03 §16)도 스킬이 아니다 — Claude가 고친 내용을 터미널에서 읽는 명령줄 프로그램 셋(lazygit·delta·difftastic)을 PC에 까는 항목이라, 직접 <code>lazygit</code>으로 연다.</p>
 </details>
 
-<footer>단디(Dandi) &middot; 스킬 카탈로그 &middot; 2026-11-17 &middot; 01 §D-4 · 02 STEP 3 ⓔ · 03 §2 · §3 · §5 · §7 · §8 · §9 · §10 · §12 · §14 · §15 · §17 · §18이 설치하는 스킬들. 명령은 별칭 없이 적었으니, 설치할 때 별칭을 골랐다면 그것을 얹어 읽으면 된다. &middot; 글꼴: Pretendard, IBM Plex Mono — 둘 다 SIL 오픈 폰트 라이선스 1.1(상업 이용·웹 임베딩 무료)</footer>
+<footer>단디(Dandi) &middot; 스킬 카탈로그 &middot; 2026-11-19 &middot; 01 §D-4 · 02 STEP 3 ⓔ · 03 §2 · §3 · §5 · §7 · §8 · §9 · §10 · §12 · §14 · §15 · §17 · §18 · §19가 설치하는 스킬들. 명령은 별칭 없이 적었으니, 설치할 때 별칭을 골랐다면 그것을 얹어 읽으면 된다. &middot; 글꼴: Pretendard, IBM Plex Mono — 둘 다 SIL 오픈 폰트 라이선스 1.1(상업 이용·웹 임베딩 무료)</footer>
 
 </div>
 <script>

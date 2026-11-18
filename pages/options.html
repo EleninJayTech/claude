@@ -499,7 +499,7 @@ details.sect>summary h2{margin:0}
 <dl>
       <dt>Off by default</dt><dd>The installer <b>looks for same-named skills first</b> and only suggests an alias for the ones it finds. With no collision, leaving it off is better &mdash; names get longer and your teammates end up calling it something else</dd>
       <dt>What you choose</dt><dd><b>None</b> / <b>all</b> / <b>only the ones you pick</b>, and <b>prefix or suffix</b>. The word itself is yours to change (a team name instead of <code class="i">dandi</code> &mdash; lowercase, digits and hyphens only)</dd>
-      <dt>Where it cannot apply</dt><dd>Installing <code class="i">frontend-design</code> or <code class="i">session-board</code> <b>as a plugin</b> lets the marketplace create the folder, so no alias attaches. Pick the <code class="i">npx</code> or manual-copy route (for session-board, the copy install) if you want one</dd>
+      <dt>Where it cannot apply</dt><dd>Installing <code class="i">frontend-design</code>, <code class="i">session-board</code> or <code class="i">agent-guard</code> <b>as a plugin</b> lets the marketplace create the folder, so no alias attaches. Pick the <code class="i">npx</code> or manual-copy route (for session-board and agent-guard, the copy install) if you want one</dd>
       <dt>What moves as a set</dt><dd>The <b>six feature-doc skills</b> call each other by name, so it is <b>all six or none</b> &mdash; never a subset</dd>
       <dt>Where it is stored</dt><dd>The install record keeps <code class="i">별칭=없음</code> or <code class="i">별칭=dandi-*</code> and reuses it next time (<code class="i">*</code> marks where the original name goes). Change it later and you are asked whether to <b>rename what exists or install a second copy under the new name</b></dd>
       <dt>When the record and your machine disagree</dt><dd>On any re-run &mdash; joining a team repository or re-applying your own &mdash; if the repository record&rsquo;s alias <b>differs from the names already installed on your machine</b>, you pick one of three &mdash; <b>rename</b> (match the record; this is machine-wide, so the name other projects used changes too) / <b>install another copy</b> (with a warning that the same skill will appear under two names) / <b>keep this machine as an exception</b> (your names stay, and that fact goes into the machine&rsquo;s own record)</dd>
@@ -1032,13 +1032,33 @@ details.sect>summary h2{margin:0}
 </details>
   </div>
 
+  <div class="opt">
+    <div class="opt-head"><span class="id">&sect;19</span><span class="name">agent-guard</span><span class="badge b-off">off by default &middot; global only</span></div>
+    <p class="lead">When Claude launches <b>several subagents at once</b>, this sets how many may run together from this PC&rsquo;s core count and memory and <b>the free memory and CPU at that moment</b>. At session start Claude is told in one line &ldquo;up to N right now&rdquo;, so it splits the work from the outset, and any launch beyond that is <b>refused</b> &mdash; Claude launches it again once an earlier agent finishes.</p>
+    <details class="more"><summary>Details</summary>
+<dl>
+      <dt>Why you might want it</dt><dd>Claude Code has its own concurrency limits, but they are <b>fixed numbers</b> that ignore your hardware. On a modest PC, agents that each drive a browser, an emulator or a build can all start at once, the machine bogs down, and you get timeouts and false failures</dd>
+      <dt>It never leaves you stuck</dt><dd><b>One agent per session is always allowed.</b> The limit is worked out from core count and total memory (at most 8), and every launch re-checks free memory (roughly 1 GB assumed per agent) and CPU load. You can change the values in <code class="i">~/.claude/agent-guard/config.json</code>; the skill explains how</dd>
+      <dt>Token cost</dt><dd>The hooks never call the model; they only write small running markers. All that reaches the conversation is the one line at session start and a notice when a launch is refused</dd>
+      <dt>How to install</dt><dd>Choose <b>plugin</b> (offered first &mdash; run <code>/plugin marketplace add EleninJayTech/claude</code> &rarr; <code>/plugin install dandi-agent-guard@dandi</code> yourself). <b>Pick it and</b> the hooks switch on in one go and come off in one go, but the marketplace creates the folder, so no skill name alias (2-7) attaches / <b>copy</b> &mdash; <b>pick it and</b> the skill folder is fetched and five hooks are appended to your machine&rsquo;s settings (existing hooks are kept). This is the route if you want an alias. If both are present the running markers are written twice and the limit is halved, so you are asked to keep only one. If the plugin is already on, fetch new versions yourself with <code>/plugin marketplace update dandi</code>. On a work PC you are also reminded that a plugin runs code with your permissions &mdash; and these hooks run on every subagent launch</dd>
+      <dt>Workflow limit (optional &mdash; you are asked)</dt><dd>Agents started by a workflow do not pass through this hook, so they cannot be refused. <b>Pick it and</b> the limit worked out for this PC goes into the environment variable <code class="i">CLAUDE_CODE_WORKFLOW_MAX_CONCURRENT_AGENTS</code> in your machine&rsquo;s settings (<code class="i">~/.claude/settings.json</code>), so workflows are held to the same number. The value differs per PC, so it never goes into project settings. The official docs do not say whether the variable takes effect from there, so it is checked in a new session and, if it does not, removed and reported. <b>Skip it and</b> workflows only get the session-start notice and follow Claude Code&rsquo;s default limit. Asked for both the plugin and the copy route</dd>
+      <dt>Scope</dt><dd><b>Global only</b>, so you are not asked &mdash; PC resources belong to the PC, and at project scope only that repository&rsquo;s sessions would be counted, letting the limit leak</dd>
+      <dt>What it needs</dt><dd><b>Node.js 18 or later</b>. Without it <b>no hooks are set up</b> (the plugin is not switched on either), and if they are already there you are asked whether to take them out. You are told, it is recorded as &ldquo;pending&rdquo; in <b>this PC&rsquo;s</b> <code class="i">~/.claude/CLAUDE.md</code>, and after installing Node.js you re-apply from a new terminal</dd>
+      <dt>Why it is off by default</dt><dd>It puts hooks on <b>every session on this PC</b> and refuses launches, so no mode switches it on for you and it is in no bundle. Tick it yourself if you often run parallel work on a modest PC</dd>
+      <dt>Watch out</dt><dd>If you already have hooks that block or count subagent launches, or environment variables that set concurrency limits, their values are shown and you are asked whether to keep or replace them</dd>
+      <dt>How to check</dt><dd>After installing, a new session&rsquo;s start-up notes should include one limit line starting with <code class="i">[agent-guard]</code> &mdash; if it is missing, the hooks are not being called</dd>
+      <dt>Removing it</dt><dd>For the plugin, <code class="i">/plugin uninstall dandi-agent-guard@dandi</code> (the hooks go with it). For a copy, remove just these hooks from your settings and delete the skill folder. Either way, delete <code class="i">~/.claude/agent-guard/</code> (it only holds running markers and optional settings, so nothing is lost), and if you added the workflow limit, remove that environment variable too</dd>
+    </dl>
+</details>
+  </div>
+
   <h3>Follow-up questions for any skill</h3>
   <div class="tbl">
   <table>
     <tr><th style="width:120px">Question</th><th>Choices</th></tr>
     <tr>
       <td><b>Scope</b></td>
-      <td><b>Global</b> (<code class="i">~/.claude/skills/</code>) &mdash; available in every project on your machine / <b>project</b> (<code class="i">.claude/skills/</code>) &mdash; this repository only; commit it and the team shares it. The feature-doc set, refactor and kr-ui-guide are used regardless of repository, pc-clean and win-setup are tools for the PC, ops-kit looks up each project itself, and kb-dashboard is called from sessions in other folders too, so <b>global is their default</b>. Policy notes (&sect;11) and the feature change log (&sect;13) are <b>fixed</b> to the project, session-board (&sect;12) to global and the diff review tools (&sect;16) to this PC, so instead of this question you are simply told. This question is never skipped in any mode &mdash; if your machine already has a global skill of the same name, a project install is shadowed by it and never runs</td>
+      <td><b>Global</b> (<code class="i">~/.claude/skills/</code>) &mdash; available in every project on your machine / <b>project</b> (<code class="i">.claude/skills/</code>) &mdash; this repository only; commit it and the team shares it. The feature-doc set, refactor and kr-ui-guide are used regardless of repository, pc-clean and win-setup are tools for the PC, ops-kit looks up each project itself, and kb-dashboard is called from sessions in other folders too, so <b>global is their default</b>. Policy notes (&sect;11) and the feature change log (&sect;13) are <b>fixed</b> to the project, session-board (&sect;12) and agent-guard (&sect;19) to global and the diff review tools (&sect;16) to this PC, so instead of this question you are simply told. This question is never skipped in any mode &mdash; if your machine already has a global skill of the same name, a project install is shadowed by it and never runs</td>
     </tr>
     <tr>
       <td><b>Invocation</b></td>
@@ -1289,7 +1309,7 @@ details.sect>summary h2{margin:0}
     Resolved or not, if you no longer want it (holding off, the organization has said no for good, you decided not to sign in), it is switched to &ldquo;not selected&rdquo; &mdash; so the same question stops coming back.
   </p>
   <p>
-    Copied skills (the feature-doc set, refactor, kr-ui-guide, browser-check, pc-clean, session-board, ops-kit, win-setup, kb-dashboard) are compared with the published version <b>file by file, contents included</b> &mdash; a revision that only reworded things still counts.
+    Copied skills (the feature-doc set, refactor, kr-ui-guide, browser-check, pc-clean, session-board, ops-kit, win-setup, kb-dashboard, agent-guard) are compared with the published version <b>file by file, contents included</b> &mdash; a revision that only reworded things still counts.
     If anything differs, the skill is shown as an <b>older install</b> and the install step replaces the whole folder.
   </p>
   </details>
@@ -1358,7 +1378,7 @@ details.sect>summary h2{margin:0}
 <a class="totop" href="#toc">&uarr; Contents</a>
 
 <footer>
-  Dandi &middot; Install options dictionary &middot; based on 00_통합-설치.md &middot; 2026-11-18<br>
+  Dandi &middot; Install options dictionary &middot; based on 00_통합-설치.md &middot; 2026-11-19<br>
   The source of truth for each item is its own document (01&ndash;06). This page exists so people can read and judge; it does not change the install procedure itself.<br>
   Repository: github.com/EleninJayTech/claude &middot;
   <a href="../index.html">Guide</a> &middot; <a href="intro.html">Intro</a> &middot; <a href="demo.html">Walkthrough</a> &middot; <a href="learn.html">Course</a> &middot; <a href="skills.html">Skill catalog</a><br>

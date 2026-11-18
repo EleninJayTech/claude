@@ -384,7 +384,7 @@ footer{max-width:1120px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
   <p>오해하기 쉬운 항목입니다 — <b>문서의 언어가 아니라</b> <b>설치가 만들어 내는 것</b>의 언어입니다. 드롭인 문서는 한국어 그대로 두고(Claude는 어느 언어로든 같게 실행합니다), 이 답이 대상 <code class="i">CLAUDE.md</code> 본문·<code class="i">docs/</code> 기록·커밋 메시지·산출물 파일명(<code class="i">docs/난이도-매트릭스.md</code> ↔ <code class="i">docs/difficulty-matrix.md</code>)의 언어를 정합니다. <code class="i">[갈래][Done]</code> 같은 형식 키워드는 어느 언어에서도 고정입니다 — <code class="i">/resume</code>·<code class="i">/wrap</code>이 그 문자열로 찾기 때문입니다. 기본값은 지금 대화하는 언어이고, 이미 만들어진 산출물이 있으면 그 언어를 우선합니다.</p>
 
   <details class="acc"><summary>스킬 이름 별칭 — 없음 / 전부 / 고른 것만</summary><div class="acc-b">
-  <p>설치되는 스킬 이름(<code class="i">resume</code>·<code class="i">wrap</code>·<code class="i">svg-design</code>)은 흔합니다. 내 PC에 <b>같은 이름의 다른 스킬</b>이 이미 있으면 그쪽이 이겨서, 설치는 됐는데 눌러 보면 엉뚱한 게 돌거나 쓰던 게 덮입니다. 이 질문이 그 회피 수단입니다 — 애칭 <b>단디</b>를 붙여 <code class="i">dandi-resume</code>(앞) 또는 <code class="i">resume-dandi</code>(뒤)로 만듭니다. 붙이기로 하면 붙일 글자(기본 <code class="i">dandi</code>)와 위치(앞/뒤)를 이어서 묻고, <b>고른 것만</b>이면 설치할 스킬 목록에서 직접 고릅니다. <b>기본은 없음</b>이고, 설치 전에 같은 이름이 있는지 찾아본 뒤 있으면 그 스킬만 체크한 '고른 것만'을 권합니다. <b>기능 문서 세트 6종은 서로를 이름으로 부르니 여섯 개가 함께 움직입니다</b>. 다시 적용할 때는 기록된 별칭을 그대로 쓰고 다시 묻지 않습니다. 기록과 이 PC에 깔린 이름이 다르면 이 PC 것을 기록에 맞출지, 별칭을 붙여 하나 더 깔지(같은 스킬이 두 이름으로 뜹니다), 이 PC만 예외로 둘지 묻습니다. frontend-design과 session-board를 플러그인으로 깔면 별칭이 붙지 않으니, 붙이려면 다른 설치 경로를 고릅니다. 자세한 건 <a href="options.ko.html#common">옵션 사전 2-7</a>.</p>
+  <p>설치되는 스킬 이름(<code class="i">resume</code>·<code class="i">wrap</code>·<code class="i">svg-design</code>)은 흔합니다. 내 PC에 <b>같은 이름의 다른 스킬</b>이 이미 있으면 그쪽이 이겨서, 설치는 됐는데 눌러 보면 엉뚱한 게 돌거나 쓰던 게 덮입니다. 이 질문이 그 회피 수단입니다 — 애칭 <b>단디</b>를 붙여 <code class="i">dandi-resume</code>(앞) 또는 <code class="i">resume-dandi</code>(뒤)로 만듭니다. 붙이기로 하면 붙일 글자(기본 <code class="i">dandi</code>)와 위치(앞/뒤)를 이어서 묻고, <b>고른 것만</b>이면 설치할 스킬 목록에서 직접 고릅니다. <b>기본은 없음</b>이고, 설치 전에 같은 이름이 있는지 찾아본 뒤 있으면 그 스킬만 체크한 '고른 것만'을 권합니다. <b>기능 문서 세트 6종은 서로를 이름으로 부르니 여섯 개가 함께 움직입니다</b>. 다시 적용할 때는 기록된 별칭을 그대로 쓰고 다시 묻지 않습니다. 기록과 이 PC에 깔린 이름이 다르면 이 PC 것을 기록에 맞출지, 별칭을 붙여 하나 더 깔지(같은 스킬이 두 이름으로 뜹니다), 이 PC만 예외로 둘지 묻습니다. frontend-design·session-board·agent-guard를 플러그인으로 깔면 별칭이 붙지 않으니, 붙이려면 다른 설치 경로를 고릅니다. 자세한 건 <a href="options.ko.html#common">옵션 사전 2-7</a>.</p>
 
   </div></details>
   </div></details>
@@ -466,7 +466,7 @@ footer{max-width:1120px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
   </details>
 
   <details class="acc">
-    <summary><span class="id">03</span>확장 기능 — 상태 표시줄·디자인 스킬·MCP·브라우저·기능 문서·코드 리팩터링·한국 UI 기준·PC 점검·정책 기록·세션 보드·기능 변경 기록·Flutter 앱 화면 검증·운영 키트·diff 검수 도구·Windows PC 정비·지식 베이스 대시보드 <span class="badge b-off">전부 선택</span></summary>
+    <summary><span class="id">03</span>확장 기능 — 상태 표시줄·디자인 스킬·MCP·브라우저·기능 문서·코드 리팩터링·한국 UI 기준·PC 점검·정책 기록·세션 보드·기능 변경 기록·Flutter 앱 화면 검증·운영 키트·diff 검수 도구·Windows PC 정비·지식 베이스 대시보드·병렬 에이전트 제한 <span class="badge b-off">전부 선택</span></summary>
     <div class="acc-b">
       <ul>
         <li><b>claude-hud</b> — 입력창 아래 <b>상태 표시줄</b>. 컨텍스트·요금제 사용량이 보입니다. 절약 프로필이면 사실상 필수. <b>Node.js 22.18 이상</b>이 필요합니다. 고르면 표시 구성을 어떻게 할지(대화형으로 고르기 / 작성자 추천 구성 / 기본값 유지)와, 메시지 사이에도 카운트다운이 흐르게 하는 <b>타이머 갱신</b>을 넣을지도 함께 묻습니다 — 안 넣으면 이벤트가 있을 때만 다시 그립니다. 타이머는 열어 둔 창 수만큼 다시 그리는 비용이 들고, Windows Git Bash에서는 간격이 짧으면 오류가 날 수 있어 거기서는 빼거나 30초 이상으로 둡니다.</li>
@@ -486,9 +486,10 @@ footer{max-width:1120px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
         <li><b>diff 검수 도구</b> — Claude가 고친 코드를 IDE를 열지 않고 <b>터미널에서 파일·hunk 단위로 읽고</b>, 괜찮은 건 스테이지하고 잘못된 건 버리게 해 줍니다. PC에 명령줄 도구 셋(<b>lazygit</b> — 터미널 git 화면 · <b>delta</b> — 줄 안에서 바뀐 단어까지 강조하는 diff · <b>difftastic</b> — 코드 구조로 비교해 들여쓰기만 바뀐 줄을 걸러 냄)을 깔고, lazygit 설정에 diff 화면 셋을 넣어 <code class="i">|</code> 키로 돌려 봅니다. Windows는 <code class="i">winget</code>, macOS는 <code class="i">brew</code>, Linux는 각 도구의 공식 설치 문서를 따릅니다. 사람이 하는 최종 검수를 돕는 도구이고 <code class="i">/code-review</code>를 대신하지 않습니다. 외부 프로그램을 깔고 내 설정 파일을 고치는 항목이라 기본은 꺼져 있고, 자리는 <b>이 PC</b>로 정해져 있습니다. 회사 PC면 소프트웨어 설치 정책을 먼저 확인하세요.</li>
         <li><b>win-setup</b>(Windows PC 정비) — Windows PC를 <b>Claude Code CLI 개발용으로 준비</b>합니다. 먼저 PC를 <b>읽기만 해서</b>(PowerShell 7과 터미널 기본 프로필, 사용자 PATH, 개발자 모드, 긴 경로, sudo, Claude Code 기본 셸 설정, jq·fd·gh 같은 작은 도구) 판정표로 보여 주고, <b>내가 승인한 항목만</b> 고칩니다 — 바꾸기 전에 백업부터 합니다. 시스템 전체 PATH는 건드리지 않습니다. <b>Windows 전용</b>이라 다른 OS에서는 나오지 않고, PC 설정을 바꾸는 PC 단위 도구라 기본은 꺼져 있습니다. 스코프 기본은 내 PC 전체이고, 기본값은 내가 <code class="i">/win-setup</code>을 칠 때만 돕니다. 회사 PC면 개발자 모드·sudo가 보안 정책에 걸릴 수 있으니 먼저 확인하세요.</li>
         <li><b>kb-dashboard</b>(지식 베이스 대시보드) — 할일·회의·이슈·팁 같은 <b>마크다운 기록을 모아 두는 저장소</b>용입니다. 할일(상태별·기한 지남), 게시한 아티팩트 링크, 팁, 종류별 기록·태그·검색을 <b>로컬 HTML 한 장</b>으로 모아 보여 줍니다. <b>보기만</b> 하고 기록을 고치지 않으며, 페이지는 저장소 밖(<code class="i">~/.claude/kb-dashboard/</code>)에 만들어 내용 사본이 git이나 외부로 나가지 않습니다. 어느 폴더를 볼지·화면 언어 같은 저장소별 규칙은 <code class="i">.claude/kb-dashboard.json</code>에 두는데, 설치가 만들지 않고 처음 부를 때 Claude가 <code class="i">CLAUDE.md</code>를 읽어 초안을 만든 뒤 확인받습니다. <b>Node.js 18 이상</b>이 필요합니다 — 없으면 설치하지 않고 그렇게 기록해 둡니다. 지식 베이스 저장소에서만 쓸모가 있어 기본은 꺼져 있고 번들에도 들지 않습니다. 스코프 기본은 내 PC 전체(다른 폴더에서도 부를 수 있게)이고, 기본값은 내가 <code class="i">/kb-dashboard</code>를 칠 때만 돕니다. 코드 저장소의 <code class="i">docs/</code> 작업 기록용은 아닙니다.</li>
+        <li><b>agent-guard</b>(에이전트 가드) — Claude가 도우미 에이전트(서브에이전트)를 여러 개 한꺼번에 띄울 때, 동시에 도는 수를 <b>이 PC가 감당할 만큼</b>으로 제한합니다. 코어 수·메모리와 그 순간의 여유 메모리·CPU를 봅니다. 세션을 시작할 때 지금 몇 개까지 띄울 수 있는지 한 줄로 알려 처음부터 나눠 띄우게 하고, 그보다 많이 띄우려 하면 <b>거부</b>해 앞선 것이 끝난 뒤 다시 띄우게 합니다. 세션마다 1개는 항상 허용하니 작업이 멈추지는 않습니다. 내장 상한은 PC를 보지 않는 고정 숫자라, 사양이 낮은 PC에서 브라우저·에뮬레이터·빌드를 돌리는 에이전트가 한꺼번에 뜨면 버벅이는데 그걸 막는 항목입니다. 워크플로가 띄우는 에이전트는 이 검사를 거치지 않습니다. <b>Node.js 18 이상</b>이 필요합니다 — Node가 없으면 훅을 걸지 않고 대기로 기록해 둡니다. PC 자원은 PC 단위라 <b>내 PC 전체</b>에 깔립니다. 모든 세션에 자동 동작을 걸고 실행을 거부하는 항목이라 기본은 꺼져 있고 번들에도 들지 않습니다. <code class="i">dandi</code> 플러그인으로 깔지, 파일을 복사해 깔지 고르고(둘 다 걸려 있으면 개수가 두 번 세어져 하나만 남기라고 묻습니다), 워크플로 에이전트도 이 PC에 맞는 같은 숫자로 묶을지 따로 묻습니다.</li>
       </ul>
       <p>스킬을 고르면 두 가지를 더 물어봅니다 — <b>스코프</b>(내 PC 전체 vs 이 프로젝트만)와
-      <b>호출 방식</b>(Claude가 알아서 vs 내가 <code class="i">/명령</code>을 칠 때만). 정책 기록·기능 변경 기록(이 프로젝트만)과 session-board·diff 검수 도구(내 PC 전체)는 자리가 정해져 있어 스코프를 묻지 않고 알려만 줍니다. Flutter 앱 화면 검증의 MCP 등록 위치는 이 프로젝트에서 나만 / 팀 공유 중에서만 고릅니다(내 PC 전체는 없습니다).
+      <b>호출 방식</b>(Claude가 알아서 vs 내가 <code class="i">/명령</code>을 칠 때만). 정책 기록·기능 변경 기록(이 프로젝트만)과 session-board·agent-guard·diff 검수 도구(내 PC 전체)는 자리가 정해져 있어 스코프를 묻지 않고 알려만 줍니다. Flutter 앱 화면 검증의 MCP 등록 위치는 이 프로젝트에서 나만 / 팀 공유 중에서만 고릅니다(내 PC 전체는 없습니다).
       기능 문서 세트·refactor·kr-ui-guide·browser-check·pc-clean·ops-kit·win-setup·kb-dashboard가 이미 <code class="i">dandi</code> 플러그인으로 켜져 있으면 <b>플러그인 유지</b>(복사 안 함)와 <b>복사본으로 교체</b> 중 하나도 묻습니다 — 둘 다 두지는 않습니다.</p>
       <p><b>frontend-design</b>이나 <b>kr-ui-guide</b>를 고르면 질문이 하나 더 붙습니다 &mdash; <b>폰트 라이선스 정책</b>입니다. 설치한 스코프의 <code class="i">CLAUDE.md</code>에 적힙니다.
       <b>자유 사용만</b>(기본)은 자유롭게 쓸 수 없는 폰트를 거절하고 무료 대체 폰트를 제시하고, <b>안내 후 선택</b>은 조건(구매·고지 의무·사용 범위)을 먼저 알린 뒤 내 결정을 기다립니다. <b>넣지 않음</b>이면 정책을 적지 않습니다.
@@ -663,7 +664,7 @@ footer{max-width:1120px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
 </div>
 
 <footer>
-  단디 · 설치 옵션 학습 코스 · 2026-11-18<br>
+  단디 · 설치 옵션 학습 코스 · 2026-11-19<br>
   각 항목의 정본은 해당 하위 문서(01~06)입니다. 이 페이지는 사람이 배우기 위한 안내이며, 설치 절차 자체를 바꾸지 않습니다. 진행도는 이 브라우저의 localStorage에만 저장됩니다.<br>
   저장소: github.com/EleninJayTech/claude ·
   <a href="../index.ko.html">사용법</a> · <a href="intro.ko.html">소개 영상</a> · <a href="demo.ko.html">설치 시연</a> · <a href="options.ko.html">옵션 사전</a> · <a href="skills.ko.html">스킬 카탈로그</a><br>

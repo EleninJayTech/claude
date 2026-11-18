@@ -1,7 +1,7 @@
 {
   "name": "dandi",
   "owner": { "name": "EleninJayTech", "url": "https://github.com/EleninJayTech" },
-  "description": "Dandi skills for Claude Code: feature specs verified against code and the running app, behavior-preserving refactoring, UI/UX guidelines for Korean users, a browser verification method, a Windows PC check-and-clean routine, a Windows PC setup routine for Claude Code CLI work, deploy-and-operate documents for a solo project, a local dashboard for a Markdown knowledge base, and a board that lets sessions in the same folder see each other. Skill instructions are written in Korean.",
+  "description": "Dandi skills for Claude Code: feature specs verified against code and the running app, behavior-preserving refactoring, UI/UX guidelines for Korean users, a browser verification method, a Windows PC check-and-clean routine, a Windows PC setup routine for Claude Code CLI work, deploy-and-operate documents for a solo project, a local dashboard for a Markdown knowledge base, a guard that keeps parallel subagents within what the PC can handle, and a board that lets sessions in the same folder see each other. Skill instructions are written in Korean.",
   "plugins": [
     {
       "name": "dandi-feature-docs",
@@ -65,6 +65,13 @@
       "description": "One local, view-only HTML dashboard of a Markdown knowledge base: todos by status and due date, published artifact links, tips, records by type, tags and search, built by a bundled Node script from a per-repo config.",
       "license": "MIT",
       "keywords": ["dashboard", "knowledge-base", "markdown", "todo", "notes"]
+    },
+    {
+      "name": "dandi-agent-guard",
+      "source": "./plugins/dandi-agent-guard",
+      "description": "Keep parallel subagents within what the PC can handle: tell Claude the current limit at session start and deny Agent spawns beyond it, based on CPU cores, RAM and currently available memory. Hooks only, no model calls.",
+      "license": "MIT",
+      "keywords": ["subagents", "concurrency", "hooks", "memory", "performance"]
     }
   ]
 }
