@@ -32,7 +32,7 @@ argument-hint: "[점검] [only=<경로>] [add=<경로>]"
    - 세션 흔적 없이 부모 폴더에서만 찾은 후보 → 기본 제외, `add=`로만 포함한다. `-p`는 신뢰 대화상자 없이 그 repo의 훅·`.mcp.json`을 실행한다(공식 headless)
 6. 기본 브랜치 = `git symbolic-ref refs/remotes/origin/HEAD`. 없으면 `main`, `master` 순으로 있는 것. 없으면 제외한다. 원격이 있으면 `git fetch`한다.
 7. `only=` 인수가 있으면 그 경로만 남긴다.
-8. **AskUserQuestion**으로 확인한다. 질문 문장에 대상·제외 전체와 각 항목의 현재 브랜치·미커밋 여부(작업 트리는 건드리지 않는다)를 적고, 선택지는 `전부 진행` / `중단`. Other로 제외·추가 경로를 받는다. 비용이 프로젝트 수에 비례한다고 함께 적고, 세션 흔적 없는 후보를 표시해 `-p`가 그 repo의 훅·`.mcp.json`을 묻지 않고 실행한다고 고지한다.
+8. **AskUserQuestion**으로 확인한다. 질문 문장에 대상·제외 전체와 각 항목의 현재 브랜치·미커밋 여부(작업 트리는 건드리지 않는다)를 적고, 선택지는 `전부 진행` / `중단`. Other로 제외·추가 경로를 받는다. 비용이 프로젝트 수에 비례한다고 함께 적고, 세션 흔적 없는 후보를 표시해 `-p`가 그 repo의 훅·`.mcp.json`을 묻지 않고 실행한다고 고지한다. 신뢰 대화상자를 수락한 적 없는 repo에서는 `-p`가 프로젝트 `permissions.allow`를 무시한다는 것도 함께 적는다(적용이 거부로 끝나면 그 repo에서 대화형 세션을 한 번 열어 수락한 뒤 다시 돌린다).
 
 ## 2) 글로벌 먼저 (메인 세션, 대화형)
 `~/.claude/CLAUDE.md`의 글로벌 기록 버전을 기준 클론의 문서 헤더 버전과 비교한다. 모두 같고 글로벌 줄에 대기·차단 메모가 없으면 `글로벌: 최신`으로 건너뛴다. 버전이 같은데 메모만 있으면 재적용 질문 ③만 묻는다. 다르면 `~/.claude/skills/*dropin-apply*/SKILL.md`를 읽어 **대상=이 PC**로 수행한다. `점검`이면 차이만 보고한다.
@@ -46,7 +46,7 @@ argument-hint: "[점검] [only=<경로>] [add=<경로>]"
 1. `NNN` = 그 repo의 `git worktree list`·`git branch -a`에 나온 가장 큰 3자리 번호 + 1.
 2. `<wt>` = `<repo>/.claude/worktrees/NNN-dropin-sync`. 그 경로가 `git check-ignore`에 안 걸리면 `<임시 폴더>/wt/<repo 이름>-NNN`을 쓴다.
 3. `git -C <repo> worktree add --detach <wt> origin/<기본 브랜치>` (원격이 없으면 로컬 기본 브랜치).
-4. `<임시>/<slug>.collect.txt`에 아래 **수집 프롬프트**를 쓰고, 워크트리에서 실행한다. Bash 도구의 `run_in_background`로 돌리고 끝나면 다음 프로젝트로 간다.
+4. `<임시>/<slug>.collect.txt`에 아래 **수집 프롬프트**를 쓰고, 워크트리에서 실행한다. 프로젝트 하나에 Bash 호출 하나로 돌리고(여러 프로젝트를 셸 루프 하나로 묶지 않는다 — 셸이 회수돼도 자식 `claude -p`는 계속 돌아 결과가 알림 없이 쌓인다) 끝나면 다음 프로젝트로 간다. 진행 상태는 알림이 아니라 `<임시>/*.json` 결과 파일로 판정하고, 보고 전에 다시 확인한다.
    ```
    cd <wt> && claude -p --permission-mode dontAsk --output-format json \
      --allowedTools "Read,Glob,Grep,Bash(git status *),Bash(git log *),Bash(git ls-files *),Bash(git show *),Bash(git rev-parse *),Bash(git check-ignore *)" \
@@ -93,7 +93,7 @@ argument-hint: "[점검] [only=<경로>] [add=<경로>]"
    ```
 4. **첫 프로젝트에서** auto를 쓸 수 없다는 오류가 나면 전체를 멈추고 AskUserQuestion: `acceptEdits로 계속(.claude/ 변경은 남은 일)` / `중단`.
 5. `.result`를 파싱하고 `total_cost_usd`를 합산한다(없으면 생략). 파싱 실패·비정상 종료면 **커밋하지 않고** `적용 실패(사유)`로 표시해 워크트리를 남기고 다음 프로젝트로 간다(6)을 건너뛴다). 한도 초과 오류면 전체를 멈춘다.
-6. 본체와 기준 클론의 `status --porcelain`이 실행 전과 다르면 **`본체 변경 감지`로 크게 보고하고 전체를 멈춘다.**
+6. 본체와 기준 클론의 `status --porcelain`이 실행 전과 다르면 **`본체 변경 감지`로 크게 보고하고 전체를 멈춘다.** 달라진 경로와 현재 브랜치를 함께 보이고, 사용자의 동시 작업(브랜치 전환·편집)일 수 있으니 원인 판정은 사용자에게 맡긴다고 적는다.
 
 **적용 프롬프트**
 ```
@@ -102,7 +102,7 @@ argument-hint: "[점검] [only=<경로>] [add=<경로>]"
 기준 클론의 최신 여부는 이미 확인했으니 다시 확인하지 않는다. 프로젝트 안 문서 사본을 교체해야 하면 고치지 않고 unresolved에 넣는다. 승인·답은 <임시>/<slug>.answers.json이 유일한 근거다. 묻는 자리마다 거기서 답을 찾고, 없으면 그 항목을 고치지 않고 unresolved에 넣는다.
 승인되지 않았거나 unresolved가 남은 문서는 dropin-applied 기록의 그 문서 버전을 올리지 않는다.
 쓰기가 거부되면 우회하지 말고 denied에 넣는다.
-쓰는 곳은 이 폴더뿐이다. ~/.claude·<repo 본체>·<기준 클론>은 읽기만 한다. 글로벌 스코프 항목은 건드리지 않는다. .gitignore에 걸린 로컬 파일을 고쳐야 하면 고치지 않고 unresolved에 넣는다.
+쓰는 곳은 이 폴더뿐이다. ~/.claude·<repo 본체>·<기준 클론>은 읽기만 한다. 셸 명령은 검증용 읽기 명령(git status·git ls-files·git check-ignore 등)만 이 폴더에서 쓴다 — 빌드·실행·테스트, 파일을 일부러 망가뜨렸다 되돌리는 시연, 다른 폴더에서의 명령은 하지 않는다. 글로벌 스코프 항목은 건드리지 않는다. .gitignore에 걸린 로컬 파일을 고쳐야 하면 고치지 않고 unresolved에 넣는다.
 커밋·브랜치 변경·push는 하지 않는다.
 최종 응답은 JSON 하나만 낸다: {"applied":["..."],"unresolved":["..."],"denied":["..."],"verify":"<00 STEP 5 검증 결과 요약>","commit_subject":"<그 repo 언어=와 커밋 양식에 맞는 한 줄>"}
 ```
