@@ -23,7 +23,7 @@ The first run creates `<repo>/.claude/kb-dashboard.json` with you: target folder
 
 ## Requirements
 
-Node.js 18 or later. Built-in modules only — nothing to `npm install`. Works on Windows, macOS and Linux.
+Node.js 18 or later. Built-in modules only — nothing to `npm install`. Tested on Windows 11; macOS and Linux open the page with `open` / `xdg-open` (not yet verified).
 
 ## Uninstall
 
