@@ -48,12 +48,13 @@ argument-hint: "[점검] [only=<경로>] [add=<경로>]"
 3. `git -C <repo> worktree add --detach <wt> origin/<기본 브랜치>` (원격이 없으면 로컬 기본 브랜치).
 4. `<임시>/<slug>.collect.txt`에 아래 **수집 프롬프트**를 쓰고, 워크트리에서 실행한다. 프로젝트 하나에 Bash 호출 하나로 돌리고(여러 프로젝트를 셸 루프 하나로 묶지 않는다 — 셸이 회수돼도 자식 `claude -p`는 계속 돌아 결과가 알림 없이 쌓인다) 끝나면 다음 프로젝트로 간다. 진행 상태는 알림이 아니라 `<임시>/*.json` 결과 파일로 판정하고, 보고 전에 다시 확인한다.
    ```
-   cd <wt> && claude -p --permission-mode dontAsk --output-format json \
+   ( cd <wt> && claude -p --permission-mode dontAsk --output-format json \
      --allowedTools "Read,Glob,Grep,Bash(git status *),Bash(git log *),Bash(git ls-files *),Bash(git show *),Bash(git rev-parse *),Bash(git check-ignore *)" \
      --disallowedTools "AskUserQuestion" \
      --add-dir <기준 클론> <repo 본체> ~/.claude \
-     < <임시>/<slug>.collect.txt > <임시>/<slug>.collect.json
+     < <임시>/<slug>.collect.txt > <임시>/<slug>.collect.json )
    ```
+   서브셸로 감싸는 이유 — 세션 셸의 cwd가 `<wt>`에 남으면 뒤의 `git worktree remove`가 Permission denied로 메타데이터만 지우고 빈 폴더를 남긴다(5)3도 같다).
 5. `.result`의 JSON을 파싱한다. 실패·비정상 종료면 `git worktree remove --force <wt>` 뒤 `수집 실패(사유)`로 표시하고 계속한다. 한도 초과 오류면 전체를 멈추고 남은 목록을 보고한다(재실행하면 이어진다).
 6. 변경도 질문도 없으면 `git worktree remove <wt>`, `이미 최신`으로 표시한다. notes의 검토 후보는 `남은 일`에 옮긴다.
 
@@ -85,11 +86,11 @@ argument-hint: "[점검] [only=<경로>] [add=<경로>]"
 2. 실행 전 `git -C <repo> status --porcelain`과 기준 클론의 `git status --porcelain`을 저장한다.
 3. 아래 **적용 프롬프트**로 실행한다.
    ```
-   cd <wt> && claude -p --permission-mode auto --output-format json \
+   ( cd <wt> && claude -p --permission-mode auto --output-format json \
      --allowedTools "Read,Glob,Grep,Edit,Write" \
      --disallowedTools "AskUserQuestion,Bash(git push *),Bash(git commit *),Bash(git switch *),Bash(git checkout *),Bash(git worktree *),Bash(git reset *),Bash(git stash *),Edit(~/.claude/**),Write(~/.claude/**),Edit(//<기준 클론>/**),Write(//<기준 클론>/**)" \
      --add-dir <기준 클론> <repo 본체> ~/.claude \
-     < <임시>/<slug>.apply.txt > <임시>/<slug>.apply.json
+     < <임시>/<slug>.apply.txt > <임시>/<slug>.apply.json )
    ```
 4. **첫 프로젝트에서** auto를 쓸 수 없다는 오류가 나면 전체를 멈추고 AskUserQuestion: `acceptEdits로 계속(.claude/ 변경은 남은 일)` / `중단`.
 5. `.result`를 파싱하고 `total_cost_usd`를 합산한다(없으면 생략). 파싱 실패·비정상 종료면 **커밋하지 않고** `적용 실패(사유)`로 표시해 워크트리를 남기고 다음 프로젝트로 간다(6)을 건너뛴다). 한도 초과 오류면 전체를 멈춘다.
