@@ -7,7 +7,7 @@ TAGS = ["[미확인]", "[화면 미확인]", "[코드만 확인]", "[화면만 �
 
 def git(*a):
     try:
-        return subprocess.check_output(["git", "-c", "core.quotepath=false", *a], stderr=subprocess.DEVNULL, text=True).strip()
+        return subprocess.check_output(["git", "-c", "core.quotepath=false", *a], stderr=subprocess.DEVNULL, encoding="utf-8").strip()
     except Exception:
         return ""
 

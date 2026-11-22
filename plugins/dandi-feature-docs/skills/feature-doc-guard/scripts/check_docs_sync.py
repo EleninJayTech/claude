@@ -9,7 +9,7 @@ SKIP_PREFIX = ("docs/", ".claude/", ".github/", "test/", "tests/", "__tests__/",
 SKIP_NAME = re.compile(r"(package-lock\.json|yarn\.lock|pnpm-lock\.yaml|\.md|\.txt|\.lock|\.png|\.jpg|\.svg|\.ico)$")
 
 def git(*a):
-    return subprocess.check_output(["git", "-c", "core.quotepath=false", *a], text=True, stderr=subprocess.DEVNULL).strip()
+    return subprocess.check_output(["git", "-c", "core.quotepath=false", *a], encoding="utf-8", stderr=subprocess.DEVNULL).strip()
 
 def norm(p):
     return p.replace("\\", "/").strip().strip("`")
@@ -50,10 +50,11 @@ def doc_file(fid):
 def main():
     if os.environ.get("FEATURE_DOC_GUARD") == "0":
         return 0
+    sys.stdout.reconfigure(encoding="utf-8")
+    sys.stderr.reconfigure(encoding="utf-8")
     out, blocked = sys.stdout, 1
     if "--only-on-commit" in sys.argv:
         out, blocked = sys.stderr, 2
-        out.reconfigure(encoding="utf-8")
         try:
             data = json.loads(sys.stdin.buffer.read())
             cmd = data.get("tool_input", {}).get("command", "")
@@ -79,12 +80,15 @@ def main():
                 affected.setdefault(fid, []).append(p)
         else:
             unmapped.append(p)
+    nodoc = [fid for fid in affected if not doc_file(fid)]
     missing = {fid: files for fid, files in affected.items()
-               if (doc_file(fid) or "") not in staged}
+               if fid not in nodoc and doc_file(fid) not in staged}
     if unmapped:
         print("[feature-doc-guard] 기능 문서에 매핑되지 않은 소스 (새 기능이면 /dandi-feature-docs:feature-docs sync):")
         for p in unmapped:
             print("   -", p)
+    if nodoc:
+        print("[feature-doc-guard] 인벤토리에만 있고 문서 파일이 없는 기능 (/dandi-feature-docs:feature-docs 로 작성):", ", ".join(nodoc))
     if missing:
         print("[feature-doc-guard] 코드는 바뀌었는데 기능 문서가 스테이징되지 않음:", file=out)
         for fid, files in missing.items():

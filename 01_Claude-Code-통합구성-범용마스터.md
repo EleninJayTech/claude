@@ -1,6 +1,6 @@
 # Claude Code 통합 구성 — 범용 마스터 (드롭인 적용)
 
-> **문서 버전: v1.124** · 최종 갱신: **2026-11-22** · **최근 재검증: 2026-11-22** · 기준: Claude Code v2.1.330 (Opus 5.5 · Sonnet 5.5 · Haiku 5.5 · Fable 5.2)
+> **문서 버전: v1.125** · 최종 갱신: **2026-11-22** · **최근 재검증: 2026-11-22** · 기준: Claude Code v2.1.330 (Opus 5.5 · Sonnet 5.5 · Haiku 5.5 · Fable 5.2)
 >
 > | 버전 | 날짜 | 변경 내용 |
 > | --- | --- | --- |
@@ -31,6 +31,7 @@
 > | v1.122 | 2026-11-22 | §D-6 절약 항목에 범위 한 줄(다른 한도 값·사용 형태의 정본은 02 §F-3·00 §C-6)과 종량 한 줄(캐시 TTL 5분·지출 한도 확인) · §D-7 "모든 운용 프로필 공통". 설치 항목·산출물 불변. **목표(R43)**: 2 — 한도 축이 Pro 여부 하나로 고정되지 않는다 |
 > | v1.123 | 2026-11-22 | 전면 재검증(v2.1.330) — Fable 5.2 반영(§D-6 기본 effort `medium`·지원 단계 · §D-7 effort 캐시 예외는 Fable 5.1 이후·캐시 단가) · `ultrathink` 승격의 VS Code·데스크톱 버전 · §J `Write`·`NotebookEdit`·`Glob` 경로 규칙은 경고 없이 무효 · 샌드박스 안 Bash 자동 허용 기본이 꺼짐 · §J-1 외부 읽기 차단이 `~/.claude/`에 미치는 범위. 설치 항목·산출물 불변. **목표(R43)**: 5 — 당일 공식 조회 |
 > | v1.124 | 2026-11-22 | **/audit 23차(전수) 반영** — ⓒ 제거 때 ⓖ도 뺄지 묻는다 · §F-2 A·B·C `/resume` 작업 중 추천을 파일 이름만으로 판정되는 신호로 좁힘 · `/wrap` 미러 게이트의 배포본 열거 정리 |
+> | v1.125 | 2026-11-22 | **/audit 24차(회귀) 반영** — `dropin-applied` 머지 충돌 문구를 "동률·필드별 예외는 00 STEP 5"로(§F-1·§F-4 — `형태=`가 다르면 고르게 하는 예외가 병합 자리에서 읽히게) |
 > ※ 갱신 시: 이 표에 한 줄 추가 + 하단 "문서 정보" 날짜 수정 + §L 재검증 체크리스트 수행.
 
 > **사용법**: 이 파일을 아무 프로젝트 루트(또는 `docs/`)에 넣고 Claude에게
@@ -316,7 +317,7 @@ New-Item -ItemType Directory -Path .claude/skills/scope -Force
 
 ### 동시편집 충돌
 - PROGRESS·DECISIONS는 append 전용(기존 줄 수정 금지 — 예외는 아래 되돌림·Superseded **표시** 한 조각뿐이고, 병합 뒤 같은 항목이 표시 유무로 두 벌이면 표시 없는 쪽을 지운다 — union은 충돌 없이 둘 다 남긴다). .gitattributes의 merge=union이 동시 append를 자동 합침.
-- **PROJECT_PLAN.md·CLAUDE.md엔 merge=union을 걸지 않는다** — 체크박스 토글·기록 줄 교체는 줄 수정이라 union이면 양쪽이 다 남아 파손된다. 충돌은 손으로: PROJECT_PLAN은 체크박스=완료 우선·미해결=합집합, CLAUDE.md의 dropin-applied는 적용일 최신 줄 기준(동률·`출처=` 처리는 00 STEP 5).
+- **PROJECT_PLAN.md·CLAUDE.md엔 merge=union을 걸지 않는다** — 체크박스 토글·기록 줄 교체는 줄 수정이라 union이면 양쪽이 다 남아 파손된다. 충돌은 손으로: PROJECT_PLAN은 체크박스=완료 우선·미해결=합집합, CLAUDE.md의 dropin-applied는 적용일 최신 줄 기준(동률·필드별 예외(`출처=`·`형태=`)는 00 STEP 5).
 - **되돌림**: 원항목을 지우지 말고 [Reverted] 새 항목 append + 원항목 끝에 "→ Reverted <날짜>". git revert가 PROGRESS 줄까지 지우면 그 줄은 되살린다(기록은 코드와 함께 되돌리지 않는다).
 - DECISIONS id는 동시 발번 충돌을 피해 날짜+작성자 포함(예: DEC-20260703-min).
 
@@ -505,7 +506,7 @@ docs/**/PROGRESS.md    merge=union
 docs/**/DECISIONS.md   merge=union
 ```
 > ⚠️ `merge=union`은 동시 top-insert 순서가 약간 섞일 수 있음(둘 다 보존). DEC 번호는 날짜+작성자로. **검수·release 같은 장수 통합 브랜치로 반복 병합하면 "약간"이 아니다** — 최상단이 최근이 아니게 되므로 §F-6 양식의 **날짜**로 읽는다.
-> ⚠️ **`PROJECT_PLAN.md`·`CLAUDE.md`는 이 목록에 넣지 않는다.** 체크박스 토글·기록 줄 교체는 append가 아니라 **줄 수정**이라, union을 걸면 `- [ ]`와 `- [x]`가 **둘 다 살아남아 파손**된다. 충돌하면 손으로 합친다 — PROJECT_PLAN은 **체크박스=완료 우선·미해결 목록=합집합**, `CLAUDE.md`의 `dropin-applied`는 **적용일이 최신인 줄 기준**(00 STEP 5).
+> ⚠️ **`PROJECT_PLAN.md`·`CLAUDE.md`는 이 목록에 넣지 않는다.** 체크박스 토글·기록 줄 교체는 append가 아니라 **줄 수정**이라, union을 걸면 `- [ ]`와 `- [x]`가 **둘 다 살아남아 파손**된다. 충돌하면 손으로 합친다 — PROJECT_PLAN은 **체크박스=완료 우선·미해결 목록=합집합**, `CLAUDE.md`의 `dropin-applied`는 **적용일이 최신인 줄 기준**(동률·필드별 예외는 00 STEP 5).
 
 ### F-5. `.gitignore` (각 repo)
 ```
@@ -654,6 +655,7 @@ Claude Code는 매주 바뀐다. 6개월마다 30분:
 - **§K 크레딧 잔액 오류 행** — Max·Ultra·Team API 크레딧의 대상(Claude Code 제외)·`Credit balance too low` 문구·인증 우선순위(`-p`는 `ANTHROPIC_API_KEY`를 항상 쓰고 대화형은 1회 승인)가 유지되는지(platform `api-credits-for-subscribers`·code.claude.com `authentication`, 2026-10-18 확인).
 - ✅(2026-11-22 종결) `~/.claude/`는 `blockReadsOutsideWorkingDirectories`의 통째 예외가 아니다 — 스킬·플러그인·rules·에이전트·커맨드·`CLAUDE.md`만 읽힌다(settings-reference). 글로벌 기록(`~/.claude/CLAUDE.md`) 읽기는 유지되고 `projects/` 열거는 막힌다(§J-1 반영). 🟡 `.claude/worktrees/` 안 세션이 본체 `CLAUDE.md`를 함께 로드하는지 — 일반 규칙(작업 디렉터리와 그 위 전부)으로는 로드되나 CLI 세션에 대한 명문은 없다(예외 명시는 서브에이전트 워크트리·데스크톱뿐).
 - **§J 웹 노출의 Claude 파일 목록** — Claude Code가 프로젝트에 두는 파일(`CLAUDE.md`·`CLAUDE.local.md`·`.claude/`·`.mcp.json`·`AGENTS.md`)이 공식 memory·settings 문서와 맞는지(새 프로젝트 파일이 생기면 §J 목록에 더한다).
+- 🟡(2026-11-22 인계) §D-6 `ultrathink` 승격 대상에 Fable 5.2가 드는지.
 - **자기 점검(갱신 의식)** — 재검증·개정은 기억이 아니라 **당일 공식 문서** 조회로 한다(확인 못 한 항목엔 🟡을 단다). 고쳤으면 ① 버전 표에 한 줄(무엇을 왜) ② 헤더·푸터의 버전과 "최종 갱신"·"최근 재검증" 날짜 ③ 저장소 `CLAUDE.md` 구성물 표 ④ 이 체크리스트 ⑤ 기계 검사 통과를 빠짐없이 한다. 버전은 네 곳에 있고 **하나만 빠져도 4축이 어긋난다** — 골격 규칙의 정본은 `docs/DOC_CONTRACT.md`다.
 - ✅ 해소된 과거 항목(재확인 불필요): CLAUDE.local.md deprecation 우려 → **계속 지원**(2026-07-20 확인, `.gitignore` 추가 권장 유지).
 
@@ -662,5 +664,5 @@ Claude Code는 매주 바뀐다. 6개월마다 30분:
 ## 핵심 출처 🟢
 IDE 통합·`--add-dir`(ide-integrations·large-codebases) / permissions·deny 한계 / hooks / skills / memory·auto-memory — 모두 `code.claude.com/docs` 및 `docs.anthropic.com`.
 
-**문서 정보** — 통합 마스터(범용) **v1.124**. 변경 이력은 최상단 버전 표 참조(유래: 8개 소스 통합 초판 — 최상단 병합 행).
+**문서 정보** — 통합 마스터(범용) **v1.125**. 변경 이력은 최상단 버전 표 참조(유래: 8개 소스 통합 초판 — 최상단 병합 행).
 최종 갱신: 2026-11-22 · 최근 재검증: 2026-11-22 / 참조: Claude Code v2.1.330, Opus 5.5(v2.1.280+) · Sonnet 5.5(v2.1.284+) · Haiku 5.5(v2.1.293+) · Fable 5.2(v2.1.321+).
