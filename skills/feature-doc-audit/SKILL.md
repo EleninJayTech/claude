@@ -46,7 +46,7 @@ allowed-tools: Bash(python *) Bash(python3 *) Bash(git rev-parse *) Bash(git rev
 ```
 
 ## 하지 않는 것
-- 문서를 고치지 않는다. 결과만 보고하고, 사용자가 원하면 `/feature-docs sync F-id` 를 안내한다.
+- 문서를 고치지 않는다. 결과만 보고하고, 사용자가 원하면 `/feature-docs sync <기준 커밋/태그>` 를 안내한다 (기준은 대상 문서의 `verified_commit` 중 가장 오래된 것).
 - 테스트를 실행하지 않는다. 실행은 `/feature-test`.
 - 리포트 파일을 만들지 않는다. 채팅 출력만. (기록이 필요하면 사용자가 요청할 때
   `docs/features/audit_reports/YYYY-MM-DD.md` 에 저장)

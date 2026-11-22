@@ -420,7 +420,7 @@ details.sect>summary h2{margin:0}
   <h3>2-4. Operating profile and usage pattern</h3>
   <p>Two questions. The <b>operating profile</b> fits your plan&rsquo;s allowance, so you pick one <b>per PC (account)</b>; the <b>usage pattern</b> is how you run Claude in this project, so you pick it <b>per project</b>. Neither <b>creates any file</b> &mdash; they only change other items&rsquo; pre-checks, suggestions and model assignments.</p>
   <ul>
-    <li>The <b>operating profile sets model assignment</b>; the <b>usage pattern sets structure</b> (which agents are pre-checked, isolation, what is suggested alongside, spending caps). When they clash, <b>the operating profile wins</b> &mdash; thrift + parallel uses thrift&rsquo;s scale for how much runs at once.</li>
+    <li>The <b>operating profile sets model assignment</b>; the <b>usage pattern sets structure</b> (which agents are pre-checked, isolation, what is suggested alongside, spending-cap advice). When they clash, <b>the operating profile wins</b> &mdash; thrift + parallel uses thrift&rsquo;s scale for how much runs at once.</li>
     <li>Whatever you pick, the <b>effort (reasoning depth) values</b> and the quality checkpoints (difficulty triage, pinning down requirements, final review, verification gates) stay the same.</li>
   </ul>
 
@@ -465,7 +465,7 @@ details.sect>summary h2{margin:0}
     <details class="more"><summary>Details</summary>
 <dl>
       <dt>Choose it when</dt><dd>You use an API key, a pay-per-use Enterprise plan or a cloud provider. If the sign-in shown by <code>/status</code> is an API key or a cloud provider, it is marked as suggested</dd>
-      <dt>What you get</dt><dd><code>claude -p</code> calls that run without a person get <b>cost and turn caps</b> (<code>--max-budget-usd</code>, <code>--max-turns</code> &mdash; the caps work on estimates). <b>Check the spending limit yourself</b> (Console or organization settings) &mdash; the install does not set it for you</dd>
+      <dt>What you get</dt><dd><b>Advice</b> to put cost and turn caps (<code>--max-budget-usd</code>, <code>--max-turns</code> &mdash; they work on estimates) on <code>claude -p</code> calls that run without a person. The install does not add them for you. <b>Check the spending limit yourself</b> (Console or organization settings) &mdash; the install does not set it for you</dd>
       <dt>Good to know</dt><dd>With an API key the cache lasts only <b>5 minutes</b>, so stepping away and coming back reprocesses the whole conversation</dd>
     </dl>
 </details>
@@ -479,7 +479,7 @@ details.sect>summary h2{margin:0}
     <details class="more"><summary>Details</summary>
 <dl>
       <dt>Suggested when</dt><dd>An agent file has <code>isolation: worktree</code>, or <code>.claude/worktrees/</code> is in use</dd>
-      <dt>What you get</dt><dd>For the 02 implementer, the isolated work folder (<code>isolation: worktree</code>) <b>set always-on in the file</b> becomes the default suggestion &middot; the handoff protocol (02 &#9427;) records how to split the slices &middot; 03 claude-hud pre-checked &middot; 03 session-board and agent-guard <b>marked as suggested only</b> (they put hooks on every session, so you pick them yourself)</dd>
+      <dt>What you get</dt><dd>For the 02 implementer, the isolated work folder (<code>isolation: worktree</code>) <b>attached only when run in parallel</b> becomes the default suggestion &middot; the handoff protocol (02 &#9427;) records that rule and how to split the slices &middot; 03 claude-hud pre-checked &middot; 03 session-board and agent-guard <b>marked as suggested only</b> (they put hooks on every session, so you pick them yourself)</dd>
       <dt>Good to know</dt><dd>Running N at once uses the allowance <b>about N times</b> faster. Workflow size is not raised &mdash; it starts at the default</dd>
       <dt>If you don&rsquo;t</dt><dd>Pre-checks follow the kind of work, as before</dd>
     </dl>
@@ -492,7 +492,7 @@ details.sect>summary h2{margin:0}
 <dl>
       <dt>Suggested when</dt><dd><code>.claude/agents/</code> has four or more role agents</dd>
       <dt>What you get</dt><dd>Everything from parallel + the <b>whole</b> roster for that kind of work pre-checked &middot; the custom reviewer (02 &#9426;) marked as suggested (still unchecked by default) &middot; the handoff protocol lists, for every role, which documents it reads and writes</dd>
-      <dt>Good to know</dt><dd>Role names not in the roster are not invented &mdash; extra roles are carved out of existing agents&rsquo; role descriptions. The experimental feature where several sessions work as a team (agent teams) is off by default, so it is <b>only explained</b> &mdash; turning it on is up to you, and it uses far more tokens</dd>
+      <dt>Good to know</dt><dd>Role names not in the roster are not invented &mdash; extra roles are carved out of existing agents&rsquo; role descriptions. The experimental feature where several sessions work as a team (agent teams) is off by default, and it is <b>not used with this roster</b> &mdash; once on, named agents come up as teammates and stop handing results back, so the roster quietly stops working. It also uses far more tokens</dd>
       <dt>If you don&rsquo;t</dt><dd>Only the agents that fit the kind of work are pre-checked</dd>
     </dl>
 </details>
@@ -503,7 +503,7 @@ details.sect>summary h2{margin:0}
     <details class="more"><summary>Details</summary>
 <dl>
       <dt>Suggested when</dt><dd>There is a <code>docs/ROUTINES.md</code>, or CI calls <code>claude -p</code></dd>
-      <dt>What you get</dt><dd>parity-tester pre-checked (when a test command is detected &mdash; with no one watching, the tests are the only check) &middot; the handoff protocol&rsquo;s stop rule becomes <b>&ldquo;stop at the first failure&rdquo;</b> &middot; 06 routines and the 04 hook gate marked as suggested &middot; <code>claude -p</code> calls bound by turn and cost caps, with a fallback model (<code>fallbackModel</code>) explained</dd>
+      <dt>What you get</dt><dd>parity-tester pre-checked (when a test command is detected &mdash; with no one watching, the tests are the only check) &middot; the handoff protocol&rsquo;s stop rule becomes <b>&ldquo;stop at the first failure&rdquo;</b> &middot; 06 routines and the 04 hook gate marked as suggested &middot; advice on capping <code>claude -p</code> calls by turns and cost, and on a fallback model (<code>fallbackModel</code>)</dd>
       <dt>Good to know</dt><dd>A workflow running with no one watching <b>fails</b> instead of waiting when it hits the allowance. Check the spending limit for extra usage yourself</dd>
       <dt>If you don&rsquo;t</dt><dd>Things stay set up for a person watching</dd>
     </dl>
@@ -774,7 +774,7 @@ details.sect>summary h2{margin:0}
       <dt>How to choose</dt><dd><b>Changing existing code</b> (migration, refactor) &rarr; everything except spec-writer. <b>Building something new</b> &rarr; drop surveyor and triage and start from <b>spec-writer</b>. An <b>audit</b> reuses surveyor (find) and analyst (verify) with their roles changed; <b>bug hunting</b> runs surveyor (reproduce) &rarr; analyst (cause) &rarr; implementer (fix) &rarr; parity-tester (regression check)</dd>
       <dt>Where they live</dt><dd><b>Shared with the team</b> = the project&rsquo;s <code>.claude/agents/</code> (committed, everyone uses them) / <b>personal experiment</b> = <code>~/.claude/agents/</code> (your machine only). Asked in every mode</dd>
       <dt>Parallel option</dt><dd>When the job is large and the slices never touch the same files, running <b>several implementers at once</b> (<code>isolation: worktree</code>) is offered as a choice. It is attached one of two ways &mdash; <b>always on</b>, set in the implementer file / <b>only when run in parallel</b> (steps done one after another skip building an isolated work folder each time, so it is lighter; since this leaves no trace in the file, the rule is written into the &#9427; handoff protocol document)</dd>
-      <dt>By usage pattern (2-4)</dt><dd>Parallel makes <b>always on</b> the default suggestion for the implementer&rsquo;s isolation, role team pre-checks the <b>whole</b> roster for that kind of work, and unattended pre-checks parity-tester (when a test command is detected). These are pre-checks only &mdash; you still choose</dd>
+      <dt>By usage pattern (2-4)</dt><dd>Parallel makes <b>only when run in parallel</b> the default suggestion for the implementer&rsquo;s isolation, role team pre-checks the <b>whole</b> roster for that kind of work, and unattended pre-checks parity-tester (when a test command is detected). These are pre-checks only &mdash; you still choose</dd>
     </dl>
 </details>
   </div>
@@ -897,7 +897,7 @@ details.sect>summary h2{margin:0}
 <dl>
       <dt>The six</dt><dd><b>feature-docs</b> (write and update the specs) &middot; <b>feature-test</b> (run the test cases written in them, on the real screen) &middot; <b>feature-doc-audit</b> (find which docs have gone stale, no test run needed) &middot; <b>feature-doc-guard</b> (block a commit that changes code without touching its doc) &middot; <b>test-to-script</b> (turn test cases into Playwright/Maestro scripts) &middot; <b>release-notes</b> (build release notes from the doc history)</dd>
       <dt>Installed together, always</dt><dd>They share one folder layout, so a partial install leaves the rest quietly broken. Start with <code>/feature-docs init</code> &mdash; four of the other five refuse to run until it exists (<code>/release-notes</code> still runs, from git history alone)</dd>
-      <dt>Asked alongside &mdash; commit guard</dt><dd>Asked separately, <b>unchecked by default</b>. It is a hook that blocks a commit changing feature code without touching that feature&rsquo;s doc, so installed in the project it applies to <b>every teammate&rsquo;s commits</b> (hence the approval). It needs the spec inventory to work, so it is only offered after <code>/feature-docs init</code></dd>
+      <dt>Asked alongside &mdash; commit guard</dt><dd>Asked separately, <b>unchecked by default</b>. It is a hook that blocks a commit changing feature code without touching that feature&rsquo;s doc, so committed with the project it also applies to <b>commits teammates make through Claude</b> (hence the approval). Plain terminal commits are blocked only on machines where the guard was installed. It needs the spec inventory to work, so it is only offered after <code>/feature-docs init</code></dd>
       <dt>Invocation</dt><dd><b>feature-test</b> (drives the screen) and <b>test-to-script</b> (adds test markers to source) are recommended as <b>manual only</b> &mdash; invoked automatically, they could drive the screen or edit source without you noticing. Set that way, you call <code>/feature-test</code> yourself</dd>
       <dt>Needs</dt><dd><b>Python 3</b> for two of them (audit and guard). Without it the other four still work, and the install is recorded as pending so it is not forgotten</dd>
       <dt>Choose it when</dt><dd>The project has real features and real screens. <b>Not for documentation-only repositories</b> &mdash; there is nothing to specify or run</dd>
@@ -1153,7 +1153,7 @@ details.sect>summary h2{margin:0}
     </tr>
     <tr>
       <td><b>Already a plugin</b></td>
-      <td>Asked only for the feature-doc set, refactor, kr-ui-guide, browser-check, pc-clean, ops-kit, win-setup and kb-dashboard, and only when the same skills are already turned on as a <code class="i">dandi</code> plugin. <b>Keep</b> &mdash; the plugin stays and the copy is skipped / <b>replace</b> &mdash; the plugin is removed, then the copy is installed. Having both would put two identical skills in front of Claude. To remove a skill you got as a plugin, follow that plugin&rsquo;s own uninstall steps (<code class="i">/plugin uninstall dandi-refactor@dandi</code>, for example)</td>
+      <td>Asked only for the feature-doc set, refactor, kr-ui-guide, browser-check, pc-clean, ops-kit, win-setup and kb-dashboard, and only when the same skills are already turned on as a <code class="i">dandi</code> plugin. <b>Keep</b> &mdash; the plugin stays and the copy is skipped / <b>replace</b> &mdash; the plugin is removed, then the copy is installed. Having both would put two identical skills in front of Claude. Session-board and agent-guard are asked about separately, when their hooks would run twice. To remove a skill you got as a plugin, follow that plugin&rsquo;s own uninstall steps (<code class="i">/plugin uninstall dandi-refactor@dandi</code>, for example)</td>
     </tr>
   </table>
   </div>
@@ -1356,7 +1356,7 @@ details.sect>summary h2{margin:0}
     <tr>
       <td><b>Running several jobs at once with subagents or worktrees</b></td>
       <td>Recommended / stronger verification / standard &middot; pattern <b>parallel</b></td>
-      <td>Implementer isolation and the status line are set by default, and session-board (sessions tell each other apart) and agent-guard (fits how many run at once to the PC) come up as suggestions. Just remember the allowance drains as fast as you run things in parallel</td>
+      <td>Isolation for parallel implementers and the status line are suggested by default, and session-board (sessions tell each other apart) and agent-guard (fits how many run at once to the PC) come up as suggestions. Just remember the allowance drains as fast as you run things in parallel</td>
     </tr>
     <tr>
       <td><b>A documentation-only repository</b></td>

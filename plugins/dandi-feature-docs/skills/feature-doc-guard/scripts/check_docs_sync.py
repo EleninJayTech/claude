@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """스테이징된 소스 변경에 대응하는 docs/features/ 문서가 함께 스테이징됐는지 검사.
-종료 0 = 통과, 1 = 누락 있음. 표준 라이브러리만 사용."""
+종료 0 = 통과, 1 = 누락 있음. --only-on-commit(Claude Code PreToolUse)이면 누락을 stderr + 종료 2로 낸다
+(1은 도구 호출을 막지 않는다). 표준 라이브러리만 사용."""
 import json, os, re, subprocess, sys
 
 DOCS = "docs/features"
@@ -49,9 +50,12 @@ def doc_file(fid):
 def main():
     if os.environ.get("FEATURE_DOC_GUARD") == "0":
         return 0
+    out, blocked = sys.stdout, 1
     if "--only-on-commit" in sys.argv:
+        out, blocked = sys.stderr, 2
+        out.reconfigure(encoding="utf-8")
         try:
-            data = json.load(sys.stdin)
+            data = json.loads(sys.stdin.buffer.read())
             cmd = data.get("tool_input", {}).get("command", "")
         except Exception:
             cmd = ""
@@ -82,12 +86,12 @@ def main():
         for p in unmapped:
             print("   -", p)
     if missing:
-        print("[feature-doc-guard] 코드는 바뀌었는데 기능 문서가 스테이징되지 않음:")
+        print("[feature-doc-guard] 코드는 바뀌었는데 기능 문서가 스테이징되지 않음:", file=out)
         for fid, files in missing.items():
-            print(f"   {fid} ({doc_file(fid)}) <- {', '.join(files)}")
-        print("   문서를 갱신하고 함께 add 하거나, /dandi-feature-docs:feature-docs sync 를 실행하세요.")
-        print("   우회: FEATURE_DOC_GUARD=0 또는 커밋 명령에 [skip-doc]")
-        return 1
+            print(f"   {fid} ({doc_file(fid)}) <- {', '.join(files)}", file=out)
+        print("   문서를 갱신하고 함께 add 하거나, /dandi-feature-docs:feature-docs sync 를 실행하세요.", file=out)
+        print("   우회: FEATURE_DOC_GUARD=0" + (" 또는 커밋 명령에 [skip-doc]" if blocked == 2 else ""), file=out)
+        return blocked
     return 0
 
 if __name__ == "__main__":

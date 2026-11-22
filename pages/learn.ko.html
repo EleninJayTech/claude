@@ -481,7 +481,7 @@ footer{max-width:1120px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
         <li><b>frontend-design</b> — Anthropic 공식 스킬. "AI가 만든 티가 나는 UI"를 피하게 합니다.</li>
         <li><b>MCP 서버</b> — 외부 도구 연결(GitHub·문서 검색·브라우저 조작). 기본은 꺼져 있습니다. 고르면 어떤 서버를 붙일지와 <b>어디에 등록할지</b>(팀 공유 <code class="i">.mcp.json</code> / 내 PC 전체 / 이 프로젝트에서 나만)를 따로 물어봅니다.</li>
         <li><b>브라우저 검증</b> — 만든 화면을 <b>Claude가 직접 열어 확인하고 고치게</b> 합니다. 고르면 쓸 브라우저 도구를 따로 묻습니다(여러 개 고를 수 있음). 기본은 창 없이 도는 <b>Playwright CLI</b>입니다(Node.js가 필요해서, Node가 없는 PC에서는 기본 해제로 나오고 다른 도구를 대안으로 보여 줍니다) — 화면이 있는 PC에서도 내 브라우저를 차지하지 않고, 여러 세션을 함께 돌릴 수 있고, WSL·SSH·CI에서도 똑같이 돕니다. 로그인이 필요한 화면은 테스트 계정의 로그인 상태를 저장한 파일로 열고, 구글처럼 테스트 계정이 없으면 창을 띄운 Chrome의 전용 프로필에 내가 직접 한 번 로그인합니다. <b>Claude in Chrome</b> 확장은 기본 해제인 보조 수단입니다. 고르더라도 매 세션 자동으로 켜지는 설정은 끄도록 안내하므로, 쓸 때는 <code class="i">claude --chrome</code>으로 시작합니다 — 이미 돌고 있는 세션에서는 확장을 열어도 연결되지 않습니다. <b>Chrome DevTools MCP</b>는 느려짐·메모리·네트워크 문제의 원인을 파고드는 디버깅용으로, 기본은 꺼져 있고 내 PC에만 등록됩니다. Desktop 앱을 쓰면 내장 브라우저도 설치 없이 쓸 수 있어 안내만 합니다. 어느 쪽이든 작은 규칙 스킬 <b>browser-check</b>가 함께 깔립니다 — 먼저 페이지를 글자로 읽고, 보이는 모습 자체가 문제일 때만 스크린샷을 찍게 합니다(스크린샷은 비쌉니다). Claude가 스스로 부르는 방식을 권장합니다.</li>
-        <li><b>기능 문서 스킬 세트</b>(6종) — 코드와 실제 화면을 보고 <b>기능마다 명세</b>를 써 두고, 거기 적힌 테스트를 돌리고, 문서를 안 고친 커밋을 막고, 릴리스 노트까지 만듭니다. 6종을 한 세트로 깔며, 문서만 있는 저장소는 대상이 아닙니다. 팀원 전원의 커밋을 막는 <b>커밋 가드</b>는 기본으로 꺼 둔 채 따로 물어봅니다.</li>
+        <li><b>기능 문서 스킬 세트</b>(6종) — 코드와 실제 화면을 보고 <b>기능마다 명세</b>를 써 두고, 거기 적힌 테스트를 돌리고, 문서를 안 고친 커밋을 막고, 릴리스 노트까지 만듭니다. 6종을 한 세트로 깔며, 문서만 있는 저장소는 대상이 아닙니다. 커밋을 막는(팀원이 Claude로 하는 커밋 포함) <b>커밋 가드</b>는 기본으로 꺼 둔 채 따로 물어봅니다.</li>
         <li><b>refactor</b> — 코드를 정리하고(중복 통합·구조 정리·낡은 문법 제거) <b>동작이 그대로인지까지 증명</b>합니다 — 호출처·계약·데이터 형식·실제 실행. 후보를 표로 보여주고 고른 것만 고칩니다. 코드를 고치는 스킬이라 어느 모드에서도 기본은 꺼져 있고, 문서만 있는 저장소는 대상이 아닙니다.</li>
         <li><b>kr-ui-guide</b> — 국내 서비스 리서치(UX 패턴·아이콘·색·최신 디자인 트렌드)와 한국 게임 UI/UX 리서치에서 추린 설계 기준. 제안하는 색의 <b>명도 대비를 계산</b>하고 화면을 체크리스트로 점검합니다. 한국 사용자 대상 <b>웹·앱·게임</b> 화면용이며, 특정 브랜드의 모양을 베끼지 않습니다. 고르면 선택 항목 두 개를 함께 묻습니다(둘 다 기본 해제). 하나는 UI 작업을 할 프로젝트의 <code class="i">CLAUDE.md</code>에 넣는 <b>프로젝트 오버라이드 절</b>(브랜드 컬러·상태 색·다크모드·도메인·타깃 플랫폼·스타일 팩)입니다 — 값을 비워 두면 Claude가 기준을 먼저 읽은 뒤 그 기준에서 고른 후보를 붙여 물어봅니다. 다른 하나는 두 번째 스킬 <b>kr-ui-styles</b>로, 프로젝트가 원할 때 기본 모습을 리서치에서 추린 다른 방향(지금은 에디토리얼·모노크롬, 다크·네온, 키치·일러스트, 네오브루탈)으로 바꿉니다. 이걸 고르면 그 프로젝트에 쓸 스타일 팩도 묻습니다.</li>
         <li><b>pc-clean</b> — PC가 느려졌을 때 원인 후보(디스크·메모리 여유, 주인 잃은 <code class="i">node.exe</code>, 오늘 이전부터 켜져 있던 Claude 세션, 임시 파일 등)를 <b>읽기만 해서</b> 표 한 장으로 보여주고, <b>내가 승인한 항목만</b> 정리합니다. <b>Windows + PowerShell 7 전용</b>이라 다른 OS에서는 목록에 나오지 않고, 프로젝트와 무관한 PC 도구라 기본은 꺼져 있습니다. 스코프는 내 PC 전체가 기본입니다.</li>
@@ -497,7 +497,7 @@ footer{max-width:1120px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
       </ul>
       <p>스킬을 고르면 두 가지를 더 물어봅니다 — <b>스코프</b>(내 PC 전체 vs 이 프로젝트만)와
       <b>호출 방식</b>(Claude가 알아서 vs 내가 <code class="i">/명령</code>을 칠 때만). 정책 기록·기능 변경 기록(이 프로젝트만)과 session-board·agent-guard·diff 검수 도구(내 PC 전체)는 자리가 정해져 있어 스코프를 묻지 않고 알려만 줍니다. Flutter 앱 화면 검증의 MCP 등록 위치는 이 프로젝트에서 나만 / 팀 공유 중에서만 고릅니다(내 PC 전체는 없습니다).
-      기능 문서 세트·refactor·kr-ui-guide·browser-check·pc-clean·ops-kit·win-setup·kb-dashboard가 이미 <code class="i">dandi</code> 플러그인으로 켜져 있으면 <b>플러그인 유지</b>(복사 안 함)와 <b>복사본으로 교체</b> 중 하나도 묻습니다 — 둘 다 두지는 않습니다.</p>
+      기능 문서 세트·refactor·kr-ui-guide·browser-check·pc-clean·ops-kit·win-setup·kb-dashboard가 이미 <code class="i">dandi</code> 플러그인으로 켜져 있으면 <b>플러그인 유지</b>(복사 안 함)와 <b>복사본으로 교체</b> 중 하나도 묻습니다 — 둘 다 두지는 않습니다. session-board·agent-guard는 훅이 두 번 돌게 될 때 따로 묻습니다.</p>
       <p><b>frontend-design</b>이나 <b>kr-ui-guide</b>를 고르면 질문이 하나 더 붙습니다 &mdash; <b>폰트 라이선스 정책</b>입니다. 설치한 스코프의 <code class="i">CLAUDE.md</code>에 적힙니다.
       <b>자유 사용만</b>(기본)은 자유롭게 쓸 수 없는 폰트를 거절하고 무료 대체 폰트를 제시하고, <b>안내 후 선택</b>은 조건(구매·고지 의무·사용 범위)을 먼저 알린 뒤 내 결정을 기다립니다. <b>넣지 않음</b>이면 정책을 적지 않습니다.
       정책 한 곳이 어느 디자인 스킬에나 적용됩니다 &mdash; frontend-design은 혼자서는 라이선스를 보지 않으면서 타이포를 가장 적극적으로 바꿉니다. <b>적용 범위·폰트 정책·브라우저 도구는 어떤 모드에서도 물어봅니다</b> &mdash; 모드가 대신 정하지 않습니다.</p>
@@ -934,9 +934,9 @@ var FORMS={
   unatt:{name:'무인',desc:'루틴 · claude -p · /loop'}
 };
 var FORMPLAN={
-  par:'<li><b>병렬</b> — implementer를 격리 워크트리 상시 지정으로 기본 제안 · 핸드오프 규약 기본 체크 · claude-hud 기본 체크 · session-board·agent-guard는 추천만(모든 세션에 훅을 거는 항목이라 체크해 두지 않음). 에이전트 N개를 동시에 돌리면 한도도 약 N배 빨리 씁니다.</li>',
-  org:'<li><b>조직</b> — 병렬의 전부 + 그 활동 유형의 로스터 전부 기본 체크 · 커스텀 리뷰어 추천(기본 해제는 그대로). agent teams는 실험적·기본 꺼짐이라 직접 켜는 선택지로만 안내합니다.</li>',
-  unatt:'<li><b>무인</b> — 테스트 명령이 감지되면 parity-tester 기본 체크(보는 사람이 없어 테스트가 유일한 검증) · 핸드오프 규약의 중단 규칙을 "첫 실패에서 멈춘다"로 · 06 루틴·04 훅 게이트 추천 · <code class="i">claude -p</code>는 턴·예산 상한으로 묶습니다.</li>'
+  par:'<li><b>병렬</b> — implementer 격리 워크트리를 동시에 돌릴 때만 붙이는 쪽으로 기본 제안 · 핸드오프 규약 기본 체크 · claude-hud 기본 체크 · session-board·agent-guard는 추천만(모든 세션에 훅을 거는 항목이라 체크해 두지 않음). 에이전트 N개를 동시에 돌리면 한도도 약 N배 빨리 씁니다.</li>',
+  org:'<li><b>조직</b> — 병렬의 전부 + 그 활동 유형의 로스터 전부 기본 체크 · 커스텀 리뷰어 추천(기본 해제는 그대로). agent teams는 실험적·기본 꺼짐이고 이 로스터와 함께 쓰지 않습니다(켜면 이름 붙은 에이전트가 결과를 돌려주지 않습니다).</li>',
+  unatt:'<li><b>무인</b> — 테스트 명령이 감지되면 parity-tester 기본 체크(보는 사람이 없어 테스트가 유일한 검증) · 핸드오프 규약의 중단 규칙을 "첫 실패에서 멈춘다"로 · 06 루틴·04 훅 게이트 추천 · <code class="i">claude -p</code>를 턴·예산 상한으로 묶는 법을 안내합니다.</li>'
 };
 function formKeys(sel){ return Object.keys(FORMS).filter(function(k){ return sel.indexOf(k)>=0; }); }
 var pSel=null, fmSel=[];
@@ -959,7 +959,7 @@ function drawProf(){
 var PROFPLAN={
   std:'<ul><li>effort 기본값 유지, 어려운 작업엔 상위 모델</li><li>대부분의 경우 이걸 고르면 됩니다</li></ul>',
   roomy:'<ul><li>일상 작업·도우미 에이전트는 표준과 같게 — 품질이 같으면 싼 쪽이라 올리지 않습니다</li><li>안 깎는 작업에는 Fable을 선택지로 제시 — 플랜에 포함되는 요금제에서만</li><li>계획 전용 모델 명령(02 ⓔ)을 추천으로 표시 — 기본 해제는 그대로</li></ul>',
-  meter:'<ul><li>모델 배정은 표준과 같게</li><li><code class="i">claude -p</code> 실행에 <code class="i">--max-budget-usd</code>·<code class="i">--max-turns</code> 상한</li><li>지출 한도(워크스페이스·조직)는 직접 확인</li></ul><p class="why"><code class="i">/status</code>의 인증이 API 키나 클라우드 공급자면 추천으로 나옵니다.</p>',
+  meter:'<ul><li>모델 배정은 표준과 같게</li><li><code class="i">claude -p</code> 실행에 <code class="i">--max-budget-usd</code>·<code class="i">--max-turns</code> 상한을 넣으라고 안내(설치가 넣어 주지는 않음)</li><li>지출 한도(워크스페이스·조직)는 직접 확인</li></ul><p class="why"><code class="i">/status</code>의 인증이 API 키나 클라우드 공급자면 추천으로 나옵니다.</p>',
   save:'<ul><li>일상 작업은 하위 모델로, 로스터 축소 · 워크플로 규모 낮춤 · 동시 팬아웃 자제</li><li>claude-hud 기본 체크 — 사용량이 보여야 아낄 수 있으니까</li></ul>'
       +'<p class="why">직접 할 것: 일상 작업은 <code class="i">/model sonnet</code>으로 시작하세요(한 번 바꾸면 저장됩니다). 난이도 분류·요구 확정·최종 리뷰처럼 안 깎는 작업은 <code class="i">claude --model &lt;상위 모델&gt;</code>로 새 세션을 열어서 하세요 — <code class="i">/model</code>로 올리면 그 값이 저장돼 다음 일상 작업도 상위 모델로 돕니다.</p>'
 };
@@ -1051,7 +1051,7 @@ function drawFinal(){
   if(notes.length) h+='<p class="why">🏢 '+notes.join(' · ')+'</p>';
   if(F.prof==='save') h+='<p class="why">💰 절약 프로필: Sonnet 중심 배정 — 단 검증 게이트는 그대로.</p>';
   if(F.prof==='roomy') h+='<p class="why">💰 여유 프로필: 배정은 표준과 같게 — 플랜에 포함되면 안 깎는 작업에 Fable을 선택지로.</p>';
-  if(F.prof==='meter') h+='<p class="why">💰 종량 프로필: <code class="i">claude -p</code> 실행에 예산·턴 상한.</p>';
+  if(F.prof==='meter') h+='<p class="why">💰 종량 프로필: <code class="i">claude -p</code> 실행에 예산·턴 상한을 직접 넣으세요.</p>';
   var fk=formKeys(F.form);
   if(fk.length) h+='<p class="why">👥 사용 형태 '+fk.map(function(k){return FORMS[k].name;}).join('+')+': 02·03에서 기본 체크·추천으로 나오는 것이 달라집니다(챕터 5).</p>';
   $('finalPlan').innerHTML=h;

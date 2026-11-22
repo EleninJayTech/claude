@@ -38,10 +38,11 @@ description: 드롭인 구성 최신성 점검(읽기 전용). 대상 프로젝�
 - 신호가 없으면 "웹 노출 신호 없음" 한 줄.
 
 ## 3) 글로벌 구성 대조 — **정본 저장소 클론이 있을 때만 수행하는 절이다**
-- 🔴 **먼저 게이트**: 이 절은 **remote가 `EleninJayTech/claude-dev`(정본·비공개)인 클론**이 있을 때만 도는 **유지보수자 전용** 절이고, `global-config/` 미러는 **설치 소스가 아니다**(R38 — 배포 저장소 하나로 같은 결과가 나와야 한다). `global-config/` 미러는 그 저장소에만 있고 **배포 저장소(`EleninJayTech/claude`)에는 `skills/dropin-*` 계열만 있다**(목록의 정본은 배포 워크플로의 복사 대상이다 — 개수를 여기 적지 않는다). 배포본 클론을 미러로 삼아 대조하면 사용자의 정상적인 `CLAUDE.md`·`settings.json`·스킬 전부가 **"백업에 없음"으로 무더기 오보**된다(2026-09-10 실제 신고). **폴더 이름·경로로 판별하지 않는다**(remote로만).
+- 🔴 **먼저 게이트**: 이 절은 **remote가 `EleninJayTech/claude-dev`(정본·비공개)인 클론**이 있을 때만 도는 **유지보수자 전용** 절이고, `global-config/` 미러는 **설치 소스가 아니다**(R38 — 배포 저장소 하나로 같은 결과가 나와야 한다). `global-config/` 미러는 그 저장소에만 있고 **배포 저장소(`EleninJayTech/claude`)에는 배포용 설치 스킬만 있다**(목록의 정본은 배포 워크플로의 복사 대상이다 — 개수를 여기 적지 않는다). 배포본 클론을 미러로 삼아 대조하면 사용자의 정상적인 `CLAUDE.md`·`settings.json`·스킬 전부가 **"백업에 없음"으로 무더기 오보**된다(2026-09-10 실제 신고). **폴더 이름·경로로 판별하지 않는다**(remote로만).
 - **정본 클론이 없으면**(배포본만 있거나 클론이 없으면) 이 절은 **"해당 없음 — 미러 대조는 정본 저장소 유지보수용"** 한 줄로 보고하고 건너뛴다. 결함이 아니라 **일반 설치의 정상 상태**이므로 권고 목록에 올리지 않는다. §1의 GitHub API 폴백은 드롭인 문서의 헤더·버전 표만을 위한 것이라 `global-config/` 전문 대조를 대신하지 못한다. 추측 비교 금지.
 - 화이트리스트 정본은 정본 저장소의 `global-config/README.md` 표다. **그 파일도 배포되지 않으므로** 위 게이트를 통과한 경우에만 참조한다.
 - 대조 대상: 위 README 표의 화이트리스트 전부를 정본 저장소 `global-config/`와 파일 단위로(없음/내용 다름). 단 `skills/synced/`(claude.ai 계정 동기화 스킬)·`skills/.trash/`(Claude Code가 지운 스킬을 옮겨 둔 내부 폴더)는 백업 대상이 아니라 대조하지 않는다.
+- 비교 전 키를 재귀 정렬하고, 비교 도구가 없으면 "미확인"으로 보고한다(통과로 치지 않는다 — `/wrap`과 같다).
 - `settings.json`은 **구성 성격 키(`permissions.deny`·`hooks`·`attribution`·`autoMemoryEnabled`)의 차이만** 보고한다 —
   그 밖은 전부 머신 종속이라 달라도 정상(model·theme·outputStyle·enabledPlugins·statusLine·effortLevel·modelSettings·autoUpdatesChannel·
   마켓플레이스 소스 형식 등, DEC-20260721-bsjeong87-02). 괄호는 예시이므로 **제외 목록을 늘리지 말고 포함 기준으로 판정**한다.

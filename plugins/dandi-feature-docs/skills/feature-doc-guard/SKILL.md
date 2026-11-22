@@ -13,8 +13,10 @@ allowed-tools: Bash(python *) Bash(python3 *) Bash(git diff *) Bash(git rev-pars
 ## install
 
 1. `${CLAUDE_SKILL_DIR}/scripts/check_docs_sync.py` 를 프로젝트의
-   `.claude/hooks/check_docs_sync.py` 로 복사한다 (프로젝트 안에 두어야 팀원과 CI 에서도 동작).
-2. **git pre-commit 훅**: `.git/hooks/pre-commit` 이 없으면 만들고, 있으면 끝에 추가한다.
+   `.claude/hooks/check_docs_sync.py` 로 복사한다 (프로젝트 안에 두고 커밋해야 팀원의 Claude Code 훅에서도 동작).
+2. **git pre-commit 훅**: `git rev-parse --git-path hooks/pre-commit` 이 가리키는 파일이 없으면 만들고, 있으면 끝에 추가한다
+   (워크트리에서는 `.git` 이 파일이라 `.git/hooks` 를 직접 쓰지 않는다. `core.hooksPath` 가 설정돼 있으면 쓰기 전에 묻는다).
+   이 훅은 커밋되지 않으므로 클론마다 `install` 을 따로 실행해야 한다.
    Windows 에서도 git 이 sh 로 실행하므로 sh 문법으로 쓴다.
    ```sh
    #!/bin/sh
@@ -23,7 +25,7 @@ allowed-tools: Bash(python *) Bash(python3 *) Bash(git diff *) Bash(git rev-pars
    ```
    `python` 이 없고 `python3` 만 있는 환경이면 그에 맞춘다. 실행 권한을 준다.
 3. **Claude Code 훅**: 프로젝트 `.claude/settings.json` 의 `hooks.PreToolUse` 에 아래를 추가한다
-   (기존 훅은 보존). 이러면 Claude 가 `git commit` 을 실행하기 직전에도 검사한다.
+   (기존 훅은 보존). 이러면 Claude 가 `git commit` 을 실행하기 직전에도 검사하고, 누락이면 그 호출을 막는다.
    ```json
    {
      "matcher": "Bash",
@@ -34,7 +36,8 @@ allowed-tools: Bash(python *) Bash(python3 *) Bash(git diff *) Bash(git rev-pars
    }
    ```
    `--only-on-commit` 은 stdin 으로 들어오는 도구 입력에 `git commit` 이 포함될 때만 검사한다.
-4. `.claude/hooks/` 와 settings.json 을 커밋 대상에 포함하라고 안내한다.
+4. `.claude/hooks/` 와 settings.json 을 커밋 대상에 포함하라고 안내한다. 팀에 공유되는 것은 Claude 경유 커밋 검사뿐이고,
+   `install` 을 하지 않은 클론의 터미널·IDE 커밋은 막지 않는다고 알린다.
 5. 설치 후 `check` 를 한 번 실행해 동작을 보여준다.
 
 ## uninstall
@@ -49,7 +52,7 @@ pre-commit 에서 `# feature-doc-guard` 블록을, settings.json 에서 해당 �
 - 스테이징된 파일 중 docs/, 테스트, 설정, 잠금 파일을 제외한 소스 파일을 대상으로 한다.
 - 각 파일을 00_inventory.md 의 "담당 코드 위치" 열과 각 F-xxx 문서의 "코드 참조" 절에서
   찾아 영향 기능을 구한다. 접두 일치(디렉터리)도 인정한다.
-- 영향 기능의 F-xxx 파일이 스테이징에 없으면 목록을 출력하고 종료 코드 1 로 커밋을 막는다.
+- 영향 기능의 F-xxx 파일이 스테이징에 없으면 목록을 출력하고 커밋을 막는다 (pre-commit 은 종료 코드 1, Claude Code 훅은 stderr + 종료 코드 2).
 - 어느 기능에도 매핑되지 않는 소스 파일은 "새 기능 후보" 로 경고만 하고 막지 않는다.
-- 우회: `FEATURE_DOC_GUARD=0` 환경변수, 또는 커밋 메시지에 `[skip-doc]`.
-  (`git commit -m "... [skip-doc]"` 은 pre-commit 시점에 메시지를 읽을 수 없으므로 환경변수를 쓴다.)
+- 우회: `FEATURE_DOC_GUARD=0` 환경변수. 커밋 명령의 `[skip-doc]` 은 Claude Code 훅에만 통한다
+  (pre-commit 은 메시지를 읽을 수 없어 그대로 막는다).
