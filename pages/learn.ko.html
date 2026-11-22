@@ -351,13 +351,13 @@ footer{max-width:1120px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
 <!-- ═══ CH5 프로필 · 기존 설정 ═══ -->
 <section class="chapter" data-ch="5" aria-labelledby="t5" hidden>
   <p class="eyebrow">챕터 5 · 나머지 공통 질문</p>
-  <h2 id="t5">운용 프로필, 산출물 언어, 이름 별칭, 그리고 이미 있을 때</h2>
+  <h2 id="t5">운용 프로필, 사용 형태, 산출물 언어, 이름 별칭, 그리고 이미 있을 때</h2>
 
   <details class="acc"><summary>빠른 경로 — 이미 구성된 PC에서만</summary><div class="acc-b">
-  <p>이 PC에 <b>이미 설치한 기록이 있고, 이번 프로젝트에는 아직 설치 기록이 없을 때만</b> 맨 처음에 나오는 질문입니다. 기록에 적힌 PC 이름을 보여 주고 <b>이 PC가 맞는지</b> 먼저 확인합니다(아니라고 답하면 이 질문은 접고 하나씩 묻습니다). 팀원이 이미 설치해 둔 저장소를 받았거나 다시 적용하는 중이라면 나오지 않습니다 — 팀이 맞춰 둔 값을 내 PC 값으로 덮지 않기 위해서입니다. 새 모드가 아니라, 공통 질문(기반 모드·번들·프로필·언어·별칭)에 <b>한 번에 답하는 지름길</b>입니다. 어느 것을 고르든 가져올 값을 보여 주고 <b>확인을 받습니다</b>.</p>
+  <p>이 PC에 <b>이미 설치한 기록이 있고, 이번 프로젝트에는 아직 설치 기록이 없을 때만</b> 맨 처음에 나오는 질문입니다. 기록에 적힌 PC 이름을 보여 주고 <b>이 PC가 맞는지</b> 먼저 확인합니다(아니라고 답하면 이 질문은 접고 하나씩 묻습니다). 팀원이 이미 설치해 둔 저장소를 받았거나 다시 적용하는 중이라면 나오지 않습니다 — 팀이 맞춰 둔 값을 내 PC 값으로 덮지 않기 위해서입니다. 새 모드가 아니라, 공통 질문(기반 모드·번들·프로필·사용 형태·언어·별칭)에 <b>한 번에 답하는 지름길</b>입니다. 어느 것을 고르든 가져올 값을 보여 주고 <b>확인을 받습니다</b>.</p>
   <ul>
-    <li><b>이 PC 기본값으로</b>(기본 추천) — 이 PC에 정해 둔 프로필(있으면 언어·별칭도)을 쓰고 모드는 최소(+작업 중 추천)로 갑니다. 값을 보여 주고 <b>확인만</b> 받습니다. 이 PC에 적힌 값이 없는 항목은 그 질문만 따로 물어봅니다. 같은 PC에서 두 번째 프로젝트부터 이것.</li>
-    <li><b>다른 프로젝트와 같게</b> — 이 PC의 다른 프로젝트에 적힌 모드·번들·언어·별칭을 가져옵니다. 프로필만은 이 PC의 값입니다. 지금도 <b>실제로 있고</b> 설치 기록이 남은 프로젝트만 후보로 나오며, 어느 프로젝트에서 가져왔는지는 기록에 남기지 않습니다(이 프로젝트 기록은 팀에 공유되니까요).</li>
+    <li><b>이 PC 기본값으로</b>(기본 추천) — 이 PC에 정해 둔 프로필(있으면 언어·별칭도)을 쓰고 모드는 최소(+작업 중 추천)로 갑니다. 값을 보여 주고 <b>확인만</b> 받습니다. 이 PC에 적힌 값이 없는 항목은 그 질문만 따로 물어봅니다 — 사용 형태는 이 PC 기록에 없는 값이라 늘 따로 묻습니다. 같은 PC에서 두 번째 프로젝트부터 이것.</li>
+    <li><b>다른 프로젝트와 같게</b> — 이 PC의 다른 프로젝트에 적힌 모드·번들·사용 형태·언어·별칭을 가져옵니다. 프로필만은 이 PC의 값입니다. 지금도 <b>실제로 있고</b> 설치 기록이 남은 프로젝트만 후보로 나오며, 어느 프로젝트에서 가져왔는지는 기록에 남기지 않습니다(이 프로젝트 기록은 팀에 공유되니까요).</li>
     <li><b>권장 모드로</b> — 이 폴더만 보고 Claude가 조합한 ‘권장’과 기본값으로 갑니다.</li>
     <li><b>하나씩 고르기</b> — 지름길 없이 공통 질문을 처음부터 전부 받습니다.</li>
   </ul>
@@ -367,18 +367,25 @@ footer{max-width:1120px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
     안전 질문("이미 있는 걸 덮어쓸까요?"), 아래의 기존 팀 구성 질문, 회사 정책 확인, 어디에 둘지 고르는 스코프 질문, 기본으로 꺼진 항목을 켤지 묻는 질문은 <b>그대로 나옵니다</b>. ‘전체’ 모드로도 줄일 수 없는 것을 지름길이 줄이면 안 되기 때문입니다.
   </div></div>
 
-  <h3>운용 프로필 — 표준 / 절약</h3>
-  <p>이 PC의 글로벌 기록에 프로필이 이미 있으면 그 값을 보여 주고 <b>확인만</b> 받습니다.</p>
+  <h3>운용 프로필과 사용 형태 — 따로 묻는 두 질문</h3>
+  <p><b>운용 프로필</b>은 요금제 한도에 관한 것이라 <b>이 PC</b>마다 정합니다. <b>사용 형태</b>는 <b>이 프로젝트</b>를 어떻게 돌리는지(에이전트 여럿을 동시에, 역할별 에이전트를 상시로, 사람 없이 자동으로)에 관한 것이라 팀이 함께 씁니다. 값이 이미 기록돼 있으면 — 프로필은 이 PC의 글로벌 기록, 사용 형태는 이 프로젝트 기록 — 그 값을 보여 주고 <b>확인만</b> 받습니다.</p>
   <div class="sim">
     <div class="q">
       <p class="qt"><b>Q.</b> 운용 프로필을 골라 주세요</p>
       <div class="opts" id="profOpts" role="group" aria-label="운용 프로필 선택"></div>
+      <p class="qt" style="margin:12px 0 6px"><b>Q.</b> 이 프로젝트를 어떻게 돌리나요? (여러 개 — 안 고르면 단일 세션)</p>
+      <div class="opts" id="formOpts" role="group" aria-label="사용 형태 선택"></div>
     </div>
     <div class="plan" aria-live="polite">
       <p class="pt">⚙️ 달라지는 것</p>
       <div id="profPlan"><p class="empty">왼쪽에서 프로필을 골라 보세요.</p></div>
     </div>
   </div>
+  <details class="acc"><summary>답이 남는 곳, 나중에 바꾸는 법</summary><div class="acc-b">
+  <p>프로필은 이 PC의 글로벌 기록(<code class="i">~/.claude/CLAUDE.md</code>)에 남습니다. 사용 형태는 <b>이 프로젝트</b> 기록에 <code class="i">형태=</code>로 남습니다 — 하나도 안 고르면 <code class="i">형태=단일</code>, 여럿이면 <code class="i">+</code>로 잇습니다. 에이전트 로스터·핸드오프 규약처럼 팀이 함께 커밋하는 파일의 모양을 정하는 값이라 팀이 공유합니다. 프로젝트에 설치할 때만 묻고, PC 글로벌 설치만 할 때는 묻지 않습니다.</p>
+  <p>폴더에 이미 있는 것을 보고 추천을 붙이기도 합니다 — 격리 워크트리로 도는 에이전트나 워크트리 폴더(병렬), 역할 에이전트 여럿(조직), 루틴 기록이나 CI의 <code class="i">claude -p</code>(무인). 하지만 <b>미리 체크하지는 않습니다</b>. 두 답 모두 그 자체로 파일을 만들지 않고, 이어지는 선택 목록에서 무엇이 기본 체크·추천으로 나오는지만 바꿉니다. 두 축이 부딪히면 <b>한도 쪽이 이깁니다</b> — 절약에 병렬이면 동시에 띄우는 규모는 절약 쪽 값을 씁니다.</p>
+  <p>나중에 바꾸려면 <code class="i">/dropin-pick 프로필</code>을 실행합니다. 지금 값을 보여 주며 다시 묻고, 이미 깔린 것 중 무엇이 달라지는지 표로 보여 준 뒤(기록이 아니라 실제 파일을 읽어 채웁니다) <b>행마다 승인</b>을 받습니다 — 기본은 유지이고, 새로 추천되는 항목(예: 병렬로 바꿨을 때 agent-guard)은 여기서 깔지 않고 그 항목의 질문으로 넘깁니다. 프로필을 바꾸면 이 PC만 바뀌고, 사용 형태를 바꾸면 팀이 공유하는 파일이 바뀔 수 있어 커밋 안내를 받습니다.</p>
+  </div></details>
 
   <details class="acc"><summary>산출물 언어 — 한국어 / English</summary><div class="acc-b">
   <p>오해하기 쉬운 항목입니다 — <b>문서의 언어가 아니라</b> <b>설치가 만들어 내는 것</b>의 언어입니다. 드롭인 문서는 한국어 그대로 두고(Claude는 어느 언어로든 같게 실행합니다), 이 답이 대상 <code class="i">CLAUDE.md</code> 본문·<code class="i">docs/</code> 기록·커밋 메시지·산출물 파일명(<code class="i">docs/난이도-매트릭스.md</code> ↔ <code class="i">docs/difficulty-matrix.md</code>)의 언어를 정합니다. <code class="i">[갈래][Done]</code> 같은 형식 키워드는 어느 언어에서도 고정입니다 — <code class="i">/resume</code>·<code class="i">/wrap</code>이 그 문자열로 찾기 때문입니다. 기본값은 지금 대화하는 언어이고, 이미 만들어진 산출물이 있으면 그 언어를 우선합니다.</p>
@@ -455,7 +462,7 @@ footer{max-width:1120px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
       기본은 꺼져 있습니다 — 정확성 리뷰는 내장 <code class="i">/code-review</code>로 충분하기 때문입니다.</p>
       <p>에이전트 파일에는 모델과 함께 <b>추론 강도(effort)</b>도 미리 적혀 있어서, 부를 때마다 고를 필요가 없습니다.
       로스터를 <b>팀과 공유할지</b>(프로젝트에 커밋) <b>나만 쓸지</b>(내 PC)도 함께 물어봅니다. 테스트 명령이 감지되지 않으면 parity-tester는 기본 해제입니다 — 돌릴 것이 없으니까요.</p>
-      <p>같은 목록에 <b>난이도 기준표</b>와, 어느 에이전트 다음에 어느 에이전트가 오고 무엇을 넘길지 정한 <b>핸드오프 규약 문서</b>도 있습니다. 규모가 크고 조각이 서로 독립적인 프로젝트면 <b>implementer 병렬 투입</b>도 제안합니다 — 각자 격리된 워크트리에서 돌고, 에이전트 파일에 상시로 적거나, 병렬로 부를 때만 지정합니다(이때는 그 규칙을 핸드오프 규약에 적습니다).</p>
+      <p>같은 목록에 <b>난이도 기준표</b>와, 어느 에이전트 다음에 어느 에이전트가 오고 무엇을 넘길지 정한 <b>핸드오프 규약 문서</b>도 있습니다. 규모가 크고 조각이 서로 독립적인 프로젝트면 <b>implementer 병렬 투입</b>도 제안합니다 — 각자 격리된 워크트리에서 돌고, 에이전트 파일에 상시로 적거나, 병렬로 부를 때만 지정합니다(이때는 그 규칙을 핸드오프 규약에 적습니다). 사용 형태를 병렬로 고르면 에이전트 파일에 상시로 적는 쪽이 기본 제안이 되고, 핸드오프 규약도 기본 체크로 나옵니다.</p>
       <p>여기에 <b>선택 항목이 하나 더</b> 있습니다(기본 해제) — <b>계획을 세울 때만</b> 다른 모델로 돌리는
       <code class="i">/plan-&lt;모델&gt;</code> 명령. 계획이 끝나면 원래 모델로 저절로 돌아옵니다.
       이 명령을 <b>어디 둘지</b>(나만 쓰는 내 PC / 팀과 공유하는 프로젝트)는 로스터와 따로 물어봅니다. 내가 부를 때만 돌게 할지도 함께 묻고, 어느 일을 어느 모델에 맡길지 정리한 <b>운용표</b>(<code class="i">docs/모델-운용표.md</code>)가 같이 만들어집니다.</p>
@@ -469,7 +476,7 @@ footer{max-width:1120px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
     <summary><span class="id">03</span>확장 기능 — 상태 표시줄·디자인 스킬·MCP·브라우저·기능 문서·코드 리팩터링·한국 UI 기준·PC 점검·정책 기록·세션 보드·기능 변경 기록·Flutter 앱 화면 검증·운영 키트·diff 검수 도구·Windows PC 정비·지식 베이스 대시보드·병렬 에이전트 제한 <span class="badge b-off">전부 선택</span></summary>
     <div class="acc-b">
       <ul>
-        <li><b>claude-hud</b> — 입력창 아래 <b>상태 표시줄</b>. 컨텍스트·요금제 사용량이 보입니다. 절약 프로필이면 사실상 필수. <b>Node.js 22.18 이상</b>이 필요합니다. 고르면 표시 구성을 어떻게 할지(대화형으로 고르기 / 작성자 추천 구성 / 기본값 유지)와, 메시지 사이에도 카운트다운이 흐르게 하는 <b>타이머 갱신</b>을 넣을지도 함께 묻습니다 — 안 넣으면 이벤트가 있을 때만 다시 그립니다. 타이머는 열어 둔 창 수만큼 다시 그리는 비용이 들고, Windows Git Bash에서는 간격이 짧으면 오류가 날 수 있어 거기서는 빼거나 30초 이상으로 둡니다.</li>
+        <li><b>claude-hud</b> — 입력창 아래 <b>상태 표시줄</b>. 컨텍스트·요금제 사용량이 보입니다. 절약 프로필이거나 사용 형태가 병렬·조직이면 기본 체크로 나옵니다 — 에이전트 여럿을 동시에 돌리면 한도도 그만큼 빨리 씁니다. <b>Node.js 22.18 이상</b>이 필요합니다. 고르면 표시 구성을 어떻게 할지(대화형으로 고르기 / 작성자 추천 구성 / 기본값 유지)와, 메시지 사이에도 카운트다운이 흐르게 하는 <b>타이머 갱신</b>을 넣을지도 함께 묻습니다 — 안 넣으면 이벤트가 있을 때만 다시 그립니다. 타이머는 열어 둔 창 수만큼 다시 그리는 비용이 들고, Windows Git Bash에서는 간격이 짧으면 오류가 날 수 있어 거기서는 빼거나 30초 이상으로 둡니다.</li>
         <li><b>svg-design</b> — SVG 시각효과(손그림·Gooey·유리·네온)를 제대로 구현하게 하는 규칙집. 웹 화면 프로젝트용.</li>
         <li><b>frontend-design</b> — Anthropic 공식 스킬. "AI가 만든 티가 나는 UI"를 피하게 합니다.</li>
         <li><b>MCP 서버</b> — 외부 도구 연결(GitHub·문서 검색·브라우저 조작). 기본은 꺼져 있습니다. 고르면 어떤 서버를 붙일지와 <b>어디에 등록할지</b>(팀 공유 <code class="i">.mcp.json</code> / 내 PC 전체 / 이 프로젝트에서 나만)를 따로 물어봅니다.</li>
@@ -479,14 +486,14 @@ footer{max-width:1120px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
         <li><b>kr-ui-guide</b> — 국내 서비스 리서치(UX 패턴·아이콘·색·최신 디자인 트렌드)와 한국 게임 UI/UX 리서치에서 추린 설계 기준. 제안하는 색의 <b>명도 대비를 계산</b>하고 화면을 체크리스트로 점검합니다. 한국 사용자 대상 <b>웹·앱·게임</b> 화면용이며, 특정 브랜드의 모양을 베끼지 않습니다. 고르면 선택 항목 두 개를 함께 묻습니다(둘 다 기본 해제). 하나는 UI 작업을 할 프로젝트의 <code class="i">CLAUDE.md</code>에 넣는 <b>프로젝트 오버라이드 절</b>(브랜드 컬러·상태 색·다크모드·도메인·타깃 플랫폼·스타일 팩)입니다 — 값을 비워 두면 Claude가 기준을 먼저 읽은 뒤 그 기준에서 고른 후보를 붙여 물어봅니다. 다른 하나는 두 번째 스킬 <b>kr-ui-styles</b>로, 프로젝트가 원할 때 기본 모습을 리서치에서 추린 다른 방향(지금은 에디토리얼·모노크롬, 다크·네온, 키치·일러스트, 네오브루탈)으로 바꿉니다. 이걸 고르면 그 프로젝트에 쓸 스타일 팩도 묻습니다.</li>
         <li><b>pc-clean</b> — PC가 느려졌을 때 원인 후보(디스크·메모리 여유, 주인 잃은 <code class="i">node.exe</code>, 오늘 이전부터 켜져 있던 Claude 세션, 임시 파일 등)를 <b>읽기만 해서</b> 표 한 장으로 보여주고, <b>내가 승인한 항목만</b> 정리합니다. <b>Windows + PowerShell 7 전용</b>이라 다른 OS에서는 목록에 나오지 않고, 프로젝트와 무관한 PC 도구라 기본은 꺼져 있습니다. 스코프는 내 PC 전체가 기본입니다.</li>
         <li><b>정책 기록</b> — 개발하다 드러난 <b>기획 규칙</b>(상태가 바뀌는 조건, 권한·노출 조건, 금액·수량·기한 계산 등 이름만 봐서는 알 수 없는 것)을 Claude가 발견하는 즉시 <code class="i">.claude/rules/policies/</code>에 적어 두고, 관련 코드를 만지거나 관련 작업을 받으면 <b>말하지 않아도</b> 그 규칙부터 확인하게 합니다. 코드에서 짐작한 것과 확인받은 것을 구분해 적습니다. 사람이 읽는 문서가 아니라 Claude가 읽는 규칙 파일입니다. <b>어느 모드에서도 기본은 꺼져 있습니다</b> — 매 턴 기록 지시를 불러오고 커밋되는 파일에 쓰는 항목이라 모드가 대신 켜지 않습니다. 문서만 있는 저장소는 대상이 아닙니다. 규칙은 그 프로젝트의 사실이라 <b>이 프로젝트에만</b> 깔립니다.</li>
-        <li><b>session-board</b>(세션 보드) — 같은 폴더에서 Claude 세션을 여러 개 띄웠을 때, <b>다른 세션의 제목(없으면 첫 프롬프트 앞부분)·브랜치·고친 파일</b>을 알려 주고 다른 세션이 방금 고친 파일을 고치려 하면 한 번 경고합니다(막지는 않습니다). 다른 세션이 없으면 대화에 아무것도 더하지 않습니다. <b>Node.js 18 이상</b>이 필요합니다 — Node가 없으면 훅을 걸지 않고(이미 걸려 있으면 걷어낼지 묻습니다), Node를 설치한 뒤 새 터미널에서 다시 적용할 때까지 대기로 기록해 둡니다. 세션은 PC 단위라 <b>내 PC 전체</b>에 깔립니다. 모든 세션에 자동 동작을 거는 항목이라 기본은 꺼져 있습니다. <code class="i">dandi</code> 플러그인으로 깔지, 파일을 복사해 깔지 고릅니다. 둘 다 걸려 있으면 동작이 두 번 돌아 하나만 남기라고 묻습니다.</li>
+        <li><b>session-board</b>(세션 보드) — 같은 폴더에서 Claude 세션을 여러 개 띄웠을 때, <b>다른 세션의 제목(없으면 첫 프롬프트 앞부분)·브랜치·고친 파일</b>을 알려 주고 다른 세션이 방금 고친 파일을 고치려 하면 한 번 경고합니다(막지는 않습니다). 다른 세션이 없으면 대화에 아무것도 더하지 않습니다. <b>Node.js 18 이상</b>이 필요합니다 — Node가 없으면 훅을 걸지 않고(이미 걸려 있으면 걷어낼지 묻습니다), Node를 설치한 뒤 새 터미널에서 다시 적용할 때까지 대기로 기록해 둡니다. 세션은 PC 단위라 <b>내 PC 전체</b>에 깔립니다. 모든 세션에 자동 동작을 거는 항목이라 기본은 꺼져 있습니다 — 사용 형태가 병렬·조직이면 추천으로 표시하되 체크해 두지는 않습니다. <code class="i">dandi</code> 플러그인으로 깔지, 파일을 복사해 깔지 고릅니다. 둘 다 걸려 있으면 동작이 두 번 돌아 하나만 남기라고 묻습니다.</li>
         <li><b>기능 변경 기록</b> — 깔아 둔 뒤부터 사람이 쓰는 기능(화면·API·명령·설정)이 <b>추가·변경·삭제</b>되면 Claude가 그 턴 안에 <code class="i">.claude/rules/feature-log/&lt;영역&gt;.md</code>에 <b>한 줄</b>로 남깁니다 — 파일 경로와 날짜, 삭제면 그 사유까지. 관련 작업을 받으면 <b>말하지 않아도</b> 그 줄부터 확인해서, 나중 작업이 기존 기능의 정의를 놓치거나 지운 기능을 슬그머니 되살리지 않게 합니다. 명세가 아니라 찾기 위한 색인이라 자세한 내용은 코드와 git 이력에 둡니다. 기능이 그대로인 리팩터링·버그 수정은 적지 않고, 이미 있던 기능을 거슬러 적지도 않습니다 — 그건 기능 문서 스킬 세트의 일이며, 그 세트를 이미 쓰고 있으면 겹친다고 알려 줍니다. 정책 기록처럼 <b>어느 모드에서도 기본은 꺼져 있고</b>, 문서만 있는 저장소는 대상이 아니며, <b>이 프로젝트에만</b> 깔립니다.</li>
         <li><b>Flutter 앱 화면 검증</b> — 브라우저가 아닌 <b>Flutter 앱</b>(데스크톱·모바일·웹) 화면을 Claude가 직접 확인하게 합니다. 디버그 모드로 실행 중인 앱에 붙어 화면 요소를 글자로 읽고, 누르고 입력해 보고, 앱이 그린 화면을 캡처합니다(Marionette라는 오픈소스 도구). 릴리스 빌드에는 붙지 않고, 앱 밖 화면(파일 선택 창 등)은 조작하지 못합니다. <b>Flutter 프로젝트에서만</b> 목록에 나오고 기본은 꺼져 있습니다 — 앱의 <code class="i">pubspec.yaml</code>에 의존성을 더하고 진입점 파일을 만드는 항목이라 모드가 대신 켜지 않습니다. 고르면 세 가지를 함께 묻습니다: <b>연결 방식</b>(MCP 서버가 기본 / 명령줄 도구는 선택) · <b>앱 쪽 준비</b>(운영 코드를 건드리지 않는 점검 전용 진입점이 기본 / 공식 방식대로 <code class="i">lib/main.dart</code>에 디버그일 때만 켜지는 코드) · <b>MCP 등록 위치</b>(이 프로젝트에서 나만이 기본 / 팀 공유). MCP는 등록한 다음 세션부터 쓸 수 있습니다. browser-check 규칙 스킬이 함께 깔립니다.</li>
         <li><b>ops-kit</b>(운영 키트) — 혼자 배포하고 운영하는 프로젝트용입니다. 먼저 <b>프로젝트를 진단해</b> 무엇이 필요한지 표로 보여 주고, <b>고른 것만</b> 만든 뒤 코드가 바뀌면 함께 갱신합니다: 배포 런북(첫 배포·재배포·롤백) · 운영 런북(외부 콘솔·행정·정기 점검) · 앱별 관리 사이트와 확인 위치를 모은 관리 허브(프로젝트 기록 — 계획·진행·결정·기능 명세 등 — 이 어디에 있는지 보여 주는 읽기 전용 지도 포함) · 충분히 긴 토큰을 넣기 전까지 닫혀 있는 <code class="i">/admin</code> 대시보드 · 헬스체크와 장애 알림 · 백업·복구 리허설 · 무료 한도·비용 감시. 런북은 단계마다 붙여 넣을 명령·성공하면 보이는 문구·실패 대처·Claude에게 돌려줄 보고 틀을 갖습니다. 필요 없다고 판정한 것은 이유와 함께 남겨 다시 권하지 않습니다. <b>배포·시크릿 입력·알림 채널 연결은 하지 않습니다</b> — 런북을 보고 직접 합니다. 앱에 코드를 쓸 수 있어 기본은 꺼져 있고, 문서 전용 저장소에는 맞지 않습니다. 스코프 기본은 내 PC 전체이고, 만든 결과물은 언제나 프로젝트 안에 생깁니다.</li>
         <li><b>diff 검수 도구</b> — Claude가 고친 코드를 IDE를 열지 않고 <b>터미널에서 파일·hunk 단위로 읽고</b>, 괜찮은 건 스테이지하고 잘못된 건 버리게 해 줍니다. PC에 명령줄 도구 셋(<b>lazygit</b> — 터미널 git 화면 · <b>delta</b> — 줄 안에서 바뀐 단어까지 강조하는 diff · <b>difftastic</b> — 코드 구조로 비교해 들여쓰기만 바뀐 줄을 걸러 냄)을 깔고, lazygit 설정에 diff 화면 셋을 넣어 <code class="i">|</code> 키로 돌려 봅니다. Windows는 <code class="i">winget</code>, macOS는 <code class="i">brew</code>, Linux는 각 도구의 공식 설치 문서를 따릅니다. 사람이 하는 최종 검수를 돕는 도구이고 <code class="i">/code-review</code>를 대신하지 않습니다. 외부 프로그램을 깔고 내 설정 파일을 고치는 항목이라 기본은 꺼져 있고, 자리는 <b>이 PC</b>로 정해져 있습니다. 회사 PC면 소프트웨어 설치 정책을 먼저 확인하세요.</li>
         <li><b>win-setup</b>(Windows PC 정비) — Windows PC를 <b>Claude Code CLI 개발용으로 준비</b>합니다. 먼저 PC를 <b>읽기만 해서</b>(PowerShell 7과 터미널 기본 프로필, 사용자 PATH, 개발자 모드, 긴 경로, sudo, Claude Code 기본 셸 설정, jq·fd·gh 같은 작은 도구) 판정표로 보여 주고, <b>내가 승인한 항목만</b> 고칩니다 — 바꾸기 전에 백업부터 합니다. 시스템 전체 PATH는 건드리지 않습니다. <b>Windows 전용</b>이라 다른 OS에서는 나오지 않고, PC 설정을 바꾸는 PC 단위 도구라 기본은 꺼져 있습니다. 스코프 기본은 내 PC 전체이고, 기본값은 내가 <code class="i">/win-setup</code>을 칠 때만 돕니다. 회사 PC면 개발자 모드·sudo가 보안 정책에 걸릴 수 있으니 먼저 확인하세요.</li>
         <li><b>kb-dashboard</b>(지식 베이스 대시보드) — 할일·회의·이슈·팁 같은 <b>마크다운 기록을 모아 두는 저장소</b>용입니다. 할일(상태별·기한 지남), 게시한 아티팩트 링크, 팁, 종류별 기록·태그·검색을 <b>로컬 HTML 한 장</b>으로 모아 보여 줍니다. <b>보기만</b> 하고 기록을 고치지 않으며, 페이지는 저장소 밖(<code class="i">~/.claude/kb-dashboard/</code>)에 만들어 내용 사본이 git이나 외부로 나가지 않습니다. 어느 폴더를 볼지·화면 언어 같은 저장소별 규칙은 <code class="i">.claude/kb-dashboard.json</code>에 두는데, 설치가 만들지 않고 처음 부를 때 Claude가 <code class="i">CLAUDE.md</code>를 읽어 초안을 만든 뒤 확인받습니다. <b>Node.js 18 이상</b>이 필요합니다 — 없으면 설치하지 않고 그렇게 기록해 둡니다. 지식 베이스 저장소에서만 쓸모가 있어 기본은 꺼져 있고 번들에도 들지 않습니다. 스코프 기본은 내 PC 전체(다른 폴더에서도 부를 수 있게)이고, 기본값은 내가 <code class="i">/kb-dashboard</code>를 칠 때만 돕니다. 코드 저장소의 <code class="i">docs/</code> 작업 기록용은 아닙니다.</li>
-        <li><b>agent-guard</b>(에이전트 가드) — Claude가 도우미 에이전트(서브에이전트)를 여러 개 한꺼번에 띄울 때, 동시에 도는 수를 <b>이 PC가 감당할 만큼</b>으로 제한합니다. 코어 수·메모리와 그 순간의 여유 메모리·CPU를 봅니다. 세션을 시작할 때 지금 몇 개까지 띄울 수 있는지 한 줄로 알려 처음부터 나눠 띄우게 하고, 그보다 많이 띄우려 하면 <b>거부</b>해 앞선 것이 끝난 뒤 다시 띄우게 합니다. 세션마다 1개는 항상 허용하니 작업이 멈추지는 않습니다. 내장 상한은 PC를 보지 않는 고정 숫자라, 사양이 낮은 PC에서 브라우저·에뮬레이터·빌드를 돌리는 에이전트가 한꺼번에 뜨면 버벅이는데 그걸 막는 항목입니다. 워크플로가 띄우는 에이전트는 이 검사를 거치지 않습니다. <b>Node.js 18 이상</b>이 필요합니다 — Node가 없으면 훅을 걸지 않고 대기로 기록해 둡니다. PC 자원은 PC 단위라 <b>내 PC 전체</b>에 깔립니다. 모든 세션에 자동 동작을 걸고 실행을 거부하는 항목이라 기본은 꺼져 있고 번들에도 들지 않습니다. <code class="i">dandi</code> 플러그인으로 깔지, 파일을 복사해 깔지 고르고(둘 다 걸려 있으면 개수가 두 번 세어져 하나만 남기라고 묻습니다), 워크플로 에이전트도 이 PC에 맞는 같은 숫자로 묶을지 따로 묻습니다.</li>
+        <li><b>agent-guard</b>(에이전트 가드) — Claude가 도우미 에이전트(서브에이전트)를 여러 개 한꺼번에 띄울 때, 동시에 도는 수를 <b>이 PC가 감당할 만큼</b>으로 제한합니다. 코어 수·메모리와 그 순간의 여유 메모리·CPU를 봅니다. 세션을 시작할 때 지금 몇 개까지 띄울 수 있는지 한 줄로 알려 처음부터 나눠 띄우게 하고, 그보다 많이 띄우려 하면 <b>거부</b>해 앞선 것이 끝난 뒤 다시 띄우게 합니다. 세션마다 1개는 항상 허용하니 작업이 멈추지는 않습니다. 내장 상한은 PC를 보지 않는 고정 숫자라, 사양이 낮은 PC에서 브라우저·에뮬레이터·빌드를 돌리는 에이전트가 한꺼번에 뜨면 버벅이는데 그걸 막는 항목입니다. 워크플로가 띄우는 에이전트는 이 검사를 거치지 않습니다. <b>Node.js 18 이상</b>이 필요합니다 — Node가 없으면 훅을 걸지 않고 대기로 기록해 둡니다. PC 자원은 PC 단위라 <b>내 PC 전체</b>에 깔립니다. 모든 세션에 자동 동작을 걸고 실행을 거부하는 항목이라 기본은 꺼져 있고 번들에도 들지 않습니다 — 사용 형태가 병렬·조직이면 추천으로 표시하되 체크해 두지는 않습니다. <code class="i">dandi</code> 플러그인으로 깔지, 파일을 복사해 깔지 고르고(둘 다 걸려 있으면 개수가 두 번 세어져 하나만 남기라고 묻습니다), 워크플로 에이전트도 이 PC에 맞는 같은 숫자로 묶을지 따로 묻습니다.</li>
       </ul>
       <p>스킬을 고르면 두 가지를 더 물어봅니다 — <b>스코프</b>(내 PC 전체 vs 이 프로젝트만)와
       <b>호출 방식</b>(Claude가 알아서 vs 내가 <code class="i">/명령</code>을 칠 때만). 정책 기록·기능 변경 기록(이 프로젝트만)과 session-board·agent-guard·diff 검수 도구(내 PC 전체)는 자리가 정해져 있어 스코프를 묻지 않고 알려만 줍니다. Flutter 앱 화면 검증의 MCP 등록 위치는 이 프로젝트에서 나만 / 팀 공유 중에서만 고릅니다(내 PC 전체는 없습니다).
@@ -569,7 +576,7 @@ footer{max-width:1120px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
   <p class="eyebrow">챕터 9 · 종합 연습</p>
   <h2 id="t9">내 상황으로 조합해 보기</h2>
   <p class="lead">
-    지금까지 배운 세 가지 선택(모드·번들·프로필)을 한 번에 조합합니다.
+    지금까지 배운 선택(모드·번들·프로필·사용 형태)을 한 번에 조합합니다.
     상황 버튼을 누르면 추천 조합이 자동으로 들어가고, 아래에서 직접 바꿀 수도 있습니다.
   </p>
   <div class="presets" id="presets" role="group" aria-label="상황 프리셋"></div>
@@ -586,6 +593,8 @@ footer{max-width:1120px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
       <div class="opts row" id="fBundle"></div>
       <p class="qt" style="margin:12px 0 6px">운용 프로필</p>
       <div class="opts row" id="fProf"></div>
+      <p class="qt" style="margin:12px 0 6px">사용 형태 (여러 개 — 안 고르면 단일)</p>
+      <div class="opts row" id="fForm"></div>
     </div>
     <div class="plan" aria-live="polite">
       <p class="pt">📋 최종 설치 계획서</p>
@@ -593,7 +602,7 @@ footer{max-width:1120px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
       <div class="stamp" id="finalStamp"></div>
       <p class="why">마지막 줄은 설치가 끝나면 <code class="i">CLAUDE.md</code> 맨 아래에 실제로 남는 기록입니다.
       버전 숫자(<span style="font-family:var(--mono)">v○.○</span>)는 설치 시점의 문서에서 읽어 적습니다.
-      운용 프로필은 PC마다 다를 수 있어 이 줄이 아니라 <b>내 PC의 글로벌 기록</b>(<code class="i">~/.claude/CLAUDE.md</code>)에 남습니다.
+      운용 프로필은 PC마다 다를 수 있어 이 줄이 아니라 <b>내 PC의 글로벌 기록</b>(<code class="i">~/.claude/CLAUDE.md</code>)에 남습니다. 사용 형태는 팀이 공유하는 값이라 이 줄(<code class="i">형태=</code>)에 남습니다.
       다음에 다시 설치를 돌리면 Claude가 이 줄을 먼저 읽고 "그 사이 무엇이 바뀌었는지"부터 보여줍니다.</p>
     </div>
   </div>
@@ -612,6 +621,7 @@ footer{max-width:1120px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
       <tr><td>구성 자체를 최신으로 올리고 싶다</td><td><code>/dropin-apply</code></td><td>문서·설치된 스킬·설정</td></tr>
       <tr><td>셋을 순서대로 한 번에 하고 싶다</td><td><code>/dropin-sync</code></td><td>세 스킬이 바꿀 것 전부 — 질문은 각 스킬이 묻는 자리에서</td></tr>
       <tr><td>한 종류만 깔고 싶다(MCP만, 플러그인만…)</td><td><code>/dropin-pick</code></td><td>고른 종류의 항목만 — 항목마다 묻고, 기본 해제 항목은 해제된 채로</td></tr>
+      <tr><td>운용 프로필·사용 형태를 나중에 바꾸고 싶다</td><td><code>/dropin-pick 프로필</code></td><td>새로 깔지 않습니다 — 이미 깔린 것 중 무엇이 달라지는지 보고 행마다 승인(기본은 유지)</td></tr>
     </tbody>
   </table>
   <h3>사람들이 가장 많이 헷갈리는 것</h3>
@@ -664,7 +674,7 @@ footer{max-width:1120px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
 </div>
 
 <footer>
-  단디 · 설치 옵션 학습 코스 · 2026-11-19<br>
+  단디 · 설치 옵션 학습 코스 · 2026-11-22<br>
   각 항목의 정본은 해당 하위 문서(01~06)입니다. 이 페이지는 사람이 배우기 위한 안내이며, 설치 절차 자체를 바꾸지 않습니다. 진행도는 이 브라우저의 localStorage에만 저장됩니다.<br>
   저장소: github.com/EleninJayTech/claude ·
   <a href="../index.ko.html">사용법</a> · <a href="intro.ko.html">소개 영상</a> · <a href="demo.ko.html">설치 시연</a> · <a href="options.ko.html">옵션 사전</a> · <a href="skills.ko.html">스킬 카탈로그</a><br>
@@ -691,7 +701,7 @@ var TERMS = [
 var STEPS = [
   ['STEP 1','문서 확보','설치에 필요한 문서(01~06)가 같은 폴더에 없으면 GitHub에서 가져옵니다. 질문 없음.'],
   ['STEP 2','환경 감지','이전 적용 기록(dropin-applied), 기존 설정 파일, 팀이 커밋해 둔 Claude 구성, 프로젝트 유형, 그리고 저장소 폴더가 곧 웹 사이트 폴더인지(index.php·.htaccess 같은 파일이 Claude 파일과 같은 곳에 있는지)를 조사합니다. 질문 없음.'],
-  ['STEP 3','큰 선택','기반 모드·목적 번들·운용 프로필·산출물 언어·스킬 이름 별칭을 물어봅니다(팀 구성이 커밋돼 있으면 그걸 어떻게 다룰지도) — 이 코스의 챕터 3~5가 여기입니다.'],
+  ['STEP 3','큰 선택','기반 모드·목적 번들·운용 프로필·사용 형태·산출물 언어·스킬 이름 별칭을 물어봅니다(팀 구성이 커밋돼 있으면 그걸 어떻게 다룰지도) — 이 코스의 챕터 3~5가 여기입니다.'],
   ['STEP 4','설치 실행','고른 문서의 절차대로 설치합니다. 문서 안 세부 항목(챕터 6~8)을 하나하나 묻는 건 \'사용자\' 모드일 때뿐이지만, 기본으로 꺼져 있는 항목과 적용 범위(스코프) 같은 안전 질문은 어느 모드에서나 나옵니다.'],
   ['STEP 5','검증·기록','실행 결과를 증거와 함께 보고하고, CLAUDE.md 맨 아래에 적용 기록 한 줄을 남깁니다. 저장(커밋) 방법도 알려 주는데, 저장소째 운영 서버에 올리는 사이트로 보이면 CLAUDE.md·.claude/·docs/ 같은 파일이 웹 주소로 읽힐 수 있다는 경고와 막는 방법 셋(운영 배포에서 빼기 · 서버에서 접근 차단 · 커밋하지 않고 이 PC에만 두기)과 확인 방법을 함께 보여 줍니다. 검수·테스트 서버는 해당하지 않고, 서버 설정은 만들지 않습니다.']
 ];
@@ -738,12 +748,13 @@ var DOC01 = [
 ];
 
 var PRESETS = [
-  ['Claude Code를 처음 깐 새 PC', {mode:'minimal',situ:null,bundles:[],prof:'std'}],
-  ['혼자 하는 개발 프로젝트', {mode:'rec',situ:'dev',bundles:['verify'],prof:'std'}],
-  ['웹 화면을 만드는 프로젝트', {mode:'rec',situ:'dev',bundles:['design','verify'],prof:'std'}],
-  ['Pro 요금제라 한도가 걱정', {mode:'rec',situ:'dev',bundles:[],prof:'save'}],
-  ['문서만 있는 저장소', {mode:'minimal',situ:null,bundles:[],prof:'std'}],
-  ['회사 저장소', {mode:'rec',situ:'dev',bundles:['company'],prof:'std'}]
+  ['Claude Code를 처음 깐 새 PC', {mode:'minimal',situ:null,bundles:[],prof:'std',form:[]}],
+  ['혼자 하는 개발 프로젝트', {mode:'rec',situ:'dev',bundles:['verify'],prof:'std',form:[]}],
+  ['웹 화면을 만드는 프로젝트', {mode:'rec',situ:'dev',bundles:['design','verify'],prof:'std',form:[]}],
+  ['Pro 요금제라 한도가 걱정', {mode:'rec',situ:'dev',bundles:[],prof:'save',form:[]}],
+  ['에이전트 여럿을 동시에 돌린다', {mode:'rec',situ:'dev',bundles:['verify'],prof:'std',form:['par']}],
+  ['문서만 있는 저장소', {mode:'minimal',situ:null,bundles:[],prof:'std',form:[]}],
+  ['회사 저장소', {mode:'rec',situ:'dev',bundles:['company'],prof:'std',form:[]}]
 ];
 
 /* ───────── 진행도 ───────── */
@@ -911,18 +922,47 @@ function drawBundle(){
 drawBundle();
 
 /* ───────── CH5 프로필 · 유지/재구성/교체 ───────── */
-var PROFS={std:{name:'표준',desc:'품질 우선 (기본)'},save:{name:'절약',desc:'Pro 요금제 · 한도 관리'}};
-var pSel=null;
+var PROFS={
+  save:{name:'절약',desc:'Pro · Team Standard, 또는 한도가 자주 임박'},
+  std:{name:'표준',desc:'Max · Team Premium — 기본'},
+  roomy:{name:'여유',desc:'Ultra — 한도가 남는다'},
+  meter:{name:'종량',desc:'API 키 · 사용량 과금 — 청구액이 제약'}
+};
+var FORMS={
+  par:{name:'병렬',desc:'에이전트·세션 여럿을 동시에'},
+  org:{name:'조직',desc:'역할별 에이전트를 상시 운영'},
+  unatt:{name:'무인',desc:'루틴 · claude -p · /loop'}
+};
+var FORMPLAN={
+  par:'<li><b>병렬</b> — implementer를 격리 워크트리 상시 지정으로 기본 제안 · 핸드오프 규약 기본 체크 · claude-hud 기본 체크 · session-board·agent-guard는 추천만(모든 세션에 훅을 거는 항목이라 체크해 두지 않음). 에이전트 N개를 동시에 돌리면 한도도 약 N배 빨리 씁니다.</li>',
+  org:'<li><b>조직</b> — 병렬의 전부 + 그 활동 유형의 로스터 전부 기본 체크 · 커스텀 리뷰어 추천(기본 해제는 그대로). agent teams는 실험적·기본 꺼짐이라 직접 켜는 선택지로만 안내합니다.</li>',
+  unatt:'<li><b>무인</b> — 테스트 명령이 감지되면 parity-tester 기본 체크(보는 사람이 없어 테스트가 유일한 검증) · 핸드오프 규약의 중단 규칙을 "첫 실패에서 멈춘다"로 · 06 루틴·04 훅 게이트 추천 · <code class="i">claude -p</code>는 턴·예산 상한으로 묶습니다.</li>'
+};
+function formKeys(sel){ return Object.keys(FORMS).filter(function(k){ return sel.indexOf(k)>=0; }); }
+var pSel=null, fmSel=[];
 function drawProf(){
   renderOpts($('profOpts'), keysOf(PROFS), pSel, function(k){ pSel=k; drawProf(); }, false);
+  renderOpts($('formOpts'), keysOf(FORMS), fmSel, function(k){
+    var i=fmSel.indexOf(k); if(i>=0) fmSel.splice(i,1); else fmSel.push(k); drawProf();
+  }, true);
   var box=$('profPlan');
   if(!pSel){ box.innerHTML='<p class="empty">왼쪽에서 프로필을 골라 보세요.</p>'; return; }
-  box.innerHTML = pSel==='std'
-    ? '<ul><li>effort 기본값 유지, 어려운 작업엔 상위 모델</li><li>대부분의 경우 이걸 고르면 됩니다</li></ul>'
-    : '<ul><li>서브에이전트를 Sonnet 중심으로 배정, 로스터 축소</li><li>claude-hud 기본 체크 — 사용량이 보여야 아낄 수 있으니까</li></ul>'
-      +'<p class="why">안 깎는 것: 난이도 분류 · 요구 확정 · 최종 리뷰 · 검증 게이트. 여기서 아끼면 재작업이 더 비쌉니다.</p>'
-      +'<p class="why">직접 할 것: 일상 작업은 <code class="i">/model sonnet</code>으로 시작하세요(한 번 바꾸면 저장됩니다). 난이도 분류·요구 확정·최종 리뷰처럼 안 깎는 작업은 <code class="i">claude --model &lt;상위 모델&gt;</code>로 새 세션을 열어서 하세요 — <code class="i">/model</code>로 올리면 그 값이 저장돼 다음 일상 작업도 상위 모델로 돕니다.</p>';
+  var fk=formKeys(fmSel);
+  var h=PROFPLAN[pSel];
+  h+= fk.length
+    ? '<ul>'+fk.map(function(k){ return FORMPLAN[k]; }).join('')+'</ul>'
+    : '<p class="why"><b>사용 형태: 단일</b> — 한 세션에서 대화하며 작업. 기본 체크는 평소처럼 활동 유형을 따릅니다.</p>';
+  if(pSel==='save' && (fk.indexOf('par')>=0 || fk.indexOf('org')>=0)) h+='<p class="why">두 축이 부딪히면 한도 쪽이 이깁니다 — 절약에 병렬이면 동시에 띄우는 규모는 절약 쪽 값을 씁니다.</p>';
+  h+='<p class="why">무엇을 고르든 안 깎는 것: 난이도 분류 · 요구 확정 · 최종 리뷰 · 검증 게이트. 여기서 아끼면 재작업이 더 비쌉니다. effort도 어느 답으로도 바뀌지 않습니다.</p>';
+  box.innerHTML=h;
 }
+var PROFPLAN={
+  std:'<ul><li>effort 기본값 유지, 어려운 작업엔 상위 모델</li><li>대부분의 경우 이걸 고르면 됩니다</li></ul>',
+  roomy:'<ul><li>일상 작업·도우미 에이전트는 표준과 같게 — 품질이 같으면 싼 쪽이라 올리지 않습니다</li><li>안 깎는 작업에는 Fable을 선택지로 제시 — 플랜에 포함되는 요금제에서만</li><li>계획 전용 모델 명령(02 ⓔ)을 추천으로 표시 — 기본 해제는 그대로</li></ul>',
+  meter:'<ul><li>모델 배정은 표준과 같게</li><li><code class="i">claude -p</code> 실행에 <code class="i">--max-budget-usd</code>·<code class="i">--max-turns</code> 상한</li><li>지출 한도(워크스페이스·조직)는 직접 확인</li></ul><p class="why"><code class="i">/status</code>의 인증이 API 키나 클라우드 공급자면 추천으로 나옵니다.</p>',
+  save:'<ul><li>일상 작업은 하위 모델로, 로스터 축소 · 워크플로 규모 낮춤 · 동시 팬아웃 자제</li><li>claude-hud 기본 체크 — 사용량이 보여야 아낄 수 있으니까</li></ul>'
+      +'<p class="why">직접 할 것: 일상 작업은 <code class="i">/model sonnet</code>으로 시작하세요(한 번 바꾸면 저장됩니다). 난이도 분류·요구 확정·최종 리뷰처럼 안 깎는 작업은 <code class="i">claude --model &lt;상위 모델&gt;</code>로 새 세션을 열어서 하세요 — <code class="i">/model</code>로 올리면 그 값이 저장돼 다음 일상 작업도 상위 모델로 돕니다.</p>'
+};
 drawProf();
 
 var KEEPS=[
@@ -965,7 +1005,7 @@ function drawTree(){
 }
 
 /* ───────── CH9 종합 시뮬레이터 ───────── */
-var F={mode:'rec',situ:'dev',bundles:[],prof:'std',preset:-1};
+var F={mode:'rec',situ:'dev',bundles:[],prof:'std',form:[],preset:-1};
 function drawFinal(){
   var pr=$('presets'); pr.innerHTML='';
   PRESETS.forEach(function(p,i){
@@ -973,7 +1013,7 @@ function drawFinal(){
     b.textContent=p[0];
     b.setAttribute('aria-pressed', F.preset===i?'true':'false');
     b.addEventListener('click',function(){
-      F.preset=i; F.mode=p[1].mode; F.situ=p[1].situ||'dev'; F.bundles=p[1].bundles.slice(); F.prof=p[1].prof;
+      F.preset=i; F.mode=p[1].mode; F.situ=p[1].situ||'dev'; F.bundles=p[1].bundles.slice(); F.prof=p[1].prof; F.form=p[1].form.slice();
       drawFinal();
     });
     pr.appendChild(b);
@@ -985,6 +1025,9 @@ function drawFinal(){
     var i=F.bundles.indexOf(k); if(i>=0) F.bundles.splice(i,1); else F.bundles.push(k); F.preset=-1; drawFinal();
   }, true);
   renderOpts($('fProf'), keysOf(PROFS).map(function(x){return {key:x.key,name:x.name};}), F.prof, function(k){ F.prof=k; F.preset=-1; drawFinal(); }, false);
+  renderOpts($('fForm'), keysOf(FORMS).map(function(x){return {key:x.key,name:x.name};}), F.form, function(k){
+    var i=F.form.indexOf(k); if(i>=0) F.form.splice(i,1); else F.form.push(k); F.preset=-1; drawFinal();
+  }, true);
 
   var base=basePlan(F.mode,F.situ);
   var isCustom = base.docs===null;
@@ -1007,6 +1050,10 @@ function drawFinal(){
   }
   if(notes.length) h+='<p class="why">🏢 '+notes.join(' · ')+'</p>';
   if(F.prof==='save') h+='<p class="why">💰 절약 프로필: Sonnet 중심 배정 — 단 검증 게이트는 그대로.</p>';
+  if(F.prof==='roomy') h+='<p class="why">💰 여유 프로필: 배정은 표준과 같게 — 플랜에 포함되면 안 깎는 작업에 Fable을 선택지로.</p>';
+  if(F.prof==='meter') h+='<p class="why">💰 종량 프로필: <code class="i">claude -p</code> 실행에 예산·턴 상한.</p>';
+  var fk=formKeys(F.form);
+  if(fk.length) h+='<p class="why">👥 사용 형태 '+fk.map(function(k){return FORMS[k].name;}).join('+')+': 02·03에서 기본 체크·추천으로 나오는 것이 달라집니다(챕터 5).</p>';
   $('finalPlan').innerHTML=h;
 
   var modeLabel=MODES[F.mode].name + F.bundles.filter(function(k){return k!=='company';}).map(function(k){return '+'+BUNDLES[k].name;}).join('')
@@ -1014,7 +1061,7 @@ function drawFinal(){
   var chosen = Object.keys(docs).sort();
   var un = ['01','02','03','04','05','06'].filter(function(k){ return chosen.indexOf(k)<0; });
   var today = new Date().toISOString().slice(0,10);
-  var line='<!-- dropin-applied: '+today+' · 모드='+modeLabel+' · 언어=ko · 별칭=없음 · 00 v○.○';
+  var line='<!-- dropin-applied: '+today+' · 모드='+modeLabel+' · 형태='+(fk.length?fk.map(function(k){return FORMS[k].name;}).join('+'):'단일')+' · 언어=ko · 별칭=없음 · 00 v○.○';
   chosen.forEach(function(k){ line+=' · '+k+' v○.○'; });
   if(un.length && !isCustom) line+=' · 미선택: '+un.join(', ');
   line+=' · 출처=사본 -->';

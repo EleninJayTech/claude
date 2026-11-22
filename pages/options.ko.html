@@ -65,6 +65,7 @@ section{margin:0 0 26px;background:var(--card);border:1px solid var(--line);bord
 h2{font-family:var(--sans);font-size:24px;font-weight:700;line-height:1.4;letter-spacing:-.02em}
 .goal{font-size:13px;color:var(--ink-soft);font-family:var(--sans);margin:6px 0 18px}
 h3{font-size:18px;font-weight:600;line-height:1.45;margin:26px 0 8px;padding-bottom:6px;border-bottom:2px solid var(--marker-soft)}
+h4{font-size:16px;font-weight:600;line-height:1.45;margin:22px 0 8px}
 p{margin:10px 0;line-height:1.6}
 ul{margin:10px 0 10px 22px}
 li{margin:6px 0}
@@ -231,7 +232,7 @@ details.sect>summary h2{margin:0}
     <tr><th style="width:64px">단계</th><th>하는 일</th><th style="width:190px">사용자가 고르는 것</th></tr>
     <tr><td><b>STEP 1</b></td><td>설치에 필요한 문서(01~06) 확보 — 같은 폴더에 없으면 GitHub에서 가져옴</td><td>없음</td></tr>
     <tr><td><b>STEP 2</b></td><td>환경 감지 — 이전에 적용한 기록(<code class="i">dropin-applied</code>), 기존 설정 파일, 팀이 커밋해 둔 Claude 구성, 프로젝트 유형, 이 폴더가 그대로 운영 웹사이트에 올라가는 구조인지(<a href="#webexpose">자주 묻는 질문 참고</a>) 조사</td><td>없음</td></tr>
-    <tr><td><b>STEP 3</b></td><td><b>큰 선택</b> — 아래 §2의 질문들</td><td>(이미 구성된 PC면 맨 앞에 <b>빠른 경로</b>) · 기반 모드 · 목적 번들 · 운용 프로필 · 산출물 언어 · 스킬 이름 별칭 · (팀이 구성을 커밋해 둔 저장소에 처음 설치하면) <b>기존 팀 구성</b>(2-6) · (<code class="i">/dropin-pick</code>으로 시작했으면 기반 모드·목적 번들 대신 <b>설치 형태</b>)</td></tr>
+    <tr><td><b>STEP 3</b></td><td><b>큰 선택</b> — 아래 §2의 질문들</td><td>(이미 구성된 PC면 맨 앞에 <b>빠른 경로</b>) · 기반 모드 · 목적 번들 · 운용 프로필 · (프로젝트에 깔면) 사용 형태 · 산출물 언어 · 스킬 이름 별칭 · (팀이 구성을 커밋해 둔 저장소에 처음 설치하면) <b>기존 팀 구성</b>(2-6) · (<code class="i">/dropin-pick</code>으로 시작했으면 기반 모드·목적 번들 대신 <b>설치 형태</b>)</td></tr>
     <tr><td><b>STEP 4</b></td><td>고른 문서의 절차대로 설치. 문서 안 세부 항목(§3~§8)은 <b>‘사용자’ 모드면 전부</b> 물어보고, 그 밖의 모드면 <b>모드별 기본값이 정해진 문서만</b> 자동으로 정함 — 기본값이 없는 문서(02·05)와 기본으로 꺼진 항목은 물어봄</td><td>모드에 따라 다름</td></tr>
     <tr><td><b>STEP 5</b></td><td>검증하고 결과 보고 + <code class="i">CLAUDE.md</code> 맨 아래에 적용 기록 한 줄 남김. STEP 2에서 운영 웹사이트 신호를 봤으면 커밋 안내 첫머리에 그 경고가 붙음</td><td>커밋 승인</td></tr>
   </table>
@@ -252,14 +253,14 @@ details.sect>summary h2{margin:0}
   <p class="goal">여기만 답하면 설치가 굴러갑니다</p>
 
   <h3>2-0. 빠른 경로 — 이미 구성된 PC에서만 (단일 선택)</h3>
-  <p>이 PC에 <b>이미 설치한 기록이 있고, 이 폴더에는 아직 기록이 없을 때만</b> 맨 처음에 나옵니다. 처음 설치하는 PC에서는 보이지 않고 바로 2-2부터 시작합니다 — 재적용할 때나 이미 기록이 있는 팀 저장소에 합류할 때도 건너뜁니다. 팀이 맞춰 둔 값을 이 PC 값으로 덮지 않기 위해서입니다. <b>새 모드가 아니라</b> 아래 공통 질문(기반 모드·목적 번들·운용 프로필·산출물 언어·스킬 이름 별칭)에 <b>한 번에 답하는 지름길</b>입니다. 어느 것을 고르든 <b>가져올 값을 보여 주고 확인을 받습니다</b> — 말없이 이어받지 않습니다. 값 옆에는 두 가지를 함께 보여 줍니다. 스킬 이름 별칭 옆에는 이 PC와 이 폴더에서 찾은 <b>같은 이름의 스킬</b>을, 산출물 언어 옆에는 <b>이 폴더의 기존 <code class="i">docs/</code> 기록이 이미 쓰고 있는 언어</b>를 보여 줍니다(기존 기록이 있으면 그 언어를 따릅니다 — 2-5).</p>
+  <p>이 PC에 <b>이미 설치한 기록이 있고, 이 폴더에는 아직 기록이 없을 때만</b> 맨 처음에 나옵니다. 처음 설치하는 PC에서는 보이지 않고 바로 2-2부터 시작합니다 — 재적용할 때나 이미 기록이 있는 팀 저장소에 합류할 때도 건너뜁니다. 팀이 맞춰 둔 값을 이 PC 값으로 덮지 않기 위해서입니다. <b>새 모드가 아니라</b> 아래 공통 질문(기반 모드·목적 번들·운용 프로필·사용 형태·산출물 언어·스킬 이름 별칭)에 <b>한 번에 답하는 지름길</b>입니다. 어느 것을 고르든 <b>가져올 값을 보여 주고 확인을 받습니다</b> — 말없이 이어받지 않습니다. 값 옆에는 두 가지를 함께 보여 줍니다. 스킬 이름 별칭 옆에는 이 PC와 이 폴더에서 찾은 <b>같은 이름의 스킬</b>을, 산출물 언어 옆에는 <b>이 폴더의 기존 <code class="i">docs/</code> 기록이 이미 쓰고 있는 언어</b>를 보여 줍니다(기존 기록이 있으면 그 언어를 따릅니다 — 2-5).</p>
 
   <div class="opt">
     <div class="opt-head"><span class="name">이 PC 기본값으로</span><span class="id">기본 추천</span><span class="badge b-on">확인만</span></div>
     <p class="lead">이 PC에 이미 정해 둔 <b>프로필·산출물 언어·스킬 이름 별칭</b>을 그대로 쓰고, 기반 모드는 <b>최소</b>(+작업 중 추천)로 갑니다.</p>
     <details class="more"><summary>자세히</summary>
 <dl>
-      <dt>생기는 것</dt><dd>이 PC의 적용 기록에 남은 값 + 기반 모드 ‘최소’ + 목적 번들은 Claude가 감지한 추천값. 값을 한 번 보여 주고 <b>확인만</b> 받습니다. 이 PC 기록에 없는 값은 그 질문으로 따로 물어봅니다</dd>
+      <dt>생기는 것</dt><dd>이 PC의 적용 기록에 남은 값 + 기반 모드 ‘최소’ + 목적 번들은 Claude가 감지한 추천값. 값을 한 번 보여 주고 <b>확인만</b> 받습니다. 이 PC 기록에 없는 값은 그 질문으로 따로 물어봅니다 — <b>사용 형태</b>(2-4)는 프로젝트마다 고르는 값이라 이 PC 기록에 없으므로 늘 따로 묻습니다</dd>
       <dt>정말 이 PC인가</dt><dd>그 기록의 PC 이름을 함께 보여 주고 이 PC가 맞는지 <b>직접 판단</b>하게 합니다(다른 PC 백업에서 복원된 기록이면 남의 값이 들어 있습니다). 아니라고 답하면 빠른 경로를 접고 하나씩 묻습니다</dd>
       <dt>이럴 때</dt><dd>같은 PC에서 두 번째·세 번째 프로젝트를 깔 때 — 매번 같은 답을 하고 있다면 이것</dd>
       <dt>안 고르면</dt><dd>공통 질문을 하나씩 받습니다(아래 ‘하나씩 고르기’와 같습니다)</dd>
@@ -269,10 +270,10 @@ details.sect>summary h2{margin:0}
 
   <div class="opt">
     <div class="opt-head"><span class="name">다른 프로젝트와 같게</span><span class="badge b-keep">이 PC의 다른 프로젝트</span></div>
-    <p class="lead">이 PC의 <b>다른 프로젝트</b>에 적어 둔 모드·번들·언어·별칭을 그대로 가져옵니다.</p>
+    <p class="lead">이 PC의 <b>다른 프로젝트</b>에 적어 둔 모드·번들·사용 형태·언어·별칭을 그대로 가져옵니다.</p>
     <details class="more"><summary>자세히</summary>
 <dl>
-      <dt>생기는 것</dt><dd>고른 프로젝트의 기반 모드 + 번들 · 산출물 언어 · 스킬 이름 별칭. <b>운용 프로필만은 이 PC의 값</b>을 씁니다 — 프로필은 PC마다 다르기 때문입니다. 그 프로젝트가 별칭을 <b>일부 스킬에만</b> 붙였다면 어느 스킬인지는 가져오지 않고, 여기서 찾은 같은 이름의 스킬로 다시 정합니다</dd>
+      <dt>생기는 것</dt><dd>고른 프로젝트의 기반 모드 + 번들 · 사용 형태 · 산출물 언어 · 스킬 이름 별칭. <b>운용 프로필만은 이 PC의 값</b>을 씁니다 — 프로필은 PC마다 다르기 때문입니다. 그 프로젝트가 별칭을 <b>일부 스킬에만</b> 붙였다면 어느 스킬인지는 가져오지 않고, 여기서 찾은 같은 이름의 스킬로 다시 정합니다</dd>
       <dt>후보로 나오는 것</dt><dd>지금도 이 PC에 <b>실제로 있고</b> 설치 기록이 남은 프로젝트만 나옵니다. 옮기거나 지운 폴더·기록이 없는 폴더·‘사용자’ 모드로 깐 프로젝트(가져올 모드·번들이 없습니다)는 빠지고, 같은 저장소의 작업용 복사본(워크트리)은 하나로 묶습니다. 후보가 없으면 이 선택지는 아예 나오지 않습니다</dd>
       <dt>목록에 없으면</dt><dd>목록은 지난 세션의 흔적으로 만든 것이라 참고용일 뿐입니다. 찾는 프로젝트가 없으면 <b>경로를 직접 입력</b>합니다(Other)</dd>
       <dt>남기지 않는 것</dt><dd>어느 프로젝트에서 가져왔는지는 <b>기록에 남기지 않습니다</b> — 이 프로젝트의 기록은 팀에 공유되기 때문입니다</dd>
@@ -311,9 +312,10 @@ details.sect>summary h2{margin:0}
     <p class="lead">“MCP만”, “플러그인만”처럼 <b>필요한 종류가 이미 분명할 때</b> 쓰는 다른 입구입니다. 새 모드가 아니라 <b>기반 모드·목적 번들(2-2·2-3)과 빠른 경로를 묻는 대신</b> 설치 형태를 묻습니다.</p>
     <details class="more"><summary>자세히</summary>
 <dl>
-      <dt>고르는 것</dt><dd>설치 형태 하나 이상(복수 선택) — <b>구성</b>(01 기본 셋업과 정책·기능 변경 기록) · <b>스킬</b> · <b>플러그인</b> · <b>MCP</b> · <b>훅</b> · <b>에이전트</b>(02 로스터) · <b>CLI·CI</b> · <b>출력 스타일</b> · <b>루틴</b>. <code class="i">/dropin-pick 스킬 MCP</code>처럼 명령 뒤에 적으면 이 질문을 건너뜁니다</dd>
+      <dt>고르는 것</dt><dd>설치 형태 하나 이상(복수 선택) — <b>구성</b>(01 기본 셋업과 정책·기능 변경 기록) · <b>스킬</b> · <b>플러그인</b> · <b>MCP</b> · <b>훅</b> · <b>에이전트</b>(02 로스터) · <b>CLI·CI</b> · <b>출력 스타일</b> · <b>루틴</b> · <b>프로필</b>(설치가 아니라 운용 프로필·사용 형태를 바꾸는 입구 — 아래). <code class="i">/dropin-pick 스킬 MCP</code>처럼 명령 뒤에 적으면 이 질문을 건너뜁니다</dd>
       <dt>생기는 것</dt><dd>고른 형태에 드는 항목만 <b>그 문서의 질문으로</b> 제시됩니다 — 형태를 골랐다고 자동으로 깔리지 않고, 기본으로 꺼진 항목도 꺼진 채로 보여 줍니다. 한 항목이 여러 형태에 걸치면(예: 브라우저 검증은 스킬·MCP·CLI 경로가 있습니다) 고른 형태에 해당하는 부분만 나옵니다. 고르지 않은 형태의 문서는 읽지도 깔지도 않습니다</dd>
-      <dt>공통 질문은</dt><dd>이 폴더에 적용 기록이 있으면 <b>운용 프로필·산출물 언어·스킬 이름 별칭은 기록값</b>을 보여 주고 확인만 받고, 없으면 그 셋만 묻습니다. 이미 깐 문서가 낡았으면 그 문서의 <b>바뀐 내용을 먼저</b> 보여 줍니다</dd>
+      <dt>공통 질문은</dt><dd>이 폴더에 적용 기록이 있으면 <b>운용 프로필·사용 형태·산출물 언어·스킬 이름 별칭은 기록값</b>을 보여 주고 확인만 받고, 없으면 그것만 묻습니다(‘프로필’을 골랐으면 운용 프로필·사용 형태는 기록값으로 넘기지 않고 다시 묻습니다). 이미 깐 문서가 낡았으면 그 문서의 <b>바뀐 내용을 먼저</b> 보여 줍니다</dd>
+      <dt>‘프로필’을 고르면</dt><dd><b>아무것도 새로 깔지 않습니다.</b> 운용 프로필·사용 형태(2-4)를 지금 값과 함께 다시 묻고(PC 전체에만 깔았으면 운용 프로필만), 이미 깐 항목만 대상으로 <b>“항목 · 지금 · 새 값이면 · 권고”</b> 표를 보여 줍니다. ‘지금’ 칸은 기록이 아니라 <b>실제 파일을 읽어</b> 채웁니다. 기존 파일을 고치는 줄은 줄마다 유지/재구성/교체를 묻고 기본은 <b>유지</b>입니다. 새로 깔아야 하는 줄(예: 병렬로 바꿔 agent-guard가 추천됨)은 그 항목의 질문으로 넘길 뿐 자동으로 깔지 않습니다. 유지한 줄은 “바꾸기 전 구성”으로 기록에 남아, 다음에 다시 돌릴 때 기록과 실물이 갈린 것을 알아챕니다. 운용 프로필은 <b>이 PC 것만</b> 바꾸고, 팀이 함께 쓰는 파일을 고치는 건 사용 형태를 바꿀 때뿐이라 그때 커밋 안내가 붙습니다. 값을 그대로 둔 채 표만 볼 수도 있습니다 — 기록과 실물이 어긋났는지 확인하는 용도입니다</dd>
       <dt>그대로 나오는 것</dt><dd>빠른 경로와 같습니다 — 안전 질문·회사 정책 확인·스코프 질문·기본으로 꺼진 항목 질문</dd>
       <dt>남는 자리</dt><dd>적용 기록의 기존 칸 그대로입니다(기록이 없던 폴더면 모드가 ‘사용자’로 남습니다). 문서 일부만 깔았으면 어떤 항목만 깔았는지가 남아, 다시 돌릴 때 나머지를 추가할지 물어봅니다</dd>
       <dt>이럴 때</dt><dd>이미 구성된 프로젝트에 한 종류만 더하고 싶을 때. 무엇이 필요한지 모르겠으면 <code class="i">/dropin-apply</code>로 모드부터 고르세요</dd>
@@ -413,23 +415,102 @@ details.sect>summary h2{margin:0}
   </table>
   </div>
 
-  <h3>2-4. 운용 프로필 — 표준 / 절약</h3>
+  <h3>2-4. 운용 프로필과 사용 형태</h3>
+  <p>질문 두 개입니다. <b>운용 프로필</b>은 요금제 한도에 맞추는 값이라 <b>PC(계정)마다</b> 하나를 고르고, <b>사용 형태</b>는 이 프로젝트에서 Claude를 어떻게 돌리는지라 <b>프로젝트마다</b> 고릅니다. 둘 다 <b>새 파일을 만들지 않습니다</b> — 다른 항목의 기본 체크·추천·모델 배정만 바꿉니다.</p>
+  <ul>
+    <li><b>운용 프로필은 모델 배정</b>을, <b>사용 형태는 구조</b>(어떤 에이전트를 기본 체크할지·격리·함께 권할 항목·비용 상한)를 정합니다. 둘이 부딪히면 <b>운용 프로필이 이깁니다</b> — 절약 + 병렬이면 한꺼번에 돌리는 규모는 절약 쪽 값을 씁니다.</li>
+    <li>어느 값이든 <b>effort(추론 강도) 값</b>과 품질 관문(난이도 분류·요구 확정·최종 리뷰·검증 게이트)은 그대로입니다.</li>
+  </ul>
+
+  <h4>운용 프로필 — 절약 / 표준 / 여유 / 종량 (단일 선택)</h4>
   <div class="opt">
-    <div class="opt-head"><span class="name">표준</span><span class="badge b-on">기본</span></div>
-    <p class="lead">품질 우선. 어려운 작업엔 상위 모델을 씁니다.</p>
-  </div>
-  <div class="opt">
-    <div class="opt-head"><span class="name">절약</span><span class="badge b-keep">Pro 요금제 · 한도 관리</span></div>
+    <div class="opt-head"><span class="name">절약</span><span class="badge b-keep">Pro · Team Standard · 한도 관리</span></div>
     <p class="lead">사용량 한도를 신경 써야 할 때. 다만 <b>깎는 건 모델 배정과 낭비뿐</b>입니다.</p>
     <details class="more"><summary>자세히</summary>
 <dl>
+      <dt>이럴 때</dt><dd>Pro·Team Standard 요금제이거나, 한도가 자주 바닥날 때</dd>
       <dt>바뀌는 것</dt><dd>일상 작업은 하위 모델로 · 어려운 작업은 상위 모델에 맡기거나, 선택지로 Sonnet 메인 + 상위 모델 자문(advisor)을 고를 수 있음(그 세션은 <code>/effort high</code>로 올립니다. 자문을 못 쓰는 환경이면 어려운 작업은 상위 모델 유지) · 정형 실행·테스트는 Haiku 적극 · 로스터 축소 · 컨텍스트 절약 습관 안내 · claude-hud를 기본 체크(사용량이 보여야 아낄 수 있으니까)</dd>
       <dt>직접 할 것</dt><dd>설치가 대신 바꿔 주지 않습니다 — <b>일상 세션은 하위 모델로 시작</b>하세요(<code>/model sonnet</code> 등 — 저장돼 다음 세션도 그 모델로 시작합니다). 아래 ‘안 깎는 것’은 <b><code>claude --model &lt;상위 모델&gt;</code>로 연 새 세션</b>에서 합니다. <code>/model</code>로 올리면 그것도 저장돼 일상이 다시 상위 모델로 굳습니다</dd>
-      <dt>안 바뀌는 것</dt><dd><b>effort(추론 강도) 값</b> — 표준과 절약이 같습니다. 아끼는 손잡이는 강도가 아니라 어느 모델에 맡기느냐입니다</dd>
+      <dt>안 바뀌는 것</dt><dd><b>effort(추론 강도) 값</b> — 어느 프로필이든 같습니다. 아끼는 손잡이는 강도가 아니라 어느 모델에 맡기느냐입니다</dd>
       <dt>안 깎는 것</dt><dd>난이도 분류 · 요구 확정 · 최종 리뷰 · 검증 게이트. <b>여기서 아끼면 재작업이 더 비쌉니다</b></dd>
-      <dt>이미 골랐으면</dt><dd>이 PC의 적용 기록에 프로필이 남아 있으면 그 값을 기본으로 보여 주고 <b>확인만</b> 받습니다(말없이 이어받지 않습니다)</dd>
     </dl>
 </details>
+  </div>
+
+  <div class="opt">
+    <div class="opt-head"><span class="name">표준</span><span class="badge b-on">기본</span></div>
+    <p class="lead">품질 우선. 어려운 작업엔 상위 모델을 씁니다.</p>
+    <details class="more"><summary>자세히</summary>
+<dl>
+      <dt>이럴 때</dt><dd>Max·Team Premium처럼 일상 작업에 한도가 모자라지 않을 때. 이 PC에 기록이 없으면 이것이 기본으로 나옵니다</dd>
+      <dt>생기는 것</dt><dd>각 문서에 적힌 기본 모델 배정 그대로입니다</dd>
+    </dl>
+</details>
+  </div>
+  <div class="opt">
+    <div class="opt-head"><span class="name">여유</span><span class="badge b-off">한도가 남을 때</span></div>
+    <p class="lead">표준과 같되, <b>품질이 갈리는 자리</b>에 더 비싼 모델을 고를 길을 열어 둡니다.</p>
+    <details class="more"><summary>자세히</summary>
+<dl>
+      <dt>이럴 때</dt><dd>Ultra처럼 한도가 넉넉히 남을 때</dd>
+      <dt>생기는 것</dt><dd>난이도 분류·요구 확정·최종 리뷰에 <b>Fable을 선택지로</b> 보여 줍니다 — 요금제에 Fable이 포함될 때만입니다(아니면 따로 과금이라 보여 주지 않습니다). 계획 전용 모델 명령(02 ⓔ)을 <b>추천으로 표시</b>합니다(기본 해제는 그대로). 정해진 일을 맡는 모델은 <b>올리지 않습니다</b> — 품질이 같으면 싼 쪽이 맞습니다</dd>
+    </dl>
+</details>
+  </div>
+  <div class="opt">
+    <div class="opt-head"><span class="name">종량</span><span class="badge b-off">API 키 · 사용량 과금</span></div>
+    <p class="lead">한도가 아니라 <b>청구액</b>이 제약일 때. 모델 배정은 표준과 같고, 비용이 새는 자리에 상한을 겁니다.</p>
+    <details class="more"><summary>자세히</summary>
+<dl>
+      <dt>이럴 때</dt><dd>API 키, 사용량만큼 내는 Enterprise, 클라우드 공급자로 쓸 때. <code>/status</code>에 보이는 인증이 API 키·클라우드 공급자면 추천으로 표시됩니다</dd>
+      <dt>생기는 것</dt><dd>사람 없이 도는 <code>claude -p</code> 호출에 <b>비용·턴 상한</b>(<code>--max-budget-usd</code>·<code>--max-turns</code>)을 넣게 합니다(상한은 추정치 기준입니다). 지출 한도(Console·조직 설정)는 <b>직접 확인</b>하세요 — 설치가 대신 정하지 않습니다</dd>
+      <dt>알아 둘 것</dt><dd>API 키로 쓰면 캐시가 <b>5분</b>만 유지돼, 자리를 비웠다 이어 가면 대화 전체를 다시 처리합니다</dd>
+    </dl>
+</details>
+  </div>
+
+  <h4>사용 형태 — 병렬 · 조직 · 무인 (복수 선택 · 프로젝트에 깔 때만)</h4>
+  <p>PC 전체에만 깔 때는 묻지 않습니다. <b>하나도 안 고르면 ‘단일’</b>(한 세션에서 대화하며 작업 — 지금까지의 기본)입니다. 폴더에서 신호를 찾으면 그 값 옆에 <b>추천</b>을 붙이되 <b>미리 체크하지는 않습니다</b>. 여럿을 고르면 각 값이 주는 기본 체크·추천을 모두 받습니다.</p>
+  <div class="opt">
+    <div class="opt-head"><span class="name">병렬</span><span class="badge b-off">동시에 여러 개</span></div>
+    <p class="lead">한 작업을 쪼개 서브에이전트·워크플로·워크트리 세션으로 <b>동시에</b> 돌릴 때.</p>
+    <details class="more"><summary>자세히</summary>
+<dl>
+      <dt>추천이 붙을 때</dt><dd>에이전트 파일에 <code>isolation: worktree</code>가 있거나 <code>.claude/worktrees/</code>를 쓰고 있을 때</dd>
+      <dt>고르면 생기는 것</dt><dd>02 implementer에 격리 작업 폴더(<code>isolation: worktree</code>)를 <b>파일에 늘 붙여 두는 쪽</b>을 기본으로 제안 · 핸드오프 규약(02 ⓓ)에 조각을 나누는 기준을 적음 · 03 claude-hud 기본 체크 · 03 session-board·agent-guard는 <b>추천으로만 표시</b>(모든 세션에 훅을 거는 항목이라 직접 고릅니다)</dd>
+      <dt>알아 둘 것</dt><dd>동시에 N개를 돌리면 한도를 <b>약 N배</b> 빨리 씁니다. 워크플로 규모는 올리지 않고 기본값으로 시작합니다</dd>
+      <dt>안 고르면</dt><dd>작업 종류에 따른 기본 체크 그대로입니다</dd>
+    </dl>
+</details>
+  </div>
+  <div class="opt">
+    <div class="opt-head"><span class="name">조직</span><span class="badge b-off">역할별 에이전트</span></div>
+    <p class="lead">기획·분석·구현·검증·리뷰를 <b>역할별 에이전트가 나눠 맡는</b> 운영을 상시로 할 때.</p>
+    <details class="more"><summary>자세히</summary>
+<dl>
+      <dt>추천이 붙을 때</dt><dd><code>.claude/agents/</code>에 역할 에이전트가 넷 이상일 때</dd>
+      <dt>고르면 생기는 것</dt><dd>병렬의 전부 + 그 작업 종류의 로스터를 <b>전부</b> 기본 체크 · 커스텀 reviewer(02 ⓒ)를 추천으로 표시(기본 해제는 그대로) · 핸드오프 규약에 역할마다 읽는 문서·쓰는 문서를 빠짐없이 적음</dd>
+      <dt>알아 둘 것</dt><dd>로스터에 없는 역할 이름은 새로 만들지 않습니다 — 더 필요한 역할은 기존 에이전트의 역할 설명으로 나눕니다. 여러 세션이 팀처럼 일하는 실험 기능(agent teams)은 기본으로 꺼져 있어 <b>안내만</b> 합니다 — 켜는 건 사용자이고, 토큰을 훨씬 많이 씁니다</dd>
+      <dt>안 고르면</dt><dd>작업 종류에 맞는 에이전트만 기본 체크됩니다</dd>
+    </dl>
+</details>
+  </div>
+  <div class="opt">
+    <div class="opt-head"><span class="name">무인</span><span class="badge b-off">사람 없이</span></div>
+    <p class="lead">루틴·<code>claude -p</code>·<code>/goal</code>·<code>/loop</code>로 <b>사람이 지켜보지 않고</b> 돌릴 때.</p>
+    <details class="more"><summary>자세히</summary>
+<dl>
+      <dt>추천이 붙을 때</dt><dd><code>docs/ROUTINES.md</code>가 있거나 CI가 <code>claude -p</code>를 부를 때</dd>
+      <dt>고르면 생기는 것</dt><dd>parity-tester 기본 체크(테스트 명령이 감지될 때 — 사람이 안 보니 테스트가 유일한 검증입니다) · 핸드오프 규약의 중단 규칙을 <b>“첫 실패에서 멈춘다”</b>로 · 06 루틴과 04 훅 게이트를 추천으로 표시 · <code>claude -p</code> 호출을 턴·비용 상한으로 묶고, 모델이 막힐 때 쓸 대체 모델(<code>fallbackModel</code>)을 안내</dd>
+      <dt>알아 둘 것</dt><dd>워크플로는 사람 없이 돌 때 한도에 걸리면 기다리지 않고 <b>실패</b>합니다. 추가 사용량 지출 한도는 직접 확인하세요</dd>
+      <dt>안 고르면</dt><dd>사람이 보면서 쓰는 기준 그대로입니다</dd>
+    </dl>
+</details>
+  </div>
+
+  <div class="note">
+    <b>📌 어디에 남고, 나중에 어떻게 바꾸나</b>
+    운용 프로필은 <b>이 PC</b>의 <code class="i">~/.claude/CLAUDE.md</code> 기록에, 사용 형태는 <b>프로젝트</b> <code class="i">CLAUDE.md</code> 기록에 <code class="i">형태=병렬+무인</code>처럼 남습니다 — 사용 형태는 로스터·규약처럼 커밋되는 파일의 모양을 정하므로 팀이 함께 씁니다. 기록에 값이 있으면 다시 돌릴 때 그 값을 보여 주고 <b>확인만</b> 받습니다(말없이 이어받지 않습니다). 사용 형태가 없던 예전 기록은 ‘단일’로 보고 이 질문만 한 번 묻습니다. 확인 중 값을 바꿨고 이미 깐 문서가 있으면, 또는 나중에 따로 바꾸려면 <code class="i">/dropin-pick 프로필</code>이 달라지는 것을 표로 보여 주고 줄마다 승인받습니다(2-0 아래 ‘설치 형태만 골라 깔기’).
   </div>
 
   <h3>2-5. 산출물 언어 — 한국어 / English</h3>
@@ -554,7 +635,7 @@ details.sect>summary h2{margin:0}
       <dt><code>/dropin-update</code></dt><dd>프로젝트에 넣어둔 문서 사본이 낡았으면 <b>물어보고</b> 최신본으로 교체</dd>
       <dt><code>/dropin-apply</code></dt><dd><b>구성 자체를 다시 적용</b> — 문서·설치된 스킬·설정까지. 00 문서를 읽어 그 절차를 그대로 돕니다. 처음 까는 경우에도 같은 명령입니다. 역할 구분에 주의: <code>/dropin-update</code>는 설명서를 새것으로 바꾸고, 이것은 설명서가 설명하는 물건을 다시 만듭니다</dd>
       <dt><code>/dropin-sync</code></dt><dd><code>/dropin-update</code>·<code>/dropin-check</code>·<code>/dropin-apply</code>를 <b>이 순서로</b> 명령 하나에 실행. 각 스킬이 묻던 질문은 같은 자리에서 그대로 묻습니다</dd>
-      <dt><code>/dropin-pick</code></dt><dd><b>설치 형태를 골라 그것만</b> 깝니다 — 구성만·스킬만·플러그인만·MCP만처럼(<code>/dropin-pick MCP</code>처럼 바로 적어도 되고, 안 적으면 물어봅니다). 기반 모드·목적 번들 질문 대신 쓰는 입구이고 나머지 질문은 그대로입니다 — 2-0 아래 ‘설치 형태만 골라 깔기’</dd>
+      <dt><code>/dropin-pick</code></dt><dd><b>설치 형태를 골라 그것만</b> 깝니다 — 구성만·스킬만·플러그인만·MCP만처럼(<code>/dropin-pick MCP</code>처럼 바로 적어도 되고, 안 적으면 물어봅니다). 기반 모드·목적 번들 질문 대신 쓰는 입구이고 나머지 질문은 그대로입니다. 운용 프로필·사용 형태를 나중에 바꿀 때도 이것을 씁니다(<code>/dropin-pick 프로필</code>) — 2-0 아래 ‘설치 형태만 골라 깔기’</dd>
       <dt><code>/scope</code></dt><dd><b>이 세션에서 할 일</b>을 한 번 선언합니다 — <code>/scope &lt;작업&gt;</code>. 그러면 Claude는 그 작업과, 작업 때문에 깨진 것의 수정·검증·규칙이 요구하는 기록까지만 하고 <b>멈춥니다</b>. 관련돼 보이는 수정·다음 작업 착수·후속 제안은 하지 않고 완료 보고 끝 <code>범위 밖 발견:</code> 목록에 한 줄씩 남깁니다(작업 중 추천도 여기로). <b>수동 호출 전용</b>이라 부르지 않으면 아무것도 바뀌지 않습니다. Claude가 따르는 지침이지 무언가를 막는 잠금은 아닙니다. 선언은 <code>/clear</code> 전까지 유효하고, 긴 세션에서 흐려지면 다시 선언합니다. 범위 밖 일을 직접 요청하면 그 요청이 우선합니다</dd>
       <dt>종류</dt><dd>resume·wrap은 환경에 따라 셋 중 하나 — 단일 저장소용 기본형 / 팀이 한 저장소를 나눠 쓰는 분할형 / 여러 저장소를 한 폴더에서 다루는 통합형</dd>
     </dl>
@@ -691,6 +772,7 @@ details.sect>summary h2{margin:0}
       <dt>고르는 요령</dt><dd>기존 코드를 <b>고치는 일</b>(전환·리팩터)이면 spec-writer를 뺀 나머지. <b>새로 만드는 일</b>이면 surveyor·triage를 빼고 <b>spec-writer</b>(명세 작성)부터 시작. <b>감사</b>는 surveyor(찾기)·analyst(검증)에 역할만 바꿔 맡기고, <b>버그 찾기</b>는 surveyor(재현) → analyst(원인) → implementer(수정) → parity-tester(회귀 확인) 순서입니다</dd>
       <dt>어디에 둘지</dt><dd><b>팀 공유</b> = 프로젝트 <code>.claude/agents/</code>(커밋 — 팀원 모두 사용) / <b>개인 실험</b> = <code>~/.claude/agents/</code>(내 PC 전용). 어떤 모드를 골라도 물어봅니다</dd>
       <dt>병렬 제안</dt><dd>일이 크고 조각끼리 같은 파일을 안 건드리면 implementer를 <b>여러 개 동시에</b> 돌리는 구성(<code>isolation: worktree</code>)도 선택지로 나옵니다. 붙이는 방식은 둘 중 하나입니다 — implementer 파일에 <b>늘 붙여 두기</b> / <b>동시에 돌릴 때만 붙이기</b>(순서대로 하는 단계는 격리 작업 폴더를 매번 만들지 않아 가볍습니다. 이 방식은 파일에 흔적이 남지 않아 ⓓ 핸드오프 규약 문서에 그 규칙을 적어 둡니다)</dd>
+      <dt>사용 형태에 따라(2-4)</dt><dd>병렬이면 implementer에 격리를 <b>늘 붙여 두기</b>가 기본 제안이 되고, 조직이면 그 작업 종류의 로스터가 <b>전부</b> 기본 체크되며, 무인이면 parity-tester가 기본 체크됩니다(테스트 명령이 감지될 때). 기본 체크일 뿐 고르는 건 사용자입니다</dd>
     </dl>
 </details>
   </div>
@@ -700,7 +782,7 @@ details.sect>summary h2{margin:0}
     <p class="lead">코드 리뷰용 에이전트. <b>기본적으로 만들지 않습니다</b> — Claude Code에 <code class="i">/code-review</code>가 이미 내장돼 있기 때문입니다.</p>
     <details class="more"><summary>자세히</summary>
 <dl>
-      <dt>체크할 때</dt><dd>내장 리뷰가 모르는 <b>우리 프로젝트만의 기준</b>이 있을 때 — 명세와 구현을 대조해야 한다거나, 도메인 규약을 검사해야 한다거나</dd>
+      <dt>체크할 때</dt><dd>내장 리뷰가 모르는 <b>우리 프로젝트만의 기준</b>이 있을 때 — 명세와 구현을 대조해야 한다거나, 도메인 규약을 검사해야 한다거나. 사용 형태가 조직이면 추천으로 표시됩니다(기본 해제는 그대로)</dd>
       <dt>참고</dt><dd>내장 명령으로 <code>/code-review</code>(기본) · <code>/simplify</code>(단순화 전용, 버그 탐지는 안 함)가 있습니다</dd>
     </dl>
 </details>
@@ -712,6 +794,7 @@ details.sect>summary h2{margin:0}
     <details class="more"><summary>자세히</summary>
 <dl>
       <dt>만들 파일</dt><dd><code>docs/핸드오프-규약.md</code>(기본 — 이미 다른 이름의 규약을 쓰고 있으면 그 이름을 그대로 둡니다) — 어느 단계가 어느 파일에 무엇을 남기는지</dd>
+      <dt>사용 형태에 따라(2-4)</dt><dd>병렬이면 조각을 나누는 기준을, 조직이면 역할마다 읽는 문서·쓰는 문서를 빠짐없이, 무인이면 <b>첫 실패에서 멈추는</b> 규칙을 적습니다</dd>
     </dl>
 </details>
   </div>
@@ -725,7 +808,7 @@ details.sect>summary h2{margin:0}
       <dt>만들 파일</dt><dd><code>skills/plan-&lt;모델&gt;/SKILL.md</code>와 <code>docs/모델-운용표.md</code>(<code>언어=en</code>이면 <code>model-usage-table.md</code>). 운용표는 "상황 · 모델 · effort" 3열로, 어떤 작업을 어느 모델·강도로 보낼지 한 표에 정리합니다. 스킬을 내 PC 전체에 두면 글로벌 <code>CLAUDE.md</code>에도 <b>언제 쓰고 언제 안 쓰는지</b> 한 항목이 붙습니다. 지울 때는 이것들을 함께 지웁니다</dd>
       <dt>함께 묻는 것</dt><dd>계획에 쓸 <b>모델</b>과 <b>강도</b>(기본 <code>high</code>) · <b>수동 호출 전용</b>으로 둘지(권장 — 자동으로 불리면 모르는 사이에 그 턴이 다른 모델로 갑니다) · <b>내 PC에만 둘지 팀과 공유할지</b>(로스터 배치와 따로 묻습니다). 스킬 이름 별칭(2-7)도 폴더 이름에 똑같이 붙습니다</dd>
       <dt>언제 쓰나</dt><dd><b>설계 갈래가 여럿이라 구현 전에 판단이 필요한 작업</b>에만. 경로가 정해진 작업은 세션에서 바로 계획·구현하는 편이 쌉니다 — 세션 모델과 다른 모델이면 호출하는 순간 그때까지의 대화 전체를 그 모델 단가로 한 번 다시 처리하기 때문입니다(세션 초반·<code>/clear</code> 직후가 쌉니다)</dd>
-      <dt>체크할 때</dt><dd>계획 단계에서만 특정 모델을 쓰고 싶을 때. 대부분은 필요 없어 <b>기본 해제</b>입니다</dd>
+      <dt>체크할 때</dt><dd>계획 단계에서만 특정 모델을 쓰고 싶을 때. 대부분은 필요 없어 <b>기본 해제</b>입니다. 운용 프로필이 여유면 추천으로 표시됩니다(기본 해제는 그대로)</dd>
     </dl>
 </details>
   </div>
@@ -744,7 +827,7 @@ details.sect>summary h2{margin:0}
       <dt>설치 방법</dt><dd>세션에서 <code>/plugin marketplace add jarrodwatts/claude-hud</code> → <code>/plugin install claude-hud</code> → <code>/reload-plugins</code> → <code>/hud</code></dd>
       <dt>필요한 것</dt><dd>최근 버전의 Claude Code와 Node.js 22.18 이상(Windows에 없으면 <code>winget install OpenJS.NodeJS.LTS</code>)</dd>
       <dt>함께 묻는 것</dt><dd><b>표시 구성</b> — 대화형 구성(<code>/hud</code>에서 항목을 직접 고름) / 작성자 추천 구성(모델·effort·돌고 있는 에이전트·컨텍스트·사용량과 리셋 시각·미커밋 표시만 켜고 소음 항목은 끔 — 7일 한도는 사용량이 낮을 때도 늘 표시) / 기본값 유지. 그리고 따로 <b><code>refreshInterval</code> 넣을지</b> — 넣으면(예: 5초) 메시지 사이에도 남은 시간 카운트다운이 흐르지만, 창이 놀아도 타이머가 돌아 <b>열어 둔 창 수만큼</b> 다시 그립니다. 터미널을 여러 개 띄워 두면 빼는 편이 낫습니다(빼도 사용량 값은 갱신됩니다). Windows Git Bash에서는 짧은 간격에서 오류가 날 수 있어, 거기선 빼거나 30초 이상으로 둡니다</dd>
-      <dt>기본 체크</dt><dd><b>절약 프로필이거나 새 PC일 때.</b> 절약 프로필이면 사실상 필수 — 얼마나 쓰는지 안 보이면 아끼는 건 감에 불과합니다</dd>
+      <dt>기본 체크</dt><dd><b>절약 프로필이거나, 사용 형태가 병렬·조직이거나, 새 PC일 때.</b> 절약 프로필이면 사실상 필수 — 얼마나 쓰는지 안 보이면 아끼는 건 감에 불과합니다. 병렬로 N개를 돌리면 한도를 약 N배 빨리 쓰므로 그때도 보여야 합니다</dd>
       <dt>주의</dt><dd>이미 다른 상태 표시줄을 쓰고 있으면 교체할지 반드시 물어봅니다</dd>
     </dl>
 </details>
@@ -912,7 +995,7 @@ details.sect>summary h2{margin:0}
       <dt>못 보는 것</dt><dd>여러 저장소 묶음에서 상위 폴더 세션과 하위 저장소 세션은 서로 보지 못합니다. 셸 명령으로 고친 파일은 보드에 오르지 않고, <code>claude -p</code>로 여러 번 돌리면 실행마다 별도 세션으로 잡힙니다</dd>
       <dt>스코프</dt><dd><b>글로벌 고정</b>이라 묻지 않습니다 — 세션은 PC 단위라, 프로젝트에 두면 그 저장소의 세션만 보입니다</dd>
       <dt>필요한 것</dt><dd><b>Node.js 18 이상</b>. 없으면 <b>훅을 걸지 않고</b>(플러그인도 켜지 않습니다) 이미 걸려 있으면 걷어낼지 묻습니다 — 돌지 못하는 훅은 오류 알림을 띄웁니다. 알려 주고 “대기”로 기록하며, Node.js를 설치한 뒤 새 터미널에서 다시 적용합니다</dd>
-      <dt>왜 기본 해제인가</dt><dd>이 PC의 <b>모든 세션</b>에 훅을 거는 항목이라 모드가 대신 켜지 않습니다. 한 폴더에서 세션을 자주 여러 개 연다면 직접 체크하세요</dd>
+      <dt>왜 기본 해제인가</dt><dd>이 PC의 <b>모든 세션</b>에 훅을 거는 항목이라 모드가 대신 켜지 않습니다. 사용 형태가 병렬·조직이면 <b>추천으로 표시</b>되지만 미리 체크하지는 않습니다. 한 폴더에서 세션을 자주 여러 개 연다면 직접 체크하세요</dd>
       <dt>주의</dt><dd>세션 시작·파일 수정 때 다른 세션이나 동시 편집을 다루는 훅이 이미 있으면 유지할지 교체할지 묻습니다</dd>
       <dt>지울 때</dt><dd>플러그인이면 <code class="i">/plugin uninstall dandi-session-board@dandi</code>(훅도 함께 사라집니다). 복사 설치면 설정에서 이 훅들만 지우고 스킬 폴더와 <code class="i">~/.claude/session-board/</code>를 지웁니다 — 세션 제목·첫 메시지 앞부분·브랜치·파일 경로만 담겨 있어 지워도 잃는 것이 없습니다</dd>
     </dl>
@@ -1042,7 +1125,7 @@ details.sect>summary h2{margin:0}
       <dt>워크플로 상한(선택 — 물어봅니다)</dt><dd>워크플로가 띄우는 에이전트는 이 훅을 거치지 않아 거부할 수 없습니다. <b>고르면</b> 이 PC 사양으로 계산한 상한을 내 PC 설정(<code class="i">~/.claude/settings.json</code>)의 환경변수 <code class="i">CLAUDE_CODE_WORKFLOW_MAX_CONCURRENT_AGENTS</code>에 넣어 워크플로도 그 수로 묶습니다. PC마다 다른 값이라 프로젝트 설정에는 넣지 않습니다. 이 자리의 환경변수가 실제로 먹는지는 공식 문서에 적혀 있지 않아, 새 세션에서 확인하고 안 먹으면 지운 뒤 알려 줍니다. <b>안 고르면</b> 워크플로는 세션 시작 안내만 받고 Claude Code의 기본 상한을 따릅니다. 플러그인·복사 설치 어느 쪽이든 묻습니다</dd>
       <dt>스코프</dt><dd><b>글로벌 고정</b>이라 묻지 않습니다 — PC 자원은 PC 단위라, 프로젝트에 두면 그 저장소의 세션만 세어 상한이 새어 나갑니다</dd>
       <dt>필요한 것</dt><dd><b>Node.js 18 이상</b>. 없으면 <b>훅을 걸지 않고</b>(플러그인도 켜지 않습니다) 이미 걸려 있으면 걷어낼지 묻습니다. 알려 주고 <b>이 PC의</b> <code class="i">~/.claude/CLAUDE.md</code>에 “대기”로 기록하며, Node.js를 설치한 뒤 새 터미널에서 다시 적용합니다</dd>
-      <dt>왜 기본 해제인가</dt><dd>이 PC의 <b>모든 세션</b>에 훅을 걸고 스폰을 거부하는 항목이라 모드가 대신 켜지 않고, 어떤 번들에도 들지 않습니다. 저사양 PC에서 병렬 작업을 자주 돌린다면 직접 체크하세요</dd>
+      <dt>왜 기본 해제인가</dt><dd>이 PC의 <b>모든 세션</b>에 훅을 걸고 스폰을 거부하는 항목이라 모드가 대신 켜지 않고, 어떤 번들에도 들지 않습니다. 사용 형태가 병렬·조직이면 <b>추천으로 표시</b>되지만 미리 체크하지는 않습니다. 저사양 PC에서 병렬 작업을 자주 돌린다면 직접 체크하세요</dd>
       <dt>주의</dt><dd>서브에이전트 스폰을 막거나 세는 훅, 또는 동시 실행 수를 정하는 환경변수가 이미 있으면 값을 보여 주고 유지할지 교체할지 묻습니다</dd>
       <dt>확인 방법</dt><dd>설치 뒤 새 세션의 시작 안내에 <code class="i">[agent-guard]</code>로 시작하는 상한 한 줄이 보여야 합니다 — 없으면 훅이 불리지 않는 것입니다</dd>
       <dt>지울 때</dt><dd>플러그인이면 <code class="i">/plugin uninstall dandi-agent-guard@dandi</code>(훅도 함께 사라집니다). 복사 설치면 설정에서 이 훅들만 지우고 스킬 폴더를 지웁니다. 어느 쪽이든 <code class="i">~/.claude/agent-guard/</code>를 지우고(실행 중 표식과 선택 설정뿐이라 잃는 것이 없습니다), 워크플로 상한을 넣었다면 그 환경변수도 지웁니다</dd>
@@ -1247,7 +1330,7 @@ details.sect>summary h2{margin:0}
 
   <div class="tbl">
   <table>
-    <tr><th style="width:180px">상황</th><th style="width:150px">모드 · 번들 · 프로필</th><th>왜</th></tr>
+    <tr><th style="width:180px">상황</th><th style="width:150px">모드 · 번들 · 프로필 (· 형태)</th><th>왜</th></tr>
     <tr>
       <td><b>Claude Code를 처음 깐 새 PC</b></td>
       <td>최소 / 번들 없음 / 표준</td>
@@ -1269,6 +1352,11 @@ details.sect>summary h2{margin:0}
       <td>상태 표시줄로 사용량을 보면서, 일상 작업을 하위 모델에 맡겨 아낍니다. 어려운 작업은 원하면 Sonnet 메인에 상위 모델 자문을 붙이는 선택지도 있습니다. 모델별 추론 강도(effort) 값과 검증 게이트는 그대로 둡니다</td>
     </tr>
     <tr>
+      <td><b>서브에이전트·워크트리로 여러 작업을 동시에</b></td>
+      <td>권장 / 검증 강화 / 표준 · 형태 <b>병렬</b></td>
+      <td>implementer 격리와 상태 표시줄이 기본으로 잡히고, 세션끼리 알려 주는 session-board와 동시 실행 수를 PC에 맞추는 agent-guard가 추천으로 나옵니다. 동시에 돌리는 만큼 한도가 빨리 줄어든다는 것만 기억하세요</td>
+    </tr>
+    <tr>
       <td><b>문서만 있는 저장소</b></td>
       <td>최소 / 번들 없음 / 표준</td>
       <td>02(모델 분담)·04(빌드 검증)는 쓸 곳이 없습니다. 기록 체계만으로 충분합니다</td>
@@ -1285,6 +1373,7 @@ details.sect>summary h2{margin:0}
     </tr>
   </table>
   </div>
+  <p style="font-size:14.5px;color:var(--ink-soft)">형태를 적지 않은 줄은 사용 형태를 고르지 않은 ‘단일’입니다(PC 전체에만 까는 새 PC 줄은 이 질문 자체가 없습니다).</p>
 </section>
 
 <!-- ═══════════ 10. FAQ ═══════════ -->
@@ -1295,9 +1384,9 @@ details.sect>summary h2{margin:0}
   <p>
     됩니다. 그게 정상 사용법입니다. 설치가 끝나면 <code class="i">CLAUDE.md</code> 맨 아래에 이런 줄이 남습니다:
   </p>
-  <p><code class="i">&lt;!-- dropin-applied: 2026-08-05 · 모드=권장+디자인 · 언어=ko · 별칭=없음 · 00 v○.○ · 01 v○.○ · 02 v○.○ · 미선택: 05, 06 · 출처=사본 --&gt;</code></p>
+  <p><code class="i">&lt;!-- dropin-applied: 2026-08-05 · 모드=권장+디자인 · 형태=병렬 · 언어=ko · 별칭=없음 · 00 v○.○ · 01 v○.○ · 02 v○.○ · 미선택: 05, 06 · 출처=사본 --&gt;</code></p>
   <p style="font-size:14.5px;color:var(--ink-soft)">
-    칸마다 내가 고른 답이 들어갑니다 — 모드와 번들, 산출물 언어, 스킬 이름 별칭, 설치한 문서별 버전, 고르지 않은 것, 문서를 어디서 읽었는지, 그리고 팀 구성 문항(2-6)을 받았다면 그 답. <b>운용 프로필</b>은 이 줄에 없습니다. 팀이 아니라 내 것이라서 <b>내 PC의 <code class="i">CLAUDE.md</code></b>에 따로 적힙니다.
+    칸마다 내가 고른 답이 들어갑니다 — 모드와 번들, 사용 형태(안 골랐으면 ‘단일’), 산출물 언어, 스킬 이름 별칭, 설치한 문서별 버전, 고르지 않은 것, 문서를 어디서 읽었는지, 그리고 팀 구성 문항(2-6)을 받았다면 그 답. <b>운용 프로필</b>은 이 줄에 없습니다. 팀이 아니라 내 것이라서 <b>내 PC의 <code class="i">CLAUDE.md</code></b>에 따로 적힙니다.
   </p>
   <p>
     다음에 다시 돌리면 Claude가 이 줄을 먼저 읽고 <b>그 사이에 문서가 무엇이 바뀌었는지 요약해서 보여줍니다</b>. 바뀐 내용은 행마다 적용할지 고르고, 보류한 행은 기록에 남아 다음에 다시 물어봅니다.
@@ -1374,7 +1463,7 @@ details.sect>summary h2{margin:0}
 <a class="totop" href="#toc">↑ 목차</a>
 
 <footer>
-  단디 · 설치 옵션 사전 · 00_통합-설치.md 기준 · 2026-11-19<br>
+  단디 · 설치 옵션 사전 · 00_통합-설치.md 기준 · 2026-11-22<br>
   각 항목의 정본은 해당 하위 문서(01~06)입니다. 이 페이지는 사람이 읽고 판단하기 위한 안내이며, 설치 절차 자체를 바꾸지 않습니다.<br>
   저장소: github.com/EleninJayTech/claude ·
   <a href="../index.ko.html">사용법</a> · <a href="intro.ko.html">소개 영상</a> · <a href="demo.ko.html">설치 시연</a> · <a href="learn.ko.html">학습 코스</a> · <a href="skills.ko.html">스킬 카탈로그</a><br>

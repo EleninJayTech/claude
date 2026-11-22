@@ -351,13 +351,13 @@ footer{max-width:1120px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
 <!-- ═══ CH5 프로필 · 기존 설정 ═══ -->
 <section class="chapter" data-ch="5" aria-labelledby="t5" hidden>
   <p class="eyebrow">Chapter 5 &middot; the remaining common questions</p>
-  <h2 id="t5">Operating profile, output language, name alias, and what is already there</h2>
+  <h2 id="t5">Operating profile, usage pattern, output language, name alias, and what is already there</h2>
 
   <details class="acc"><summary>Quick path &mdash; only on an already-set-up PC</summary><div class="acc-b">
-  <p>The question that comes <b>first, and only when this PC already has an install record but this project does not have one yet</b>. It shows the PC name from that record and asks you to <b>confirm it is this PC</b> first (answer no and the shortcut folds away and each question is asked). It does not appear when you cloned a repo a teammate already set up, or when re-applying &mdash; so the team&rsquo;s settled values are never overwritten by your PC&rsquo;s. It is not a new mode &mdash; it is <b>a shortcut for answering the common questions in one go</b> (base mode, bundles, profile, language, alias). Whichever you pick, the values it will carry over are shown and <b>you confirm them</b>.</p>
+  <p>The question that comes <b>first, and only when this PC already has an install record but this project does not have one yet</b>. It shows the PC name from that record and asks you to <b>confirm it is this PC</b> first (answer no and the shortcut folds away and each question is asked). It does not appear when you cloned a repo a teammate already set up, or when re-applying &mdash; so the team&rsquo;s settled values are never overwritten by your PC&rsquo;s. It is not a new mode &mdash; it is <b>a shortcut for answering the common questions in one go</b> (base mode, bundles, profile, usage pattern, language, alias). Whichever you pick, the values it will carry over are shown and <b>you confirm them</b>.</p>
   <ul>
-    <li><b>This PC&rsquo;s defaults</b> (default pick) &mdash; uses the profile (and language and alias, if recorded) already settled on this PC and goes with mode Minimal (plus in-work suggestions). The values are shown and you <b>only confirm</b>. Anything this PC has no value for is asked as its own question. From the second project on the same PC, this one.</li>
-    <li><b>Same as another project</b> &mdash; carries over the mode, bundles, language and alias recorded in another project on this PC. Only the profile comes from this PC. Only projects that <b>actually exist</b> now and have an install record are offered, and which project the values came from is not written to the record (this project&rsquo;s record is shared with the team).</li>
+    <li><b>This PC&rsquo;s defaults</b> (default pick) &mdash; uses the profile (and language and alias, if recorded) already settled on this PC and goes with mode Minimal (plus in-work suggestions). The values are shown and you <b>only confirm</b>. Anything this PC has no value for is asked as its own question &mdash; the usage pattern is never in this PC&rsquo;s record, so that one is always asked. From the second project on the same PC, this one.</li>
+    <li><b>Same as another project</b> &mdash; carries over the mode, bundles, usage pattern, language and alias recorded in another project on this PC. Only the profile comes from this PC. Only projects that <b>actually exist</b> now and have an install record are offered, and which project the values came from is not written to the record (this project&rsquo;s record is shared with the team).</li>
     <li><b>Recommended mode</b> &mdash; the Recommended mix Claude puts together by looking at this folder alone, plus defaults.</li>
     <li><b>One by one</b> &mdash; no shortcut; you get the common questions from the start, all of them.</li>
   </ul>
@@ -367,18 +367,25 @@ footer{max-width:1120px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
     The safety questions (&ldquo;may I overwrite what is already there?&rdquo;), the existing-team-setup question below, the company-policy check, the scope questions about where things should live, and the questions about items that are off by default <b>still appear</b>. Not even the &ldquo;everything&rdquo; mode can skip those, so a shortcut must not either.
   </div></div>
 
-  <h3>Operating profile &mdash; standard / thrift</h3>
-  <p>If this PC&rsquo;s global record already has a profile, that value is shown and you <b>only confirm</b> it.</p>
+  <h3>Operating profile and usage pattern &mdash; two separate questions</h3>
+  <p>The <b>operating profile</b> is about your plan&rsquo;s allowance and belongs to <b>this PC</b>. The <b>usage pattern</b> is about how <b>this project</b> is run (several agents at once, a standing team of role agents, runs with nobody watching) and is shared with the team. If a value is already recorded &mdash; the profile in this PC&rsquo;s global record, the usage pattern in this project&rsquo;s record &mdash; it is shown and you <b>only confirm</b> it.</p>
   <div class="sim">
     <div class="q">
       <p class="qt"><b>Q.</b> Choose an operating profile</p>
       <div class="opts" id="profOpts" role="group" aria-label="Operating profile selection"></div>
+      <p class="qt" style="margin:12px 0 6px"><b>Q.</b> How will this project be run? (multiple &mdash; pick none for a single session)</p>
+      <div class="opts" id="formOpts" role="group" aria-label="Usage pattern selection"></div>
     </div>
     <div class="plan" aria-live="polite">
       <p class="pt">&#9881;&#65039; What changes</p>
       <div id="profPlan"><p class="empty">Pick a profile on the left.</p></div>
     </div>
   </div>
+  <details class="acc"><summary>Where the answers are kept, and changing them later</summary><div class="acc-b">
+  <p>The profile goes into this PC&rsquo;s global record (<code class="i">~/.claude/CLAUDE.md</code>). The usage pattern goes into <b>this project&rsquo;s</b> record as <code class="i">형태=</code> &mdash; pick none and it reads <code class="i">형태=단일</code> (single), pick several and they are joined with <code class="i">+</code>. It is shared with the team because it shapes files everyone commits, such as the agent roster and the hand-off rules. It is asked only when you install into a project, not for a PC-only install.</p>
+  <p>What the folder already holds can mark a pattern as recommended &mdash; agents set to isolated worktrees or a worktree folder in use (parallel), several role agents (role team), a routines record or <code class="i">claude -p</code> in CI (unattended) &mdash; but it is <b>never ticked for you</b>. Neither answer creates files on its own: they only change what comes pre-checked or suggested in the lists you still pick from. If the two pull different ways, <b>the allowance wins</b> &mdash; thrift with parallel keeps the thrift-sized fan-out.</p>
+  <p>To change either later, run <code class="i">/dropin-pick 프로필</code>. It asks again with your current values, shows a table of what would change in what is already installed (read from the actual files, not just the record), and you approve it row by row &mdash; keep is the default, and a newly suggested item (agent-guard after switching to parallel, say) goes to its own item question instead of being installed. Changing the profile touches only this PC; changing the usage pattern can change files the team shares, so you are reminded to commit.</p>
+  </div></details>
 
   <details class="acc"><summary>Output language &mdash; Korean / English</summary><div class="acc-b">
   <p>This one is easy to misread: it is <b>not the language of the documents</b> but the language of <b>what the install produces</b>. The drop-in documents stay Korean &mdash; Claude executes them identically either way &mdash; while your answer here decides the language of the target <code class="i">CLAUDE.md</code> body, the <code class="i">docs/</code> entries, commit messages and generated filenames (<code class="i">docs/difficulty-matrix.md</code> vs <code class="i">docs/난이도-매트릭스.md</code>). Format keywords such as <code class="i">[topic][Done]</code> stay fixed in either language, because <code class="i">/resume</code> and <code class="i">/wrap</code> find them by those exact strings. The default is the language you are chatting in, and if outputs already exist, their language comes first.</p>
@@ -455,7 +462,7 @@ footer{max-width:1120px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
       as well, but it starts unchecked &mdash; the built-in <code class="i">/code-review</code> already covers correctness review.</p>
       <p>Each agent file also carries its <b>reasoning effort</b> next to the model, so you do not pick it every time you call one.
       You are also asked whether the roster is <b>shared with the team</b> (committed to the project) or <b>just for you</b> (your machine). If no test command is detected, parity-tester starts unchecked &mdash; it would have nothing to run.</p>
-      <p>The same list offers a <b>difficulty rubric</b> and a <b>hand-off document</b> that fixes which agent follows which and what each passes on. On a large project whose pieces are independent, you are also offered <b>running implementers in parallel</b>, each in its own isolated worktree &mdash; set permanently in the agent file, or only when called, in which case the rule is written into the hand-off document.</p>
+      <p>The same list offers a <b>difficulty rubric</b> and a <b>hand-off document</b> that fixes which agent follows which and what each passes on. On a large project whose pieces are independent, you are also offered <b>running implementers in parallel</b>, each in its own isolated worktree &mdash; set permanently in the agent file, or only when called, in which case the rule is written into the hand-off document. Choose the parallel usage pattern and the permanent setting is the default suggestion, with the hand-off document pre-checked.</p>
       <p>There is <b>one more optional item</b> (unchecked by default) &mdash; a <code class="i">/plan-&lt;model&gt;</code> command that runs a
       different model <b>only while planning</b>. When the plan is done it returns to your normal model by itself.
       Where that command lives (<b>just for you</b> on your machine, or <b>shared with the team</b> in the project) is asked separately from the roster. You are also asked whether it should run only when you call it, and a <b>usage table</b> of which model takes which work (<code class="i">docs/model-usage-table.md</code>) is created with it.</p>
@@ -469,7 +476,7 @@ footer{max-width:1120px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
     <summary><span class="id">03</span>Add-ons &mdash; status line, design skills, MCP, browser, feature docs, refactor, Korean UI guide, PC check-up, policy notes, session board, feature change log, Flutter app screen verification, operations kit, diff review tools, Windows PC set-up, knowledge-base dashboard, parallel-agent guard <span class="badge b-off">all optional</span></summary>
     <div class="acc-b">
       <ul>
-        <li><b>claude-hud</b> &mdash; a <b>status line</b> under the input box showing context and plan usage. Practically required on the thrift profile. Needs <b>Node.js 22.18 or later</b>. Pick it and you also choose how to set up what it shows (walk through it interactively, take the author&rsquo;s recommended layout, or leave the defaults), and whether to add a <b>timer refresh</b> so countdowns keep moving between messages &mdash; without it, the line redraws only on events. The timer costs a redraw per open window, and on Windows Git Bash short intervals can throw errors, so there leave it out or use 30 seconds or more.</li>
+        <li><b>claude-hud</b> &mdash; a <b>status line</b> under the input box showing context and plan usage. Comes pre-checked on the thrift profile and on a parallel or role-team usage pattern &mdash; several agents at once use the allowance that many times faster. Needs <b>Node.js 22.18 or later</b>. Pick it and you also choose how to set up what it shows (walk through it interactively, take the author&rsquo;s recommended layout, or leave the defaults), and whether to add a <b>timer refresh</b> so countdowns keep moving between messages &mdash; without it, the line redraws only on events. The timer costs a redraw per open window, and on Windows Git Bash short intervals can throw errors, so there leave it out or use 30 seconds or more.</li>
         <li><b>svg-design</b> &mdash; a rulebook for implementing SVG effects (hand-drawn, Gooey, glass, neon) correctly. For projects that build web screens.</li>
         <li><b>frontend-design</b> &mdash; an official Anthropic skill that steers away from UI that looks AI-generated.</li>
         <li><b>MCP servers</b> &mdash; connect external tools (GitHub, doc search, browser control). Starts unchecked. Pick it and you are asked separately which servers to attach and <b>where to register them</b> (team-shared <code class="i">.mcp.json</code> / your whole machine / just you, in this project).</li>
@@ -479,14 +486,14 @@ footer{max-width:1120px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
         <li><b>kr-ui-guide</b> &mdash; design rules from research on Korean services (UX patterns, icons, colour, recent design trends) and on Korean game UI/UX. Claude <b>calculates contrast</b> for the colours it proposes and checks screens against the checklists. For Korean-audience <b>web, app and game</b> screens; it does not copy any brand's look. Pick it and two optional follow-ups come with it, both unchecked: a <b>project override section</b> in the <code class="i">CLAUDE.md</code> of the project that will get UI work (brand colour, status colours, dark mode, domain, target platform, style pack) &mdash; leave a value blank and Claude first reads the guide, then asks you with suggestions drawn from it &mdash; and a second skill, <b>kr-ui-styles</b>, which swaps the default look for another researched direction (for now editorial / monochrome, dark / neon, kitsch / illustrated and neo-brutalist) when a project asks for it; choosing it also asks which style pack the project uses.</li>
         <li><b>pc-clean</b> &mdash; when your PC slows down, it <b>only reads</b> the likely causes (free disk and memory, orphaned <code class="i">node.exe</code> processes, Claude sessions started before today, temp files and so on) into one table, then cleans up <b>only the items you approve</b>. <b>Windows + PowerShell 7 only</b>, so it does not appear on other systems, and as a machine-level tool unrelated to the project it starts unchecked. Its scope defaults to your whole machine.</li>
         <li><b>Policy notes</b> &mdash; the moment Claude spots a <b>product rule</b> while developing (when a status may change, who can see or do what, how amounts, quantities or deadlines are calculated &mdash; things a name alone does not tell you), it writes it into <code class="i">.claude/rules/policies/</code>, and whenever it touches that code or gets related work it checks those rules first, <b>without being told</b>. Guesses from the code and confirmed rules are marked apart. It is a rule file for Claude, not a document for people. <b>It starts unchecked in every mode</b> &mdash; its instruction loads on every turn and it writes into files that get committed, so no mode turns it on for you &mdash; and it is not for documentation-only repositories. The rules are facts about that project, so it installs <b>into this project only</b>.</li>
-        <li><b>session-board</b> &mdash; when you run several Claude sessions in the same folder, it tells Claude the <b>other sessions&rsquo; titles (or, if untitled, the start of the first prompt), branches and edited files</b>, and warns once before editing a file another session just changed (it never blocks). With no other session running it adds nothing to the conversation. Needs <b>Node.js 18 or later</b> &mdash; if Node is missing, no hooks are attached (you are asked whether to remove any already there) and it is noted as waiting until you install Node and re-apply from a new terminal. Sessions are per machine, so it installs <b>machine-wide</b>. It hooks into every session, so it starts unchecked. You choose whether to install it as a <code class="i">dandi</code> plugin or as a copied file; if both are found, everything would run twice, so you are asked to keep one.</li>
+        <li><b>session-board</b> &mdash; when you run several Claude sessions in the same folder, it tells Claude the <b>other sessions&rsquo; titles (or, if untitled, the start of the first prompt), branches and edited files</b>, and warns once before editing a file another session just changed (it never blocks). With no other session running it adds nothing to the conversation. Needs <b>Node.js 18 or later</b> &mdash; if Node is missing, no hooks are attached (you are asked whether to remove any already there) and it is noted as waiting until you install Node and re-apply from a new terminal. Sessions are per machine, so it installs <b>machine-wide</b>. It hooks into every session, so it starts unchecked &mdash; on a parallel or role-team usage pattern it is marked as suggested, still not ticked. You choose whether to install it as a <code class="i">dandi</code> plugin or as a copied file; if both are found, everything would run twice, so you are asked to keep one.</li>
         <li><b>Feature change log</b> &mdash; from the moment it is installed, whenever a feature people use (a screen, API, command or setting) is <b>added, changed or removed</b>, Claude writes <b>one line</b> into <code class="i">.claude/rules/feature-log/&lt;area&gt;.md</code> in the same turn &mdash; the file path and the date, plus the reason for a removal. When related work comes in, it checks those lines first, <b>without being told</b>, so a later change does not miss how a feature was defined or quietly bring back one that was removed. It is an index for finding things, not a spec: the details stay in the code and the git history. Refactors and bug fixes that leave a feature as it was are not logged, and nothing is written retroactively for existing features &mdash; that is the job of the feature-doc set, and if that set is already in use you are told the two overlap. Like policy notes, <b>it starts unchecked in every mode</b>, is not for documentation-only repositories, and installs <b>into this project only</b>.</li>
         <li><b>Flutter app screen verification</b> &mdash; lets Claude check the screens of a <b>Flutter app</b> (desktop, mobile or web) rather than a browser page. It attaches to the app running in debug mode, reads the on-screen elements as text, taps and types to try things, and captures the screen the app drew (an open-source tool called Marionette). It does not attach to release builds and cannot operate screens outside the app (a file picker, for example). It appears <b>only in Flutter projects</b> and starts unchecked &mdash; it adds a dependency to the app&rsquo;s <code class="i">pubspec.yaml</code> and creates an entry-point file, so no mode turns it on for you. Pick it and three questions follow: <b>how to connect</b> (an MCP server by default / the command-line tool optionally) &middot; <b>app-side setup</b> (a separate check-only entry point that leaves your production code alone, by default / the official way, code in <code class="i">lib/main.dart</code> that switches on only in debug) &middot; <b>where to register the MCP server</b> (just me in this project by default / shared with the team). The MCP server is usable from the session after you register it. The browser-check rule skill comes with it.</li>
         <li><b>ops-kit</b> &mdash; for a project you deploy and run on your own. It first <b>checks the project</b> and shows a table of what it needs, then makes <b>only what you pick</b> and keeps it up to date as the code changes: a deploy runbook (first deploy, redeploy, rollback), an operations runbook (outside consoles, paperwork, regular checks), a management hub listing each app&rsquo;s admin sites and where to look (plus a read-only map of where the project&rsquo;s records are &mdash; plans, progress, decisions, feature specs and the like), an <code class="i">/admin</code> dashboard that stays closed until a strong enough token is set, health checks and outage alerts, backup and restore rehearsals, and free-tier and cost watching. Each runbook step has a command to paste, what success looks like, what to do on failure and a report to send back to Claude. Items judged unnecessary are noted with the reason so they are not suggested again. It <b>does not deploy, enter secrets or connect alert channels</b> &mdash; you do that by following the runbook. Because it can write code into your app, it starts unchecked, and it is not for documentation-only repositories. Its scope defaults to your whole machine; what it makes always lands inside the project.</li>
         <li><b>diff review tools</b> &mdash; lets you <b>read what Claude changed in the terminal</b>, file by file and hunk by hunk, staging the good parts and discarding the bad ones without opening an IDE. It installs three command-line tools on your PC (<b>lazygit</b>, a git screen in the terminal; <b>delta</b>, a diff that highlights the changed words inside a line; <b>difftastic</b>, which compares by code structure so indentation-only changes drop out) and adds three diff views to lazygit&rsquo;s settings that you cycle with the <code class="i">|</code> key. Windows uses <code class="i">winget</code>, macOS <code class="i">brew</code>, Linux each tool&rsquo;s official install page. It helps your own final review and does not replace <code class="i">/code-review</code>. It installs outside programs and edits your settings file, so it starts unchecked, and it belongs to <b>this PC</b>. On a work PC, check the software install policy first.</li>
         <li><b>win-setup</b> &mdash; gets a <b>Windows PC ready for Claude Code on the command line</b>. It first <b>only reads</b> the machine (PowerShell 7 and the terminal&rsquo;s default profile, your user PATH, developer mode, long file paths, sudo, Claude Code&rsquo;s default-shell setting, and small tools such as jq, fd and gh) and shows a verdict table, then fixes <b>only the items you approve</b>, backing up what it changes first. It leaves the system-wide PATH alone. <b>Windows only</b>, so it does not appear on other systems, and as a machine-level tool that changes PC settings it starts unchecked. Its scope defaults to your whole machine, and by default it runs <b>only when you type <code class="i">/win-setup</code></b>. On a work PC, check the security policy first &mdash; developer mode and sudo may be restricted.</li>
         <li><b>kb-dashboard</b> (knowledge-base dashboard) &mdash; for a repository that <b>collects notes as markdown</b>: to-dos, meetings, issues, tips. It gathers to-dos (by status, overdue), links to artifacts you published, tips, and notes by type with tags and search into <b>one local HTML page</b>. It <b>only reads</b> and never edits your notes, and it writes the page outside the repository (<code class="i">~/.claude/kb-dashboard/</code>), so no copy of the content goes into git or anywhere else. Per-repository rules such as which folders to show and the page language live in <code class="i">.claude/kb-dashboard.json</code>; the install does not create it &mdash; the first time you call it, Claude reads <code class="i">CLAUDE.md</code>, drafts one and asks you to confirm. It needs <b>Node.js 18 or later</b> &mdash; without it the item is not installed and that is noted. It is only useful in a knowledge-base repository, so it starts unchecked and is in no bundle. Its scope defaults to your whole machine (so you can call it from other folders), and by default it runs <b>only when you type <code class="i">/kb-dashboard</code></b>. It is not for the work logs in a code repository&rsquo;s <code class="i">docs/</code>.</li>
-        <li><b>agent-guard</b> &mdash; when Claude runs several helper agents (subagents) at once, it limits how many run together to what <b>this PC can handle</b>: its cores and memory, and how much memory and CPU are free at that moment. At the start of each session it tells Claude in one line how many it may run now, so the work is split from the start; a launch over the limit is <b>turned down</b> and Claude starts it again once an earlier one finishes. One agent per session is always allowed, so work never stalls. The built-in limits are fixed numbers that do not look at your PC, which is why a modest machine can bog down when agents that run browsers, emulators or builds all start together. Agents started by a workflow do not pass through this check. Needs <b>Node.js 18 or later</b> &mdash; if Node is missing, no hooks are attached and it is noted as waiting. PC resources belong to the PC, so it installs <b>machine-wide</b>. It hooks into every session and turns launches down, so it starts unchecked and is in no bundle. You choose whether to install it as a <code class="i">dandi</code> plugin or as a copied file (if both are found, the count runs twice, so you are asked to keep one), and you are asked separately whether to also cap workflow agents at the same number for this PC.</li>
+        <li><b>agent-guard</b> &mdash; when Claude runs several helper agents (subagents) at once, it limits how many run together to what <b>this PC can handle</b>: its cores and memory, and how much memory and CPU are free at that moment. At the start of each session it tells Claude in one line how many it may run now, so the work is split from the start; a launch over the limit is <b>turned down</b> and Claude starts it again once an earlier one finishes. One agent per session is always allowed, so work never stalls. The built-in limits are fixed numbers that do not look at your PC, which is why a modest machine can bog down when agents that run browsers, emulators or builds all start together. Agents started by a workflow do not pass through this check. Needs <b>Node.js 18 or later</b> &mdash; if Node is missing, no hooks are attached and it is noted as waiting. PC resources belong to the PC, so it installs <b>machine-wide</b>. It hooks into every session and turns launches down, so it starts unchecked and is in no bundle &mdash; on a parallel or role-team usage pattern it is marked as suggested, still not ticked. You choose whether to install it as a <code class="i">dandi</code> plugin or as a copied file (if both are found, the count runs twice, so you are asked to keep one), and you are asked separately whether to also cap workflow agents at the same number for this PC.</li>
       </ul>
       <p>Choosing a skill brings two more questions &mdash; <b>scope</b> (your whole machine vs. this project only) and
       <b>invocation</b> (Claude decides vs. only when you type <code class="i">/command</code>). Policy notes and the feature change log (this project only) and session-board, agent-guard and the diff review tools (whole machine) have a fixed place, so their scope is announced, not asked. For Flutter app screen verification the MCP server is registered either just for you in this project or shared with the team (there is no whole-machine option).
@@ -569,7 +576,7 @@ footer{max-width:1120px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
   <p class="eyebrow">Chapter 9 &middot; putting it together</p>
   <h2 id="t9">Combine it for your own situation</h2>
   <p class="lead">
-    Combine the three choices you have learned (mode, bundles, profile) in one go.
+    Combine the choices you have learned (mode, bundles, profile, usage pattern) in one go.
     Press a situation button to load the recommended combination, then change it yourself below.
   </p>
   <div class="presets" id="presets" role="group" aria-label="Situation presets"></div>
@@ -586,6 +593,8 @@ footer{max-width:1120px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
       <div class="opts row" id="fBundle"></div>
       <p class="qt" style="margin:12px 0 6px">Operating profile</p>
       <div class="opts row" id="fProf"></div>
+      <p class="qt" style="margin:12px 0 6px">Usage pattern (multiple &mdash; none means single)</p>
+      <div class="opts row" id="fForm"></div>
     </div>
     <div class="plan" aria-live="polite">
       <p class="pt">&#128203; Final install plan</p>
@@ -593,7 +602,7 @@ footer{max-width:1120px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
       <div class="stamp" id="finalStamp"></div>
       <p class="why">That last line is the record actually left at the bottom of <code class="i">CLAUDE.md</code> when the install finishes.
       The version numbers (<span style="font-family:var(--mono)">v&#9675;.&#9675;</span>) are read from the documents at install time.
-      The operating profile can differ per machine, so it is kept not here but in <b>your machine&rsquo;s global record</b> (<code class="i">~/.claude/CLAUDE.md</code>).
+      The operating profile can differ per machine, so it is kept not here but in <b>your machine&rsquo;s global record</b> (<code class="i">~/.claude/CLAUDE.md</code>). The usage pattern does stay in this line (<code class="i">형태=</code>), because the team shares it.
       Run the install again later and Claude reads this line first, leading with &ldquo;here is what changed since&rdquo;.</p>
     </div>
   </div>
@@ -612,6 +621,7 @@ footer{max-width:1120px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
       <tr><td>Bring the configuration itself up to date</td><td><code>/dropin-apply</code></td><td>Documents, installed skills, settings</td></tr>
       <tr><td>Do all three in order</td><td><code>/dropin-sync</code></td><td>Whatever the three would change &mdash; each asks where it asks</td></tr>
       <tr><td>Install just one kind of thing (only MCP, only plugins&hellip;)</td><td><code>/dropin-pick</code></td><td>Only the items of the kinds you pick &mdash; each still asked, off-by-default ones still off</td></tr>
+      <tr><td>Change the operating profile or usage pattern later</td><td><code>/dropin-pick 프로필</code></td><td>Nothing new is installed &mdash; you see what would change in what is already there and approve row by row (keep is the default)</td></tr>
     </tbody>
   </table>
   <h3>The one thing people get wrong</h3>
@@ -664,7 +674,7 @@ footer{max-width:1120px;margin:0 auto;padding:0 24px 60px;color:var(--ink-soft);
 </div>
 
 <footer>
-  Dandi &middot; Install options course &middot; 2026-11-19<br>
+  Dandi &middot; Install options course &middot; 2026-11-22<br>
   The source of truth for each item is its own document (01&ndash;06). This page exists for people to learn from; it does not change the install procedure. Progress is stored only in this browser&rsquo;s localStorage.<br>
   저장소: github.com/EleninJayTech/claude ·
   <a href="../index.html">Guide</a> &middot; <a href="intro.html">Intro</a> &middot; <a href="demo.html">Walkthrough</a> &middot; <a href="options.html">Dictionary</a> &middot; <a href="skills.html">Skill catalog</a><br>
@@ -691,7 +701,7 @@ var TERMS = [
 var STEPS = [
   ['STEP 1','Obtain documents','If the documents needed (01\u201306) are not in the folder, they are fetched from GitHub. No questions.'],
   ['STEP 2','Detect environment','Inspects the prior install record (dropin-applied), existing config files, any Claude setup the team committed, the project type, and whether the repository folder is itself the website folder (files such as index.php or .htaccess sitting where the Claude files go). No questions.'],
-  ['STEP 3','The big choices','Asks for base mode, purpose bundles, operating profile, output language and skill name alias (plus, if the team committed a setup, how to treat it) \u2014 chapters 3\u20135 of this course.'],
+  ['STEP 3','The big choices','Asks for base mode, purpose bundles, operating profile, usage pattern, output language and skill name alias (plus, if the team committed a setup, how to treat it) \u2014 chapters 3\u20135 of this course.'],
   ['STEP 4','Run the install','Installs by each chosen document\u2019s procedure. Only "custom" mode asks about each per-document item (chapters 6\u20138), but items that are off by default and safety questions such as scope come up in every mode.'],
   ['STEP 5','Verify and record','Reports the result with evidence and leaves one install-record line at the bottom of CLAUDE.md. It also tells you how to save (commit) the result — and if the site looks like it goes to the production server as the whole repository, it adds a warning that files such as CLAUDE.md, .claude/ and docs/ could be read by URL, three ways to prevent it (leave them out of the production deploy, block them on the server, or keep them on this PC without committing) and how to check. Staging and test servers are not affected, and no server settings are created.']
 ];
@@ -738,12 +748,13 @@ var DOC01 = [
 ];
 
 var PRESETS = [
-  ['New machine, Claude Code just installed', {mode:'minimal',situ:null,bundles:[],prof:'std'}],
-  ['Solo development project', {mode:'rec',situ:'dev',bundles:['verify'],prof:'std'}],
-  ['Project that builds web screens', {mode:'rec',situ:'dev',bundles:['design','verify'],prof:'std'}],
-  ['On Pro, worried about the allowance', {mode:'rec',situ:'dev',bundles:[],prof:'save'}],
-  ['Documentation-only repository', {mode:'minimal',situ:null,bundles:[],prof:'std'}],
-  ['Company repository', {mode:'rec',situ:'dev',bundles:['company'],prof:'std'}]
+  ['New machine, Claude Code just installed', {mode:'minimal',situ:null,bundles:[],prof:'std',form:[]}],
+  ['Solo development project', {mode:'rec',situ:'dev',bundles:['verify'],prof:'std',form:[]}],
+  ['Project that builds web screens', {mode:'rec',situ:'dev',bundles:['design','verify'],prof:'std',form:[]}],
+  ['On Pro, worried about the allowance', {mode:'rec',situ:'dev',bundles:[],prof:'save',form:[]}],
+  ['Running several agents at once', {mode:'rec',situ:'dev',bundles:['verify'],prof:'std',form:['par']}],
+  ['Documentation-only repository', {mode:'minimal',situ:null,bundles:[],prof:'std',form:[]}],
+  ['Company repository', {mode:'rec',situ:'dev',bundles:['company'],prof:'std',form:[]}]
 ];
 
 /* ───────── 진행도 ───────── */
@@ -911,17 +922,46 @@ function drawBundle(){
 drawBundle();
 
 /* ───────── CH5 프로필 · 유지/재구성/교체 ───────── */
-var PROFS={std:{name:'Standard',desc:'quality first (default)'},save:{name:'Thrift',desc:'Pro plan \u00b7 managing an allowance'}};
-var pSel=null;
+var PROFS={
+  save:{name:'Thrift',desc:'Pro \u00b7 Team Standard, or often near the limit'},
+  std:{name:'Standard',desc:'Max \u00b7 Team Premium \u2014 the default'},
+  roomy:{name:'Ample',desc:'Ultra \u2014 allowance to spare'},
+  meter:{name:'Metered',desc:'API key \u00b7 usage billing \u2014 the bill is the limit'}
+};
+var PROFPLAN={
+  std:'<ul><li>effort stays at its default; hard work goes to the stronger model</li><li>The right answer most of the time</li></ul>',
+  save:'<ul><li>Everyday work on the lighter model, with a smaller roster, smaller workflows and fewer agents fanned out at once</li><li>claude-hud pre-checked \u2014 you cannot economize on what you cannot see</li></ul>'
+    +'<p class="why">Yours to do: start everyday work with <code class="i">/model sonnet</code> (it is saved once set). Do the never-cut work &mdash; triage, spec, final review &mdash; in a new session opened with <code class="i">claude --model &lt;stronger model&gt;</code>; raising it with <code class="i">/model</code> saves that value, and your next everyday session runs on the stronger model too.</p>',
+  roomy:'<ul><li>Everyday work and helper agents stay as in Standard \u2014 not raised, because the same quality is cheaper there</li><li>For the never-cut work, Fable is offered as an option \u2014 only on plans that include it</li><li>The plan-only model command (02 \u24d4) is marked as recommended \u2014 still off by default</li></ul>',
+  meter:'<ul><li>Models are assigned as in Standard</li><li><code class="i">claude -p</code> runs are capped with <code class="i">--max-budget-usd</code> and <code class="i">--max-turns</code></li><li>Spending limits (workspace or organisation) are yours to check</li></ul><p class="why">Suggested when <code class="i">/status</code> shows you signed in with an API key or through a cloud provider.</p>'
+};
+var FORMS={
+  par:{name:'Parallel',desc:'several agents or sessions at once',rec:'\ubcd1\ub82c'},
+  org:{name:'Role team',desc:'role agents share the work for good',rec:'\uc870\uc9c1'},
+  unatt:{name:'Unattended',desc:'routines \u00b7 claude -p \u00b7 /loop',rec:'\ubb34\uc778'}
+};
+var FORMPLAN={
+  par:'<li><b>Parallel</b> \u2014 implementers suggested with an isolated worktree set permanently; the hand-off document pre-checked; claude-hud pre-checked; session-board and agent-guard suggested but not ticked (they hook into every session). N agents at once use the allowance about N times faster.</li>',
+  org:'<li><b>Role team</b> \u2014 everything Parallel does, plus the whole roster for your activity type pre-checked and the custom reviewer suggested (still off by default). Agent teams are mentioned only as an option you switch on yourself \u2014 they are experimental and off by default.</li>',
+  unatt:'<li><b>Unattended</b> \u2014 the parity tester pre-checked when a test command is found (nobody is watching, so the tests are the only check); the hand-off rule becomes \u201cstop at the first failure\u201d; routines (06) and the hook gate (04) suggested; <code class="i">claude -p</code> runs capped by turns and budget.</li>'
+};
+function formKeys(sel){ return Object.keys(FORMS).filter(function(k){ return sel.indexOf(k)>=0; }); }
+var pSel=null, fmSel=[];
 function drawProf(){
   renderOpts($('profOpts'), keysOf(PROFS), pSel, function(k){ pSel=k; drawProf(); }, false);
+  renderOpts($('formOpts'), keysOf(FORMS), fmSel, function(k){
+    var i=fmSel.indexOf(k); if(i>=0) fmSel.splice(i,1); else fmSel.push(k); drawProf();
+  }, true);
   var box=$('profPlan');
   if(!pSel){ box.innerHTML='<p class="empty">Pick a profile on the left.</p>'; return; }
-  box.innerHTML = pSel==='std'
-    ? '<ul><li>effort stays at its default; hard work goes to the stronger model</li><li>The right answer most of the time</li></ul>'
-    : '<ul><li>Subagents assigned mostly to Sonnet, with a smaller roster</li><li>claude-hud pre-checked \u2014 you cannot economize on what you cannot see</li></ul>'
-      +'<p class="why">Never cut: difficulty triage, requirements (spec), final review, verification gates. Saving there costs more in rework.</p>'
-      +'<p class="why">Yours to do: start everyday work with <code class="i">/model sonnet</code> (it is saved once set). Do the never-cut work &mdash; triage, spec, final review &mdash; in a new session opened with <code class="i">claude --model &lt;stronger model&gt;</code>; raising it with <code class="i">/model</code> saves that value, and your next everyday session runs on the stronger model too.</p>';
+  var fk=formKeys(fmSel);
+  var h=PROFPLAN[pSel];
+  h+= fk.length
+    ? '<ul>'+fk.map(function(k){ return FORMPLAN[k]; }).join('')+'</ul>'
+    : '<p class="why"><b>Usage pattern: single</b> \u2014 one session, working as you talk. What comes pre-checked follows your activity type as usual.</p>';
+  if(pSel==='save' && (fk.indexOf('par')>=0 || fk.indexOf('org')>=0)) h+='<p class="why">When the two pull different ways, the allowance wins \u2014 thrift with parallel keeps the thrift-sized fan-out.</p>';
+  h+='<p class="why">Never cut, whatever you pick: difficulty triage, requirements (spec), final review, verification gates. Saving there costs more in rework. effort does not change with either answer.</p>';
+  box.innerHTML=h;
 }
 drawProf();
 
@@ -965,7 +1005,7 @@ function drawTree(){
 }
 
 /* ───────── CH9 종합 시뮬레이터 ───────── */
-var F={mode:'rec',situ:'dev',bundles:[],prof:'std',preset:-1};
+var F={mode:'rec',situ:'dev',bundles:[],prof:'std',form:[],preset:-1};
 function drawFinal(){
   var pr=$('presets'); pr.innerHTML='';
   PRESETS.forEach(function(p,i){
@@ -973,7 +1013,7 @@ function drawFinal(){
     b.textContent=p[0];
     b.setAttribute('aria-pressed', F.preset===i?'true':'false');
     b.addEventListener('click',function(){
-      F.preset=i; F.mode=p[1].mode; F.situ=p[1].situ||'dev'; F.bundles=p[1].bundles.slice(); F.prof=p[1].prof;
+      F.preset=i; F.mode=p[1].mode; F.situ=p[1].situ||'dev'; F.bundles=p[1].bundles.slice(); F.prof=p[1].prof; F.form=p[1].form.slice();
       drawFinal();
     });
     pr.appendChild(b);
@@ -985,6 +1025,9 @@ function drawFinal(){
     var i=F.bundles.indexOf(k); if(i>=0) F.bundles.splice(i,1); else F.bundles.push(k); F.preset=-1; drawFinal();
   }, true);
   renderOpts($('fProf'), keysOf(PROFS).map(function(x){return {key:x.key,name:x.name};}), F.prof, function(k){ F.prof=k; F.preset=-1; drawFinal(); }, false);
+  renderOpts($('fForm'), keysOf(FORMS).map(function(x){return {key:x.key,name:x.name};}), F.form, function(k){
+    var i=F.form.indexOf(k); if(i>=0) F.form.splice(i,1); else F.form.push(k); F.preset=-1; drawFinal();
+  }, true);
 
   var base=basePlan(F.mode,F.situ);
   var isCustom = base.docs===null;
@@ -1007,6 +1050,10 @@ function drawFinal(){
   }
   if(notes.length) h+='<p class="why">🏢 '+notes.join(' · ')+'</p>';
   if(F.prof==='save') h+='<p class="why">&#128176; Thrift profile: Sonnet-centric assignment \u2014 but the verification gates stay.</p>';
+  if(F.prof==='roomy') h+='<p class="why">&#128176; Ample profile: assigned as in Standard \u2014 Fable is offered for the never-cut work where your plan includes it.</p>';
+  if(F.prof==='meter') h+='<p class="why">&#128176; Metered profile: <code class="i">claude -p</code> runs get a budget and a turn cap.</p>';
+  var fk=formKeys(F.form);
+  if(fk.length) h+='<p class="why">&#128101; Usage pattern '+fk.map(function(k){return FORMS[k].name;}).join(' + ')+': changes what comes pre-checked and suggested in 02 and 03 (chapter 5).</p>';
   $('finalPlan').innerHTML=h;
 
   /* 기록 줄의 모드·번들 값은 산출물 언어와 무관하게 00 문서의 표기 그대로 */
@@ -1016,7 +1063,7 @@ function drawFinal(){
   var chosen = Object.keys(docs).sort();
   var un = ['01','02','03','04','05','06'].filter(function(k){ return chosen.indexOf(k)<0; });
   var today = new Date().toISOString().slice(0,10);
-  var line='<!-- dropin-applied: '+today+' \u00b7 모드='+modeLabel+' \u00b7 언어=en \u00b7 별칭=없음 \u00b7 00 v\u25cb.\u25cb';
+  var line='<!-- dropin-applied: '+today+' \u00b7 모드='+modeLabel+' \u00b7 형태='+(fk.length?fk.map(function(k){return FORMS[k].rec;}).join('+'):'\ub2e8\uc77c')+' \u00b7 언어=en \u00b7 별칭=없음 \u00b7 00 v\u25cb.\u25cb';
   chosen.forEach(function(k){ line+=' \u00b7 '+k+' v\u25cb.\u25cb'; });
   if(un.length && !isCustom) line+=' \u00b7 미선택: '+un.join(', ');
   line+=' \u00b7 출처=사본 -->';
