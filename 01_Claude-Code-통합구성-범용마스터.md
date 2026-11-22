@@ -1,6 +1,6 @@
 # Claude Code 통합 구성 — 범용 마스터 (드롭인 적용)
 
-> **문서 버전: v1.122** · 최종 갱신: **2026-11-22** · **최근 재검증: 2026-11-02** · 기준: Claude Code v2.1.316 (Opus 5.5 · Sonnet 5.5 · Haiku 5.5 · Fable 5.1)
+> **문서 버전: v1.123** · 최종 갱신: **2026-11-22** · **최근 재검증: 2026-11-22** · 기준: Claude Code v2.1.330 (Opus 5.5 · Sonnet 5.5 · Haiku 5.5 · Fable 5.2)
 >
 > | 버전 | 날짜 | 변경 내용 |
 > | --- | --- | --- |
@@ -29,6 +29,7 @@
 > | v1.120 | 2026-11-16 | **§J 웹 노출(운영 서버에 Claude 파일이 올라가는 경우)** — 신호(Claude 파일 폴더의 웹 진입 파일·서버 설정)·대응 3택(운영 배포 제외·서버 차단·로컬 전용)·확인 명령의 정본 · §A STEP 1 감지와 STEP 4 고지 · §E-1 커밋 안내 · §F-1 한 줄(배포를 도울 때 확인) · §K 증상 행 · §L. 검수·테스트 서버는 대상 아님, 서버 설정은 만들지 않는다. **목표(R43)**: 2 — 저장소 루트가 곧 웹 루트인 PHP·정적 사이트에서도 드롭인 산출물이 정보 노출이 되지 않는다 · 8 — 입문자가 모르는 노출 경로를 설치 시점에 알린다 |
 > | v1.121 | 2026-11-16 | **외부 조사(Windows 터미널 환경) 중 공식 확인분 반영** — §D 서두 Windows 문단에 agent view 한 문장(터미널 종료·절전 뒤에도 세션 유지 — 멀티플렉서 대신 공식 수단, `/bg`·`←` 전환은 격리 없음, 셧다운 시 중지, 세션별 쿼터) · §K WinGet 설치본 자동 업데이트 꺼짐 행 · §L. 설치 항목·산출물 불변. DEC-20261116-bsjeong87-03. **목표(R43)**: 7 — 터미널을 닫아도 세션이 이어지는 공식 수단을 쓴다 · 1 — WinGet 설치로 낡은 버전에 머무는 원인을 짚는다 |
 > | v1.122 | 2026-11-22 | §D-6 절약 항목에 범위 한 줄(다른 한도 값·사용 형태의 정본은 02 §F-3·00 §C-6)과 종량 한 줄(캐시 TTL 5분·지출 한도 확인) · §D-7 "모든 운용 프로필 공통". 설치 항목·산출물 불변. **목표(R43)**: 2 — 한도 축이 Pro 여부 하나로 고정되지 않는다 |
+> | v1.123 | 2026-11-22 | 전면 재검증(v2.1.330) — Fable 5.2 반영(§D-6 기본 effort `medium`·지원 단계 · §D-7 effort 캐시 예외는 Fable 5.1 이후·캐시 단가) · `ultrathink` 승격의 VS Code·데스크톱 버전 · §J `Write`·`NotebookEdit`·`Glob` 경로 규칙은 경고 없이 무효 · 샌드박스 안 Bash 자동 허용 기본이 꺼짐 · §J-1 외부 읽기 차단이 `~/.claude/`에 미치는 범위. 설치 항목·산출물 불변. **목표(R43)**: 5 — 당일 공식 조회 |
 > ※ 갱신 시: 이 표에 한 줄 추가 + 하단 "문서 정보" 날짜 수정 + §L 재검증 체크리스트 수행.
 
 > **사용법**: 이 파일을 아무 프로젝트 루트(또는 `docs/`)에 넣고 Claude에게
@@ -198,14 +199,14 @@ New-Item -ItemType Directory -Path .claude/skills/scope -Force
 
 ### D-6. 추론 강도(effort) 제어 — `/effort` 🟢
 세션의 **사고(reasoning) 깊이**를 조절하는 슬래시 명령. 고른 값은 **모델별로** settings.json `modelSettings`에 저장된다(v2.1.257+ — 모델마다 자기 저장값을 갖고, **`effortLevel`은 저장값 없는 모델의 기본값**으로 격하 — 단 User 스코프의 최상위 `effortLevel`은 **Opus 5.5 이후 모델엔 적용되지 않는다**(v2.1.280+). `s`를 붙이면 세션 한정, `/effort auto`는 활성 모델의 저장값 제거).
-- **단계(낮음→높음)**: `low` → `medium` → `high` → `xhigh` → `max`. **기본값은 `high`**(예외: Opus 4.7=`xhigh` · **Opus 5.5·Sonnet 5.5·Haiku 5.5=`medium`**). **단계 이름은 세대 간 같은 사고량이 아니다** — 공식 테스트에서 Opus 5.5 `medium`이 Opus 5 `high`와 같거나 앞선다.
-- **모델별 지원**: Fable 5.1 · Fable 5 · Opus 5.5 · Opus 5 · Sonnet 5.5 · Haiku 5.5 · Sonnet 5 · Opus 4.8 · Opus 4.7 = 전 단계(`xhigh` 포함). Opus 4.6 · Sonnet 4.6 = `xhigh` 없음(low/medium/high/max). 미지원 단계를 지정하면 **바로 아래 지원 단계로 자동 폴백**(예: Opus 4.6에서 xhigh→high).
+- **단계(낮음→높음)**: `low` → `medium` → `high` → `xhigh` → `max`. **기본값은 `high`**(예외: Opus 4.7=`xhigh` · **Fable 5.2·Opus 5.5·Sonnet 5.5·Haiku 5.5=`medium`**). **단계 이름은 세대 간 같은 사고량이 아니다** — 공식 테스트에서 Opus 5.5 `medium`이 Opus 5 `high`와 같거나 앞선다.
+- **모델별 지원**: Fable 5.2 · Fable 5.1 · Fable 5 · Opus 5.5 · Opus 5 · Sonnet 5.5 · Haiku 5.5 · Sonnet 5 · Opus 4.8 · Opus 4.7 = 전 단계(`xhigh` 포함). Opus 4.6 · Sonnet 4.6 = `xhigh` 없음(low/medium/high/max). 미지원 단계를 지정하면 **바로 아래 지원 단계로 자동 폴백**(예: Opus 4.6에서 xhigh→high).
 - **새 모델은 자기 기본값으로 시작한다**: 저장값은 모델별이라 **새로 나온 모델은 이전 모델의 저장값을 물려받지 않는다**(v2.1.280+). 예전의 기본값 hold(Fable 5·Opus 4.8·4.7이 첫 실행 기본값을 저장값·프로젝트 값보다 우선하던 동작)는 v2.1.280에서 폐지됐다.
 - **`/effort xhigh`**: high보다 깊은 추론, **최대(max) 바로 아래**. (안내문: *"Deeper reasoning than high, just below maximum"*)
 - **`/effort` (인자 없이)**: 대화형 슬라이더. `/effort auto`는 모델 기본값으로 리셋. `/model` 화면에서도 좌우 화살표로 effort 조절 가능.
 - **저장 제한**: `effortLevel`에 저장되는 건 `low`~`xhigh`뿐. **`max`는 세션 한정**(단 `CLAUDE_CODE_EFFORT_LEVEL`로는 지속 지정 가능).
 - **`ultracode`**: effort 단계가 아니라 Claude Code 설정 — 굵직한 작업마다 **동적 워크플로(멀티에이전트 오케스트레이션)** 를 얹는다. **v2.1.284+는 독립 토글**이다 — `/effort ultracode [on|off]`(슬라이더에선 Tab)로 켜고 끄며 **effort 단계는 바뀌지 않는다**(그 전엔 `xhigh`로 올리고 다른 단계를 고르면 꺼졌다). `--effort ultracode` 플래그만 `xhigh`까지 함께 건다. 토큰 소모 큼.
-- **`ultrathink`**: 프롬프트에 이 단어를 넣으면 **그 턴만** 깊은 추론 요청(세션 설정 불변). v2.1.311+ 터미널에서 Anthropic API의 Opus 5.5·Sonnet 5.5·Haiku 5.5·Fable 5.1이면 그 턴이 `xhigh`로 올라 토큰이 는다(`maxEffortLevel` 상한 안에서, 끄려면 `CLAUDE_CODE_DISABLE_ULTRATHINK`). "think hard" 류는 키워드가 아님.
+- **`ultrathink`**: 프롬프트에 이 단어를 넣으면 **그 턴만** 깊은 추론 요청(세션 설정 불변). v2.1.311+ 터미널(VS Code·데스크톱은 v2.1.316+)에서 Anthropic API의 Opus 5.5·Sonnet 5.5·Haiku 5.5·Fable 5.1이면 그 턴이 `xhigh`로 올라 토큰이 는다(`maxEffortLevel` 상한 안에서, 끄려면 `CLAUDE_CODE_DISABLE_ULTRATHINK`). "think hard" 류는 키워드가 아님.
 - **스코프**: `effortLevel`은 **User·Project·Local** 지원, 우선순위 **Managed > CLI > Local > Project > User**. 최상위 `effortLevel`은 User에서만 Opus 5.5 이후 모델이 무시하고, Project·Local·Managed·`--settings`에선 **모든 모델에 적용**된다. 세션 1회 오버라이드는 `--effort` 플래그·`CLAUDE_CODE_EFFORT_LEVEL` 환경변수(환경변수가 최우선).
 - **원칙 — 모델은 별칭으로, effort는 그 모델의 기본값에서 출발한다**: 모델을 `opus`·`sonnet`·`haiku`·`fable` 별칭으로 고르면 새 세대가 나올 때 자동으로 최신을 가리킨다. 저장값(`modelSettings`·최상위 `effortLevel`)은 **기본값과 다를 이유가 있을 때만** 둔다 — 기본값과 같은 키는 하는 일 없이 정식 이름으로 버전에 묶여, 세대가 바뀌면 낡은 키로만 남는다. 서브에이전트·스킬 frontmatter `effort:`는 사정이 다르다(지정자가 없어 생략이 기본값을 뜻하지 않는다 — 02 §E).
 - **모델별 저장값을 묶어 둔다 — 기본값과 다른 값을 둘 모델이 있을 때만**(`~/.claude/settings.json`, User 스코프 · 하위 모델 기본이 이미 `medium`이면 쓸 키가 없다 — 아래 "키는 기본값이 `medium`보다 높은 하위 모델에만"). 그러면 `/model`로 모델만 고르면 강도가 따라와, 매 작업 `/effort`를 다시 판단하지 않는다(02 §F-1 운용표의 `(자동)` 열 — 적지 않은 모델은 그 모델의 기본값이 그대로 `(자동)`이다). **키는 아래 예시를 베끼지 않는다** — `/model` 목록에서 **이 PC가 실제로 쓸 수 있는 모델의 전체 ID**를 먼저 읽고 그 값으로 채운다(Pro 요금제·Foundry 등에서 키가 가용 모델과 안 맞으면 저장은 되지만 아무 모델에도 적용되지 않는다):
@@ -243,8 +244,8 @@ New-Item -ItemType Directory -Path .claude/skills/scope -Force
 > ✅ 확정(2026-07-20, code.claude.com/docs/en/model-config·/sub-agents·/skills 재검증): 단계 명칭 low~max + ultracode(설정), 서브에이전트·스킬 frontmatter 키는 **`effort:`**, `effortLevel` 저장은 low~xhigh만.
 
 ### D-7. 프롬프트 캐시 친화 운영 🟢
-매 턴 대화 전체가 다시 실려가되, 요청 앞부분이 직전과 **같으면 캐시에서 읽는다**(정가의 ~10% — Opus 5.5는 5%, Fable 5.1은 2.5%). 한 곳이라도 바뀌면 **그 뒤 전부**를 다시 처리한다 — 절약의 두 번째 축은 "덜 쓰기"가 아니라 **"재처리 안 당하기"** 다. 모든 운용 프로필 공통.
-- **캐시를 깨는 행동** — 작업 중엔 피하고, 필요하면 **세션 시작에 몰아서** 한다: `/model` 전환 · `/effort` 변경(effort도 캐시 키다 — 02 §F 운용 원칙의 "강도 상향은 새 세션" 항목. **예외: 일부 최신 모델은 `/effort` 변경이 캐시를 깨지 않는다**(모델 목록은 공식 prompt-caching 문서가 정본 — 2026-10-08 기준 Opus 5.5·Sonnet 5.5·Haiku 5.5·Fable 5.1. API 키·구독 한정 — Bedrock·Google Cloud·Claude apps 게이트웨이·`CLAUDE_CODE_DISABLE_EXPERIMENTAL_BETAS`·HIPAA 구성은 여전히 깬다) — 다른 모델은 여전히 깬다, 2026-10-08 공식 확인) · fast mode 켜기 · MCP 서버 연결/해제(도구가 **비deferred**로 프리픽스에 실린 경우만) · **MCP 서버를 제공하는** 플러그인 활성/비활성(스킬·커맨드·훅·테마만 주는 플러그인은 무해) · **도구 이름 단독 deny 규칙** 추가·제거(`Bash` 형태. `Bash(rm *)` 같은 스코프 규칙은 무해) · `/compact` · 업그레이드 후 `claude --resume`(가장 비싼 한 턴이 된다).
+매 턴 대화 전체가 다시 실려가되, 요청 앞부분이 직전과 **같으면 캐시에서 읽는다**(정가의 ~10% — Opus 5.5는 5%, Fable 5.2·5.1은 2.5%). 한 곳이라도 바뀌면 **그 뒤 전부**를 다시 처리한다 — 절약의 두 번째 축은 "덜 쓰기"가 아니라 **"재처리 안 당하기"** 다. 모든 운용 프로필 공통.
+- **캐시를 깨는 행동** — 작업 중엔 피하고, 필요하면 **세션 시작에 몰아서** 한다: `/model` 전환 · `/effort` 변경(effort도 캐시 키다 — 02 §F 운용 원칙의 "강도 상향은 새 세션" 항목. **예외: 일부 최신 모델은 `/effort` 변경이 캐시를 깨지 않는다**(모델 목록은 공식 prompt-caching 문서가 정본 — 2026-11-22 기준 Fable 5.1 이후·Opus 5.5·Sonnet 5.5·Haiku 5.5. API 키·구독 한정 — Bedrock·Google Cloud·Claude apps 게이트웨이·`CLAUDE_CODE_DISABLE_EXPERIMENTAL_BETAS`·HIPAA 구성은 여전히 깬다) — 다른 모델은 여전히 깬다, 2026-10-08 공식 확인) · fast mode 켜기 · MCP 서버 연결/해제(도구가 **비deferred**로 프리픽스에 실린 경우만) · **MCP 서버를 제공하는** 플러그인 활성/비활성(스킬·커맨드·훅·테마만 주는 플러그인은 무해) · **도구 이름 단독 deny 규칙** 추가·제거(`Bash` 형태. `Bash(rm *)` 같은 스코프 규칙은 무해) · `/compact` · 업그레이드 후 `claude --resume`(가장 비싼 한 턴이 된다).
 - **캐시를 지키는 행동** — 마음껏: plan mode 진입·이탈 · 스킬·커맨드 호출(**예외: 세션과 다른 `model:` 스킬** — 호출 턴이 다른 모델로 가 컨텍스트 전체를 비캐시 1회, 02 §F. `effort:`만 다른 스킬의 캐시 영향은 공식 미명시 — §L 🟡) · `/recap` · `/rewind` · 권한 모드 전환 · advisor 켜고 끄기 · 파일 편집 · CLAUDE.md 편집(루트·사용자 수준은 세션 시작에 한 번 읽어 **세션 중엔 적용도 안 된다** — 다음 `/clear`·`/compact`·재시작에 로드. **단 중첩 `CLAUDE.md`·`paths:` rules는 매칭 파일을 처음 읽을 때 로드되므로 그 전의 편집은 적용된다**) · 출력 스타일 **전환**(**모든 환경에서** 새 스타일이 대화 메시지로 전달돼 캐시를 지키면서 **다음 메시지부터 즉시 적용**, v2.1.251+ — 2026-09-16 재확인 결과 환경별 구분은 없어졌다(이전 서술 "Bedrock·GCP·Foundry는 전체 재처리"는 회귀 정정). 그 전엔 `/clear` 뒤에만 적용됐다. **스타일 파일 내용 편집**은 시작 시에만 읽혀 재시작해야 반영 — 05).
 - **예외 `opusplan`**: plan 경계마다 모델이 바뀌어 **토글 1회 = 캐시 리셋**이다(02 §F).
 - **`/compact`보다 `/clear`**: `/clear`는 요청을 보내지 않아 **비용 0**(단 **`/wrap` 뒤에** — `/clear`엔 훅 게이트가 없어 기록 안 된 결정이 그대로 사라진다), `/compact`는 요약을 만드는 **그 자체로 큰 요청**이다(캐시가 식은 오래된 세션에서 가장 비싸다 — §D-3 `manual` 게이트를 걸었다면 `/wrap` 뒤에). 가 본 길을 통째로 버릴 땐 `/rewind`가 더 싸다 — 이미 캐시된 지점으로 되감기 때문이다.
@@ -576,9 +577,9 @@ CLAUDE.local.md
 ---
 
 ## J. 보안 (셋업 전 최우선) 🔴
-- **deny의 현재 커버리지**: Read/Edit deny 규칙은 파일 도구 + Bash 안의 인식되는 파일 명령(`cat`/`head`/`tail`/`sed` 등)까지 감지·차단한다. Read deny는 같은 경로의 **Edit·Write까지 차단**(편집 v2.1.208+·쓰기 v2.1.228+, 새 파일 생성 포함). **NotebookEdit만 미포함**이라 어떤 도구도 못 바꾸게 하려면 별도 `Edit(...)` deny가 필요하다(`Write(...)`·`NotebookEdit(...)`·`Glob(...)` 경로 규칙 자체는 무효라 시작 시 경고가 뜬다). 심볼릭 링크는 링크·대상 **둘 다** 검사해 하나라도 deny면 차단.
+- **deny의 현재 커버리지**: Read/Edit deny 규칙은 파일 도구 + Bash 안의 인식되는 파일 명령(`cat`/`head`/`tail`/`sed` 등)까지 감지·차단한다. Read deny는 같은 경로의 **Edit·Write까지 차단**(편집 v2.1.208+·쓰기 v2.1.228+, 새 파일 생성 포함). **NotebookEdit만 미포함**이라 어떤 도구도 못 바꾸게 하려면 별도 `Edit(...)` deny가 필요하다(`Write(...)`·`NotebookEdit(...)`·`Glob(...)` 경로 규칙 자체는 무효다 — 받아들여지지만 매칭되지 않는다). 심볼릭 링크는 링크·대상 **둘 다** 검사해 하나라도 deny면 차단.
 - **남은 구멍 2개**: ① 임의 서브프로세스(python/node 스크립트가 파일을 직접 open) 우회 가능 → OS 수준 차단은 아래 샌드박스. ② `cat`·`ls`·`head`·`grep` 등 읽기전용 내장 명령은 **기본적으로 프롬프트 없이 실행**되므로, 막으려면 명시적 ask/deny 규칙 필요.
-- **샌드박스** 🔴: `/sandbox` 또는 `sandbox.enabled`로 켜는 OS 수준 격리(Bash 명령+자식 프로세스의 파일·네트워크 접근을 OS가 강제). 지원: **macOS(Seatbelt) · Linux · WSL2(bubblewrap+socat)**. **네이티브 Windows는 여전히 미지원** → Windows에선 WSL2에서 돌리거나, allow 좁게 + deny 규칙 기반으로 운용.
+- **샌드박스** 🔴: `/sandbox` 또는 `sandbox.enabled`로 켜는 OS 수준 격리(Bash 명령+자식 프로세스의 파일·네트워크 접근을 OS가 강제). 지원: **macOS(Seatbelt) · Linux · WSL2(bubblewrap+socat)**. **네이티브 Windows는 여전히 미지원** → Windows에선 WSL2에서 돌리거나, allow 좁게 + deny 규칙 기반으로 운용. 샌드박스 안 Bash도 기본은 일반 권한 흐름이다(`sandbox.autoAllowBashIfSandboxed` 기본 `false` — v2.1.324 전엔 `true`).
   - 샌드박스 기본 읽기 정책은 **컴퓨터 전체 읽기 허용**(일부 시스템 경로 제외)이라 `~/.ssh`·`~/.aws`는 **`sandbox.credentials`**(v2.1.187+)로 명시 차단하거나 env 토큰은 `mode: "mask"`로 대체 — 형식은 `credentials.files[]`={path,mode}·`credentials.envVars[]`={name,mode}(mode=`deny`|`mask`)이고, **`mask`는 user/managed 스코프와 `--settings`에서만 유효(repo의 `.claude/settings(.local).json`에선 무시)하며 `network.tlsTerminate`가 필요**하다. 확장 옵션(`extract`·`decode`(JWT)·`maskClaims`·`maskDuplicates`·`onExtractNoMatch`·`injectHosts`·`awsPairs`·`sigv4`·`allowPlaintextInject` 등 — 도입 버전은 필드마다 다르다)이 있다 — 세부 값별 매칭·마스킹 규칙을 더 촘촘히 지정할 때 쓴다. 전 서브프로세스에서 Anthropic·클라우드 자격증명 제거는 `CLAUDE_CODE_SUBPROCESS_ENV_SCRUB`. 파일 격리만 끄고 네트워크 격리는 유지하려면 `sandbox.filesystem.disabled`(v2.1.216+, user/managed·`--settings`에서만 유효 — managed가 `sandbox.filesystem`·credentials deny를 걸면 managed 값만, `CLAUDE_CODE_SUBPROCESS_ENV_SCRUB` 설정 시엔 무시).
 - **격리 3단 — 어느 것을 쓰나**: 내장 샌드박스(위, 설치 불요·macOS·Linux·WSL2) → **dev container**(Docker 전제 — `.devcontainer/devcontainer.json` + 이그레스 방화벽 스크립트. **네이티브 Windows에서 격리가 필요할 때의 공식 대안**이다) → 전용 VM. 컨테이너에 `~/.ssh`·클라우드 자격증명을 마운트하면 격리 의미가 사라진다. 절차는 공식 `devcontainer` 문서를 직접 참조 — 이 문서는 선택 기준만 든다.
 - **PowerShell 규칙**: `PowerShell(Get-Content *)` deny 하나로 별칭(`gc`·`type`·`cat`)까지 자동 매칭(대소문자 무관, 파이프·`;`로 나뉜 복합 명령은 **모든 하위 명령**이 규칙을 통과해야 허용). Bash 규칙은 별칭 정규화가 없으므로 Git Bash 병용 시 3종 유지(§D-3·§F-3).
@@ -593,7 +594,7 @@ CLAUDE.local.md
 "매번 승인(manual)"과 "전부 스킵(`--dangerously-skip-permissions`)" 사이의 중간지대. **별도 분류기 모델**(기본 Sonnet 5)이 각 액션을 실행 전 심사해 안전한 것은 통과시키고, 요청 범위를 벗어난 행동·미인식 인프라 대상·읽은 콘텐츠(프롬프트 인젝션)에서 유래한 행동을 차단한다.
 - **켜기**: **v2.1.283+는 모든 플랜·프로바이더에서 대화형 터미널·VS Code 세션의 기본 시작 모드가 auto다**(`permissions.defaultMode`가 있으면 그 값이 이긴다 — 그 전 버전은 Pro·Max·Team만 기본, 2026-09-30 확인). 설치·업그레이드 직후 첫 세션은 feature flag가 오기 전이라 다른 모드로 시작할 수 있다. 바꾸려면 `Shift+Tab` 순환(auto에서 첫 타는 `default`, 이후 `default`→`acceptEdits`→`plan`, auto를 쓸 수 있으면 다시 `auto`) 또는 `--permission-mode`. 기본 시작 모드 고정은 `defaultMode: "auto"` — 단 **user/managed 스코프만 유효**(프로젝트·로컬 settings에선 무시되고 그때 사용자 `defaultMode`도 버려 내장 기본으로 시작한다: repo가 스스로 권한을 올리는 걸 막는 설계).
 - **규칙과의 관계**: 명시적 **ask 규칙은 auto mode에서도 프롬프트 강제**, deny는 그대로 차단(분류기가 deny를 뚫지 못함). `rm -rf /`·`~` 같은 critical path 삭제는 분류기가 심사하지 않고 **터미널에선 시간제한 승인 프롬프트, 그 밖에선 거부**다(allow 규칙으로 못 푼다 — 공식 permission-modes). 요청하지 않은 파괴적 git 명령·트랜스크립트 조작은 차단. 단 **설치한 mod가 도구 호출을 승인하면 auto 분류기를 건너뛰고**, managed settings가 없고 Team/Enterprise 로그인도 아니면 ask 규칙·`PreToolUse` 차단·deny까지 넘는다(03 부록 경고). mod가 없는 구성에서만 위 보증이 그대로다.
-- **첫 외부 읽기 프롬프트**: auto 세션에서 Read·Grep·Glob이 작업 디렉터리 밖을 처음 읽을 때 네 갈래를 묻는다(`-p`·백그라운드 제외). **"No, and block…"을 고르면 user settings에 `permissions.blockReadsOutsideWorkingDirectories: true`가 기록돼 이후 모든 세션·모드에서 파일 도구가 그 밖을 못 읽는다** — 다른 repo를 읽는 교차 기록이 갑자기 막히면 이 키를 본다. 풀려면 `/add-dir` 또는 키 삭제(공식 permission-modes).
+- **첫 외부 읽기 프롬프트**: auto 세션에서 Read·Grep·Glob이 작업 디렉터리 밖을 처음 읽을 때 네 갈래를 묻는다(`-p`·백그라운드 제외). **"No, and block…"을 고르면 user settings에 `permissions.blockReadsOutsideWorkingDirectories: true`가 기록돼 이후 모든 세션·모드에서 파일 도구가 그 밖을 못 읽는다** — 다른 repo를 읽는 교차 기록이 갑자기 막히면 이 키를 본다. `~/.claude/`도 예외가 아니다 — 스킬·플러그인·rules·에이전트·커맨드·`CLAUDE.md`만 계속 읽히고 `projects/`·`settings.json` 등은 막힌다. 풀려면 `/add-dir` 또는 키 삭제(공식 permission-modes·settings-reference).
 - **회사 환경 주의** 🔴: v2.1.283+는 **Enterprise도 auto로 시작한다**. 조직이 manual로 시작하게 하려면 managed settings의 `permissions.defaultMode`(사용자가 auto로 바꿀 수는 있다), 선택 자체를 없애려면 아래 `disableAutoMode`다. 관리자가 managed settings `permissions.disableAutoMode: "disable"`로 조직 전체를 끌 수 있다 — **조직 정책이 항상 우선**이며 이 문서로 우회 구성하지 않는다. 프로바이더는 API·Claude Platform on AWS·Bedrock·Google Cloud·Foundry 모두 기본 제공(v2.1.207+), 단 모델 하한이 다르다 — API·Claude Platform on AWS는 Opus 4.6+·Sonnet 4.6+·Haiku 5.5·Fable 모델, Bedrock 등 서드파티는 Sonnet 5+·Opus 4.7+·Haiku 5.5(v2.1.293+)·Fable 모델(공식 문서는 "Fable 5" 같은 구체 버전을 명시하지 않는다).
 - **한계**: 프롬프트를 줄일 뿐 안전 보장이 아니다 — 방향을 신뢰하는 작업에만 쓰고, 민감 작업(배포·시크릿 인접·대량 삭제)은 manual/plan으로 내려서 검토한다. plan mode 중에도 분류기가 셸 명령을 심사한다(`useAutoModeDuringPlan` 기본 on, v2.1.218+ — critical path 삭제는 예외).
 - **분류기 비용**(Enterprise·API 키·Claude Platform on AWS·Bedrock·Google Cloud·Foundry — Pro·Max·Ultra·Team은 해당 없음): v2.1.278+는 분류 검사를 **서버가 세션 요청 안에서 무료로** 한다. 사내 LLM 게이트웨이·프록시가 요청을 변형하면 서버 검사가 닿지 않아 **예전처럼 과금되는 자체 분류 요청**으로 돌아가고, 세션에서 한 번 `this session isn't eligible` 알림이 뜬다(auto mode는 그대로 동작). 확인은 `/status`의 `Auto mode server` 행(`Enabled`/`Disabled`) — 게이트웨이 쪽 조치는 관리자 사안이다.
@@ -627,7 +628,7 @@ CLAUDE.local.md
 Claude Code는 매주 바뀐다. 6개월마다 30분:
 - `code.claude.com/docs/en/whats-new` 최신 항목 확인.
 - ✅(2026-11-02 종결) `CLAUDE.local.md`는 계속 지원된다 — §F-1·§F-5가 개인 파일로 쓴다(memory: *"loads alongside CLAUDE.md"*).
-- §D-6 `modelSettings` 예시가 **자리표시자 키**를 유지하는지(실제 모델 ID를 박으면 세대 교체마다 낡는다 — `claude-fable-5` → `claude-fable-5-1`이 실례) · 모델별 **기본 effort**(Opus 5.5=`medium` — 모델마다 다르고, 새 모델은 이전 저장값을 물려받지 않는다).
+- §D-6 `modelSettings` 예시가 **자리표시자 키**를 유지하는지(실제 모델 ID를 박으면 세대 교체마다 낡는다 — `claude-fable-5` → `claude-fable-5-1`이 실례) · 모델별 **기본 effort**(Opus 5.5·Fable 5.2=`medium` — 모델마다 다르고, 새 모델은 이전 저장값을 물려받지 않는다).
 - ✅(2026-09-16 종결) ⓐ `modelSettings`(모델별 저장값)가 `effortLevel`(저장값 없는 모델의 폴백)을 이긴다 — settings 레퍼런스 원문 재확인(이전 재검증 서술 그대로 확정 — 특정 버전 행을 인용하지 않는다. R20 병합되면 근거가 사라진다). ⓒ §J-1 auto 기본 시작 모드 도입 = macOS/Linux/WSL v2.1.228+·네이티브 Windows v2.1.233+, 2026-08-14(이후 v2.1.283에 전 플랜 기본으로 넓어졌다 — 본문은 현행만 적는다).
 - ✅(2026-09-30 종결) §E `AGENTS.md` 로드 조건은 **작업 디렉터리와 그 상위**의 `CLAUDE.md`·`.claude/CLAUDE.md`·`CLAUDE.local.md`를 센다(`~/.claude/CLAUDE.md`·managed·`.claude/rules/`는 세지 않는다 — memory `#agents-md`). §E-4 감지에 라우터 고지를 넣었다.
 - ✅(2026-09-30 종결) `/init`은 import를 스스로 넣지 않는다. 기본 `/init`의 흡수 대상은 Cursor·Copilot 규칙뿐이고, `AGENTS.md`는 `CLAUDE_CODE_NEW_INIT=1`일 때 흡수, `/import`는 사본을 덧붙인다 — §E에 "복사본과 import 중 하나만"을 넣었다.
@@ -650,7 +651,7 @@ Claude Code는 매주 바뀐다. 6개월마다 30분:
 - **§F-1 같은 폴더 동시 세션의 예외 조건** — 조건 ⓑ의 판단 도구(03 §12 session-board)가 셸 편집을 못 보는 한계가 유지되는지, Claude Code가 같은 폴더 동시 세션·워크트리에 대한 공식 권고를 새로 냈는지(공식 worktrees·common-workflows — 생기면 조건을 그쪽에 맞춘다).
 - **§G 세션 분리 축** — `claude -c`(그 폴더의 가장 최근 대화)·`-n`/`/rename`(세션 이름)·`--resume <이름>`·`--worktree`(worktree 위치·분기·정리) 동작 · `--worktree`의 브랜치 이름(`worktree-<이름>`)·이름 재사용·`EnterWorktree` `path`의 `.claude/worktrees/` 밖 승인(§F-1 고유번호 규칙의 전제)(공식 sessions·worktrees, 2026-09-13 확인 · 고유번호 전제는 2026-10-26 확인). 같은 폴더 동시 세션에 대한 **공식 경고는 없다**(같은 날 확인) — 생기면 §G 줄의 근거를 그쪽으로 바꾼다.
 - **§K 크레딧 잔액 오류 행** — Max·Ultra·Team API 크레딧의 대상(Claude Code 제외)·`Credit balance too low` 문구·인증 우선순위(`-p`는 `ANTHROPIC_API_KEY`를 항상 쓰고 대화형은 1회 승인)가 유지되는지(platform `api-credits-for-subscribers`·code.claude.com `authentication`, 2026-10-18 확인).
-- 🟡 `~/.claude/`가 `blockReadsOutsideWorkingDirectories` 차단 대상인지(맞으면 글로벌 기록 읽기가 막혀 신규 합류로 오판한다) · `.claude/worktrees/` 안 세션이 상위 탐색으로 본체 `CLAUDE.md`를 함께 로드하는지.
+- ✅(2026-11-22 종결) `~/.claude/`는 `blockReadsOutsideWorkingDirectories`의 통째 예외가 아니다 — 스킬·플러그인·rules·에이전트·커맨드·`CLAUDE.md`만 읽힌다(settings-reference). 글로벌 기록(`~/.claude/CLAUDE.md`) 읽기는 유지되고 `projects/` 열거는 막힌다(§J-1 반영). 🟡 `.claude/worktrees/` 안 세션이 본체 `CLAUDE.md`를 함께 로드하는지 — 일반 규칙(작업 디렉터리와 그 위 전부)으로는 로드되나 CLI 세션에 대한 명문은 없다(예외 명시는 서브에이전트 워크트리·데스크톱뿐).
 - **§J 웹 노출의 Claude 파일 목록** — Claude Code가 프로젝트에 두는 파일(`CLAUDE.md`·`CLAUDE.local.md`·`.claude/`·`.mcp.json`·`AGENTS.md`)이 공식 memory·settings 문서와 맞는지(새 프로젝트 파일이 생기면 §J 목록에 더한다).
 - **자기 점검(갱신 의식)** — 재검증·개정은 기억이 아니라 **당일 공식 문서** 조회로 한다(확인 못 한 항목엔 🟡을 단다). 고쳤으면 ① 버전 표에 한 줄(무엇을 왜) ② 헤더·푸터의 버전과 "최종 갱신"·"최근 재검증" 날짜 ③ 저장소 `CLAUDE.md` 구성물 표 ④ 이 체크리스트 ⑤ 기계 검사 통과를 빠짐없이 한다. 버전은 네 곳에 있고 **하나만 빠져도 4축이 어긋난다** — 골격 규칙의 정본은 `docs/DOC_CONTRACT.md`다.
 - ✅ 해소된 과거 항목(재확인 불필요): CLAUDE.local.md deprecation 우려 → **계속 지원**(2026-07-20 확인, `.gitignore` 추가 권장 유지).
@@ -660,5 +661,5 @@ Claude Code는 매주 바뀐다. 6개월마다 30분:
 ## 핵심 출처 🟢
 IDE 통합·`--add-dir`(ide-integrations·large-codebases) / permissions·deny 한계 / hooks / skills / memory·auto-memory — 모두 `code.claude.com/docs` 및 `docs.anthropic.com`.
 
-**문서 정보** — 통합 마스터(범용) **v1.122**. 변경 이력은 최상단 버전 표 참조(유래: 8개 소스 통합 초판 — 최상단 병합 행).
-최종 갱신: 2026-11-22 · 최근 재검증: 2026-11-02 / 참조: Claude Code v2.1.316, Opus 5.5(v2.1.280+) · Sonnet 5.5(v2.1.284+) · Haiku 5.5(v2.1.293+) · Fable 5.1(v2.1.257+).
+**문서 정보** — 통합 마스터(범용) **v1.123**. 변경 이력은 최상단 버전 표 참조(유래: 8개 소스 통합 초판 — 최상단 병합 행).
+최종 갱신: 2026-11-22 · 최근 재검증: 2026-11-22 / 참조: Claude Code v2.1.330, Opus 5.5(v2.1.280+) · Sonnet 5.5(v2.1.284+) · Haiku 5.5(v2.1.293+) · Fable 5.2(v2.1.321+).
