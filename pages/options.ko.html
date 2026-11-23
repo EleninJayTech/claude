@@ -1037,7 +1037,7 @@ details.sect>summary h2{margin:0}
       <dt>함께 깔리는 확인 규칙</dt><dd>§5의 <code class="i">browser-check</code> 스킬이 함께 깔립니다(§5를 고르지 않았어도 — 그때는 이 스킬의 스코프·호출 방식·별칭도 묻습니다. 이미 있으면 그대로 씁니다) — Flutter 앱에 연결하는 순서와 알려진 한계도 이 스킬이 갖습니다. Marionette가 따로 내놓는 공식 스킬은 깔지 않고 안내만 합니다</dd>
       <dt>커밋할 것</dt><dd>별도 진입점이면 <code class="i">pubspec.yaml</code>·<code class="i">pubspec.lock</code>·<code class="i">tool/marionette_main.dart</code>, 팀 공유면 <code class="i">.mcp.json</code>까지 커밋 대상입니다</dd>
       <dt>회사 주의 🔴</dt><dd>서드파티 패키지를 앱 의존성에 더하고 MCP 서버를 등록하는 항목입니다. §4와 같은 승인 질문을 <b>어느 모드에서든</b> 묻고, 승인이 없으면 이 항목만 뺍니다. 서버는 이 PC 안에서 돕니다. 앱에 붙는 연결 주소를 가진 쪽은 앱을 조작할 수 있으므로 그 주소는 기록하거나 커밋하지 않습니다</dd>
-      <dt>지울 때</dt><dd><code>claude mcp remove marionette</code>(팀 공유면 <code class="i">.mcp.json</code>에서 항목을 지우고 커밋) · 전역 도구는 <code>dart pub global deactivate marionette_mcp</code>(CLI는 <code>marionette_cli</code>) · 앱은 <code>flutter pub remove marionette_flutter</code> 뒤 진입 파일을 지우거나 <code class="i">lib/main.dart</code>를 원래대로 되돌립니다 · <code class="i">browser-check</code>는 §5도 쓰지 않을 때만 지웁니다</dd>
+      <dt>지울 때</dt><dd><code>claude mcp remove marionette</code>(팀 공유면 <code class="i">.mcp.json</code>에서 항목을 지우고 커밋) · 전역 도구는 <code>dart pub global deactivate marionette_mcp</code>(CLI는 <code>marionette_cli</code> · 팀 공유로 개발용 의존성에 넣었으면 <code>dart pub remove marionette_mcp</code>) · 앱은 <code>flutter pub remove marionette_flutter</code> 뒤 진입 파일을 지우거나 <code class="i">lib/main.dart</code>를 원래대로 되돌립니다 · <code class="i">browser-check</code>는 §5도 쓰지 않을 때만 지웁니다</dd>
     </dl>
 </details>
   </div>
