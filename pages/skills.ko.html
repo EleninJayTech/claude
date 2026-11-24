@@ -214,7 +214,7 @@ details.sect>table{display:block;overflow-x:auto;min-width:0}
   <div class="basic">
     <span class="n">02</span>
     <b>부르는 방법은 두 가지</b>
-    <p><code>/이름</code>을 직접 치거나, Claude가 <em>설명</em>과 내 요청을 맞춰 보고 알아서 불러온다. 일부러 수동 호출 전용으로 두는 스킬도 있다 &mdash; 브라우저를 조작하거나, 소스에 테스트 코드를 넣거나, PC 설정을 바꾸는 스킬은 설치할 때 그렇게 권한다.</p>
+    <p><code>/이름</code>을 직접 치거나, Claude가 <em>설명</em>과 내 요청을 맞춰 보고 알아서 불러온다. 일부러 수동 호출 전용으로 두는 스킬도 있다 &mdash; 브라우저를 조작하거나, 소스에 테스트 코드를 넣거나, PC 설정을 바꾸거나, 에이전트 파일을 고치는 스킬은 설치할 때 그렇게 권한다.</p>
   </div>
   <div class="basic">
     <span class="n">03</span>
@@ -273,6 +273,9 @@ details.sect>table{display:block;overflow-x:auto;min-width:0}
     <tr><th class="grp" colspan="4" scope="colgroup">병렬 에이전트 &middot; 03 §19</th></tr>
     <tr><td><code>/agent-guard</code></td><td>없음 &mdash; 훅이 알아서 돈다</td><td>병렬 서브에이전트로 PC가 느려지거나, 스폰이 거부됐거나, 상한을 바꾸고 싶을 때</td><td>세션 시작 때 상한 한 줄 &mdash; 넘는 스폰은 거부되고 나중에 다시 뜬다</td></tr>
 
+    <tr><th class="grp" colspan="4" scope="colgroup">에이전트 모델 &middot; 03 §20</th></tr>
+    <tr><td><code>/agent-tune</code></td><td><code>[점검 | 되돌리기 [에이전트&hellip;]]</code> &mdash; 읽기 전용 대조 &middot; 이전 값 복원, 없으면 제안 후 승인분 적용 &middot; 수동 전용</td><td>서브에이전트가 맡은 일에 비해 너무 비싸거나 약한 모델로 도는 것 같을 때</td><td>승인한 에이전트의 <code>model:</code>·<code>effort:</code> 줄만, 그리고 배정 기록</td></tr>
+
     <tr><th class="grp" colspan="4" scope="colgroup">배포·운영 &middot; 03 §15</th></tr>
     <tr><td><code>/ops-kit</code></td><td><code>init</code> | <code>runbook</code> | <code>hub</code> | <code>dashboard</code> | <code>health</code> | <code>backup</code> | <code>limits</code> | <code>sync</code> | <code>check</code> &mdash; <code>check</code>는 읽기만</td><td>혼자 운영할 프로젝트를 배포하기 전, 또는 배포 설정이 바뀌었을 때</td><td>고른 산출물만 <code>docs/status/</code>에 &mdash; 상태 파일 하나와 함께</td></tr>
 
@@ -294,6 +297,7 @@ details.sect>table{display:block;overflow-x:auto;min-width:0}
   <button class="chip" data-g="pc" aria-pressed="false">PC</button>
   <button class="chip" data-g="board" aria-pressed="false">동시 세션</button>
   <button class="chip" data-g="guard" aria-pressed="false">병렬 에이전트</button>
+  <button class="chip" data-g="tune" aria-pressed="false">에이전트 모델</button>
   <button class="chip" data-g="ops" aria-pressed="false">운영</button>
   <button class="chip" data-g="kb" aria-pressed="false">지식 베이스</button>
   <span class="count" id="count"></span><button type="button" class="xbtn" data-expand data-open="모두 펼치기" data-close="모두 접기" aria-pressed="false">모두 펼치기</button>
@@ -375,7 +379,7 @@ details.sect>table{display:block;overflow-x:auto;min-width:0}
       <dl>
         <dt>언제</dt><dd>이 PC나 이 프로젝트를 현재 문서 기준으로 올리고 싶을 때. 처음 까는 경우에도 같은 명령이라, 내가 어느 쪽인지 몰라도 된다. Claude나 <code>/resume</code>이 작업에 새로 필요한 항목을 추천했으면 <code>추천</code>을 붙여 부른다.</dd>
         <dt>하는 일</dt><dd>00 문서를 찾아서(같은 폴더&middot;<code>docs/</code>의 사본·로컬 클론·내가 알려 준 폴더·배포된 raw 순 &mdash; raw는 요약하지 않고 파일 그대로 프로젝트 밖 임시 폴더에 받는다) 읽고 그 절차를 그대로 돈다 &mdash; 이미 있는 것을 감지하고, 무엇을 할지 묻고, 고른 것만 설치하고, 검증하고, 적용 기록을 쓴다. 스킬 자신은 단계를 하나도 갖지 않아서 문서와 갈릴 수가 없다. <code>/dropin-apply 추천</code>으로 부르면 작업 중 추천 경로를 탄다 &mdash; 작업이 새로 필요로 하게 됐는데 아직 안 깐 항목만, 무엇을 보고 걸렸는지 한 줄씩 붙여 내놓고, 처음 공통 질문은 기록된 답으로 갈음하며, 고른 것만 깐다. 그 항목이 든 문서가 지금 판보다 낡게 깔려 있으면 그 개정분부터 보여 준다. 안전 질문은 그대로 묻는다. 적용 기록이 없는 폴더에서는 이 경로 대신 일반 설치를 돌고, 거기서는 최소가 기본 추천이다. 프로젝트 폴더가 그대로 운영 웹 서버에 올라가는 구조로 보이면, 마지막 커밋 안내 첫머리에 커밋한 Claude 파일이 URL로 읽힌다는 경고와 막는 방법 세 가지, 확인 명령이 붙는다.</dd>
-        <dt>결과</dt><dd>문서와 일치하는 구성, 그리고 그 사실을 적은 <code>dropin-applied</code> 줄. 기능 문서·refactor·kr-ui-guide·kr-ui-styles·browser-check·pc-clean·win-setup·session-board·agent-guard·ops-kit·kb-dashboard·<code>/scope</code>와 <code>dropin-</code> 계열처럼 이미 깔린 스킬은 <b>이름이 아니라 내용으로</b> 대조하므로, 파일 수는 그대로고 문장만 바뀐 개정도 교체된다 &mdash; <code>dropin-</code> 계열과 <code>/scope</code>는 배포본과 다르면 기본값이 <code>재구성</code>으로 나온다. <code>/resume</code>·<code>/wrap</code>은 있는지만 본다 &mdash; 새 본문으로 갈려면 이미 깔린 글로벌 항목을 묻는 질문에서 기본값 <code>유지</code> 대신 <code>재구성</code>을 고른다. 승인한 개정이 걸린 항목은 처음부터 <code>재구성</code>이 기본으로 나온다. 거절한 추천은 기록에 남아 다시 권하지 않는다 &mdash; 나중에 깔고 싶으면 인수 없이 <code>/dropin-apply</code>를 다시 돌려 추가한다.</dd>
+        <dt>결과</dt><dd>문서와 일치하는 구성, 그리고 그 사실을 적은 <code>dropin-applied</code> 줄. 기능 문서·refactor·kr-ui-guide·kr-ui-styles·browser-check·pc-clean·win-setup·session-board·agent-guard·ops-kit·kb-dashboard·agent-tune·<code>/scope</code>와 <code>dropin-</code> 계열처럼 이미 깔린 스킬은 <b>이름이 아니라 내용으로</b> 대조하므로, 파일 수는 그대로고 문장만 바뀐 개정도 교체된다 &mdash; <code>dropin-</code> 계열과 <code>/scope</code>는 배포본과 다르면 기본값이 <code>재구성</code>으로 나온다. <code>/resume</code>·<code>/wrap</code>은 있는지만 본다 &mdash; 새 본문으로 갈려면 이미 깔린 글로벌 항목을 묻는 질문에서 기본값 <code>유지</code> 대신 <code>재구성</code>을 고른다. 승인한 개정이 걸린 항목은 처음부터 <code>재구성</code>이 기본으로 나온다. 거절한 추천은 기록에 남아 다시 권하지 않는다 &mdash; 나중에 깔고 싶으면 인수 없이 <code>/dropin-apply</code>를 다시 돌려 추가한다.</dd>
       </dl>
       <div class="warn soft"><b>알아 둘 것.</b> Claude에게 &ldquo;이 문서를 학습해서 적용해줘&rdquo;라고 말하는 것과 같은 일이다 &mdash; 그 문장도 그대로 동작한다. 명령이 따로 있는 이유는, 보이지 않는 문은 열리지 않기 때문이다.</div>
       </details>
@@ -839,6 +843,33 @@ details.sect>table{display:block;overflow-x:auto;min-width:0}
   </div>
 </section>
 
+<!-- ══════════ GROUP: tune ══════════ -->
+<section class="group" data-g="tune">
+  <div class="ghead">
+    <h2 style="margin-top:0">에이전트 모델</h2>
+    <span class="src">문서 03 §20이 설치 &middot; 기본 해제</span>
+  </div>
+  <p class="gnote">이미 서브에이전트를 운영하는 프로젝트용이다 &mdash; 02 로스터로 만들었든 손으로 썼든. 에이전트를 만들거나 지우지 않고, 있는 에이전트의 모델과 effort를 각자 맡은 일에 맞춰 다시 맞춘다.</p>
+  <div class="cards">
+
+    <article class="skill" data-g="tune">
+      <div class="cmd"><span class="sl">/</span>agent-tune</div>
+      <div class="args">[점검 | 되돌리기 [에이전트&hellip;]] — 없으면 조사·질문·제안 뒤 승인한 것만 적용 &middot; 기본은 수동 호출 전용 &middot; 플러그인이면 /dandi-agent-tune:agent-tune</div>
+      <p class="one">프로젝트의 서브에이전트마다 모델과 effort를 근거 한 줄·비용 경향과 함께 제안하고, 승인한 에이전트만 고친다.</p>
+      <details class="more"><summary>자세히</summary>
+      <dl>
+        <dt>언제</dt><dd>어떤 에이전트가 맡은 일에 비해 비싼 모델로 돌거나, 반대로 너무 약해서 결과를 다시 하게 되는 것 같을 때. 에이전트를 새로 들였을 때, 운용 프로필을 바꿨을 때. <code>/agent-tune 점검</code>은 에이전트 파일이 기록과 아직 같은지 보고, <code>/agent-tune 되돌리기</code>는 이전 값으로 돌려놓는다.</dd>
+        <dt>하는 일</dt><dd>먼저 그날 공식 문서를 조회한다 &mdash; 에이전트 파일이 받는 <code>model</code>·<code>effort</code> 값, 별칭이 오늘 가리키는 모델, 모델별 effort 단계, 가격. 그다음 <code>.claude/agents/</code>와 <code>~/.claude/agents/</code>를 조사해 표로 보인다(위치·맡은 일·현재 모델과 effort·도구). 플러그인 에이전트와 워크플로 단계 모델은 보고만 하고, 에이전트 파일을 덮어쓰는 설정이 있으면 먼저 경고한다. 에이전트마다 맡은 일과 난도를 어떻게 읽었는지 보여 주고 틀린 것만 고쳐 달라고 한 뒤, 파일로 알 수 없는 것만 묻는다: 품질 우선 / 균형(추천) / 비용 우선, 에이전트별 호출 빈도, 최근 결과에 문제가 있던 에이전트와 그 원인(빠뜨리거나 대충 했나, 맥락을 다 갖고도 판단이 틀렸나). 적용 기록의 운용 프로필은 모델만 제약하고(없으면 묻는다), effort는 맡은 일로만 정한다. 틀리면 하류 전체가 다시 해야 하는 에이전트 &mdash; 난이도 분류·요구 확정·최종 리뷰·고난도 설계 &mdash; 는 어느 경우에도 내리지 않는다.</dd>
+        <dt>결과</dt><dd>배정표와, 가격을 조회했으면 에이전트별 상대 비용 지수. 고른 에이전트만, 그것도 <code>model:</code>·<code>effort:</code> 줄만 고친다 &mdash; 도구·<code>isolation:</code>·본문은 그대로다. 적용한 값과 이전 값은 조회일·링크와 함께 <code>docs/에이전트-배정.md</code>(산출물 언어가 영어면 <code>docs/agent-assignment.md</code>)에 남는다. 끝에 바뀐 파일 목록을 보여 주고, 커밋은 내가 한다.</dd>
+      </dl>
+      <div class="warn soft"><b>알아 둘 것.</b> 에이전트 정의 파일을 고치는 스킬이라 기본 해제로 나오고, 사용 형태 질문에서 조직을 고르면 추천으로 표시되지만 미리 체크되지는 않는다. 설치 절차는 글로벌 스코프를 권한다 &mdash; 부른 폴더의 에이전트를 스스로 조사하기 때문이다. 팀이 같은 절차를 공유해야 하면 프로젝트 스코프를 고른다. 호출 방식은 수동 호출 전용을 권한다. <code>~/.claude/agents/</code>의 에이전트는 이 PC의 모든 프로젝트에 적용되므로 따로 묻고, 커밋된 <code>.claude/agents/</code>는 팀 전원에게 적용된다. 비용 지수는 API 단가 기준이다 &mdash; 구독 한도가 같은 비율로 줄어든다는 공식 보장은 없다. 웹에 접근할 수 없으면 쓸 값을 확인받고 비용 경향은 내지 않는다. 02 로스터를 재적용해도 기록에 오른 값은 템플릿 값으로 되돌리지 않고, 프로필을 바꿨으면 <code>/agent-tune</code>을 다시 돌리라고 안내한다. 복사본과 <code>dandi</code> 플러그인으로 둘 다 깔면 둘 다 보인다 &mdash; 하나만 남긴다. 스킬 이름 별칭은 복사본에만 붙는다.</div>
+      </details>
+      <div class="tags"><span class="tag hand">수동 호출 전용</span><span class="tag">글로벌</span><span class="tag">기본 해제</span><span class="tag">승인 게이트</span></div>
+    </article>
+
+  </div>
+</section>
+
 <!-- ══════════ GROUP: ops ══════════ -->
 <section class="group" data-g="ops">
   <div class="ghead">
@@ -1058,7 +1089,7 @@ details.sect>table{display:block;overflow-x:auto;min-width:0}
 <div class="traps">
   <div class="trap"><b>이 셋업을 한 번도 안 깐 PC라면.</b><p>거기서도 <code>/dropin-apply</code>다 &mdash; 처음 까는 경우에도 같은 명령이다. 스킬이 아직 없으면 Claude에게 이렇게 말하면 된다: <i>&ldquo;저장소의 <code>00_통합-설치.md</code>를 받아서 이 PC에 적용해줘&rdquo;</i>. 그러면 이 스킬도 다른 것들과 함께 깔린다.</p></div>
   <div class="trap"><b>파일 이름은 그대로인데 내용만 낡은 경우.</b><p>스킬은 파일이 하나도 늘거나 줄지 않은 채로 개정될 수 있다. 이름만 대조하는 점검은 그걸 &ldquo;이미 최신&rdquo;이라고 말한다. 설치 절차는 내용까지 대조하므로, 문장만 바뀐 개정도 교체된다.</p></div>
-  <div class="trap"><b>이미 단디 플러그인으로 켜 두었다면.</b><p>기능 문서·refactor·kr-ui-guide·kr-ui-styles·browser-check·pc-clean·win-setup·session-board·agent-guard·ops-kit·kb-dashboard 스킬을 <code>dandi</code> 플러그인 마켓으로 깔았다면, 같은 스킬이 <code>/dandi-refactor:refactor</code> 같은 플러그인 이름으로 이미 있다. 설치 절차가 이걸 알아채고 묻는다: 플러그인을 <b>유지</b>하고 복사 설치를 건너뛸지, 플러그인을 걷고 복사본으로 <b>교체</b>할지. 한 스킬이 두 벌 깔리면 둘이 서로 불려 가려고 다툰다. 나중에 플러그인 설치를 지울 때는 복사본 제거 절차가 아니라 그 플러그인 README의 <code>/plugin uninstall</code>을 따른다.</p></div>
+  <div class="trap"><b>이미 단디 플러그인으로 켜 두었다면.</b><p>기능 문서·refactor·kr-ui-guide·kr-ui-styles·browser-check·pc-clean·win-setup·session-board·agent-guard·ops-kit·kb-dashboard·agent-tune 스킬을 <code>dandi</code> 플러그인 마켓으로 깔았다면, 같은 스킬이 <code>/dandi-refactor:refactor</code> 같은 플러그인 이름으로 이미 있다. 설치 절차가 이걸 알아채고 묻는다: 플러그인을 <b>유지</b>하고 복사 설치를 건너뛸지, 플러그인을 걷고 복사본으로 <b>교체</b>할지. 한 스킬이 두 벌 깔리면 둘이 서로 불려 가려고 다툰다. 나중에 플러그인 설치를 지울 때는 복사본 제거 절차가 아니라 그 플러그인 README의 <code>/plugin uninstall</code>을 따른다.</p></div>
   <div class="trap"><b><code>/dropin-check</code>가 다 보지는 못한다.</b><p>일반 설치에는 대조할 사설 사본이 아예 없다. 그래서 그냥 &ldquo;최신&rdquo;이 아니라 &ldquo;문서 기준 최신 &mdash; 스킬 실물 내용은 미확인&rdquo;이라고 보고한다. 그 나머지 절반이 궁금하면 <code>/dropin-apply</code>를 돌리면 된다 &mdash; <code>/resume</code>·<code>/wrap</code>까지 새 본문으로 받으려면 이미 깔린 글로벌 항목에서 <code>재구성</code>을 고른다. <code>유지</code>면 낡은 본문이 그대로 남는다.</p></div>
 </div>
 </details>
@@ -1093,6 +1124,7 @@ details.sect>table{display:block;overflow-x:auto;min-width:0}
     <tr><td><code>/agent-guard</code></td><td>03 §19</td><td>글로벌 &mdash; 고정이라 묻지 않는다 &middot; 또는 <code>dandi</code> 플러그인(먼저 권한다)</td><td>플러그인: <code>/plugin uninstall dandi-agent-guard@dandi</code> &mdash; 훅도 함께 사라진다. 복사본: <code>~/.claude/settings.json</code>의 훅 중 <code>guard.mjs</code>를 부르는 묶음만 지우고 폴더를 삭제한다. 어느 쪽이든 <code>~/.claude/agent-guard/</code>를 지운다 &mdash; 실행 중 표식과 선택 설정뿐이라 잃는 것이 없다. 워크플로 선택 단계를 했다면 <code>~/.claude/settings.json</code>의 <code>env</code>에서 <code>CLAUDE_CODE_WORKFLOW_MAX_CONCURRENT_AGENTS</code>도 지운다.</td></tr>
     <tr><td><code>/ops-kit</code></td><td>03 §15</td><td>글로벌 &mdash; 프로젝트 스코프면 repo마다 한 벌씩 커밋된다 &middot; 또는 <code>dandi</code> 플러그인</td><td>플러그인: <code>/plugin uninstall dandi-ops-kit@dandi</code>. 복사본: 폴더 삭제 &mdash; 프로젝트 스코프면 삭제를 커밋한다. 걷을 훅·설정·예약 작업은 없다. 만든 것 &mdash; <code>docs/status/</code>와 승인한 <code>/admin</code>·<code>/health</code>·점검 워크플로 코드 &mdash; 은 남는다. 그 프로젝트의 코드·데이터라서, 없애려면 그 프로젝트의 git으로 되돌린다. 게시한 페이지는 claude.ai에서 직접 지운다.</td></tr>
     <tr><td><code>/kb-dashboard</code></td><td>03 §18</td><td>글로벌 &mdash; 프로젝트 스코프면 그 저장소에서만 뜬다 &middot; 또는 <code>dandi</code> 플러그인</td><td>플러그인: <code>/plugin uninstall dandi-kb-dashboard@dandi</code>. 복사본: 폴더 삭제 &mdash; 프로젝트 스코프면 삭제를 커밋한다. 걷을 훅·설정·예약 작업은 없다. 어느 쪽이든 만들어진 페이지 <code>~/.claude/kb-dashboard/</code>는 직접 지운다. 기록 저장소의 <code>.claude/kb-dashboard.json</code>은 그 저장소 소유라 남는다 &mdash; 더 쓰지 않으면 그 저장소에서 지우고 커밋한다. 링크 목록은 기록이라 지우지 않는다.</td></tr>
+    <tr><td><code>/agent-tune</code></td><td>03 §20</td><td>글로벌 &mdash; 팀이 절차를 공유해야 하면 프로젝트 스코프 &middot; 또는 <code>dandi</code> 플러그인</td><td>에이전트를 이전 값으로 되돌리고 싶으면 지우기 <em>전에</em> <code>/agent-tune 되돌리기</code>를 부른다 &mdash; 스킬부터 지우면 기록표를 보며 손으로 되돌려야 한다. 플러그인: <code>/plugin uninstall dandi-agent-tune@dandi</code>. 복사본: 폴더를 삭제한다 &mdash; 프로젝트 스코프면 삭제를 커밋한다. 걷어낼 훅·설정은 없다. 배정 기록은 데이터라 기본으로 남긴다 &mdash; 지우면 나중에 02를 재적용할 때 템플릿 값을 다시 권할 수 있으니, 원할 때만 지운다.</td></tr>
     <tr><td><code>/plan-&lt;모델&gt;</code></td><td>02 STEP 3 ⓔ</td><td>설치 때 묻는다 &mdash; 글로벌 또는 프로젝트</td><td>폴더 삭제. 함께 만든 모델 운용표와, <code>CLAUDE.md</code>·핸드오프 규약에 적어 둔 이 명령 안내 줄도 지운다.</td></tr>
   </tbody>
 </table>
@@ -1100,7 +1132,7 @@ details.sect>table{display:block;overflow-x:auto;min-width:0}
 <p class="lead" style="margin-top:16px">전부 제거 절차가 문서에 적혀 있는데, 이건 의도한 것이다. 되돌릴 수 없는 설치는 애초에 선택지를 준 게 아니기 때문이다. 감지·설치·검증·제거 4단 전체는 각 문서에 있다. 설치할 때 나오는 질문의 뜻은 <a href="options.ko.html">옵션 사전</a>에, 처음부터 차근히 밟아 보려면 <a href="learn.ko.html">학습 코스</a>에 있다. 설치 항목 몇 개는 일부러 여기 없다: 정책 기록(03 §11)과 기능 변경 기록(03 §13)은 스킬이 아니라 규칙 파일(<code>.claude/rules/policy-recording.md</code>, <code>.claude/rules/feature-log.md</code>)을 더하는 항목이라, 부를 명령이 없어 카드도 없다. diff 검수 도구(03 §16)도 스킬이 아니다 — Claude가 고친 내용을 터미널에서 읽는 명령줄 프로그램 셋(lazygit·delta·difftastic)을 PC에 까는 항목이라, 직접 <code>lazygit</code>으로 연다.</p>
 </details>
 
-<footer>단디(Dandi) &middot; 스킬 카탈로그 &middot; 2026-11-23 &middot; 01 §D-4 · 02 STEP 3 ⓔ · 03 §2 · §3 · §5 · §7 · §8 · §9 · §10 · §12 · §14 · §15 · §17 · §18 · §19가 설치하는 스킬들. 명령은 별칭 없이 적었으니, 설치할 때 별칭을 골랐다면 그것을 얹어 읽으면 된다. &middot; 글꼴: Pretendard, IBM Plex Mono — 둘 다 SIL 오픈 폰트 라이선스 1.1(상업 이용·웹 임베딩 무료)</footer>
+<footer>단디(Dandi) &middot; 스킬 카탈로그 &middot; 2026-11-24 &middot; 01 §D-4 · 02 STEP 3 ⓔ · 03 §2 · §3 · §5 · §7 · §8 · §9 · §10 · §12 · §14 · §15 · §17 · §18 · §19 · §20이 설치하는 스킬들. 명령은 별칭 없이 적었으니, 설치할 때 별칭을 골랐다면 그것을 얹어 읽으면 된다. &middot; 글꼴: Pretendard, IBM Plex Mono — 둘 다 SIL 오픈 폰트 라이선스 1.1(상업 이용·웹 임베딩 무료)</footer>
 
 </div>
 <script>

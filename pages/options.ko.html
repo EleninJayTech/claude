@@ -489,9 +489,9 @@ details.sect>summary h2{margin:0}
     <details class="more"><summary>자세히</summary>
 <dl>
       <dt>추천이 붙을 때</dt><dd><code>.claude/agents/</code>에 역할 에이전트가 넷 이상일 때(02가 이미 깐 로스터는 세지 않습니다)</dd>
-      <dt>고르면 생기는 것</dt><dd>병렬의 전부 + 커스텀 reviewer(02 ⓒ)를 추천으로 표시(기본 해제는 그대로)</dd>
+      <dt>고르면 생기는 것</dt><dd>병렬의 전부 + 커스텀 reviewer(02 ⓒ)를 추천으로 표시(기본 해제는 그대로) · 03을 더하면 에이전트마다 모델·강도를 다시 맞추는 agent-tune(§20)도 <b>추천으로만 표시</b>(미리 체크하지 않습니다)</dd>
       <dt>알아 둘 것</dt><dd>로스터에 없는 역할 이름은 새로 만들지 않습니다 — 더 필요한 역할은 기존 에이전트의 역할 설명으로 나눕니다. 여러 세션이 팀처럼 일하는 실험 기능(agent teams)은 기본으로 꺼져 있고 <b>이 로스터와 함께 쓰지 않습니다</b> — 켜면 이름 붙은 에이전트가 팀원으로 떠 결과를 돌려주지 않아 로스터가 조용히 멈춥니다. 토큰도 훨씬 많이 씁니다</dd>
-      <dt>안 고르면</dt><dd>커스텀 reviewer는 추천 표시 없이 꺼진 채로 나옵니다</dd>
+      <dt>안 고르면</dt><dd>커스텀 reviewer·agent-tune은 추천 표시 없이 꺼진 채로 나옵니다</dd>
     </dl>
 </details>
   </div>
@@ -773,6 +773,7 @@ details.sect>summary h2{margin:0}
       <dt>어디에 둘지</dt><dd><b>팀 공유</b> = 프로젝트 <code>.claude/agents/</code>(커밋 — 팀원 모두 사용) / <b>개인 실험</b> = <code>~/.claude/agents/</code>(내 PC 전용). 어떤 모드를 골라도 물어봅니다</dd>
       <dt>병렬 제안</dt><dd>일이 크고 조각끼리 같은 파일을 안 건드리면 implementer를 <b>여러 개 동시에</b> 돌리는 구성(<code>isolation: worktree</code>)도 선택지로 나옵니다. 붙이는 방식은 둘 중 하나입니다 — implementer 파일에 <b>늘 붙여 두기</b> / <b>동시에 돌릴 때만 붙이기</b>(순서대로 하는 단계는 격리 작업 폴더를 매번 만들지 않아 가볍습니다. 이 방식은 파일에 흔적이 남지 않아 ⓓ 핸드오프 규약 문서에 그 규칙을 적어 둡니다). ⓓ를 고르지 않았으면 파일에 늘 붙여 두는 쪽으로 하고, 그것도 할 수 없는 내 PC 전용 로스터면 병렬을 제안하지 않습니다</dd>
       <dt>사용 형태에 따라(2-4)</dt><dd>병렬이면 implementer 격리는 <b>동시에 돌릴 때만 붙이기</b>가 기본 제안이 되고, 조직이면 거기에 커스텀 reviewer가 추천으로 표시되며, 무인이면 parity-tester가 기본 체크됩니다(테스트 명령이 감지될 때). 기본 체크일 뿐 고르는 건 사용자입니다. 로스터를 내 PC 전용(개인 실험)에 두면 이 구조는 적용하지 않고 알리기만 합니다 — 그 PC의 모든 프로젝트가 함께 바뀌기 때문입니다</dd>
+      <dt>다시 돌릴 때</dt><dd>03 agent-tune(§20)으로 모델·강도를 맞춘 에이전트는 배정 기록에 남아 있어, 로스터를 재구성·교체하거나 프로필을 바꿔도 <b>템플릿 값으로 되돌리지 않고</b> 그 기록값을 씁니다. 프로필을 바꿔 다시 맞춰야 하면 <code class="i">/agent-tune</code>을 다시 돌리라고 안내합니다</dd>
     </dl>
 </details>
   </div>
@@ -1133,17 +1134,37 @@ details.sect>summary h2{margin:0}
 </details>
   </div>
 
+  <div class="opt">
+    <div class="opt-head"><span class="id">§20</span><span class="name">agent-tune</span><span class="badge b-off">기본 해제 · 에이전트 정의를 고침</span></div>
+    <p class="lead">프로젝트에서 쓰는 서브에이전트마다 <b>맡은 일에 맞는 모델과 추론 강도(effort)</b>를 근거와 함께 제안하고, 내가 승인한 에이전트의 파일에서 <b>그 두 줄만</b> 고치는 스킬입니다. 02가 만든 로스터가 아닌 에이전트에도 씁니다.</p>
+    <details class="more"><summary>자세히</summary>
+<dl>
+      <dt>언제 쓰나</dt><dd>에이전트가 여럿인데 모두 같은 모델로 돌고 있거나, 어떤 에이전트가 비싸기만 하고 결과는 그대로라 낮춰도 될지 궁금할 때, 반대로 자꾸 틀려서 올려야 할지 판단이 필요할 때</dd>
+      <dt>하는 일</dt><dd>에이전트를 조사해 현황표로 보여 주고, 코드로는 알 수 없는 것(얼마나 자주 부르는지 · 최근 문제와 그 원인 · 무엇을 우선할지)만 묻습니다. 운용 프로필(2-4)은 <b>모델 쪽만</b> 제약하고, 강도는 맡은 일로만 정합니다. 틀리면 뒤가 전부 재작업되는 자리(난이도 분류·요구 확정·최종 리뷰 같은)는 어느 프로필에서도 내리지 않습니다. 모델 이름·가격·강도 단계는 기억이 아니라 <b>그날 공식 문서를 조회해</b> 씁니다</dd>
+      <dt>안 하는 것</dt><dd>에이전트를 만들거나 지우지 않고, 도구·격리 설정·본문도 고치지 않습니다. 승인 전에는 아무 파일도 고치지 않으며, 커밋도 하지 않습니다(바뀐 파일과 커밋 안내만)</dd>
+      <dt>쓰는 법</dt><dd><code>/agent-tune</code>(제안 → 승인한 것만 적용) · <code>/agent-tune 점검</code>(배정 기록과 실제 파일을 대조만 함 — 아무것도 고치지 않음) · <code>/agent-tune 되돌리기</code>(기록해 둔 이전 값으로 복원)</dd>
+      <dt>남는 것</dt><dd><b>배정 기록</b> <code class="i">docs/에이전트-배정.md</code>(<code class="i">언어=en</code>이면 <code class="i">docs/agent-assignment.md</code>) — 적용한 값과 이전 값, 조회일이 남습니다. 이 기록에 오른 에이전트는 02를 다시 적용해도 템플릿 값으로 되돌아가지 않습니다</dd>
+      <dt>왜 기본 해제인가</dt><dd>에이전트 정의 파일의 모델·강도를 고치는 스킬이라 모드가 대신 켜지 않고, 어떤 번들에도 들지 않습니다. 사용 형태가 조직이면 <b>추천으로 표시</b>되지만 미리 체크하지는 않습니다. 에이전트가 아직 없어도 설치할 수 있습니다(그때는 아무것도 고치지 않고 끝납니다)</dd>
+      <dt>스코프</dt><dd><b>글로벌이 기본</b>입니다 — 어느 프로젝트에서 불러도 그 폴더의 에이전트를 스스로 조사합니다. 팀이 같은 절차를 함께 써야 하면 프로젝트(커밋)를 고르세요</dd>
+      <dt>호출 방식</dt><dd><b>수동 호출 전용이 기본</b>입니다 — 에이전트 정의 파일을 고치는 스킬이라 스스로 불리지 않게 합니다. 자동 판단을 골라도 승인 단계는 그대로 남습니다</dd>
+      <dt>설치 방법</dt><dd>설치는 스킬 폴더를 복사해 깝니다. <b>플러그인</b>으로 받으려면 <code>/plugin marketplace add EleninJayTech/claude</code> → <code>/plugin install dandi-agent-tune@dandi</code>를 직접 실행합니다(그때 이름은 <code class="i">/dandi-agent-tune:agent-tune</code>이고 스킬 이름 별칭은 붙지 않습니다)</dd>
+      <dt>주의</dt><dd>이름이나 설명에 에이전트와 모델·강도·배정이 함께 들어간 스킬·명령이 이미 있으면 유지할지 교체할지 묻습니다 — 배정 절차가 둘이면 누가 파일을 고쳤는지 기록이 갈립니다</dd>
+      <dt>지울 때</dt><dd>먼저 <b>고친 값을 되돌릴지</b> 묻습니다 — 되돌리려면 스킬을 지우기 <b>전에</b> <code class="i">/agent-tune 되돌리기</code>를 부릅니다(지운 뒤에는 기록표를 보며 손으로 되돌려야 합니다). 그다음 설치한 스코프의 <code class="i">agent-tune/</code> 폴더를 지웁니다(훅·설정을 만들지 않습니다). 플러그인이면 <code class="i">/plugin uninstall dandi-agent-tune@dandi</code>. 배정 기록은 데이터라 <b>기본으로 남깁니다</b> — 지우면 02를 다시 적용할 때 그 에이전트에 템플릿 값을 다시 권할 수 있습니다</dd>
+    </dl>
+</details>
+  </div>
+
   <h3>스킬을 고르면 따라오는 질문</h3>
   <div class="tbl">
   <table>
     <tr><th style="width:120px">질문</th><th>선택지</th></tr>
     <tr>
       <td><b>스코프</b></td>
-      <td><b>글로벌</b>(<code class="i">~/.claude/skills/</code>) — 내 PC 모든 프로젝트에서 쓸 수 있음 / <b>프로젝트</b>(<code class="i">.claude/skills/</code>) — 이 저장소에서만, 커밋하면 팀 공유. 기능 문서 세트·refactor·kr-ui-guide는 저장소를 가리지 않고 쓰이고 pc-clean·win-setup은 PC 단위 도구, ops-kit은 프로젝트를 스스로 조사하는 스킬, kb-dashboard는 다른 폴더 세션에서도 부르는 스킬이라 <b>글로벌이 기본</b>입니다. 정책 기록(§11)·기능 변경 기록(§13)은 프로젝트, session-board(§12)·agent-guard(§19)는 글로벌, diff 검수 도구(§16)는 이 PC로 <b>고정</b>이라 이 질문 없이 알려만 줍니다. 어떤 모드에서도 생략되지 않는 질문입니다 — 내 PC 글로벌에 같은 이름이 있으면 프로젝트에 깔아도 그쪽에 가려 실행되지 않습니다</td>
+      <td><b>글로벌</b>(<code class="i">~/.claude/skills/</code>) — 내 PC 모든 프로젝트에서 쓸 수 있음 / <b>프로젝트</b>(<code class="i">.claude/skills/</code>) — 이 저장소에서만, 커밋하면 팀 공유. 기능 문서 세트·refactor·kr-ui-guide는 저장소를 가리지 않고 쓰이고 pc-clean·win-setup은 PC 단위 도구, ops-kit·agent-tune은 프로젝트를 스스로 조사하는 스킬, kb-dashboard는 다른 폴더 세션에서도 부르는 스킬이라 <b>글로벌이 기본</b>입니다. 정책 기록(§11)·기능 변경 기록(§13)은 프로젝트, session-board(§12)·agent-guard(§19)는 글로벌, diff 검수 도구(§16)는 이 PC로 <b>고정</b>이라 이 질문 없이 알려만 줍니다. 어떤 모드에서도 생략되지 않는 질문입니다 — 내 PC 글로벌에 같은 이름이 있으면 프로젝트에 깔아도 그쪽에 가려 실행되지 않습니다</td>
     </tr>
     <tr>
       <td><b>호출 방식</b></td>
-      <td><b>자동 판단</b> — 관련 작업이 감지되면 Claude가 알아서 불러 씀(기본) / <b>수동 호출 전용</b> — 내가 <code class="i">/svg-design</code>이라고 쳐야만 동작(파일에 <code class="i">disable-model-invocation: true</code> 한 줄이 추가됨). 브라우저 확인 규칙(<code class="i">browser-check</code>)은 <b>자동 판단을 권합니다</b> — 확인할 때 스스로 불려야 쓸모가 있습니다. 반대로 <code class="i">win-setup</code>은 PC 설정을 바꾸는 스킬이라, <code class="i">kb-dashboard</code>는 부를 때만 페이지를 만드는 스킬이라 <b>수동 호출 전용이 기본</b>입니다</td>
+      <td><b>자동 판단</b> — 관련 작업이 감지되면 Claude가 알아서 불러 씀(기본) / <b>수동 호출 전용</b> — 내가 <code class="i">/svg-design</code>이라고 쳐야만 동작(파일에 <code class="i">disable-model-invocation: true</code> 한 줄이 추가됨). 브라우저 확인 규칙(<code class="i">browser-check</code>)은 <b>자동 판단을 권합니다</b> — 확인할 때 스스로 불려야 쓸모가 있습니다. 반대로 <code class="i">win-setup</code>은 PC 설정을 바꾸는 스킬이라, <code class="i">kb-dashboard</code>는 부를 때만 페이지를 만드는 스킬이라, <code class="i">agent-tune</code>은 에이전트 정의 파일을 고치는 스킬이라 <b>수동 호출 전용이 기본</b>입니다</td>
     </tr>
     <tr>
       <td><b>이름 별칭</b></td>
@@ -1151,7 +1172,7 @@ details.sect>summary h2{margin:0}
     </tr>
     <tr>
       <td><b>이미 플러그인</b></td>
-      <td>기능 문서 세트·refactor·kr-ui-guide·browser-check·pc-clean·ops-kit·win-setup·kb-dashboard에서만, 같은 스킬이 <code class="i">dandi</code> 플러그인으로 이미 켜져 있을 때만 묻습니다. <b>유지</b> — 플러그인을 그대로 두고 복사 설치는 건너뜀 / <b>교체</b> — 플러그인을 지운 뒤 복사 설치. 둘 다 두면 똑같은 스킬 두 개가 Claude 앞에 놓입니다. session-board·agent-guard는 훅이 두 번 돌게 될 때 따로 묻습니다. 플러그인으로 받은 스킬을 뺄 때는 그 플러그인의 제거 방법을 따릅니다(예: <code class="i">/plugin uninstall dandi-refactor@dandi</code>)</td>
+      <td>기능 문서 세트·refactor·kr-ui-guide·browser-check·pc-clean·ops-kit·win-setup·kb-dashboard·agent-tune에서만, 같은 스킬이 <code class="i">dandi</code> 플러그인으로 이미 켜져 있을 때만 묻습니다. <b>유지</b> — 플러그인을 그대로 두고 복사 설치는 건너뜀 / <b>교체</b> — 플러그인을 지운 뒤 복사 설치. 둘 다 두면 똑같은 스킬 두 개가 Claude 앞에 놓입니다. session-board·agent-guard는 훅이 두 번 돌게 될 때 따로 묻습니다. 플러그인으로 받은 스킬을 뺄 때는 그 플러그인의 제거 방법을 따릅니다(예: <code class="i">/plugin uninstall dandi-refactor@dandi</code>)</td>
     </tr>
   </table>
   </div>
@@ -1396,13 +1417,13 @@ details.sect>summary h2{margin:0}
     해소 여부와 상관없이 더는 원하지 않으면(일단 보류, 조직 불허 확정, 인증 안 하기로 함) “미선택”으로 바꿔 기록합니다 — 같은 질문이 계속 반복되지 않게요.
   </p>
   <p>
-    복사해 까는 스킬(기능 문서 세트·refactor·kr-ui-guide·browser-check·pc-clean·session-board·ops-kit·win-setup·kb-dashboard·agent-guard)은 배포본과 <b>파일마다 내용까지</b> 대조합니다 — 문구만 바뀐 개정도 놓치지 않습니다.
+    복사해 까는 스킬(기능 문서 세트·refactor·kr-ui-guide·browser-check·pc-clean·session-board·ops-kit·win-setup·kb-dashboard·agent-guard·agent-tune)은 배포본과 <b>파일마다 내용까지</b> 대조합니다 — 문구만 바뀐 개정도 놓치지 않습니다.
     하나라도 다르면 <b>구설치본</b>으로 보여주고, 설치 단계에서 폴더째 새것으로 바꿉니다.
   </p>
   </details>
   <details class="faq"><summary>체크를 안 하면 나중에 못 넣나요?</summary>
   <p>언제든 다시 돌려서 추가할 수 있습니다. 문서들은 서로 독립적이라 순서에 크게 얽매이지 않습니다 — 다만 01의 기록 체계가 깔려 있으면 02가 자연스럽습니다.</p>
-  <p>반대로 <b>이미 깐 것을 뺄 수도</b> 있습니다. 다시 돌릴 때 “제거”를 고르면 그 문서의 제거 절차대로 <b>설치가 만든 블록·키·파일만</b> 걷어냅니다 — 원래 내 설정에 있던 항목은 남기고, 그동안 쌓인 기록(<code class="i">docs/</code>의 진행·결정 기록, 기능 명세, 리팩터링 보고서)은 물어본 뒤 <b>기본으로 보존</b>합니다. 뺀 사실은 적용 기록에 남습니다.</p>
+  <p>반대로 <b>이미 깐 것을 뺄 수도</b> 있습니다. 다시 돌릴 때 “제거”를 고르면 그 문서의 제거 절차대로 <b>설치가 만든 블록·키·파일만</b> 걷어냅니다 — 원래 내 설정에 있던 항목은 남기고, 그동안 쌓인 기록(<code class="i">docs/</code>의 진행·결정 기록, 기능 명세, 리팩터링 보고서, 에이전트 배정 기록)은 물어본 뒤 <b>기본으로 보존</b>합니다. 뺀 사실은 적용 기록에 남습니다.</p>
   </details>
   <details class="faq"><summary>최소로 시작했는데 나중에 더 깔려면?</summary>
   <p>두 가지입니다. 작업이 어떤 항목을 필요로 하면 지금 작업이 끝난 뒤 Claude가 한 줄로 추천하고(01 ⓖ), 수락하면 고른 것만 깝니다. 아니면 언제든 <code class="i">/dropin-apply 추천</code>을 직접 부르면 됩니다. 필요한 종류를 이미 안다면 <code class="i">/dropin-pick</code>으로 그 형태(MCP·플러그인 등)만 골라 깔 수도 있습니다(2-0 아래). 이미 깐 문서가 낡았으면 그 문서의 바뀐 내용을 먼저 보여 줍니다. 어느 쪽이든 안전 질문은 그대로 나오고, 거절한 항목은 다시 권하지 않습니다.</p>
@@ -1463,7 +1484,7 @@ details.sect>summary h2{margin:0}
 <a class="totop" href="#toc">↑ 목차</a>
 
 <footer>
-  단디 · 설치 옵션 사전 · 00_통합-설치.md 기준 · 2026-11-23<br>
+  단디 · 설치 옵션 사전 · 00_통합-설치.md 기준 · 2026-11-24<br>
   각 항목의 정본은 해당 하위 문서(01~06)입니다. 이 페이지는 사람이 읽고 판단하기 위한 안내이며, 설치 절차 자체를 바꾸지 않습니다.<br>
   저장소: github.com/EleninJayTech/claude ·
   <a href="../index.ko.html">사용법</a> · <a href="intro.ko.html">소개 영상</a> · <a href="demo.ko.html">설치 시연</a> · <a href="learn.ko.html">학습 코스</a> · <a href="skills.ko.html">스킬 카탈로그</a><br>

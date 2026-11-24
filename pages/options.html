@@ -491,9 +491,9 @@ details.sect>summary h2{margin:0}
     <details class="more"><summary>Details</summary>
 <dl>
       <dt>Suggested when</dt><dd><code>.claude/agents/</code> has four or more role agents (the roster 02 already installed is not counted)</dd>
-      <dt>What you get</dt><dd>Everything from parallel + the custom reviewer (02 &#9426;) marked as suggested (still unchecked by default)</dd>
+      <dt>What you get</dt><dd>Everything from parallel + the custom reviewer (02 &#9426;) marked as suggested (still unchecked by default) &middot; if you add 03, agent-tune (&sect;20), which re-fits each agent&rsquo;s model and effort, is <b>marked as suggested only</b> (not pre-checked)</dd>
       <dt>Good to know</dt><dd>Role names not in the roster are not invented &mdash; extra roles are carved out of existing agents&rsquo; role descriptions. The experimental feature where several sessions work as a team (agent teams) is off by default, and it is <b>not used with this roster</b> &mdash; once on, named agents come up as teammates and stop handing results back, so the roster quietly stops working. It also uses far more tokens</dd>
-      <dt>If you don&rsquo;t</dt><dd>The custom reviewer is listed unchecked, without the suggestion mark</dd>
+      <dt>If you don&rsquo;t</dt><dd>The custom reviewer and agent-tune are listed unchecked, without the suggestion mark</dd>
     </dl>
 </details>
   </div>
@@ -775,6 +775,7 @@ details.sect>summary h2{margin:0}
       <dt>Where they live</dt><dd><b>Shared with the team</b> = the project&rsquo;s <code>.claude/agents/</code> (committed, everyone uses them) / <b>personal experiment</b> = <code>~/.claude/agents/</code> (your machine only). Asked in every mode</dd>
       <dt>Parallel option</dt><dd>When the job is large and the slices never touch the same files, running <b>several implementers at once</b> (<code>isolation: worktree</code>) is offered as a choice. It is attached one of two ways &mdash; <b>always on</b>, set in the implementer file / <b>only when run in parallel</b> (steps done one after another skip building an isolated work folder each time, so it is lighter; since this leaves no trace in the file, the rule is written into the &#9427; handoff protocol document). If you do not pick &#9427;, it is set in the file instead, and with a PC-only roster, where that cannot be done either, parallel is not offered</dd>
       <dt>By usage pattern (2-4)</dt><dd>Parallel makes <b>only when run in parallel</b> the default suggestion for the implementer&rsquo;s isolation, role team adds a suggestion mark on the custom reviewer, and unattended pre-checks parity-tester (when a test command is detected). These are pre-checks only &mdash; you still choose. If the roster is placed for your PC only (personal experiment), these changes are not applied, only mentioned &mdash; they would change every project on that PC</dd>
+      <dt>On a re-run</dt><dd>Agents whose model and effort you set with 03 agent-tune (&sect;20) are listed in its assignment record, so reconciling or replacing the roster, or changing the profile, <b>does not put them back to the template values</b> &mdash; the recorded values are used. If a profile change means they need re-fitting, you are told to run <code class="i">/agent-tune</code> again</dd>
     </dl>
 </details>
   </div>
@@ -1135,17 +1136,37 @@ details.sect>summary h2{margin:0}
 </details>
   </div>
 
+  <div class="opt">
+    <div class="opt-head"><span class="id">&sect;20</span><span class="name">agent-tune</span><span class="badge b-off">off by default &middot; edits agent definitions</span></div>
+    <p class="lead">A skill that suggests, with reasons, <b>the model and reasoning effort that fit each subagent&rsquo;s job</b> in your project, then edits <b>just those two lines</b> in the files of the agents you approve. It works on agents that did not come from the 02 roster too.</p>
+    <details class="more"><summary>Details</summary>
+<dl>
+      <dt>When to use it</dt><dd>You have several agents all running on the same model; one agent costs a lot and you wonder whether a cheaper setting would do just as well; or one keeps getting things wrong and you need to decide whether to raise it</dd>
+      <dt>What it does</dt><dd>It surveys your agents and shows a status table, then asks only what the code cannot tell it (how often each one is called &middot; recent problems and their cause &middot; what to prioritise). The operating profile (2-4) limits <b>only the model side</b>; effort is set by the job alone. Spots where a mistake means redoing everything downstream (difficulty triage, settling requirements, final review and the like) are never lowered under any profile. Model names, prices and effort levels are not taken from memory &mdash; they are <b>looked up in the official docs that day</b></dd>
+      <dt>What it doesn&rsquo;t do</dt><dd>It does not create or delete agents, and does not touch their tools, isolation setting or body text. Nothing is edited before you approve, and it does not commit (it lists the changed files and tells you how to commit)</dd>
+      <dt>How you use it</dt><dd><code>/agent-tune</code> (suggests &rarr; applies only what you approve) &middot; <code>/agent-tune 점검</code> (only compares the assignment record with the actual files &mdash; changes nothing) &middot; <code>/agent-tune 되돌리기</code> (restores the recorded previous values). The argument words are Korean</dd>
+      <dt>What it leaves</dt><dd>An <b>assignment record</b>, <code class="i">docs/에이전트-배정.md</code> (<code class="i">docs/agent-assignment.md</code> with <code class="i">언어=en</code>) &mdash; the applied values, the previous values and the lookup date. Agents listed there are not put back to the template values when 02 is re-applied</dd>
+      <dt>Why off by default</dt><dd>It edits the model and effort in agent definition files, so no mode turns it on for you, and it is in no bundle. With the role team usage pattern it is <b>marked as suggested</b>, but never pre-checked. You can install it before you have any agents (it then finishes without changing anything)</dd>
+      <dt>Scope</dt><dd><b>Global by default</b> &mdash; whichever project you call it from, it surveys that folder&rsquo;s agents itself. Pick project (committed) if the team needs to share the same procedure</dd>
+      <dt>Invocation</dt><dd><b>Manual only by default</b> &mdash; it edits agent definition files, so it should not load itself. Even if you pick automatic, the approval step stays</dd>
+      <dt>How to install</dt><dd>The install copies the skill folder. To get it as a <b>plugin</b> instead, run <code>/plugin marketplace add EleninJayTech/claude</code> &rarr; <code>/plugin install dandi-agent-tune@dandi</code> yourself (it is then called <code class="i">/dandi-agent-tune:agent-tune</code>, and no skill name alias attaches)</dd>
+      <dt>Watch out</dt><dd>If a skill or command whose name or description combines agents with model, effort or assignment already exists, you are asked whether to keep it or replace it &mdash; with two assignment procedures, the record of who edited the files splits</dd>
+      <dt>Removing it</dt><dd>First you are asked <b>whether to revert the edited values</b> &mdash; to do that, call <code class="i">/agent-tune 되돌리기</code> <b>before</b> deleting the skill (afterwards you would have to revert by hand from the record table). Then delete the <code class="i">agent-tune/</code> folder in the scope you installed it to (it creates no hooks or settings). For the plugin, <code class="i">/plugin uninstall dandi-agent-tune@dandi</code>. The assignment record is data, so it is <b>kept by default</b> &mdash; deleting it means re-applying 02 may suggest template values for those agents again</dd>
+    </dl>
+</details>
+  </div>
+
   <h3>Follow-up questions for any skill</h3>
   <div class="tbl">
   <table>
     <tr><th style="width:120px">Question</th><th>Choices</th></tr>
     <tr>
       <td><b>Scope</b></td>
-      <td><b>Global</b> (<code class="i">~/.claude/skills/</code>) &mdash; available in every project on your machine / <b>project</b> (<code class="i">.claude/skills/</code>) &mdash; this repository only; commit it and the team shares it. The feature-doc set, refactor and kr-ui-guide are used regardless of repository, pc-clean and win-setup are tools for the PC, ops-kit looks up each project itself, and kb-dashboard is called from sessions in other folders too, so <b>global is their default</b>. Policy notes (&sect;11) and the feature change log (&sect;13) are <b>fixed</b> to the project, session-board (&sect;12) and agent-guard (&sect;19) to global and the diff review tools (&sect;16) to this PC, so instead of this question you are simply told. This question is never skipped in any mode &mdash; if your machine already has a global skill of the same name, a project install is shadowed by it and never runs</td>
+      <td><b>Global</b> (<code class="i">~/.claude/skills/</code>) &mdash; available in every project on your machine / <b>project</b> (<code class="i">.claude/skills/</code>) &mdash; this repository only; commit it and the team shares it. The feature-doc set, refactor and kr-ui-guide are used regardless of repository, pc-clean and win-setup are tools for the PC, ops-kit and agent-tune look up each project themselves, and kb-dashboard is called from sessions in other folders too, so <b>global is their default</b>. Policy notes (&sect;11) and the feature change log (&sect;13) are <b>fixed</b> to the project, session-board (&sect;12) and agent-guard (&sect;19) to global and the diff review tools (&sect;16) to this PC, so instead of this question you are simply told. This question is never skipped in any mode &mdash; if your machine already has a global skill of the same name, a project install is shadowed by it and never runs</td>
     </tr>
     <tr>
       <td><b>Invocation</b></td>
-      <td><b>Automatic</b> &mdash; Claude loads it when it detects relevant work (default) / <b>manual only</b> &mdash; it runs only when you type <code class="i">/svg-design</code> (adds one <code class="i">disable-model-invocation: true</code> line to the file). For the browser checking rules (<code class="i">browser-check</code>), <b>automatic is recommended</b> &mdash; they only help if they load themselves when Claude checks. <code class="i">win-setup</code>, on the other hand, changes PC settings, and <code class="i">kb-dashboard</code> only builds a page when you call it, so both are <b>manual only by default</b></td>
+      <td><b>Automatic</b> &mdash; Claude loads it when it detects relevant work (default) / <b>manual only</b> &mdash; it runs only when you type <code class="i">/svg-design</code> (adds one <code class="i">disable-model-invocation: true</code> line to the file). For the browser checking rules (<code class="i">browser-check</code>), <b>automatic is recommended</b> &mdash; they only help if they load themselves when Claude checks. <code class="i">win-setup</code>, on the other hand, changes PC settings, and <code class="i">kb-dashboard</code> only builds a page when you call it, and <code class="i">agent-tune</code> edits agent definition files, so all three are <b>manual only by default</b></td>
     </tr>
     <tr>
       <td><b>Name alias</b></td>
@@ -1153,7 +1174,7 @@ details.sect>summary h2{margin:0}
     </tr>
     <tr>
       <td><b>Already a plugin</b></td>
-      <td>Asked only for the feature-doc set, refactor, kr-ui-guide, browser-check, pc-clean, ops-kit, win-setup and kb-dashboard, and only when the same skills are already turned on as a <code class="i">dandi</code> plugin. <b>Keep</b> &mdash; the plugin stays and the copy is skipped / <b>replace</b> &mdash; the plugin is removed, then the copy is installed. Having both would put two identical skills in front of Claude. Session-board and agent-guard are asked about separately, when their hooks would run twice. To remove a skill you got as a plugin, follow that plugin&rsquo;s own uninstall steps (<code class="i">/plugin uninstall dandi-refactor@dandi</code>, for example)</td>
+      <td>Asked only for the feature-doc set, refactor, kr-ui-guide, browser-check, pc-clean, ops-kit, win-setup, kb-dashboard and agent-tune, and only when the same skills are already turned on as a <code class="i">dandi</code> plugin. <b>Keep</b> &mdash; the plugin stays and the copy is skipped / <b>replace</b> &mdash; the plugin is removed, then the copy is installed. Having both would put two identical skills in front of Claude. Session-board and agent-guard are asked about separately, when their hooks would run twice. To remove a skill you got as a plugin, follow that plugin&rsquo;s own uninstall steps (<code class="i">/plugin uninstall dandi-refactor@dandi</code>, for example)</td>
     </tr>
   </table>
   </div>
@@ -1398,13 +1419,13 @@ details.sect>summary h2{margin:0}
     Resolved or not, if you no longer want it (holding off, the organization has said no for good, you decided not to sign in), it is switched to &ldquo;not selected&rdquo; &mdash; so the same question stops coming back.
   </p>
   <p>
-    Copied skills (the feature-doc set, refactor, kr-ui-guide, browser-check, pc-clean, session-board, ops-kit, win-setup, kb-dashboard, agent-guard) are compared with the published version <b>file by file, contents included</b> &mdash; a revision that only reworded things still counts.
+    Copied skills (the feature-doc set, refactor, kr-ui-guide, browser-check, pc-clean, session-board, ops-kit, win-setup, kb-dashboard, agent-guard, agent-tune) are compared with the published version <b>file by file, contents included</b> &mdash; a revision that only reworded things still counts.
     If anything differs, the skill is shown as an <b>older install</b> and the install step replaces the whole folder.
   </p>
   </details>
   <details class="faq"><summary>If I skip a checkbox, is it gone for good?</summary>
   <p>You can run it again any time and add it. The documents are independent, so order barely matters &mdash; though 02 flows naturally once 01&rsquo;s record system is in place.</p>
-  <p>It works the other way too &mdash; <b>you can take out something already installed</b>. Choose &ldquo;remove&rdquo; on a re-run and the document&rsquo;s own removal steps take out <b>only the blocks, keys and files the install created</b>. Entries that were in your settings before stay, and the records built up since (progress and decision logs in <code class="i">docs/</code>, feature specs, refactor reports) are asked about and <b>kept by default</b>. The removal is noted in the install record.</p>
+  <p>It works the other way too &mdash; <b>you can take out something already installed</b>. Choose &ldquo;remove&rdquo; on a re-run and the document&rsquo;s own removal steps take out <b>only the blocks, keys and files the install created</b>. Entries that were in your settings before stay, and the records built up since (progress and decision logs in <code class="i">docs/</code>, feature specs, refactor reports, the agent assignment record) are asked about and <b>kept by default</b>. The removal is noted in the install record.</p>
   </details>
   <details class="faq"><summary>I started with minimal &mdash; how do I add more later?</summary>
   <p>Two ways. When your work needs an item, Claude suggests it in one line once the current task is done (01 &#9430;) &mdash; accept and only what you pick is installed. Or call <code class="i">/dropin-apply 추천</code> yourself at any time. If you already know the kind of thing you need, <code class="i">/dropin-pick</code> installs just that install type (MCP, plugins and so on &mdash; see under 2-0). If a document you installed before is out of date, its changes are shown first. Either way the safety questions still appear, and a declined item is not suggested again.</p>
@@ -1467,7 +1488,7 @@ details.sect>summary h2{margin:0}
 <a class="totop" href="#toc">&uarr; Contents</a>
 
 <footer>
-  Dandi &middot; Install options dictionary &middot; based on 00_통합-설치.md &middot; 2026-11-23<br>
+  Dandi &middot; Install options dictionary &middot; based on 00_통합-설치.md &middot; 2026-11-24<br>
   The source of truth for each item is its own document (01&ndash;06). This page exists so people can read and judge; it does not change the install procedure itself.<br>
   Repository: github.com/EleninJayTech/claude &middot;
   <a href="../index.html">Guide</a> &middot; <a href="intro.html">Intro</a> &middot; <a href="demo.html">Walkthrough</a> &middot; <a href="learn.html">Course</a> &middot; <a href="skills.html">Skill catalog</a><br>

@@ -52,11 +52,11 @@
 
 ## 스킬을 플러그인으로 받기
 
-설치 문서가 복사해 주는 스킬(기능 문서 세트·refactor·kr-ui-guide·kr-ui-styles·browser-check·pc-clean·session-board·ops-kit·win-setup·kb-dashboard·agent-guard)은 Claude Code 플러그인 마켓 **`dandi`**로도 받을 수 있습니다.
+설치 문서가 복사해 주는 스킬(기능 문서 세트·refactor·kr-ui-guide·kr-ui-styles·browser-check·pc-clean·session-board·ops-kit·win-setup·kb-dashboard·agent-guard·agent-tune)은 Claude Code 플러그인 마켓 **`dandi`**로도 받을 수 있습니다.
 
 ```text
 /plugin marketplace add EleninJayTech/claude
-/plugin install dandi-feature-docs@dandi      # 그 밖에 dandi-refactor@dandi, dandi-kr-ui-guide@dandi, dandi-browser-check@dandi, dandi-pc-clean@dandi, dandi-session-board@dandi, dandi-ops-kit@dandi, dandi-win-setup@dandi, dandi-kb-dashboard@dandi, dandi-agent-guard@dandi
+/plugin install dandi-feature-docs@dandi      # 그 밖에 dandi-refactor@dandi, dandi-kr-ui-guide@dandi, dandi-browser-check@dandi, dandi-pc-clean@dandi, dandi-session-board@dandi, dandi-ops-kit@dandi, dandi-win-setup@dandi, dandi-kb-dashboard@dandi, dandi-agent-guard@dandi, dandi-agent-tune@dandi
 ```
 
 - kr-ui-styles는 `dandi-kr-ui-guide`에 함께 실려 있어 따로 받는 플러그인이 없습니다.
@@ -87,7 +87,7 @@
 
 <details><summary>03 편의 기능 전체 목록</summary>
 
-**편의 기능.** 사용량 실시간 표시기(claude-hud) · 움직이는 그래픽 제작 기술(svg-design) · "AI가 만든 티" 안 나는 화면 디자인(frontend-design) · 외부 도구 연결(MCP) · 만든 화면을 AI가 직접 열어 확인 — 기본은 내 브라우저를 건드리지 않는 백그라운드 브라우저(Node.js 필요 — Node가 없으면 체크가 해제된 채 나옴), 내 실제 로그인이 꼭 필요할 때만 쓰는 내 Chrome과 원인을 파고드는 디버깅 도구는 선택·둘 다 기본 꺼짐(브라우저 검증) · 기능마다 명세·테스트·커밋 가드·릴리스 노트(기능 문서 스킬 세트) · 동작을 보존한 코드 정리와 사이드 이펙트 검증(refactor) · 한국 사용자 대상 웹·앱·게임 화면의 UI/UX·아이콘·색 설계 기준(kr-ui-guide) · kr-ui-guide의 절제된 기본 모습 대신 에디토리얼 흑백·다크 네온 같은 다른 방향을 프로젝트마다 골라 얹는 스타일 팩, kr-ui-guide를 고르면 함께 물으며 기본은 꺼져 있음(kr-ui-styles) · Windows 전용 — PC가 느려진 원인을 읽기만 하며 점검하고 승인한 항목만 정리(pc-clean) · 개발 중 드러난 기획 규칙(상태 전이·권한·금액 계산 등)을 AI가 프로젝트에 적어 두고 그 코드를 다룰 때 먼저 확인, 기본 꺼짐(정책 기록) · 같은 폴더에서 도는 다른 Claude 세션과 그 세션이 고친 파일을 알려 주는 보드, Node.js 18 이상·기본 꺼짐(session-board) · 설치 뒤 추가·변경·삭제된 기능을 한 줄(파일 경로·날짜, 삭제는 사유)로 적어 두고 관련 작업 때 AI가 먼저 확인, 기본 꺼짐(기능 변경 기록) · Flutter 프로젝트 전용 — 디버그 모드로 실행 중인 앱의 화면을 AI가 Marionette로 직접 읽고 누르고 캡처, 기본은 개발용 패키지와 점검 전용 시작 파일을 따로 두어 실제 시작 파일은 고치지 않음, Flutter가 감지되면 추천(앱 화면 검증 번들로도 나옴)·기본 꺼짐(Flutter 앱 화면 검증) · 배포하는 프로젝트용 — 무엇이 필요한지 먼저 살핀 뒤 고른 것만 만들고 함께 갱신: 배포·운영 런북, 관리 사이트 허브(프로젝트 기록이 어디에 몇 건 있는지 보여 주는 읽기 전용 기록 지도 포함), `/admin` 대시보드, 헬스체크·장애 알림, 백업·복구 리허설, 무료 한도·비용 감시. 배포·시크릿 입력은 직접 하지 않음, 배포 설정이 감지되면 추천(운영 번들로도 나옴)·기본 꺼짐(ops-kit) · Claude가 고친 코드를 IDE를 열지 않고 터미널에서 파일·hunk 단위로 읽고, 괜찮은 수정은 남기고 잘못된 수정은 커밋 전에 버림 — 이 PC에 lazygit·delta·difftastic을 깔고 lazygit에서 `|` 키로 셋을 돌려 보게 설정, PC 전체에 한 번 설치·기본 꺼짐(diff 검수 도구) · Windows 전용 — 터미널에서 Claude Code를 쓰기 좋게 PC를 아무것도 바꾸지 않고 점검(터미널 기본 PowerShell 7·깨진 사용자 PATH·개발자 모드·긴 경로·sudo·Claude가 쓰는 셸·jq·fd·gh)한 뒤 승인한 항목만 백업부터 남기고 정비, `/win-setup`으로 직접 부르며 기본 꺼짐(win-setup) · 마크다운으로 기록을 쌓는 저장소의 할일·게시한 아티팩트 링크·팁·기록을 로컬 HTML 한 장에 모아 보기만 함(페이지는 저장소 밖에 생성, Node.js 18 이상 필요), `/kb-dashboard`로 직접 부르며 기본 꺼짐(kb-dashboard) · 보조 AI(서브에이전트)를 한꺼번에 띄울 때 동시에 도는 수를 이 PC가 감당할 만큼으로 제한 — 코어 수·메모리로 정하고 띄울 때마다 남은 메모리·CPU를 다시 봄, 넘는 실행은 앞선 것이 끝난 뒤 뜨고 세션마다 1개는 항상 허용, 플러그인 또는 복사본·PC 전체에 설치·Node.js 18 이상 필요·기본 꺼짐(agent-guard). 디자인 스킬을 고르면 **폰트 라이선스 정책**(자유 사용만 / 조건을 안내받고 선택 / 넣지 않음)도 함께 물어 구성에 기록합니다
+**편의 기능.** 사용량 실시간 표시기(claude-hud) · 움직이는 그래픽 제작 기술(svg-design) · "AI가 만든 티" 안 나는 화면 디자인(frontend-design) · 외부 도구 연결(MCP) · 만든 화면을 AI가 직접 열어 확인 — 기본은 내 브라우저를 건드리지 않는 백그라운드 브라우저(Node.js 필요 — Node가 없으면 체크가 해제된 채 나옴), 내 실제 로그인이 꼭 필요할 때만 쓰는 내 Chrome과 원인을 파고드는 디버깅 도구는 선택·둘 다 기본 꺼짐(브라우저 검증) · 기능마다 명세·테스트·커밋 가드·릴리스 노트(기능 문서 스킬 세트) · 동작을 보존한 코드 정리와 사이드 이펙트 검증(refactor) · 한국 사용자 대상 웹·앱·게임 화면의 UI/UX·아이콘·색 설계 기준(kr-ui-guide) · kr-ui-guide의 절제된 기본 모습 대신 에디토리얼 흑백·다크 네온 같은 다른 방향을 프로젝트마다 골라 얹는 스타일 팩, kr-ui-guide를 고르면 함께 물으며 기본은 꺼져 있음(kr-ui-styles) · Windows 전용 — PC가 느려진 원인을 읽기만 하며 점검하고 승인한 항목만 정리(pc-clean) · 개발 중 드러난 기획 규칙(상태 전이·권한·금액 계산 등)을 AI가 프로젝트에 적어 두고 그 코드를 다룰 때 먼저 확인, 기본 꺼짐(정책 기록) · 같은 폴더에서 도는 다른 Claude 세션과 그 세션이 고친 파일을 알려 주는 보드, Node.js 18 이상·기본 꺼짐(session-board) · 설치 뒤 추가·변경·삭제된 기능을 한 줄(파일 경로·날짜, 삭제는 사유)로 적어 두고 관련 작업 때 AI가 먼저 확인, 기본 꺼짐(기능 변경 기록) · Flutter 프로젝트 전용 — 디버그 모드로 실행 중인 앱의 화면을 AI가 Marionette로 직접 읽고 누르고 캡처, 기본은 개발용 패키지와 점검 전용 시작 파일을 따로 두어 실제 시작 파일은 고치지 않음, Flutter가 감지되면 추천(앱 화면 검증 번들로도 나옴)·기본 꺼짐(Flutter 앱 화면 검증) · 배포하는 프로젝트용 — 무엇이 필요한지 먼저 살핀 뒤 고른 것만 만들고 함께 갱신: 배포·운영 런북, 관리 사이트 허브(프로젝트 기록이 어디에 몇 건 있는지 보여 주는 읽기 전용 기록 지도 포함), `/admin` 대시보드, 헬스체크·장애 알림, 백업·복구 리허설, 무료 한도·비용 감시. 배포·시크릿 입력은 직접 하지 않음, 배포 설정이 감지되면 추천(운영 번들로도 나옴)·기본 꺼짐(ops-kit) · Claude가 고친 코드를 IDE를 열지 않고 터미널에서 파일·hunk 단위로 읽고, 괜찮은 수정은 남기고 잘못된 수정은 커밋 전에 버림 — 이 PC에 lazygit·delta·difftastic을 깔고 lazygit에서 `|` 키로 셋을 돌려 보게 설정, PC 전체에 한 번 설치·기본 꺼짐(diff 검수 도구) · Windows 전용 — 터미널에서 Claude Code를 쓰기 좋게 PC를 아무것도 바꾸지 않고 점검(터미널 기본 PowerShell 7·깨진 사용자 PATH·개발자 모드·긴 경로·sudo·Claude가 쓰는 셸·jq·fd·gh)한 뒤 승인한 항목만 백업부터 남기고 정비, `/win-setup`으로 직접 부르며 기본 꺼짐(win-setup) · 마크다운으로 기록을 쌓는 저장소의 할일·게시한 아티팩트 링크·팁·기록을 로컬 HTML 한 장에 모아 보기만 함(페이지는 저장소 밖에 생성, Node.js 18 이상 필요), `/kb-dashboard`로 직접 부르며 기본 꺼짐(kb-dashboard) · 보조 AI(서브에이전트)를 한꺼번에 띄울 때 동시에 도는 수를 이 PC가 감당할 만큼으로 제한 — 코어 수·메모리로 정하고 띄울 때마다 남은 메모리·CPU를 다시 봄, 넘는 실행은 앞선 것이 끝난 뒤 뜨고 세션마다 1개는 항상 허용, 플러그인 또는 복사본·PC 전체에 설치·Node.js 18 이상 필요·기본 꺼짐(agent-guard) · 프로젝트의 서브에이전트마다 맡은 일을 보고 모델·effort를 제안하고(파일로 알 수 없는 호출 빈도·최근 문제와 원인만 물음) 승인한 에이전트의 그 두 설정만 고침, 값은 실행하는 날 공식 문서로 확인하고 바꾼 값과 이전 값을 `docs/`에 기록해 모델 분담(02)을 다시 적용해도 유지, `점검`으로 대조·`되돌리기`로 복원, `/agent-tune`으로 직접 부르며 사용 형태가 조직이면 추천·기본 꺼짐(agent-tune). 디자인 스킬을 고르면 **폰트 라이선스 정책**(자유 사용만 / 조건을 안내받고 선택 / 넣지 않음)도 함께 물어 구성에 기록합니다
 
 </details>
 
@@ -113,4 +113,4 @@
 
 ---
 
-<!-- pages-sync-updated: 2026-11-23 -->
+<!-- pages-sync-updated: 2026-11-24 -->
