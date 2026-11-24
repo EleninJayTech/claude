@@ -1,7 +1,7 @@
 {
   "name": "dandi",
   "owner": { "name": "EleninJayTech", "url": "https://github.com/EleninJayTech" },
-  "description": "Dandi skills for Claude Code: feature specs verified against code and the running app, behavior-preserving refactoring, UI/UX guidelines for Korean users, a browser verification method, a Windows PC check-and-clean routine, a Windows PC setup routine for Claude Code CLI work, deploy-and-operate documents for a solo project, a local dashboard for a Markdown knowledge base, a guard that keeps parallel subagents within what the PC can handle, and a board that lets sessions in the same folder see each other. Skill instructions are written in Korean.",
+  "description": "Dandi skills for Claude Code: feature specs verified against code and the running app, behavior-preserving refactoring, UI/UX guidelines for Korean users, a browser verification method, a Windows PC check-and-clean routine, a Windows PC setup routine for Claude Code CLI work, deploy-and-operate documents for a solo project, a local dashboard for a Markdown knowledge base, a guard that keeps parallel subagents within what the PC can handle, per-subagent model and effort tuning, and a board that lets sessions in the same folder see each other. Skill instructions are written in Korean.",
   "plugins": [
     {
       "name": "dandi-feature-docs",
@@ -72,6 +72,13 @@
       "description": "Keep parallel subagents within what the PC can handle: tell Claude the current limit at session start and deny Agent spawns beyond it, based on CPU cores, RAM and currently available memory. Hooks only, no model calls.",
       "license": "MIT",
       "keywords": ["subagents", "concurrency", "hooks", "memory", "performance"]
+    },
+    {
+      "name": "dandi-agent-tune",
+      "source": "./plugins/dandi-agent-tune",
+      "description": "Assign a model and effort level to each subagent by what it actually does, within your plan profile, with reasons and a cost trend; edits only the frontmatter you approve.",
+      "license": "MIT",
+      "keywords": ["subagents", "model", "effort", "cost"]
     }
   ]
 }
