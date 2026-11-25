@@ -1,0 +1,10 @@
+{
+  "name": "dandi-tool-tune",
+  "version": "1.0.0+409b2a23",
+  "description": "Check the tools Claude uses on this PC (browser and desktop control, verification, docs lookup: MCP servers, plugins, global CLIs) against today's official releases, show only what differs, suggest better tools side by side with sources, and update only what you approve. Skill instructions are written in Korean.",
+  "author": { "name": "EleninJayTech", "url": "https://github.com/EleninJayTech" },
+  "homepage": "https://eleninjaytech.github.io/claude/pages/skills.html",
+  "repository": "https://github.com/EleninJayTech/claude",
+  "license": "MIT",
+  "keywords": ["tools", "updates", "mcp", "plugins"]
+}
