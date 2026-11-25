@@ -1,6 +1,6 @@
 {
   "name": "dandi-win-setup",
-  "version": "1.0.0+bbab1486",
+  "version": "1.0.0+1bcfc08e",
   "description": "Diagnose and set up a Windows PC for Claude Code CLI work (Windows Terminal default profile to PowerShell 7, user PATH cleanup, developer mode, long paths, sudo, defaultShell, jq/fd/gh). The diagnosis is read-only; changes run only for the items you approve. Manual invocation only. Skill instructions are written in Korean.",
   "author": { "name": "EleninJayTech", "url": "https://github.com/EleninJayTech" },
   "homepage": "https://eleninjaytech.github.io/claude/pages/skills.html",

@@ -1,6 +1,6 @@
 {
   "name": "dandi-kb-dashboard",
-  "version": "1.0.0+ca0e6ee6",
+  "version": "1.0.0+151b04d3",
   "description": "Build one local HTML dashboard of a Markdown knowledge base — todos by status and due date, published artifact links, tips, records by type, tags, search — from a small per-repo config. View-only; the page stays on your PC. Manual invocation only. Skill instructions are written in Korean.",
   "author": { "name": "EleninJayTech", "url": "https://github.com/EleninJayTech" },
   "homepage": "https://eleninjaytech.github.io/claude/pages/skills.html",

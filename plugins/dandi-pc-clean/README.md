@@ -9,7 +9,7 @@ A check-then-clean routine for a Windows PC that got slow. The check is read-onl
 /plugin install dandi-pc-clean@dandi
 ```
 
-Third-party marketplaces don't auto-update by default — enable it in `/plugin` → Marketplaces, or run `/plugin marketplace update dandi`.
+Third-party marketplaces don't auto-update by default — enable it in `/plugin` → Marketplaces, or run `/plugin marketplace update dandi` to refresh the listing, then `claude plugin update dandi-pc-clean@dandi`.
 
 ## Skills
 

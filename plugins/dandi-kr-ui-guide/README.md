@@ -9,7 +9,7 @@ UI/UX, icon, color, typography, spacing, motion and design-token guidelines for 
 /plugin install dandi-kr-ui-guide@dandi
 ```
 
-Third-party marketplaces don't auto-update by default — enable it in `/plugin` → Marketplaces, or run `/plugin marketplace update dandi`.
+Third-party marketplaces don't auto-update by default — enable it in `/plugin` → Marketplaces, or run `/plugin marketplace update dandi` to refresh the listing, then `claude plugin update dandi-kr-ui-guide@dandi`.
 
 ## Skills
 

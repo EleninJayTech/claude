@@ -9,7 +9,7 @@ Behavior-preserving refactoring and optimization — merge duplicates, tidy stru
 /plugin install dandi-refactor@dandi
 ```
 
-Third-party marketplaces don't auto-update by default — enable it in `/plugin` → Marketplaces, or run `/plugin marketplace update dandi`.
+Third-party marketplaces don't auto-update by default — enable it in `/plugin` → Marketplaces, or run `/plugin marketplace update dandi` to refresh the listing, then `claude plugin update dandi-refactor@dandi`.
 
 ## Skills
 

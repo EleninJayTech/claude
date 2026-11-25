@@ -2,6 +2,9 @@
 """docs/features/ 상태 점검. 프로젝트 루트에서 실행. 표준 라이브러리만 사용."""
 import argparse, json, os, re, subprocess, sys
 
+if hasattr(sys.stdout, "reconfigure"):
+    sys.stdout.reconfigure(encoding="utf-8")  # 로케일 인코딩이면 Windows에서 한글이 깨진다
+
 DOCS = "docs/features"
 TAGS = ["[미확인]", "[화면 미확인]", "[코드만 확인]", "[화면만 확인]", "[출처 불명]", "[숨김/비활성 추정]"]
 

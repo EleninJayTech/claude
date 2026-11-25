@@ -9,7 +9,7 @@ A diagnose-then-fix routine that gets a Windows PC ready for Claude Code CLI wor
 /plugin install dandi-win-setup@dandi
 ```
 
-Third-party marketplaces don't auto-update by default — enable it in `/plugin` → Marketplaces, or run `/plugin marketplace update dandi`.
+Third-party marketplaces don't auto-update by default — enable it in `/plugin` → Marketplaces, or run `/plugin marketplace update dandi` to refresh the listing, then `claude plugin update dandi-win-setup@dandi`.
 
 ## Skills
 

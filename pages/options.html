@@ -151,7 +151,7 @@ details.sect>summary h2{margin:0}
 <nav class="toc" id="toc">
   <b>Contents</b>
   <ol>
-    <li><a href="#words">0. Eight words to know first</a> &mdash; scope, settings.json, hooks, subagents</li>
+    <li><a href="#words">0. Words to know first</a> &mdash; scope, settings.json, hooks, subagents</li>
     <li><a href="#flow">1. What order the questions come in</a></li>
     <li><a href="#common">2. The opening questions</a> &mdash; asked before any document, regardless of which ones you pick</li>
     <li><a href="#doc01">3. 01 Base setup</a> &mdash; record system and security (&#9424;&ndash;&#9430;)</li>
@@ -168,7 +168,7 @@ details.sect>summary h2{margin:0}
 
 <!-- ═══════════ 0. 용어 ═══════════ -->
 <section id="words">
-  <h2>0. Eight words to know first</h2>
+  <h2>0. Words to know first</h2>
   <p class="goal">Know these and every choice below reads clearly</p>
 
   <div class="tbl">
@@ -994,7 +994,7 @@ details.sect>summary h2{margin:0}
 <dl>
       <dt>It does not block</dt><dd>Whether to carry on, open a separate workspace with <code>claude --worktree &lt;name&gt;</code>, or ask the other session is your call. Two sessions in one folder default to separate workspaces (worktrees); staying in the same folder is only for cases where every condition holds, such as briefly editing different files on the same work branch. The board is how you check which files the other session changed when making that call (files changed by terminal commands do not show up on it, so look at <code>git status</code> too), and the safety net that lets you <b>notice before committing</b> when a condition breaks</dd>
       <dt>Token cost</dt><dd>The hooks never call the model; they only write a small per-session file. <b>With no other session running, nothing is added to the conversation</b></dd>
-      <dt>How to install</dt><dd>Choose <b>plugin</b> (offered first &mdash; run <code>/plugin marketplace add EleninJayTech/claude</code> &rarr; <code>/plugin install dandi-session-board@dandi</code> yourself; the hooks switch on in one go and come off in one go) or <b>copy</b> (the skill folder is fetched and five hooks are appended to your machine&rsquo;s settings &mdash; existing hooks are kept). If both are present every notice runs twice, so you are asked to keep only one. If the plugin is already on, fetch new versions yourself with <code>/plugin marketplace update dandi</code> &mdash; re-applying alone does not change the hooks already running. On a work PC you are also reminded that a plugin runs code with your permissions &mdash; and these hooks run on every edit</dd>
+      <dt>How to install</dt><dd>Choose <b>plugin</b> (offered first &mdash; run <code>/plugin marketplace add EleninJayTech/claude</code> &rarr; <code>/plugin install dandi-session-board@dandi</code> yourself; the hooks switch on in one go and come off in one go) or <b>copy</b> (the skill folder is fetched and five hooks are appended to your machine&rsquo;s settings &mdash; existing hooks are kept). If both are present every notice runs twice, so you are asked to keep only one. If the plugin is already on, fetch new versions yourself with <code>/plugin marketplace update dandi</code> to refresh the listing, then <code>claude plugin update dandi-session-board@dandi</code> &mdash; re-applying alone does not change the hooks already running. On a work PC you are also reminded that a plugin runs code with your permissions &mdash; and these hooks run on every edit</dd>
       <dt>What it cannot see</dt><dd>In a multi-repository workspace, a session in the parent folder and one in a sub-repository do not see each other. Files changed through shell commands do not appear on the board, and repeated <code>claude -p</code> runs each show up as a separate session</dd>
       <dt>Scope</dt><dd><b>Global only</b>, so you are not asked &mdash; sessions belong to the PC, and at project scope only that repository&rsquo;s sessions would show up</dd>
       <dt>What it needs</dt><dd><b>Node.js 18 or later</b>. Without it <b>no hooks are set up</b> (the plugin is not switched on either), and if they are already there you are asked whether to take them out &mdash; hooks that cannot run raise error notices. You are told, it is recorded as &ldquo;pending&rdquo;, and after installing Node.js you re-apply from a new terminal</dd>
@@ -1124,7 +1124,7 @@ details.sect>summary h2{margin:0}
       <dt>Why you might want it</dt><dd>Claude Code has its own concurrency limits, but they are <b>fixed numbers</b> that ignore your hardware. On a modest PC, agents that each drive a browser, an emulator or a build can all start at once, the machine bogs down, and you get timeouts and false failures</dd>
       <dt>It never leaves you stuck</dt><dd><b>One agent per session is always allowed.</b> The limit is worked out from core count and total memory (at most 8), and every launch re-checks free memory (roughly 1 GB assumed per agent) and CPU load. You can change the values in <code class="i">~/.claude/agent-guard/config.json</code>; the skill explains how</dd>
       <dt>Token cost</dt><dd>The hooks never call the model; they only write small running markers. All that reaches the conversation is the one line at session start and a notice when a launch is refused</dd>
-      <dt>How to install</dt><dd>Choose <b>plugin</b> (offered first &mdash; run <code>/plugin marketplace add EleninJayTech/claude</code> &rarr; <code>/plugin install dandi-agent-guard@dandi</code> yourself). <b>Pick it and</b> the hooks switch on in one go and come off in one go, but the marketplace creates the folder, so no skill name alias (2-7) attaches / <b>copy</b> &mdash; <b>pick it and</b> the skill folder is fetched and five hooks are appended to your machine&rsquo;s settings (existing hooks are kept). This is the route if you want an alias. If both are present the running markers are written twice and the limit is halved, so you are asked to keep only one. If the plugin is already on, fetch new versions yourself with <code>/plugin marketplace update dandi</code>. On a work PC you are also reminded that a plugin runs code with your permissions &mdash; and these hooks run on every subagent launch</dd>
+      <dt>How to install</dt><dd>Choose <b>plugin</b> (offered first &mdash; run <code>/plugin marketplace add EleninJayTech/claude</code> &rarr; <code>/plugin install dandi-agent-guard@dandi</code> yourself). <b>Pick it and</b> the hooks switch on in one go and come off in one go, but the marketplace creates the folder, so no skill name alias (2-7) attaches / <b>copy</b> &mdash; <b>pick it and</b> the skill folder is fetched and five hooks are appended to your machine&rsquo;s settings (existing hooks are kept). This is the route if you want an alias. If both are present the running markers are written twice and the limit is halved, so you are asked to keep only one. If the plugin is already on, fetch new versions yourself with <code>/plugin marketplace update dandi</code> to refresh the listing, then <code>claude plugin update dandi-agent-guard@dandi</code>. On a work PC you are also reminded that a plugin runs code with your permissions &mdash; and these hooks run on every subagent launch</dd>
       <dt>Workflow limit (optional &mdash; you are asked)</dt><dd>Agents started by a workflow do not pass through this hook, so they cannot be refused. <b>Pick it and</b> the limit worked out for this PC goes into the environment variable <code class="i">CLAUDE_CODE_WORKFLOW_MAX_CONCURRENT_AGENTS</code> in your machine&rsquo;s settings (<code class="i">~/.claude/settings.json</code>), so workflows are held to the same number. The value differs per PC, so it never goes into project settings. The official docs do not say whether the variable takes effect from there, so it is checked in a new session and, if it does not, removed and reported. <b>Skip it and</b> workflows only get the session-start notice and follow Claude Code&rsquo;s default limit. Asked for both the plugin and the copy route</dd>
       <dt>Scope</dt><dd><b>Global only</b>, so you are not asked &mdash; PC resources belong to the PC, and at project scope only that repository&rsquo;s sessions would be counted, letting the limit leak</dd>
       <dt>What it needs</dt><dd><b>Node.js 18 or later</b>. Without it <b>no hooks are set up</b> (the plugin is not switched on either), and if they are already there you are asked whether to take them out. You are told, it is recorded as &ldquo;pending&rdquo; in <b>this PC&rsquo;s</b> <code class="i">~/.claude/CLAUDE.md</code>, and after installing Node.js you re-apply from a new terminal</dd>
@@ -1182,7 +1182,7 @@ details.sect>summary h2{margin:0}
 
 <!-- ═══════════ 6. 04 ═══════════ -->
 <section id="doc04">
-  <h2>6. 04 Verification &mdash; a three-item checklist</h2>
+  <h2>6. 04 Verification &mdash; a checklist</h2>
   <p class="goal">Machinery that stops &ldquo;I verified it&rdquo; from being just words</p>
 
   <p>
@@ -1315,7 +1315,7 @@ details.sect>summary h2{margin:0}
   </div>
 
   <div class="opt">
-    <div class="opt-head"><span class="id">&sect;3</span><span class="name">Creating a routine &mdash; pick one of three triggers</span><span class="badge b-off">unchecked by default</span></div>
+    <div class="opt-head"><span class="id">&sect;3</span><span class="name">Creating a routine &mdash; pick a trigger</span><span class="badge b-off">unchecked by default</span></div>
     <p class="lead">Once created it runs on your account and starts using your allowance, so no mode switches it on &mdash; it is <b>shown unchecked</b>.</p>
     <div class="tbl">
       <table>
@@ -1488,7 +1488,7 @@ details.sect>summary h2{margin:0}
 <a class="totop" href="#toc">&uarr; Contents</a>
 
 <footer>
-  Dandi &middot; Install options dictionary &middot; based on 00_통합-설치.md &middot; 2026-11-24<br>
+  Dandi &middot; Install options dictionary &middot; based on 00_통합-설치.md &middot; 2026-11-25<br>
   The source of truth for each item is its own document (01&ndash;06). This page exists so people can read and judge; it does not change the install procedure itself.<br>
   Repository: github.com/EleninJayTech/claude &middot;
   <a href="../index.html">Guide</a> &middot; <a href="intro.html">Intro</a> &middot; <a href="demo.html">Walkthrough</a> &middot; <a href="learn.html">Course</a> &middot; <a href="skills.html">Skill catalog</a> &middot; <a href="terminal.html">Terminal intro</a><br>

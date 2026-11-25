@@ -53,7 +53,7 @@ const summary = others => {
     const more = (o.files || []).length - f.length;
     lines.push(`- ${label(o)} · 브랜치 ${o.branch || '?'} · ${mins(o.updated)}분 전 활동 · 수정: ${f.length ? f.join(', ') : '없음'}${more > 0 ? ` 외 ${more}` : ''}`);
   }
-  lines.push('겹치는 파일을 고칠 작업이면 시작 전에 사용자에게 `claude --worktree <이름>`으로 옮길지 한 줄 제안한다. 관련 작업이면 그 세션의 수정 파일을 먼저 읽는다. 필요하면 SendMessage로 그 세션에 직접 묻는다.');
+  lines.push('겹치는 파일을 고칠 작업이면 시작 전에 사용자에게 워크트리로 옮길지 한 줄 제안한다(프로젝트 `CLAUDE.md`에 워크트리 이름·브랜치 규칙이 있으면 그대로 따른다). 관련 작업이면 그 세션의 수정 파일을 먼저 읽는다. 필요하면 SendMessage로 그 세션에 직접 묻는다.');
   let t = lines.join('\n');
   return t.length > MAX_TEXT ? t.slice(0, MAX_TEXT - 1) + '…' : t;
 };

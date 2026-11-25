@@ -9,7 +9,7 @@ One local HTML page for a Markdown knowledge base — a repository of notes clas
 /plugin install dandi-kb-dashboard@dandi
 ```
 
-Third-party marketplaces don't auto-update by default — enable it in `/plugin` → Marketplaces, or run `/plugin marketplace update dandi`.
+Third-party marketplaces don't auto-update by default — enable it in `/plugin` → Marketplaces, or run `/plugin marketplace update dandi` to refresh the listing, then `claude plugin update dandi-kb-dashboard@dandi`.
 
 ## Skills
 

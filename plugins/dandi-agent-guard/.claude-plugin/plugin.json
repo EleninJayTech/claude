@@ -1,6 +1,6 @@
 {
   "name": "dandi-agent-guard",
-  "version": "1.0.0+4c8dd3b4",
+  "version": "1.0.0+dad1df1a",
   "description": "Keep parallel subagents within what this PC can handle: at session start Claude is told how many agents can run at once (from CPU cores, total RAM and currently available memory), and a PreToolUse hook denies Agent spawns beyond that until running ones finish. Hooks only, no model calls. Node.js 18+. Skill instructions are written in Korean.",
   "author": { "name": "EleninJayTech", "url": "https://github.com/EleninJayTech" },
   "homepage": "https://eleninjaytech.github.io/claude/pages/skills.html",

@@ -65,7 +65,7 @@ The skills the installer copies (feature docs, refactor, kr-ui-guide, kr-ui-styl
 - `dandi-session-board` and `dandi-agent-guard` each turn on the hooks they need with the one plugin, and the hooks go away together when you uninstall it.
 - Plugin skills are called with the plugin name in front — `/dandi-feature-docs:feature-test`.
 - **Use one route per skill** — either the drop-in install or the plugin. Both at once shows every skill twice. If the installer finds the plugin already turned on, it asks whether to keep the plugin (skipping the copy) or replace it with the copy.
-- Third-party marketplaces don't auto-update by default; turn it on in `/plugin` → Marketplaces, or fetch a revision with `/plugin marketplace update dandi`.
+- Third-party marketplaces don't auto-update by default; turn it on in `/plugin` → Marketplaces, or fetch a revision with `/plugin marketplace update dandi` (refreshes the listing only) and then `claude plugin update <plugin>@dandi`.
 - License: MIT.
 - Which channel each teammate used isn't tracked by these documents (drop-in installs are recorded, plugin installs aren't) — check locally with `claude plugin list`.
 

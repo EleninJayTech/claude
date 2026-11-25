@@ -64,7 +64,7 @@
 - `dandi-session-board`·`dandi-agent-guard`는 플러그인 하나로 필요한 훅까지 켜지고, 지울 때도 한 번에 사라집니다.
 - 플러그인 스킬은 앞에 플러그인 이름을 붙여 부릅니다 — `/dandi-feature-docs:feature-test`.
 - **스킬마다 한 경로만 쓰세요** — 설치 문서로 깔든 플러그인으로 깔든 하나만. 둘 다 있으면 같은 스킬이 두 번 보입니다. 설치 문서가 플러그인이 이미 켜져 있는 걸 찾으면 플러그인 유지(복사 설치 건너뜀)와 복사본으로 교체 중 하나를 묻습니다.
-- 서드파티 마켓은 자동 업데이트가 기본으로 꺼져 있습니다. `/plugin` → Marketplaces에서 켜거나, 개정이 나올 때 `/plugin marketplace update dandi`로 받으세요.
+- 서드파티 마켓은 자동 업데이트가 기본으로 꺼져 있습니다. `/plugin` → Marketplaces에서 켜거나, 개정이 나올 때 `/plugin marketplace update dandi`로 목록을 새로 받고(목록만 갱신됩니다) `claude plugin update <플러그인>@dandi`로 올리세요.
 - 라이선스: MIT.
 - 팀원마다 어느 경로를 썼는지는 이 문서 체계가 추적하지 않습니다(드롭인 설치는 기록되지만 플러그인 설치는 아닙니다) — 로컬에서 `claude plugin list`로 확인하세요.
 

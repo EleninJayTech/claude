@@ -150,7 +150,7 @@ details.sect>summary h2{margin:0}
 <nav class="toc" id="toc">
   <b>목차</b>
   <ol>
-    <li><a href="#words">0. 먼저 알아둘 낱말 8개</a> — 스코프·settings.json·훅·서브에이전트 같은 말부터</li>
+    <li><a href="#words">0. 먼저 알아둘 낱말</a> — 스코프·settings.json·훅·서브에이전트 같은 말부터</li>
     <li><a href="#flow">1. 질문은 어떤 순서로 나오나</a></li>
     <li><a href="#common">2. 맨 처음 공통 질문</a> — 어떤 문서를 고르든 먼저 묻는 것들</li>
     <li><a href="#doc01">3. 01 기본 셋업</a> — 기록 체계와 보안 (ⓐ~ⓖ)</li>
@@ -167,7 +167,7 @@ details.sect>summary h2{margin:0}
 
 <!-- ═══════════ 0. 용어 ═══════════ -->
 <section id="words">
-  <h2>0. 먼저 알아둘 낱말 8개</h2>
+  <h2>0. 먼저 알아둘 낱말</h2>
   <p class="goal">이것만 알면 아래 선택지가 전부 읽힙니다</p>
 
   <div class="tbl">
@@ -992,7 +992,7 @@ details.sect>summary h2{margin:0}
 <dl>
       <dt>막지는 않습니다</dt><dd>그대로 계속할지, <code>claude --worktree &lt;이름&gt;</code>으로 작업 공간을 따로 열지, 그 세션에 물어볼지는 사용자가 정합니다. 같은 폴더의 동시 세션은 기본이 작업 공간 분리(워크트리)이고, 같은 작업 브랜치에서 서로 다른 파일만 짧게 고치는 것처럼 조건이 모두 맞을 때만 같은 폴더에서 이어갑니다. 이 보드는 그 판단을 할 때 다른 세션이 고친 파일을 확인하는 도구이고(터미널 명령으로 고친 파일은 보드에 안 보여 <code>git status</code>와 함께 봅니다), 조건이 깨졌을 때 <b>커밋 전에 알아채게</b> 하는 안전망입니다</dd>
       <dt>토큰은</dt><dd>훅이 모델을 부르지 않고 세션별 메모 파일만 씁니다. <b>다른 세션이 없으면 대화에 아무것도 더하지 않습니다</b></dd>
-      <dt>설치 방법</dt><dd><b>플러그인</b>(먼저 권함 — <code>/plugin marketplace add EleninJayTech/claude</code> → <code>/plugin install dandi-session-board@dandi</code>, 직접 실행. 훅까지 한 번에 켜지고 지울 때도 한 번) / <b>복사 설치</b>(스킬 폴더를 받고 내 PC 설정에 훅 다섯 개를 덧붙입니다 — 기존 훅은 지우지 않습니다) 중 고릅니다. 둘 다 있으면 모든 알림이 두 번 돌아서 하나만 남기라고 묻습니다. 플러그인이 이미 켜져 있으면 새 버전은 <code>/plugin marketplace update dandi</code>로 직접 받습니다 — 다시 적용하는 것만으로는 돌고 있는 훅이 바뀌지 않습니다. 회사 PC면 플러그인이 내 권한으로 코드를 실행한다는 점을 함께 알립니다 — 이 훅은 모든 편집에 돕니다</dd>
+      <dt>설치 방법</dt><dd><b>플러그인</b>(먼저 권함 — <code>/plugin marketplace add EleninJayTech/claude</code> → <code>/plugin install dandi-session-board@dandi</code>, 직접 실행. 훅까지 한 번에 켜지고 지울 때도 한 번) / <b>복사 설치</b>(스킬 폴더를 받고 내 PC 설정에 훅 다섯 개를 덧붙입니다 — 기존 훅은 지우지 않습니다) 중 고릅니다. 둘 다 있으면 모든 알림이 두 번 돌아서 하나만 남기라고 묻습니다. 플러그인이 이미 켜져 있으면 새 버전은 <code>/plugin marketplace update dandi</code>로 목록을 새로 받은 뒤 <code>claude plugin update dandi-session-board@dandi</code>로 직접 받습니다 — 다시 적용하는 것만으로는 돌고 있는 훅이 바뀌지 않습니다. 회사 PC면 플러그인이 내 권한으로 코드를 실행한다는 점을 함께 알립니다 — 이 훅은 모든 편집에 돕니다</dd>
       <dt>못 보는 것</dt><dd>여러 저장소 묶음에서 상위 폴더 세션과 하위 저장소 세션은 서로 보지 못합니다. 셸 명령으로 고친 파일은 보드에 오르지 않고, <code>claude -p</code>로 여러 번 돌리면 실행마다 별도 세션으로 잡힙니다</dd>
       <dt>스코프</dt><dd><b>글로벌 고정</b>이라 묻지 않습니다 — 세션은 PC 단위라, 프로젝트에 두면 그 저장소의 세션만 보입니다</dd>
       <dt>필요한 것</dt><dd><b>Node.js 18 이상</b>. 없으면 <b>훅을 걸지 않고</b>(플러그인도 켜지 않습니다) 이미 걸려 있으면 걷어낼지 묻습니다 — 돌지 못하는 훅은 오류 알림을 띄웁니다. 알려 주고 “대기”로 기록하며, Node.js를 설치한 뒤 새 터미널에서 다시 적용합니다</dd>
@@ -1122,7 +1122,7 @@ details.sect>summary h2{margin:0}
       <dt>왜 필요한가</dt><dd>Claude Code에도 동시 실행 상한이 있지만 <b>고정 숫자</b>라 PC 사양을 보지 않습니다. 저사양 PC에서 브라우저·에뮬레이터·빌드를 돌리는 에이전트가 한꺼번에 뜨면 PC가 버벅이고 시간 초과나 거짓 실패가 납니다</dd>
       <dt>막혀서 멈추지는 않습니다</dt><dd><b>세션마다 1개는 항상 허용</b>합니다. 상한은 코어 수와 전체 메모리로 계산하고(최대 8), 스폰마다 여유 메모리(에이전트당 약 1GB로 어림)와 CPU 사용률을 다시 봅니다. 값은 <code class="i">~/.claude/agent-guard/config.json</code>으로 바꿀 수 있고, 방법은 스킬이 안내합니다</dd>
       <dt>토큰은</dt><dd>훅이 모델을 부르지 않고 실행 중 표식만 씁니다. 대화에 더해지는 것은 세션 시작 때의 안내 한 줄과, 거부할 때의 알림뿐입니다</dd>
-      <dt>설치 방법</dt><dd><b>플러그인</b>(먼저 권함 — <code>/plugin marketplace add EleninJayTech/claude</code> → <code>/plugin install dandi-agent-guard@dandi</code>, 직접 실행). <b>고르면</b> 훅까지 한 번에 켜지고 지울 때도 한 번입니다. 다만 폴더를 마켓이 만들어 스킬 이름 별칭(2-7)은 붙지 않습니다 / <b>복사 설치</b> — <b>고르면</b> 스킬 폴더를 받고 내 PC 설정에 훅 다섯 개를 덧붙입니다(기존 훅은 지우지 않습니다). 별칭을 붙이려면 이쪽입니다. 둘 다 있으면 실행 중 표식이 두 번 쓰여 상한이 절반으로 줄어서 하나만 남기라고 묻습니다. 플러그인이 이미 켜져 있으면 새 버전은 <code>/plugin marketplace update dandi</code>로 직접 받습니다. 회사 PC면 플러그인이 내 권한으로 코드를 실행한다는 점을 함께 알립니다 — 이 훅은 모든 서브에이전트 스폰에 돕니다</dd>
+      <dt>설치 방법</dt><dd><b>플러그인</b>(먼저 권함 — <code>/plugin marketplace add EleninJayTech/claude</code> → <code>/plugin install dandi-agent-guard@dandi</code>, 직접 실행). <b>고르면</b> 훅까지 한 번에 켜지고 지울 때도 한 번입니다. 다만 폴더를 마켓이 만들어 스킬 이름 별칭(2-7)은 붙지 않습니다 / <b>복사 설치</b> — <b>고르면</b> 스킬 폴더를 받고 내 PC 설정에 훅 다섯 개를 덧붙입니다(기존 훅은 지우지 않습니다). 별칭을 붙이려면 이쪽입니다. 둘 다 있으면 실행 중 표식이 두 번 쓰여 상한이 절반으로 줄어서 하나만 남기라고 묻습니다. 플러그인이 이미 켜져 있으면 새 버전은 <code>/plugin marketplace update dandi</code>로 목록을 새로 받은 뒤 <code>claude plugin update dandi-agent-guard@dandi</code>로 직접 받습니다. 회사 PC면 플러그인이 내 권한으로 코드를 실행한다는 점을 함께 알립니다 — 이 훅은 모든 서브에이전트 스폰에 돕니다</dd>
       <dt>워크플로 상한(선택 — 물어봅니다)</dt><dd>워크플로가 띄우는 에이전트는 이 훅을 거치지 않아 거부할 수 없습니다. <b>고르면</b> 이 PC 사양으로 계산한 상한을 내 PC 설정(<code class="i">~/.claude/settings.json</code>)의 환경변수 <code class="i">CLAUDE_CODE_WORKFLOW_MAX_CONCURRENT_AGENTS</code>에 넣어 워크플로도 그 수로 묶습니다. PC마다 다른 값이라 프로젝트 설정에는 넣지 않습니다. 이 자리의 환경변수가 실제로 먹는지는 공식 문서에 적혀 있지 않아, 새 세션에서 확인하고 안 먹으면 지운 뒤 알려 줍니다. <b>안 고르면</b> 워크플로는 세션 시작 안내만 받고 Claude Code의 기본 상한을 따릅니다. 플러그인·복사 설치 어느 쪽이든 묻습니다</dd>
       <dt>스코프</dt><dd><b>글로벌 고정</b>이라 묻지 않습니다 — PC 자원은 PC 단위라, 프로젝트에 두면 그 저장소의 세션만 세어 상한이 새어 나갑니다</dd>
       <dt>필요한 것</dt><dd><b>Node.js 18 이상</b>. 없으면 <b>훅을 걸지 않고</b>(플러그인도 켜지 않습니다) 이미 걸려 있으면 걷어낼지 묻습니다. 알려 주고 <b>이 PC의</b> <code class="i">~/.claude/CLAUDE.md</code>에 “대기”로 기록하며, Node.js를 설치한 뒤 새 터미널에서 다시 적용합니다</dd>
@@ -1180,7 +1180,7 @@ details.sect>summary h2{margin:0}
 
 <!-- ═══════════ 6. 04 ═══════════ -->
 <section id="doc04">
-  <h2>6. 04 검증 자동화 — 3종 체크리스트</h2>
+  <h2>6. 04 검증 자동화 — 체크리스트</h2>
   <p class="goal">“검증했다고 말만 하는 것”을 기계로 막는 장치</p>
 
   <p>
@@ -1313,7 +1313,7 @@ details.sect>summary h2{margin:0}
   </div>
 
   <div class="opt">
-    <div class="opt-head"><span class="id">§3</span><span class="name">루틴 생성 — 트리거 3종 중 선택</span><span class="badge b-off">기본 해제</span></div>
+    <div class="opt-head"><span class="id">§3</span><span class="name">루틴 생성 — 트리거 중 선택</span><span class="badge b-off">기본 해제</span></div>
     <p class="lead">만드는 순간부터 계정에서 실행되고 사용량을 쓰기 시작해서, 모드가 대신 켜지 않고 <b>해제된 채로 보여 줍니다</b>.</p>
     <div class="tbl">
       <table>
@@ -1484,7 +1484,7 @@ details.sect>summary h2{margin:0}
 <a class="totop" href="#toc">↑ 목차</a>
 
 <footer>
-  단디 · 설치 옵션 사전 · 00_통합-설치.md 기준 · 2026-11-24<br>
+  단디 · 설치 옵션 사전 · 00_통합-설치.md 기준 · 2026-11-25<br>
   각 항목의 정본은 해당 하위 문서(01~06)입니다. 이 페이지는 사람이 읽고 판단하기 위한 안내이며, 설치 절차 자체를 바꾸지 않습니다.<br>
   저장소: github.com/EleninJayTech/claude ·
   <a href="../index.ko.html">사용법</a> · <a href="intro.ko.html">소개 영상</a> · <a href="demo.ko.html">설치 시연</a> · <a href="learn.ko.html">학습 코스</a> · <a href="skills.ko.html">스킬 카탈로그</a> · <a href="terminal.ko.html">터미널 소개</a><br>

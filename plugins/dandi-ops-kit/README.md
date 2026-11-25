@@ -13,7 +13,7 @@ Every runbook step carries a paste-ready command, the success text to look for, 
 /plugin install dandi-ops-kit@dandi
 ```
 
-Third-party marketplaces don't auto-update by default — enable it in `/plugin` → Marketplaces, or run `/plugin marketplace update dandi`.
+Third-party marketplaces don't auto-update by default — enable it in `/plugin` → Marketplaces, or run `/plugin marketplace update dandi` to refresh the listing, then `claude plugin update dandi-ops-kit@dandi`.
 
 ## Skills
 

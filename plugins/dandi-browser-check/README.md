@@ -9,7 +9,7 @@ A rule set for looking at pages when Claude verifies or debugs in a browser. It 
 /plugin install dandi-browser-check@dandi
 ```
 
-Third-party marketplaces don't auto-update by default — enable it in `/plugin` → Marketplaces, or run `/plugin marketplace update dandi`.
+Third-party marketplaces don't auto-update by default — enable it in `/plugin` → Marketplaces, or run `/plugin marketplace update dandi` to refresh the listing, then `claude plugin update dandi-browser-check@dandi`.
 
 ## Skills
 

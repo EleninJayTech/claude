@@ -1,6 +1,6 @@
 {
   "name": "dandi-pc-clean",
-  "version": "1.0.0+82596e10",
+  "version": "1.0.0+38dbaebc",
   "description": "Check why a Windows PC got slow (orphaned node.exe, stale claude.exe sessions, old TEMP files, recycle bin, Outlook logging) read-only, then clean only the items you approve. Windows + PowerShell 7. Skill instructions are written in Korean.",
   "author": { "name": "EleninJayTech", "url": "https://github.com/EleninJayTech" },
   "homepage": "https://eleninjaytech.github.io/claude/pages/skills.html",

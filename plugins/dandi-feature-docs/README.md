@@ -9,7 +9,7 @@ Verify every feature against the code and the running app, keep AI-reproducible 
 /plugin install dandi-feature-docs@dandi
 ```
 
-Third-party marketplaces don't auto-update by default — enable it in `/plugin` → Marketplaces, or run `/plugin marketplace update dandi`.
+Third-party marketplaces don't auto-update by default — enable it in `/plugin` → Marketplaces, or run `/plugin marketplace update dandi` to refresh the listing, then `claude plugin update dandi-feature-docs@dandi`.
 
 ## Skills
 

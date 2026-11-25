@@ -11,7 +11,7 @@ The hooks never call a model. They only write small "running" markers under `~/.
 /plugin install dandi-agent-guard@dandi
 ```
 
-Third-party marketplaces don't auto-update by default — enable it in `/plugin` → Marketplaces, or run `/plugin marketplace update dandi`.
+Third-party marketplaces don't auto-update by default — enable it in `/plugin` → Marketplaces, or run `/plugin marketplace update dandi` to refresh the listing, then `claude plugin update dandi-agent-guard@dandi`.
 
 ## Skills
 
