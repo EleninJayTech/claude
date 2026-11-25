@@ -79,7 +79,7 @@ Select-String -Path .\CLAUDE.md, $HOME\.claude\CLAUDE.md -Pattern '^dropin-appli
 
 서명 없는 exe가 막히는지는 미리 알기 어렵다. A나 B로 설치한 뒤 S5 테스트에서 실행이 거부되면 C로 내려간다.
 
-판정표를 보고하고, 진행할 단계를 **사용자가 고르게** 한다(S1~S16 중 기본은 S1~S9, 나머지는 선택).
+판정표를 보고하고, 진행할 단계를 **사용자가 고르게** 한다(S1~S17 중 기본은 S1~S9, 나머지는 선택).
 
 ## 2. 승인 게이트 — 항목마다 따로 묻는다
 
@@ -88,7 +88,7 @@ Select-String -Path .\CLAUDE.md, $HOME\.claude\CLAUDE.md -Pattern '^dropin-appli
 | **회사 PC: 사내 정책 확인** | 설치 전에 사용자에게 소프트웨어 설치·원격 접속 정책을 확인했는지 묻는다. 확인하지 않았으면 진행하지 않는다 |
 | `irm … \| iex` 설치(S2 Claude Code, 경로 A의 Scoop) | 받은 스크립트를 바로 실행한다. 서명 확인(S2)을 함께 한다. 보안 솔루션이 막으면 **우회하지 말고** 서명자 확인 절차를 근거로 보안팀에 예외를 요청하도록 안내한다 |
 | `Set-ExecutionPolicy -Scope CurrentUser RemoteSigned` | 실행 정책 변경. 회사가 강제한 값(MachinePolicy/UserPolicy)은 바꿀 수 없고 바꾸려 하지 않는다 |
-| `-ExecutionPolicy Bypass` | 이 문서는 쓰지 않는다. 필요해 보이면 멈추고 사용자에게 알린다 |
+| `-ExecutionPolicy Bypass` | S17 f의 바탕화면 바로 가기만 쓰며 선택이다. 그 밖에 필요해 보이면 멈추고 사용자에게 알린다 |
 | OpenSSH Server 설치와 `administrators_authorized_keys`(S12) | 원격에서 PC로 들어오는 경로를 연다. 관리자 PowerShell이 필요하다 |
 | 보안 SW 예외 추가 | 사용자가 보안 SW에서 직접 한다. Claude는 대신 설정하지 않는다 |
 | Remote Control(S12) | **대화가 Anthropic 서버를 거친다.** 회사 PC는 조직 정책이 허용하는지 먼저 확인한다 |
@@ -664,6 +664,136 @@ tmux new-session -A -s main
 - Java·Gradle 프로젝트를 Windows 쪽 드라이브에 둔 채 WSL에서 빌드하면 파일 입출력이 느려질 수 있다. 저장소를 WSL 파일 시스템 안에 두는 편이 낫다.
 - **단디 PC**: WSL 안의 `~/.claude`는 Windows 쪽과 별개라 단디가 없다. WSL 안 프로젝트에 `00_통합-설치.md`를 넣고 “00_통합-설치.md 를 학습해서 이 프로젝트에 적용해줘”라고 해서 다시 적용한다. agent-guard 훅은 node 18 이상이 필요하다.
 - 회사 PC는 관리자 권한이 필요해 보통 진행하지 않는다.
+
+### S17. 활용 요령의 설정 조각 (선택 · 항목별로 고른다)
+
+사람용 페이지 `pages/terminal.ko.html`의 「설치 후」 표시 요령이 쓰는 설정이다. 하나씩 묻고, 고른 것만 진행한다. 각 항목은 앞 단계가 끝난 PC에서만 의미가 있다.
+
+**a. yazi를 옆 칸에 바로 열기** (psmux 필요) — `~/.tmux.conf` 끝에 한 줄을 추가하고 다시 읽는다. 이후 `Ctrl+b` → `Tab`이 지금 폴더의 yazi를 오른쪽 칸에 연다. `Tab`은 psmux 기본 바인딩에 없는 키다.
+
+```
+bind Tab split-window -h -c "#{pane_current_path}" yazi
+```
+
+```powershell
+psmux source-file $HOME\.tmux.conf
+```
+
+- 완료 조건: psmux 안에서 `Ctrl+b` → `Tab`으로 오른쪽 칸에 yazi가 열리고 `q`로 닫으면 칸도 닫힌다(사용자 확인).
+- 되돌리기: 그 한 줄을 지우고 `source-file`.
+
+**b. 프로젝트 화면을 스크립트 한 번에** (psmux 필요) — 예시 `dev.ps1`. 프로젝트 폴더에서 실행하면 세션이 있을 때는 붙기만 한다. **서버 명령(`gradlew bootRun`)은 프로젝트에 맞게 사용자에게 묻고 바꾼다.** 만들 위치도 사용자에게 묻는다.
+
+```powershell
+$n = Split-Path -Leaf (Get-Location)
+psmux has-session -t $n 2>$null
+if ($LASTEXITCODE -ne 0) {
+  psmux new-session -d -s $n -n main -c (Get-Location).Path
+  psmux split-window -h -p 40 -t $n -c (Get-Location).Path   # 오른쪽 40%
+  psmux split-window -v -t $n -c (Get-Location).Path         # 오른쪽 위/아래
+  psmux send-keys -t $n 'lazygit' Enter                      # 오른쪽 아래: git
+  psmux select-pane -t $n -U
+  psmux send-keys -t $n 'gradlew bootRun' Enter              # 오른쪽 위: 서버
+  psmux select-pane -t $n -L
+  psmux send-keys -t $n 'claude --continue' Enter            # 왼쪽: Claude
+}
+psmux attach -t $n
+```
+
+- 완료 조건: 프로젝트 폴더에서 실행하면 세 칸이 뜨고, 다시 실행하면 붙기만 한다(사용자 확인).
+- 되돌리기: 만든 스크립트와 `psmux kill-session -t <폴더 이름>`.
+
+**c. yazi를 닫으면 그 폴더로 이동** — 프로필(S8)의 `function y { yazi @args }` 줄을 아래 함수로 **바꾼다**(프로필 백업 후). `q`로 나오면 셸이 마지막에 보던 폴더로 옮겨 간다. 옮기지 않고 나갈 때는 `Q`.
+
+```powershell
+function y {
+  $tmp = (New-TemporaryFile).FullName
+  yazi $args --cwd-file="$tmp"
+  $cwd = Get-Content -Path $tmp -Encoding UTF8
+  if (-not [String]::IsNullOrEmpty($cwd) -and $cwd -ne $PWD.Path) {
+    Set-Location -LiteralPath (Resolve-Path -LiteralPath $cwd).Path
+  }
+  Remove-Item -Path $tmp
+}
+```
+
+- 완료 조건: 새 탭에서 `y` → 폴더 이동 → `q` 하면 `Get-Location`이 마지막 폴더다.
+- 되돌리기: `$PROFILE.bak-ccguide`로 되돌리거나 원래 한 줄로 바꾼다.
+
+**d. fzf·ripgrep 추가** — `zi`(후보를 골라 폴더 이동), yazi의 `z`(파일 점프), yazi의 `S`(파일 내용 검색)가 살아난다. 개인 PC는 winget, 회사 PC는 S4와 같은 경로 규칙을 따른다.
+
+```powershell
+winget install --id junegunn.fzf -e
+winget install --id BurntSushi.ripgrep.MSVC -e
+```
+
+- 완료 조건: 새 터미널에서 `fzf --version`, `rg --version`이 버전을 출력한다.
+- 되돌리기: `winget uninstall --id junegunn.fzf -e`, `winget uninstall --id BurntSushi.ripgrep.MSVC -e`.
+
+**e. Windows Terminal 패널 확대 키** — 패널 확대에는 기본 키가 없다. Windows Terminal `settings.json`의 `actions`에 추가한다(S9 백업이 있으면 그대로 쓴다). 명령 팔레트(`Ctrl+Shift+P` → “Toggle pane zoom”)로도 된다.
+
+```json
+{ "command": "togglePaneZoom", "keys": "alt+shift+z" }
+```
+
+- 완료 조건: 패널을 나눈 탭에서 `Alt+Shift+Z`로 지금 패널이 확대·복원된다(사용자 확인).
+- 되돌리기: 그 항목을 지운다.
+
+**f. psmux 없이 쓰기 — 레이아웃 스크립트 (경로 C 대안)** — psmux를 쓸 수 없는 PC에서 Windows Terminal 패널로 Claude 세션 여러 개를 나란히 띄운다. psmux가 되면 필요 없다. 이 방식은 창을 닫으면 세션도 끝나므로 세션 유지는 agent view(S11)가 맡는다. 같은 폴더에서 세션 둘이 돌면 작업 트리와 git 인덱스를 공유해 미커밋 변경이 섞이므로 `claude --worktree 이름`으로 따로 연다(`.claude/worktrees/이름/`에 `worktree-이름` 브랜치). 단디 PC는 이 자동 이름이 `/resume NNN`으로 찾아지지 않는 점을 알린다(S11).
+
+`%USERPROFILE%\claude-layout.ps1` — **프로젝트 목록(`$Projects`)은 사용자에게 묻고 바꾼다.**
+
+```powershell
+# 프로젝트 목록만 고칩니다. Panes: 1, 2, 4. Color: 탭 색(#RRGGBB)
+$Projects = @(
+  @{ Name = "api-server"; Path = "D:\work\api-server"; Panes = 4; Color = "#2D7FF9" },
+  @{ Name = "web-app";    Path = "D:\work\web-app";    Panes = 2; Color = "#E0A030" }
+)
+$AutoStart = $true   # $false면 claude 없이 PowerShell만
+
+function PaneCmd($proj, $n) {
+  if (-not $AutoStart) { return "pwsh" }
+  if ($n -le 1) { return "pwsh -NoExit -Command claude" }
+  return "pwsh -NoExit -Command claude --worktree $($proj.Name)-$n"
+}
+
+$parts = @(); $first = $true
+foreach ($p in $Projects) {
+  if (-not (Test-Path $p.Path)) { Write-Warning "경로 없음, 건너뜀: $($p.Path)"; continue }
+  $d = "-d `"$($p.Path)`""
+  $tab = if ($first) { "" } else { "new-tab " }; $first = $false
+  $parts += "$tab--tabColor $($p.Color) $d $(PaneCmd $p 1)"
+  if ($p.Panes -ge 2) { $parts += "split-pane -V $d $(PaneCmd $p 2)" }
+  if ($p.Panes -ge 4) {
+    $parts += "split-pane -H $d $(PaneCmd $p 3)"
+    $parts += "move-focus left"
+    $parts += "split-pane -H $d $(PaneCmd $p 4)"
+  }
+}
+if ($parts.Count -eq 0) { Write-Error "실행할 프로젝트가 없습니다."; exit 1 }
+Start-Process wt -ArgumentList ($parts -join " ; ")
+```
+
+실행은 터미널에서 `& "$env:USERPROFILE\claude-layout.ps1"`이 기본이다. **바탕화면 바로 가기**를 원하면 새로 만들기 → 바로 가기의 대상에 아래를 넣는다. 이 방식은 `-ExecutionPolicy Bypass`를 쓰므로 §2 게이트 대상이고, 회사 PC에서는 보안 정책에 걸릴 수 있어 권하지 않는다(막히면 위 터미널 실행을 쓴다).
+
+```
+pwsh -NoProfile -ExecutionPolicy Bypass -File "%USERPROFILE%\claude-layout.ps1"
+```
+
+- 어제 대화를 잇는 법: 첫 패널은 `claude --continue`, 워크트리 패널은 `claude --worktree 이름 --resume`.
+- 탭 제목은 Claude가 작업 상태로 덮어쓴다. 프로젝트 구분은 `--tabColor` 색 띠가 안정적이다.
+- Windows Terminal 패널 ↔ psmux 대응: 탭=창(`Ctrl+b` `c`) · `Alt+Shift+＋`/`−`=`Ctrl+b` `|`/`-` · `Alt+방향키`=`Ctrl+b` `h j k l` · `Alt+Shift+Z`=`Ctrl+b` `z` · `claude-layout.ps1`=위 b의 `dev.ps1` · 창을 닫으면 끝=창을 닫아도 세션 유지.
+- 완료 조건: 스크립트를 실행하면 Windows Terminal이 지정한 탭과 패널로 열리고 경로가 없는 프로젝트는 경고만 남기고 건너뛴다(사용자 확인).
+- 되돌리기: 스크립트와 바로 가기를 지운다. 만든 워크트리는 사용자가 결정한다.
+
+**g. (참고) Linux 서버의 tmux 안에서 Claude Code** — psmux가 아니라 Linux 서버의 tmux에서 돌릴 때만 해당한다. Claude Code 공식 문서가 서버의 `~/.tmux.conf`에 아래 네 줄을 권한다. 이 PC의 설정이 아니므로 사용자가 원할 때만 안내한다.
+
+```
+set -g allow-passthrough on
+set -g focus-events on
+set -s extended-keys on
+set -as terminal-features 'xterm*:extkeys'
+```
 
 ## 4. 끝낸 뒤 사용자에게 알린다
 
