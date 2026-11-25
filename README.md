@@ -17,7 +17,7 @@
 | 🧭 **Install options dictionary** — every choice the installer asks, explained for beginners | https://eleninjaytech.github.io/claude/pages/options.html |
 | 🎓 **Install options course** — an interactive course where you click through the choices yourself | https://eleninjaytech.github.io/claude/pages/learn.html |
 | 🧰 **Skill catalog** — every skill the documents install, explained for a first-week developer | https://eleninjaytech.github.io/claude/pages/skills.html |
-| 🖥️ **Windows terminal intro** — why and what of a Claude Code terminal setup whose sessions outlive the window (introduction only; install guide to follow) | https://eleninjaytech.github.io/claude/pages/terminal.html |
+| 🖥️ **Windows terminal intro** — why and what of a Claude Code terminal setup whose sessions outlive the window (introduction; installation is the separate [`terminal-setup.md`](terminal-setup.md)) | https://eleninjaytech.github.io/claude/pages/terminal.html |
 | 📝 **Latest release notes** — what changed in the newest release | https://github.com/EleninJayTech/claude/releases/latest |
 | 📖 **How to use** — start here; no development background needed | https://eleninjaytech.github.io/claude/ |
 
@@ -80,6 +80,7 @@ The skills the installer copies (feature docs, refactor, kr-ui-guide, kr-ui-styl
 | [`04_검증-자동화.md`](04_검증-자동화.md) | **The automatic inspector.** Checkers run every time the AI edits code, and again before code is merged — you get **proof the checks passed** instead of the AI saying "done" |
 | [`05_출력스타일.md`](05_출력스타일.md) | **Changing tone and role.** Answers the way you want them — explanation-first, diagram-first, learning mode. Build your own style and you are also asked whether to keep Claude Code's built-in coding instructions — keep them if you will still write code with that style. You are also asked whether to switch the new style on now |
 | [`06_루틴-자동화.md`](06_루틴-자동화.md) | **Scheduled runs.** Work happens in the cloud at set times even while your machine is off (nightly code review, weekly doc checks) — Pro plan or above and a GitHub repository, and with approval at companies |
+| [`terminal-setup.md`](terminal-setup.md) | **Not an installer item — a standalone document.** Claude Code reads it, diagnoses your Windows PC read-only, then sets up the terminal configuration (psmux · yazi · zoxide · eza · lazygit · Windows Terminal) item by item with your approval. Intro: [terminal page](pages/terminal.html) |
 | [`index.html`](index.html) | **The human-facing guide** (GitHub Pages landing) — [view on the web](https://eleninjaytech.github.io/claude/) |
 | [`pages/`](pages/) | The rest of the human-facing pages — [intro](pages/intro.html) · [walkthrough](pages/demo.html) · [options dictionary](pages/options.html) · [options course](pages/learn.html) · [skill catalog](pages/skills.html) · [terminal intro](pages/terminal.html) |
 | [`skills/`](skills/) | The skill files document 03 installs (feature docs, refactor, kr-ui-guide and the rest) — the installer copies them from here on its own |
