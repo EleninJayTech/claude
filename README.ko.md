@@ -17,6 +17,7 @@
 | 🧭 **설치 옵션 사전** — 설치 중 나오는 선택 항목 전부를 입문자 눈높이로 | https://eleninjaytech.github.io/claude/pages/options.html |
 | 🎓 **설치 옵션 학습 코스** — 선택지를 챕터별로 직접 눌러 보며 배우는 인터랙티브 코스 | https://eleninjaytech.github.io/claude/pages/learn.html |
 | 🧰 **스킬 카탈로그** — 문서가 설치하는 스킬 전부를 신입 개발자 눈높이로 | https://eleninjaytech.github.io/claude/pages/skills.html |
+| 🖥️ **Windows 터미널 소개** — 세션이 창에 묶이지 않는 Claude Code 터미널 구성의 이유와 내용(소개만, 설치 안내는 준비 중) | https://eleninjaytech.github.io/claude/pages/terminal.html |
 | 📝 **최신 릴리스 노트** — 가장 최근 릴리스에서 무엇이 바뀌었나 | https://github.com/EleninJayTech/claude/releases/latest |
 | 📖 **사용법 안내** — 처음이라면 여기부터, 개발을 몰라도 이해 가능 | https://eleninjaytech.github.io/claude/ |
 
@@ -79,7 +80,7 @@
 | [`05_출력스타일.md`](05_출력스타일.md) | **말투·역할 바꾸기.** 답변 방식을 원하는 대로 — 설명 위주, 다이어그램 먼저, 학습 모드 등. 나만의 스타일을 만들 때는 Claude Code의 내장 코딩 지침을 유지할지도 묻습니다 — 그 스타일로 코딩도 시킬 거라면 유지하세요. 만든 스타일을 지금 켤지도 함께 묻습니다 |
 | [`06_루틴-자동화.md`](06_루틴-자동화.md) | **자동 실행 예약.** 내 컴퓨터가 꺼져 있어도 클라우드에서 정해진 시간에 AI가 알아서 작업(야간 코드 검토·주간 문서 점검 등) — Pro 요금제 이상·GitHub 저장소 필요, 회사에서는 승인 후 |
 | [`index.html`](index.html) | **사람용 안내 페이지**(GitHub Pages 랜딩) — [웹에서 보기](https://eleninjaytech.github.io/claude/) |
-| [`pages/`](pages/) | 나머지 사람용 페이지 — [소개 영상](pages/intro.html) · [설치 시연](pages/demo.html) · [설치 옵션 사전](pages/options.html) · [설치 옵션 학습 코스](pages/learn.html) · [스킬 카탈로그](pages/skills.html) |
+| [`pages/`](pages/) | 나머지 사람용 페이지 — [소개 영상](pages/intro.html) · [설치 시연](pages/demo.html) · [설치 옵션 사전](pages/options.html) · [설치 옵션 학습 코스](pages/learn.html) · [스킬 카탈로그](pages/skills.html) · [터미널 소개](pages/terminal.html) |
 | [`skills/`](skills/) | 03 문서가 설치하는 스킬 실물(기능 문서·refactor·kr-ui-guide 등) — 설치할 때 Claude가 여기서 알아서 복사 |
 | [`global-config/skills/`](global-config/skills/) | 01 문서가 `/resume`·`/wrap`과 함께 설치하는 명령 — `/dropin-apply`·`/dropin-check`·`/dropin-update`·`/dropin-sync`·`/dropin-pick`·`/scope` |
 | [`plugins/`](plugins/) | 플러그인 마켓 `dandi`([스킬을 플러그인으로 받기](#스킬을-플러그인으로-받기) 참고) — `skills/`에서 만들어지고, 마켓 목록은 `.claude-plugin/`에 있다 |

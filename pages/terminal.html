@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Claude Code on Windows Terminal · Introduction — Dandi</title>
+<meta name="description" content="An introduction to a Claude Code terminal setup on Windows: Windows Terminal and PowerShell 7 plus psmux, yazi, zoxide, eza and lazygit. Why this setup, what each tool does, sample screens, usage tips and shortcuts.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🖥️</text></svg>">
+<meta property="og:title" content="Claude Code on Windows Terminal · Introduction">
+<meta property="og:description" content="A Windows terminal setup that frees sessions from the window and lets you resume them remotely.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://eleninjaytech.github.io/claude/pages/terminal.html">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" rel="stylesheet">
+<meta name="color-scheme" content="light dark">
+<style>
+:root{color-scheme:light dark;
+  --paper:#F9FAFB;--card:#FFFFFF;--card-2:#F2F4F6;--ink:#191F28;--ink-soft:#4E5968;--line:#E5E8EB;--line-strong:#8B95A1;
+  --blue:#2B49C7;--blue-soft:#EDF0FC;--blue-line:#C9D3F4;--marker:#FFD84D;--marker-soft:#FFF3C2;--marker-line:#EFDD9A;--amber:#7A5B00;--mark-bg:#FFD84D;
+  --green:#1B7A4B;--green-soft:#E3F3EA;--term:#191F28;--term-line:#333D4B;--term-fg:#E5E8EB;--term-dim:#9EA3B5;--dim:#6B7684;
+  --shadow-2:0 4px 16px rgba(0,0,0,.06);
+  --sans:'Pretendard Variable',Pretendard,-apple-system,BlinkMacSystemFont,system-ui,Roboto,'Noto Sans KR','Apple SD Gothic Neo','Malgun Gothic',sans-serif;
+  --mono:'IBM Plex Mono',ui-monospace,Consolas,monospace;}
+@media (prefers-color-scheme:dark){:root{--paper:#0F1317;--card:#191F28;--card-2:#232B36;--ink:#FFFFFF;--ink-soft:#B0B8C1;--line:#252C37;--line-strong:#6B7684;
+  --blue:#8FA2F5;--blue-soft:#1F2A4A;--blue-line:#34447A;--marker:#F2C94C;--marker-soft:#3A3220;--marker-line:#5C4F2A;--amber:#F2C94C;--mark-bg:rgba(255,216,77,.30);
+  --green:#6FCF97;--green-soft:#15332A;--term:#0A0D10;--term-line:#252C37;--dim:#9EA3B5;--shadow-2:none}}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--sans);background:var(--paper);color:var(--ink);line-height:1.6;font-size:16px;letter-spacing:-.01em;word-break:keep-all;overflow-wrap:break-word}
+p,li{text-wrap:pretty}
+::selection{background:var(--mark-bg)}
+a{color:var(--blue)}
+:focus-visible{outline:3px solid var(--blue);outline-offset:2px;border-radius:4px}
+code{font-family:var(--mono);font-size:.88em;background:var(--card-2);border:1px solid var(--line);border-radius:6px;padding:1px 5px}
+kbd{font-family:var(--mono);font-size:.82em;background:var(--card);border:1px solid var(--line-strong);border-bottom-width:2px;border-radius:5px;padding:0 5px;white-space:nowrap}
+kbd.pf{border-color:var(--blue);color:var(--blue)}
+.then{margin:0 5px;color:var(--dim)}.sep{color:var(--dim)}
+.wrap{max-width:1000px;margin:0 auto;padding:48px 24px 80px}
+.eyebrow{font-size:13px;color:var(--ink-soft);margin-bottom:14px}.eyebrow b{color:var(--blue);font-weight:600}
+h1{font-weight:700;font-size:clamp(28px,4.2vw,40px);line-height:1.35;letter-spacing:-.025em;text-wrap:balance}
+h2{font-weight:700;font-size:24px;line-height:1.4;letter-spacing:-.02em;margin-top:56px;scroll-margin-top:16px}
+h3{font-weight:600;font-size:18px;line-height:1.45;margin-top:30px}
+.mark{background:linear-gradient(transparent 58%,var(--mark-bg) 58%,var(--mark-bg) 92%,transparent 92%);padding:0 2px}
+p.sub{margin-top:14px;color:var(--ink-soft);max-width:42em}
+.backlink{font-size:13px;margin-top:10px}
+.lead{margin-top:14px;max-width:44em}
+.toc{display:flex;flex-wrap:wrap;gap:8px;margin-top:26px}
+.toc a{font-size:13px;text-decoration:none;border:1px solid var(--line);background:var(--card);color:var(--ink-soft);padding:6px 13px;border-radius:999px}
+.toc a:hover{border-color:var(--blue);color:var(--blue)}
+.layers{display:grid;gap:10px;margin-top:20px}
+.layer{display:grid;grid-template-columns:minmax(0,15em) 1fr auto;gap:6px 16px;align-items:center;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px 18px;box-shadow:var(--shadow-2)}
+.layer.base{background:var(--card-2);box-shadow:none}
+.layer b{font-size:15.5px}.layer span{font-size:14px;color:var(--ink-soft)}
+.layer small{font-size:11.5px;border:1px solid var(--blue-line);background:var(--blue-soft);color:var(--blue);padding:2px 10px;border-radius:999px;white-space:nowrap}
+.layer.base small{background:var(--card);border-color:var(--line);color:var(--ink-soft)}
+@media(max-width:640px){.layer{grid-template-columns:1fr}.layer small{justify-self:start}}
+ul.plain{margin:14px 0 0 1.2em;max-width:46em}ul.plain li{margin-top:6px}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:14px;margin-top:20px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px 20px}
+.card b{display:block;font-size:16px;margin-bottom:6px}.card p{font-size:14px;color:var(--ink-soft)}
+.card code{white-space:nowrap}
+pre.term{margin-top:16px;background:var(--term);color:var(--term-fg);border:1px solid var(--term-line);border-radius:12px;padding:16px 18px;overflow-x:auto;font-family:var(--mono);font-size:13px;line-height:1.55;white-space:pre}
+.cap{font-size:13px;color:var(--ink-soft);margin-top:8px}
+.note{margin-top:16px;font-size:14px;background:var(--blue-soft);border-left:3px solid var(--blue);border-radius:0 8px 8px 0;padding:10px 14px;max-width:46em}
+.note.warn{background:var(--marker-soft);border-left-color:var(--marker-line);color:var(--amber)}
+.note b{font-weight:600}
+.tag{font-size:11.5px;padding:2px 9px;border-radius:999px;background:var(--card-2);border:1px solid var(--line);color:var(--ink-soft);white-space:nowrap}
+.tag.unk{background:var(--marker-soft);border-color:var(--marker-line);color:var(--amber)}
+.tw{overflow-x:auto;margin-top:12px;border:1px solid var(--line);border-radius:12px;background:var(--card)}
+table{border-collapse:collapse;width:100%;min-width:520px;font-size:14px}
+th,td{text-align:left;padding:10px 14px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-size:12px;letter-spacing:.02em;color:var(--ink-soft);background:var(--card-2)}
+tr:last-child td{border-bottom:0}
+.star{color:#B8860B}
+details{margin-top:12px;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:0 16px}
+details>summary{cursor:pointer;padding:12px 0;font-weight:600;font-size:15px}
+details[open]>summary{border-bottom:1px solid var(--line);margin-bottom:10px}
+details>*:last-child{margin-bottom:14px}
+details .tip{margin-top:10px;font-size:14.5px}
+.filter{margin-top:18px;display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.filter input{font-family:var(--sans);font-size:14.5px;padding:9px 14px;border:1px solid var(--line);border-radius:999px;background:var(--card);color:var(--ink);min-width:min(300px,100%)}
+.filter span{font-size:12.5px;color:var(--dim)}
+.soon{margin-top:16px;background:var(--card);border:2px dashed var(--line-strong);border-radius:14px;padding:18px 20px}
+.soon b{display:block;margin-bottom:4px}
+[hidden]{display:none!important}
+footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);font-size:13px;color:var(--ink-soft)}
+@media print{details{border:0}}
+</style>
+</head>
+<body>
+<div style="max-width:1000px;margin:0 auto;padding:14px 20px 0;font-family:var(--sans);font-size:13px;text-align:right;opacity:.75"><b>English</b> &middot; <a href="terminal.ko.html" onclick="try{localStorage.setItem('lang','ko')}catch(e){}">한국어</a></div>
+<div class="wrap">
+
+<header>
+  <p class="eyebrow"><b>Dandi</b> &middot; EleninJayTech / claude &middot; Windows terminal introduction</p>
+  <h1>A Windows terminal where <span class="mark">sessions outlive</span><br>the window, built for Claude Code.</h1>
+  <p class="sub">This is the <b>introduction</b>. It covers why the setup exists, what each tool does, and which screens and keys you will use afterwards. <b>It does not cover installation or configuration</b> — that is being prepared as a separate request.</p>
+  <p class="backlink"><a href="../index.html">&larr; Back to the guide</a> &middot; <a href="intro.html">Intro video</a> &middot; <a href="demo.html">Install demo</a> &middot; <a href="options.html">Options dictionary</a> &middot; <a href="learn.html">Learning course</a> &middot; <a href="skills.html">Skill catalog</a> &middot; <a href="https://github.com/EleninJayTech/claude">GitHub repo &#8599;</a></p>
+  <nav class="toc" aria-label="On this page"><a href="#why">Why this setup</a><a href="#rec">Recommended setup</a><a href="#screens">Screens</a><a href="#tips">Usage tips</a><a href="#alt-wt">Without psmux</a><a href="#keys">Shortcuts</a><a href="#with-dandi">With Dandi</a><a href="#install">Install</a><a href="#sources">Sources & unknowns</a></nav>
+</header>
+
+<h2 id="why">Why this setup</h2>
+<p class="lead">Claude Code takes on long-running work, but in a default terminal the <b>session is tied to the window</b>. Close it or lose the SSH link and the server, tests and git view beside the conversation go with it. Step away and there is no way to pick the session up from a phone or another PC.</p>
+<div class="cards">
+  <div class="card"><b>Detach sessions from the window</b><p>A multiplexer (psmux) or Claude Code’s agent view keeps work running after the window closes.</p></div>
+  <div class="card"><b>Several views at once</b><p>Claude, the server and git side by side — and Claude can read errors from the next pane itself.</p></div>
+  <div class="card"><b>Resume from anywhere</b><p>Remote Control continues the same session from a phone or browser.</p></div>
+  <div class="card"><b>macOS-style muscle memory</b><p>Aliases such as <code>y</code>, <code>z</code>, <code>ll</code> and <code>lg</code> work the same on Windows.</p></div>
+</div>
+
+<h2 id="rec">Recommended setup: keep what you have, add three layers</h2>
+<p class="lead">There is no reason to replace the terminal or the shell. Windows Terminal is updated steadily and ships with the PC. What is missing is sessions bound to a window and a way to resume remotely; the layers below fill exactly that.</p>
+<div class="layers">
+  <div class="layer"><b>Claude Code agent view · Remote Control</b><span>Sessions survive closing the terminal; continue from a phone or browser</span><small>nothing to install</small></div>
+  <div class="layer"><b>psmux</b><span>tmux syntax as-is. Detach/attach, Claude reads and controls other panes, agent teams teammates open as panes</span><small>new</small></div>
+  <div class="layer"><b>yazi · zoxide · eza · lazygit</b><span>File browser · folder jump · nicer listings · git UI. Aliases <code>y</code> <code>z</code> <code>ll</code> <code>lg</code></span><small>new</small></div>
+  <div class="layer base"><b>Windows Terminal + PowerShell 7</b><span>Kept as is; only shell-integration marks, window restore and a dropdown shortcut are added</span><small>as is</small></div>
+</div>
+<ul class="plain">
+  <li><b>psmux is optional.</b> If you only need sessions to stay alive, agent view (<code>claude --bg</code>) does it. For PCs where psmux is not an option, the Windows Terminal-only way is described below.</li>
+  <li><b>Moving to WSL2</b> is only worth it when you really need the Claude Code sandbox. Agent teams split views work natively inside psmux.</li>
+  <li><b>WezTerm</b> has good external control but its stable release stalled in February 2024, so it is left out. <b>Ghostty</b> has no official Windows build.</li>
+  <li>This setup still gives you no screen rewind, no inline images and no iTerm2-style SSH file transfer.</li>
+</ul>
+
+<h2 id="screens">Screens</h2>
+<p class="lead">This is roughly what you get afterwards. Folder and file names are made up.</p>
+<h3>① Claude, server and git in one window</h3>
+<pre class="term" aria-label="psmux layout">┌─ claude ──────────────────────┬─ server ─────────────────────┐
+│ > read the last 50 lines of   │ $ npm run dev                │
+│   the server pane, explain    │ ERROR  Cannot find module…   │
+│                               ├─ git ────────────────────────┤
+│                               │ Files  M src/app.js          │
+│                               │        ? todo.txt            │
+└───────────────────────────────┴──────────────────────────────┘
+ [0] main  1:claude  2:server*</pre>
+<p class="cap">The upper right is the server pane, the lower right is lazygit. Zoom a single pane with <kbd class="pf">Ctrl</kbd>+<kbd class="pf">b</kbd> → <kbd>z</kbd>.</p>
+<h3>② <code>ll</code> with git status</h3>
+<pre class="term">PS D:\work\my-app&gt; ll
+Mode   Size Git Name
+d----     -  --  docs
+d----     -  -M  src
+-a---    22  --  package.json
+-a---    10  --  README.md
+-a---     5  -N  todo.txt</pre>
+<p class="cap"><code>-M</code> means modified, <code>-N</code> means a new untracked file.</p>
+<h3>③ Tree view with <code>eza -T -L 2</code></h3>
+<pre class="term">PS D:\work\my-app&gt; eza -T -L 2
+.
+├── docs
+│   └── guide.md
+├── src
+│   └── app.js
+├── package.json
+├── README.md
+└── todo.txt</pre>
+
+<h2 id="tips">Usage tips</h2>
+<p class="lead">Pick what you need once setup is done. Tips that require editing a config file are marked <span class="tag">after setup</span>; the config snippets will live in the install guide when it exists.</p>
+
+<details open><summary>Getting more from psmux</summary>
+<ul class="plain">
+  <li><b>Open yazi in the next pane</b> <span class="tag">after setup</span> — One added key binding makes <kbd class="pf">Ctrl</kbd>+<kbd class="pf">b</kbd> → <kbd>Tab</kbd> open yazi for the current folder in a right-hand pane. Quitting with <kbd>q</kbd> closes the pane.</li>
+  <li><b>One script for a project layout</b> <span class="tag">after setup</span> — A script builds the Claude, server and git panes instead of splitting by hand. If the session already exists it just attaches.</li>
+  <li><b>Hand a neighbouring pane’s error to Claude</b> — Name the server pane with <kbd class="pf">Ctrl</kbd>+<kbd class="pf">b</kbd> → <kbd>T</kbd>, then ask “read the last 50 lines of the server pane and explain the error”. Claude reads it with <code>psmux capture-pane -p -t main:1.2</code> and can send commands to another pane with <code>psmux send-keys</code>. <code>main:1.2</code> means session:window.pane.</li>
+  <li><b>One session per project</b> <span class="tag">after setup</span> — Names like <code>tm api</code> and <code>tm web</code> keep separate sessions and layouts. Switch with <kbd class="pf">Ctrl</kbd>+<kbd class="pf">b</kbd> → <kbd>s</kbd>.</li>
+  <li><b>Lost among panes</b> — <kbd class="pf">Ctrl</kbd>+<kbd class="pf">b</kbd> → <kbd>q</kbd> shows numbers to press, or <kbd class="pf">Ctrl</kbd>+<kbd class="pf">b</kbd> → <kbd>w</kbd> shows everything as a tree. Zoom a narrow pane with <kbd class="pf">Ctrl</kbd>+<kbd class="pf">b</kbd> → <kbd>z</kbd>.</li>
+  <li><b>Cross-check with several AIs</b> <span class="tag unk">check policy</span> — Open agents such as Codex CLI or Gemini CLI in other panes, send the same question and have Claude combine the answers. Each CLI needs its own install and login. On a company- or institution-managed PC, first check that external AI tools are allowed — your code goes to each vendor’s servers.</li>
+  <li><b>tmux commands work too</b> — Installing psmux also provides <code>tmux</code> and <code>pmux</code> names, so tmux commands and scripts from macOS or Linux run unchanged.</li>
+</ul></details>
+
+<details><summary>Shell and tools</summary>
+<ul class="plain">
+  <li><b>Pass an error to Claude</b> <span class="tag">after setup</span> — Right after a failed command press <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>↑</kbd> → <kbd>Ctrl</kbd>+<kbd>C</kbd> → <kbd>Ctrl</kbd>+<kbd>V</kbd> in the Claude prompt. No dragging needed (the shell has to mark command boundaries). <span class="tag unk">unconfirmed inside psmux</span></li>
+  <li><b>Pass a file path to Claude</b> — Select a file in yazi, press <kbd>c</kbd> <kbd>c</kbd> to copy its path and paste it after <code>@</code> in the Claude prompt.</li>
+  <li><b>Review what Claude changed</b> — Keep <code>lg</code> open in another pane and changed files show up at once. Press <kbd>Enter</kbd> to pick lines and commit; <kbd>z</kbd> undoes the last git action (it cannot undo a commit you already pushed).</li>
+  <li><b>Re-run earlier commands</b> — Type the first few letters and press <kbd>F8</kbd>, or press <kbd>Ctrl</kbd>+<kbd>R</kbd> and type part of a word.</li>
+  <li><b>Land in the folder you left yazi in</b> <span class="tag">after setup</span> — A small shell function moves you to the last folder when you quit with <kbd>q</kbd>; <kbd>Q</kbd> quits without moving.</li>
+  <li><b>fzf·ripgrep</b> — Install them separately and three searches come alive: <code>zi</code> (pick a folder), yazi <kbd>z</kbd> (file jump) and yazi <kbd>S</kbd> (content search).</li>
+  <li><b>Teach zoxide your folders</b> — Right after install <code>z</code> knows nothing. <code>zoxide add D:\work\my-app</code> makes <code>z my-app</code> work at once; <code>zoxide remove path</code> forgets a wrong one.</li>
+  <li><b>Folders as a tree</b> — <code>eza -T -L 2</code> shows two levels as a tree; <code>ll -T -L 2</code> adds git status.</li>
+</ul></details>
+
+<details><summary>Long jobs and remote access</summary>
+<p class="tip">Hand long jobs — builds, migrations, AI agents — to a named session and detach. Next day run <code>psmux ls</code> then <code>psmux attach -t name</code>.</p>
+<div class="tw"><table><thead><tr><th>Situation</th><th>psmux session</th><th>Basis</th></tr></thead><tbody>
+<tr><td>Close the terminal window</td><td>Stays alive (treated as detach)</td><td>psmux FAQ</td></tr>
+<tr><td>SSH connection drops</td><td>Stays alive. Reconnect and run <code>psmux attach</code></td><td>psmux FAQ</td></tr>
+<tr><td>Close the RDP window with ✕ (disconnect)</td><td>Expected to stay alive <span class="tag unk">unconfirmed</span></td><td>psmux docs do not mention RDP; Windows keeps the logon session after a disconnect</td></tr>
+<tr><td>Sign out inside RDP</td><td>Expected to end <span class="tag unk">unconfirmed</span></td><td>Signing out ends that user’s processes</td></tr>
+<tr><td>PC reboot</td><td>Ends</td><td>psmux FAQ. The pane layout can be restored with a plugin</td></tr>
+</tbody></table></div>
+<ul class="plain">
+  <li>Close RDP with the ✕ at the top right (disconnect). Signing out from the Start menu may lose the session.</li>
+  <li>Different resolutions per client shake the pane ratios. Zoom with <kbd class="pf">Ctrl</kbd>+<kbd class="pf">b</kbd> → <kbd>z</kbd> or fix the Windows Terminal start size.</li>
+  <li>Over SSH the mouse works with plain <code>ssh</code> when the server is Windows 11 build 22523 or later. On a Windows 10 server only the keyboard works.</li>
+</ul></details>
+
+<details><summary>psmux mouse — unlike tmux</summary>
+<p class="tip">tmux ships with the mouse off; psmux has it on. Click a pane to focus it, drag borders to resize, click a window name in the status line to switch, scroll with the wheel, drag to select (release copies to the clipboard) and right-click to paste. Hold <kbd>Shift</kbd> while dragging to use the terminal’s own selection. Turn it off with <code>set -g mouse off</code>.</p></details>
+
+<details><summary>Avoid: settings blogs tell you to change</summary>
+<div class="tw"><table><thead><tr><th>Setting</th><th>Problem on Windows</th></tr></thead><tbody>
+<tr><td>Changing the prefix to <kbd>Ctrl</kbd>+<kbd>Space</kbd></td><td>PowerShell’s completion menu (<code>MenuComplete</code>) uses this key, so you lose it. Keep the prefix on <kbd>Ctrl</kbd>+<kbd>b</kbd>.</td></tr>
+<tr><td>Moving panes with <kbd>Alt</kbd>+<kbd>h</kbd> <kbd>j</kbd> <kbd>k</kbd> <kbd>l</kbd> without a prefix</td><td><kbd>Alt</kbd>+<kbd>h</kbd> is PowerShell’s parameter help. Conflicts inside Claude Code were not checked. Use the prefix keys.</td></tr>
+<tr><td>Changing the prefix to <kbd>Ctrl</kbd>+<kbd>a</kbd></td><td>PowerShell’s “start of line” is <kbd>Ctrl</kbd>+<kbd>a</kbd>, so you must press it twice. If you must, add a secondary prefix (<code>prefix2</code>).</td></tr>
+<tr><td>Switching to Ghostty</td><td>No official Windows build. Stay on Windows Terminal.</td></tr>
+</tbody></table></div></details>
+
+<h2 id="alt-wt">Without psmux</h2>
+<p class="lead">For PCs where psmux is not available: run several Claude sessions side by side in Windows Terminal panes. Closing the window <b>ends the sessions</b>, so keeping them alive is agent view’s job (<code>claude --bg</code>).</p>
+<div class="tw"><table><thead><tr><th>Shortcut</th><th>Action</th></tr></thead><tbody>
+<tr><td><kbd>Alt</kbd>+<kbd>Shift</kbd>+<kbd>＋</kbd></td><td>Split side by side</td></tr>
+<tr><td><kbd>Alt</kbd>+<kbd>Shift</kbd>+<kbd>−</kbd></td><td>Split top/bottom</td></tr>
+<tr><td><kbd>Alt</kbd>+<kbd>Shift</kbd>+<kbd>D</kbd></td><td>Split in the automatic direction (duplicate the pane)</td></tr>
+<tr><td><kbd>Alt</kbd>+<kbd>←</kbd> <kbd>→</kbd> <kbd>↑</kbd> <kbd>↓</kbd></td><td>Move between panes</td></tr>
+<tr><td><kbd>Alt</kbd>+<kbd>Shift</kbd>+<kbd>←</kbd> <kbd>→</kbd> <kbd>↑</kbd> <kbd>↓</kbd></td><td>Resize the pane</td></tr>
+<tr><td><kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>W</kbd></td><td>Close the pane (the tab if it is the last one)</td></tr>
+<tr><td><kbd>Alt</kbd>+<kbd>Shift</kbd>+<kbd>Z</kbd> <span class="tag">after setup</span></td><td>Zoom the pane in/out. There is no default key, so it has to be added in settings (the command palette’s “Toggle pane zoom” works out of the box).</td></tr>
+</tbody></table></div>
+<h3>Building a 2×2</h3>
+<ol class="plain">
+  <li>In a new tab, go to the project folder and run <code>claude</code>.</li>
+  <li><kbd>Alt</kbd>+<kbd>Shift</kbd>+<kbd>＋</kbd> → in the right pane run <code>claude --worktree my-app-2</code>.</li>
+  <li><kbd>Alt</kbd>+<kbd>Shift</kbd>+<kbd>−</kbd> → in the lower right run <code>claude --worktree my-app-3</code>.</li>
+  <li><kbd>Alt</kbd>+<kbd>←</kbd> to go left, then <kbd>Alt</kbd>+<kbd>Shift</kbd>+<kbd>−</kbd> → in the lower left run <code>claude --worktree my-app-4</code>.</li>
+</ol>
+<p class="note"><b>Why worktrees</b> — Two sessions in one folder share the working tree and git index, so uncommitted changes get mixed up. <code>claude --worktree name</code> creates a separate checkout in <code>.claude/worktrees/name/</code> on a <code>worktree-name</code> branch. If you use Dandi it has a naming rule — see “With Dandi” below.</p>
+<div class="tw"><table><thead><tr><th>Windows Terminal</th><th>psmux (tmux)</th></tr></thead><tbody>
+<tr><td>Tab = project</td><td>Window <kbd class="pf">Ctrl</kbd>+<kbd class="pf">b</kbd> → <kbd>c</kbd></td></tr>
+<tr><td><kbd>Alt</kbd>+<kbd>Shift</kbd>+<kbd>＋</kbd> / <kbd>−</kbd></td><td><kbd class="pf">Ctrl</kbd>+<kbd class="pf">b</kbd> → <kbd>|</kbd> / <kbd>-</kbd></td></tr>
+<tr><td><kbd>Alt</kbd>+<kbd>←</kbd> etc.</td><td><kbd class="pf">Ctrl</kbd>+<kbd class="pf">b</kbd> → <kbd>h</kbd> <kbd>j</kbd> <kbd>k</kbd> <kbd>l</kbd></td></tr>
+<tr><td><kbd>Alt</kbd>+<kbd>Shift</kbd>+<kbd>Z</kbd></td><td><kbd class="pf">Ctrl</kbd>+<kbd class="pf">b</kbd> → <kbd>z</kbd></td></tr>
+<tr><td>Closing the window ends it</td><td>Sessions survive closing the window</td></tr>
+</tbody></table></div>
+
+<h2 id="keys">Shortcuts</h2>
+<p class="lead">Every key this setup uses in one place. ★ marks core keys; <span class="tag">after setup</span> marks keys that only work once config or aliases are in place.</p>
+<p class="note"><kbd class="pf">Ctrl</kbd>+<kbd class="pf">b</kbd> <span class="then">→</span> <kbd>|</kbd> means: press Ctrl and b together, release both, then press |. Direction and resize keys repeat without the prefix if pressed within 0.5 seconds.</p>
+<div class="filter"><input type="search" id="kq" placeholder="Search: split, copy, yazi, commit …" aria-label="Search shortcuts"><span id="kcnt"></span></div>
+<div class="kgrp"><h3>psmux sessions</h3><div class="tw"><table class="keys"><thead><tr><th style="width:44%">Key / command</th><th>What it does</th></tr></thead><tbody><tr data-q="p &gt; d 세션에서 빠져나오기 (세션은 유지) detach from the session (it keeps running)"><td><span class="kc"><kbd class="pf">Ctrl</kbd>+<kbd class="pf">b</kbd><span class="then">→</span><kbd>d</kbd></span></td><td><span class="star" title="core">★</span> Detach from the session (it keeps running)</td></tr><tr data-q="$ tm · tm 이름 세션에 붙거나 만들기 (이름을 안 주면 main) attach or create a session (main if no name)"><td><code>tm · tm 이름</code></td><td>Attach or create a session (main if no name) <span class="tag">after setup</span></td></tr><tr data-q="$ psmux ls 살아 있는 세션 목록 list live sessions"><td><code>psmux ls</code></td><td>List live sessions</td></tr><tr data-q="p &gt; s 세션 골라 옮기기 pick a session to switch to"><td><span class="kc"><kbd class="pf">Ctrl</kbd>+<kbd class="pf">b</kbd><span class="then">→</span><kbd>s</kbd></span></td><td>Pick a session to switch to</td></tr><tr data-q="p &gt; $ 세션 이름 바꾸기 rename the session"><td><span class="kc"><kbd class="pf">Ctrl</kbd>+<kbd class="pf">b</kbd><span class="then">→</span><kbd>$</kbd></span></td><td>Rename the session</td></tr><tr data-q="$ psmux kill-session -t 이름 세션 끝내기 (안의 프로그램도 끝남) end a session (programs inside end too)"><td><code>psmux kill-session -t 이름</code></td><td>End a session (programs inside end too)</td></tr></tbody></table></div></div>
+<div class="kgrp"><h3>psmux windows (tabs)</h3><div class="tw"><table class="keys"><thead><tr><th style="width:44%">Key / command</th><th>What it does</th></tr></thead><tbody><tr data-q="p &gt; c 새 창 new window"><td><span class="kc"><kbd class="pf">Ctrl</kbd>+<kbd class="pf">b</kbd><span class="then">→</span><kbd>c</kbd></span></td><td><span class="star" title="core">★</span> New window</td></tr><tr data-q="p &gt; n / p &gt; p 다음 · 이전 창 next / previous window"><td><span class="kc"><kbd class="pf">Ctrl</kbd>+<kbd class="pf">b</kbd><span class="then">→</span><kbd>n</kbd></span> <span class="sep">/</span> <span class="kc"><kbd class="pf">Ctrl</kbd>+<kbd class="pf">b</kbd><span class="then">→</span><kbd>p</kbd></span></td><td><span class="star" title="core">★</span> Next / previous window</td></tr><tr data-q="p &gt; 1~9 그 번호 창으로 jump to window by number"><td><span class="kc"><kbd class="pf">Ctrl</kbd>+<kbd class="pf">b</kbd><span class="then">→</span><kbd>1~9</kbd></span></td><td>Jump to window by number</td></tr><tr data-q="p &gt; w 세션·창·칸 전체를 나무로 보고 고르기 browse sessions, windows and panes as a tree"><td><span class="kc"><kbd class="pf">Ctrl</kbd>+<kbd class="pf">b</kbd><span class="then">→</span><kbd>w</kbd></span></td><td>Browse sessions, windows and panes as a tree</td></tr><tr data-q="p &gt; , 창 이름 바꾸기 rename the window"><td><span class="kc"><kbd class="pf">Ctrl</kbd>+<kbd class="pf">b</kbd><span class="then">→</span><kbd>,</kbd></span></td><td>Rename the window</td></tr></tbody></table></div></div>
+<div class="kgrp"><h3>psmux panes: split and move</h3><div class="tw"><table class="keys"><thead><tr><th style="width:44%">Key / command</th><th>What it does</th></tr></thead><tbody><tr data-q="p &gt; | 좌우로 나누기 (지금 폴더 유지) split left/right (keeps the current folder)"><td><span class="kc"><kbd class="pf">Ctrl</kbd>+<kbd class="pf">b</kbd><span class="then">→</span><kbd>|</kbd></span></td><td><span class="star" title="core">★</span> Split left/right (keeps the current folder) <span class="tag">after setup</span></td></tr><tr data-q="p &gt; - 위아래로 나누기 (지금 폴더 유지) split top/bottom (keeps the current folder)"><td><span class="kc"><kbd class="pf">Ctrl</kbd>+<kbd class="pf">b</kbd><span class="then">→</span><kbd>-</kbd></span></td><td><span class="star" title="core">★</span> Split top/bottom (keeps the current folder) <span class="tag">after setup</span></td></tr><tr data-q="p &gt; % 좌우로 나누기 (기본 키) split left/right (default key)"><td><span class="kc"><kbd class="pf">Ctrl</kbd>+<kbd class="pf">b</kbd><span class="then">→</span><kbd>%</kbd></span></td><td>Split left/right (default key)</td></tr><tr data-q="p &gt; " 위아래로 나누기 (기본 키) split top/bottom (default key)"><td><span class="kc"><kbd class="pf">Ctrl</kbd>+<kbd class="pf">b</kbd><span class="then">→</span><kbd>"</kbd></span></td><td>Split top/bottom (default key)</td></tr><tr data-q="p &gt; h j k l 왼쪽 · 아래 · 위 · 오른쪽 칸으로 move to the pane left / down / up / right"><td><span class="kc"><kbd class="pf">Ctrl</kbd>+<kbd class="pf">b</kbd><span class="then">→</span><kbd>h j k l</kbd></span></td><td><span class="star" title="core">★</span> Move to the pane left / down / up / right <span class="tag">after setup</span></td></tr><tr data-q="p &gt; q 칸 번호 표시 (그때 숫자를 누르면 그 칸으로) show pane numbers (press one to jump)"><td><span class="kc"><kbd class="pf">Ctrl</kbd>+<kbd class="pf">b</kbd><span class="then">→</span><kbd>q</kbd></span></td><td>Show pane numbers (press one to jump)</td></tr><tr data-q="p &gt; z 칸 크게 보기 ↔ 되돌리기 (상태 줄에 z) zoom the pane in / out (z shows in the status line)"><td><span class="kc"><kbd class="pf">Ctrl</kbd>+<kbd class="pf">b</kbd><span class="then">→</span><kbd>z</kbd></span></td><td><span class="star" title="core">★</span> Zoom the pane in / out (Z shows in the status line)</td></tr><tr data-q="p &gt; x 칸 닫기 (y로 확인) close the pane (confirm with y)"><td><span class="kc"><kbd class="pf">Ctrl</kbd>+<kbd class="pf">b</kbd><span class="then">→</span><kbd>x</kbd></span></td><td><span class="star" title="core">★</span> Close the pane (confirm with y)</td></tr><tr data-q="p &gt; t 칸 이름 붙이기 name the pane"><td><span class="kc"><kbd class="pf">Ctrl</kbd>+<kbd class="pf">b</kbd><span class="then">→</span><kbd>T</kbd></span></td><td>Name the pane <span class="tag">after setup</span></td></tr><tr data-q="p &gt; tab 옆 칸에 yazi 열기 open yazi in a side pane"><td><span class="kc"><kbd class="pf">Ctrl</kbd>+<kbd class="pf">b</kbd><span class="then">→</span><kbd>Tab</kbd></span></td><td>Open yazi in a side pane <span class="tag">after setup</span></td></tr></tbody></table></div></div>
+<div class="kgrp"><h3>psmux copy, scroll and misc</h3><div class="tw"><table class="keys"><thead><tr><th style="width:44%">Key / command</th><th>What it does</th></tr></thead><tbody><tr data-q="p &gt; [ 복사·스크롤 모드 copy / scroll mode"><td><span class="kc"><kbd class="pf">Ctrl</kbd>+<kbd class="pf">b</kbd><span class="then">→</span><kbd>[</kbd></span></td><td><span class="star" title="core">★</span> Copy / scroll mode</td></tr><tr data-q="space (복사 모드) 선택 시작 (copy mode) start selecting"><td><span class="kc"><kbd>Space</kbd></span></td><td>(copy mode) Start selecting</td></tr><tr data-q="enter / y (복사 모드) 복사하고 나가기 (copy mode) copy and exit"><td><span class="kc"><kbd>Enter</kbd></span> <span class="sep">/</span> <span class="kc"><kbd>y</kbd></span></td><td>(copy mode) Copy and exit</td></tr><tr data-q="/ / ? (복사 모드) 아래로 · 위로 찾기 (copy mode) search down / up"><td><span class="kc"><kbd>/</kbd></span> <span class="sep">/</span> <span class="kc"><kbd>?</kbd></span></td><td>(copy mode) Search down / up</td></tr><tr data-q="q (복사 모드) 나가기 (copy mode) exit"><td><span class="kc"><kbd>q</kbd></span></td><td>(copy mode) Exit</td></tr><tr data-q="p &gt; ] 붙여넣기 paste"><td><span class="kc"><kbd class="pf">Ctrl</kbd>+<kbd class="pf">b</kbd><span class="then">→</span><kbd>]</kbd></span></td><td>Paste</td></tr><tr data-q="p &gt; ? 지금 적용된 키 모두 보기 (q로 닫기) show every active key (q closes)"><td><span class="kc"><kbd class="pf">Ctrl</kbd>+<kbd class="pf">b</kbd><span class="then">→</span><kbd>?</kbd></span></td><td><span class="star" title="core">★</span> Show every active key (q closes)</td></tr><tr data-q="p &gt; : 명령 입력줄 command prompt"><td><span class="kc"><kbd class="pf">Ctrl</kbd>+<kbd class="pf">b</kbd><span class="then">→</span><kbd>:</kbd></span></td><td>Command prompt</td></tr><tr data-q="$ psmux capture-pane -p -t main:1.2 다른 칸 화면 읽기 (claude도 같은 명령) read another pane’s screen (claude uses the same command)"><td><code>psmux capture-pane -p -t main:1.2</code></td><td>Read another pane’s screen (Claude uses the same command)</td></tr><tr data-q="$ psmux send-keys -t main:1.2 "npm test" enter 다른 칸에 명령 보내기 send a command to another pane"><td><code>psmux send-keys -t main:1.2 "npm test" Enter</code></td><td>Send a command to another pane</td></tr></tbody></table></div></div>
+<div class="kgrp"><h3>psmux mouse (on by default)</h3><div class="tw"><table class="keys"><thead><tr><th style="width:44%">Key / command</th><th>What it does</th></tr></thead><tbody><tr data-q="$ 클릭 칸 선택 · 상태 줄의 창 전환 select a pane / switch windows in the status line"><td><code>클릭</code></td><td>Select a pane / switch windows in the status line</td></tr><tr data-q="$ 경계선 끌기 칸 크기 조절 drag a border to resize"><td><code>경계선 끌기</code></td><td>Drag a border to resize</td></tr><tr data-q="$ 휠 지난 출력 스크롤 (복사 모드로 들어감) scroll back (enters copy mode)"><td><code>휠</code></td><td>Scroll back (enters copy mode)</td></tr><tr data-q="$ 끌어서 선택 놓으면 클립보드로 복사 drag to select; release copies to the clipboard"><td><code>끌어서 선택</code></td><td>Drag to select; release copies to the clipboard</td></tr><tr data-q="$ 오른쪽 클릭 붙여넣기 right-click pastes"><td><code>오른쪽 클릭</code></td><td>Right-click pastes</td></tr><tr data-q="shift+끌기 터미널 자체 선택 shift+drag uses the terminal’s own selection"><td><span class="kc"><kbd>Shift</kbd>+<kbd>끌기</kbd></span></td><td>Shift+drag uses the terminal’s own selection</td></tr></tbody></table></div></div>
+<div class="kgrp"><h3>Shell aliases</h3><div class="tw"><table class="keys"><thead><tr><th style="width:44%">Key / command</th><th>What it does</th></tr></thead><tbody><tr data-q="$ ls · ll · la 폴더 보기 · 자세히(git 상태) · 숨김 포함 list · detailed with git status · include hidden"><td><code>ls · ll · la</code></td><td>List · detailed with git status · include hidden <span class="tag">after setup</span></td></tr><tr data-q="$ eza -t -l 2 두 단계 아래까지 나무 모양 tree view, two levels deep"><td><code>eza -T -L 2</code></td><td>Tree view, two levels deep</td></tr><tr data-q="$ z 이름 가 본 폴더로 이동 jump to a folder you have visited"><td><code>z 이름</code></td><td>Jump to a folder you have visited <span class="tag">after setup</span></td></tr><tr data-q="$ z - 바로 전 폴더로 back to the previous folder"><td><code>z -</code></td><td>Back to the previous folder <span class="tag">after setup</span></td></tr><tr data-q="$ zi 후보를 골라 이동 (fzf 필요) pick a folder from candidates (needs fzf)"><td><code>zi</code></td><td>Pick a folder from candidates (needs fzf) <span class="tag">after setup</span></td></tr><tr data-q="$ y 파일 탐색기 yazi open the yazi file manager"><td><code>y</code></td><td>Open the yazi file manager <span class="tag">after setup</span></td></tr><tr data-q="$ lg git 화면 lazygit open lazygit"><td><code>lg</code></td><td>Open lazygit <span class="tag">after setup</span></td></tr><tr data-q="$ cc 이 폴더의 직전 claude 대화 이어 가기 continue the last claude conversation in this folder"><td><code>cc</code></td><td>Continue the last Claude conversation in this folder <span class="tag">after setup</span></td></tr><tr data-q="$ ca 백그라운드 claude 세션 목록 list background claude sessions"><td><code>ca</code></td><td>List background Claude sessions <span class="tag">after setup</span></td></tr></tbody></table></div></div>
+<div class="kgrp"><h3>PowerShell prompt</h3><div class="tw"><table class="keys"><thead><tr><th style="width:44%">Key / command</th><th>What it does</th></tr></thead><tbody><tr data-q="↑ / ↓ 전에 친 명령 불러오기 recall earlier commands"><td><span class="kc"><kbd>↑</kbd></span> <span class="sep">/</span> <span class="kc"><kbd>↓</kbd></span></td><td>Recall earlier commands</td></tr><tr data-q="ctrl+r 기록에서 낱말로 찾기 search history by word"><td><span class="kc"><kbd>Ctrl</kbd>+<kbd>R</kbd></span></td><td>Search history by word</td></tr><tr data-q="f8 지금 친 글자로 시작하는 지난 명령 previous command starting with what you typed"><td><span class="kc"><kbd>F8</kbd></span></td><td>Previous command starting with what you typed</td></tr><tr data-q="tab 경로·명령 이름 자동 완성 complete paths and command names"><td><span class="kc"><kbd>Tab</kbd></span></td><td>Complete paths and command names</td></tr><tr data-q="ctrl+space 완성 후보를 목록으로 (그래서 psmux prefix로 쓰지 않음) completion menu (so it is not used as the psmux prefix)"><td><span class="kc"><kbd>Ctrl</kbd>+<kbd>Space</kbd></span></td><td>Completion menu (so it is not used as the psmux prefix)</td></tr><tr data-q="alt+. 직전 명령의 마지막 인수 넣기 insert the last argument of the previous command"><td><span class="kc"><kbd>Alt</kbd>+<kbd>.</kbd></span></td><td>Insert the last argument of the previous command</td></tr></tbody></table></div></div>
+<div class="kgrp"><h3>yazi</h3><div class="tw"><table class="keys"><thead><tr><th style="width:44%">Key / command</th><th>What it does</th></tr></thead><tbody><tr data-q="h j k l 이동 (방향키도 됨) move (arrow keys work too)"><td><span class="kc"><kbd>h j k l</kbd></span></td><td>Move (arrow keys work too)</td></tr><tr data-q="enter / o 열기 open"><td><span class="kc"><kbd>Enter</kbd></span> <span class="sep">/</span> <span class="kc"><kbd>o</kbd></span></td><td>Open</td></tr><tr data-q="space / v 여러 개 고르기 · 범위 고르기 select several · select a range"><td><span class="kc"><kbd>Space</kbd></span> <span class="sep">/</span> <span class="kc"><kbd>v</kbd></span></td><td>Select several · select a range</td></tr><tr data-q="y / x / p 복사 · 잘라내기 · 붙여넣기 copy · cut · paste"><td><span class="kc"><kbd>y</kbd></span> <span class="sep">/</span> <span class="kc"><kbd>x</kbd></span> <span class="sep">/</span> <span class="kc"><kbd>p</kbd></span></td><td>Copy · cut · paste</td></tr><tr data-q="d / d 휴지통 · 영구 삭제 trash · delete permanently"><td><span class="kc"><kbd>d</kbd></span> <span class="sep">/</span> <span class="kc"><kbd>D</kbd></span></td><td>Trash · delete permanently</td></tr><tr data-q="a / r 새 파일(끝에 /면 폴더) · 이름 바꾸기 new file (trailing / makes a folder) · rename"><td><span class="kc"><kbd>a</kbd></span> <span class="sep">/</span> <span class="kc"><kbd>r</kbd></span></td><td>New file (trailing / makes a folder) · rename</td></tr><tr data-q=". 숨김 파일 보기 toggle hidden files"><td><span class="kc"><kbd>.</kbd></span></td><td>Toggle hidden files</td></tr><tr data-q="s / s 이름 검색(fd) · 내용 검색(ripgrep) search names (fd) · search contents (ripgrep)"><td><span class="kc"><kbd>s</kbd></span> <span class="sep">/</span> <span class="kc"><kbd>S</kbd></span></td><td>Search names (fd) · search contents (ripgrep)</td></tr><tr data-q="c &gt; c 고른 파일 경로 복사 copy the selected file’s path"><td><span class="kc"><kbd>c</kbd><span class="then">→</span><kbd>c</kbd></span></td><td>Copy the selected file’s path</td></tr><tr data-q="~ 키 목록 key list"><td><span class="kc"><kbd>~</kbd></span></td><td>Key list</td></tr><tr data-q="q / q 끝내기 · 폴더 이동 없이 끝내기 quit · quit without changing folder"><td><span class="kc"><kbd>q</kbd></span> <span class="sep">/</span> <span class="kc"><kbd>Q</kbd></span></td><td>Quit · quit without changing folder</td></tr></tbody></table></div></div>
+<div class="kgrp"><h3>lazygit</h3><div class="tw"><table class="keys"><thead><tr><th style="width:44%">Key / command</th><th>What it does</th></tr></thead><tbody><tr data-q="1~5 칸 옮기기 (상태·파일·브랜치·커밋·스태시) switch panel (status, files, branches, commits, stash)"><td><span class="kc"><kbd>1~5</kbd></span></td><td>Switch panel (status, files, branches, commits, stash)</td></tr><tr data-q="space / a 스테이지 · 전부 스테이지 stage · stage all"><td><span class="kc"><kbd>Space</kbd></span> <span class="sep">/</span> <span class="kc"><kbd>a</kbd></span></td><td>Stage · stage all</td></tr><tr data-q="enter 파일 안으로 들어가 줄 단위로 open a file to work line by line"><td><span class="kc"><kbd>Enter</kbd></span></td><td>Open a file to work line by line</td></tr><tr data-q="c 커밋 commit"><td><span class="kc"><kbd>c</kbd></span></td><td>Commit</td></tr><tr data-q="p / p 푸시 · 풀 (대문자가 푸시) push · pull (capital p pushes)"><td><span class="kc"><kbd class="pf">Ctrl</kbd>+<kbd class="pf">b</kbd></span> <span class="sep">/</span> <span class="kc"><kbd>p</kbd></span></td><td>Push · pull (capital P pushes)</td></tr><tr data-q="z / z 되돌리기 · 다시 하기 undo · redo"><td><span class="kc"><kbd>z</kbd></span> <span class="sep">/</span> <span class="kc"><kbd>Z</kbd></span></td><td>Undo · redo</td></tr><tr data-q="d 변경 버리기 (확인 창) discard changes (asks first)"><td><span class="kc"><kbd>d</kbd></span></td><td>Discard changes (asks first)</td></tr><tr data-q="? / q 키 목록 · 끝내기 key list · quit"><td><span class="kc"><kbd>?</kbd></span> <span class="sep">/</span> <span class="kc"><kbd>q</kbd></span></td><td>Key list · quit</td></tr></tbody></table></div></div>
+<div class="kgrp"><h3>Windows Terminal</h3><div class="tw"><table class="keys"><thead><tr><th style="width:44%">Key / command</th><th>What it does</th></tr></thead><tbody><tr data-q="ctrl+shift+t 새 탭 new tab"><td><span class="kc"><kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>T</kbd></span></td><td>New tab</td></tr><tr data-q="ctrl+tab 다음 탭 (shift를 더하면 이전) next tab (add shift for previous)"><td><span class="kc"><kbd>Ctrl</kbd>+<kbd>Tab</kbd></span></td><td>Next tab (add Shift for previous)</td></tr><tr data-q="ctrl+shift+w 지금 탭·패널 닫기 close the current tab / pane"><td><span class="kc"><kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>W</kbd></span></td><td>Close the current tab / pane</td></tr><tr data-q="ctrl+shift+↑ 직전 명령의 출력만 선택 (셸 통합 필요) select the last command’s output (needs shell integration)"><td><span class="kc"><kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>↑</kbd></span></td><td>Select the last command’s output (needs shell integration) <span class="tag">after setup</span></td></tr><tr data-q="ctrl+shift+f 출력에서 찾기 find in output"><td><span class="kc"><kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>F</kbd></span></td><td>Find in output</td></tr><tr data-q="ctrl+c / ctrl+v 복사 · 붙여넣기 (선택이 없으면 ctrl+c는 실행 중단) copy · paste (without a selection ctrl+c interrupts)"><td><span class="kc"><kbd>Ctrl</kbd>+<kbd>C</kbd></span> <span class="sep">/</span> <span class="kc"><kbd>Ctrl</kbd>+<kbd>V</kbd></span></td><td>Copy · paste (without a selection Ctrl+C interrupts)</td></tr><tr data-q="ctrl+shift+p 명령 팔레트 command palette"><td><span class="kc"><kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>P</kbd></span></td><td>Command palette</td></tr><tr data-q="alt+shift+＋ / alt+shift+− 패널 좌우 · 위아래 나누기 (psmux 없이 쓸 때) split pane side by side / stacked (without psmux)"><td><span class="kc"><kbd>Alt</kbd>+<kbd>Shift</kbd>+<kbd>＋</kbd></span> <span class="sep">/</span> <span class="kc"><kbd>Alt</kbd>+<kbd>Shift</kbd>+<kbd>−</kbd></span></td><td>Split pane side by side / stacked (without psmux)</td></tr><tr data-q="alt+← 패널 사이 이동 (psmux 없이 쓸 때) move between panes (without psmux)"><td><span class="kc"><kbd>Alt</kbd>+<kbd>←</kbd></span></td><td>Move between panes (without psmux)</td></tr></tbody></table></div></div>
+<div class="kgrp"><h3>Claude Code</h3><div class="tw"><table class="keys"><thead><tr><th style="width:44%">Key / command</th><th>What it does</th></tr></thead><tbody><tr data-q="$ claude --bg "할 일" 백그라운드로 맡기기 hand a task to the background"><td><code>claude --bg "할 일"</code></td><td>Hand a task to the background</td></tr><tr data-q="$ /bg 대화 중인 세션을 백그라운드로 send the current session to the background"><td><code>/bg</code></td><td>Send the current session to the background</td></tr><tr data-q="$ claude attach id · logs id · stop id 세션에 붙기 · 최근 출력 · 중지 attach · recent output · stop"><td><code>claude attach id · logs id · stop id</code></td><td>Attach · recent output · stop</td></tr><tr data-q="esc 하던 일 멈추기 stop what it is doing"><td><span class="kc"><kbd>Esc</kbd></span></td><td>Stop what it is doing</td></tr><tr data-q="esc &gt; esc 앞 메시지로 되감기 rewind to an earlier message"><td><span class="kc"><kbd>Esc</kbd><span class="then">→</span><kbd>Esc</kbd></span></td><td>Rewind to an earlier message</td></tr><tr data-q="shift+tab 작업 모드 바꾸기 (계획만 · 자동 수락 등) cycle the work mode (plan only, auto-accept, …)"><td><span class="kc"><kbd>Shift</kbd>+<kbd>Tab</kbd></span></td><td>Cycle the work mode (plan only, auto-accept, …)</td></tr><tr data-q="$ @경로 파일을 대화에 붙이기 attach a file to the conversation"><td><code>@경로</code></td><td>Attach a file to the conversation</td></tr><tr data-q="$ /rc remote control 켜기 turn on remote control"><td><code>/rc</code></td><td>Turn on Remote Control</td></tr></tbody></table></div></div>
+<p class="note" id="kempty" hidden>No matches. Try another word.</p>
+
+<h2 id="with-dandi">Using it with Dandi</h2>
+<ul class="plain">
+  <li><b>Keeping sessions alive</b>: Dandi’s doc 01 §D recommends agent view before a multiplexer. psmux is an optional layer on top.</li>
+  <li><b>Worktree names</b>: Dandi numbers them like <code>.claude/worktrees/NNN-summary</code> and finds them with <code>/resume NNN</code>. The <code>my-app-2</code> in the 2×2 example above, or the automatic names from agent view, carry no number and cannot be found that way.</li>
+  <li><b>Concurrent agents</b>: Dandi’s <a href="skills.html">agent-guard</a> limits parallel subagents to what the PC can take. Whether agent teams teammates opened as panes count toward that limit was not confirmed.</li>
+  <li><b>Windows check-up</b>: the Windows Terminal default profile, PATH and Git are diagnosed by Dandi’s <code>/win-setup</code>. This page does not repeat that — see the <a href="skills.html">skill catalog</a>.</li>
+  <li><b>lazygit</b>: installation and diff-tool setup are covered by §16 in the <a href="options.html">options dictionary</a>. This page only covers using it.</li>
+</ul>
+
+<h2 id="install">Installation</h2>
+<div class="soon"><b>Installation comes as a separate request (in preparation)</b>A separate document that Claude Code reads to check and set up this configuration for your PC is being prepared. It is not part of Dandi’s main installer (document 00). Hands-on exercises and troubleshooting arrive with it.</div>
+
+<h2 id="sources">Sources and unknowns</h2>
+<ul class="plain">
+  <li><b>As of</b> — 2026-11-24. Carried over from checks of commands and keys on Windows 11, Windows Terminal, PowerShell 7 and psmux. They were not re-verified when this page was written.</li>
+  <li><b>Unconfirmed</b> — psmux sessions on RDP disconnect or sign-out · <kbd>Ctrl</kbd>+<kbd>↑</kbd> command jumping inside psmux · an <kbd>Alt</kbd>+<kbd>h</kbd> conflict inside Claude Code · whether agent-guard counts teammates.</li>
+  <li><b>psmux</b> — <a href="https://github.com/psmux/psmux">repository</a> · <a href="https://github.com/psmux/psmux/blob/master/docs/keybindings.md">keybindings</a> · <a href="https://github.com/psmux/psmux/blob/master/docs/claude-code.md">claude-code</a> · <a href="https://github.com/psmux/psmux/blob/master/docs/faq.md">faq</a></li>
+  <li><b>Claude Code</b> — <a href="https://code.claude.com/docs/en/terminal-config">Configure your terminal</a> · <a href="https://code.claude.com/docs/en/agent-teams">Agent teams</a> · <a href="https://code.claude.com/docs/en/worktrees">Worktrees</a></li>
+  <li><b>Windows Terminal</b> — <a href="https://learn.microsoft.com/windows/terminal/command-line-arguments">Command line arguments</a></li>
+</ul>
+
+<footer>Dandi &middot; Terminal introduction &middot; 2026-11-25 &middot; An introduction page, not an install item. Installation and configuration guidance is being prepared as a separate request.</footer>
+</div>
+<script>
+(function(){
+  var q=document.getElementById('kq'), rows=[].slice.call(document.querySelectorAll('table.keys tbody tr')),
+      grps=[].slice.call(document.querySelectorAll('.kgrp')), cnt=document.getElementById('kcnt'), empty=document.getElementById('kempty');
+  function run(){
+    var s=q.value.trim().toLowerCase(), n=0;
+    rows.forEach(function(r){ var ok=!s||r.getAttribute('data-q').indexOf(s)>-1; r.hidden=!ok; if(ok)n++; });
+    grps.forEach(function(g){ g.hidden=!g.querySelector('tbody tr:not([hidden])'); });
+    cnt.textContent=s?n+' matches':'';
+    empty.hidden=n>0;
+  }
+  q.addEventListener('input',run);
+  function openTo(id){
+    var el=id&&document.getElementById(id); if(!el) return;
+    var d=el.closest('details'); if(d) d.open=true;
+  }
+  window.addEventListener('beforeprint',function(){ [].slice.call(document.querySelectorAll('details')).forEach(function(d){ d.open=true; }); });
+  try{ openTo(decodeURIComponent(location.hash.slice(1))); }catch(e){}
+})();
+</script>
+<script>
+(function(){try{
+  if(localStorage.getItem('lang'))return;
+  if((navigator.language||'').toLowerCase().indexOf('ko')===0){
+    localStorage.setItem('lang','ko');location.replace('terminal.ko.html');
+  }
+}catch(e){}})();
+</script>
+</body>
+</html>
