@@ -1154,17 +1154,37 @@ details.sect>summary h2{margin:0}
 </details>
   </div>
 
+  <div class="opt">
+    <div class="opt-head"><span class="id">§21</span><span class="name">tool-tune</span><span class="badge b-off">기본 해제 · PC의 도구를 올림</span></div>
+    <p class="lead">Claude가 일할 때 쓰는 도구(브라우저·화면 조작, 데스크톱·앱 조작, 검증, 문서 조회 — MCP 서버·플러그인·전역 명령줄 도구)의 버전을 <b>그날의 최신 버전</b>과 비교해 다른 것만 표로 보여 주고, <b>내가 승인한 것만</b> 올리는 스킬입니다. 같은 일을 더 잘하는 도구가 있으면 근거와 함께 <b>나란히 설치</b>를 권합니다.</p>
+    <details class="more"><summary>자세히</summary>
+<dl>
+      <dt>언제 쓰나</dt><dd>MCP 서버나 플러그인을 깐 지 오래돼 지금 버전이 맞는지 궁금할 때, 쓰던 도구보다 나은 것이 나왔는지 알고 싶을 때, 방금 올린 도구가 이상해서 이전 버전으로 돌아가고 싶을 때</dd>
+      <dt>하는 일</dt><dd>이 PC에 <b>실제로 깔린 것만</b> 찾아 버전을 읽고, 최신 버전은 기억이 아니라 <b>그날 레지스트리·공식 릴리스를 조회해</b> 비교합니다(조회하지 못한 것은 올릴 대상에 넣지 않습니다). 큰 버전이 바뀌는 업데이트는 따로 표시하고 미리 고르지 않습니다. 대체 도구는 이 설치 문서가 이미 비교해 뺀 도구는 권하지 않고, 근거로 공식 주소와 확인일을 붙입니다. Windows·macOS는 패키지 관리자(winget·brew)로 깐 것까지, Linux는 플러그인·MCP·npm·Dart 전역 도구만 봅니다</dd>
+      <dt>안 하는 것</dt><dd>기존 도구를 지우지 않습니다(대체는 나란히 설치까지이고, 지울지는 내가 정합니다). 셸·git·런타임 같은 개발 기본 환경은 win-setup(§17), Claude Code 본체는 자체 자동 업데이트의 몫이라 다루지 않습니다. 프로젝트 의존성(린터·테스트 도구)은 보고만 합니다 — 올리면 팀 전원의 환경이 바뀝니다</dd>
+      <dt>쓰는 법</dt><dd><code>/tool-tune</code>(차이 표 → 승인한 것만 적용) · <code>/tool-tune 점검</code>(표까지만 — 아무것도 바꾸지 않고 기록도 쓰지 않음) · <code>/tool-tune 되돌리기</code>(기록해 둔 이전 버전으로)</dd>
+      <dt>남는 것</dt><dd><b>변경 기록</b> <code class="i">~/.claude/tool-tune/log.md</code> — 바꾼 도구의 이전 버전과 되돌리는 명령이 남습니다. 이 파일이 이미 있으면 설치 화면에 함께 표시됩니다(전에 쓴 PC라는 뜻입니다)</dd>
+      <dt>왜 기본 해제인가</dt><dd>이 PC의 전역 도구를 올리고 새 도구를 까는 스킬이라 모드가 대신 켜지 않고, 어떤 번들에도 들지 않습니다</dd>
+      <dt>스코프</dt><dd><b>글로벌이 기본</b>입니다 — 도구는 PC 단위로 깔리기 때문입니다. 팀이 같은 절차를 함께 써야 하면 프로젝트(커밋)를 고르세요</dd>
+      <dt>호출 방식</dt><dd><b>수동 호출 전용이 기본</b>입니다 — 도구를 올리고 까는 스킬이라 스스로 불리지 않게 합니다. 자동 판단을 골라도 승인 단계는 그대로 남습니다</dd>
+      <dt>설치 방법</dt><dd>설치는 스킬 폴더를 복사해 깝니다. <b>플러그인</b>으로 받으려면 <code>/plugin marketplace add EleninJayTech/claude</code> → <code>/plugin install dandi-tool-tune@dandi</code>를 직접 실행합니다(그때 이름은 <code class="i">/dandi-tool-tune:tool-tune</code>이고 스킬 이름 별칭은 붙지 않습니다)</dd>
+      <dt>주의</dt><dd>회사 PC면 전역 도구 업데이트·새 도구 설치가 보안 정책에 걸릴 수 있어 정책을 먼저 확인합니다. 새 MCP 서버·브라우저 도구를 나란히 설치하는 후보를 고르면 스킬이 회사 정책 질문을 다시 묻습니다. 이름이나 설명에 도구와 업데이트·버전·최신화가 함께 들어간 스킬·명령이 이미 있으면 유지할지 교체할지 묻습니다 — 갱신 절차가 둘이면 어느 쪽이 무엇을 올렸는지 기록이 갈립니다</dd>
+      <dt>지울 때</dt><dd>먼저 <b>올린 도구를 되돌릴지</b> 묻습니다 — 되돌리려면 스킬을 지우기 <b>전에</b> <code class="i">/tool-tune 되돌리기</code>를 부릅니다(기록에 ‘불가’로 적힌 것은 되돌릴 수 없고, 스킬을 먼저 지우면 기록의 명령을 손으로 실행해야 합니다). 그다음 설치한 스코프의 <code class="i">tool-tune/</code> 폴더를 지웁니다(훅·설정을 만들지 않습니다). 플러그인이면 <code class="i">/plugin uninstall dandi-tool-tune@dandi</code>. 나란히 설치한 도구는 스킬을 지워도 남으므로 따로 지웁니다. 변경 기록은 데이터라 <b>기본으로 남깁니다</b> — 지우면 되돌릴 근거가 사라집니다</dd>
+    </dl>
+</details>
+  </div>
+
   <h3>스킬을 고르면 따라오는 질문</h3>
   <div class="tbl">
   <table>
     <tr><th style="width:120px">질문</th><th>선택지</th></tr>
     <tr>
       <td><b>스코프</b></td>
-      <td><b>글로벌</b>(<code class="i">~/.claude/skills/</code>) — 내 PC 모든 프로젝트에서 쓸 수 있음 / <b>프로젝트</b>(<code class="i">.claude/skills/</code>) — 이 저장소에서만, 커밋하면 팀 공유. 기능 문서 세트·refactor·kr-ui-guide는 저장소를 가리지 않고 쓰이고 pc-clean·win-setup은 PC 단위 도구, ops-kit·agent-tune은 프로젝트를 스스로 조사하는 스킬, kb-dashboard는 다른 폴더 세션에서도 부르는 스킬이라 <b>글로벌이 기본</b>입니다. 정책 기록(§11)·기능 변경 기록(§13)은 프로젝트, session-board(§12)·agent-guard(§19)는 글로벌, diff 검수 도구(§16)는 이 PC로 <b>고정</b>이라 이 질문 없이 알려만 줍니다. 어떤 모드에서도 생략되지 않는 질문입니다 — 내 PC 글로벌에 같은 이름이 있으면 프로젝트에 깔아도 그쪽에 가려 실행되지 않습니다</td>
+      <td><b>글로벌</b>(<code class="i">~/.claude/skills/</code>) — 내 PC 모든 프로젝트에서 쓸 수 있음 / <b>프로젝트</b>(<code class="i">.claude/skills/</code>) — 이 저장소에서만, 커밋하면 팀 공유. 기능 문서 세트·refactor·kr-ui-guide는 저장소를 가리지 않고 쓰이고 pc-clean·win-setup은 PC 단위 도구, ops-kit·agent-tune은 프로젝트를 스스로 조사하는 스킬, tool-tune은 PC 단위로 깔린 도구를 다루는 스킬, kb-dashboard는 다른 폴더 세션에서도 부르는 스킬이라 <b>글로벌이 기본</b>입니다. 정책 기록(§11)·기능 변경 기록(§13)은 프로젝트, session-board(§12)·agent-guard(§19)는 글로벌, diff 검수 도구(§16)는 이 PC로 <b>고정</b>이라 이 질문 없이 알려만 줍니다. 어떤 모드에서도 생략되지 않는 질문입니다 — 내 PC 글로벌에 같은 이름이 있으면 프로젝트에 깔아도 그쪽에 가려 실행되지 않습니다</td>
     </tr>
     <tr>
       <td><b>호출 방식</b></td>
-      <td><b>자동 판단</b> — 관련 작업이 감지되면 Claude가 알아서 불러 씀(기본) / <b>수동 호출 전용</b> — 내가 <code class="i">/svg-design</code>이라고 쳐야만 동작(파일에 <code class="i">disable-model-invocation: true</code> 한 줄이 추가됨). 브라우저 확인 규칙(<code class="i">browser-check</code>)은 <b>자동 판단을 권합니다</b> — 확인할 때 스스로 불려야 쓸모가 있습니다. 반대로 <code class="i">win-setup</code>은 PC 설정을 바꾸는 스킬이라, <code class="i">kb-dashboard</code>는 부를 때만 페이지를 만드는 스킬이라, <code class="i">agent-tune</code>은 에이전트 정의 파일을 고치는 스킬이라 <b>수동 호출 전용이 기본</b>입니다</td>
+      <td><b>자동 판단</b> — 관련 작업이 감지되면 Claude가 알아서 불러 씀(기본) / <b>수동 호출 전용</b> — 내가 <code class="i">/svg-design</code>이라고 쳐야만 동작(파일에 <code class="i">disable-model-invocation: true</code> 한 줄이 추가됨). 브라우저 확인 규칙(<code class="i">browser-check</code>)은 <b>자동 판단을 권합니다</b> — 확인할 때 스스로 불려야 쓸모가 있습니다. 반대로 <code class="i">win-setup</code>은 PC 설정을 바꾸는 스킬이라, <code class="i">kb-dashboard</code>는 부를 때만 페이지를 만드는 스킬이라, <code class="i">agent-tune</code>은 에이전트 정의 파일을 고치는 스킬이라, <code class="i">tool-tune</code>은 PC의 도구를 올리고 까는 스킬이라 <b>수동 호출 전용이 기본</b>입니다</td>
     </tr>
     <tr>
       <td><b>이름 별칭</b></td>
@@ -1172,7 +1192,7 @@ details.sect>summary h2{margin:0}
     </tr>
     <tr>
       <td><b>이미 플러그인</b></td>
-      <td>기능 문서 세트·refactor·kr-ui-guide·browser-check·pc-clean·ops-kit·win-setup·kb-dashboard·agent-tune에서만, 같은 스킬이 <code class="i">dandi</code> 플러그인으로 이미 켜져 있을 때만 묻습니다. <b>유지</b> — 플러그인을 그대로 두고 복사 설치는 건너뜀 / <b>교체</b> — 플러그인을 지운 뒤 복사 설치. 둘 다 두면 똑같은 스킬 두 개가 Claude 앞에 놓입니다. session-board·agent-guard는 훅이 두 번 돌게 될 때 따로 묻습니다. 플러그인으로 받은 스킬을 뺄 때는 그 플러그인의 제거 방법을 따릅니다(예: <code class="i">/plugin uninstall dandi-refactor@dandi</code>)</td>
+      <td>기능 문서 세트·refactor·kr-ui-guide·browser-check·pc-clean·ops-kit·win-setup·kb-dashboard·agent-tune·tool-tune에서만, 같은 스킬이 <code class="i">dandi</code> 플러그인으로 이미 켜져 있을 때만 묻습니다. <b>유지</b> — 플러그인을 그대로 두고 복사 설치는 건너뜀 / <b>교체</b> — 플러그인을 지운 뒤 복사 설치. 둘 다 두면 똑같은 스킬 두 개가 Claude 앞에 놓입니다. session-board·agent-guard는 훅이 두 번 돌게 될 때 따로 묻습니다. 플러그인으로 받은 스킬을 뺄 때는 그 플러그인의 제거 방법을 따릅니다(예: <code class="i">/plugin uninstall dandi-refactor@dandi</code>)</td>
     </tr>
   </table>
   </div>
@@ -1417,7 +1437,7 @@ details.sect>summary h2{margin:0}
     해소 여부와 상관없이 더는 원하지 않으면(일단 보류, 조직 불허 확정, 인증 안 하기로 함) “미선택”으로 바꿔 기록합니다 — 같은 질문이 계속 반복되지 않게요.
   </p>
   <p>
-    복사해 까는 스킬(기능 문서 세트·refactor·kr-ui-guide·browser-check·pc-clean·session-board·ops-kit·win-setup·kb-dashboard·agent-guard·agent-tune)은 배포본과 <b>파일마다 내용까지</b> 대조합니다 — 문구만 바뀐 개정도 놓치지 않습니다.
+    복사해 까는 스킬(기능 문서 세트·refactor·kr-ui-guide·browser-check·pc-clean·session-board·ops-kit·win-setup·kb-dashboard·agent-guard·agent-tune·tool-tune)은 배포본과 <b>파일마다 내용까지</b> 대조합니다 — 문구만 바뀐 개정도 놓치지 않습니다.
     하나라도 다르면 <b>구설치본</b>으로 보여주고, 설치 단계에서 폴더째 새것으로 바꿉니다.
   </p>
   </details>
