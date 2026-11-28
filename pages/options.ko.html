@@ -1097,19 +1097,22 @@ details.sect>summary h2{margin:0}
   </div>
 
   <div class="opt">
-    <div class="opt-head"><span class="id">§18</span><span class="name">kb-dashboard</span><span class="badge b-off">기본 해제 · 마크다운 지식 베이스</span></div>
-    <p class="lead">마크다운으로 쌓아 둔 기록 저장소(할일 파일·회의·이슈·절차·팁 폴더 같은 것)를 <b>내 PC의 HTML 한 장</b>으로 모아 보여 주는 스킬입니다. 물어봐야만 확인되던 할일·게시한 아티팩트 링크·팁·기록을 브라우저에서 한눈에 봅니다.</p>
+    <div class="opt-head"><span class="id">§18</span><span class="name">지식 베이스 세트(kb-init · kb-dashboard)</span><span class="badge b-off">기본 해제 · 마크다운 지식 베이스</span></div>
+    <p class="lead">Claude가 분류해 저장하고 찾아 답하는 마크다운 기록 저장소(할일 파일·회의·이슈·절차·팁 폴더 같은 것)를 위한 스킬 두 개입니다. <b>kb-init</b>은 빈 폴더에 그 저장소를 만들고, <b>kb-dashboard</b>는 그것을 <b>내 PC의 HTML 한 장</b>으로 모아 보여 줍니다 — 물어봐야만 확인되던 할일·게시한 아티팩트 링크·팁·기록을 브라우저에서 한눈에 봅니다.</p>
     <details class="more"><summary>자세히</summary>
 <dl>
-      <dt>보여 주는 것</dt><dd>상태별 할일과 기한이 지난 것 · 게시한 아티팩트 링크와 산출물 폴더 · 팁 · 종류별 기록과 태그·프로젝트 묶음·검색 · 본문 펼쳐 읽기</dd>
+      <dt>kb-init — 만드는 것</dt><dd><code>/kb-init</code>(만들 폴더 경로는 선택)을 부르면 몇 가지를 한 번에 묻습니다 — 한 폴더로 쓸지 회사·개인 폴더와 공용 폴더로 나눌지, 기록 종류, 할일 파일·아티팩트 링크 파일을 함께 만들지, git을 시작할지. 만들 파일 목록을 먼저 보여 주고 확인한 뒤에만 만듭니다: 분류 표를 가진 루트 <code class="i">CLAUDE.md</code>, 폴더들, 할일·링크 파일, 프로젝트 스킬 네 개(<code>/log</code> 기록 · <code>/find</code> 검색 · <code>/todo</code> 할일 · <code>/report</code> 산출물), <code class="i">README.md</code>, <code class="i">.gitignore</code>, 대시보드 설정 파일. 네 스킬은 그 폴더에서 새 세션을 열어야 뜹니다</dd>
+      <dt>kb-init — 하지 않는 것</dt><dd><b>이미 있는 파일은 덮어쓰지 않고</b>, 폴더에 루트 <code class="i">CLAUDE.md</code>나 대시보드 설정이 이미 있거나 소프트웨어 프로젝트로 보이면 거부합니다. 원격 저장소를 만들거나 push하지 않습니다 — 해도 <code>git init</code>과 첫 커밋까지, 그것도 물어본 뒤에 합니다</dd>
+      <dt>kb-dashboard — 보여 주는 것</dt><dd>상태별 할일과 기한이 지난 것 · 게시한 아티팩트 링크와 산출물 폴더 · 팁 · 종류별 기록과 태그·프로젝트 묶음·검색 · 본문 펼쳐 읽기</dd>
       <dt>보기 전용</dt><dd>페이지에서 고칠 수 없고, 페이지는 저장소 <b>밖</b>(<code class="i">~/.claude/kb-dashboard/</code>)에 만듭니다 — 기록 본문의 사본이 git이나 외부로 나가지 않습니다. 스킬이 페이지를 Artifact로 게시하지도 않습니다</dd>
       <dt>쓰는 법</dt><dd><code>/kb-dashboard</code>(페이지를 만들고 브라우저로 엶) · <code>/kb-dashboard 아티팩트 &lt;URL&gt; &lt;제목&gt;</code>(게시한 아티팩트 링크를 기록 파일에 한 줄 추가 — <b>커밋은 하지 않음</b>) · <code>/kb-dashboard 설정</code> · <code>/kb-dashboard 점검</code>(설정과 기록 형식만 확인)</dd>
-      <dt>설정 파일</dt><dd>저장소마다 다른 규칙(볼 폴더·기록 종류·할일 상태어·화면 언어 <code class="i">lang</code>)은 그 저장소의 <code class="i">.claude/kb-dashboard.json</code>이 정합니다. 설치는 이 파일을 만들지 않고, <b>처음 부를 때</b> Claude가 저장소의 <code class="i">CLAUDE.md</code>를 읽어 초안을 만든 뒤 확인받고 저장합니다. 이미 있으면 그대로 둡니다</dd>
+      <dt>설정 파일</dt><dd>저장소마다 다른 규칙(볼 폴더·기록 종류·할일 상태어·화면 언어 <code class="i">lang</code>)은 그 저장소의 <code class="i">.claude/kb-dashboard.json</code>이 정합니다. 설치는 이 파일을 만들지 않습니다. <code>/kb-init</code>으로 만든 저장소에는 이미 있어 설정 절차 없이 바로 열리고, 손으로 꾸린 저장소는 <b>처음 부를 때</b> Claude가 저장소의 <code class="i">CLAUDE.md</code>를 읽어 초안을 만든 뒤 확인받고 저장합니다. 이미 있으면 그대로 둡니다</dd>
       <dt>필요한 것</dt><dd><b>Node.js 18 이상</b>(추가 패키지 설치는 없음). 없으면 설치하지 않고 “Node 없음”으로 미선택 기록됩니다 — 이 PC의 사정이라 프로젝트가 공유하는 기록이 아니라 <b>이 PC의</b> <code class="i">~/.claude/CLAUDE.md</code>에 남습니다</dd>
-      <dt>왜 기본 해제인가</dt><dd>기록을 마크다운으로 쌓는 <b>지식 베이스 저장소</b>용이라 어떤 번들에도 들지 않습니다. 소프트웨어 저장소의 <code class="i">docs/</code> 작업 기록을 보려는 도구가 아닙니다. 필요하면 직접 체크하세요</dd>
-      <dt>스코프</dt><dd><b>글로벌이 기본</b>입니다 — 다른 폴더에서 연 세션에서도 부를 수 있습니다. 프로젝트를 고르면 그 지식 베이스 저장소에서만 뜹니다</dd>
-      <dt>호출 방식</dt><dd><b>수동 호출 전용이 기본</b>입니다 — 부를 때만 페이지를 만드는 스킬이라 스스로 불릴 이유가 없습니다</dd>
-      <dt>지울 때</dt><dd>설치한 스코프의 <code class="i">kb-dashboard/</code> 폴더를 지웁니다(훅·설정·예약 작업을 만들지 않습니다). 플러그인으로 받았다면 <code class="i">/plugin uninstall dandi-kb-dashboard@dandi</code>. 만들어진 페이지 <code class="i">~/.claude/kb-dashboard/</code>도 지웁니다. 저장소의 <code class="i">.claude/kb-dashboard.json</code>은 그 저장소 것이라 남습니다 — 더 쓰지 않으면 거기서 지우고 커밋하세요. 아티팩트 링크 기록 파일은 기록이라 지우지 않습니다</dd>
+      <dt>왜 기본 해제인가</dt><dd>기록을 마크다운으로 쌓는 <b>지식 베이스 저장소</b>를 쓰거나 새로 만들 때만 쓸모가 있어 어떤 번들에도 들지 않습니다. 소프트웨어 저장소의 <code class="i">docs/</code> 작업 기록을 보려는 도구가 아닙니다. 필요하면 직접 체크하세요</dd>
+      <dt>스코프</dt><dd><b>글로벌이 기본</b>이고 두 스킬은 같은 스코프에 함께 깝니다 — kb-init은 지식 베이스가 생기기 전에 부르고, kb-dashboard는 다른 폴더에서 연 세션에서도 부릅니다. 프로젝트를 고르면 그 지식 베이스 저장소에서만 뜹니다</dd>
+      <dt>호출 방식</dt><dd>둘 다 <b>수동 호출 전용이 기본</b>입니다 — 부를 때만 지식 베이스나 페이지를 만드는 스킬이라 스스로 불릴 이유가 없습니다</dd>
+      <dt>kb-dashboard만 깔려 있다면</dt><dd>이 항목이 kb-dashboard 하나였을 때 설치한 PC는 재적용 때 “부분 설치”로 표시되고 kb-init만 채워집니다</dd>
+      <dt>지울 때</dt><dd>설치한 스코프의 <code class="i">kb-init/</code>·<code class="i">kb-dashboard/</code> 폴더를 지웁니다(훅·설정·예약 작업을 만들지 않습니다). 플러그인으로 받았다면 <code class="i">/plugin uninstall dandi-kb-dashboard@dandi</code> — 플러그인 하나에 둘이 함께 들어 있습니다. 만들어진 페이지 <code class="i">~/.claude/kb-dashboard/</code>도 지웁니다. 저장소의 <code class="i">.claude/kb-dashboard.json</code>은 그 저장소 것이라 남습니다 — 더 쓰지 않으면 거기서 지우고 커밋하세요. 아티팩트 링크 기록 파일은 기록이라 지우지 않고, kb-init이 만든 지식 베이스(폴더·기록·그 <code class="i">CLAUDE.md</code>·프로젝트 스킬 네 개)도 설치 흔적이 아니라 그 저장소의 내용이라 남습니다</dd>
     </dl>
 </details>
   </div>
@@ -1180,11 +1183,11 @@ details.sect>summary h2{margin:0}
     <tr><th style="width:120px">질문</th><th>선택지</th></tr>
     <tr>
       <td><b>스코프</b></td>
-      <td><b>글로벌</b>(<code class="i">~/.claude/skills/</code>) — 내 PC 모든 프로젝트에서 쓸 수 있음 / <b>프로젝트</b>(<code class="i">.claude/skills/</code>) — 이 저장소에서만, 커밋하면 팀 공유. 기능 문서 세트·refactor·kr-ui-guide는 저장소를 가리지 않고 쓰이고 pc-clean·win-setup은 PC 단위 도구, ops-kit·agent-tune은 프로젝트를 스스로 조사하는 스킬, tool-tune은 PC 단위로 깔린 도구를 다루는 스킬, kb-dashboard는 다른 폴더 세션에서도 부르는 스킬이라 <b>글로벌이 기본</b>입니다. 정책 기록(§11)·기능 변경 기록(§13)은 프로젝트, session-board(§12)·agent-guard(§19)는 글로벌, diff 검수 도구(§16)는 이 PC로 <b>고정</b>이라 이 질문 없이 알려만 줍니다. 어떤 모드에서도 생략되지 않는 질문입니다 — 내 PC 글로벌에 같은 이름이 있으면 프로젝트에 깔아도 그쪽에 가려 실행되지 않습니다</td>
+      <td><b>글로벌</b>(<code class="i">~/.claude/skills/</code>) — 내 PC 모든 프로젝트에서 쓸 수 있음 / <b>프로젝트</b>(<code class="i">.claude/skills/</code>) — 이 저장소에서만, 커밋하면 팀 공유. 기능 문서 세트·refactor·kr-ui-guide는 저장소를 가리지 않고 쓰이고 pc-clean·win-setup은 PC 단위 도구, ops-kit·agent-tune은 프로젝트를 스스로 조사하는 스킬, tool-tune은 PC 단위로 깔린 도구를 다루는 스킬, 지식 베이스 세트는 지식 베이스가 생기기 전이나 다른 폴더 세션에서 부르는 스킬이라 <b>글로벌이 기본</b>입니다. 정책 기록(§11)·기능 변경 기록(§13)은 프로젝트, session-board(§12)·agent-guard(§19)는 글로벌, diff 검수 도구(§16)는 이 PC로 <b>고정</b>이라 이 질문 없이 알려만 줍니다. 어떤 모드에서도 생략되지 않는 질문입니다 — 내 PC 글로벌에 같은 이름이 있으면 프로젝트에 깔아도 그쪽에 가려 실행되지 않습니다</td>
     </tr>
     <tr>
       <td><b>호출 방식</b></td>
-      <td><b>자동 판단</b> — 관련 작업이 감지되면 Claude가 알아서 불러 씀(기본) / <b>수동 호출 전용</b> — 내가 <code class="i">/svg-design</code>이라고 쳐야만 동작(파일에 <code class="i">disable-model-invocation: true</code> 한 줄이 추가됨). 브라우저 확인 규칙(<code class="i">browser-check</code>)은 <b>자동 판단을 권합니다</b> — 확인할 때 스스로 불려야 쓸모가 있습니다. 반대로 <code class="i">win-setup</code>은 PC 설정을 바꾸는 스킬이라, <code class="i">kb-dashboard</code>는 부를 때만 페이지를 만드는 스킬이라, <code class="i">agent-tune</code>은 에이전트 정의 파일을 고치는 스킬이라, <code class="i">tool-tune</code>은 PC의 도구를 올리고 까는 스킬이라 <b>수동 호출 전용이 기본</b>입니다</td>
+      <td><b>자동 판단</b> — 관련 작업이 감지되면 Claude가 알아서 불러 씀(기본) / <b>수동 호출 전용</b> — 내가 <code class="i">/svg-design</code>이라고 쳐야만 동작(파일에 <code class="i">disable-model-invocation: true</code> 한 줄이 추가됨). 브라우저 확인 규칙(<code class="i">browser-check</code>)은 <b>자동 판단을 권합니다</b> — 확인할 때 스스로 불려야 쓸모가 있습니다. 반대로 <code class="i">win-setup</code>은 PC 설정을 바꾸는 스킬이라, <code class="i">kb-init</code>·<code class="i">kb-dashboard</code>는 부를 때만 지식 베이스나 페이지를 만드는 스킬이라, <code class="i">agent-tune</code>은 에이전트 정의 파일을 고치는 스킬이라, <code class="i">tool-tune</code>은 PC의 도구를 올리고 까는 스킬이라 <b>수동 호출 전용이 기본</b>입니다</td>
     </tr>
     <tr>
       <td><b>이름 별칭</b></td>
@@ -1192,7 +1195,7 @@ details.sect>summary h2{margin:0}
     </tr>
     <tr>
       <td><b>이미 플러그인</b></td>
-      <td>기능 문서 세트·refactor·kr-ui-guide·browser-check·pc-clean·ops-kit·win-setup·kb-dashboard·agent-tune·tool-tune에서만, 같은 스킬이 <code class="i">dandi</code> 플러그인으로 이미 켜져 있을 때만 묻습니다. <b>유지</b> — 플러그인을 그대로 두고 복사 설치는 건너뜀 / <b>교체</b> — 플러그인을 지운 뒤 복사 설치. 둘 다 두면 똑같은 스킬 두 개가 Claude 앞에 놓입니다. session-board·agent-guard는 훅이 두 번 돌게 될 때 따로 묻습니다. 플러그인으로 받은 스킬을 뺄 때는 그 플러그인의 제거 방법을 따릅니다(예: <code class="i">/plugin uninstall dandi-refactor@dandi</code>)</td>
+      <td>기능 문서 세트·refactor·kr-ui-guide·browser-check·pc-clean·ops-kit·win-setup·지식 베이스 세트(kb-init·kb-dashboard)·agent-tune·tool-tune에서만, 같은 스킬이 <code class="i">dandi</code> 플러그인으로 이미 켜져 있을 때만 묻습니다. <b>유지</b> — 플러그인을 그대로 두고 복사 설치는 건너뜀 / <b>교체</b> — 플러그인을 지운 뒤 복사 설치. 둘 다 두면 똑같은 스킬 두 개가 Claude 앞에 놓입니다. session-board·agent-guard는 훅이 두 번 돌게 될 때 따로 묻습니다. 플러그인으로 받은 스킬을 뺄 때는 그 플러그인의 제거 방법을 따릅니다(예: <code class="i">/plugin uninstall dandi-refactor@dandi</code>)</td>
     </tr>
   </table>
   </div>
@@ -1437,7 +1440,7 @@ details.sect>summary h2{margin:0}
     해소 여부와 상관없이 더는 원하지 않으면(일단 보류, 조직 불허 확정, 인증 안 하기로 함) “미선택”으로 바꿔 기록합니다 — 같은 질문이 계속 반복되지 않게요.
   </p>
   <p>
-    복사해 까는 스킬(기능 문서 세트·refactor·kr-ui-guide·browser-check·pc-clean·session-board·ops-kit·win-setup·kb-dashboard·agent-guard·agent-tune·tool-tune)은 배포본과 <b>파일마다 내용까지</b> 대조합니다 — 문구만 바뀐 개정도 놓치지 않습니다.
+    복사해 까는 스킬(기능 문서 세트·refactor·kr-ui-guide·browser-check·pc-clean·session-board·ops-kit·win-setup·kb-init·kb-dashboard·agent-guard·agent-tune·tool-tune)은 배포본과 <b>파일마다 내용까지</b> 대조합니다 — 문구만 바뀐 개정도 놓치지 않습니다.
     하나라도 다르면 <b>구설치본</b>으로 보여주고, 설치 단계에서 폴더째 새것으로 바꿉니다.
   </p>
   </details>
@@ -1504,7 +1507,7 @@ details.sect>summary h2{margin:0}
 <a class="totop" href="#toc">↑ 목차</a>
 
 <footer>
-  단디 · 설치 옵션 사전 · 00_통합-설치.md 기준 · 2026-11-25<br>
+  단디 · 설치 옵션 사전 · 00_통합-설치.md 기준 · 2026-11-28<br>
   각 항목의 정본은 해당 하위 문서(01~06)입니다. 이 페이지는 사람이 읽고 판단하기 위한 안내이며, 설치 절차 자체를 바꾸지 않습니다.<br>
   저장소: github.com/EleninJayTech/claude ·
   <a href="../index.ko.html">사용법</a> · <a href="intro.ko.html">소개 영상</a> · <a href="demo.ko.html">설치 시연</a> · <a href="learn.ko.html">학습 코스</a> · <a href="skills.ko.html">스킬 카탈로그</a> · <a href="terminal.ko.html">터미널 소개</a><br>

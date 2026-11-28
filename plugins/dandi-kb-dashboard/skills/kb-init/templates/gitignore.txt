@@ -1,0 +1,22 @@
+# Per-PC settings — never commit (only the .example files are shared)
+CLAUDE.local.md
+*.local.md
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editors and temporary files
+.vscode/
+.idea/
+*.swp
+*.tmp
+*~
+
+# Claude runtime
+.claude/cache/
+.claude/sessions/
+.claude/logs/
+.claude/worktrees/
+.claude/settings.local.json

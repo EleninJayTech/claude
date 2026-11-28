@@ -1,7 +1,7 @@
 {
   "name": "dandi",
   "owner": { "name": "EleninJayTech", "url": "https://github.com/EleninJayTech" },
-  "description": "Dandi skills for Claude Code: feature specs verified against code and the running app, behavior-preserving refactoring, UI/UX guidelines for Korean users, a browser verification method, a Windows PC check-and-clean routine, a Windows PC setup routine for Claude Code CLI work, deploy-and-operate documents for a solo project, a local dashboard for a Markdown knowledge base, a guard that keeps parallel subagents within what the PC can handle, per-subagent model and effort tuning, version checks and updates for the tools Claude uses, and a board that lets sessions in the same folder see each other. Skill instructions are written in Korean.",
+  "description": "Dandi skills for Claude Code: feature specs verified against code and the running app, behavior-preserving refactoring, UI/UX guidelines for Korean users, a browser verification method, a Windows PC check-and-clean routine, a Windows PC setup routine for Claude Code CLI work, deploy-and-operate documents for a solo project, a Markdown knowledge base scaffold with its local dashboard, a guard that keeps parallel subagents within what the PC can handle, per-subagent model and effort tuning, version checks and updates for the tools Claude uses, and a board that lets sessions in the same folder see each other. Skill instructions are written in Korean.",
   "plugins": [
     {
       "name": "dandi-feature-docs",
@@ -62,9 +62,9 @@
     {
       "name": "dandi-kb-dashboard",
       "source": "./plugins/dandi-kb-dashboard",
-      "description": "One local, view-only HTML dashboard of a Markdown knowledge base: todos by status and due date, published artifact links, tips, records by type, tags and search, built by a bundled Node script from a per-repo config.",
+      "description": "Scaffold a Markdown knowledge base (classified notes, a todo file, log/find/todo/report commands) and view it as one local, view-only HTML dashboard: todos by status and due date, published artifact links, tips, records by type, tags and search.",
       "license": "MIT",
-      "keywords": ["dashboard", "knowledge-base", "markdown", "todo", "notes"]
+      "keywords": ["dashboard", "knowledge-base", "markdown", "todo", "notes", "scaffold"]
     },
     {
       "name": "dandi-agent-guard",
